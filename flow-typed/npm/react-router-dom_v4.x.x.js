@@ -1,10 +1,42 @@
-// flow-typed signature: 1e6728f0a649edac3689d6e2db7487a7
-// flow-typed version: 01716df816/react-router_v4.x.x/flow_>=v0.53.x
+// flow-typed signature: 7ef7e99bfa7953a438470755d51dc345
+// flow-typed version: 107feb8c45/react-router-dom_v4.x.x/flow_>=v0.53.x
 
-declare module "react-router" {
-  // NOTE: many of these are re-exported by react-router-dom and
-  // react-router-native, so when making changes, please be sure to update those
-  // as well.
+declare module "react-router-dom" {
+  declare export class BrowserRouter extends React$Component<{
+    basename?: string,
+    forceRefresh?: boolean,
+    getUserConfirmation?: GetUserConfirmation,
+    keyLength?: number,
+    children?: React$Node
+  }> {}
+
+  declare export class HashRouter extends React$Component<{
+    basename?: string,
+    getUserConfirmation?: GetUserConfirmation,
+    hashType?: "slash" | "noslash" | "hashbang",
+    children?: React$Node
+  }> {}
+
+  declare export class Link extends React$Component<{
+    to: string | LocationShape,
+    replace?: boolean,
+    children?: React$Node
+  }> {}
+
+  declare export class NavLink extends React$Component<{
+    to: string | LocationShape,
+    activeClassName?: string,
+    className?: string,
+    activeStyle?: Object,
+    style?: Object,
+    isActive?: (match: Match, location: Location) => boolean,
+    children?: React$Node,
+    exact?: boolean,
+    strict?: boolean
+  }> {}
+
+  // NOTE: Below are duplicated from react-router. If updating these, please
+  // update the react-router and react-router-native types as well.
   declare export type Location = {
     pathname: string,
     search: string,
@@ -86,7 +118,7 @@ declare module "react-router" {
   }> {}
 
   declare export class Prompt extends React$Component<{
-    message: string | ((location: Location) => string | true),
+    message: string | ((location: Location) => string | boolean),
     when?: boolean
   }> {}
 
@@ -115,9 +147,10 @@ declare module "react-router" {
   declare type MatchPathOptions = {
     path?: string,
     exact?: boolean,
-    strict?: boolean,
-    sensitive?: boolean
+    sensitive?: boolean,
+    strict?: boolean
   };
+
   declare export function matchPath(
     pathname: string,
     options?: MatchPathOptions | string
