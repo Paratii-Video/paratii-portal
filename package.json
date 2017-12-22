@@ -7,21 +7,21 @@
   "author": "Benjamin Baum <benjaminjbaum@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "yarn run clean && yarn run prep && webpack-dev-server -d --content-base ./build --hot --progress --colors",
-    "build": "yarn run clean && yarn run prep && NODE_ENV=production webpack --progress --colors",
+    "dev":
+      "yarn run clean && yarn run prep && webpack-dev-server -d --content-base ./build --hot --progress --colors",
+    "build":
+      "yarn run clean && yarn run prep && NODE_ENV=production webpack --progress --colors",
     "prep": "mkdir build/ && cp src/index.html build/",
     "clean": "rm -rf build/",
     "lint": "eslint src test --cache",
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
+    "test": "NODE_ENV=test karma start karma.conf.js",
+    "test:dev": "yarn run test -- --single-run false",
     "quality": "yarn run lint && yarn run flow",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint --cache",
-      "git add"
-    ]
+    "*.js": ["prettier --write", "eslint --cache", "git add"]
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -35,6 +35,8 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.7",
     "cssnano": "^3.10.0",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.13.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^11.0.0-beta.0",
@@ -47,6 +49,9 @@
     "eslint-plugin-standard": "^3.0.1",
     "flow-bin": "^0.61.0",
     "husky": "^0.14.3",
+    "karma": "^2.0.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^2.0.9",
     "lint-staged": "^6.0.0",
     "node-sass": "^4.7.2",
     "postcss-cssnext": "^3.0.2",
@@ -60,6 +65,9 @@
     "webpack-dev-server": "^2.9.7"
   },
   "dependencies": {
+    "jasmine-core": "^2.8.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",

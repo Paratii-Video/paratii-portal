@@ -29,7 +29,8 @@ var config = {
       containers: scriptsDir + "/containers",
       selectors: scriptsDir + "/selectors",
       apis: scriptsDir + "/apis",
-      adapters: scriptsDir + "/adapters"
+      adapters: scriptsDir + "/adapters",
+      "test-utils": testDir + "/test-utils"
     }
   },
   module: {
@@ -54,7 +55,8 @@ var config = {
         use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"]
       }
     ]
-  }
+  },
+  devtool: "inline-source-map"
 };
 
 module.exports = config;
