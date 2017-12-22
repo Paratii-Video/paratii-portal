@@ -14,7 +14,6 @@
     "prep": "mkdir build/ && cp src/index.html build/",
     "clean": "rm -rf build/",
     "lint": "eslint src test --cache",
-    "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "test": "NODE_ENV=test karma start karma.conf.js",
     "test:dev": "yarn run test -- --single-run false",
     "quality": "yarn run lint && yarn run flow",
