@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  font-size: 20px;
+`;
 
 const Title = styled.header`
   background-color: #fff;
   height: 50px;
   padding: 20px;
-  color: white;
   display: flex;
   align-items: center;
   color: blue;
