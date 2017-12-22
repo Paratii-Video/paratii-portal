@@ -7,10 +7,8 @@
   "author": "Benjamin Baum <benjaminjbaum@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev":
-      "yarn run clean && yarn run prep && webpack-dev-server -d --content-base ./build --hot --progress --colors",
-    "build":
-      "yarn run clean && yarn run prep && NODE_ENV=production webpack --progress --colors",
+    "dev": "yarn run clean && yarn run prep && webpack-dev-server -d --content-base ./build --hot --progress --colors",
+    "build": "yarn run clean && yarn run prep && NODE_ENV=production webpack --progress --colors",
     "prep": "mkdir build/ && cp src/index.html build/",
     "clean": "rm -rf build/",
     "lint": "eslint src test --cache",
@@ -19,7 +17,11 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": ["prettier --write", "eslint --cache", "git add"]
+    "*.js": [
+      "prettier --write",
+      "eslint --cache",
+      "git add"
+    ]
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -62,6 +64,8 @@
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
+    "redux-actions": "^2.2.1",
+    "redux-thunk": "^2.2.0",
     "styled-components": "^2.3.3"
   }
 }
