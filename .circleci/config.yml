@@ -18,6 +18,7 @@ jobs:
           key: v1-dependencies-{{ checksum "yarn.lock" }}
       - run: yarn run quality
       - run: yarn test
+      - run: yarn run build
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
