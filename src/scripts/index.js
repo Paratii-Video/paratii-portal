@@ -1,4 +1,4 @@
-/* flow */
+/* @flow */
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -31,13 +31,15 @@ ReactDOM.render(
 if (module.hot) {
   module.hot.accept("components/Root", () => {
     const NextRoot = require("components/Root").default;
-    ReactDOM.render(
-      <Provider store={store}>
-        <AppContainer>
-          <NextRoot />
-        </AppContainer>
-      </Provider>,
-      root
-    );
+    if (root) {
+      ReactDOM.render(
+        <Provider store={store}>
+          <AppContainer>
+            <NextRoot />
+          </AppContainer>
+        </Provider>,
+        root
+      );
+    }
   });
 }

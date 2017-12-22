@@ -7,8 +7,7 @@
 ./node_modules/fbjs/lib
 
 [libs]
-flow-typed
-
+flow/flow-typed
 flow
 
 [options]
