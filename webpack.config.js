@@ -18,6 +18,7 @@ var config = {
   ],
   output: {
     path: buildDir,
+    publicPath: "/",
     filename: "bundle.js"
   },
   resolve: {

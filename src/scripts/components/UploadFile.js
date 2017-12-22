@@ -4,12 +4,13 @@ import styled from "styled-components";
 const Wrapper = styled.div``;
 
 const Title = styled.header`
-  background-color: #222;
+  background-color: #fff;
   height: 50px;
   padding: 20px;
   color: white;
   display: flex;
   align-items: center;
+  color: blue;
 `;
 
 class UploadFile extends Component {
