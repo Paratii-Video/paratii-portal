@@ -43,7 +43,7 @@ var config = {
   module: {
     loaders: [
       {
-        test: /\.jsx?/,
+        test: /\.js$/,
         include: [srcDir, testDir],
         loader: "babel-loader",
         options: {
