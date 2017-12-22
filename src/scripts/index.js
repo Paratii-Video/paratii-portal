@@ -1,16 +1,17 @@
-/* @flow */
+/* flow */
 
 import React from "react";
 import ReactDOM from "react-dom";
+import { AppContainer } from "react-hot-loader";
 import { Provider } from "react-redux";
 
+import Root from "components/Root";
 import createStore from "scripts/createStore";
-import AppContainer from "containers/AppContainer";
 import "styles/app.scss";
 
-const store = createStore();
-
 let root: ?Element = document.getElementById("root");
+
+const store = createStore();
 
 if (!root) {
   root = document.createElement("div");
@@ -20,7 +21,23 @@ if (!root) {
 
 ReactDOM.render(
   <Provider store={store}>
-    <AppContainer />
+    <AppContainer>
+      <Root />
+    </AppContainer>
   </Provider>,
   root
 );
+
+if (module.hot) {
+  module.hot.accept("components/Root", () => {
+    const NextRoot = require("components/Root").default;
+    ReactDOM.render(
+      <Provider store={store}>
+        <AppContainer>
+          <NextRoot />
+        </AppContainer>
+      </Provider>,
+      root
+    );
+  });
+}

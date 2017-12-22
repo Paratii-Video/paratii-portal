@@ -11,7 +11,11 @@ var testDir = path.resolve(__dirname, "test");
 var prod = process.env.NODE_ENV === "production";
 
 var config = {
-  entry: scriptsDir + "/index.js",
+  entry: [
+    "react-hot-loader/patch",
+    scriptsDir + "/index.js",
+    "webpack-hot-middleware/client?quiet=true"
+  ],
   output: {
     path: buildDir,
     filename: "bundle.js"
@@ -38,7 +42,15 @@ var config = {
       {
         test: /\.jsx?/,
         include: [srcDir, testDir],
-        loader: "babel-loader"
+        loader: "babel-loader",
+        options: {
+          presets: ["es2015", "react"],
+          plugins: [
+            "transform-flow-strip-types",
+            "transform-object-rest-spread",
+            "react-hot-loader/babel"
+          ]
+        }
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -56,7 +68,11 @@ var config = {
       }
     ]
   },
-  devtool: "inline-source-map"
+  devtool: "inline-source-map",
+  devServer: {
+    hot: true
+  },
+  plugins: [new webpack.HotModuleReplacementPlugin()]
 };
 
 module.exports = config;
