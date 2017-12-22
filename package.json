@@ -23,7 +23,7 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": ["prettier --write", "yarn run quality", "git add"]
+    "*.js": ["prettier --write", "eslint --cache", "git add"]
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

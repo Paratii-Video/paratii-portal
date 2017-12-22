@@ -1,7 +1,11 @@
 import App from "components/App";
 import createTestRenderer from "test-utils/createTestRenderer";
 
-const defaultProps = {};
+const defaultProps = {
+  match: {
+    url: "/"
+  }
+};
 
 const render = createTestRenderer(App, defaultProps);
 

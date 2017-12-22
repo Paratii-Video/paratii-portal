@@ -9,7 +9,7 @@ import UploadFileContainer from "containers/UploadFileContainer";
 
 type Props = {
   match: {
-    url: ?string
+    url: string
   }
 };
 
@@ -30,7 +30,7 @@ const Logo = styled.img`
   height: 80px;
 `;
 
-class App extends Component<Props, void, void> {
+class App extends Component<Props, void> {
   render() {
     const { match } = this.props;
 
