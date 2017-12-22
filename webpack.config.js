@@ -11,11 +11,13 @@ var testDir = path.resolve(__dirname, "test");
 var prod = process.env.NODE_ENV === "production";
 
 var config = {
-  entry: [
-    "react-hot-loader/patch",
-    scriptsDir + "/index.js",
-    "webpack-hot-middleware/client?quiet=true"
-  ],
+  entry: prod
+    ? [scriptsDir + "/index.js"]
+    : [
+        "react-hot-loader/patch",
+        scriptsDir + "/index.js",
+        "webpack-hot-middleware/client?quiet=true"
+      ],
   output: {
     path: buildDir,
     publicPath: "/",
@@ -46,11 +48,13 @@ var config = {
         loader: "babel-loader",
         options: {
           presets: ["es2015", "react"],
-          plugins: [
-            "transform-flow-strip-types",
-            "transform-object-rest-spread",
-            "react-hot-loader/babel"
-          ]
+          plugins: prod
+            ? ["transform-flow-strip-types", "transform-object-rest-spread"]
+            : [
+                "transform-flow-strip-types",
+                "transform-object-rest-spread",
+                "react-hot-loader/babel"
+              ]
         }
       },
       {
@@ -70,10 +74,12 @@ var config = {
     ]
   },
   devtool: "inline-source-map",
-  devServer: {
-    hot: true
-  },
-  plugins: [new webpack.HotModuleReplacementPlugin()]
+  devServer: prod
+    ? {}
+    : {
+        hot: true
+      },
+  plugins: prod ? [] : [new webpack.HotModuleReplacementPlugin()]
 };
 
 module.exports = config;

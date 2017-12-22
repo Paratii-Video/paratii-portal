@@ -7,10 +7,13 @@
   "author": "Benjamin Baum <benjaminjbaum@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev-client": "yarn run clean && yarn run prep && webpack --watch --colors --progress",
-    "dev-server": "nodemon --watch src/server --watch node_modules src/server/index.js localhost:8080",
+    "dev-client":
+      "yarn run clean && yarn run prep && webpack --watch --colors --progress",
+    "dev-server":
+      "nodemon --watch src/server --watch node_modules src/server/index.js localhost:8080",
     "dev": "concurrently \"yarn run dev-client\" \"yarn run dev-server\"",
-    "build": "yarn run clean && yarn run prep && NODE_ENV=production webpack --progress --colors",
+    "build":
+      "yarn run clean && yarn run prep && NODE_ENV=production webpack --progress --colors",
     "prep": "mkdir build/ && cp src/index.html build/",
     "clean": "rm -rf build/",
     "lint": "eslint src test --cache",
@@ -20,11 +23,7 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint --cache",
-      "git add"
-    ]
+    "*.js": ["prettier --write", "yarn run quality", "git add"]
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
