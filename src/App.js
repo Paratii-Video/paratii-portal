@@ -11,7 +11,7 @@ class App extends Component {
           <h1 className="App-title">Paratii Portal</h1>
         </header>
         <p className="App-intro">
-          Everything starts here..
+          Everything starts here.
         </p>
       </div>
     );
