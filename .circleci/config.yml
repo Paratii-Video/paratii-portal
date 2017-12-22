@@ -1,14 +1,15 @@
 version: 2
+containerInfo:
+  env:
+    - CHROME_BIN=/usr/bin/google-chrome
 jobs:
   build:
     docker:
       - image: circleci/node:8.9.1
       - image: circleci/ruby:2.3.3-node-browsers
     working_directory: ~/repo
-
     steps:
       - checkout
-
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
@@ -19,6 +20,5 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
-
       - run: yarn run quality
       - run: yarn test
