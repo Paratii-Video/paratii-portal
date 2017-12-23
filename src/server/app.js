@@ -1,0 +1,25 @@
+const express = require("express");
+const path = require("path");
+const devMiddleware = require("webpack-dev-middleware");
+const hotMiddleware = require("webpack-hot-middleware");
+const webpack = require("webpack");
+const webpackConfig = require("../../webpack.config.js");
+
+const compiler = webpack(webpackConfig);
+const app = express();
+
+app.use(
+  devMiddleware(compiler, {
+    stats: { colors: true }
+  })
+);
+
+app.use(hotMiddleware(compiler));
+
+app.use(express.static(path.resolve(__dirname, "../../", "build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../../", "build", "index.html"));
+});
+
+module.exports = app;

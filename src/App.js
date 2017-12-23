@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import logo from './paratii_logo.png';
-import './App.css';
+import React, { Component } from "react";
+import logo from "./paratii_logo.png";
+import "./App.css";
 
 class App extends Component {
   render() {
@@ -10,9 +10,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Paratii Portal</h1>
         </header>
-        <p className="App-intro">
-          Everything starts here.
-        </p>
+        <p className="App-intro">Everything starts here.</p>
       </div>
     );
   }
