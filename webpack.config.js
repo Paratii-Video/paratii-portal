@@ -62,7 +62,10 @@ var config = {
         include: assetsDir,
         use: [
           {
-            loader: "url-loader"
+            loader: "file-loader",
+            options: {
+              outputPath: "assets/"
+            }
           }
         ]
       },
