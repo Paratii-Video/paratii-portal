@@ -12,4 +12,5 @@ else
     exit
 fi
 
-ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/paratii-devops && fab deploy_portal $1 </dev/null >deploy_portal.log 2>&1 &"
+# ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && fab deploy_portal"
+ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && fab deploy_portal $1 </dev/null >ldeploy_portal.log 2>&1 &"
