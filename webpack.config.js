@@ -76,7 +76,7 @@ var config = {
       }
     ]
   },
-  devtool: "inline-source-map",
+  devtool: prod ? undefined : "eval-source-map",
   devServer: prod
     ? {}
     : {
