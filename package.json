@@ -14,7 +14,8 @@
     "dev": "concurrently \"yarn run dev-client\" \"yarn run dev-server\"",
     "build":
       "yarn run clean && yarn run prep && NODE_ENV=production webpack --progress --colors",
-    "prep": "mkdir build/ && cp src/index.html build/",
+    "prep":
+      "mkdir build/ && cp src/index.html build/ && mkdir build/assets/ && cp -r src/assets/ build/assets/",
     "clean": "rm -rf build/",
     "lint:scripts": "eslint src test --cache",
     "lint:styles": "stylelint 'src/**/*.js'",
