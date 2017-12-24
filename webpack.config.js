@@ -82,7 +82,14 @@ var config = {
     : {
         hot: true
       },
-  plugins: prod ? [] : [new webpack.HotModuleReplacementPlugin()]
+  plugins: prod
+    ? [
+        new webpack.DefinePlugin({
+          "process.env.NODE_ENV": JSON.stringify("production")
+        }),
+        new webpack.optimize.UglifyJsPlugin()
+      ]
+    : [new webpack.HotModuleReplacementPlugin()]
 };
 
 module.exports = config;
