@@ -1,17 +1,12 @@
 {
   "extends": [
     "standard",
-    "prettier",
     "plugin:react/recommended"
   ],
   "parser": "babel-eslint",
   "plugins": [
     "flowtype",
-    "prettier",
   ],
-  "rules": {
-    "prettier/prettier": "error"
-  },
   "env": {
     "browser": true
   }
