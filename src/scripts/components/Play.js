@@ -4,7 +4,9 @@ import styled from "styled-components";
 import type { RouteMatch } from "types/ApplicationTypes";
 
 type Props = {
-  match: RouteMatch
+  match: RouteMatch,
+  setVideoId: (id: string) => void,
+  videoId: ?string
 };
 
 const Wrapper = styled.div`
@@ -21,6 +23,14 @@ const Title = styled.header`
 `;
 
 class Play extends Component<Props, void> {
+  constructor(props: Props) {
+    super(props);
+
+    if (this.props.match.params.id) {
+      this.props.setVideoId(this.props.match.params.id);
+    }
+  }
+
   render() {
     return (
       <Wrapper>
