@@ -7,14 +7,11 @@
   "author": "Benjamin Baum <benjaminjbaum@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev-client":
-      "yarn run clean && yarn run prep && webpack --watch --colors --progress",
-    "dev-server":
-      "nodemon --watch src/server --watch node_modules src/server/index.js localhost:8080",
+    "dev-client": "yarn run clean && yarn run prep && webpack --watch --colors --progress",
+    "dev-server": "nodemon --watch src/server --watch node_modules src/server/index.js localhost:8080",
     "dev": "concurrently \"yarn run dev-client\" \"yarn run dev-server\"",
-    "build":
-      "yarn run clean && yarn run prep && NODE_ENV=production webpack --progress --colors",
-    "prep": "mkdir build/ && cp src/index.html build/",
+    "build": "yarn run clean && yarn run prep && NODE_ENV=production webpack --progress --colors",
+    "prep": "mkdir build/ && cp src/index.html build/ && mkdir build/assets/",
     "clean": "rm -rf build/",
     "lint:scripts": "eslint src test --cache",
     "lint:styles": "stylelint 'src/**/*.js'",
@@ -24,7 +21,12 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": ["prettier --write", "eslint --cache", "stylelint", "git add"]
+    "*.js": [
+      "prettier --write",
+      "eslint --cache",
+      "stylelint",
+      "git add"
+    ]
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -52,6 +54,7 @@
     "eslint-plugin-react": "^7.5.1",
     "eslint-plugin-standard": "^3.0.1",
     "express": "^4.16.2",
+    "file-loader": "^1.1.6",
     "flow-bin": "^0.61.0",
     "husky": "^0.14.3",
     "jasmine-core": "^2.8.0",
@@ -73,7 +76,6 @@
     "stylelint-config-standard": "^18.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "^1.2.1",
-    "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^2.0.2",
     "webpack-hot-middleware": "^2.21.0"
