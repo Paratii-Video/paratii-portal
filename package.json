@@ -18,7 +18,9 @@
     "test": "NODE_ENV=test karma start karma.conf.js",
     "test:dev": "yarn test -- --single-run false",
     "quality": "yarn lint:scripts && yarn lint:styles && yarn flow",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "chimp-test": "chimp --jasmine",
+    "chimp-watch": "chimp --jasmine --watch"
   },
   "lint-staged": {
     "*.js": [
