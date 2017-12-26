@@ -8,6 +8,6 @@ class Video extends ImmutableRecord({
   id: ?string;
 }
 
-export const _getVideoId = (state: Video): string => state.get("id");
+export const _getVideoId = (state: Video): ?string => state.get("id");
 
 export default Video;
