@@ -38,6 +38,8 @@ module.name_mapper='^adapters\/\(.*\)$' -> '<PROJECT_ROOT>/src/scripts/adapters/
 module.name_mapper='^adapters$' -> '<PROJECT_ROOT>/src/scripts/adapters'
 module.name_mapper='^assets\/\(.*\)$' -> '<PROJECT_ROOT>/src/assets/\1'
 module.name_mapper='^assets$' -> '<PROJECT_ROOT>/src/assets'
+module.name_mapper='^types\/\(.*\)$' -> '<PROJECT_ROOT>/src/scripts/types/\1'
+module.name_mapper='^types$' -> '<PROJECT_ROOT>/src/scripts/types'
 
 esproposal.class_static_fields=enable
 suppress_type=$FlowIssue

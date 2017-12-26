@@ -37,6 +37,7 @@ var config = {
       selectors: scriptsDir + "/selectors",
       apis: scriptsDir + "/apis",
       adapters: scriptsDir + "/adapters",
+      types: scriptsDir + "/types",
       "test-utils": testDir + "/test-utils"
     }
   },

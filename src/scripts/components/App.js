@@ -6,11 +6,12 @@ import styled from "styled-components";
 import logo from "assets/img/paratii_logo.png";
 
 import UploadFileContainer from "containers/UploadFileContainer";
+import Play from "components/Play";
+
+import type { RouteMatch } from "types/ApplicationTypes";
 
 type Props = {
-  match: {
-    url: string
-  }
+  match: RouteMatch
 };
 
 const Wrapper = styled.div`
@@ -43,6 +44,7 @@ class App extends Component<Props, void> {
           path={`${match.url}uploader/upload-file`}
           component={UploadFileContainer}
         />
+        <Route path={`${match.url}play/:id`} component={Play} />
       </Wrapper>
     );
   }
