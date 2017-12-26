@@ -12,15 +12,15 @@
 
 End-to-end tests that can be run by starting up the application in one window:
 
-    $ yarn run dev
+    $ yarn dev
 
 And running the tests in another window:
 
-    $ yarn run chimp-test
+    $ yarn chimp-test
 
 Or, when you are developing:
 
-    $ npm run chimp-watch
+    $ yarn chimp-watch
 
 
 ## Development
