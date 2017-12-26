@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import Play from "components/Play";
-import { setVideoId } from "actions/VideoActions";
+import { setVideoId, fetchVideo } from "actions/VideoActions";
 import { getVideoId } from "selectors/index";
 
 import type { RootState } from "types/ApplicationTypes";
@@ -14,7 +14,8 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setVideoId: bindActionCreators(setVideoId, dispatch)
+  setVideoId: bindActionCreators(setVideoId, dispatch),
+  fetchVideo: bindActionCreators(fetchVideo, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);

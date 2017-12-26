@@ -2,6 +2,10 @@
 
 ![](./src/assets/img/paratii_logo.png)
 
+## Prerequisites
+
+* node >= 8.9.0
+
 ## Installing
 
     $ yarn
