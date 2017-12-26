@@ -17,11 +17,19 @@ export const setVideoId = createAction(SET_VIDEO_ID);
 
 export const fetchVideo = (id: string) => (getState, dispatch) => {
   eth.vids
-    .get(id)
-    .then(res => {
-      console.log(res);
+    .create({
+      id: "0x90f8bf6a479",
+      ipfsHash: "QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ",
+      owner: "0x90f8bf6a479f320ead074411a4b0e7944ea8c9c1"
     })
-    .catch(e => {
-      console.log("e: ", e);
+    .then(() => {
+      eth.vids
+        .get("0x90f8bf6a479")
+        .then(res => {
+          console.log(res);
+        })
+        .catch(e => {
+          console.log("e: ", e);
+        });
     });
 };
