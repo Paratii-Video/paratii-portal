@@ -1,9 +1,9 @@
-import { connect } from "react-redux";
+import { connect } from 'react-redux'
 
-import UploadFile from "components/UploadFile";
+import UploadFile from 'components/UploadFile'
 
-const mapStateToProps = () => ({});
+const mapStateToProps = () => ({})
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = () => ({})
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploadFile);
+export default connect(mapStateToProps, mapDispatchToProps)(UploadFile)
