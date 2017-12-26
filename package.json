@@ -38,6 +38,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "chimp": "^0.50.2",
     "concurrently": "^3.5.1",
     "css-loader": "^0.28.7",
     "cssnano": "^3.10.0",
