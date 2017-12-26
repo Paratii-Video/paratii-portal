@@ -6,7 +6,7 @@ import styled from "styled-components";
 import logo from "assets/img/paratii_logo.png";
 
 import UploadFileContainer from "containers/UploadFileContainer";
-import Play from "components/Play";
+import PlayContainer from "containers/PlayContainer";
 
 import type { RouteMatch } from "types/ApplicationTypes";
 
@@ -44,7 +44,7 @@ class App extends Component<Props, void> {
           path={`${match.url}uploader/upload-file`}
           component={UploadFileContainer}
         />
-        <Route path={`${match.url}play/:id`} component={Play} />
+        <Route path={`${match.url}play/:id`} component={PlayContainer} />
       </Wrapper>
     );
   }
