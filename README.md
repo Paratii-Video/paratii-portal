@@ -12,7 +12,7 @@
 
 ## Development
 
-    $ yarn run dev 
+    $ yarn dev
 
 This does two things, concurrently:
 
@@ -25,25 +25,25 @@ Both processes recompile/restart on relevant file changes. In addition, the dev 
 
 ### eslint
 
-    $ yarn run lint:scripts
+    $ yarn lint:scripts
 
 ### stylelint
 
-    $ yarn run lint:styles
+    $ yarn lint:styles
 
 _Note: this is used for linting styles written in javascript strings for `styled-components`_
 
 ### flow
 
-    $ yarn run flow
+    $ yarn flow
 
 
 ### Run all checks in sequence
 
-    $ yarn run quality
+    $ yarn quality
 
 ## Build for Production
 
-    $ yarn run build
+    $ yarn build
 
 After this command completes, `index.html` and `bundle.js` will both reside in the `build/` directory.
