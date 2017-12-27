@@ -1,6 +1,6 @@
 /* @flow */
 
-import VideoRecord from "records/VideoRecords";
+import VideoRecord from 'records/VideoRecords'
 
 export type RouteMatch = {
   path: string,

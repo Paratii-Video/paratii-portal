@@ -1,32 +1,32 @@
 /* @flow */
 
-import { createAction } from "redux-actions";
-import { Paratii } from "paratii-lib/dist/bundle";
+import { createAction } from 'redux-actions'
+import { Paratii } from 'paratii-lib/dist/bundle'
 
-import { SET_VIDEO_ID } from "constants/ActionConstants";
+import { SET_VIDEO_ID } from 'constants/ActionConstants'
 
 const paratii = new Paratii({
-  provider: "http://localhost:8545"
-});
+  provider: 'http://localhost:8545'
+})
 
 paratii.core.vids
   .create({
-    id: "0x90f8bf6a479",
+    id: '0x90f8bf6a479',
     // ipfsHash: "QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ",
-    owner: "0x90f8bf6a479f320ead074411a4b0e7944ea8c9c1"
+    owner: '0x90f8bf6a479f320ead074411a4b0e7944ea8c9c1'
   })
   .then(() => {
     paratii.core.vids
-      .get("0x90f8bf6a479")
+      .get('0x90f8bf6a479')
       .then(res => {
-        console.log(res);
+        console.log(res)
       })
       .catch(e => {
-        console.log("e: ", e);
-      });
-  });
+        console.log('e: ', e)
+      })
+  })
 
-export const setVideoId = createAction(SET_VIDEO_ID);
+export const setVideoId = createAction(SET_VIDEO_ID)
 
 export const fetchVideo = (id: string) => (getState, dispatch) => {
   // paratii.core.vids
@@ -45,4 +45,4 @@ export const fetchVideo = (id: string) => (getState, dispatch) => {
   //         console.log("e: ", e);
   //       });
   //   });
-};
+}

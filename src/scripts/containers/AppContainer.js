@@ -1,9 +1,9 @@
-import { connect } from "react-redux";
+import { connect } from 'react-redux'
 
-import App from "components/App";
+import App from 'components/App'
 
-const mapStateToProps = () => ({});
+const mapStateToProps = () => ({})
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = () => ({})
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App)

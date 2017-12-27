@@ -1,14 +1,14 @@
 /* @flow */
 
-import React, { Component } from "react";
-import { Route } from "react-router-dom";
-import styled from "styled-components";
-import logo from "assets/img/paratii_logo.png";
+import React, { Component } from 'react'
+import { Route } from 'react-router-dom'
+import styled from 'styled-components'
+import logo from 'assets/img/paratii_logo.png'
 
-import UploadFileContainer from "containers/UploadFileContainer";
-import PlayContainer from "containers/PlayContainer";
+import UploadFileContainer from 'containers/UploadFileContainer'
+import PlayContainer from 'containers/PlayContainer'
 
-import type { RouteMatch } from "types/ApplicationTypes";
+import type { RouteMatch } from 'types/ApplicationTypes'
 
 type Props = {
   match: RouteMatch
@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
-`;
+`
 
 const Header = styled.header`
   background-color: #222;
@@ -28,20 +28,20 @@ const Header = styled.header`
   color: white;
   display: flex;
   align-items: center;
-`;
+`
 
 const Logo = styled.img`
   height: 80px;
-`;
+`
 
 class App extends Component<Props, void> {
-  render() {
-    const { match } = this.props;
+  render () {
+    const { match } = this.props
 
     return (
       <Wrapper>
         <Header>
-          <Logo src={logo} alt="logo" />
+          <Logo src={logo} alt='logo' />
         </Header>
         <Route
           path={`${match.url}uploader/upload-file`}
@@ -49,8 +49,8 @@ class App extends Component<Props, void> {
         />
         <Route path={`${match.url}play/:id`} component={PlayContainer} />
       </Wrapper>
-    );
+    )
   }
 }
 
-export default App;
+export default App

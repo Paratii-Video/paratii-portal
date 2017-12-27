@@ -1,22 +1,22 @@
 /* @flow */
 
-import React from "react";
-import ReactDOM from "react-dom";
-import { AppContainer } from "react-hot-loader";
-import { Provider } from "react-redux";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { AppContainer } from 'react-hot-loader'
+import { Provider } from 'react-redux'
 
-import Root from "components/Root";
-import createStore from "scripts/createStore";
-import "styles/app.scss";
+import Root from 'components/Root'
+import createStore from 'scripts/createStore'
+import 'styles/app.scss'
 
-let root: ?Element = document.getElementById("root");
+let root: ?Element = document.getElementById('root')
 
-const store = createStore();
+const store = createStore()
 
 if (!root) {
-  root = document.createElement("div");
-  root.setAttribute("id", "root");
-  document.body && document.body.appendChild(root);
+  root = document.createElement('div')
+  root.setAttribute('id', 'root')
+  document.body && document.body.appendChild(root)
 }
 
 ReactDOM.render(
@@ -26,11 +26,11 @@ ReactDOM.render(
     </AppContainer>
   </Provider>,
   root
-);
+)
 
 if (module.hot) {
-  module.hot.accept("components/Root", () => {
-    const NextRoot = require("components/Root").default;
+  module.hot.accept('components/Root', () => {
+    const NextRoot = require('components/Root').default
     if (root) {
       ReactDOM.render(
         <Provider store={store}>
@@ -39,7 +39,7 @@ if (module.hot) {
           </AppContainer>
         </Provider>,
         root
-      );
+      )
     }
-  });
+  })
 }
