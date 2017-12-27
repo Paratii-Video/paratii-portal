@@ -27,6 +27,10 @@ Both processes recompile/restart on relevant file changes. In addition, the dev 
 
     $ yarn lint:scripts
 
+If you want the linter to try to fix errors automatically, you can run:
+
+    $ yarn lint:scripts --fix
+
 ### stylelint
 
     $ yarn lint:styles
