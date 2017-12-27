@@ -14,48 +14,72 @@ type Props = {
 
 const Wrapper = styled.div`
   font-size: 20px;
+  flex: 1 1 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Body = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Title = styled.header`
   background-color: #fff;
-  height: 50px;
   padding: 20px;
   display: flex;
   align-items: center;
   color: blue;
+  flex: 0 0 50px;
+  width: 100%;
+  text-align: left;
 `;
 
-const Player = styled.div``;
+const Player = styled.div`
+  width: 100%;
+  flex: 0 0 50%;
+`;
 
 class Play extends Component<Props, void> {
   constructor(props: Props): void {
     super(props);
 
-    if (this.props.match.params.id) {
-      this.props.setVideoId(this.props.match.params.id);
-      this.props.fetchVideo(this.props.match.params.id);
+    const videoId = this.props.match.params.id;
+
+    if (videoId) {
+      this.props.setVideoId(videoId);
+      // this.props.fetchVideo(this.props.match.params.id);
     }
   }
 
   componentWillReceiveProps(nextProps: Props): void {
     if (nextProps.videoId && nextProps.videoId !== this.props.videoId) {
-      CreatePlayer({
-        selector: "#player",
-        source:
-          "https://gateway.paratii.video/ipfs/" +
-          nextProps.videoId +
-          "/master.m3u8",
-        mimeType: "video/mp4",
-        ipfsHash: nextProps.videoId
-      });
     }
+  }
+
+  componentDidMount() {
+    CreatePlayer({
+      selector: "#player",
+      source:
+        "https://gateway.paratii.video/ipfs/" +
+        this.props.match.params.id +
+        "/master.m3u8",
+      mimeType: "video/mp4",
+      ipfsHash: this.props.match.params.id
+    });
   }
 
   render() {
     return (
       <Wrapper>
-        <Title>Play Video:</Title>
-        <Player id="player" />
+        <Body>
+          <Title>Play Video:</Title>
+          <Player id="player" />
+        </Body>
       </Wrapper>
     );
   }

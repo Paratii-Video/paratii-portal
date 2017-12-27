@@ -16,11 +16,14 @@ type Props = {
 
 const Wrapper = styled.div`
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 `;
 
 const Header = styled.header`
   background-color: #222;
-  height: 50px;
+  flex: 0 0 50px;
   padding: 20px;
   color: white;
   display: flex;
