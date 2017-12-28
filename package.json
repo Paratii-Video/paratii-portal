@@ -13,6 +13,7 @@
     "build": "yarn clean && yarn prep && NODE_ENV=production webpack --progress --colors",
     "prep": "mkdir build/ && cp src/index.html build/ && mkdir build/assets/",
     "clean": "rm -rf build/",
+    "lint": "yarn lint:scripts && yarn lint:styles",
     "lint:scripts": "eslint src test features --cache",
     "lint:styles": "stylelint 'src/**/*.js'",
     "unit-test": "NODE_ENV=test karma start karma.conf.js",
