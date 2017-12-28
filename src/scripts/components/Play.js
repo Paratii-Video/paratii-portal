@@ -15,7 +15,7 @@ type Props = {
 const Wrapper = styled.div`
   font-size: 20px;
   flex: 1 1 0;
-  padding: 20px;
+  padding: 0;
   display: flex;
   flex-direction: column;
 `
@@ -29,9 +29,9 @@ const Body = styled.div`
 `
 
 const Title = styled.header`
+  display: none;
   background-color: #fff;
   padding: 20px;
-  display: flex;
   align-items: center;
   color: blue;
   flex: 0 0 50px;
