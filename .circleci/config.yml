@@ -17,7 +17,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
       - run: yarn quality
-      - run: yarn test
+      - run: yarn unit-test
       - run:
           command: yarn dev
           background: true

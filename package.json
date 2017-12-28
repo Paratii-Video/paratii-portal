@@ -15,12 +15,12 @@
     "clean": "rm -rf build/",
     "lint:scripts": "eslint src test features --cache",
     "lint:styles": "stylelint 'src/**/*.js'",
-    "test": "NODE_ENV=test karma start karma.conf.js",
-    "test:dev": "yarn test -- --single-run false",
+    "unit-test": "NODE_ENV=test karma start karma.conf.js",
+    "unit-test:dev": "yarn test -- --single-run false",
     "quality": "yarn lint:scripts && yarn lint:styles && yarn flow",
     "precommit": "lint-staged",
-    "chimp": "chimp --mocha --chai",
-    "chimp:watch": "chimp --mocha --chai --watch"
+    "chimp-test": "chimp --mocha --chai",
+    "chimp-test:watch": "chimp --mocha --chai --watch"
   },
   "lint-staged": {
     "*.js": [
