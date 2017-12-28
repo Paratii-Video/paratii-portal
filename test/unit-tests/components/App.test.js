@@ -1,5 +1,5 @@
 import App from 'components/App'
-import createTestRenderer from 'test-utils/createTestRenderer'
+import createTestRenderer from 'unit-tests/test-utils/createTestRenderer'
 
 const defaultProps = {
   match: {
