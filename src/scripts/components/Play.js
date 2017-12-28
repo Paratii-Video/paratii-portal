@@ -66,8 +66,7 @@ class Play extends Component<Props, void> {
       selector: '#player',
       source:
         'https://gateway.paratii.video/ipfs/' +
-        this.props.match.params.id +
-        '/master.m3u8',
+        this.props.match.params.id,
       mimeType: 'video/mp4',
       ipfsHash: this.props.match.params.id
     })
