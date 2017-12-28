@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import logo from 'assets/img/paratii_logo.png'
 
 import UploadFileContainer from 'containers/UploadFileContainer'
+import DebugContainer from 'containers/DebugContainer'
 
 type Props = {
   match: {
@@ -42,6 +43,10 @@ class App extends Component<Props, void> {
         <Route
           path={`${match.url}uploader/upload-file`}
           component={UploadFileContainer}
+        />
+        <Route
+          path={`${match.url}debug`}
+          component={DebugContainer}
         />
       </Wrapper>
     )
