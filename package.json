@@ -14,15 +14,17 @@
     "build": "yarn clean && yarn prep && NODE_ENV=production webpack --progress --colors",
     "prep": "mkdir build/ && cp src/index.html build/ && mkdir build/assets/",
     "clean": "rm -rf build/",
+    "lint": "yarn lint:scripts && yarn lint:styles",
     "lint:scripts": "eslint src test features --cache",
     "lint:styles": "stylelint 'src/**/*.js'",
     "test": "NODE_ENV=test karma start karma.conf.js",
     "test:dev": "yarn test -- --single-run false",
     "quality": "yarn lint:scripts && yarn lint:styles && yarn flow",
     "precommit": "lint-staged",
-    "chimp-test": "chimp --jasmine",
-    "chimp-watch": "chimp --jasmine --watch",
-    "parity": "parity --config parity-config.toml"
+    "parity": "parity --config parity-config.toml",
+    "chimp-test": "chimp --mocha",
+    "chimp-watch": "chimp --mocha --watch"
+
   },
   "lint-staged": {
     "*.js": [
