@@ -10,6 +10,7 @@
     "dev-client": "yarn clean && yarn prep && webpack --watch --colors --progress",
     "dev-server": "nodemon --watch src/server --watch node_modules src/server/index.js localhost:8080",
     "dev": "concurrently \"yarn dev-client\" \"yarn dev-server\"",
+    "dev-parity": "concurrently \"yarn parity\" \"yarn dev-client\" \"yarn dev-server\"",
     "build": "yarn clean && yarn prep && NODE_ENV=production webpack --progress --colors",
     "prep": "mkdir build/ && cp src/index.html build/ && mkdir build/assets/",
     "clean": "rm -rf build/",
@@ -20,7 +21,8 @@
     "quality": "yarn lint:scripts && yarn lint:styles && yarn flow",
     "precommit": "lint-staged",
     "chimp-test": "chimp --jasmine",
-    "chimp-watch": "chimp --jasmine --watch"
+    "chimp-watch": "chimp --jasmine --watch",
+    "parity": "parity --config parity-config.toml"
   },
   "lint-staged": {
     "*.js": [
