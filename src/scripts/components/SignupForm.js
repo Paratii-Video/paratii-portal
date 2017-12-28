@@ -31,21 +31,24 @@ class SignupForm extends Component<Props, void> {
     return (
       <Form onSubmit={(onSubmit)}>
         <Input
+          id='signup-name'
           type='text'
           onChange={(e) => onInputChange('name', e)}
           placeholder='Name'
         />
         <Input
+          id='signup-email'
           type='text'
           onChange={(e) => onInputChange('email', e)}
           placeholder='Email'
         />
         <Input
+          id='signup-password'
           type='password'
           onChange={(e) => onInputChange('password', e)}
           placeholder='Password'
         />
-        <Button type='submit'>Register</Button>
+        <Button id='signup-submit' type='submit'>Register</Button>
       </Form>
     )
   }
