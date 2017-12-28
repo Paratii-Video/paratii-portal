@@ -21,9 +21,6 @@ jobs:
       - run:
           command: yarn dev
           background: true
-      - run:
-          name: Waiting for the server to start
-          command: sleep 30
       - run: yarn chimp-test
       - run: yarn build
       - deploy:
