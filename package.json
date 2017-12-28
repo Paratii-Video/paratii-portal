@@ -19,8 +19,8 @@
     "unit-test:dev": "yarn test -- --single-run false",
     "quality": "yarn lint:scripts && yarn lint:styles && yarn flow",
     "precommit": "lint-staged",
-    "chimp-test": "chimp --mocha --chai",
-    "chimp-test:watch": "chimp --mocha --chai --watch"
+    "chimp-test": "chimp chimp.config.js --mocha --chai",
+    "chimp-test:watch": "yarn chimp-test -- --watch"
   },
   "lint-staged": {
     "*.js": [
