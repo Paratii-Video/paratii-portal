@@ -19,8 +19,8 @@
     "test:dev": "yarn test -- --single-run false",
     "quality": "yarn lint:scripts && yarn lint:styles && yarn flow",
     "precommit": "lint-staged",
-    "chimp-test": "chimp --jasmine",
-    "chimp-watch": "chimp --jasmine --watch"
+    "chimp": "chimp --mocha --chai",
+    "chimp:watch": "chimp --mocha --chai --watch"
   },
   "lint-staged": {
     "*.js": [
@@ -39,6 +39,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "chai": "^4.1.2",
     "chimp": "^0.50.2",
     "concurrently": "^3.5.1",
     "css-loader": "^0.28.7",
@@ -57,13 +58,14 @@
     "file-loader": "^1.1.6",
     "flow-bin": "^0.61.0",
     "husky": "^0.14.3",
-    "jasmine-core": "^2.8.0",
     "karma": "^2.0.0",
+    "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^1.1.1",
+    "karma-mocha": "^1.3.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.9",
     "lint-staged": "^6.0.0",
+    "mocha": "^4.0.1",
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.1",
     "postcss-cssnext": "^3.0.2",

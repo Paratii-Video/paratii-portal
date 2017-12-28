@@ -1,25 +1,25 @@
-var webpackConfig = require("./webpack.config.js");
+var webpackConfig = require('./webpack.config.js')
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
-    basePath: "",
-    frameworks: ["jasmine"],
-    files: ["test/index.test.js"],
+    basePath: '',
+    frameworks: ['mocha', 'chai'],
+    files: ['test/index.test.js'],
     exclude: [],
     preprocessors: {
-      "test/index.test.js": ["webpack", "sourcemap"]
+      'test/index.test.js': ['webpack', 'sourcemap']
     },
     webpack: webpackConfig,
     webpackMiddleware: {
-      stats: "errors-only"
+      stats: 'errors-only'
     },
-    reporters: ["progress"],
+    reporters: ['progress'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ["Chrome"],
+    browsers: ['Chrome'],
     singleRun: true,
     concurrency: Infinity
-  });
-};
+  })
+}
