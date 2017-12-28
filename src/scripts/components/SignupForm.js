@@ -1,5 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, SyntheticEvent } from 'react'
 import styled from 'styled-components'
+
+type Props = {
+  onSubmit: () => void,
+  onInputChange: (name: string, e: SyntheticEvent) => void
+};
 
 const Form = styled.form`
   font-size: 20px;
@@ -20,43 +25,25 @@ const Button = styled.button`
   font-weight: 500;
 `
 
-class SignupForm extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {name: '', email: '', password: ''}
-    this.handleInput = this.handleInput.bind(this)
-  }
-
-  handleInput (input, e) {
-    this.setState({
-      [input]: e.target.value
-    })
-  }
-
-  handleSubmit (e) {
-    console.log('should create an account here')
-  }
-
+class SignupForm extends Component<Props, void> {
   render () {
+    const { onSubmit, onInputChange } = this.props
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={(onSubmit)}>
         <Input
           type='text'
-          onChange={(e) => this.handleInput('name', e)}
+          onChange={(e) => onInputChange('name', e)}
           placeholder='Name'
-          value={this.state.name}
         />
         <Input
           type='text'
-          onChange={(e) => this.handleInput('email', e)}
+          onChange={(e) => onInputChange('email', e)}
           placeholder='Email'
-          value={this.state.email}
         />
         <Input
           type='password'
-          onChange={(e) => this.handleInput('password', e)}
+          onChange={(e) => onInputChange('password', e)}
           placeholder='Password'
-          value={this.state.password}
         />
         <Button type='submit'>Register</Button>
       </Form>

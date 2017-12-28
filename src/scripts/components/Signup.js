@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-// import SignupFormContainer from 'containers/SignupFormContainer'
-import SignupForm from 'components/SignupForm'
+import SignupFormContainer from 'containers/SignupFormContainer'
 
 const Wrapper = styled.div`
   font-size: 20px;
@@ -28,7 +27,7 @@ class Signup extends Component {
     return (
       <Wrapper>
         <Title>Signup</Title>
-        <SignupForm />
+        <SignupFormContainer />
       </Wrapper>
     )
   }
