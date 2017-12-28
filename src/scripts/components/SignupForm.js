@@ -29,21 +29,9 @@ class SignupForm extends Component {
     this.handlePasswordInput = this.handlePasswordInput.bind(this)
   }
 
-  handleNameInput (e) {
+  handleInput (input, e) {
     this.setState({
-      name: e.target.value
-    })
-  }
-
-  handleEmailInput (e) {
-    this.setState({
-      email: e.target.value
-    })
-  }
-
-  handlePasswordInput (e) {
-    this.setState({
-      password: e.target.value
+      [input]: e.target.value
     })
   }
 
@@ -56,19 +44,19 @@ class SignupForm extends Component {
       <Form onSubmit={this.handleSubmit}>
         <Input
           type='text'
-          onChange={this.handleNameInput}
+          onChange={(e) => this.handleInput('name', e)}
           placeholder='Name'
           value={this.state.name}
         />
         <Input
           type='text'
-          onChange={this.handleEmailInput}
+          onChange={(e) => this.handleInput('email', e)}
           placeholder='Email'
           value={this.state.email}
         />
         <Input
           type='password'
-          onChange={this.handlePasswordInput}
+          onChange={(e) => this.handleInput('password', e)}
           placeholder='Password'
           value={this.state.password}
         />
