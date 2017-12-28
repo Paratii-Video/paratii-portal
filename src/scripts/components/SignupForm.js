@@ -24,9 +24,7 @@ class SignupForm extends Component {
   constructor (props) {
     super(props)
     this.state = {name: '', email: '', password: ''}
-    this.handleNameInput = this.handleNameInput.bind(this)
-    this.handleEmailInput = this.handleEmailInput.bind(this)
-    this.handlePasswordInput = this.handlePasswordInput.bind(this)
+    this.handleInput = this.handleInput.bind(this)
   }
 
   handleInput (input, e) {
