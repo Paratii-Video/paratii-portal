@@ -10,7 +10,7 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package-lock.json" }}
           - v1-dependencies-
-      - run: bash <(curl https://get.parity.io -Lk)      
+      - run: bash <(curl https://get.parity.io -Lk)
       - run: npm install
       - save_cache:
           paths:
