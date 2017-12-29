@@ -6,9 +6,10 @@
 
 * node >= 8.9.0
 * Install [parity](https://github.com/paritytech/parity) (ethereum client):
-    ```shell
-        bash <(curl https://get.parity.io -Lk)
-    ```
+    * ```$ bash <(curl https://get.parity.io -Lk)```
+    * Then, add the following to your `.bash_profile`: `export PATH=/Applications/Parity\ Ethereum.app/Contents/MacOS:$PATH`
+    * ``` $ source path/to/.bash_profile```
+
 
 
 ## Installing
