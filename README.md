@@ -5,10 +5,16 @@
 ## Prerequisites
 
 * node >= 8.9.0
+* Install [parity](https://github.com/paritytech/parity) (ethereum client):
+    ```shell
+        bash <(curl https://get.parity.io -Lk)
+    ```
+
 
 ## Installing
 
     $ npm i
+
 
 ## Testing
 
@@ -39,6 +45,10 @@ This does two things, concurrently:
 * kicks off `webpack` build
 
 Both processes recompile/restart on relevant file changes. In addition, the dev server is set up to support hot-module-replacement for `react` and `redux`.
+
+To also run the `parity` ethereum client concurrently, instead run:
+
+    $ npm run dev-parity
 
 ## Code Quality
 
