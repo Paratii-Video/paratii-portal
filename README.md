@@ -12,7 +12,22 @@
 
 ## Testing
 
-    $ yarn test
+To run unit tests:
+
+    $ yarn unit-test
+
+End-to-end tests that can be run by starting up the application in one window:
+
+    $ yarn dev
+
+And running the tests in another window:
+
+    $ yarn chimp-test
+
+Or, when you are developing:
+
+    $ yarn chimp-test:watch
+
 
 ## Development
 

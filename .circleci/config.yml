@@ -10,14 +10,18 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           - v1-dependencies-
-
+      - run: bash <(curl https://get.parity.io -Lk)      
       - run: yarn install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
       - run: yarn quality
-      - run: yarn test
+      - run: yarn unit-test
+      - run:
+          command: yarn dev
+          background: true
+      - run: yarn chimp-test
       - run: yarn build
       - deploy:
           command: |

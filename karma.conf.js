@@ -3,11 +3,11 @@ var webpackConfig = require('./webpack.config.js')
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine'],
-    files: ['test/index.test.js'],
+    frameworks: ['mocha', 'chai'],
+    files: ['test/unit-tests/index.test.js'],
     exclude: [],
     preprocessors: {
-      'test/index.test.js': ['webpack', 'sourcemap']
+      'test/unit-tests/index.test.js': ['webpack', 'sourcemap']
     },
     webpack: webpackConfig,
     webpackMiddleware: {

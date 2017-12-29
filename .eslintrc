@@ -5,9 +5,14 @@
   ],
   "parser": "babel-eslint",
   "plugins": [
-    "flowtype",
+    "flowtype"
   ],
   "env": {
-    "browser": true
+    "browser": true,
+    "jasmine": true,
+    "mocha": true
+  },
+  "globals": {
+      "browser": true
   }
 }

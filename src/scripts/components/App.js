@@ -7,6 +7,7 @@ import logo from 'assets/img/paratii_logo.png'
 
 import UploadFileContainer from 'containers/UploadFileContainer'
 import PlayContainer from 'containers/PlayContainer'
+import DebugContainer from 'containers/DebugContainer'
 
 import type { RouteMatch } from 'types/ApplicationTypes'
 
@@ -48,6 +49,10 @@ class App extends Component<Props, void> {
           component={UploadFileContainer}
         />
         <Route path={`${match.url}play/:id`} component={PlayContainer} />
+        <Route
+          path={`${match.url}debug`}
+          component={DebugContainer}
+        />
       </Wrapper>
     )
   }

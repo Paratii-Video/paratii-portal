@@ -7,6 +7,8 @@ var assetsDir = srcDir + "/assets";
 var stylesDir = srcDir + "/styles";
 var buildDir = path.resolve(__dirname, "build");
 var testDir = path.resolve(__dirname, "test");
+var unitTestsDir = testDir + "/unit-tests";
+var functionalTestsDir = testDir + "/functional-tests";
 
 var prod = process.env.NODE_ENV === "production";
 
@@ -40,6 +42,8 @@ var config = {
       types: scriptsDir + "/types",
       util: scriptsDir + "/util",
       "test-utils": testDir + "/test-utils"
+      "unit-tests": unitTestsDir,
+      "functional-tests": functionalTestsDir
     }
   },
   module: {
