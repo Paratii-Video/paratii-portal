@@ -9,7 +9,6 @@
   "scripts": {
     "dev-client": "npm run clean && npm run prep && webpack --watch --colors --progress",
     "dev-server": "nodemon --watch src/server --watch node_modules src/server/index.js localhost:8080",
-    "testrpc": "testrpc -a 10 --deterministic",
     "dev": "concurrently \"npm run dev-client\" \"npm run dev-server\"",
     "build": "npm run clean && npm run prep && NODE_ENV=production webpack --progress --colors",
     "clean": "rm -rf build/",
@@ -59,7 +58,6 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-react": "^7.5.1",
     "eslint-plugin-standard": "^3.0.1",
-    "ethereumjs-testrpc": "^6.0.3",
     "express": "^4.16.2",
     "file-loader": "^1.1.6",
     "flow-bin": "^0.61.0",
