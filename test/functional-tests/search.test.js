@@ -4,6 +4,7 @@
 //
 //
 // MIGRATING FROM paratii-player/tests/
+// Issue where this migratin is tracked: https://github.com/Paratii-Video/paratii-portal/issues/29
 //
 //
 //
