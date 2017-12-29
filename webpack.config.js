@@ -40,7 +40,6 @@ var config = {
       apis: scriptsDir + "/apis",
       adapters: scriptsDir + "/adapters",
       types: scriptsDir + "/types",
-      util: scriptsDir + "/util",
       "test-utils": testDir + "/test-utils",
       "unit-tests": unitTestsDir,
       "functional-tests": functionalTestsDir

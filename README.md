@@ -8,30 +8,30 @@
 
 ## Installing
 
-    $ yarn
+    $ npm i
 
 ## Testing
 
 To run unit tests:
 
-    $ yarn unit-test
+    $ npm run unit-test
 
 End-to-end tests that can be run by starting up the application in one window:
 
-    $ yarn dev
+    $ npm run dev
 
 And running the tests in another window:
 
-    $ yarn chimp-test
+    $ npm run chimp-test
 
 Or, when you are developing:
 
-    $ yarn chimp-test:watch
+    $ npm run chimp-test:watch
 
 
 ## Development
 
-    $ yarn dev
+    $ npm run dev
 
 This does two things, concurrently:
 
@@ -44,29 +44,29 @@ Both processes recompile/restart on relevant file changes. In addition, the dev 
 
 ### eslint
 
-    $ yarn lint:scripts
+    $ npm run lint:scripts
 
 If you want the linter to try to fix errors automatically, you can run:
 
-    $ yarn lint:scripts --fix
+    $ npm run lint:scripts --fix
 
 ### stylelint
 
-    $ yarn lint:styles
+    $ npm run lint:styles
 
 _Note: this is used for linting styles written in javascript strings for `styled-components`_
 
 ### flow
 
-    $ yarn flow
+    $ npm run flow
 
 
 ### Run all checks in sequence
 
-    $ yarn quality
+    $ npm run quality
 
 ## Build for Production
 
-    $ yarn build
+    $ npm run build
 
 After this command completes, `index.html` and `bundle.js` will both reside in the `build/` directory.

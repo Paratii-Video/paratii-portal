@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 
 import Root from 'components/Root'
 import createStore from 'scripts/createStore'
-import initParatiiLib from 'util/ParatiiLib'
+import initParatiiLib from 'scripts/util/ParatiiLib'
 import 'styles/app.scss'
 
 initParatiiLib({
