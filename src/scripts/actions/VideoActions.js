@@ -1,7 +1,7 @@
 /* @flow */
 
 import { createAction } from 'redux-actions'
-import paratii from 'scripts/util/ParatiiLib'
+import paratii from 'utils/ParatiiLib'
 
 import { SET_VIDEO_ID } from 'constants/ActionConstants'
 

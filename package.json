@@ -7,10 +7,10 @@
   "author": "Benjamin Baum <benjaminjbaum@gmail.com>, Jelle Gerbrandy <jelle@gerbrandy.com>, and many others",
   "license": "GPL-3.0",
   "scripts": {
-    "dev-client": "npm run clean && npm prep && webpack --watch --colors --progress",
+    "dev-client": "npm run clean && npm run prep && webpack --watch --colors --progress",
     "dev-server": "nodemon --watch src/server --watch node_modules src/server/index.js localhost:8080",
     "testrpc": "testrpc -a 10 --deterministic",
-    "dev": "concurrently \"npm dev-client\" \"npm dev-server\"",
+    "dev": "concurrently \"npm run dev-client\" \"npm run dev-server\"",
     "build": "npm run clean && npm run prep && NODE_ENV=production webpack --progress --colors",
     "clean": "rm -rf build/",
     "chimp-test": "chimp chimp.config.js --mocha --chai",
@@ -25,7 +25,7 @@
     "prep": "mkdir build/ && cp src/index.html build/ && mkdir build/assets/",
     "quality": "npm run lint:scripts && npm run lint:styles && npm run flow",
     "unit-test": "NODE_ENV=test karma start karma.conf.js",
-    "unit-test:dev": "npm unit-test -- --single-run false"
+    "unit-test:dev": "npm run unit-test -- --single-run false"
   },
   "lint-staged": {
     "*.js": [
