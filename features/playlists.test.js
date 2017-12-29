@@ -1,6 +1,7 @@
 /* eslint-disable */
 //
 // Note for devs: WORK IN PROGRESS
+// https://github.com/Paratii-Video/paratii-portal/issues/28
 //
 //
 // MIGRATING FROM paratii-player/tests/
