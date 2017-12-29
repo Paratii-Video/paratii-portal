@@ -3,9 +3,11 @@
 import { Paratii } from 'paratii-lib/lib/paratii'
 import Promise from 'bluebird'
 
+import type { ParatiiLibConfig } from 'types/ApplicationTypes'
+
 let instancePromise
 
-export default (config = {}) => {
+export default (config: ParatiiLibConfig = { provider: '' }) => {
   if (!instancePromise) {
     instancePromise = new Promise((resolve, reject) => {
       const paratii = new Paratii({

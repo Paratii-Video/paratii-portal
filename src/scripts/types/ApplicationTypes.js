@@ -17,3 +17,7 @@ export type Action<T> = {
 export type RootState = {
   video: ?VideoRecord
 };
+
+export type ParatiiLibConfig = {
+  provider: string
+};

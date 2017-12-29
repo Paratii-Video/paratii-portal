@@ -15,6 +15,7 @@
     "chimp-test": "chimp chimp.config.js --mocha --chai",
     "chimp-test:watch": "npm run chimp-test --watch",
     "dev-parity": "concurrently \"npm run parity\" \"npm run dev-client\" \"npm run dev-server\"",
+    "flow": "flow",
     "lint": "npm run lint:scripts && npm run lint:styles",
     "lint:fix": "npm run lint:scripts --fix",
     "lint:scripts": "eslint src test --cache",

@@ -58,13 +58,14 @@ class Play extends Component<Props, void> {
 
   componentWillReceiveProps (nextProps: Props): void {
     if (nextProps.video && !this.props.video) {
+      const nextVideo: VideoRecord = nextProps.video
+
       CreatePlayer({
         selector: '#player',
         source:
-        'https://gateway.paratii.video/ipfs/' +
-        nextProps.video.get('ipfsData'),
+        `https://gateway.paratii.video/ipfs/${nextVideo.get('ipfsData')}`,
         mimeType: 'video/mp4',
-        ipfsHash: nextProps.video.get('ipfsData')
+        ipfsHash: nextVideo.get('ipfsData')
       })
     }
   }
