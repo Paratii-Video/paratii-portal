@@ -1,4 +1,5 @@
 var webpack = require("webpack");
+var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 var path = require("path");
 
 var srcDir = path.resolve(__dirname, "src");
@@ -93,7 +94,11 @@ var config = {
         new webpack.DefinePlugin({
           "process.env.NODE_ENV": JSON.stringify("production")
         }),
-        new webpack.optimize.UglifyJsPlugin()
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            ecma: 6
+          }
+        })
       ]
     : [new webpack.HotModuleReplacementPlugin()]
 };

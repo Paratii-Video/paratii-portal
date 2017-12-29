@@ -82,6 +82,7 @@
     "stylelint-config-standard": "^18.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "^1.2.1",
+    "uglifyjs-webpack-plugin": "^1.1.5",
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^2.0.2",
     "webpack-hot-middleware": "^2.21.0"
