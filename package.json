@@ -7,21 +7,21 @@
   "author": "Benjamin Baum <benjaminjbaum@gmail.com>, Jelle Gerbrandy <jelle@gerbrandy.com>, and many others",
   "license": "GPL-3.0",
   "scripts": {
+    "build": "yarn clean && yarn prep && NODE_ENV=production webpack --progress --colors",
+    "clean": "rm -rf build/",
+    "chimp-test": "chimp chimp.config.js --mocha --chai",
+    "chimp-test:watch": "yarn chimp-test --watch",
+    "dev": "concurrently \"yarn dev-client\" \"yarn dev-server\"",
     "dev-client": "yarn clean && yarn prep && webpack --watch --colors --progress",
     "dev-server": "nodemon --watch src/server --watch node_modules src/server/index.js localhost:8080",
-    "dev": "concurrently \"yarn dev-client\" \"yarn dev-server\"",
-    "build": "yarn clean && yarn prep && NODE_ENV=production webpack --progress --colors",
-    "prep": "mkdir build/ && cp src/index.html build/ && mkdir build/assets/",
-    "clean": "rm -rf build/",
     "lint": "yarn lint:scripts && yarn lint:styles",
-    "lint:scripts": "eslint src test features --cache",
+    "lint:scripts": "eslint src test --cache",
     "lint:styles": "stylelint 'src/**/*.js'",
-    "unit-test": "NODE_ENV=test karma start karma.conf.js",
-    "unit-test:dev": "yarn test -- --single-run false",
-    "quality": "yarn lint:scripts && yarn lint:styles && yarn flow",
     "precommit": "lint-staged",
-    "chimp-test": "chimp chimp.config.js --mocha --chai",
-    "chimp-test:watch": "yarn chimp-test -- --watch"
+    "prep": "mkdir build/ && cp src/index.html build/ && mkdir build/assets/",
+    "quality": "yarn lint:scripts && yarn lint:styles && yarn flow",
+    "unit-test": "NODE_ENV=test karma start karma.conf.js",
+    "unit-test:dev": "yarn test -- --single-run false"
   },
   "lint-staged": {
     "*.js": [
