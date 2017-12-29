@@ -1,8 +1,7 @@
 /* @flow */
 
-import { _getVideoId } from 'records/VideoRecords'
+import VideoRecord from 'records/VideoRecords'
 
 import type { RootState } from 'types/ApplicationTypes'
 
-export const getVideoId = (state: RootState): ?string =>
-  _getVideoId(state.video)
+export const getVideo = (state: RootState): ?VideoRecord => state.video

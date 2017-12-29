@@ -86,6 +86,7 @@
     "webpack-hot-middleware": "^2.21.0"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "immutable": "^3.8.2",
     "paratii-lib": "github:Paratii-Video/paratii-lib#dev",
     "paratii-mediaplayer": "^0.0.11",

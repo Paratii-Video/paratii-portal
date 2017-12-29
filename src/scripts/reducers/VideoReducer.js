@@ -2,16 +2,16 @@
 
 import { handleActions } from 'redux-actions'
 
-import { SET_VIDEO_ID } from 'constants/ActionConstants'
+import { VIDEO_DATA_LOADED } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 
 import type { Action } from 'types/ApplicationTypes'
 
 const reducer = {
-  [SET_VIDEO_ID]: (
+  [VIDEO_DATA_LOADED]: (
     state: VideoRecord,
     { payload }: Action<string>
-  ): VideoRecord => state.set('id', payload)
+  ): VideoRecord => new VideoRecord(payload)
 }
 
-export default handleActions(reducer, new VideoRecord())
+export default handleActions(reducer, null)

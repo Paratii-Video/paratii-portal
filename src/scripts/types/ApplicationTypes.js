@@ -15,5 +15,5 @@ export type Action<T> = {
 };
 
 export type RootState = {
-  video: VideoRecord
+  video: ?VideoRecord
 };

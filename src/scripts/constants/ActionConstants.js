@@ -2,4 +2,4 @@
 
 const createActionConstant = constant => `@@PARATII_PORTAL_${constant}`
 
-export const SET_VIDEO_ID = createActionConstant('SET_VIDEO_ID')
+export const VIDEO_DATA_LOADED = createActionConstant('VIDEO_DATA_LOADED')

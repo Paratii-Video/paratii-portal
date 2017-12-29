@@ -3,13 +3,17 @@
 import { Record as ImmutableRecord } from 'immutable'
 
 class Video extends ImmutableRecord({
-  id: null,
-  ipfsHash: null
+  id: '',
+  ipfsData: '',
+  ipfsHash: '',
+  owner: '',
+  price: ''
 }) {
-  id: ?string;
-  ipfsHash: ?string;
+  id: string;
+  ipfsData: string;
+  ipfsHash: string;
+  owner: string;
+  price: string;
 }
-
-export const _getVideoId = (state: Video): ?string => state.get('id')
 
 export default Video

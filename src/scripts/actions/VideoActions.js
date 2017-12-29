@@ -3,42 +3,27 @@
 import { createAction } from 'redux-actions'
 import paratii from 'utils/ParatiiLib'
 
-import { SET_VIDEO_ID } from 'constants/ActionConstants'
+import { VIDEO_DATA_LOADED } from 'constants/ActionConstants'
 
-paratii().core.vids
-  .create({
-    id: '0x90f8bf6a479',
-    // ipfsHash: "QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ",
-    owner: '0x90f8bf6a479f320ead074411a4b0e7944ea8c9c1'
-  })
-  .then(() => {
-    paratii().core.vids
-      .get('0x90f8bf6a479')
-      .then(res => {
-        console.log(res)
+export const videoDataLoaded = createAction(VIDEO_DATA_LOADED)
+
+export const fetchVideo = (id: string) => (dispatch, getState) => {
+  paratii().then((lib) => {
+    lib.core.vids
+      .create({
+        id,
+        price: 0,
+        owner: '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
       })
-      .catch(e => {
-        console.log('e: ', e)
+      .then(() => {
+        lib.core.vids
+          .get('999')
+          .then(res => {
+            dispatch(videoDataLoaded(res))
+          })
+          .catch(e => {
+            console.log('e: ', e)
+          })
       })
   })
-
-export const setVideoId = createAction(SET_VIDEO_ID)
-
-export const fetchVideo = (id: string) => (getState, dispatch) => {
-  // paratii.core.vids
-  //   .create({
-  //     id: "0x90f8bf6a479",
-  //     // ipfsHash: "QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ",
-  //     owner: "0x90f8bf6a479f320ead074411a4b0e7944ea8c9c1"
-  //   })
-  //   .then(() => {
-  //     paratii.core.vids
-  //       .get("0x90f8bf6a479")
-  //       .then(res => {
-  //         console.log(res);
-  //       })
-  //       .catch(e => {
-  //         console.log("e: ", e);
-  //       });
-  //   });
 }

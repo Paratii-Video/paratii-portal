@@ -3,13 +3,14 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import CreatePlayer from 'paratii-mediaplayer'
+import VideoRecord from 'records/VideoRecords'
 
 import type { RouteMatch } from 'types/ApplicationTypes'
 
 type Props = {
   match: RouteMatch,
-  setVideoId: (id: string) => void,
-  videoId: ?string
+  fetchVideo: (id: string) => void,
+  video: ?VideoRecord
 };
 
 const Wrapper = styled.div`
@@ -51,25 +52,21 @@ class Play extends Component<Props, void> {
     const videoId = this.props.match.params.id
 
     if (videoId) {
-      this.props.setVideoId(videoId)
-      // this.props.fetchVideo(this.props.match.params.id);
+      this.props.fetchVideo(videoId)
     }
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    if (nextProps.videoId && nextProps.videoId !== this.props.videoId) {
-    }
-  }
-
-  componentDidMount () {
-    CreatePlayer({
-      selector: '#player',
-      source:
+    if (nextProps.video && !this.props.video) {
+      CreatePlayer({
+        selector: '#player',
+        source:
         'https://gateway.paratii.video/ipfs/' +
-        this.props.match.params.id,
-      mimeType: 'video/mp4',
-      ipfsHash: this.props.match.params.id
-    })
+        nextProps.video.get('ipfsData'),
+        mimeType: 'video/mp4',
+        ipfsHash: nextProps.video.get('ipfsData')
+      })
+    }
   }
 
   render () {
