@@ -7,7 +7,12 @@ import { Provider } from 'react-redux'
 
 import Root from 'components/Root'
 import createStore from 'scripts/createStore'
+import initParatiiLib from 'util/ParatiiLib'
 import 'styles/app.scss'
+
+initParatiiLib({
+  provider: 'http://localhost:8545'
+})
 
 let root: ?Element = document.getElementById('root')
 
