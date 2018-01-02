@@ -1,0 +1,7 @@
+# https://github.com/paritytech/parity/wiki/Configuring-Parity
+[parity]
+chain = "chain.json"
+[mining]
+reseal_min_period = 0
+[rpc]
+cors = "*"

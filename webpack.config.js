@@ -1,4 +1,5 @@
 var webpack = require("webpack");
+var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 var path = require("path");
 
 var srcDir = path.resolve(__dirname, "src");
@@ -39,6 +40,9 @@ var config = {
       selectors: scriptsDir + "/selectors",
       apis: scriptsDir + "/apis",
       adapters: scriptsDir + "/adapters",
+      types: scriptsDir + "/types",
+      utils: scriptsDir + "/utils",
+      "test-utils": testDir + "/test-utils",
       "unit-tests": unitTestsDir,
       "functional-tests": functionalTestsDir
     }
@@ -90,7 +94,11 @@ var config = {
         new webpack.DefinePlugin({
           "process.env.NODE_ENV": JSON.stringify("production")
         }),
-        new webpack.optimize.UglifyJsPlugin()
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            ecma: 6
+          }
+        })
       ]
     : [new webpack.HotModuleReplacementPlugin()]
 };

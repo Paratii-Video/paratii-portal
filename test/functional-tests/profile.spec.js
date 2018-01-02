@@ -2,6 +2,7 @@
 //
 //
 // Note for devs: WORK IN PROGRESS
+// Check https://github.com/Paratii-Video/paratii-portal/issues/24 for progress
 //
 //
 // MIGRATING FROM paratii-player/tests/

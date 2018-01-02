@@ -8,21 +8,21 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - v1-dependencies-{{ checksum "package-lock.json" }}
           - v1-dependencies-
-
-      - run: yarn install
+      - run: bash <(curl https://get.parity.io -Lk)
+      - run: npm install
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
-      - run: yarn quality
-      - run: yarn unit-test
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+      - run: npm run quality
+      - run: npm run unit-test
       - run:
-          command: yarn dev
+          command: npm run dev
           background: true
-      - run: yarn chimp-test
-      - run: yarn build
+      - run: npm run chimp-test
+      - run: npm run build
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then

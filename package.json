@@ -7,21 +7,25 @@
   "author": "Benjamin Baum <benjaminjbaum@gmail.com>, Jelle Gerbrandy <jelle@gerbrandy.com>, and many others",
   "license": "GPL-3.0",
   "scripts": {
-    "dev-client": "yarn clean && yarn prep && webpack --watch --colors --progress",
+    "dev-client": "npm run clean && npm run prep && webpack --watch --colors --progress",
     "dev-server": "nodemon --watch src/server --watch node_modules src/server/index.js localhost:8080",
-    "dev": "concurrently \"yarn dev-client\" \"yarn dev-server\"",
-    "build": "yarn clean && yarn prep && NODE_ENV=production webpack --progress --colors",
-    "prep": "mkdir build/ && cp src/index.html build/ && mkdir build/assets/",
+    "dev": "concurrently \"npm run dev-client\" \"npm run dev-server\"",
+    "build": "npm run clean && npm run prep && NODE_ENV=production webpack --progress --colors",
     "clean": "rm -rf build/",
-    "lint": "yarn lint:scripts && yarn lint:styles",
-    "lint:scripts": "eslint src test features --cache",
-    "lint:styles": "stylelint 'src/**/*.js'",
-    "unit-test": "NODE_ENV=test karma start karma.conf.js",
-    "unit-test:dev": "yarn test -- --single-run false",
-    "quality": "yarn lint:scripts && yarn lint:styles && yarn flow",
-    "precommit": "lint-staged",
     "chimp-test": "chimp chimp.config.js --mocha --chai",
-    "chimp-test:watch": "yarn chimp-test -- --watch"
+    "chimp-test:watch": "npm run chimp-test --watch",
+    "dev-parity": "concurrently \"npm run parity\" \"npm run dev-client\" \"npm run dev-server\"",
+    "flow": "flow",
+    "lint": "npm run lint:scripts && npm run lint:styles",
+    "lint:fix": "npm run lint:scripts --fix",
+    "lint:scripts": "eslint src test --cache",
+    "lint:styles": "stylelint 'src/**/*.js'",
+    "parity": "parity --config parity-config.toml",
+    "precommit": "lint-staged",
+    "prep": "mkdir build/ && cp src/index.html build/ && mkdir build/assets/",
+    "quality": "npm run lint:scripts && npm run lint:styles && npm run flow",
+    "unit-test": "NODE_ENV=test karma start karma.conf.js",
+    "unit-test:dev": "npm run unit-test -- --single-run false"
   },
   "lint-staged": {
     "*.js": [
@@ -78,11 +82,16 @@
     "stylelint-config-standard": "^18.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "^1.2.1",
+    "uglifyjs-webpack-plugin": "^1.1.5",
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^2.0.2",
     "webpack-hot-middleware": "^2.21.0"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
+    "immutable": "^3.8.2",
+    "paratii-lib": "github:Paratii-Video/paratii-lib#23d62e42fb359d875c6dfecae1600244154f5381",
+    "paratii-mediaplayer": "^0.0.11",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
@@ -90,6 +99,7 @@
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0",
+    "streamspeed": "^1.1.0",
     "styled-components": "^2.3.3"
   }
 }
