@@ -14,7 +14,7 @@
 
 ## Installing
 
-    $ npm i
+    $ npm install
 
 
 ## Testing
