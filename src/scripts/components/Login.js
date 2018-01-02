@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import SignupFormContainer from 'containers/SignupFormContainer'
+import LoginFormContainer from 'containers/LoginFormContainer'
 
 const Wrapper = styled.div`
   font-size: 20px;
@@ -23,20 +23,20 @@ const Title = styled.header`
   width: 100%;
 `
 
-const LoginLink = styled(Link)`
+const SignupLink = styled(Link)`
   float: left;
 `
 
-class Signup extends Component {
+class Login extends Component {
   render () {
     return (
       <Wrapper>
-        <Title>Signup</Title>
-        <SignupFormContainer />
-        <LoginLink to='/login'>Login</LoginLink>
+        <Title>Login</Title>
+        <LoginFormContainer />
+        <SignupLink to='/signup'>Signup</SignupLink>
       </Wrapper>
     )
   }
 }
 
-export default Signup
+export default Login
