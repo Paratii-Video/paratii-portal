@@ -10,9 +10,7 @@ import createStore from 'scripts/createStore'
 import initParatiiLib from 'utils/ParatiiLib'
 import 'styles/app.scss'
 
-initParatiiLib({
-  provider: 'http://localhost:8545'
-})
+initParatiiLib()
 
 let root: ?Element = document.getElementById('root')
 
