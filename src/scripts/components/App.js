@@ -8,6 +8,7 @@ import logo from 'assets/img/paratii_logo.png'
 import UploadFileContainer from 'containers/UploadFileContainer'
 import SignupContainer from 'containers/SignupContainer'
 import LoginContainer from 'containers/LoginContainer'
+import ProfileContainer from 'containers/ProfileContainer'
 
 type Props = {
   match: {
@@ -52,6 +53,10 @@ class App extends Component<Props, void> {
         <Route
           path={`${match.url}login`}
           component={LoginContainer}
+        />
+        <Route
+          path={`${match.url}profile`}
+          component={ProfileContainer}
         />
       </Wrapper>
     )
