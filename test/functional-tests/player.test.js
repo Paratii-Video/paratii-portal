@@ -67,7 +67,7 @@ describe('Player:', function () {
     // no need to test all controlers - they are tested in paratii-mediaplayer
   })
 
-  it('play a free video', function () {
+  it.skip('play a free video', function () {
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitForExist('#video-player')
     browser.waitForExist('.player-overlay')
