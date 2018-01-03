@@ -29,6 +29,9 @@ const playerIsFullScreen = () => !!(
 )
 
 describe('Player:', function () {
+
+  let videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ' // this is  a known videoId defined in fixtures.js
+
   before(function () {
     browser.addCommand('waitUntilVideoIsPlaying', () => {
       browser.waitUntil(() => (
@@ -51,21 +54,21 @@ describe('Player:', function () {
   })
 
   beforeEach(function () {
-    server.execute(createVideo, '12345', 'Test 1', '', '', [''], 0)
-    server.execute(createVideo, '23456', 'Test 2', '', '', [''], 0)
-    server.execute(createPlaylist, '98765', 'Playlist test', ['12345', '23456'])
+    // server.execute(createVideo, '12345', 'Test 1', '', '', [''], 0)
+    // server.execute(createVideo, '23456', 'Test 2', '', '', [''], 0)
+    // server.execute(createPlaylist, '98765', 'Playlist test', ['12345', '23456'])
   })
 
-  it.skip('should have basic flow in place', function () {
+  it('should have basic flow in place', function () {
     // set up the test and add a video via paratii-lib
     // there should be a player here
-    browser.url('http://localhost:8080/play/{videoId}')
-
+    browser.url(`http://localhost:8080/play/${videoId}`)
+    browser.pause(10000)
     // no need to test all controlers - they are tested in paratii-mediaplayer
   })
 
   it.skip('play a free video', function () {
-    browser.url('http://localhost:3000/play/12345')
+    browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitForExist('#video-player')
     browser.waitForExist('.player-overlay')
     assert.equal(browser.getText('.player-title'), 'Test 1')

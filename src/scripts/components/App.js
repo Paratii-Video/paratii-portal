@@ -6,21 +6,25 @@ import styled from 'styled-components'
 import logo from 'assets/img/paratii_logo.png'
 
 import UploadFileContainer from 'containers/UploadFileContainer'
+import PlayContainer from 'containers/PlayContainer'
 import DebugContainer from 'containers/DebugContainer'
 
+import type { RouteMatch } from 'types/ApplicationTypes'
+
 type Props = {
-  match: {
-    url: string
-  }
-}
+  match: RouteMatch
+};
 
 const Wrapper = styled.div`
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 `
 
 const Header = styled.header`
   background-color: #222;
-  height: 50px;
+  flex: 0 0 50px;
   padding: 20px;
   color: white;
   display: flex;
@@ -44,6 +48,7 @@ class App extends Component<Props, void> {
           path={`${match.url}uploader/upload-file`}
           component={UploadFileContainer}
         />
+        <Route path={`${match.url}play/:id`} component={PlayContainer} />
         <Route
           path={`${match.url}debug`}
           component={DebugContainer}
