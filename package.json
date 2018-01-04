@@ -90,7 +90,7 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "immutable": "^3.8.2",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#ddebc3c0d7c5d93f06ea3198525d1ee72957bd9a",
+    "paratii-lib": "github:Paratii-Video/paratii-lib#f67f054324696f0d8327b06e954efb7710ac8ff5",
     "paratii-mediaplayer": "^0.0.11",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
