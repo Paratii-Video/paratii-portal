@@ -63,11 +63,11 @@ export const USERADDRESS = '0xdef933d2d0203821af2a1579d77fb42b4f8dcf7b'
 // }
 //
 // // The before  function will be run once, before all tests
-// before(async function (done) {
-//   browser.addCommand('waitForClickable', function (selector, timeout) {
-//     this.waitForVisible(selector, timeout)
-//     this.waitForEnabled(selector, timeout)
-//   })
+before(async function (done) {
+  browser.addCommand('waitForClickable', function (selector, timeout) {
+    this.waitForVisible(selector, timeout)
+    this.waitForEnabled(selector, timeout)
+  })
 //
 //   browser.addCommand('waitAndSetValue', function (selector, value, timeout) {
 //     this.waitForVisible(selector, timeout)
@@ -86,28 +86,28 @@ export const USERADDRESS = '0xdef933d2d0203821af2a1579d77fb42b4f8dcf7b'
 //       }
 //     }, timeout, `Could not set value on ${selector} (timeout: ${timeout}s)`)
 //   })
-//   browser.addCommand('waitAndClick', function (selector, timeout) {
-//     this.waitForVisible(selector, timeout)
-//     this.waitForEnabled(selector, timeout)
-//     browser.waitUntil(function () {
-//       try {
-//         browser.click(selector)
-//         return true
-//       } catch (err) {
-//         if (err.seleniumStack.type === 'InvalidElementState') {
-//           // ignore and try again
-//           return false
-//         } else if (err.seleniumStack.type === 'UnknownError') {
-//           // 'another element would receive the click' is reported as an 'unknown error'
-//           // ignore and try again
-//           return false
-//         } else {
-//           console.log(err)
-//           throw err
-//         }
-//       }
-//     }, timeout, `Could not click on ${selector} (timeout: ${timeout}s)`)
-//   })
+  browser.addCommand('waitAndClick', function (selector, timeout) {
+    this.waitForVisible(selector, timeout)
+    this.waitForEnabled(selector, timeout)
+    browser.waitUntil(function () {
+      try {
+        browser.click(selector)
+        return true
+      } catch (err) {
+        if (err.seleniumStack.type === 'InvalidElementState') {
+          // ignore and try again
+          return false
+        } else if (err.seleniumStack.type === 'UnknownError') {
+          // 'another element would receive the click' is reported as an 'unknown error'
+          // ignore and try again
+          return false
+        } else {
+          console.log(err)
+          throw err
+        }
+      }
+    }, timeout, `Could not click on ${selector} (timeout: ${timeout}s)`)
+  })
 //   browser.addCommand('waitUntilRequestHasStatus', function (url, status = 200, method = 'GET', timeout) {
 //     browser.waitUntil(() => {
 //       const request = new XMLHttpRequest()
@@ -117,15 +117,15 @@ export const USERADDRESS = '0xdef933d2d0203821af2a1579d77fb42b4f8dcf7b'
 //     }, timeout, `The ${method} request to ${url} never achieved a ${status} status`)
 //   })
 //
-//   browser.addCommand('waitAndRemove', function (selector, timeout) {
-//     this.waitForVisible(selector)
-//     browser.execute((selectorToRemove) => {
-//       const element = document.querySelector(selectorToRemove)
-//       if (element) {
-//         element.remove()
-//       }
-//     }, selector)
-//   })
+  browser.addCommand('waitAndRemove', function (selector, timeout) {
+    this.waitForVisible(selector)
+    browser.execute((selectorToRemove) => {
+      const element = document.querySelector(selectorToRemove)
+      if (element) {
+        element.remove()
+      }
+    }, selector)
+  })
 //
 //   browser.addCommand('sendSomeETH', async function (beneficiary, amount, timeout) {
 //     // console.log(`send ${amount} to ${beneficiary}`)
@@ -150,8 +150,8 @@ export const USERADDRESS = '0xdef933d2d0203821af2a1579d77fb42b4f8dcf7b'
 //   })
 //   browser.url('http://localhost:3000')
 //   browser.contracts = await getOrDeployParatiiContracts(server, browser)
-//   done()
-// })
+  done()
+})
 //
 // // The beforeEach function is run before each single test
 // beforeEach(function () {

@@ -28,7 +28,7 @@ const playerIsFullScreen = () => !!(
   document.msFullscreenElement
 )
 
-describe('Player:', function () {
+describe('Player: ', function () {
 
   let videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ' // this is  a known videoId defined in fixtures.js
 
@@ -63,26 +63,39 @@ describe('Player:', function () {
     // set up the test and add a video via paratii-lib
     // there should be a player here
     browser.url(`http://localhost:8080/play/${videoId}`)
-    browser.pause(10000)
+    expect('#player').to.exist
     // no need to test all controlers - they are tested in paratii-mediaplayer
   })
 
-  it.skip('play a free video', function () {
+  it('play a free video', function () {
     browser.url(`http://localhost:8080/play/${videoId}`)
-    browser.waitForExist('#video-player')
-    browser.waitForExist('.player-overlay')
-    assert.equal(browser.getText('.player-title'), 'Test 1')
-    browser.waitForExist('.player-controls')
-    assert.isTrue(browser.getAttribute('.player-container', 'class').includes('play'))
-    browser.waitAndClick('#play-pause-button')
-    assert.isTrue(browser.getAttribute('#nav', 'class').includes('closed'))
-    assert.isTrue(browser.getAttribute('.player-container', 'class').includes('pause'))
-    assert.isTrue(browser.getAttribute('.player-container', 'class').includes('pause'))
+    browser.waitAndClick('#player')
+    browser.waitForExist('.media-control')
+    browser.pause(5000)
   })
 
-  it.skip('click on the progress bar [TODO]', function () {
-    browser.url('http://localhost:3000/play/12345')
-    browser.waitForExist('#video-player')
+  it.skip('the video has overlay informations', function () {
+    browser.url(`http://localhost:8080/play/${videoId}`)
+    browser.waitAndClick('#player')
+    // browser.waitForExist('#video-player')
+    // browser.waitForExist('.player-overlay')
+    // assert.equal(browser.getText('.player-title'), 'Test 1')
+    // browser.waitForExist('.player-controls')
+    // assert.isTrue(browser.getAttribute('.player-container', 'class').includes('play'))
+
+    // browser.waitForExist('.player-overlay')
+    // assert.isTrue(browser.getAttribute('#nav', 'class').includes('closed'))
+    // assert.isTrue(browser.getAttribute('.player-container', 'class').includes('pause'))
+    // assert.isTrue(browser.getAttribute('.player-container', 'class').includes('pause'))
+  })
+
+  it('click on the progress bar', function () {
+    // Moving this to mediaplayer
+    browser.url(`http://localhost:8080/play/${videoId}`)
+    browser.waitAndClick('#player')
+    browser.waitForExist('.media-control')
+    browser.waitAndClick('.bar-container', 5000)
+    browser.pause(5000)
     // browser.waitForExist('#loaded-bar')
     // browser.waitUntil(() => browser.getElementSize('#loaded-bar', 'width') > 30, 5000, 'video load timeout')
     // browser.click('#loaded-bar')
@@ -170,6 +183,7 @@ describe('Player:', function () {
   })
 
   it.skip('should play/pause a video when the spacebar is pressed', () => {
+    // Moving this to mediaplayer
     browser.url('http://localhost:3000/play/12345?playlist=98765')
     browser.waitUntilBuffered()
     browser.waitForClickable('#play-pause-button')
@@ -184,6 +198,7 @@ describe('Player:', function () {
   })
 
   it.skip('should play/pause a video when the player is single-clicked', () => {
+    // Moving this to mediaplayer
     browser.url('http://localhost:3000/play/12345?playlist=98765')
     browser.waitAndRemove('.player-uploader-name')
     browser.waitAndRemove('.player-stats')
@@ -200,6 +215,7 @@ describe('Player:', function () {
   })
 
   it.skip('should toggle full-screen mode on double click', () => {
+    // Moving this to mediaplayer
     browser.url('http://localhost:3000/play/12345?playlist=98765')
     browser.waitAndRemove('.player-uploader-name')
     browser.waitAndRemove('.player-stats')
@@ -218,6 +234,7 @@ describe('Player:', function () {
   })
 
   it.skip('should stay in full-screen mode when a video is paused via the space bar', () => {
+    // Moving this to mediaplayer
     browser.url('http://localhost:3000/play/12345?playlist=98765')
     browser.waitUntilBuffered()
     browser.waitAndClick('#play-pause-button')
