@@ -1,9 +1,11 @@
-import React, { Component, SyntheticEvent } from 'react'
+/* @flow */
+
+import React, { Component } from 'react'
 import styled from 'styled-components'
 
 type Props = {
   onSubmit: () => void,
-  onInputChange: (name: string, e: SyntheticEvent) => void
+  onInputChange: (name: string, e: Object) => void
 };
 
 const Form = styled.form`

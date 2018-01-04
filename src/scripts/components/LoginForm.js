@@ -1,9 +1,12 @@
-import React, { Component, SyntheticEvent } from 'react'
+/* @flow */
+
+import React, { Component } from 'react'
 import styled from 'styled-components'
 
 type Props = {
   onSubmit: () => void,
-  onInputChange: (name: string, e: SyntheticEvent) => void
+  onInputChange: (name: string, e: Object) => void,
+  isLoggingIn: boolean
 };
 
 const Form = styled.form`
@@ -29,7 +32,7 @@ class LoginForm extends Component<Props, void> {
   render () {
     const { onSubmit, onInputChange } = this.props
     return (
-      <Form onSubmit={(onSubmit)}>
+      <Form onSubmit={onSubmit}>
         <Input
           id='login-email'
           type='text'
@@ -42,7 +45,7 @@ class LoginForm extends Component<Props, void> {
           onChange={(e) => onInputChange('password', e)}
           placeholder='Password'
         />
-        <Button id='login-submit' type='submit'>Login</Button>
+        <Button id='login-submit' type='submit' disabled={this.props.isLoggingIn}>Login</Button>
       </Form>
     )
   }

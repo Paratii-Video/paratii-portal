@@ -1,6 +1,7 @@
 /* @flow */
 
 import VideoRecord from 'records/VideoRecords'
+import UserRecord from 'records/UserRecords'
 
 export type RouteMatch = {
   path: string,
@@ -15,7 +16,8 @@ export type Action<T> = {
 };
 
 export type RootState = {
-  video: ?VideoRecord
+  video: ?VideoRecord,
+  user: ?UserRecord
 };
 
 export type ParatiiLibConfig = {

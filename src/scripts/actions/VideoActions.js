@@ -10,7 +10,7 @@ import type { Dispatch } from 'redux'
 export const videoDataLoaded = createAction(VIDEO_DATA_LOADED)
 
 export const fetchVideo = (id: string) => (dispatch: Dispatch<*>) => {
-  paratii().then((lib) => {
+  paratii().t((lib) => {
     lib.core.vids
       .create({
         id,
