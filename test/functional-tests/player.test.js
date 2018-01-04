@@ -19,7 +19,8 @@
 //
 
 import { assert } from 'chai'
-import { assertUserIsLoggedIn, assertUserIsNotLoggedIn, createUserAndLogin, createPlaylist, createVideo } from './helpers.js'
+import paratii from 'utils/ParatiiLib'
+import { assertUserIsLoggedIn, assertUserIsNotLoggedIn, createUserAndLogin, createPlaylist } from './helpers.js'
 
 const playerIsFullScreen = () => !!(
   document.fullscreenElement ||
@@ -33,24 +34,31 @@ describe('Player: ', function () {
   let videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ' // this is  a known videoId defined in fixtures.js
 
   before(function () {
-    browser.addCommand('waitUntilVideoIsPlaying', () => {
-      browser.waitUntil(() => (
-        parseInt(browser.getAttribute('#video-player', 'currentTime'), 10) !== 0 &&
-        browser.getAttribute('#video-player', 'paused') !== 'true' &&
-        browser.getAttribute('#video-player', 'ended') !== 'true'
-      ))
-    })
-    browser.addCommand('waitUntilBuffered', () => {
-      browser.waitUntil(() => !!browser.execute(() => {
-        const playerEl = document.querySelector('#video-player')
-        for (let i = 0; i < playerEl.buffered.length; i += 1) {
-          if (playerEl.buffered.end(i) > 0) {
-            return true
-          }
-        }
-        return false
-      }).value)
-    })
+
+    console.log(paratii())
+
+//     The setup, will have calls like paratii.eth.deployContracts(), paratii.core.vids.create({id: 'foo'}) and paratii.ipfs.add( myverysmalltestvideofile), and is typically called in the before or beforeEach functions of the mocha specs
+// Then, in the tests, the only videos you'll have access to are the ones created in the setup. In this case, you could call vids.get('foo') to get the video info
+
+
+    // browser.addCommand('waitUntilVideoIsPlaying', () => {
+    //   browser.waitUntil(() => (
+    //     parseInt(browser.getAttribute('#video-player', 'currentTime'), 10) !== 0 &&
+    //     browser.getAttribute('#video-player', 'paused') !== 'true' &&
+    //     browser.getAttribute('#video-player', 'ended') !== 'true'
+    //   ))
+    // })
+    // browser.addCommand('waitUntilBuffered', () => {
+    //   browser.waitUntil(() => !!browser.execute(() => {
+    //     const playerEl = document.querySelector('#video-player')
+    //     for (let i = 0; i < playerEl.buffered.length; i += 1) {
+    //       if (playerEl.buffered.end(i) > 0) {
+    //         return true
+    //       }
+    //     }
+    //     return false
+    //   }).value)
+    // })
   })
 
   beforeEach(function () {

@@ -30,44 +30,34 @@ export const USERADDRESS = '0xdef933d2d0203821af2a1579d77fb42b4f8dcf7b'
 // export { paratii }
 // const add0x = utils.add0x
 //
-// export async function sendSomeETH (beneficiary, amount) {
-//   // let fromAddress = paratii.eth.web3.eth.accounts.wallet[0].address
-//   // await paratii.setAccount(fromAddress)
-//   beneficiary = add0x(beneficiary)
-//   amount = paratii.eth.web3.utils.toWei(String(amount))
-//   console.log(`Sending ${amount} ETH from ${paratii.config.account.address} to ${beneficiary} `)
-//   let result = await paratii.eth.transfer(beneficiary, amount, 'ETH')
-//   return result
-// }
-//
-// export async function sendSomePTI (beneficiary, amount) {
-//   // const contract = await paratii.eth.getContract('ParatiiToken')
-//   // console.log(paratii.eth.web3.eth.accounts.wallet)
-//   // console.log(paratii.eth.web3.eth.accounts.wallet[0])
-//   // let fromAddress = paratii.eth.web3.eth.accounts.wallet[0].address
-//   // await paratii.setAccount(fromAddress)
-//   // console.log(await paratii.diagnose())
-//   amount = paratii.eth.web3.utils.toWei(String(amount))
-//   console.log(`Sending ${amount} PTI from ${paratii.config.account.address} to ${beneficiary} `)
-//   // let contract = await paratii.eth.getContract('ParatiiToken')
-//   // console.log(`using contract at ${contract.options.address}`)
-//   // console.log(await paratii.config)
-//   // console.log(await paratii.diagnose())
-//   let result = await paratii.eth.transfer(beneficiary, amount, 'PTI')
-//   return result
-//   // let value = amount
-//   // // console.log(`Sending ${value} PTI from ${fromAddress} to ${beneficiary} using contract ${contract}`)
-//   // let result = await contract.method.transfer(
-//   //   beneficiary, Number(paratii.web3.utils.toWei(String(value)))).send({ gas: 200000, from: fromAddress })
-//   // return result
-// }
-//
+
+
 // // The before  function will be run once, before all tests
 before(async function (done) {
   browser.addCommand('waitForClickable', function (selector, timeout) {
     this.waitForVisible(selector, timeout)
     this.waitForEnabled(selector, timeout)
   })
+
+	browser.addCommand('waitUntilVideoIsPlaying', () => {
+		browser.waitUntil(() => (
+			parseInt(browser.getAttribute('#video-player', 'currentTime'), 10) !== 0 &&
+			browser.getAttribute('#video-player', 'paused') !== 'true' &&
+			browser.getAttribute('#video-player', 'ended') !== 'true'
+		))
+	})
+	
+	browser.addCommand('waitUntilBuffered', () => {
+		browser.waitUntil(() => !!browser.execute(() => {
+			const playerEl = document.querySelector('#video-player')
+			for (let i = 0; i < playerEl.buffered.length; i += 1) {
+				if (playerEl.buffered.end(i) > 0) {
+					return true
+				}
+			}
+			return false
+		}).value)
+	})
 //
 //   browser.addCommand('waitAndSetValue', function (selector, value, timeout) {
 //     this.waitForVisible(selector, timeout)
