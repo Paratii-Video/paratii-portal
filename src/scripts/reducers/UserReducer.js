@@ -2,15 +2,23 @@
 
 import { handleActions } from 'redux-actions'
 
-import { LOGIN_REQUESTED } from 'constants/ActionConstants'
+import type { Action } from 'types/ApplicationTypes'
+import { LOGIN_REQUESTED, LOGIN_SUCCESS } from 'constants/ActionConstants'
 import UserRecord from 'records/UserRecords'
 
 const reducer = {
   [LOGIN_REQUESTED]: (
     state: UserRecord
   ): UserRecord => {
-    console.log('statee:', state)
     return state.set('isLoggingIn', true)
+  },
+  [LOGIN_SUCCESS]: (
+    state: UserRecord,
+    { payload }: Action<{email: string}>
+  ): UserRecord => {
+    return state
+      .set('isLoggingIn', false)
+      .set('email', payload.email)
   }
 }
 
