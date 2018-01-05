@@ -89,6 +89,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.1",
+    "js-cookie": "^2.2.0",
     "immutable": "^3.8.2",
     "paratii-lib": "github:Paratii-Video/paratii-lib#23d62e42fb359d875c6dfecae1600244154f5381",
     "paratii-mediaplayer": "^0.0.11",

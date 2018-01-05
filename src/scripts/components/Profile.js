@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 type Props = {
-  profile: {
+  user: {
     name: string,
     email: string
   }
@@ -33,7 +33,7 @@ const Label = styled.div`
 
 class Profile extends Component<Props, void> {
   render () {
-    const {name, email} = this.props.profile
+    const {name, email} = this.props.user
     return (
       <Wrapper>
         <Title>{name}</Title>

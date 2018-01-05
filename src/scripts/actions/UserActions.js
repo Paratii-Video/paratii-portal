@@ -1,33 +1,25 @@
 /* @flow */
 
 import { createAction } from 'redux-actions'
+import Promise from 'bluebird'
+import Cookies from 'js-cookie'
 
-import { LOGIN_REQUESTED } from 'constants/ActionConstants'
+import { LOGIN_REQUESTED, LOGIN_SUCCESS } from 'constants/ActionConstants'
 
 import type { Dispatch } from 'redux'
 
 export const loginRequested = createAction(LOGIN_REQUESTED)
+export const loginSuccess = createAction(LOGIN_SUCCESS)
 
-// export const fetchVideo = (id: string) => (dispatch: Dispatch<*>) => {
-//   paratii().then((lib) => {
-//     lib.core.vids
-//       .create({
-//         id,
-//         price: 0,
-//         owner: '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
-//       })
-//       .then(() => {
-//         lib.core.vids
-//           .get('999')
-//           .then(res => {
-//             dispatch(videoDataLoaded(res))
-//           })
-//           .catch(e => {
-//             console.log('e: ', e)
-//           })
-//       })
-//   })
-// }
+const sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 export const login = (email: string, password: string) => (dispatch: Dispatch<*>) => {
   dispatch(loginRequested())
+  sleep(2000).then(() => {
+    Cookies.set('email', email)
+    dispatch(loginSuccess({email}))
+    // TODO: redirect to profile
+  })
 }

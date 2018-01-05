@@ -41,7 +41,6 @@ const Logo = styled.img`
 class App extends Component<Props, void> {
   render () {
     const { match } = this.props
-
     return (
       <Wrapper>
         <Header>

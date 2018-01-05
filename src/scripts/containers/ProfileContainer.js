@@ -3,10 +3,12 @@
 import { connect } from 'react-redux'
 
 import Profile from 'components/Profile'
+import { getUser } from 'selectors/index'
 
-const mapStateToProps = () => ({
-  //  TODO use redux
-  profile: {name: 'John', email: 'john@test.com'}
+import type { RootState } from 'types/ApplicationTypes'
+
+const mapStateToProps = (state: RootState) => ({
+  user: getUser(state)
 })
 
 const mapDispatchToProps = () => ({})
