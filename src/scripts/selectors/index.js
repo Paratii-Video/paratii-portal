@@ -11,3 +11,7 @@ export const getVideo = (state: RootState): ?VideoRecord => state.video
 /* Users */
 export const getUser = (state: RootState): ?UserRecord => state.user
 export const isLoggingIn = (state: RootState): ?boolean => (state.user) ? state.user.isLoggingIn : false
+export const isLogged = (state: RootState): ?boolean => {
+  const user = state.user
+  return !!(user && user.email && !isLoggingIn(state))
+}

@@ -12,7 +12,7 @@ class User extends ImmutableRecord({
   name: string;
   isLoggingIn: boolean;
 
-  constructor (email) {
+  constructor (email?: string) {
     super({email: email, name: 'John Doe', isLoggingIn: false})
   }
 
