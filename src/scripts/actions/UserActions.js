@@ -20,6 +20,5 @@ export const login = (email: string, password: string) => (dispatch: Dispatch<*>
   sleep(2000).then(() => {
     Cookies.set('email', email)
     dispatch(loginSuccess({email}))
-    // TODO: redirect to profile
   })
 }
