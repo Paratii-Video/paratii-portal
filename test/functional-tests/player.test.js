@@ -20,9 +20,9 @@
 
 import { assert } from 'chai'
 // import paratii from 'utils/ParatiiLib'
-import { Paratii } from 'paratii-lib'
 
 import { assertUserIsLoggedIn, assertUserIsNotLoggedIn, createUserAndLogin, createPlaylist } from './helpers.js'
+import { Paratii } from 'paratii-lib'
 
 let paratii = new Paratii()
 
