@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
+import LogoutButton from 'containers/LogoutButtonContainer'
+
 type Props = {
   user: {
     name: string,
@@ -38,6 +40,7 @@ class Profile extends Component<Props, void> {
       <Wrapper>
         <Title>{name}</Title>
         <Label>{email}</Label>
+        <LogoutButton />
       </Wrapper>
     )
   }

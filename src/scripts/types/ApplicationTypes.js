@@ -10,6 +10,12 @@ export type RouteMatch = {
   params: Object
 };
 
+export type Location = {
+  pathname: string,
+  search: string,
+  state: Object
+};
+
 export type Action<T> = {
   type: string,
   payload: T

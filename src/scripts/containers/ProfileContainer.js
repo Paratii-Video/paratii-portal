@@ -1,6 +1,7 @@
 /* @flow */
 
 import { connect } from 'react-redux'
+import RequiresLogin from './RequiresLogin'
 
 import Profile from 'components/Profile'
 import { getUser } from 'selectors/index'
@@ -13,4 +14,4 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = () => ({})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+export default RequiresLogin(connect(mapStateToProps, mapDispatchToProps)(Profile), true)

@@ -15,3 +15,4 @@ export const isLogged = (state: RootState): ?boolean => {
   const user = state.user
   return !!(user && user.email && !isLoggingIn(state))
 }
+export const shouldKeepUrl = (state: RootState): ?boolean => !!((state.user) && (state.user.keepUrl))
