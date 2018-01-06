@@ -19,7 +19,8 @@
 //
 
 import { assert } from 'chai'
-import paratii from 'utils/ParatiiLib'
+import { Paratii } from 'paratii-lib'
+import { address, privateKey } from './utils.js'
 import { assertUserIsLoggedIn, assertUserIsNotLoggedIn, createUserAndLogin, createPlaylist } from './helpers.js'
 
 const playerIsFullScreen = () => !!(
@@ -32,10 +33,26 @@ const playerIsFullScreen = () => !!(
 describe('Player: ', function () {
 
   let videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ' // this is  a known videoId defined in fixtures.js
+  let paratii
 
-  before(function () {
+  before(async function () {
 
-    console.log(paratii())
+    paratii = new Paratii({
+      provider: 'http://localhost:8545/rpc/',
+      address,
+      privateKey
+    })
+
+    const contracts = await paratii.eth.deployContracts()
+
+    let videoId = await paratii.core.vids.create({
+      id: '0x12355',
+      price: '10',
+      title: 'Test Title',
+      owner: address,
+    })
+
+    // paratii.core.vids.create({id: 'video-test'})
 
 //     The setup, will have calls like paratii.eth.deployContracts(), paratii.core.vids.create({id: 'foo'}) and paratii.ipfs.add( myverysmalltestvideofile), and is typically called in the before or beforeEach functions of the mocha specs
 // Then, in the tests, the only videos you'll have access to are the ones created in the setup. In this case, you could call vids.get('foo') to get the video info

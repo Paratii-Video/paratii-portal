@@ -13,6 +13,10 @@
     "mocha": true
   },
   "globals": {
-      "browser": true
-  }
+    "browser": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2017
+  },
 }
