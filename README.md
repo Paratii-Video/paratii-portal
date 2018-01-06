@@ -7,7 +7,10 @@
 * node >= 8.9.0
 * Install [parity](https://github.com/paritytech/parity) (ethereum client):
     * ```$ bash <(curl https://get.parity.io -Lk)```
-    * Then, add the following to your `.bash_profile`: `export PATH=/Applications/Parity\ Ethereum.app/Contents/MacOS:$PATH`
+
+If you are on a Mac, you may need to set the path to parity:
+
+    * add the following to your `.bash_profile`: `export PATH=/Applications/Parity\ Ethereum.app/Contents/MacOS:$PATH`
     * ``` $ source path/to/.bash_profile```
 
 
@@ -81,3 +84,15 @@ _Note: this is used for linting styles written in javascript strings for `styled
     $ npm run build
 
 After this command completes, `index.html` and `bundle.js` will both reside in the `build/` directory.
+
+
+# Troubleshooting
+
+
+If you get the following error:
+
+    [1] Module build failed: Error: ENOENT: no such file or directory, scandir '.../paratii-portal/node_modules/node-sass/vendor'
+
+Rebuilding `node-sass` may help:
+
+    npm rebild node-sass
