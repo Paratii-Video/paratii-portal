@@ -1,9 +1,10 @@
 /* @flow */
 
 import { paratii } from './test-utils/helpers'
+import chai from 'chai'
+import chaiAsPromised from 'chai-as-promised'
 
-var chai = require('chai')
-var chaiAsPromised = require('chai-as-promised')
+declare var browser: Object
 
 chai.use(chaiAsPromised)
 
