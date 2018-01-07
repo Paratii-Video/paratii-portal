@@ -8,7 +8,7 @@
 // */
 //
 /* global localStorage */
-// import { Paratii, utils } from 'paratii-lib'
+import { Paratii, utils } from 'paratii-lib'
 // import { XMLHttpRequest } from 'xmlhttprequest'
 import { assert } from 'chai'
 export const SEED = 'road inherit leave arm unlock estate option merge mechanic rate blade dumb'
