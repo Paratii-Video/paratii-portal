@@ -1,6 +1,6 @@
 /* @flow */
 
-import paratii from './test-utils/helpers'
+import { paratii } from './test-utils/helpers'
 
 var chai = require('chai')
 var chaiAsPromised = require('chai-as-promised')

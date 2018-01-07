@@ -28,7 +28,7 @@ import {
   createPlaylist,
   createVideo,
   paratii
-} from './helpers.js'
+} from './test-utils/helpers.js'
 
 const playerIsFullScreen = () => !!(
   document.fullscreenElement ||

@@ -17,7 +17,7 @@
 //
 //
 
-import { assertUserIsLoggedIn, logout, createUserAndLogin, nukeLocalStorage, web3 } from './helpers.js'
+import { assertUserIsLoggedIn, logout, createUserAndLogin, nukeLocalStorage, web3 } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
 describe.skip('Video Store:', function () {
