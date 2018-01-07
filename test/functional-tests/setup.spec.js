@@ -26,10 +26,12 @@ before(async function (done) {
 
   browser.addCommand('waitUntilBuffered', () => {
     browser.waitUntil(() => !!browser.execute(() => {
-      const playerEl = document.querySelector('#video-player')
-      for (let i = 0; i < playerEl.buffered.length; i += 1) {
-        if (playerEl.buffered.end(i) > 0) {
-          return true
+      const playerEl = document.querySelector('video')
+      if (playerEl && playerEl.getAttribute('id') === 'video-player') {
+        for (let i = 0; i < playerEl.buffered.length; i += 1) {
+          if (playerEl.buffered.end(i) > 0) {
+            return true
+          }
         }
       }
       return false
