@@ -20,10 +20,15 @@
 
 import { assert } from 'chai'
 
-import { assertUserIsLoggedIn, assertUserIsNotLoggedIn, createUserAndLogin, createPlaylist, createVideo } from './helpers.js'
-import { Paratii } from 'paratii-lib'
-
-let paratii = new Paratii()
+import {
+  address1,
+  assertUserIsLoggedIn,
+  assertUserIsNotLoggedIn,
+  createUserAndLogin,
+  createPlaylist,
+  createVideo,
+  paratii
+} from './helpers.js'
 
 const playerIsFullScreen = () => !!(
   document.fullscreenElement ||
@@ -34,13 +39,19 @@ const playerIsFullScreen = () => !!(
 
 describe('Player: ', function () {
 
-  let videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ' // this is  a known videoId defined in fixtures.js
+  // this is  a known videoId defined in fixtures.js
+  let videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
 
-  before(function () {
+  before(async function () {
 
-    console.log(paratii)
-
-//     The setup, will have calls like paratii.eth.deployContracts(), paratii.core.vids.create({id: 'foo'}) and paratii.ipfs.add( myverysmalltestvideofile), and is typically called in the before or beforeEach functions of the mocha specs
+    await paratii.eth.deployContracts()
+    await paratii.core.vids.create({
+      id: 'foo',
+      owner: address1,
+      title: 'Malandrina',
+    })
+    // await paratii.ipfs.add( myverysmalltestvideofile)
+    // , and is typically called in the before or beforeEach functions of the mocha specs
 // Then, in the tests, the only videos you'll have access to are the ones created in the setup. In this case, you could call vids.get('foo') to get the video info
 
 
@@ -78,7 +89,7 @@ describe('Player: ', function () {
     // no need to test all controlers - they are tested in paratii-mediaplayer
   })
 
-  it('play a free video', function () {
+  it.skip('play a free video', function () {
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')
     browser.waitForExist('.media-control')

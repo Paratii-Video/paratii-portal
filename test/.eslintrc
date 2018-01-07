@@ -1,3 +1,9 @@
-"env": {
-    "jasmine": true
+{
+  "env": {
+    "jasmine": true,
+    "mocha": true,
+  },
+  "globals": {
+      "browser": true
+  }
 }
