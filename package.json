@@ -26,6 +26,19 @@
     "unit-test": "NODE_ENV=test karma start karma.conf.js",
     "unit-test:dev": "npm run unit-test -- --single-run false"
   },
+  "babel": {
+    "env": {
+      "production": {
+        "plugins": ["transform-flow-strip-types", "transform-object-rest-spread"]
+      }
+    },
+    "presets": ["es2015", "react"],
+    "plugins": [
+      "transform-flow-strip-types",
+      "transform-object-rest-spread",
+      "react-hot-loader/babel"
+    ]
+  },
   "lint-staged": {
     "*.js": [
       "eslint --cache",
