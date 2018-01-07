@@ -8,7 +8,7 @@
   "scripts": {
     "build": "npm run clean && npm run prep && NODE_ENV=production webpack --progress --colors",
     "clean": "rm -rf build/",
-    "chimp-test": "chimp chimp.config.js --mocha --chai",
+    "chimp-test": "chimp chimp.config.js",
     "chimp-test:watch": "npm run chimp-test --watch",
     "dev": "concurrently \"npm run dev-client\" \"npm run dev-server\" \"npm run parity\"",
     "dev-client": "npm run clean && npm run prep && webpack --watch --colors --progress",
