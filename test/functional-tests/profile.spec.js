@@ -36,7 +36,7 @@ import {
   clearUserKeystoreFromLocalStorage,
   getEthAccountFromApp,
   waitForKeystore
-} from './helpers.js'
+} from './test-utils/helpers.js'
 // import { add0x } from '../imports/lib/utils.js'
 import { assert } from 'chai'
 

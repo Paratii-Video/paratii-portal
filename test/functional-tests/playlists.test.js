@@ -17,7 +17,7 @@
 //
 //
 //
-import { assertUserIsLoggedIn, createVideo, createUserAndLogin, getEthAccountFromApp } from './helpers.js'
+import { assertUserIsLoggedIn, createVideo, createUserAndLogin, getEthAccountFromApp } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
 function createPlaylist () {
