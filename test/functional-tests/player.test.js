@@ -23,7 +23,13 @@ import { Paratii } from 'paratii-lib'
 import { address, privateKey } from './utils.js'
 import { assertUserIsLoggedIn, assertUserIsNotLoggedIn, createUserAndLogin, createPlaylist } from './helpers.js'
 
-let paratii = new Paratii()
+let paratii = new Paratii({
+  provider: 'http://localhost:8545/rpc/',
+  address,
+  privateKey
+})
+
+
 
 const playerIsFullScreen = () => !!(
   document.fullscreenElement ||
@@ -38,14 +44,8 @@ describe('Player: ', function () {
 
   before(async function () {
 
-    console.log(paratii)
-    // paratii = new Paratii({
-    //   provider: 'http://localhost:8545/rpc/',
-    //   address,
-    //   privateKey
-    // })
-    //
-    // const contracts = await paratii.eth.deployContracts()
+    const contracts = await paratii.eth.deployContracts()
+    console.log(contracts)
     //
     // let videoId = await paratii.core.vids.create({
     //   id: '0x12355',
