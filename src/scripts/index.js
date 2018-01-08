@@ -7,10 +7,10 @@ import { Provider } from 'react-redux'
 
 import Root from 'components/Root'
 import createStore from 'scripts/createStore'
-import paratii from 'utils/ParatiiLib'
+// import paratii from 'utils/ParatiiLib'
 import 'styles/app.scss'
 
-paratii()
+// paratii()
 
 let root: ?Element = document.getElementById('root')
 

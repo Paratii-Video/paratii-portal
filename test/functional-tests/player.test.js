@@ -40,18 +40,21 @@ const playerIsFullScreen = () => !!(
 describe('Player: ', function () {
 
   // this is  a known videoId defined in fixtures.js
-  let videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
+  let ipfsHash = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
+  let videoId = 'foo'
 
   before(async function () {
 
     await paratii.core.vids.create({
-      id: 'foo',
+      id: videoId,
       owner: address1,
       title: 'Malandrina',
+      ipfsHash: ipfsHash
     })
-    // await paratii.ipfs.add( myverysmalltestvideofile)
-    // , and is typically called in the before or beforeEach functions of the mocha specs
-// Then, in the tests, the only videos you'll have access to are the ones created in the setup. In this case, you could call vids.get('foo') to get the video info
+    let ipfsInstance = await paratii.ipfs.getIPFSInstance()
+    // let directory = 'test/functional-tests/data/QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB/1440.ts'
+    // yah7ya will implement the next function:
+    // let result = await paratii.ipfs.addDirectory(directory, {recursive: true})
 
 
     // browser.addCommand('waitUntilVideoIsPlaying', () => {
@@ -88,14 +91,13 @@ describe('Player: ', function () {
     // no need to test all controlers - they are tested in paratii-mediaplayer
   })
 
-  it.skip('play a free video', function () {
+  it.skip('play a free video  @watch', function () {
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')
     browser.waitForExist('.media-control')
-    browser.pause(5000)
   })
 
-  it.skip('the video has overlay informations', function () {
+  it('the video has overlay informations', function () {
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')
     // browser.waitForExist('#video-player')
