@@ -53,16 +53,6 @@ var config = {
         test: /\.js$/,
         include: [srcDir, testDir],
         loader: "babel-loader",
-        options: {
-          presets: ["es2015", "react"],
-          plugins: prod
-            ? ["transform-flow-strip-types", "transform-object-rest-spread"]
-            : [
-                "transform-flow-strip-types",
-                "transform-object-rest-spread",
-                "react-hot-loader/babel"
-              ]
-        }
       },
       {
         test: /\.(png|jpg|gif)$/,

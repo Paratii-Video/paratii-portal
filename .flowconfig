@@ -2,6 +2,7 @@
 .*/node_modules/immutable/.*
 .*/node_modules/documentation/.*
 .*/node_modules/oboe/.*
+.*/node_modules/ipfs/test/.*
 
 [include]
 <PROJECT_ROOT>/src

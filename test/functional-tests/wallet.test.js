@@ -16,7 +16,7 @@
 //
 //
 
-import { assertUserIsLoggedIn, web3, createUserAndLogin, getEthAccountFromApp } from './helpers.js'
+import { assertUserIsLoggedIn, web3, createUserAndLogin, getEthAccountFromApp } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
 describe('wallet:', function () {
