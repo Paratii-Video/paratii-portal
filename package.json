@@ -10,9 +10,9 @@
     "clean": "rm -rf build/",
     "chimp-test": "chimp chimp.config.js",
     "chimp-test:watch": "yarn run chimp-test --watch",
-    "dev": "concurrently \"yarn run dev-client\" \"yarn run dev-server\" \"yarn run parity\"",
-    "dev-client": "yarn run clean && yarn run prep && webpack --watch --colors --progress",
-    "dev-parity": "concurrently \"yarn run parity\" \"yarn run dev-client\" \"yarn run dev-server\"",
+    "dev": "concurrently \"yarn run dev-client\" \"yarn run dev-server\" \"yarn run dev-parity\"",
+    "dev-client": "yarn clean && yarn run prep && webpack --watch --colors --progress",
+    "dev-parity": "yarn parity",
     "dev-server": "nodemon --watch src/server --watch node_modules src/server/index.js localhost:8080",
     "flow": "flow",
     "lint": "yarn run lint:scripts && yarn run lint:styles",
@@ -29,10 +29,16 @@
   "babel": {
     "env": {
       "production": {
-        "plugins": ["transform-flow-strip-types", "transform-object-rest-spread"]
+        "plugins": [
+          "transform-flow-strip-types",
+          "transform-object-rest-spread"
+        ]
       }
     },
-    "presets": ["es2015", "react"],
+    "presets": [
+      "es2015",
+      "react"
+    ],
     "plugins": [
       "transform-flow-strip-types",
       "transform-object-rest-spread",
