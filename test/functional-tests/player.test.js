@@ -37,6 +37,8 @@ const playerIsFullScreen = () => !!(
   document.msFullscreenElement
 )
 
+
+
 describe('Player: ', function () {
 
   // this is  a known videoId defined in fixtures.js
@@ -51,6 +53,8 @@ describe('Player: ', function () {
       title: 'Malandrina',
       ipfsHash: ipfsHash
     })
+
+
     let ipfsInstance = await paratii.ipfs.getIPFSInstance()
     // let directory = 'test/functional-tests/data/QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB/1440.ts'
     // yah7ya will implement the next function:
@@ -91,13 +95,13 @@ describe('Player: ', function () {
     // no need to test all controlers - they are tested in paratii-mediaplayer
   })
 
-  it.skip('play a free video  @watch', function () {
+  it('play a free video  @watch', function () {
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')
     browser.waitForExist('.media-control')
   })
 
-  it('the video has overlay informations', function () {
+  it.skip('the video has overlay informations', function () {
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')
     // browser.waitForExist('#video-player')
@@ -112,7 +116,7 @@ describe('Player: ', function () {
     // assert.isTrue(browser.getAttribute('.player-container', 'class').includes('pause'))
   })
 
-  it('click on the progress bar', function () {
+  it.skip('click on the progress bar', function () {
     // Moving this to mediaplayer
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')

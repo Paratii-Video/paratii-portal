@@ -11,9 +11,9 @@ chai.use(chaiAsPromised)
 before(async function (done) {
   await paratii.eth.deployContracts()
   let registryAddress = paratii.eth.getRegistryAddress()
-  console.log(registryAddress)
 
-  // browser.execute(function() { window.paratii.setRegistryAddress(registryAddress)`})
+  browser.execute(function () { window.paratii.setRegistryAddress(registryAddress) })
+
   browser.addCommand('waitForClickable', function (selector, timeout) {
     this.waitForVisible(selector, timeout)
     this.waitForEnabled(selector, timeout)

@@ -31,7 +31,7 @@ export const SEED = 'road inherit leave arm unlock estate option merge mechanic 
 export const USERADDRESS = '0xdef933d2d0203821af2a1579d77fb42b4f8dcf7b'
 
 export const paratii = new Paratii({
-  provider: 'http://127.0.0.1:8545',
+  provider: 'http://127.0.0.1:8545/rpc',
   address: address,
   privateKey: privateKey
 })
