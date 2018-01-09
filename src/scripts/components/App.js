@@ -62,10 +62,6 @@ class App extends Component<Props, void> {
           path={`${match.url}profile`}
           component={ProfileContainer}
         />
-        <Route
-          path={`${match.url}profile2`}
-          component={ProfileContainer}
-        />
         <Route path={`${match.url}play/:id`} component={PlayContainer} />
         <Route
           path={`${match.url}debug`}

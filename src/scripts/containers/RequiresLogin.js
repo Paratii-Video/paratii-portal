@@ -6,6 +6,7 @@ import type { RootState, Location } from 'types/ApplicationTypes'
 
 import queryString from 'query-string'
 
+// Handle components related to login
 function RequiresLogin (WrappedComponent, loginRequired) {
   type Props = {
     isLogged: boolean,
@@ -16,8 +17,8 @@ function RequiresLogin (WrappedComponent, loginRequired) {
   class RequiresLogin extends React.Component<Props, void> {
     render () {
       const defaultPages = {
-        [true]: '/profile',
-        [false]: '/login'
+        [true]: '/profile', // if user is logged in, redirects to profile if needed
+        [false]: '/login' // if user is not logged in, redirects to login if needed
       }
 
       const {isLogged, shouldKeepUrl, location} = this.props
