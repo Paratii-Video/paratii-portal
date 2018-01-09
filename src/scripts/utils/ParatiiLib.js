@@ -2,7 +2,9 @@
 
 import { Paratii } from 'paratii-lib/lib/paratii'
 
-export const paratii = new Paratii({
+export let paratii
+
+window.paratii = new Paratii({
   // ...config,
   provider: 'http://localhost:8545/rpc/',
   // this is the user's address, and must be set from the browser's wallet
@@ -11,4 +13,4 @@ export const paratii = new Paratii({
   // registry: '0x0'
 })
 
-window.paratii = paratii
+paratii = window.paratii

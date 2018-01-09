@@ -96,9 +96,11 @@ describe('Player: ', function () {
   })
 
   it('play a free video  @watch', function () {
+    // browser.execute(function () { console.log(paratii) })
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')
     browser.waitForExist('.media-control')
+    browser.pause(5000)
   })
 
   it.skip('the video has overlay informations', function () {

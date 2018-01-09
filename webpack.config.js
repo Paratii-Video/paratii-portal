@@ -13,6 +13,8 @@ var functionalTestsDir = testDir + "/functional-tests";
 
 var prod = process.env.NODE_ENV === "production";
 
+console.log(process.env.NODE_ENV)
+
 var config = {
   entry: prod
     ? [scriptsDir + "/index.js"]
@@ -84,12 +86,12 @@ var config = {
         new webpack.DefinePlugin({
           "process.env.NODE_ENV": JSON.stringify("production"),
           "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
-        }),
-        new UglifyJsPlugin({
-          uglifyOptions: {
-            ecma: 6
-          }
         })
+        // new UglifyJsPlugin({
+        //   uglifyOptions: {
+        //     ecma: 6
+        //   }
+        // })
       ]
     : [new webpack.HotModuleReplacementPlugin()]
 };
