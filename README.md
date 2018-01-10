@@ -7,38 +7,41 @@
 * node >= 8.9.0
 * Install [parity](https://github.com/paritytech/parity) (ethereum client):
     * ```$ bash <(curl https://get.parity.io -Lk)```
-    * Then, add the following to your `.bash_profile`: `export PATH=/Applications/Parity\ Ethereum.app/Contents/MacOS:$PATH`
+
+If you are on a Mac, you may need to set the path to parity:
+
+    * add the following to your `.bash_profile`: `export PATH=/Applications/Parity\ Ethereum.app/Contents/MacOS:$PATH`
     * ``` $ source path/to/.bash_profile```
 
 
 
 ## Installing
 
-    $ npm install
+    $ yarn install
 
 
 ## Testing
 
 To run unit tests:
 
-    $ npm run unit-test
+    $ yarn run unit-test
 
 End-to-end tests that can be run by starting up the application in one window:
 
-    $ npm run dev
+    $ yarn run dev
 
 And running the tests in another window:
 
-    $ npm run chimp-test
+    $ yarn run chimp-test
 
 Or, when you are developing:
 
-    $ npm run chimp-test:watch
+    $ yarn run chimp-test:watch
 
 
 ## Development
 
-    $ npm run dev
+    $ yarn run dev
 
 This does two things, concurrently:
 
@@ -49,35 +52,47 @@ Both processes recompile/restart on relevant file changes. In addition, the dev 
 
 To also run the `parity` ethereum client concurrently, instead run:
 
-    $ npm run dev-parity
+    $ yarn run dev-parity
 
 ## Code Quality
 
 ### eslint
 
-    $ npm run lint:scripts
+    $ yarn run lint:scripts
 
 If you want the linter to try to fix errors automatically, you can run:
 
-    $ npm run lint:scripts --fix
+    $ yarn run lint:scripts --fix
 
 ### stylelint
 
-    $ npm run lint:styles
+    $ yarn run lint:styles
 
 _Note: this is used for linting styles written in javascript strings for `styled-components`_
 
 ### flow
 
-    $ npm run flow
+    $ yarn run flow
 
 
 ### Run all checks in sequence
 
-    $ npm run quality
+    $ yarn run quality
 
 ## Build for Production
 
-    $ npm run build
+    $ yarn run build
 
 After this command completes, `index.html` and `bundle.js` will both reside in the `build/` directory.
+
+
+# Troubleshooting
+
+
+If you get the following error:
+
+    [1] Module build failed: Error: ENOENT: no such file or directory, scandir '.../paratii-portal/node_modules/node-sass/vendor'
+
+Rebuilding `node-sass` may help:
+
+    yarn rebild node-sass

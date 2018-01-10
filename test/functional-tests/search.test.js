@@ -17,7 +17,7 @@
 //
 //
 //
-import { createVideo } from './helpers.js'
+import { createVideo } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
 describe('Search video :', function () {

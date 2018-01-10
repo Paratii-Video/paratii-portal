@@ -2,30 +2,48 @@
   "name": "paratii-portal",
   "version": "0.0.1",
   "description": "Paratii Portal",
-  "main": "index.js",
   "repository": "https://github.com/Paratii-Video/paratii-portal.git",
   "author": "Benjamin Baum <benjaminjbaum@gmail.com>, Jelle Gerbrandy <jelle@gerbrandy.com>, and many others",
   "license": "GPL-3.0",
   "scripts": {
-    "dev-client": "npm run clean && npm run prep && webpack --watch --colors --progress",
-    "dev-server": "nodemon --watch src/server --watch node_modules src/server/index.js localhost:8080",
-    "dev": "concurrently \"npm run dev-client\" \"npm run dev-server\"",
-    "build": "npm run clean && npm run prep && NODE_ENV=production webpack --progress --colors",
+    "build": "yarn run clean && yarn run prep && NODE_ENV=production webpack --progress --colors",
     "clean": "rm -rf build/",
-    "chimp-test": "chimp chimp.config.js --mocha --chai",
-    "chimp-test:watch": "npm run chimp-test --watch",
-    "dev-parity": "concurrently \"npm run parity\" \"npm run dev-client\" \"npm run dev-server\"",
+    "chimp-test": "chimp chimp.config.js",
+    "chimp-test:watch": "yarn run chimp-test --watch",
+    "dev": "concurrently \"yarn run dev-client\" \"yarn run dev-server\" \"yarn run dev-parity\"",
+    "dev-parity": "yarn parity",
+    "dev-client": "yarn run clean && yarn run prep && webpack --watch --colors --progress",
+    "dev-server": "NODE_ENV=dev nodemon --watch src/server --watch node_modules src/server/index.js localhost:8080 ",
     "flow": "flow",
-    "lint": "npm run lint:scripts && npm run lint:styles",
-    "lint:fix": "npm run lint:scripts --fix",
+    "lint": "yarn run lint:scripts && yarn run lint:styles",
+    "lint:fix": "yarn run lint:scripts --fix",
     "lint:scripts": "eslint src test --cache",
     "lint:styles": "stylelint 'src/**/*.js'",
     "parity": "parity --config parity-config.toml",
     "precommit": "lint-staged",
     "prep": "mkdir build/ && cp src/index.html build/ && mkdir build/assets/",
-    "quality": "npm run lint:scripts && npm run lint:styles && npm run flow",
+    "quality": "yarn run lint:scripts && yarn run lint:styles && yarn run flow",
     "unit-test": "NODE_ENV=test karma start karma.conf.js",
-    "unit-test:dev": "npm run unit-test -- --single-run false"
+    "unit-test:dev": "yarn run unit-test -- --single-run false"
+  },
+  "babel": {
+    "env": {
+      "production": {
+        "plugins": [
+          "transform-flow-strip-types",
+          "transform-object-rest-spread"
+        ]
+      }
+    },
+    "presets": [
+      "es2015",
+      "react"
+    ],
+    "plugins": [
+      "transform-flow-strip-types",
+      "transform-object-rest-spread",
+      "react-hot-loader/babel"
+    ]
   },
   "lint-staged": {
     "*.js": [
@@ -42,7 +60,6 @@
     "babel-plugin-react-transform": "^3.0.0",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "chai": "^4.1.2",
     "chimp": "^0.50.2",
@@ -90,8 +107,8 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "immutable": "^3.8.2",
+    "paratii-lib": "github:Paratii-Video/paratii-lib#7c9e5c77c8db431f89e716bdfb783fed48cf75e2",
     "js-cookie": "^2.2.0",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#23d62e42fb359d875c6dfecae1600244154f5381",
     "paratii-mediaplayer": "^0.0.11",
     "query-string": "^5.0.1",
     "react": "^16.2.0",

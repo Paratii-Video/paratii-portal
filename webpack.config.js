@@ -13,6 +13,8 @@ var functionalTestsDir = testDir + "/functional-tests";
 
 var prod = process.env.NODE_ENV === "production";
 
+console.log(process.env.NODE_ENV)
+
 var config = {
   entry: prod
     ? [scriptsDir + "/index.js"]
@@ -53,16 +55,6 @@ var config = {
         test: /\.js$/,
         include: [srcDir, testDir],
         loader: "babel-loader",
-        options: {
-          presets: ["es2015", "react"],
-          plugins: prod
-            ? ["transform-flow-strip-types", "transform-object-rest-spread"]
-            : [
-                "transform-flow-strip-types",
-                "transform-object-rest-spread",
-                "react-hot-loader/babel"
-              ]
-        }
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -92,13 +84,14 @@ var config = {
   plugins: prod
     ? [
         new webpack.DefinePlugin({
-          "process.env.NODE_ENV": JSON.stringify("production")
-        }),
-        new UglifyJsPlugin({
-          uglifyOptions: {
-            ecma: 6
-          }
+          "process.env.NODE_ENV": JSON.stringify("production"),
+          "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
         })
+        // new UglifyJsPlugin({
+        //   uglifyOptions: {
+        //     ecma: 6
+        //   }
+        // })
       ]
     : [new webpack.HotModuleReplacementPlugin()]
 };

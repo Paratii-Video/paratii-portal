@@ -35,10 +35,10 @@ import {
   nukeLocalStorage,
   clearUserKeystoreFromLocalStorage,
   getEthAccountFromApp,
-  waitForKeystore,
   getPath,
+  waitForKeystore,
   clearCookies
-} from './helpers.js'
+} from './test-utils/helpers.js'
 // import { add0x } from '../imports/lib/utils.js'
 import { assert } from 'chai'
 
@@ -47,13 +47,10 @@ describe('Profile and accounts workflow:', function () {
     browser.url(getPath('signup'))
 
     // fill in the form
-    browser.waitForClickable('#signup-name')
+    browser.waitForEnabled('#signup-name')
     browser.setValue('#signup-name', 'Guildenstern')
     browser.setValue('#signup-email', 'guildenstern@rosencrantz.com')
     browser.setValue('#signup-password', 'password')
-
-    // submit the form
-    browser.waitForClickable('#signup-submit')
     browser.click('#signup-submit')
 
     // the new user is automaticaly logged in after account creation
@@ -82,7 +79,7 @@ describe('Profile and accounts workflow:', function () {
 
     // fill form
     browser.url(getPath('login'))
-    browser.waitForClickable('#login-email')
+    browser.waitForEnabled('#login-email')
     browser.setValue('#login-email', 'guildenstern@rosencrantz.com')
     browser.setValue('#login-password', 'password')
     browser.click('#login-submit')

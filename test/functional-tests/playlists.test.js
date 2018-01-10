@@ -17,7 +17,7 @@
 //
 //
 //
-import { assertUserIsLoggedIn, createVideo, createUserAndLogin, getEthAccountFromApp } from './helpers.js'
+import { assertUserIsLoggedIn, createVideo, createUserAndLogin, getEthAccountFromApp } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
 function createPlaylist () {
@@ -43,7 +43,7 @@ function fakeVideoUnlock (address) {
   // Transactions.insert(transaction)
 }
 
-describe('price tag status', function () {
+describe('Price tag status', function () {
   it.skip('when the video has no price', () => {
     createUserAndLogin(browser)
     server.execute(createVideo, '12345', 'Test 1', '', '', [''], 0)

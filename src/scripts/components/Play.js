@@ -57,8 +57,11 @@ class Play extends Component<Props, void> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
+    console.log('will receive')
+    console.log(this.props.video)
     if (nextProps.video && !this.props.video) {
       const nextVideo: VideoRecord = nextProps.video
+      console.log(nextProps.video)
 
       CreatePlayer({
         selector: '#player',
@@ -70,7 +73,20 @@ class Play extends Component<Props, void> {
     }
   }
 
+  componentDidMount (): void {
+    const videoId = this.props.match.params.id
+
+    CreatePlayer({
+      selector: '#player',
+      source:
+      `https://gateway.paratii.video/ipfs/${videoId}`,
+      mimeType: 'video/mp4',
+      ipfsHash: videoId
+    })
+  }
+
   render () {
+    console.log('render')
     return (
       <Wrapper>
         <Body>
