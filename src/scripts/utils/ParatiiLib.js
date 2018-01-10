@@ -2,7 +2,7 @@
 
 import { Paratii } from 'paratii-lib/lib/paratii'
 
-export let paratii
+import type { ParatiiLib } from 'types/ApplicationTypes'
 
 window.paratii = new Paratii({
   // ...config,
@@ -13,4 +13,4 @@ window.paratii = new Paratii({
   // registry: '0x0'
 })
 
-paratii = window.paratii
+export const paratii: ParatiiLib = window.paratii
