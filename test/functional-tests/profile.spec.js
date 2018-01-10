@@ -35,14 +35,16 @@ import {
   nukeLocalStorage,
   clearUserKeystoreFromLocalStorage,
   getEthAccountFromApp,
-  waitForKeystore
+  waitForKeystore,
+  getPath,
+  clearCookies
 } from './helpers.js'
 // import { add0x } from '../imports/lib/utils.js'
 import { assert } from 'chai'
 
 describe('Profile and accounts workflow:', function () {
   it('register a new user', function () {
-    browser.url('http://localhost:8080/signup')
+    browser.url(getPath('signup'))
 
     // fill in the form
     browser.waitForClickable('#signup-name')
@@ -72,6 +74,23 @@ describe('Profile and accounts workflow:', function () {
     // browser.pause(1000)
     // the user is now logged in
     // assertUserIsLoggedIn(browser)
+  })
+
+  it('login', () => {
+    // clear Cookies
+    clearCookies()
+
+    // fill form
+    browser.url(getPath('login'))
+    browser.waitForClickable('#login-email')
+    browser.setValue('#login-email', 'guildenstern@rosencrantz.com')
+    browser.setValue('#login-password', 'password')
+    browser.click('#login-submit')
+
+    // verify page
+    browser.waitForExist('#profile-email', 'page did not load')
+    assert.equal(browser.getUrl(), getPath('profile'), 'not redirect to profile page')
+    assert.equal(browser.getText('#profile-email'), 'guildenstern@rosencrantz.com', 'not same email')
   })
 
   it.skip('login as an existing user on a device with no keystore - use existing anonymous keystore ', function () {
@@ -652,6 +671,19 @@ describe('Profile and accounts workflow:', function () {
       assert.equal(browser.isVisible('.modal-profile'), true)
       browser.waitForVisible('.profile-user-email')
       assert.equal(browser.getText('.profile-user-email'), 'guildenstern@rosencrantz.com')
+    })
+  })
+
+  describe('profile redirects', () => {
+    it('should redirect to login page if user not logged in', () => {
+      // clear Cookies
+      clearCookies()
+
+      browser.url(getPath('profile'))
+      const loginUrl = RegExp(getPath('login'))
+      assert.match(browser.getUrl(), loginUrl, 'it is not login page')
+      const profileUrl = RegExp(getPath('profile'))
+      assert.notMatch(browser.getUrl(), profileUrl, 'it is the profile page')
     })
   })
 })

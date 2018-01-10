@@ -18,7 +18,7 @@ const sleep = (ms) => {
 
 export const login = (email: string, password: string) => (dispatch: Dispatch<*>) => {
   dispatch(loginRequested())
-  sleep(2000).then(() => {
+  sleep(200).then(() => {
     Cookies.set('email', email)
     dispatch(loginSuccess({email}))
   })

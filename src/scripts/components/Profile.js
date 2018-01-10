@@ -39,7 +39,7 @@ class Profile extends Component<Props, void> {
     return (
       <Wrapper>
         <Title>{name}</Title>
-        <Label>{email}</Label>
+        <Label id='profile-email'>{email}</Label>
         <LogoutButton />
       </Wrapper>
     )
