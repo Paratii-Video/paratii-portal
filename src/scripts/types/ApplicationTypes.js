@@ -21,3 +21,11 @@ export type RootState = {
 export type ParatiiLibConfig = {
   provider: string
 };
+
+export type ParatiiLib = {
+  core: {
+    vids: {
+      get: (id: string) => ?Object
+    }
+  }
+};
