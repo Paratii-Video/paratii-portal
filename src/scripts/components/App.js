@@ -45,6 +45,10 @@ class App extends Component<Props, void> {
           <Logo src={logo} alt='logo' />
         </Header>
         <Route
+          exact path='/'
+          component={DebugContainer}
+        />
+        <Route
           path={`${match.url}uploader/upload-file`}
           component={UploadFileContainer}
         />
