@@ -30,7 +30,7 @@ export type ParatiiLibConfig = {
   provider: string
 };
 
-// TODO move this into paratii-lib repo`
+// TODO move this into paratii-lib repo
 export type ParatiiLib = {
   core: {
     vids: {
