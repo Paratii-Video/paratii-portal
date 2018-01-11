@@ -30,12 +30,15 @@ function RequiresLogin (WrappedComponent, loginRequired) {
         }
         if (!isLogged) {
           if (shouldKeepUrl) {
-            to.search = queryString.stringify({returnUrl: location.pathname + location.search})
+            to.search = queryString.stringify({returnPath: location.pathname, returnSearch: location.search})
           }
         } else {
-          const returnUrl = queryString.parse(location.search).returnUrl
-          if (returnUrl) {
-            to.pathname = returnUrl
+          const {returnPath, returnSearch} = queryString.parse(location.search)
+          if (returnPath) {
+            to.pathname = returnPath
+          }
+          if (returnSearch) {
+            to.search = returnSearch
           }
         }
 
