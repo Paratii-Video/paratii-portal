@@ -10,27 +10,30 @@ const reducer = {
   [LOGIN_REQUESTED]: (
     state: UserRecord
   ): UserRecord => {
-    return state
-      .set('isLoggingIn', true)
-      .set('email', null)
-      .set('name', null)
+    return state.merge({
+      isLoggingIn: true,
+      email: null,
+      name: null
+    })
   },
   [LOGIN_SUCCESS]: (
     state: UserRecord,
     { payload }: Action<{email: string}>
   ): UserRecord => {
-    return state
-      .set('isLoggingIn', false)
-      .set('email', payload.email)
+    return state.merge({
+      isLoggingIn: false,
+      email: payload.email
+    })
   },
   [LOGOUT]: (
     state: UserRecord
   ): UserRecord => {
-    return state
-      .set('isLoggingIn', false)
-      .set('email', null)
-      .set('name', null)
-      .set('keepUrl', false)
+    return state.merge({
+      isLoggingIn: false,
+      email: null,
+      name: null,
+      keepUrl: false
+    })
   }
 }
 
