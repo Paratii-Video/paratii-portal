@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Wrapper from './foundations/Wrapper'
 
@@ -15,7 +16,12 @@ class Debug extends Component {
   render () {
     return (
       <Wrapper>
-        <Title>Debug page</Title>
+        <pre>
+          <Title>Debug page</Title>
+          <Link to="/play/foo">Play a video</Link>
+          <br />
+          <Link to="/uploader/upload-file">Upload a file</Link>
+        </pre>
       </Wrapper>
     )
   }
