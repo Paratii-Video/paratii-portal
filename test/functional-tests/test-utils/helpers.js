@@ -35,6 +35,14 @@ export const paratii = new Paratii({
   address: address,
   privateKey: privateKey
 })
+
+export const getPath = (path) => {
+  return `http://localhost:8080/${path}`
+}
+
+export const clearCookies = () => {
+  browser.deleteCookie('email')
+}
 //
 // // let web3 = paratii.web3
 // // export { web3 }

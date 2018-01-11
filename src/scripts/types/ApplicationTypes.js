@@ -1,6 +1,7 @@
 /* @flow */
 
 import VideoRecord from 'records/VideoRecords'
+import UserRecord from 'records/UserRecords'
 
 export type RouteMatch = {
   path: string,
@@ -9,19 +10,27 @@ export type RouteMatch = {
   params: Object
 };
 
+export type Location = {
+  pathname: string,
+  search: string,
+  state: Object
+};
+
 export type Action<T> = {
   type: string,
   payload: T
 };
 
 export type RootState = {
-  video: ?VideoRecord
+  video: ?VideoRecord,
+  user: ?UserRecord
 };
 
 export type ParatiiLibConfig = {
   provider: string
 };
 
+// TODO move this into paratii-lib repo
 export type ParatiiLib = {
   core: {
     vids: {

@@ -1,6 +1,7 @@
 /* @flow */
 
 import { Paratii } from 'paratii-lib/lib/paratii'
+
 import type { ParatiiLib } from 'types/ApplicationTypes'
 
 window.paratii = new Paratii({

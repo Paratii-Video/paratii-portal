@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-
-const Wrapper = styled.div`
-  font-size: 20px;
-`
+import Wrapper from './foundations/Wrapper'
 
 const Title = styled.header`
   background-color: #fff;
