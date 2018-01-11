@@ -6,6 +6,9 @@ import styled from 'styled-components'
 import logo from 'assets/img/paratii_logo.png'
 
 import UploadFileContainer from 'containers/UploadFileContainer'
+import SignupContainer from 'containers/SignupContainer'
+import LoginContainer from 'containers/LoginContainer'
+import ProfileContainer from 'containers/ProfileContainer'
 import PlayContainer from 'containers/PlayContainer'
 import DebugContainer from 'containers/DebugContainer'
 
@@ -38,7 +41,6 @@ const Logo = styled.img`
 class App extends Component<Props, void> {
   render () {
     const { match } = this.props
-
     return (
       <Wrapper>
         <Header>
@@ -51,6 +53,18 @@ class App extends Component<Props, void> {
         <Route
           path={`${match.url}uploader/upload-file`}
           component={UploadFileContainer}
+        />
+        <Route
+          path={`${match.url}signup`}
+          component={SignupContainer}
+        />
+        <Route
+          path={`${match.url}login`}
+          component={LoginContainer}
+        />
+        <Route
+          path={`${match.url}profile`}
+          component={ProfileContainer}
         />
         <Route path={`${match.url}play/:id`} component={PlayContainer} />
         <Route
