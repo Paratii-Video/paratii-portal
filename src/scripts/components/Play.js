@@ -56,22 +56,22 @@ class Play extends Component<Props, void> {
     }
   }
 
-  componentWillReceiveProps (nextProps: Props): void {
-    console.log('will receive')
-    console.log(this.props.video)
-    if (nextProps.video && !this.props.video) {
-      const nextVideo: VideoRecord = nextProps.video
-      console.log(nextProps.video)
-
-      CreatePlayer({
-        selector: '#player',
-        source:
-        `https://gateway.paratii.video/ipfs/${nextVideo.get('ipfsData')}`,
-        mimeType: 'video/mp4',
-        ipfsHash: nextVideo.get('ipfsData')
-      })
-    }
-  }
+  // componentWillReceiveProps (nextProps: Props): void {
+  //   console.log('will receive')
+  //   console.log(this.props.video)
+  //   if (nextProps.video && !this.props.video) {
+  //     const nextVideo: VideoRecord = nextProps.video
+  //     console.log(nextProps.video)
+  //
+  //     CreatePlayer({
+  //       selector: '#player',
+  //       source:
+  //       `https://gateway.paratii.video/ipfs/${nextVideo.get('ipfsData')}`,
+  //       mimeType: 'video/mp4',
+  //       ipfsHash: nextVideo.get('ipfsData')
+  //     })
+  //   }
+  // }
 
   componentDidMount (): void {
     const videoId = this.props.match.params.id
