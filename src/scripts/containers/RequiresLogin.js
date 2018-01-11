@@ -1,7 +1,8 @@
 import React from 'react'
 import { Redirect } from 'react-router'
 import { connect } from 'react-redux'
-import { isLogged, shouldKeepUrl } from 'selectors/index'
+import { getShouldKeepUrl } from 'selectors/index'
+import { getIsLoggedIn } from 'selectors/UserSelectors'
 import type { RootState, Location } from 'types/ApplicationTypes'
 
 import queryString from 'query-string'
@@ -48,8 +49,8 @@ function RequiresLogin (WrappedComponent, loginRequired) {
   }
 
   const mapStateToProps = (state: RootState) => ({
-    isLogged: isLogged(state),
-    shouldKeepUrl: shouldKeepUrl(state)
+    isLogged: getIsLoggedIn(state),
+    shouldKeepUrl: getShouldKeepUrl(state)
   })
   const mapDispatchToProps = dispatch => ({})
 

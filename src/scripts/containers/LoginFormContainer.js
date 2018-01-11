@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 
 import LoginForm from 'components/LoginForm'
 import { login } from 'actions/UserActions'
-import { isLoggingIn } from 'selectors/index'
+import { getIsLoggingIn } from 'selectors/index'
 
 import type { RootState } from 'types/ApplicationTypes'
 
@@ -46,7 +46,7 @@ class LoginFormContainer extends Component<Props, void> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  isLoggingIn: isLoggingIn(state)
+  isLoggingIn: getIsLoggingIn(state)
 })
 
 const mapDispatchToProps = dispatch => ({

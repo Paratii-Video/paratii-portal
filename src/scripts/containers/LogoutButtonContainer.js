@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import LogoutButton from 'components/LogoutButton'
 import { logout } from 'actions/UserActions'
-import { isLogged } from 'selectors/index'
+import { getIsLoggedIn } from 'selectors/UserSelectors'
 
 import type { RootState } from 'types/ApplicationTypes'
 
@@ -29,7 +29,7 @@ class LogoutButtonContainer extends Component<Props, void> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  isLogged: isLogged(state)
+  isLogged: getIsLoggedIn(state)
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -107,8 +107,8 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "immutable": "^3.8.2",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#7c9e5c77c8db431f89e716bdfb783fed48cf75e2",
     "js-cookie": "^2.2.0",
+    "paratii-lib": "github:Paratii-Video/paratii-lib#7c9e5c77c8db431f89e716bdfb783fed48cf75e2",    
     "paratii-mediaplayer": "^0.0.11",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
@@ -118,6 +118,7 @@
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1",
     "streamspeed": "^1.1.0",
     "styled-components": "^2.3.3"
   }
