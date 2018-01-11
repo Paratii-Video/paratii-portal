@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Button from './foundations/Button'
+import Input from './foundations/Input'
 
 type Props = {
   onSubmit: () => void,
@@ -12,20 +14,6 @@ type Props = {
 const Form = styled.form`
   font-size: 20px;
   margin: 10px;
-`
-
-const Input = styled.input`
-  height: 35px;
-  font-size: 14px;
-  font-weight: 500;
-  display: block;
-`
-
-const Button = styled.button`
-  display: block;
-  height: 35px;
-  font-size: 14px;
-  font-weight: 500;
 `
 
 class LoginForm extends Component<Props, void> {
