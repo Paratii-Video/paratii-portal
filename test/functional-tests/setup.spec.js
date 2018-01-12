@@ -10,9 +10,14 @@ chai.use(chaiAsPromised)
 
 before(async function (done) {
   await paratii.eth.deployContracts()
-  let registryAddress = paratii.eth.getRegistryAddress()
-  console.log(registryAddress)
-  browser.execute(function () { window.paratii.setRegistryAddress(registryAddress) })
+
+  // we open the browser and save the registryAddress in localStorage
+  // where it will be picked up by paratii-lib (in ParatiiLib.js)
+  browser.url(`http://localhost:8080/`)
+  browser.execute(
+    function (registryAddress) { localStorage.setItem('paratii.registry', registryAddress) },
+    await paratii.eth.getRegistryAddress()
+  )
 
   browser.addCommand('waitForClickable', function (selector, timeout) {
     this.waitForVisible(selector, timeout)

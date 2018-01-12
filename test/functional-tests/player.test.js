@@ -57,7 +57,7 @@ describe('Player: ', function () {
 
     let ipfsInstance = await paratii.ipfs.getIPFSInstance()
     // let directory = 'test/functional-tests/data/QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB/1440.ts'
-    // yah7ya will implement the next function:
+    // the next function should now be available
     // let result = await paratii.ipfs.addDirectory(directory, {recursive: true})
 
 
@@ -90,17 +90,16 @@ describe('Player: ', function () {
   it('should have basic flow in place', function () {
     // set up the test and add a video via paratii-lib
     // there should be a player here
+
     browser.url(`http://localhost:8080/play/${videoId}`)
     expect('#player').to.exist
     // no need to test all controlers - they are tested in paratii-mediaplayer
   })
 
-  it('play a free video  @watch', function () {
-    // browser.execute(function () { console.log(paratii) })
+  it('play a free video  @watch', async function () {
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')
     browser.waitForExist('.media-control')
-    browser.pause(5000)
   })
 
   it.skip('the video has overlay informations', function () {

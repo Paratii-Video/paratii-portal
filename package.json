@@ -108,7 +108,7 @@
     "bluebird": "^3.5.1",
     "immutable": "^3.8.2",
     "js-cookie": "^2.2.0",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#7c9e5c77c8db431f89e716bdfb783fed48cf75e2",    
+    "paratii-lib": "github:Paratii-Video/paratii-lib#b3d16a59029c1c9b2a51e6879ba5a4b33c5d4acd",
     "paratii-mediaplayer": "^0.0.11",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
