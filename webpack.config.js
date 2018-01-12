@@ -13,7 +13,6 @@ var functionalTestsDir = testDir + "/functional-tests";
 
 var prod = process.env.NODE_ENV === "production";
 
-console.log(process.env.NODE_ENV)
 
 var config = {
   entry: prod
@@ -81,19 +80,35 @@ var config = {
     : {
         hot: true
       },
-  plugins: prod
-    ? [
+  plugins:
+    [
         new webpack.DefinePlugin({
-          "process.env.NODE_ENV": JSON.stringify("production"),
+          "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
           "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
-        })
+        }),
+        new webpack.HotModuleReplacementPlugin()
         // new UglifyJsPlugin({
         //   uglifyOptions: {
         //     ecma: 6
         //   }
         // })
       ]
-    : [new webpack.HotModuleReplacementPlugin()]
+
+  // plugins: prod
+  //   ? [
+  //       new webpack.DefinePlugin({
+  //         "process.env.NODE_ENV": JSON.stringify("production"),
+  //         "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
+  //       })
+  //       new UglifyJsPlugin({
+  //         uglifyOptions: {
+  //           ecma: 6
+  //         }
+  //       })
+  //     ]
+  //   : [new webpack.HotModuleReplacementPlugin()]
 };
 
 module.exports = config;
+
+console.log(process.env.NODE_ENV)

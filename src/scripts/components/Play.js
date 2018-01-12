@@ -74,14 +74,14 @@ class Play extends Component<Props, void> {
   // }
 
   componentDidMount (): void {
-    const videoId = this.props.match.params.id
-
+    // const videoId = this.props.match.params.id
+    const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
     CreatePlayer({
       selector: '#player',
       source:
-      `https://gateway.paratii.video/ipfs/${videoId}`,
+      `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
       mimeType: 'video/mp4',
-      ipfsHash: videoId
+      ipfsHash: ipfsHash
     })
   }
 

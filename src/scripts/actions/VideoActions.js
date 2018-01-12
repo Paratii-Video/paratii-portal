@@ -1,7 +1,7 @@
 /* @flow */
 
 import { createAction } from 'redux-actions'
-import { paratii } from 'utils/ParatiiLib'
+// import { paratii } from 'utils/ParatiiLib'
 
 import { VIDEO_DATA_LOADED } from 'constants/ActionConstants'
 
@@ -10,8 +10,9 @@ import type { Dispatch } from 'redux'
 export const videoDataLoaded = createAction(VIDEO_DATA_LOADED)
 
 export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
-  let videoInfo = await paratii.core.vids.get(id)
-  console.log(videoInfo)
+  // let videoInfo = await paratii.core.vids.get(id)
+  // console.log(videoInfo)
+
   // paratii().then((lib) => {
   //   lib.core.vids
   //     .create({
