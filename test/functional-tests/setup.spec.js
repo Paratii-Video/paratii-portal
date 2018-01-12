@@ -15,7 +15,7 @@ before(async function (done) {
   // where it will be picked up by paratii-lib (in ParatiiLib.js)
   browser.url(`http://localhost:8080/`)
   browser.execute(
-    function (registryAddress) { localStorage.setItem('paratii.registry', registryAddress) },
+    function (registryAddress) { sessionStorage.setItem('paratii.registry', registryAddress) },
     await paratii.eth.getRegistryAddress()
   )
 

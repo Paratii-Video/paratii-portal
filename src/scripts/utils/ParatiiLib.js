@@ -8,7 +8,7 @@ import type { ParatiiLib } from 'types/ApplicationTypes'
 // In test mode, we get the values for the registry and other deployment-specific settings from the Session
 let testMode = true
 if (testMode) {
-  let registryAddress = localStorage.getItem('paratii.registry')
+  let registryAddress = sessionStorage.getItem('paratii.registry')
   if (registryAddress) {
     window.paratii = new Paratii({
     // ...config,
