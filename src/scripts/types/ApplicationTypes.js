@@ -16,6 +16,15 @@ export type Location = {
   state: Object
 };
 
+export type UploadProgress = {
+  progress: number
+}
+
+export type VideoInfo = {
+  title: string,
+  description: string
+}
+
 export type Action<T> = {
   type: string,
   payload: T
