@@ -43,6 +43,16 @@ import {
 import { assert } from 'chai'
 
 describe('Profile and accounts workflow:', function () {
+
+  it('arriving on a fresh device should create a keystore in localstorage @watch', async function() {
+    // as spec'd in https://github.com/Paratii-Video/paratii-portal/wiki/Portal-Specs:-wallet-handling
+    browser.url(getPath('/'))
+
+    // check localStorage
+    let keystore = waitForKeystore(browser)
+    console.log(keystore)
+
+  })
   it('register a new user', function () {
     browser.url(getPath('signup'))
 

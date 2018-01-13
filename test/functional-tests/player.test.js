@@ -96,7 +96,7 @@ describe('Player: ', function () {
     // no need to test all controlers - they are tested in paratii-mediaplayer
   })
 
-  it('play a free video  @watch', async function () {
+  it('play a free video', async function () {
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')
     browser.waitForExist('.media-control')

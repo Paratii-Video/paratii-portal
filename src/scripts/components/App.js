@@ -14,12 +14,14 @@ import DebugContainer from 'containers/DebugContainer'
 
 import type { RouteMatch } from 'types/ApplicationTypes'
 
+import { setupKeystore } from 'utils/ParatiiLib'
+
 type Props = {
   match: RouteMatch
 };
 
 const Wrapper = styled.div`
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -40,6 +42,7 @@ const Logo = styled.img`
 
 class App extends Component<Props, void> {
   render () {
+    setupKeystore()
     const { match } = this.props
     return (
       <Wrapper>
