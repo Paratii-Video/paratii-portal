@@ -3,6 +3,6 @@ module.exports = {
   mocha: true,
   chai: true,
   webdriverio: {
-    waitForTimeout: 10000
+    waitforTimeout: 10000
   }
 }
