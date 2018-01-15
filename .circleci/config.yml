@@ -16,13 +16,13 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
-      - run: yarn run quality
-      - run: yarn run unit-test
+      - run: yarn quality
+      - run: yarn unit-test
       - run:
-          command: yarn run dev
+          command: yarn dev
           background: true
-      - run: yarn run chimp-test
-      - run: yarn run build
+      - run: yarn chimp-test
+      - run: yarn build
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
