@@ -11,7 +11,7 @@ jobs:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           - v1-dependencies-
       - run: bash <(curl https://get.parity.io -Lk)
-      - run: yarn run install
+      - run: yarn install
       - save_cache:
           paths:
             - node_modules
