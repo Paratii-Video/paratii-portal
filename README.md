@@ -4,7 +4,8 @@
 
 ## Prerequisites
 
-* node >= 8.9.0
+* nodejs >= 8.9.0
+* yarn
 * Install [parity](https://github.com/paritytech/parity) (ethereum client):
     * ```$ bash <(curl https://get.parity.io -Lk)```
 
@@ -17,7 +18,10 @@ If you are on a Mac, you may need to set the path to parity:
 
 ## Installing
 
+    $ git clone https://github.com/Paratii-Video/paratii-portal
+    $ cd paratii-lib
     $ yarn install
+
 
 
 ## Testing

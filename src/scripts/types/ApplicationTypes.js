@@ -35,6 +35,13 @@ export type ParatiiLib = {
   core: {
     vids: {
       get: (id: string) => ?Object
+    },
+  },
+  eth: {
+    wallet: {
+      decrypt: (string, password: string) => Object,
+      encrypt: (password: string) => Object,
+      newMnemonic: () => string
     }
   }
 };
