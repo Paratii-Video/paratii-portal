@@ -132,18 +132,16 @@ export const clearCookies = () => {
 //   })
 // }
 //
-// export function waitForKeystore (browser) {
-//   let userId = browser.execute(function () {
-//     return Meteor.userId()
-//   }).value
-//
-//   browser.waitUntil(function () {
-//     return browser.execute(function (userId) {
-//       return localStorage.getItem(`keystore-${userId}`)
-//     }, userId).value
-//   })
-//   return userId
-// }
+export function waitForKeystore (browser, key='keystore-anon') {
+  browser.waitUntil(function () {
+    return browser.execute(function (key) {
+      return localStorage.getItem(key)
+    }, key).value
+  })
+  return browser.execute(function (key) {
+    return localStorage.getItem(key)
+  }, key).value
+}
 // export function assertUserIsNotLoggedIn (browser) {
 //   // assert that the user is logged in
 //   let userId = browser.execute(function () {

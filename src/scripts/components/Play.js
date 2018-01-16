@@ -68,13 +68,12 @@ class Play extends Component<Props, void> {
   //       source:
   //       `https://gateway.paratii.video/ipfs/${nextVideo.get('ipfsData')}`,
   //       mimeType: 'video/mp4',
-  //       ipfsHash: nextVideo.get('ipfsData')
+  //       ipfsHash: nextVideo.get('ipfsHash')
   //     })
   //   }
   // }
 
   componentDidMount (): void {
-    // const videoId = this.props.match.params.id
     const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
     CreatePlayer({
       selector: '#player',
@@ -86,11 +85,11 @@ class Play extends Component<Props, void> {
   }
 
   render () {
-    console.log('render')
+    const videoId = this.props.match.params.id
     return (
       <Wrapper>
         <Body>
-          <Title>Play Video:</Title>
+          <Title>Play Video: { videoId } </Title>
           <Player id="player" />
         </Body>
       </Wrapper>
