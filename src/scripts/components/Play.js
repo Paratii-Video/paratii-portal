@@ -50,9 +50,13 @@ class Play extends Component<Props, void> {
     super(props)
 
     const videoId = this.props.match.params.id
+    console.log('HERRRRRRRRRRRRRRE')
+    console.log(this.props.match.params.id)
 
     if (videoId) {
       this.props.fetchVideo(videoId)
+    } else {
+      throw Error('We should raise a 404 error here and redirect to the player')
     }
   }
 
@@ -73,12 +77,16 @@ class Play extends Component<Props, void> {
   //   }
   // }
 
-  componentDidMount (): void {
+  // componentDidUpdate (prevProps, prevState){
+  // }
+  componentWillReceiveProps (nextProps: Props): void {
     const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
+    console.log('componentDidMount')
+    console.log(this.props.video)
+    console.log(nextProps.video)
     CreatePlayer({
       selector: '#player',
-      source:
-      `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
+      source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
       mimeType: 'video/mp4',
       ipfsHash: ipfsHash
     })

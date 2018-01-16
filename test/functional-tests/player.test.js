@@ -59,7 +59,6 @@ describe('Player: ', function () {
     let directory = 'test/functional-tests/data/QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
     // the next function should now be available
     let result = await paratii.ipfs.uploader.addDirectory(directory) //, {recursive: true})
-    console.log(result)
 
     // browser.addCommand('waitUntilVideoIsPlaying', () => {
     //   browser.waitUntil(() => (
