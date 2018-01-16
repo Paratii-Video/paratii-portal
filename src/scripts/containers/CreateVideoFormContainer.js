@@ -12,7 +12,7 @@ type Props = {
   updateUploadInfo: (title: string, description: string) => void
 }
 
-class VideoFormContainer extends Component<Props, void> {
+class CreateVideoFormContainer extends Component<Props, void> {
   constructor (props) {
     super(props)
     this.state = {title: '', description: ''}
@@ -48,4 +48,4 @@ const mapDispatchToProps = dispatch => ({
   updateUploadInfo: bindActionCreators(updateUploadInfo, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(VideoFormContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateVideoFormContainer)

@@ -1,19 +1,27 @@
 import { connect } from 'react-redux'
 
-import { Component } from 'react'
+import React, { Component } from 'react'
 
 import type { RootState } from 'types/ApplicationTypes'
 
 import { getIsUploading, getHasUploadInfo } from 'selectors/Index'
+import UploadFileContainer from 'components/UploadFileContainer'
+import CreateVideoFormContainer from 'components/CreateVideoFormContainer'
 
 type Props = {
   isUploading: boolean,
   hasUploadInfo: boolean
 }
 
-class UploadFileContainer extends Component<Props, void> {
+class UploadContainer extends Component<Props, void> {
   render () {
-    return null
+    const { isUploading, hasUploadInfo } = this.props
+    return (
+      <div>
+        {!isUploading && <UploadFileContainer />}
+        {isUploading && !hasUploadInfo && <CreateVideoFormContainer />}
+      </div>
+    )
   }
 }
 
@@ -24,4 +32,4 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = dispatch => ({})
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploadFileContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(UploadContainer)

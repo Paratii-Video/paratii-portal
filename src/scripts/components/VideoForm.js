@@ -15,7 +15,7 @@ const Form = styled.form`
   margin: 10px;
 `
 
-class CreateVideo extends Component<Props, void> {
+class VideoForm extends Component<Props, void> {
   render () {
     const { onSubmit, onInputChange } = this.props
     return (
@@ -39,4 +39,4 @@ class CreateVideo extends Component<Props, void> {
   }
 }
 
-export default CreateVideo
+export default VideoForm
