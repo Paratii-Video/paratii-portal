@@ -50,7 +50,9 @@ describe('Profile and accounts workflow:', function () {
 
     // check localStorage
     let keystore = waitForKeystore(browser)
-    console.log(keystore)
+    assert.isOk(keystore)
+    keystore = JSON.parse(keystore)
+    assert.isOk(keystore[0].address)
 
   })
   it('register a new user', function () {
