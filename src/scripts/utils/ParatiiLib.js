@@ -1,6 +1,7 @@
 /* @flow */
 
 import { Paratii } from 'paratii-lib/lib/paratii'
+import { DEFAULT_PASSWORD } from 'constants/ParatiiLibConstants'
 
 import type { ParatiiLib } from 'types/ApplicationTypes'
 
@@ -31,7 +32,7 @@ if (process.env.NODE_ENV === 'test') {
 export const paratii: ParatiiLib = window.paratii
 
 export async function setupKeystore () {
-  let defaultPassword = 'password'
+  let defaultPassword = DEFAULT_PASSWORD
   let mnemonic
   let walletKey = 'keystore-anon'
   let mnemonicKey = 'mnemonic-anon'
