@@ -37,22 +37,27 @@ const playerIsFullScreen = () => !!(
   document.msFullscreenElement
 )
 
+
+
 describe('Player: ', function () {
 
-  // this is  a known videoId defined in fixtures.js
-  let videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
+  let ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
+  let videoId = 'foo'
 
   before(async function () {
 
     await paratii.core.vids.create({
-      id: 'foo',
+      id: videoId,
       owner: address1,
       title: 'Malandrina',
+      ipfsHash: ipfsHash
     })
-    // await paratii.ipfs.add( myverysmalltestvideofile)
-    // , and is typically called in the before or beforeEach functions of the mocha specs
-// Then, in the tests, the only videos you'll have access to are the ones created in the setup. In this case, you could call vids.get('foo') to get the video info
 
+
+    let ipfsInstance = await paratii.ipfs.getIPFSInstance()
+    let directory =  `test/functional-tests/data/${ipfsHash}`
+    // the next function should now be available
+    let result = await paratii.ipfs.uploader.addDirectory(directory) //, {recursive: true})
 
     // browser.addCommand('waitUntilVideoIsPlaying', () => {
     //   browser.waitUntil(() => (
@@ -80,22 +85,15 @@ describe('Player: ', function () {
     // server.execute(createPlaylist, '98765', 'Playlist test', ['12345', '23456'])
   })
 
-  it('should have basic flow in place', function () {
-    // set up the test and add a video via paratii-lib
-    // there should be a player here
+  it('play a video @watch', async function () {
     browser.url(`http://localhost:8080/play/${videoId}`)
     expect('#player').to.exist
-    // no need to test all controlers - they are tested in paratii-mediaplayer
-  })
-
-  it.skip('play a free video', function () {
-    browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')
     browser.waitForExist('.media-control')
-    browser.pause(5000)
   })
 
   it.skip('the video has overlay informations', function () {
+    // This tests should just be very much reduced
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')
     // browser.waitForExist('#video-player')
@@ -110,8 +108,8 @@ describe('Player: ', function () {
     // assert.isTrue(browser.getAttribute('.player-container', 'class').includes('pause'))
   })
 
-  it('click on the progress bar', function () {
-    // Moving this to mediaplayer
+  it.skip('click on the progress bar', function () {
+    // This test should be moved to mediaplayer
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')
     browser.waitForExist('.media-control')

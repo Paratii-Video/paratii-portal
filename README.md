@@ -4,7 +4,8 @@
 
 ## Prerequisites
 
-* node >= 8.9.0
+* nodejs >= 8.9.0
+* yarn
 * Install [parity](https://github.com/paritytech/parity) (ethereum client):
     * ```$ bash <(curl https://get.parity.io -Lk)```
 
@@ -17,31 +18,34 @@ If you are on a Mac, you may need to set the path to parity:
 
 ## Installing
 
-    $ npm install
+    $ git clone https://github.com/Paratii-Video/paratii-portal
+    $ cd paratii-lib
+    $ yarn install
+
 
 
 ## Testing
 
 To run unit tests:
 
-    $ npm run unit-test
+    $ yarn run unit-test
 
 End-to-end tests that can be run by starting up the application in one window:
 
-    $ npm run dev
+    $ yarn run dev
 
 And running the tests in another window:
 
-    $ npm run chimp-test
+    $ yarn run chimp-test
 
 Or, when you are developing:
 
-    $ npm run chimp-test:watch
+    $ yarn run chimp-test:watch
 
 
 ## Development
 
-    $ npm run dev
+    $ yarn run dev
 
 This does two things, concurrently:
 
@@ -52,36 +56,36 @@ Both processes recompile/restart on relevant file changes. In addition, the dev 
 
 To also run the `parity` ethereum client concurrently, instead run:
 
-    $ npm run dev-parity
+    $ yarn run dev-parity
 
 ## Code Quality
 
 ### eslint
 
-    $ npm run lint:scripts
+    $ yarn run lint:scripts
 
 If you want the linter to try to fix errors automatically, you can run:
 
-    $ npm run lint:scripts --fix
+    $ yarn run lint:scripts --fix
 
 ### stylelint
 
-    $ npm run lint:styles
+    $ yarn run lint:styles
 
 _Note: this is used for linting styles written in javascript strings for `styled-components`_
 
 ### flow
 
-    $ npm run flow
+    $ yarn run flow
 
 
 ### Run all checks in sequence
 
-    $ npm run quality
+    $ yarn run quality
 
 ## Build for Production
 
-    $ npm run build
+    $ yarn run build
 
 After this command completes, `index.html` and `bundle.js` will both reside in the `build/` directory.
 
@@ -95,4 +99,4 @@ If you get the following error:
 
 Rebuilding `node-sass` may help:
 
-    npm rebild node-sass
+    yarn rebild node-sass

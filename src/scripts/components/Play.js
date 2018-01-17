@@ -50,47 +50,54 @@ class Play extends Component<Props, void> {
     super(props)
 
     const videoId = this.props.match.params.id
+    console.log('HERRRRRRRRRRRRRRE')
+    console.log(this.props.match.params.id)
 
     if (videoId) {
       this.props.fetchVideo(videoId)
+    } else {
+      throw Error('We should raise a 404 error here and redirect to the player')
     }
   }
 
+  // componentWillReceiveProps (nextProps: Props): void {
+  //   console.log('will receive')
+  //   console.log(this.props.video)
+  //   if (nextProps.video && !this.props.video) {
+  //     const nextVideo: VideoRecord = nextProps.video
+  //     console.log(nextProps.video)
+  //
+  //     CreatePlayer({
+  //       selector: '#player',
+  //       source:
+  //       `https://gateway.paratii.video/ipfs/${nextVideo.get('ipfsData')}`,
+  //       mimeType: 'video/mp4',
+  //       ipfsHash: nextVideo.get('ipfsHash')
+  //     })
+  //   }
+  // }
+
+  // componentDidUpdate (prevProps, prevState){
+  // }
   componentWillReceiveProps (nextProps: Props): void {
-    console.log('will receive')
+    // const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
+    console.log('componentDidMount')
     console.log(this.props.video)
-    if (nextProps.video && !this.props.video) {
-      const nextVideo: VideoRecord = nextProps.video
-      console.log(nextProps.video)
-
-      CreatePlayer({
-        selector: '#player',
-        source:
-        `https://gateway.paratii.video/ipfs/${nextVideo.get('ipfsData')}`,
-        mimeType: 'video/mp4',
-        ipfsHash: nextVideo.get('ipfsData')
-      })
-    }
-  }
-
-  componentDidMount (): void {
-    const videoId = this.props.match.params.id
-
+    console.log(nextProps.video)
     CreatePlayer({
       selector: '#player',
-      source:
-      `https://gateway.paratii.video/ipfs/${videoId}`,
+      source: `https://gateway.paratii.video/ipfs/${nextProps.video.ipfsHash}/master.m3u8`,
       mimeType: 'video/mp4',
-      ipfsHash: videoId
+      ipfsHash: nextProps.video.ipfsHash
     })
   }
 
   render () {
-    console.log('render')
+    const videoId = this.props.match.params.id
     return (
       <Wrapper>
         <Body>
-          <Title>Play Video:</Title>
+          <Title>Play Video: { videoId } </Title>
           <Player id="player" />
         </Body>
       </Wrapper>

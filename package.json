@@ -10,10 +10,10 @@
     "clean": "rm -rf build/",
     "chimp-test": "chimp chimp.config.js",
     "chimp-test:watch": "yarn run chimp-test --watch",
-    "dev": "concurrently \"yarn run dev-client\" \"yarn run dev-server\" \"yarn run parity\"",
-    "dev-client": "yarn run clean && yarn run prep && webpack --watch --colors --progress",
-    "dev-parity": "concurrently \"yarn run parity\" \"yarn run dev-client\" \"yarn run dev-server\"",
-    "dev-server": "nodemon --watch src/server --watch node_modules src/server/index.js localhost:8080",
+    "dev": "concurrently \"yarn run dev-client\" \"yarn run dev-server\" \"yarn run dev-parity\"",
+    "dev-parity": "yarn parity",
+    "dev-client": "yarn run clean && yarn run prep && NODE_ENV=test webpack --watch --colors --progress",
+    "dev-server": "NODE_ENV=test nodemon --watch src/server --watch node_modules src/server/index.js localhost:8080 ",
     "flow": "flow",
     "lint": "yarn run lint:scripts && yarn run lint:styles",
     "lint:fix": "yarn run lint:scripts --fix",
@@ -29,10 +29,16 @@
   "babel": {
     "env": {
       "production": {
-        "plugins": ["transform-flow-strip-types", "transform-object-rest-spread"]
+        "plugins": [
+          "transform-flow-strip-types",
+          "transform-object-rest-spread"
+        ]
       }
     },
-    "presets": ["es2015", "react"],
+    "presets": [
+      "es2015",
+      "react"
+    ],
     "plugins": [
       "transform-flow-strip-types",
       "transform-object-rest-spread",
@@ -104,8 +110,10 @@
     "babel-polyfill": "^6.26.0",
     "bluebird": "^3.5.1",
     "immutable": "^3.8.2",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#c9290e87ccda14682afea03e4e41790825360827",
+    "js-cookie": "^2.2.0",
+    "paratii-lib": "github:Paratii-Video/paratii-lib#23a793dd97edf3ab71980ae782b07ae07459478f",
     "paratii-mediaplayer": "^0.0.11",
+    "query-string": "^5.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
@@ -113,6 +121,7 @@
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1",
     "streamspeed": "^1.1.0",
     "styled-components": "^2.3.3"
   }

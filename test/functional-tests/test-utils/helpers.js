@@ -32,10 +32,18 @@ export const USERADDRESS= '0xdef933d2d0203821af2a1579d77fb42b4f8dcf7b'
 export const USERADDRESS2 = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
 
 export const paratii = new Paratii({
-  provider: 'http://127.0.0.1:8545',
+  provider: 'http://127.0.0.1:8545/rpc',
   address: address,
   privateKey: privateKey
 })
+
+export const getPath = (path) => {
+  return `http://localhost:8080/${path}`
+}
+
+export const clearCookies = () => {
+  browser.deleteCookie('email')
+}
 //
 // // let web3 = paratii.web3
 // // export { web3 }
@@ -236,18 +244,16 @@ before(async function (done) {
 //   })
 // }
 //
-// export function waitForKeystore (browser) {
-//   let userId = browser.execute(function () {
-//     return Meteor.userId()
-//   }).value
-//
-//   browser.waitUntil(function () {
-//     return browser.execute(function (userId) {
-//       return localStorage.getItem(`keystore-${userId}`)
-//     }, userId).value
-//   })
-//   return userId
-// }
+export function waitForKeystore (browser, key='keystore-anon') {
+  browser.waitUntil(function () {
+    return browser.execute(function (key) {
+      return localStorage.getItem(key)
+    }, key).value
+  })
+  return browser.execute(function (key) {
+    return localStorage.getItem(key)
+  }, key).value
+}
 // export function assertUserIsNotLoggedIn (browser) {
 //   // assert that the user is logged in
 //   let userId = browser.execute(function () {

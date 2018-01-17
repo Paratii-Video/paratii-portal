@@ -35,60 +35,71 @@ import {
   nukeLocalStorage,
   clearUserKeystoreFromLocalStorage,
   getEthAccountFromApp,
-  waitForKeystore
+  getPath,
+  waitForKeystore,
+  clearCookies
 } from './test-utils/helpers.js'
 // import { add0x } from '../imports/lib/utils.js'
 import { assert } from 'chai'
 
 describe('Profile and accounts workflow:', function () {
-  beforeEach(function () {
-    browser.url('http://localhost:3000/')
-    browser.execute(nukeLocalStorage)
-    server.execute(resetDb)
+
+  it('arriving on a fresh device should create a keystore in localstorage', async function() {
+    // as spec'd in https://github.com/Paratii-Video/paratii-portal/wiki/Portal-Specs:-wallet-handling
+    browser.url(getPath('/'))
+
+    // check localStorage
+    let keystore = waitForKeystore(browser)
+    assert.isOk(keystore)
+    keystore = JSON.parse(keystore)
+    assert.isOk(keystore[0].address)
+
   })
-
-  it.skip('register a new user', function () {
-    browser.execute(nukeLocalStorage)
-    browser.url('http://localhost:3000')
-
-    // log in as the created user
-    assertUserIsNotLoggedIn(browser)
-
-    browser.url('http://localhost:3000')
-    browser.waitForClickable('#nav-profile')
-    browser.click('#nav-profile')
-
-    browser.waitForClickable('#at-signUp')
-    browser.click('#at-signUp')
+  it('register a new user', function () {
+    browser.url(getPath('signup'))
 
     // fill in the form
-    browser.waitForClickable('[name="at-field-name"]')
-    browser.setValue('[name="at-field-name"]', 'Guildenstern')
-    browser.setValue('[name="at-field-email"]', 'guildenstern@rosencrantz.com')
-    browser.setValue('[name="at-field-password"]', 'password')
-    // .setValue('[name="at-field-password_again"]', 'password')
-
-    // submit the form
-    browser.waitForClickable('#at-btn')
-    browser.click('#at-btn')
+    browser.waitForEnabled('#signup-name')
+    browser.setValue('#signup-name', 'Guildenstern')
+    browser.setValue('#signup-email', 'guildenstern@rosencrantz.com')
+    browser.setValue('#signup-password', 'password')
+    browser.click('#signup-submit')
 
     // the new user is automaticaly logged in after account creation
-    waitForUserIsLoggedIn(browser)
+    // waitForUserIsLoggedIn(browser)
 
     // wait for the keystore to be generated
-    waitForKeystore(browser)
+    // waitForKeystore(browser)
+
     // now a modal should be opened with the seed
-    browser.waitForClickable('#seed')
-    const seed = browser.getText('#seed strong', false)
-    browser.waitForClickable('#btn-check-seed')
-    browser.click('#btn-check-seed')
-    browser.waitForClickable('[name="check_seed"]')
-    browser.setValue('[name="check_seed"]', seed)
-    browser.waitForClickable('#btn-check-seed-finish')
-    browser.click('#btn-check-seed-finish')
-    browser.pause(1000)
+    // browser.waitForClickable('#seed')
+    // const seed = browser.getText('#seed strong', false)
+    // browser.waitForClickable('#btn-check-seed')
+    // browser.click('#btn-check-seed')
+    // browser.waitForClickable('[name="check_seed"]')
+    // browser.setValue('[name="check_seed"]', seed)
+    // browser.waitForClickable('#btn-check-seed-finish')
+    // browser.click('#btn-check-seed-finish')
+    // browser.pause(1000)
     // the user is now logged in
-    assertUserIsLoggedIn(browser)
+    // assertUserIsLoggedIn(browser)
+  })
+
+  it('login', () => {
+    // clear Cookies
+    clearCookies()
+
+    // fill form
+    browser.url(getPath('login'))
+    browser.waitForEnabled('#login-email')
+    browser.setValue('#login-email', 'guildenstern@rosencrantz.com')
+    browser.setValue('#login-password', 'password')
+    browser.click('#login-submit')
+
+    // verify page
+    browser.waitForExist('#profile-email', 'page did not load')
+    assert.equal(browser.getUrl(), getPath('profile'), 'not redirect to profile page')
+    assert.equal(browser.getText('#profile-email'), 'guildenstern@rosencrantz.com', 'not same email')
   })
 
   it.skip('login as an existing user on a device with no keystore - use existing anonymous keystore ', function () {
@@ -669,6 +680,19 @@ describe('Profile and accounts workflow:', function () {
       assert.equal(browser.isVisible('.modal-profile'), true)
       browser.waitForVisible('.profile-user-email')
       assert.equal(browser.getText('.profile-user-email'), 'guildenstern@rosencrantz.com')
+    })
+  })
+
+  describe('profile redirects', () => {
+    it('should redirect to login page if user not logged in', () => {
+      // clear Cookies
+      clearCookies()
+
+      browser.url(getPath('profile'))
+      const loginUrl = RegExp(getPath('login'))
+      assert.match(browser.getUrl(), loginUrl, 'it is not login page')
+      const profileUrl = RegExp(getPath('profile'))
+      assert.notMatch(browser.getUrl(), profileUrl, 'it is the profile page')
     })
   })
 })

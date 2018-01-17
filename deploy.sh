@@ -1,5 +1,11 @@
 #!/bin/bash
-# the 'build_and_deploy.sh' referred to in this script is https://github.com/Paratii-Video/devops/blob/master/files/build_and_deploy.sh
+
+# Usage:
+#   ./deploy.sh production
+#   ./deploy.sh staging
+#   ./deploy.sh production verbose
+
+
 
 if [[ $1 == staging ]]; then
     # ok
@@ -12,5 +18,8 @@ else
     exit
 fi
 
-# ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && fab deploy_portal"
-ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && fab deploy_portal $1 </dev/null >ldeploy_portal.log 2>&1 &"
+if [[ $2 == verbose ]]; then
+    ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && fab deploy_portal:$1 </dev/null"
+else
+    ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && fab deploy_portal:$1 </dev/null >ldeploy_portal.log 2>&1 &"
+fi
