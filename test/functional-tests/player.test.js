@@ -55,7 +55,7 @@ describe('Player: ', function () {
 
 
     let ipfsInstance = await paratii.ipfs.getIPFSInstance()
-    let directory =  `test/functional-tests/data/${ipfsHash}``
+    let directory =  `test/functional-tests/data/${ipfsHash}`
     // the next function should now be available
     let result = await paratii.ipfs.uploader.addDirectory(directory) //, {recursive: true})
 
