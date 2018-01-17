@@ -6,7 +6,7 @@ import Button from './foundations/Button'
 
 type Props = {
   onFileChosen: (file: Object) => void,
-  onUploadRequested: () => void
+  onUploadRequested: (e: Object) => void
 }
 
 class UploadFile extends Component<Props, void> {

@@ -2,6 +2,7 @@
 
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
+import UploadRecord from 'records/UploadRecords'
 
 export type RouteMatch = {
   path: string,
@@ -17,7 +18,7 @@ export type Location = {
 };
 
 export type UploadProgress = {
-  progress: number
+  value: number
 }
 
 export type VideoInfo = {
@@ -32,7 +33,8 @@ export type Action<T> = {
 
 export type RootState = {
   video: ?VideoRecord,
-  user: ?UserRecord
+  user: ?UserRecord,
+  upload: ?UploadRecord
 };
 
 export type ParatiiLibConfig = {

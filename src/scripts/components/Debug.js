@@ -20,7 +20,7 @@ class Debug extends Component {
           <Title>Debug page</Title>
           <Link to="/play/foo">Play a video</Link>
           <br />
-          <Link to="/uploader/upload-file">Upload a file</Link>
+          <Link to="/uploader">Upload a file</Link>
         </pre>
       </Wrapper>
     )

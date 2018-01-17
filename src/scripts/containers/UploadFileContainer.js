@@ -18,6 +18,7 @@ class UploadFileContainer extends Component<Props, void> {
     super(props)
     this.state = {source: null}
     this.handleFileChosen = this.handleFileChosen.bind(this)
+    this.handleUploadRequested = this.handleUploadRequested.bind(this)
   }
 
   handleFileChosen (file) {
@@ -26,8 +27,10 @@ class UploadFileContainer extends Component<Props, void> {
     })
   }
 
-  handleUploadRequested () {
-    this.props.upload(this.state.file.name)
+  handleUploadRequested (e) {
+    e.preventDefault()
+    this.props.upload('file.mp4')
+    // this.props.upload(this.state.file.name)
   }
 
   render () {

@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux'
 
 import React, { Component } from 'react'
 
-import VideoForm from 'components/VideoFormContainer'
-import { updateUploadInfo } from 'actions/UserActions'
+import VideoForm from 'components/VideoForm'
+import { updateUploadInfo } from 'actions/UploadActions'
 
 import type { RootState } from 'types/ApplicationTypes'
 
