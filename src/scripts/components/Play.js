@@ -64,9 +64,12 @@ class Play extends Component<Props, void> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    const ipfsHash = nextProps.video.ipfsHash
+    let ipfsHash = ''
+    if (nextProps.video) {
+      ipfsHash = nextProps.video.ipfsHash
+    }
     console.log('componentDidMount')
-    console.log(this.props)
+    console.log(this.props.video)
     console.log(nextProps.video)
     CreatePlayer({
       selector: '#player',
