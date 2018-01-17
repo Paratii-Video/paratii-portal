@@ -41,8 +41,7 @@ const playerIsFullScreen = () => !!(
 
 describe('Player: ', function () {
 
-  // this is  a known videoId defined in fixtures.js
-  let ipfsHash = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
+  let ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
   let videoId = 'foo'
 
   before(async function () {
@@ -56,7 +55,7 @@ describe('Player: ', function () {
 
 
     let ipfsInstance = await paratii.ipfs.getIPFSInstance()
-    let directory = 'test/functional-tests/data/QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
+    let directory =  `test/functional-tests/data/${ipfsHash}``
     // the next function should now be available
     let result = await paratii.ipfs.uploader.addDirectory(directory) //, {recursive: true})
 

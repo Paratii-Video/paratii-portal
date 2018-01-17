@@ -80,15 +80,15 @@ class Play extends Component<Props, void> {
   // componentDidUpdate (prevProps, prevState){
   // }
   componentWillReceiveProps (nextProps: Props): void {
-    const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
+    // const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
     console.log('componentDidMount')
     console.log(this.props.video)
     console.log(nextProps.video)
     CreatePlayer({
       selector: '#player',
-      source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
+      source: `https://gateway.paratii.video/ipfs/${nextProps.video.ipfsHash}/master.m3u8`,
       mimeType: 'video/mp4',
-      ipfsHash: ipfsHash
+      ipfsHash: nextProps.video.ipfsHash
     })
   }
 
