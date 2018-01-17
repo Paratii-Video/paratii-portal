@@ -8,13 +8,15 @@ class Upload extends ImmutableRecord({
   isUploading: false,
   progress: null,
   source: '',
-  video: null
+  video: null,
+  ipfsHash: null
 }) {
   id: string;
   isUploading: boolean;
   progress: UploadProgress;
   source: string;
   video: VideoInfo;
+  ipfsHash: string;
 }
 
 export default Upload

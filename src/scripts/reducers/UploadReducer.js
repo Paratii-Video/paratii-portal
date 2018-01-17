@@ -24,11 +24,13 @@ const reducer = {
     })
   },
   [UPLOAD_SUCCESS]: (
-    state: UploadRecord
+    state: UploadRecord,
+    { payload }
   ): UploadRecord => {
     return state.merge({
       isUploading: false,
-      progress: null
+      progress: null,
+      ipfsHash: payload.ipfsHash
     })
   }
 }
