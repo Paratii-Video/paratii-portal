@@ -18,12 +18,15 @@ const sleep = (ms) => {
 
 export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   dispatch(uploadRequested())
+<<<<<<< HEAD
 
   console.log(`Uploading file ${file.name}`)
+=======
+>>>>>>> a418520949bba2953d692ad32c41e13700f41f50
   sleep(0).then(async () => {
     for (let i = 0; i < 100; i++) {
-      dispatch(uploadProgress(i))
-      await sleep(10)
+      dispatch(uploadProgress({progress: i}))
+      await sleep(100)
     }
     dispatch(uploadSuccess())
   })

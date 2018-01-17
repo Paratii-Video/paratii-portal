@@ -1,27 +1,38 @@
 import { connect } from 'react-redux'
 
-import { Component } from 'react'
+import React, { Component } from 'react'
+import type { RootState, UploadProgress } from 'types/ApplicationTypes'
 
-import type { RootState } from 'types/ApplicationTypes'
-
-import { getIsUploading, getHasUploadInfo } from 'selectors/Index'
+import { getIsUploading, getHasUploadInfo, getProgress } from 'selectors/index'
+import UploadFileContainer from 'containers/UploadFileContainer'
+import CreateVideoFormContainer from 'containers/CreateVideoFormContainer'
 
 type Props = {
   isUploading: boolean,
-  hasUploadInfo: boolean
+  hasUploadInfo: boolean,
+  progress: UploadProgress
 }
 
-class UploadFileContainer extends Component<Props, void> {
+class UploadContainer extends Component<Props, void> {
   render () {
-    return null
+    const { progress, isUploading, hasUploadInfo } = this.props
+    const p = progress ? progress.getIn(['value']) : '0' // need getIn because is immutable
+    return (
+      <div>
+        <p>{p}</p>
+        {!isUploading && <UploadFileContainer />}
+        {isUploading && !hasUploadInfo && <CreateVideoFormContainer />}
+      </div>
+    )
   }
 }
 
 const mapStateToProps = (state: RootState) => ({
+  progress: getProgress(state),
   isUploading: getIsUploading(state),
   hasUploadInfo: getHasUploadInfo(state)
 })
 
 const mapDispatchToProps = dispatch => ({})
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploadFileContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(UploadContainer)

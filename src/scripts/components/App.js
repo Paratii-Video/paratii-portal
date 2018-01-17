@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom'
 import styled from 'styled-components'
 import logo from 'assets/img/paratii_logo.png'
 
-import UploadFileContainer from 'containers/UploadFileContainer'
+import UploadContainer from 'containers/UploadContainer'
 import SignupContainer from 'containers/SignupContainer'
 import LoginContainer from 'containers/LoginContainer'
 import ProfileContainer from 'containers/ProfileContainer'
@@ -54,8 +54,8 @@ class App extends Component<Props, void> {
           component={DebugContainer}
         />
         <Route
-          path={`${match.url}uploader/upload-file`}
-          component={UploadFileContainer}
+          path={`${match.url}uploader`}
+          component={UploadContainer}
         />
         <Route
           path={`${match.url}signup`}
