@@ -42,6 +42,7 @@ export type ParatiiLib = {
       decrypt: (string, password: string) => Object,
       encrypt: (password: string) => Object,
       newMnemonic: () => string
-    }
+    },
+    vids: any,
   }
 };
