@@ -45,12 +45,15 @@ const Player = styled.div`
   flex: 0 0 50%;
 `
 
+const Hover = styled.div`
+  width: 100%;
+`
+
 class Play extends Component<Props, void> {
   constructor (props: Props): void {
     super(props)
 
     const videoId = this.props.match.params.id
-    console.log('HERRRRRRRRRRRRRRE')
     console.log(this.props.match.params.id)
 
     if (videoId) {
@@ -60,35 +63,16 @@ class Play extends Component<Props, void> {
     }
   }
 
-  // componentWillReceiveProps (nextProps: Props): void {
-  //   console.log('will receive')
-  //   console.log(this.props.video)
-  //   if (nextProps.video && !this.props.video) {
-  //     const nextVideo: VideoRecord = nextProps.video
-  //     console.log(nextProps.video)
-  //
-  //     CreatePlayer({
-  //       selector: '#player',
-  //       source:
-  //       `https://gateway.paratii.video/ipfs/${nextVideo.get('ipfsData')}`,
-  //       mimeType: 'video/mp4',
-  //       ipfsHash: nextVideo.get('ipfsHash')
-  //     })
-  //   }
-  // }
-
-  // componentDidUpdate (prevProps, prevState){
-  // }
   componentWillReceiveProps (nextProps: Props): void {
-    // const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
+    const ipfsHash = nextProps.video.ipfsHash
     console.log('componentDidMount')
-    console.log(this.props.video)
+    console.log(this.props)
     console.log(nextProps.video)
     CreatePlayer({
       selector: '#player',
-      source: `https://gateway.paratii.video/ipfs/${nextProps.video.ipfsHash}/master.m3u8`,
+      source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
       mimeType: 'video/mp4',
-      ipfsHash: nextProps.video.ipfsHash
+      ipfsHash: ipfsHash
     })
   }
 
@@ -98,6 +82,7 @@ class Play extends Component<Props, void> {
       <Wrapper>
         <Body>
           <Title>Play Video: { videoId } </Title>
+          <Hover>Hover text</Hover>
           <Player id="player" />
         </Body>
       </Wrapper>
