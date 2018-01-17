@@ -27,15 +27,8 @@ class UploadFileContainer extends Component<Props, void> {
     })
   }
 
-<<<<<<< HEAD
   handleUploadRequested () {
     this.props.upload(this.state.file)
-=======
-  handleUploadRequested (e) {
-    e.preventDefault()
-    this.props.upload('file.mp4')
-    // this.props.upload(this.state.file.name)
->>>>>>> a418520949bba2953d692ad32c41e13700f41f50
   }
 
   render () {

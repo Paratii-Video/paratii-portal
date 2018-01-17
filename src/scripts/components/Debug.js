@@ -23,13 +23,9 @@ class Debug extends Component {
           <Title>Debug page</Title>
           <Link to="/play/foo">Play a video</Link>
           <br />
-<<<<<<< HEAD
           <Link to="/uploader/upload-file">Upload a file</Link>
           <br />
           {config}
-=======
-          <Link to="/uploader">Upload a file</Link>
->>>>>>> a418520949bba2953d692ad32c41e13700f41f50
         </pre>
       </Wrapper>
     )
