@@ -16,9 +16,10 @@ const sleep = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-export const upload = (filename: string) => (dispatch: Dispatch<*>) => {
+export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   dispatch(uploadRequested())
 
+  console.log(`Uploading file ${file.name}`)
   sleep(0).then(async () => {
     for (let i = 0; i < 100; i++) {
       dispatch(uploadProgress(i))

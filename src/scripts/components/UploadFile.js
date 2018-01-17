@@ -16,9 +16,10 @@ class UploadFile extends Component<Props, void> {
     this.onFileChosen = this.onFileChosen.bind(this)
   }
 
-  onFileChosen ({ files }) {
-    const file = files[0]
+  onFileChosen (e) {
+    const file = e.target.files[0]
     this.props.onFileChosen(file)
+    this.setState({file: e.target.files[0]})
   }
 
   render () {
@@ -26,7 +27,7 @@ class UploadFile extends Component<Props, void> {
       <Wrapper>
         <Title>Upload File</Title>
         <input type='file' onChange={this.onFileChosen} />
-        <Button id='upload-submit' onClick={this.props.onUploadRequested}>Login</Button>
+        <Button id='upload-submit' onClick={this.props.onUploadRequested}>Upload</Button>
       </Wrapper>
     )
   }
