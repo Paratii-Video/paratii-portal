@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/embed.css">
+  <script src="/bundle.js"></script>
+  <meta name="og:title" content="{{title}}"/>
+  <meta name="og:image" content="{{thumbnailUrl}}"/>
+  <meta name="og:description" content="{{description}}"/>
+  <meta name="og:url" content="{{url}}"/>
+</head>
+<body>
+  <div id="player"></div>
+  <script type="application/javascript">
+    window.paratii.mediaPlayer({
+      selector: '#player',
+      source: 'https://gateway.paratii.video/ipfs/{{ipfsData}}',
+      mimeType: 'video/mp4',
+      ipfsHash: '{{ipfsData}}'
+    })
+  </script>
+</body>
+</html>
