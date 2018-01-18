@@ -34,7 +34,7 @@ export type Action<T> = {
 export type RootState = {
   video: ?VideoRecord,
   user: ?UserRecord,
-  upload: ?UploadRecord
+  upload: UploadRecord
 };
 
 export type ParatiiLibConfig = {
@@ -53,6 +53,11 @@ export type ParatiiLib = {
       decrypt: (string, password: string) => Object,
       encrypt: (password: string) => Object,
       newMnemonic: () => string
+    }
+  },
+  ipfs: {
+    uploader: {
+      upload: ([Object]) => Object
     }
   }
 };
