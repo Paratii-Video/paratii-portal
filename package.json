@@ -9,7 +9,7 @@
     "build": "yarn run clean && yarn run prep && NODE_ENV=production webpack --progress --colors",
     "clean": "rm -rf build/",
     "chimp-test": "concurrently --kill-others --success all \"NODE_ENV=test yarn run dev\" \"chimp chimp.config.js\"",
-    "chimp-test:watch": "yarn run chimp-test --watch",
+    "chimp-test:watch": "concurrently --kill-others --success all \"NODE_ENV=test yarn run dev\" \"chimp chimp.config.js --watch\"",
     "dev": "concurrently \"yarn run dev-client\" \"yarn run dev-server\" \"yarn run dev-parity\"",
     "dev-parity": "yarn run parity",
     "dev-client": "yarn run clean && yarn run prep && webpack --watch --colors --progress",
