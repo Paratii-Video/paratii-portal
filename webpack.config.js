@@ -25,7 +25,7 @@ const config = {
           scriptsDir + "/index.js",
           "webpack-hot-middleware/client?quiet=true"
         ],
-    'embed/bundle': embedDir + "/client/index.js"
+    'embed/bundle': embedDir + "/index.js"
   },
   output: {
     chunkFilename: "[name].bundle.js",

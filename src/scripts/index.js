@@ -7,22 +7,11 @@ import { Provider } from 'react-redux'
 
 import { Paratii } from 'paratii-lib/lib/paratii'
 import Root from 'components/Root'
+import { getRoot } from 'utils/AppUtils'
 import createStore from 'scripts/createStore'
 import 'styles/app.scss'
 
 const store = createStore()
-
-const getRoot = (): Element => {
-  let root: ?Element = document.getElementById('root')
-
-  if (!root) {
-    root = document.createElement('div')
-    root.setAttribute('id', 'root')
-    document.body && document.body.appendChild(root)
-  }
-
-  return root
-}
 
 const renderApp = () => {
   ReactDOM.render(

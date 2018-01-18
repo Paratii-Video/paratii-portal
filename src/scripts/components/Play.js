@@ -7,8 +7,8 @@ import VideoRecord from 'records/VideoRecords'
 import type { RouteMatch } from 'types/ApplicationTypes'
 
 type Props = {
-  match: RouteMatch,
-  fetchVideo: (id: string) => void,
+  match: ?RouteMatch,
+  fetchVideo: ?(id: string) => void,
   video: ?VideoRecord
 };
 
@@ -48,13 +48,18 @@ class Play extends Component<Props, void> {
   constructor (props: Props): void {
     super(props)
 
-    const videoId = this.props.match.params.id
-    console.log(this.props.match.params.id)
+    const { match, fetchVideo } = this.props
 
-    if (videoId) {
-      this.props.fetchVideo(videoId)
-    } else {
-      throw Error('We should raise a 404 error here and redirect to the player')
+    if (match) {
+      const videoId = match.params.id
+
+      if (videoId) {
+        if (fetchVideo) {
+          fetchVideo(videoId)
+        }
+      } else {
+        throw Error('We should raise a 404 error here and redirect to the player')
+      }
     }
   }
 
@@ -75,11 +80,10 @@ class Play extends Component<Props, void> {
   }
 
   render () {
-    const videoId = this.props.match.params.id
     return (
       <Wrapper>
         <Body>
-          <Title>Play Video: { videoId } </Title>
+          <Title>Play Video:</Title>
           <Player id="player" />
         </Body>
       </Wrapper>
