@@ -7,9 +7,7 @@ const app = express()
 const port = process.env.PORT || 3000
 
 app.use(express.static('build/embed'))
-app.engine('handlebars', expressHandlebars({
-  layoutsDir: 'server/views'
-}))
+app.engine('handlebars', expressHandlebars())
 app.set('view engine', 'handlebars')
 app.set('views', path.join(__dirname, 'views'))
 app.get('/video/:id', videoRoute)
