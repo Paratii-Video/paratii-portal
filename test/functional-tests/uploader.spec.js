@@ -1,7 +1,17 @@
+import { assert } from 'chai'
+
 describe('Uploader Tool', function () {
-  it.skip('should have basic flow in place', function () {
+  it('should have basic flow in place @watch', function () {
     // see https://github.com/Paratii-Video/paratii-portal/issues/8
     browser.url('http://localhost:8080/uploader/upload-file')
+    let fileToUpload = `${__dirname}/data/data.txt`
+    console.log(fileToUpload)
+
+    browser.chooseFile('input[type="file"]', fileToUpload)
+
+    var val = browser.getValue('input[type="file"]')
+    // val will be something liek 'C://fakepath/data.txt'
+    assert.match(val, /data.txt$/)
     // open a file from the FS
     // click on submit
     // (write a separte test for errors on this screen)

@@ -85,7 +85,7 @@ describe('Player: ', function () {
     // server.execute(createPlaylist, '98765', 'Playlist test', ['12345', '23456'])
   })
 
-  it('play a video @watch', async function () {
+  it('play a video', async function () {
     browser.url(`http://localhost:8080/play/${videoId}`)
     expect('#player').to.exist
     browser.waitAndClick('#player')
