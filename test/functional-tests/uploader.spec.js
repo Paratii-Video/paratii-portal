@@ -9,7 +9,6 @@ describe('Uploader Tool', function () {
     }
     browser.url('http://localhost:8080/uploader/upload-file')
     let fileToUpload = `${__dirname}/data/data.txt`
-    console.log(fileToUpload)
 
     browser.chooseFile('input[type="file"]', fileToUpload)
 

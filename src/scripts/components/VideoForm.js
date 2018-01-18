@@ -7,7 +7,8 @@ import Input from './foundations/Input'
 
 type Props = {
   onSubmit: () => void,
-  onInputChange: (name: string, e: Object) => void
+  onInputChange: (name: string, e: Object) => void,
+  onVideoInfoSubmitted: (e: Object) => void
 };
 
 const Form = styled.form`
@@ -33,7 +34,8 @@ class VideoForm extends Component<Props, void> {
           onChange={(e) => onInputChange('description', e)}
           placeholder='Description'
         />
-        <Button id='video-submit' type='submit'>Submit</Button>
+        <Button id='video-submit' type='submit' onClick={this.props.onVideoInfoSubmitted}>Submit</Button>
+
       </Form>
     )
   }

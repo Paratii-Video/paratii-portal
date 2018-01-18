@@ -3,7 +3,7 @@
 import { handleActions } from 'redux-actions'
 
 import type { Action } from 'types/ApplicationTypes'
-import { UPLOAD_REQUESTED, UPLOAD_PROGRESS, UPLOAD_SUCCESS } from 'constants/ActionConstants'
+import { UPLOAD_REQUESTED, UPLOAD_PROGRESS, UPLOAD_SUCCESS, UPDATE_UPLOAD_INFO } from 'constants/ActionConstants'
 import { fromJS } from 'immutable'
 import UploadRecord from 'records/UploadRecords'
 
@@ -31,6 +31,14 @@ const reducer = {
       isUploading: false,
       progress: null,
       ipfsHash: payload.ipfsHash
+    })
+  },
+  [UPDATE_UPLOAD_INFO]: (
+    state: UploadRecord,
+    { payload }
+  ): UploadRecord => {
+    return state.merge({
+      video: payload
     })
   }
 }

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import React, { Component } from 'react'
 
 import VideoForm from 'components/VideoForm'
-import { updateUploadInfo } from 'actions/UploadActions'
+import { saveVideoInfo } from 'actions/UploadActions'
 
 import type { RootState } from 'types/ApplicationTypes'
 
@@ -12,7 +12,7 @@ type Props = {
   updateUploadInfo: (title: string, description: string) => void
 }
 
-class CreateVideoFormContainer extends Component<Props, void> {
+class UploadVideoFormContainer extends Component<Props, void> {
   constructor (props) {
     super(props)
     this.state = {title: '', description: ''}
@@ -29,7 +29,7 @@ class CreateVideoFormContainer extends Component<Props, void> {
   handleSubmit (e) {
     const { title, description } = this.state
     e.preventDefault()
-    this.props.updateUploadInfo(title, description)
+    this.props.updateUploadInfo({title, description})
   }
 
   render () {
@@ -45,7 +45,7 @@ class CreateVideoFormContainer extends Component<Props, void> {
 const mapStateToProps = (state: RootState) => ({})
 
 const mapDispatchToProps = dispatch => ({
-  updateUploadInfo: bindActionCreators(updateUploadInfo, dispatch)
+  updateUploadInfo: bindActionCreators(saveVideoInfo, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateVideoFormContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(UploadVideoFormContainer)

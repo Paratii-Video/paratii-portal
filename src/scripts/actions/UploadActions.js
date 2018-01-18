@@ -11,7 +11,7 @@ import type { Dispatch } from 'redux'
 const uploadRequested = createAction(UPLOAD_REQUESTED)
 const uploadProgress = createAction(UPLOAD_PROGRESS)
 const uploadSuccess = createAction(UPLOAD_SUCCESS)
-export const updateUploadInfo = createAction(UPDATE_UPLOAD_INFO)
+const updateUploadInfo = createAction(UPDATE_UPLOAD_INFO)
 
 const sleep = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -46,4 +46,9 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
     }
     // dispatch(uploadSuccess())
   })
+}
+
+export const saveVideoInfo = (videoInfo: Object) => (dispatch: Dispatch<*>) => {
+  console.log('Saving video info')
+  dispatch(updateUploadInfo(videoInfo))
 }
