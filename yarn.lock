@@ -10889,9 +10889,9 @@ parallel-transform@^1.1.0:
     stream-to-pull-stream "^1.7.2"
     web3 "^1.0.0-beta.27"
 
-paratii-mediaplayer@0.0.14:
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/paratii-mediaplayer/-/paratii-mediaplayer-0.0.14.tgz#60d76e563f1433992cf06f389d7551e4aaba3246"
+paratii-mediaplayer@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/paratii-mediaplayer/-/paratii-mediaplayer-0.1.1.tgz#7d316f588af6b6ee2a0076239ea24be253e8ec2e"
   dependencies:
     clappr "^0.2.78"
     hlsjs-ipfs-loader "github:ya7ya/hlsjs-ipfs-loader#paratii/v0.27.1"
