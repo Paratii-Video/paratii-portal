@@ -58,6 +58,20 @@ To also run the `parity` ethereum client concurrently, instead run:
 
     $ yarn run dev-parity
 
+
+## Embed Sever
+
+The embedded player client code will be bundled with the commands shown above.
+
+To boot up the server:
+
+    $ yarn run start-embed
+
+Or, to restart the server on changes:
+
+    $ yarn run start-embed:dev
+
+
 ## Code Quality
 
 ### eslint
