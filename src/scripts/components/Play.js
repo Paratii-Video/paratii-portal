@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import CreatePlayer from 'paratii-mediaplayer'
 import VideoRecord from 'records/VideoRecords'
 
 import type { RouteMatch } from 'types/ApplicationTypes'
@@ -59,36 +58,20 @@ class Play extends Component<Props, void> {
     }
   }
 
-  // componentWillReceiveProps (nextProps: Props): void {
-  //   console.log('will receive')
-  //   console.log(this.props.video)
-  //   if (nextProps.video && !this.props.video) {
-  //     const nextVideo: VideoRecord = nextProps.video
-  //     console.log(nextProps.video)
-  //
-  //     CreatePlayer({
-  //       selector: '#player',
-  //       source:
-  //       `https://gateway.paratii.video/ipfs/${nextVideo.get('ipfsData')}`,
-  //       mimeType: 'video/mp4',
-  //       ipfsHash: nextVideo.get('ipfsHash')
-  //     })
-  //   }
-  // }
-
-  // componentDidUpdate (prevProps, prevState){
-  // }
   componentWillReceiveProps (nextProps: Props): void {
-    // const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
-    if (nextProps.video) {
-      let ipfsHash = nextProps.video.ipfsHash
-      CreatePlayer({
-        selector: '#player',
-        source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
-        mimeType: 'video/mp4',
-        ipfsHash: ipfsHash
-      })
-    }
+    import('paratii-mediaplayer').then(
+      CreatePlayer => {
+        if (nextProps.video && nextProps.video !== this.props.video) {
+          const ipfsHash = nextProps.video.ipfsHash
+          CreatePlayer({
+            selector: '#player',
+            source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
+            mimeType: 'video/mp4',
+            ipfsHash: ipfsHash
+          })
+        }
+      }
+    )
   }
 
   render () {

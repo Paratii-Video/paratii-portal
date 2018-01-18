@@ -28,10 +28,12 @@ const config = {
     'embed/bundle': embedDir + "/client/index.js"
   },
   output: {
+    chunkFilename: "[name].bundle.js",
+    filename: "[name].js",
     path: buildDir,
     publicPath: "/",
-    filename: "[name].js"
   },
+  target: "web",
   resolve: {
     alias: {
       scripts: scriptsDir,
@@ -51,7 +53,8 @@ const config = {
       "test-utils": testDir + "/test-utils",
       "unit-tests": unitTestsDir,
       "functional-tests": functionalTestsDir
-    }
+    },
+    aliasFields: ["browser"]
   },
   module: {
     loaders: [
