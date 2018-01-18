@@ -89,7 +89,7 @@ describe('Player: ', function () {
     browser.url(`http://localhost:8080/play/${videoId}`)
     expect('#player').to.exist
     browser.waitAndClick('#player')
-    browser.waitForExist('.media-control')
+    browser.waitForExist('.media-contasdf;lasdjfrol')
   })
 
   it.skip('the video has overlay informations', function () {
