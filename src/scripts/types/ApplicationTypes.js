@@ -58,6 +58,7 @@ export type ParatiiLib = {
   ipfs: {
     uploader: {
       upload: ([Object]) => Object
-    }
+    },
+    vids: any,
   }
 };
