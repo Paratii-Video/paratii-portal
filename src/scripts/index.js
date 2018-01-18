@@ -9,8 +9,6 @@ import Root from 'components/Root'
 import createStore from 'scripts/createStore'
 import 'styles/app.scss'
 
-console.log(process.env.NODE_ENV)
-
 let root: ?Element = document.getElementById('root')
 
 const store = createStore()
