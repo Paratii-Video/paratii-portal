@@ -116,8 +116,6 @@
   },
   "dependencies": {
     "bluebird": "^3.5.1",
-    "express-handlebars": "^3.0.0",
-    "handlebars": "^4.0.11",
     "immutable": "^3.8.2",
     "js-cookie": "^2.2.0",
     "paratii-lib": "github:Paratii-Video/paratii-lib#23a793dd97edf3ab71980ae782b07ae07459478f",
