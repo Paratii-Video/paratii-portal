@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
-import { initParatiiLib } from 'utils/ParatiiLib'
 import { getRoot } from 'utils/AppUtils'
 import PlayContainer from 'containers/PlayContainer'
 import createStore from 'scripts/createStore'
@@ -31,13 +30,11 @@ class EmbedApp extends React.Component<Props, void> {
   }
 }
 
-initParatiiLib().then(() => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <Route path='/' component={EmbedApp} />
-      </BrowserRouter>
-    </Provider>,
-    getRoot()
-  )
-})
+ReactDOM.render(
+  <Provider store={store}>
+    <BrowserRouter>
+      <Route path='/' component={EmbedApp} />
+    </BrowserRouter>
+  </Provider>,
+  getRoot()
+)

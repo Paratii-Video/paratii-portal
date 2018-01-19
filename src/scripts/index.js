@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 
-import { initParatiiLib } from 'utils/ParatiiLib'
 import Root from 'components/Root'
 import { getRoot } from 'utils/AppUtils'
 import createStore from 'scripts/createStore'
@@ -13,17 +12,14 @@ import 'styles/app.scss'
 
 const store = createStore()
 
-initParatiiLib()
-  .then(() => {
-    ReactDOM.render(
-      <Provider store={store}>
-        <AppContainer>
-          <Root />
-        </AppContainer>
-      </Provider>,
-      getRoot()
-    )
-  })
+ReactDOM.render(
+  <Provider store={store}>
+    <AppContainer>
+      <Root />
+    </AppContainer>
+  </Provider>,
+  getRoot()
+)
 
 if (module.hot) {
   module.hot.accept('components/Root', () => {

@@ -4,6 +4,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const path = require("path");
 
 const srcDir = path.resolve(__dirname, "src");
+const configDir = path.resolve(__dirname, "config");
 const scriptsDir = srcDir + "/scripts";
 const embedDir = scriptsDir + "/embed";
 const assetsDir = srcDir + "/assets";
@@ -35,6 +36,7 @@ const config = {
   target: "web",
   resolve: {
     alias: {
+      config: configDir,
       scripts: scriptsDir,
       styles: stylesDir,
       assets: assetsDir,

@@ -2,35 +2,15 @@
 
 import { Paratii } from 'paratii-lib/lib/paratii'
 import { DEFAULT_PASSWORD } from 'constants/ParatiiLibConstants'
+import { getParatiiConfig } from 'utils/AppUtils'
 
 import type { ParatiiLib } from 'types/ApplicationTypes'
 
-let paratiiInstance: ParatiiLib
+const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 
-const defaultConfig = {
-  provider: 'http://localhost:8545/rpc/',
-  address: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
-  privateKey: '399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6'
-}
+window.paratii = new Paratii(paratiiConfig)
 
-export async function initParatiiLib (config: Object = defaultConfig) {
-  if (paratiiInstance) {
-    return paratiiInstance
-  }
-
-  if (process.env.NODE_ENV !== 'production') {
-    paratiiInstance = new Paratii(config)
-    await paratiiInstance.eth.deployContracts()
-  } else {
-    paratiiInstance = new Paratii(config)
-  }
-
-  await setupKeystore()
-}
-
-export const paratii = () => paratiiInstance
-
-window.paratii = paratii
+export const paratii: ParatiiLib = window.paratii
 
 export async function setupKeystore () {
   let defaultPassword = DEFAULT_PASSWORD
@@ -42,7 +22,7 @@ export async function setupKeystore () {
   if (existingWallet) {
     try {
       console.log('Found existing wallet')
-      paratii().eth.wallet.decrypt(JSON.parse(existingWallet), defaultPassword)
+      paratii.eth.wallet.decrypt(JSON.parse(existingWallet), defaultPassword)
     } catch (err) {
       console.log('Existing wallet is not valid')
       existingWalletIsValid = false
@@ -50,8 +30,9 @@ export async function setupKeystore () {
   }
   if (!existingWallet || existingWalletIsValid === false) {
     console.log('Creating a new wallet')
-    mnemonic = await paratii().eth.wallet.newMnemonic()
-    localStorage.setItem(walletKey, JSON.stringify(paratii().eth.wallet.encrypt(defaultPassword)))
+    mnemonic = await paratii.eth.wallet.newMnemonic()
+    localStorage.setItem(walletKey, JSON.stringify(paratii.eth.wallet.encrypt(defaultPassword)))
     localStorage.setItem(mnemonicKey, mnemonic)
   }
+  // console.log(`Your account is: ${}`)
 }
