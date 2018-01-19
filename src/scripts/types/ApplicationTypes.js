@@ -59,7 +59,9 @@ export type ParatiiLib = {
     wallet: {
       decrypt: (string, password: string) => Object,
       encrypt: (password: string) => Object,
-      newMnemonic: () => string
+      // newMnemonic: () => string,
+      getMnemonic: () => string,
+      create: () => Object
     },
     vids: {
       get: (string) => Object

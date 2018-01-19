@@ -1,51 +1,37 @@
-/* eslint-disable */
 //
 //
 // Note for devs: WORK IN PROGRESS
 // Check https://github.com/Paratii-Video/paratii-portal/issues/24 for progress
 //
 //
-// MIGRATING FROM paratii-player/tests/
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
-/* global localStorage */
 import {
+  add0x,
   SEED,
   USERADDRESS,
   assertUserIsLoggedIn,
-  createUser,
   createUserKeystore,
   getAnonymousAddress,
-  resetDb,
   createUserAndLogin,
   login,
   waitForUserIsLoggedIn,
   assertUserIsNotLoggedIn,
   nukeLocalStorage,
+  nukeSessionStorage,
   clearUserKeystoreFromLocalStorage,
   getEthAccountFromApp,
   getPath,
   waitForKeystore,
   clearCookies
 } from './test-utils/helpers.js'
-// import { add0x } from '../imports/lib/utils.js'
+
 import { assert } from 'chai'
 
 describe('Profile and accounts workflow:', function () {
-
-  it('arriving on a fresh device should create a keystore in localstorage', async function() {
+  it('arriving on a fresh device should create a keystore in localstorage @watch', async function () {
     // as spec'd in https://github.com/Paratii-Video/paratii-portal/wiki/Portal-Specs:-wallet-handling
+    browser.execute(nukeLocalStorage)
+    browser.execute(nukeSessionStorage)
     browser.url(getPath('/'))
 
     // check localStorage
@@ -53,8 +39,12 @@ describe('Profile and accounts workflow:', function () {
     assert.isOk(keystore)
     keystore = JSON.parse(keystore)
     assert.isOk(keystore[0].address)
-
+    // the paratii object in the browser should also know of the address
+    let paratiiConfigAddress = (await browser.execute(function () { return window.paratii.config.account.address })).value
+    assert.isOk(paratiiConfigAddress)
+    assert.equal(paratiiConfigAddress.toLowerCase(), add0x(keystore[0].address).toLowerCase())
   })
+
   it('register a new user', function () {
     browser.url(getPath('signup'))
 
@@ -104,7 +94,7 @@ describe('Profile and accounts workflow:', function () {
 
   it.skip('login as an existing user on a device with no keystore - use existing anonymous keystore ', function () {
     // create a meteor user
-    server.execute(createUser)
+    // server.execute(createUser)
 
     assertUserIsNotLoggedIn(browser)
 
@@ -161,11 +151,11 @@ describe('Profile and accounts workflow:', function () {
 
   it.skip('show an error message if provided wrong password ', function () {
     browser.execute(clearUserKeystoreFromLocalStorage)
-    server.execute(resetDb)
+    // server.execute(resetDb)
     browser.pause(2000)
 
     // create a meteor user
-    server.execute(createUser)
+    // server.execute(createUser)
 
     // log in as the created user
     assertUserIsNotLoggedIn(browser)
@@ -187,9 +177,9 @@ describe('Profile and accounts workflow:', function () {
 
   it.skip('login as an existing user on a device with no keystore - restore keystore with a seedPhrase', function () {
     browser.execute(nukeLocalStorage)
-    server.execute(resetDb)
+    // server.execute(resetDb)
     // create a meteor user
-    server.execute(createUser)
+    // server.execute(createUser)
     assertUserIsNotLoggedIn(browser)
 
     browser.url('http://localhost:3000')
@@ -219,7 +209,7 @@ describe('Profile and accounts workflow:', function () {
   })
 
   it.skip('try to register a new account with a used email', function () {
-    server.execute(createUser)
+    // server.execute(createUser)
     // browser.url('http://localhost:3000/profile')
 
     browser.url('http://localhost:3000/')
@@ -402,7 +392,7 @@ describe('Profile and accounts workflow:', function () {
 
   it.skip('do not create a new wallet if the password is wrong', function () {
     // create a meteor user
-    server.execute(createUser)
+    // server.execute(createUser)
     assertUserIsNotLoggedIn(browser)
 
     // log in as the created user

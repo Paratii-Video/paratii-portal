@@ -14,8 +14,8 @@ if (process.env.NODE_ENV === 'test') {
   // ...config,
     provider: 'http://localhost:8545/rpc/',
     // this is the user's address, and must be set from the browser's wallet
-    address: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
-    privateKey: '399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6',
+    // address: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
+    // privateKey: '399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6',
     registryAddress: registryAddress
   })
 } else {
@@ -49,8 +49,10 @@ export async function setupKeystore () {
   }
   if (!existingWallet || existingWalletIsValid === false) {
     console.log('Creating a new wallet')
-    mnemonic = await paratii.eth.wallet.newMnemonic()
+    paratii.eth.wallet.create()
+    mnemonic = await paratii.eth.wallet.getMnemonic()
     localStorage.setItem(walletKey, JSON.stringify(paratii.eth.wallet.encrypt(defaultPassword)))
+    // TODO: needs to be encrypted
     localStorage.setItem(mnemonicKey, mnemonic)
   }
   // console.log(`Your account is: ${}`)

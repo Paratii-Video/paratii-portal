@@ -43,20 +43,30 @@ export const getPath = (path) => {
 export const clearCookies = () => {
   browser.deleteCookie('email')
 }
-//
-// // let web3 = paratii.web3
-// // export { web3 }
-// export { paratii }
-// const add0x = utils.add0x
-//
 
-//
 // // The beforeEach function is run before each single test
 // beforeEach(function () {
-//   server.execute(resetDb)
 //   browser.execute(nukeLocalStorage)
 //   browser.execute(nukeSessionStorage)
 // })
+
+export function nukeLocalStorage () {
+  localStorage.clear()
+}
+
+export function nukeSessionStorage () {
+  window.sessionStorage.clear()
+}
+
+export function add0x (input) {
+  if (typeof (input) !== 'string') {
+    return input
+  } else if (input.length < 2 || input.slice(0, 2) !== '0x') {
+    return `0x${input}`
+  }
+  return input
+}
+
 //
 // export function getProvider () {
 //   return Meteor.settings.public.http_provider
@@ -237,14 +247,6 @@ export function waitForKeystore (browser, key='keystore-anon') {
 //
 // export function clearUserKeystoreFromLocalStorage () {
 //   localStorage.removeItem(`keystore-${Accounts.userId()}`)
-// }
-//
-// export function nukeLocalStorage () {
-//   localStorage.clear()
-// }
-//
-// export function nukeSessionStorage () {
-//   window.sessionStorage.clear()
 // }
 //
 // // export function createVideo (id, title, price) {
