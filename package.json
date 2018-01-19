@@ -22,6 +22,7 @@
     "parity": "parity --config parity-config.toml",
     "precommit": "lint-staged",
     "prep": "mkdir build/ && cp src/index.html build/ && mkdir build/assets/",
+    "prepare": "patch-package",
     "quality": "yarn run lint:scripts && yarn run lint:styles && yarn run flow",
     "unit-test": "NODE_ENV=test karma start karma.conf.js",
     "unit-test:dev": "yarn run unit-test -- --single-run false"
@@ -92,6 +93,8 @@
     "nodemon": "^1.14.1",
     "postcss-cssnext": "^3.0.2",
     "postcss-loader": "^2.0.9",
+    "patch-package": "^5.0.0",
+    "postinstall-prepare": "^1.0.1",
     "react-hot-loader": "^3.1.3",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
