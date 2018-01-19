@@ -25,9 +25,10 @@ describe('Uploader Tool', function () {
     // submit the form
     browser.click('#video-submit')
 
+    // we now should be on the status screen
+    browser.isExisting('#video-status')
     // (write a separate test for error handling on this form)
     // assert that we are on a screen where we can see the status of the video upload and transcoding
-    browser.pause(4000)
   })
 
   it.skip('Upload file should have decent error handling', function () {

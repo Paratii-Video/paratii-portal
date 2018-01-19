@@ -43,9 +43,16 @@ export type ParatiiLibConfig = {
 
 // TODO move this into paratii-lib repo
 export type ParatiiLib = {
+  config: {
+    account: {
+      address: string,
+      privateKey: string
+    }
+  },
   core: {
     vids: {
-      get: (id: string) => ?Object
+      get: (id: string) => ?Object,
+      create: (Object) => Object
     },
   },
   eth: {

@@ -1,39 +1,34 @@
 import { connect } from 'react-redux'
 // import { bindActionCreators } from 'redux'
-
 import React, { Component } from 'react'
-
+import VideoStatus from 'components/VideoStatus'
 import type { RootState } from 'types/ApplicationTypes'
-import Wrapper from '../components/foundations/Wrapper'
 
 type Props = {
+  video: Object,
+  videoFromPTI: Object
 }
 
 class UploadVideoStatusContainer extends Component<Props, void> {
   constructor (props) {
     super(props)
-    this.state = {}
+    console.log(props)
   }
 
   render () {
+    console.log('Rendering UploadVideoStatusContainer', this.props.video)
     return (
-      <Wrapper>
-        <pre>
-        Your Video is now being uploaded/beging transcoded/all ready for sharing!
-          <br />
-        You can share your video here [link] or embed it like this [link]
-          <br />
-        Soon you willl also be able to tag the video, create playlists,a nd other goodies! (But not yet :-())
-        </pre>
-      </Wrapper>
+      <VideoStatus video={this.props.video} />
     )
   }
 }
 
-const mapStateToProps = (state: RootState) => ({})
+const mapStateToProps = (state: RootState) => ({
+  state: state,
+  video: state.upload.video
+})
 
 const mapDispatchToProps = dispatch => ({
-  // updateUploadInfo: bindActionCreators(updateUploadInfo, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadVideoStatusContainer)

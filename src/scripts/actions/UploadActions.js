@@ -50,5 +50,16 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
 
 export const saveVideoInfo = (videoInfo: Object) => (dispatch: Dispatch<*>) => {
   console.log('Saving video info')
-  dispatch(updateUploadInfo(videoInfo))
+  // TODO: paratii-lib shoudl generate a fresh id, we now use a placeholder
+  videoInfo.id = `foo_${Math.floor(Math.random() * 100000)}`
+  // the owner is the user that is logged in
+  videoInfo.owner = paratii.config.account.address
+  // TODO: paratii-lib has no support for the description yet (there is an issue)
+  // TODO: once that support is there, the following line should be deleted
+  delete videoInfo.description
+  console.log(videoInfo)
+  paratii.core.vids.create(videoInfo).then(function (videoInfo) {
+    console.log('Video successfully uploaded!')
+    dispatch(updateUploadInfo(videoInfo))
+  })
 }
