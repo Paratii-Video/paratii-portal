@@ -6,15 +6,17 @@ const webpack = require('webpack')
 const webpackConfig = require('../../webpack.config.js')
 const videoRoute = require('./routes/embed')
 
-const compiler = webpack(webpackConfig)
 const app = express()
 
-app.use(
-  devMiddleware(compiler, {
-    stats: { colors: true }
-  })
-)
-app.use(hotMiddleware(compiler))
+if (process.env.NODE_ENV === 'development') {
+  const compiler = webpack(webpackConfig)
+  app.use(
+    devMiddleware(compiler, {
+      stats: { colors: true }
+    })
+  )
+  app.use(hotMiddleware(compiler))
+}
 
 app.use(express.static(path.resolve(__dirname, '../../', 'build')))
 app.get('/embed/:id', videoRoute)

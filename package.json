@@ -13,7 +13,7 @@
     "dev": "concurrently \"yarn run dev-client\" \"yarn run dev-server\" \"yarn run dev-parity\"",
     "dev-parity": "yarn run parity",
     "dev-client": "yarn run clean && yarn run prep && webpack --watch --colors --progress",
-    "dev-server": "nodemon --watch src/server --watch node_modules src/server/index.js",
+    "dev-server": "NODE_ENV=development nodemon src/server/index.js --watch node_modules src/server/index.js",
     "flow": "flow",
     "lint": "yarn run lint:scripts && yarn run lint:styles",
     "lint:fix": "yarn run lint:scripts --fix",
@@ -24,8 +24,7 @@
     "prep": "mkdir build/ && mkdir build/embed && cp src/index.html build/ && mkdir build/assets/",
     "prepare": "patch-package",
     "quality": "yarn run lint:scripts && yarn run lint:styles && yarn run flow",
-    "start-embed": "node src/scripts/embed/index.js",
-    "start-embed:dev": "nodemon src/scripts/embed/index.js",
+    "start-server": "node src/server/index.js",
     "unit-test": "NODE_ENV=test karma start karma.conf.js",
     "unit-test:dev": "yarn run unit-test -- --single-run false"
   },
