@@ -1,24 +1,33 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
 
-const Wrapper = styled.div`
-  font-size: 20px;
-`
+import Title from './foundations/Title'
+import Wrapper from './foundations/Wrapper'
+import Button from './foundations/Button'
 
-const Title = styled.header`
-  background-color: #fff;
-  height: 50px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  color: blue;
-`
+type Props = {
+  onFileChosen: (file: Object) => void,
+  onUploadRequested: (e: Object) => void
+}
 
-class UploadFile extends Component {
+class UploadFile extends Component<Props, void> {
+  constructor (props) {
+    super(props)
+    this.state = {}
+    this.onFileChosen = this.onFileChosen.bind(this)
+  }
+
+  onFileChosen (e) {
+    const file = e.target.files[0]
+    this.props.onFileChosen(file)
+    this.setState({file: e.target.files[0]})
+  }
+
   render () {
     return (
       <Wrapper>
         <Title>Upload File</Title>
+        <input type='file' onChange={this.onFileChosen} />
+        <Button id='upload-submit' onClick={this.props.onUploadRequested}>Upload</Button>
       </Wrapper>
     )
   }

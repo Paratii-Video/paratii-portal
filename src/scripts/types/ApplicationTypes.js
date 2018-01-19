@@ -2,6 +2,7 @@
 
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
+import UploadRecord from 'records/UploadRecords'
 
 export type RouteMatch = {
   path: string,
@@ -16,6 +17,15 @@ export type Location = {
   state: Object
 };
 
+export type UploadProgress = {
+  value: number
+}
+
+export type VideoInfo = {
+  title: string,
+  description: string
+}
+
 export type Action<T> = {
   type: string,
   payload: T
@@ -23,7 +33,8 @@ export type Action<T> = {
 
 export type RootState = {
   video: ?VideoRecord,
-  user: ?UserRecord
+  user: ?UserRecord,
+  upload: UploadRecord
 };
 
 export type ParatiiLibConfig = {
@@ -32,9 +43,16 @@ export type ParatiiLibConfig = {
 
 // TODO move this into paratii-lib repo
 export type ParatiiLib = {
+  config: {
+    account: {
+      address: string,
+      privateKey: string
+    }
+  },
   core: {
     vids: {
-      get: (id: string) => ?Object
+      get: (id: string) => ?Object,
+      create: (Object) => Object
     },
   },
   eth: {
@@ -43,6 +61,13 @@ export type ParatiiLib = {
       encrypt: (password: string) => Object,
       newMnemonic: () => string
     },
-    vids: any,
+    vids: {
+      get: (string) => Object
+    }
+  },
+  ipfs: {
+    uploader: {
+      upload: ([Object]) => Object
+    },
   }
 };
