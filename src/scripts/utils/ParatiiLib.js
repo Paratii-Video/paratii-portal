@@ -7,24 +7,22 @@ import type { ParatiiLib } from 'types/ApplicationTypes'
 
 let paratiiInstance: ParatiiLib
 
-export async function initParatiiLib () {
+const defaultConfig = {
+  provider: 'http://localhost:8545/rpc/',
+  address: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
+  privateKey: '399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6'
+}
+
+export async function initParatiiLib (config: Object = defaultConfig) {
   if (paratiiInstance) {
     return paratiiInstance
   }
 
   if (process.env.NODE_ENV !== 'production') {
-    paratiiInstance = new Paratii({
-      provider: 'http://localhost:8545/rpc/',
-      address: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
-      privateKey: '399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6'
-    })
+    paratiiInstance = new Paratii(config)
     await paratiiInstance.eth.deployContracts()
   } else {
-    paratiiInstance = new Paratii({
-      provider: 'http://localhost:8545/rpc/',
-      address: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
-      privateKey: '399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6'
-    })
+    paratiiInstance = new Paratii(config)
   }
 
   window.paratii = paratiiInstance
