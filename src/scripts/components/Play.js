@@ -59,12 +59,12 @@ class Play extends Component<Props, void> {
 
   componentWillReceiveProps (nextProps: Props): void {
     if (nextProps.video && this.props.video !== nextProps.video) {
-      const ipfsHash = nextProps.video.ipfsHash
+      const id = nextProps.video.id
       CreatePlayer({
         selector: '#player',
-        source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
+        source: `https://gateway.paratii.video/ipfs/${id}/master.m3u8`,
         mimeType: 'video/mp4',
-        ipfsHash: ipfsHash
+        ipfsHash: id
       })
     }
   }
