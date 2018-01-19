@@ -13,16 +13,17 @@ import 'styles/app.scss'
 
 const store = createStore()
 
-initParatiiLib().then(() => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <AppContainer>
-        <Root />
-      </AppContainer>
-    </Provider>,
-    getRoot()
-  )
-})
+initParatiiLib()
+  .then(() => {
+    ReactDOM.render(
+      <Provider store={store}>
+        <AppContainer>
+          <Root />
+        </AppContainer>
+      </Provider>,
+      getRoot()
+    )
+  })
 
 if (module.hot) {
   module.hot.accept('components/Root', () => {

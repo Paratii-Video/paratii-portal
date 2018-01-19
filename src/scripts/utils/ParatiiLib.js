@@ -27,7 +27,7 @@ export async function initParatiiLib (config: Object = defaultConfig) {
 
   window.paratii = paratiiInstance
 
-  return paratiiInstance
+  await setupKeystore()
 }
 
 export const paratii = () => paratiiInstance
@@ -42,7 +42,7 @@ export async function setupKeystore () {
   if (existingWallet) {
     try {
       console.log('Found existing wallet')
-      paratii.eth.wallet.decrypt(JSON.parse(existingWallet), defaultPassword)
+      paratii().eth.wallet.decrypt(JSON.parse(existingWallet), defaultPassword)
     } catch (err) {
       console.log('Existing wallet is not valid')
       existingWalletIsValid = false
@@ -50,9 +50,8 @@ export async function setupKeystore () {
   }
   if (!existingWallet || existingWalletIsValid === false) {
     console.log('Creating a new wallet')
-    mnemonic = await paratii.eth.wallet.newMnemonic()
-    localStorage.setItem(walletKey, JSON.stringify(paratii.eth.wallet.encrypt(defaultPassword)))
+    mnemonic = await paratii().eth.wallet.newMnemonic()
+    localStorage.setItem(walletKey, JSON.stringify(paratii().eth.wallet.encrypt(defaultPassword)))
     localStorage.setItem(mnemonicKey, mnemonic)
   }
-  // console.log(`Your account is: ${}`)
 }
