@@ -1,9 +1,7 @@
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+// import { bindActionCreators } from 'redux'
 
 import React, { Component } from 'react'
-
-import { updateUploadInfo } from 'actions/UploadActions'
 
 import type { RootState } from 'types/ApplicationTypes'
 import Wrapper from '../components/foundations/Wrapper'
@@ -35,7 +33,7 @@ class UploadVideoStatusContainer extends Component<Props, void> {
 const mapStateToProps = (state: RootState) => ({})
 
 const mapDispatchToProps = dispatch => ({
-  updateUploadInfo: bindActionCreators(updateUploadInfo, dispatch)
+  // updateUploadInfo: bindActionCreators(updateUploadInfo, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadVideoStatusContainer)

@@ -19,4 +19,4 @@ export const getProgress = (state: RootState): UploadProgress => state.upload.pr
 
 export const getIsUploading = (state: RootState): boolean => state.upload.isUploading
 
-export const getHasUploadInfo = (state: RootState): boolean => !!(state.upload.video && state.upload.video.title)
+export const getHasUploadInfo = (state: RootState): boolean => !!(state.upload.video)
