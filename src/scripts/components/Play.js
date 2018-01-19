@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import CreatePlayer from 'paratii-mediaplayer'
 import VideoRecord from 'records/VideoRecords'
 
+import VideoOverlay from 'components/VideoOverlay'
+
 import type { RouteMatch } from 'types/ApplicationTypes'
 
 type Props = {
@@ -45,16 +47,11 @@ const Player = styled.div`
   flex: 0 0 50%;
 `
 
-const Hover = styled.div`
-  width: 100%;
-`
-
 class Play extends Component<Props, void> {
   constructor (props: Props): void {
     super(props)
 
     const videoId = this.props.match.params.id
-    console.log(this.props.match.params.id)
 
     if (videoId) {
       this.props.fetchVideo(videoId)
@@ -68,8 +65,9 @@ class Play extends Component<Props, void> {
     if (nextProps.video) {
       ipfsHash = nextProps.video.ipfsHash
     }
-    console.log('componentDidMount')
+    console.log('this props')
     console.log(this.props.video)
+    console.log('next props')
     console.log(nextProps.video)
     CreatePlayer({
       selector: '#player',
@@ -85,7 +83,7 @@ class Play extends Component<Props, void> {
       <Wrapper>
         <Body>
           <Title>Play Video: { videoId } </Title>
-          <Hover>Hover text</Hover>
+          <VideoOverlay/>
           <Player id="player" />
         </Body>
       </Wrapper>
