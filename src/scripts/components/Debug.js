@@ -15,8 +15,8 @@ const Title = styled.header`
 
 class Debug extends Component {
   render () {
-    delete paratii.config.paratii
-    let config = JSON.stringify(paratii.config, null, 2)
+    delete paratii().config.paratii
+    let config = JSON.stringify(paratii().config, null, 2)
     return (
       <Wrapper>
         <pre>
