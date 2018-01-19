@@ -25,12 +25,12 @@ export async function initParatiiLib (config: Object = defaultConfig) {
     paratiiInstance = new Paratii(config)
   }
 
-  window.paratii = paratiiInstance
-
   await setupKeystore()
 }
 
 export const paratii = () => paratiiInstance
+
+window.paratii = paratii
 
 export async function setupKeystore () {
   let defaultPassword = DEFAULT_PASSWORD
