@@ -6,7 +6,6 @@ require('babel-register')({
     'react'
   ],
   plugins: [
-    'syntax-dynamic-import',
     'babel-plugin-webpack-alias'
   ]
 })
