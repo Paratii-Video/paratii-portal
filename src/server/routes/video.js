@@ -14,6 +14,7 @@ module.exports = (req: $Request, res: $Response) => {
     <html>
       <head>
         <title>${title}</title>
+        <link rel="stylesheet" type="text/css" href="/embed/index.css">
         <meta name="og:title" content="${title}"/>
         <meta name="og:image" content="${thumbnailUrl}"/>
         <meta name="og:description" content="${description}"/>

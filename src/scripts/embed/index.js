@@ -3,10 +3,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Route } from 'react-router-dom'
+import { Provider } from 'react-redux'
 
+import { initParatiiLib, paratii } from 'utils/ParatiiLib'
 import { getRoot } from 'utils/AppUtils'
-import Play from 'components/Play'
+import PlayContainer from 'containers/PlayContainer'
 import Video from 'records/VideoRecords'
+import createStore from 'scripts/createStore'
+
+import 'styles/embed/index.scss'
 
 import type { RouteMatch } from 'types/ApplicationTypes'
 
@@ -15,13 +20,15 @@ type Props = {
 };
 
 type State = {
-  video?: ?Video
+  video?: Video
 };
+
+const store = createStore()
 
 class EmbedApp extends React.Component<Props, State> {
   fetchVideo: () => void;
 
-  constructor (props) {
+  constructor (props: Props) {
     super(props)
 
     this.state = {}
@@ -29,37 +36,39 @@ class EmbedApp extends React.Component<Props, State> {
     this.fetchVideo = this.fetchVideo.bind(this)
   }
 
-  async fetchVideo (id: string) {
-    await window.paratii.eth.deployContracts()
-    const videoInfo = await window.paratii.eth.vids.get(id)
-
-    this.setState({
-      video: new Video(videoInfo)
-    })
+  fetchVideo (id: string) {
+    paratii().eth.vids.get(id)
+      .then(videoInfo => {
+        this.setState(prevState => {
+          if (!prevState.video) {
+            return {
+              video: new Video(videoInfo)
+            }
+          }
+        })
+      })
   }
 
   render () {
     const { match } = this.props
     const { video } = this.state
 
+    console.log('video: ', video)
+
     return <Route
       exact path={`${match.url}video/:id`}
-      component={({ match }) => (
-        <Play
-          fetchVideo={() => {
-            this.fetchVideo(match.params.id)
-          }}
-          match={match}
-          video={video}
-        />
-      )}
+      component={PlayContainer}
     />
   }
 }
 
-ReactDOM.render(
-  <BrowserRouter>
-    <Route path='/' component={EmbedApp} />
-  </BrowserRouter>,
-  getRoot()
-)
+initParatiiLib().then(() => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <Route path='/' component={EmbedApp} />
+      </BrowserRouter>
+    </Provider>,
+    getRoot()
+  )
+})

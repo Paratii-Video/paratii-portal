@@ -2,13 +2,14 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import CreatePlayer from 'paratii-mediaplayer'
 import VideoRecord from 'records/VideoRecords'
 
 import type { RouteMatch } from 'types/ApplicationTypes'
 
 type Props = {
-  match: ?RouteMatch,
-  fetchVideo: ?(id: string) => void,
+  match: RouteMatch,
+  fetchVideo: (id: string) => void,
   video: ?VideoRecord
 };
 
@@ -18,6 +19,7 @@ const Wrapper = styled.div`
   padding: 0;
   display: flex;
   flex-direction: column;
+  height: 100%;
 `
 
 const Body = styled.div`
@@ -45,45 +47,34 @@ const Player = styled.div`
 `
 
 class Play extends Component<Props, void> {
-  constructor (props: Props): void {
-    super(props)
+  componentDidMount (): void {
+    const videoId = this.props.match.params.id
 
-    const { match, fetchVideo } = this.props
-
-    if (match) {
-      const videoId = match.params.id
-
-      if (videoId) {
-        if (fetchVideo) {
-          fetchVideo(videoId)
-        }
-      } else {
-        throw Error('We should raise a 404 error here and redirect to the player')
-      }
+    if (videoId) {
+      this.props.fetchVideo(videoId)
+    } else {
+      throw Error('We should raise a 404 error here and redirect to the player')
     }
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    import('paratii-mediaplayer').then(
-      CreatePlayer => {
-        if (nextProps.video && nextProps.video !== this.props.video) {
-          const ipfsHash = nextProps.video.ipfsHash
-          CreatePlayer({
-            selector: '#player',
-            source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
-            mimeType: 'video/mp4',
-            ipfsHash: ipfsHash
-          })
-        }
-      }
-    )
+    if (nextProps.video && this.props.video !== nextProps.video) {
+      const ipfsHash = nextProps.video.ipfsHash
+      CreatePlayer({
+        selector: '#player',
+        source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
+        mimeType: 'video/mp4',
+        ipfsHash: ipfsHash
+      })
+    }
   }
 
   render () {
+    const videoId = this.props.match.params.id
     return (
       <Wrapper>
         <Body>
-          <Title>Play Video:</Title>
+          <Title>Play Video: { videoId } </Title>
           <Player id="player" />
         </Body>
       </Wrapper>

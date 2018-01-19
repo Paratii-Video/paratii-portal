@@ -15,7 +15,6 @@ const functionalTestsDir = testDir + "/functional-tests";
 
 const prod = process.env.NODE_ENV === "production";
 
-
 const config = {
   entry: {
     bundle: prod
@@ -78,11 +77,12 @@ const config = {
       {
         test: /\.scss$/,
         include: stylesDir,
+        exclude: stylesDir + "/embed/index.scss",
         use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"]
       },
       {
         test: /\.scss$/,
-        include: embedDir + "/client/styles/embed.scss",
+        include: stylesDir + "/embed/index.scss",
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'sass-loader']
@@ -101,7 +101,7 @@ const config = {
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
     }),
-    new ExtractTextPlugin('embed/embed.css'),
+    new ExtractTextPlugin('embed/index.css'),
     prod
     ? new UglifyJsPlugin({
       uglifyOptions: {
