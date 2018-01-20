@@ -1,7 +1,7 @@
 /* @flow */
 
 import { Record as ImmutableRecord } from 'immutable'
-import type { VideoInfo } from 'types/ApplicationTypes'
+import type VideoInfoRecord from './VideoInfoRecords'
 import AsyncTaskStatusRecord from './AsyncTaskStatusRecord'
 
 class Upload extends ImmutableRecord({
@@ -10,7 +10,7 @@ class Upload extends ImmutableRecord({
   blockchainStatus: new AsyncTaskStatusRecord()
 }) {
   uploadStatus: AsyncTaskStatusRecord;
-  videoInfo: VideoInfo;
+  videoInfo: VideoInfoRecord;
   blockchainStatus: AsyncTaskStatusRecord;
 }
 export default Upload

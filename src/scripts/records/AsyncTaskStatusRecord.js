@@ -8,6 +8,6 @@ class AsyncTaskStatus extends ImmutableRecord({
   data: new Map()
 }) {
   name: AsyncTaskStatusName;
-  data: Map
+  data: typeof Map
 }
 export default AsyncTaskStatus

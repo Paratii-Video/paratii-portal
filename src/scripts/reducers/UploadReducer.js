@@ -1,10 +1,11 @@
 /* @flow */
 
 import { handleActions } from 'redux-actions'
-import type { VideoInfo, Action } from 'types/ApplicationTypes'
+import type { Action } from 'types/ApplicationTypes'
 import { UPLOAD_REQUESTED, UPLOAD_PROGRESS, UPLOAD_SUCCESS, UPDATE_UPLOAD_INFO } from 'constants/ActionConstants'
 import { fromJS } from 'immutable'
 import UploadRecord from 'records/UploadRecords'
+import VideoInfoRecord from 'records/VideoInfoRecords'
 
 const reducer = {
   [UPLOAD_REQUESTED]: (
@@ -41,11 +42,9 @@ const reducer = {
   },
   [UPDATE_UPLOAD_INFO]: (
     state: UploadRecord,
-    { payload }: Action<VideoInfo>
+    { payload }: Action<VideoInfoRecord>
   ): UploadRecord => {
-    return state.merge({
-      videoInfo: payload
-    })
+    return state.setIn(['videoInfo'], payload)
   }
 }
 

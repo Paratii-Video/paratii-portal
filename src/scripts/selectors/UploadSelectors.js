@@ -14,5 +14,25 @@ export const getIsUploading = createSelector(
 )
 
 export const getHasVideoInfo = createSelector(
-  [getUpload], (upload) => !!(upload.get('videoInfo').title)
+  [getUpload], (upload) => !!(upload.getIn(['videoInfo', 'title']))
+)
+
+export const getShowUploadFile = createSelector(
+  [getUpload], (upload) => {
+    return upload.getIn(['uploadStatus', 'name']) === 'idle'
+  }
+)
+
+export const getShowEditVideoInfo = createSelector(
+  [getUpload, getHasVideoInfo], (upload, hasVideoInfo) => {
+    const uploadStatus = upload.getIn(['uploadStatus', 'name'])
+    return (uploadStatus !== 'idle' && !hasVideoInfo)
+  }
+)
+
+export const getShowVideoInfo = createSelector(
+  [getUpload, getHasVideoInfo], (upload, hasVideoInfo) => {
+    const uploadStatus = upload.getIn(['uploadStatus', 'name'])
+    return (uploadStatus !== 'idle' && hasVideoInfo)
+  }
 )

@@ -25,7 +25,7 @@ class UploadVideoStatusContainer extends Component<Props, void> {
 
 const mapStateToProps = (state: RootState) => ({
   state: state,
-  video: state.upload.video
+  video: state.upload.videoInfo
 })
 
 const mapDispatchToProps = dispatch => ({
