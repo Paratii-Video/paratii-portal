@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import type { RootState, UploadProgress } from 'types/ApplicationTypes'
 
-import { getIsUploading, getHasUploadInfo, getProgress } from 'selectors/index'
+import { getIsUploading, getHasVideoInfo, getUploadProgress } from 'selectors/UploadSelectors'
 import UploadFileContainer from 'containers/UploadFileContainer'
 import UploadVideoFormContainer from 'containers/UploadVideoFormContainer'
 import UploadVideoStatusContainer from 'containers/UploadVideoStatusContainer'
@@ -18,7 +18,7 @@ type Props = {
 class UploadContainer extends Component<Props, void> {
   render () {
     const { progress, isUploading, hasUploadInfo, state } = this.props
-    const p = progress ? progress.getIn(['value']) : '0' // need getIn because is immutable
+    const p = progress // need getIn because is immutable
     const stringifiedState = JSON.stringify(state)
     return (
       <div>
@@ -39,9 +39,9 @@ class UploadContainer extends Component<Props, void> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  progress: getProgress(state),
+  progress: getUploadProgress(state),
   isUploading: getIsUploading(state),
-  hasUploadInfo: getHasUploadInfo(state),
+  hasUploadInfo: getHasVideoInfo(state),
   state: state // have the state here for debugging purposes...
 })
 

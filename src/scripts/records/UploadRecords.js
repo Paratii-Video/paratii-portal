@@ -1,22 +1,16 @@
 /* @flow */
 
 import { Record as ImmutableRecord } from 'immutable'
-import type { UploadProgress, VideoInfo } from 'types/ApplicationTypes'
+import type { VideoInfo } from 'types/ApplicationTypes'
+import AsyncTaskStatusRecord from './AsyncTaskStatusRecord'
 
 class Upload extends ImmutableRecord({
-  id: '',
-  isUploading: false,
-  progress: null,
-  source: '',
-  video: null,
-  ipfsHash: null
+  uploadStatus: new AsyncTaskStatusRecord(),
+  videoInfo: {title: null, description: null},
+  blockchainStatus: new AsyncTaskStatusRecord()
 }) {
-  id: string;
-  isUploading: boolean;
-  progress: UploadProgress;
-  source: string;
-  video: VideoInfo;
-  ipfsHash: string;
+  uploadStatus: AsyncTaskStatusRecord;
+  videoInfo: VideoInfo;
+  blockchainStatus: AsyncTaskStatusRecord;
 }
-
 export default Upload

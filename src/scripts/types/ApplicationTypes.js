@@ -17,14 +17,12 @@ export type Location = {
   state: Object
 };
 
-export type UploadProgress = {
-  value: number
-}
+export type AsyncTaskStatusName = 'idle' | 'running' | 'success' | 'error';
 
 export type VideoInfo = {
-  title: string,
-  description: string
-}
+  title: ?string,
+  description: ?string
+};
 
 export type Action<T> = {
   type: string,
@@ -69,7 +67,7 @@ export type ParatiiLib = {
   },
   ipfs: {
     uploader: {
-      upload: ([Object]) => Object
+      upload: ([Object], Object) => Object
     },
   }
 };
