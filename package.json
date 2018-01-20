@@ -6,7 +6,6 @@
   "author": "Benjamin Baum <benjaminjbaum@gmail.com>, Jelle Gerbrandy <jelle@gerbrandy.com>, and many others",
   "license": "GPL-3.0",
   "scripts": {
-    "no-parity": "concurrently \"yarn run dev-client\" \"yarn run dev-server\"",
     "build": "yarn run clean && yarn run prep && NODE_ENV=production webpack --progress --colors",
     "clean": "rm -rf build/",
     "chimp-test": "chimp chimp.config.js",
