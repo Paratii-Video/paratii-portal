@@ -1,6 +1,6 @@
 # paratii-portal
 
-![](./src/assets/img/paratii_logo.png)
+![](https://github.com/Paratii-Video/paratiisite/blob/master/rebrand/src/svgs/paratii-logo.svg)
 
 ## Prerequisites
 
