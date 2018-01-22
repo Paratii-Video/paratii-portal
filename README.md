@@ -23,6 +23,15 @@ If you are on a Mac, you may need to set the path to parity:
     $ cd paratii-portal
     $ yarn install
 
+### Workaround for web3 bug
+
+Currently, instead of using `yarn` to install dependencies the following steps must be taken:
+
+    $ npm install
+    $ npm install web3@1.0.0-beta.27 --save
+
+This is due to [this issue](https://github.com/ethereum/web3.js/issues/966) in the `web3.js` project.
+
 
 ## Testing
 
@@ -47,29 +56,23 @@ Or, when you are developing:
 
     $ yarn run dev
 
-This does two things, concurrently:
+This does three things, concurrently:
 
-* boots a simple express server listening on port `8080` that will serve up `index.html` on all routes.
-* kicks off `webpack` build
+* boots up the server
+* bundles client code with webpack
+* boots up `parity`
 
-Both processes recompile/restart on relevant file changes. In addition, the dev server is set up to support hot-module-replacement for `react` and `redux`.
+The client and server will recompile/restart on relevant file changes. In addition, the dev server is set up to support hot-module-replacement for `react` and `redux`.
 
-To also run the `parity` ethereum client concurrently, instead run:
+To run these processes separately:
 
-    $ yarn run dev-parity
+`$ yarn run build:dev`
 
+`$ yarn run server:dev`
 
-## Embed Sever
+`$ yarn run parity`
 
-The embedded player client code will be bundled with the commands shown above.
-
-To boot up the server:
-
-    $ yarn run start-embed
-
-Or, to restart the server on changes:
-
-    $ yarn run start-embed:dev
+The application can be visited at `http://localhost:8080`
 
 
 ## Code Quality
