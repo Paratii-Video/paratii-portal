@@ -1,6 +1,7 @@
-# paratii-portal
+<img src="https://github.com/Paratii-Video/paratiisite/blob/master/rebrand/src/svgs/paratii-logo.svg" width="200"> 
 
-![](./src/assets/img/paratii_logo.png)
+# paratii-portal
+A modular web-interface for uploading content into the peer-to-peer network behind Paratii, and to browse or organize it. It's purpose is to **1)** help populate Paratii's registries with real world data and files from creators; **2)** expose widgets and forms of interaction with the paratii-library that other developers can leverage, or platform owners can implement; **3)** battletest distributed curation concepts, whenever mature for account management. First iteration will randomize account info. and focus on the experience of uploading videos.
 
 ## Prerequisites
 
@@ -19,9 +20,8 @@ If you are on a Mac, you may need to set the path to parity:
 ## Installing
 
     $ git clone https://github.com/Paratii-Video/paratii-portal
-    $ cd paratii-lib
+    $ cd paratii-portal
     $ yarn install
-
 
 
 ## Testing
@@ -57,6 +57,20 @@ Both processes recompile/restart on relevant file changes. In addition, the dev 
 To also run the `parity` ethereum client concurrently, instead run:
 
     $ yarn run dev-parity
+
+
+## Embed Sever
+
+The embedded player client code will be bundled with the commands shown above.
+
+To boot up the server:
+
+    $ yarn run start-embed
+
+Or, to restart the server on changes:
+
+    $ yarn run start-embed:dev
+
 
 ## Code Quality
 

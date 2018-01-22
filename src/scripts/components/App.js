@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 import MainHeader from 'components/MainHeader'
 
-import UploadFileContainer from 'containers/UploadFileContainer'
+import UploadContainer from 'containers/UploadContainer'
 import SignupContainer from 'containers/SignupContainer'
 import LoginContainer from 'containers/LoginContainer'
 import ProfileContainer from 'containers/ProfileContainer'
@@ -30,8 +30,8 @@ const Wrapper = styled.div`
 
 class App extends Component<Props, void> {
   render () {
-    setupKeystore()
     const { match } = this.props
+    setupKeystore()
     return (
       <Wrapper>
         <MainHeader/>
@@ -40,8 +40,8 @@ class App extends Component<Props, void> {
           component={DebugContainer}
         />
         <Route
-          path={`${match.url}uploader/upload-file`}
-          component={UploadFileContainer}
+          path={`${match.url}uploader`}
+          component={UploadContainer}
         />
         <Route
           path={`${match.url}signup`}

@@ -1,13 +1,32 @@
+import { assert } from 'chai'
+
 describe('Uploader Tool', function () {
-  it.skip('should have basic flow in place', function () {
+  it('should have basic flow in place @watch', function () {
     // see https://github.com/Paratii-Video/paratii-portal/issues/8
+    let video = {
+      title: 'Some title',
+      description: 'Description of the video which can be pretty long and may contain dïàcrítics'
+    }
     browser.url('http://localhost:8080/uploader/upload-file')
-    // open a file from the FS
-    // click on submit
-    // (write a separte test for errors on this screen)
-    // assert that we are on a screen where we can add info about the file
-    // fill in the form with title and description and stuff
+    let fileToUpload = `${__dirname}/data/data.txt`
+
+    browser.chooseFile('input[type="file"]', fileToUpload)
+
+    var val = browser.getValue('input[type="file"]')
+    // val will be something like 'C://fakepath/data.txt'
+    assert.match(val, /data.txt$/)
+
+    // submit the file
+    browser.click('#upload-submit')
+
+    // now we should see a form to fill in
+    browser.setValue('#video-title', video.title)
+    browser.setValue('#video-description', video.description)
     // submit the form
+    browser.click('#video-submit')
+
+    // we now should be on the status screen
+    browser.isExisting('#video-status')
     // (write a separate test for error handling on this form)
     // assert that we are on a screen where we can see the status of the video upload and transcoding
   })

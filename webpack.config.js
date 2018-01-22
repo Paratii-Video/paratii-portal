@@ -1,34 +1,42 @@
-var webpack = require("webpack");
-var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-var path = require("path");
+const webpack = require("webpack");
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const path = require("path");
 
-var srcDir = path.resolve(__dirname, "src");
-var scriptsDir = srcDir + "/scripts";
-var assetsDir = srcDir + "/assets";
-var stylesDir = srcDir + "/styles";
-var buildDir = path.resolve(__dirname, "build");
-var testDir = path.resolve(__dirname, "test");
-var unitTestsDir = testDir + "/unit-tests";
-var functionalTestsDir = testDir + "/functional-tests";
+const srcDir = path.resolve(__dirname, "src");
+const configDir = path.resolve(__dirname, "config");
+const scriptsDir = srcDir + "/scripts";
+const embedDir = scriptsDir + "/embed";
+const assetsDir = srcDir + "/assets";
+const stylesDir = srcDir + "/styles";
+const buildDir = path.resolve(__dirname, "build");
+const testDir = path.resolve(__dirname, "test");
+const unitTestsDir = testDir + "/unit-tests";
+const functionalTestsDir = testDir + "/functional-tests";
 
-var prod = process.env.NODE_ENV === "production";
+const prod = process.env.NODE_ENV === "production";
 
-
-var config = {
-  entry: prod
-    ? [scriptsDir + "/index.js"]
-    : [
-        "react-hot-loader/patch",
-        scriptsDir + "/index.js",
-        "webpack-hot-middleware/client?quiet=true"
-      ],
+const config = {
+  entry: {
+    bundle: prod
+      ? [scriptsDir + "/index.js"]
+      : [
+          "react-hot-loader/patch",
+          scriptsDir + "/index.js",
+          "webpack-hot-middleware/client?quiet=true"
+        ],
+    'embed/bundle': embedDir + "/index.js"
+  },
   output: {
+    chunkFilename: "[name].bundle.js",
+    filename: "[name].js",
     path: buildDir,
     publicPath: "/",
-    filename: "bundle.js"
   },
+  target: "web",
   resolve: {
     alias: {
+      config: configDir,
       scripts: scriptsDir,
       styles: stylesDir,
       assets: assetsDir,
@@ -46,7 +54,8 @@ var config = {
       "test-utils": testDir + "/test-utils",
       "unit-tests": unitTestsDir,
       "functional-tests": functionalTestsDir
-    }
+    },
+    aliasFields: ["browser"]
   },
   module: {
     loaders: [
@@ -70,7 +79,16 @@ var config = {
       {
         test: /\.scss$/,
         include: stylesDir,
+        exclude: stylesDir + "/embed/index.scss",
         use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"]
+      },
+      {
+        test: /\.scss$/,
+        include: stylesDir + "/embed/index.scss",
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
       }
     ]
   },
@@ -80,35 +98,20 @@ var config = {
     : {
         hot: true
       },
-  plugins:
-    [
-        new webpack.DefinePlugin({
-          "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-          "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
-        }),
-        new webpack.HotModuleReplacementPlugin()
-        // new UglifyJsPlugin({
-        //   uglifyOptions: {
-        //     ecma: 6
-        //   }
-        // })
-      ]
-
-  // plugins: prod
-  //   ? [
-  //       new webpack.DefinePlugin({
-  //         "process.env.NODE_ENV": JSON.stringify("production"),
-  //         "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
-  //       })
-  //       new UglifyJsPlugin({
-  //         uglifyOptions: {
-  //           ecma: 6
-  //         }
-  //       })
-  //     ]
-  //   : [new webpack.HotModuleReplacementPlugin()]
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+      "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
+    }),
+    new ExtractTextPlugin('embed/index.css'),
+    prod
+    ? new UglifyJsPlugin({
+      uglifyOptions: {
+        ecma: 6
+      }
+    })
+    : new webpack.HotModuleReplacementPlugin()
+  ]
 };
 
 module.exports = config;
-
-console.log(process.env.NODE_ENV)

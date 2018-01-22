@@ -9,3 +9,10 @@ export const LOGIN_REQUESTED = createActionConstant('LOGIN_REQUESTED')
 export const LOGIN_SUCCESS = createActionConstant('LOGIN_SUCCESS')
 export const LOGIN_FAILURE = createActionConstant('LOGIN_FAILURE')
 export const LOGOUT = createActionConstant('LOGOUT')
+
+/* Upload Actions */
+export const UPLOAD_REQUESTED = createActionConstant('UPLOAD_REQUESTED')
+export const UPLOAD_PROGRESS = createActionConstant('UPLOAD_PROGRESS')
+export const UPLOAD_FAILURE = createActionConstant('UPLOAD_FAILURE')
+export const UPLOAD_SUCCESS = createActionConstant('UPLOAD_SUCCESS')
+export const UPDATE_UPLOAD_INFO = createActionConstant('UPDATE_UPLOAD_INFO')

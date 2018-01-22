@@ -18,9 +18,12 @@ flow
 [options]
 module.system=haste
 module.use_strict=true
+module.ignore_non_literal_requires=true
 module.file_ext=.js
 module.file_ext=.json
 module.file_ext=.scss
+module.name_mapper='^config\/\(.*\)$' -> '<PROJECT_ROOT>/config/\1'
+module.name_mapper='^config$' -> '<PROJECT_ROOT>/config'
 module.name_mapper='^scripts\/\(.*\)$' -> '<PROJECT_ROOT>/src/scripts/\1'
 module.name_mapper='^scripts$' -> '<PROJECT_ROOT>/src/scripts'
 module.name_mapper='^styles\/\(.*\)$' -> '<PROJECT_ROOT>/src/styles/\1'

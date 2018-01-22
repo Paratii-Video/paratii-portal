@@ -21,6 +21,7 @@ const Wrapper = styled.div`
   padding: 0;
   display: flex;
   flex-direction: column;
+  height: 100%;
   position: relative;
 `
 
@@ -49,9 +50,7 @@ const Player = styled.div`
 `
 
 class Play extends Component<Props, void> {
-  constructor (props: Props): void {
-    super(props)
-
+  componentDidMount (): void {
     const videoId = this.props.match.params.id
 
     if (videoId) {

@@ -1,8 +1,8 @@
 /* @flow */
 
 import { createAction } from 'redux-actions'
-import { paratii } from 'utils/ParatiiLib'
 
+import { paratii } from 'utils/ParatiiLib'
 import { VIDEO_DATA_LOADED } from 'constants/ActionConstants'
 
 import type { Dispatch } from 'redux'

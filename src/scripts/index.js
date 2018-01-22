@@ -6,20 +6,11 @@ import { AppContainer } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 
 import Root from 'components/Root'
+import { getRoot } from 'utils/AppUtils'
 import createStore from 'scripts/createStore'
 import 'styles/app.scss'
 
-console.log(process.env.NODE_ENV)
-
-let root: ?Element = document.getElementById('root')
-
 const store = createStore()
-
-if (!root) {
-  root = document.createElement('div')
-  root.setAttribute('id', 'root')
-  document.body && document.body.appendChild(root)
-}
 
 ReactDOM.render(
   <Provider store={store}>
@@ -27,21 +18,19 @@ ReactDOM.render(
       <Root />
     </AppContainer>
   </Provider>,
-  root
+  getRoot()
 )
 
 if (module.hot) {
   module.hot.accept('components/Root', () => {
     const NextRoot = require('components/Root').default
-    if (root) {
-      ReactDOM.render(
-        <Provider store={store}>
-          <AppContainer>
-            <NextRoot />
-          </AppContainer>
-        </Provider>,
-        root
-      )
-    }
+    ReactDOM.render(
+      <Provider store={store}>
+        <AppContainer>
+          <NextRoot />
+        </AppContainer>
+      </Provider>,
+      getRoot()
+    )
   })
 }
