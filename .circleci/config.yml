@@ -29,6 +29,9 @@ jobs:
       - run:
           command: yarn run build:dev
           background: true
+      - run:
+          command: yarn run server:dev
+          background: true
       - run: yarn run chimp-test
       - run: yarn run build
       - deploy:
