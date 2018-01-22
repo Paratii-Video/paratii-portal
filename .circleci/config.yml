@@ -12,6 +12,8 @@ jobs:
           - v1-dependencies-
       - run: bash <(curl https://get.parity.io -Lk)
       - run: yarn install
+      # the next line is a workaround around a web3 bug tracked here https://github.com/ethereum/web3.js/issues/1234
+      - run: npm install web3@1.0.0-beta.27 --save
       - save_cache:
           paths:
             - node_modules
