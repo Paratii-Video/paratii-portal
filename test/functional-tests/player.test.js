@@ -48,7 +48,7 @@ describe('Player: ', function () {
     await paratii.core.vids.create({
       id: videoId,
       owner: address1,
-      title: 'Malandrina',
+      title: 'Test 1',
       ipfsHash: ipfsHash
     })
 
@@ -95,8 +95,7 @@ describe('Player: ', function () {
     // This tests should just be very much reduced
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')
-    // browser.waitForExist('#video-player')
-    // browser.waitForExist('.player-overlay')
+    browser.waitForExist('#video-overlay')
     // assert.equal(browser.getText('.player-title'), 'Test 1')
     // browser.waitForExist('.player-controls')
     // assert.isTrue(browser.getAttribute('.player-container', 'class').includes('play'))

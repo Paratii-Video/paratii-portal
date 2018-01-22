@@ -21,6 +21,7 @@ const Wrapper = styled.div`
   padding: 0;
   display: flex;
   flex-direction: column;
+  position: relative;
 `
 
 const Body = styled.div`
@@ -55,26 +56,28 @@ class Play extends Component<Props, void> {
 
     if (videoId) {
       this.props.fetchVideo(videoId)
+      console.log(this.props.fetchVideo(videoId))
     } else {
       throw Error('We should raise a 404 error here and redirect to the player')
     }
   }
 
   componentWillReceiveProps (nextProps: Props): void {
+    console.log('- - - componentWillReceiveProps')
+
     let ipfsHash = ''
     if (nextProps.video) {
-      ipfsHash = nextProps.video.ipfsHash
+      if (this.props.video == null || nextProps.video.ipfsHash !== this.props.video.ipfsHash) {
+        ipfsHash = nextProps.video.ipfsHash
+        console.log('- - - CreatePlayer')
+        CreatePlayer({
+          selector: '#player',
+          source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
+          mimeType: 'video/mp4',
+          ipfsHash: ipfsHash
+        })
+      }
     }
-    console.log('this props')
-    console.log(this.props.video)
-    console.log('next props')
-    console.log(nextProps.video)
-    CreatePlayer({
-      selector: '#player',
-      source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
-      mimeType: 'video/mp4',
-      ipfsHash: ipfsHash
-    })
   }
 
   render () {
@@ -83,7 +86,7 @@ class Play extends Component<Props, void> {
       <Wrapper>
         <Body>
           <Title>Play Video: { videoId } </Title>
-          <VideoOverlay/>
+          <VideoOverlay {...this.props}/>
           <Player id="player" />
         </Body>
       </Wrapper>

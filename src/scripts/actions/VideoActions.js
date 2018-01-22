@@ -14,6 +14,6 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
   let videoInfo = await paratii.eth.vids.get(id)
   // TODO: previous line should be replaced with next line once the db is updated
   // let videoInfo = await paratii.core.vids.get(id)
-  console.log(`Received video info`)
+  console.log('Received video info')
   dispatch(videoDataLoaded(videoInfo))
 }
