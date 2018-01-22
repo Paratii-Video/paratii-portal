@@ -129,6 +129,7 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "streamspeed": "^1.1.0",
-    "styled-components": "^2.3.3"
+    "styled-components": "^2.3.3",
+    "web3": "^1.0.0-beta.27"
   }
 }
