@@ -91,7 +91,7 @@ describe('Player: ', function () {
     browser.waitForExist('.media-control')
   })
 
-  it.skip('the video has overlay informations', function () {
+  it('the video has overlay informations', function () {
     // This tests should just be very much reduced
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')

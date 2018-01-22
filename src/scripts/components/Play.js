@@ -56,7 +56,6 @@ class Play extends Component<Props, void> {
 
     if (videoId) {
       this.props.fetchVideo(videoId)
-      console.log(this.props.fetchVideo(videoId))
     } else {
       throw Error('We should raise a 404 error here and redirect to the player')
     }
