@@ -16,7 +16,13 @@ const Title = styled.header`
 class Debug extends Component {
   render () {
     delete paratii.config.paratii
-    let config = JSON.stringify(paratii().config, null, 2)
+    let config = JSON.stringify(paratii.config, null, 2)
+    let warning = null
+    if (!paratii.config.registryAddress) {
+      warning = <div><b>No registry address set!</b></div>
+    } else {
+      warning = <div />
+    }
     return (
       <Wrapper>
         <pre>
@@ -25,7 +31,10 @@ class Debug extends Component {
           <br />
           <Link to="/uploader/upload-file">Upload a file</Link>
           <br />
+          {warning}
+          <br />
           {config}
+
         </pre>
       </Wrapper>
     )
