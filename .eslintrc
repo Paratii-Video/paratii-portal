@@ -13,6 +13,6 @@
     "mocha": true
   },
   "globals": {
-      "browser": true
+    "browser": true
   }
 }

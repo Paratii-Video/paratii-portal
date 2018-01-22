@@ -38,7 +38,6 @@ const playerIsFullScreen = () => !!(
 )
 
 
-
 describe('Player: ', function () {
 
   let ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
@@ -49,7 +48,7 @@ describe('Player: ', function () {
     await paratii.core.vids.create({
       id: videoId,
       owner: address1,
-      title: 'Malandrina',
+      title: 'Test 1',
       ipfsHash: ipfsHash
     })
 
@@ -92,12 +91,11 @@ describe('Player: ', function () {
     browser.waitForExist('.media-control')
   })
 
-  it.skip('the video has overlay informations', function () {
+  it('the video has overlay informations', function () {
     // This tests should just be very much reduced
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')
-    // browser.waitForExist('#video-player')
-    // browser.waitForExist('.player-overlay')
+    browser.waitForExist('#video-overlay')
     // assert.equal(browser.getText('.player-title'), 'Test 1')
     // browser.waitForExist('.player-controls')
     // assert.isTrue(browser.getAttribute('.player-container', 'class').includes('play'))
@@ -108,21 +106,6 @@ describe('Player: ', function () {
     // assert.isTrue(browser.getAttribute('.player-container', 'class').includes('pause'))
   })
 
-  it.skip('click on the progress bar', function () {
-    // This test should be moved to mediaplayer
-    browser.url(`http://localhost:8080/play/${videoId}`)
-    browser.waitAndClick('#player')
-    browser.waitForExist('.media-control')
-    browser.waitAndClick('.bar-container', 5000)
-    browser.pause(5000)
-    // browser.waitForExist('#loaded-bar')
-    // browser.waitUntil(() => browser.getElementSize('#loaded-bar', 'width') > 30, 5000, 'video load timeout')
-    // browser.click('#loaded-bar')
-    // browser.pause(2000)
-    // assert.notEqual(browser.getText('#current-time'), '00:00')
-    // assert.isAbove(browser.getElementSize('#played-bar', 'width'), 0)
-    // assert.isAbove(browser.getLocation('#scrubber', 'x'), 0)
-  })
 
   it.skip('click on next video', () => {
     browser.url('http://localhost:3000/play/12345?playlist=98765')
@@ -201,75 +184,4 @@ describe('Player: ', function () {
     ))
   })
 
-  it.skip('should play/pause a video when the spacebar is pressed', () => {
-    // Moving this to mediaplayer
-    browser.url('http://localhost:3000/play/12345?playlist=98765')
-    browser.waitUntilBuffered()
-    browser.waitForClickable('#play-pause-button')
-    browser.switchTab()
-    browser.waitUntil(() => browser.hasFocus('#player-container'))
-    browser.keys('Space')
-    browser.waitUntilVideoIsPlaying()
-    it
-    browser.keys('Space')
-
-    browser.waitUntil(() => browser.getAttribute('#video-player', 'paused') === 'true')
-  })
-
-  it.skip('should play/pause a video when the player is single-clicked', () => {
-    // Moving this to mediaplayer
-    browser.url('http://localhost:3000/play/12345?playlist=98765')
-    browser.waitAndRemove('.player-uploader-name')
-    browser.waitAndRemove('.player-stats')
-    browser.waitAndRemove('.player-title')
-    browser.waitAndRemove('.player-info')
-    browser.waitUntilBuffered()
-    browser.waitAndClick('#video-player')
-
-    browser.waitUntilVideoIsPlaying()
-
-    browser.waitAndClick('#video-player')
-
-    browser.waitUntil(() => browser.getAttribute('#video-player', 'paused') === 'true')
-  })
-
-  it.skip('should toggle full-screen mode on double click', () => {
-    // Moving this to mediaplayer
-    browser.url('http://localhost:3000/play/12345?playlist=98765')
-    browser.waitAndRemove('.player-uploader-name')
-    browser.waitAndRemove('.player-stats')
-    browser.waitAndRemove('.player-title')
-    browser.waitAndRemove('.player-info')
-    browser.waitUntilBuffered()
-    browser.waitForClickable('#video-player')
-    browser.doubleClick('#video-player')
-
-    browser.waitUntil(() => !!browser.execute(playerIsFullScreen).value)
-
-    browser.waitForClickable('#video-player')
-    browser.doubleClick('#video-player')
-
-    browser.waitUntil(() => !browser.execute(playerIsFullScreen).value)
-  })
-
-  it.skip('should stay in full-screen mode when a video is paused via the space bar', () => {
-    // Moving this to mediaplayer
-    browser.url('http://localhost:3000/play/12345?playlist=98765')
-    browser.waitUntilBuffered()
-    browser.waitAndClick('#play-pause-button')
-    browser.waitUntilVideoIsPlaying()
-
-    browser.waitAndClick('#fullscreen-button')
-
-    browser.waitUntil(() => !!browser.execute(playerIsFullScreen).value)
-
-    browser.switchTab()
-    browser.keys('Space')
-
-    browser.waitUntil(() => browser.getAttribute('#video-player', 'paused') === 'true')
-    browser.waitUntil(() => !!browser.execute(playerIsFullScreen).value)
-
-    browser.waitAndClick('#fullscreen-button')
-    browser.waitUntil(() => !browser.execute(playerIsFullScreen).value)
-  })
 })

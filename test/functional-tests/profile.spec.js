@@ -39,7 +39,6 @@ import {
   waitForKeystore,
   clearCookies
 } from './test-utils/helpers.js'
-// import { add0x } from '../imports/lib/utils.js'
 import { assert } from 'chai'
 
 describe('Profile and accounts workflow:', function () {
@@ -281,8 +280,8 @@ describe('Profile and accounts workflow:', function () {
     createUserAndLogin(browser)
     // browser.url('http://localhost:3000/profile')
     browser.execute(function () {
-      utils = require('/imports/lib/utils.js') // eslint-disable-line no-undef
-      utils.showModal('showSeed') // eslint-disable-line no-undef
+      //utils = require('/imports/lib/utils.js') // eslint-disable-line no-undef
+      //utils.showModal('showSeed') // eslint-disable-line no-undef
     })
 
     // the showSeed modal should now be visible
