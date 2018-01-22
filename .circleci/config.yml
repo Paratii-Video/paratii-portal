@@ -11,8 +11,10 @@ jobs:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           - v1-dependencies-
       - run: bash <(curl https://get.parity.io -Lk)
+
+      # the next lines are a workaround around a web3 bug tracked here https://github.com/ethereum/web3.js/issues/1234
+      # as soon as this bug is fixed, we should go back to yarn install, which is faster
       # - run: yarn install
-      # the next line is a workaround around a web3 bug tracked here https://github.com/ethereum/web3.js/issues/1234
       - run: npm install
       - run: npm install web3@1.0.0-beta.27 --save
       - save_cache:
