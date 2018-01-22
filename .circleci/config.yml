@@ -9,7 +9,7 @@ jobs:
       - restore_cache:
           keys:
           # - v1-dependencies-{{ checksum "yarn.lock" }}
-          - v1-dependencies-{{ checksum "package.lock" }}
+          - v1-dependencies-{{ checksum "package-lock.json" }}
           - v1-dependencies-
       - run: bash <(curl https://get.parity.io -Lk)
 
@@ -23,7 +23,7 @@ jobs:
           paths:
             - node_modules
           # key: v1-dependencies-{{ checksum "yarn.lock" }}
-          key: v1-dependencies-{{ checksum "package.lock" }}
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
       - run: yarn run quality
       - run: yarn run unit-test
       - run:
