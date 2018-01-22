@@ -24,7 +24,8 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   //
   paratii.ipfs.uploader.upload([file], {
     onStart: function () {
-      console.log('Upload stared')
+      dispatch(uploadRequested())
+      console.log('Upload started')
     },
     onError: function (err) {
       throw err
@@ -54,7 +55,7 @@ export const saveVideoInfo = (videoInfo: Object) => (dispatch: Dispatch<*>) => {
   delete videoInfo.description
   console.log(videoInfo)
   paratii.core.vids.create(videoInfo).then(function (videoInfo) {
-    console.log('Video successfully uploaded!')
+    console.log('Video information saved..!')
     dispatch(updateUploadInfo(videoInfo))
   })
 }

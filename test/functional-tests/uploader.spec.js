@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 
 describe('Uploader Tool', function () {
-  it('should have basic flow in place', function () {
+  it('should have basic flow in place @watch', function () {
     // see https://github.com/Paratii-Video/paratii-portal/issues/8
     let video = {
       title: 'Some title',
