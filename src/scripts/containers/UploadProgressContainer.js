@@ -8,7 +8,8 @@ import type { RootState } from 'types/ApplicationTypes'
 import UploadProgress from 'components/UploadProgress'
 
 type Props = {
-  progress: number
+  progress: number;
+  state: RootState;
 }
 
 class UploadProgressContainer extends Component<Props, void> {
@@ -23,13 +24,14 @@ class UploadProgressContainer extends Component<Props, void> {
 
   render () {
     return (
-      <UploadProgress progress={this.props.progress} onCancelUpload={this.cancelUpload}/>
+      <UploadProgress progress={this.props.progress} onCancelUpload={this.cancelUpload} state={this.props.state.upload}/>
     )
   }
 }
 
 const mapStateToProps = (state: RootState) => ({
-  progress: getUploadProgress(state)
+  progress: getUploadProgress(state),
+  state: state
 })
 
 const mapDispatchToProps = dispatch => ({

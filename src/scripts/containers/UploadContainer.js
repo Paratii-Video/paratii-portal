@@ -14,7 +14,7 @@ type Props = {
   showUploadFile: boolean,
   showEditVideoInfo: boolean,
   showVideoInfo: boolean,
-  state: Object
+  state: RootState
 }
 
 class UploadContainer extends Component<Props, void> {
@@ -23,7 +23,7 @@ class UploadContainer extends Component<Props, void> {
     const stringifiedState = JSON.stringify(state)
     return (
       <div>
-        {isUploading && <UploadProgressContainer />}
+        {isUploading && <UploadProgressContainer state={state.upload }/>}
         {showUploadFile && <UploadFileContainer />}
         {showEditVideoInfo && <UploadVideoFormContainer />}
         {showVideoInfo && <UploadVideoStatusContainer />}
