@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import CreatePlayer from 'paratii-mediaplayer'
 import VideoRecord from 'records/VideoRecords'
 
+import VideoOverlay from 'components/VideoOverlay'
+
 import type { RouteMatch } from 'types/ApplicationTypes'
 
 type Props = {
@@ -20,6 +22,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
 `
 
 const Body = styled.div`
@@ -58,14 +61,20 @@ class Play extends Component<Props, void> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    if (nextProps.video && this.props.video !== nextProps.video) {
-      const id = nextProps.video.id
-      CreatePlayer({
-        selector: '#player',
-        source: `https://gateway.paratii.video/ipfs/${id}/master.m3u8`,
-        mimeType: 'video/mp4',
-        ipfsHash: id
-      })
+    console.log('- - - componentWillReceiveProps')
+
+    let ipfsHash = ''
+    if (nextProps.video) {
+      if (this.props.video == null || nextProps.video.ipfsHash !== this.props.video.ipfsHash) {
+        ipfsHash = nextProps.video.ipfsHash
+        console.log('- - - CreatePlayer')
+        CreatePlayer({
+          selector: '#player',
+          source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
+          mimeType: 'video/mp4',
+          ipfsHash: ipfsHash
+        })
+      }
     }
   }
 
@@ -75,6 +84,7 @@ class Play extends Component<Props, void> {
       <Wrapper>
         <Body>
           <Title>Play Video: { videoId } </Title>
+          <VideoOverlay {...this.props}/>
           <Player id="player" />
         </Body>
       </Wrapper>

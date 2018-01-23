@@ -62,7 +62,7 @@ export type ParatiiLib = {
       newMnemonic: () => string
     },
     vids: {
-      get: (string) => Object
+      get: (id: string) => ?Object
     }
   },
   ipfs: {
