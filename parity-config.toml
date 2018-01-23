@@ -1,6 +1,8 @@
 # https://github.com/paritytech/parity/wiki/Configuring-Parity
 [parity]
 chain = "chain.json"
+[network]
+max_peers = 0
 [mining]
 reseal_min_period = 0
 [rpc]
