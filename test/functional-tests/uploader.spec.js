@@ -32,7 +32,7 @@ describe('Uploader Tool', function () {
     // assert that we are on a screen where we can see the status of the video upload and transcoding
   })
 
-  it('cancel upload shoud work [but is not yet]', function () {
+  it('cancel upload should work [but is not yet]', function () {
     // start uploading a file
     browser.url('http://localhost:8080/uploader/upload-file')
     let fileToUpload = `${__dirname}/data/data.txt`

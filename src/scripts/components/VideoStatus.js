@@ -2,9 +2,11 @@
 
 import React, { Component } from 'react'
 import Wrapper from './foundations/Wrapper'
+import VideoRecord from 'records/VideoRecords'
 
 type Props = {
-  video: Object
+  video: VideoRecord,
+  state: Object
 };
 
 class VideoStatus extends Component<Props, void> {
@@ -13,6 +15,14 @@ class VideoStatus extends Component<Props, void> {
     return (
       <Wrapper>
         <pre id="video-status">
+
+            Blockchain status (= the object has been saved on the blockchain?): {this.props.state.blockchainStatus.name}
+          <br />
+            Upload status (= the object has been pinned?): {this.props.state.uploadStatus.name}
+          <br />
+            Transcoding status (= the object has been transcoded and is available for streaming?):
+          {this.props.state.transcodingStatus.name}
+          <br />
             Your Video is now being either:
           <ul>
             <li>being uploaded</li>
@@ -35,10 +45,7 @@ class VideoStatus extends Component<Props, void> {
           --------------------------------------------------------
           <br />
           Soon you willl also be able to tag the video, create playlists, and other goodies! (But not yet :-())
-
-          <b>TODO: checks, progress, blabla:</b>
           <br />
-
         </pre>
       </Wrapper>
     )

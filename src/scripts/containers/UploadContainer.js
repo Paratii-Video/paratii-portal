@@ -28,6 +28,7 @@ class UploadContainer extends Component<Props, void> {
         {showEditVideoInfo && <UploadVideoFormContainer />}
         {showVideoInfo && <UploadVideoStatusContainer />}
         <pre>
+          -------------------------the state----
           {stringifiedState}
         </pre>
       </div>

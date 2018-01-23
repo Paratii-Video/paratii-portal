@@ -47,9 +47,12 @@ const reducer = {
     state: UploadRecord,
     { payload }: Action<VideoInfoRecord>
   ): UploadRecord => {
-    console.log(payload)
     state = state.setIn(['videoInfo'], payload)
-    console.log(state)
+    state = state.mergeDeep({
+      blockchainStatus: {
+        name: 'success'
+      }
+    })
     return state
   }
 }

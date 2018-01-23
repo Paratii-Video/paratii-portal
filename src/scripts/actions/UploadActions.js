@@ -37,7 +37,7 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   })
 }
 
-export const saveVideoInfo = (videoInfo: Object) => (dispatch: Dispatch<*>) => {
+export const saveVideoInfo = (videoInfo: Object) => async (dispatch: Dispatch<*>) => {
   // console.log('Saving video info')
   // // TODO: paratii-lib shoudl generate a fresh id, we now use a placeholder
   // videoInfo.id = `foo_${Math.floor(Math.random() * 100000)}`
@@ -46,10 +46,14 @@ export const saveVideoInfo = (videoInfo: Object) => (dispatch: Dispatch<*>) => {
   // // TODO: paratii-lib has no support for the description yet (there is an issue)
   // // TODO: once that support is there, the following line should be deleted
   // delete videoInfo.description
-  paratii.core.vids.create(videoInfo).then((videoInfo) => {
-    console.log('Video successfully uploaded!')
-    console.log(videoInfo)
-    // dispatch(updateUploadInfo(videoInfo))
-    dispatch(updateUploadInfo(new VideoInfoRecord(videoInfo)))
-  })
+  console.log(videoInfo)
+  paratii.core.vids.create(videoInfo)
+    .then((videoInfo) => {
+      console.log('Video successfully uploaded!')
+      dispatch(updateUploadInfo(new VideoInfoRecord(videoInfo)))
+    })
+    .catch((error) => {
+      console.log('-------------------')
+      console.log(error)
+    })
 }
