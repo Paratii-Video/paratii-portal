@@ -1,9 +1,8 @@
-
-/* @flow */
-
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+
+//
 
 type Props = {
 }
@@ -12,8 +11,8 @@ type Props = {
 
 const MainLogo = styled.h1`
   display: block;
+  flex: 0 0 ${props => props.theme.sizes ? props.theme.sizes.mainHeaderLogo.width : ''};
   height: ${props => props.theme.sizes ? props.theme.sizes.mainHeaderLogo.height : ''};
-  width: ${props => props.theme.sizes ? props.theme.sizes.mainHeaderLogo.width : ''};
 `
 
 const MainLogoAnchor = styled(Link)`

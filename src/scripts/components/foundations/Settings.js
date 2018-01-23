@@ -14,27 +14,6 @@ export const Colors = {
   pinkGradient: 'linear-gradient(to bottom, \'#E72061\', \'#DC3DCC\' )'
 }
 
-export const Themes = {
-  dark: {
-    body: {
-      background: Colors.grayDark
-    },
-    header: {
-      background: Colors.black,
-      logoFill: Colors.white
-    }
-  },
-  light: {
-    body: {
-      background: Colors.grayLight
-    },
-    header: {
-      background: Colors.white,
-      logoFill: Colors.black
-    }
-  }
-}
-
 export const Fonts = {
   family: 'Roboto'
 }
@@ -43,8 +22,60 @@ export const Sizes = {
   mainHeader: {
     height: '96px'
   },
+  mainFooter: {
+    height: '192px'
+  },
   mainHeaderLogo: {
     height: '29px',
     width: '98px'
+  },
+  searchInputLogo: '17px',
+  mainInput: {
+    height: '44px'
+  }
+}
+
+export const Themes = {
+  dark: {
+    body: {
+      background: Colors.grayDark,
+      color: Colors.grayLight
+    },
+    header: {
+      background: Colors.black,
+      color: Colors.grayLight,
+      logoFill: Colors.white
+    },
+    footer: {
+      background: Colors.black,
+      color: Colors.grayLight,
+      logoFill: Colors.white
+    },
+    mainInput: {
+      border: Colors.grayLight,
+      color: Colors.white,
+      placeholder: Colors.grayLight
+    }
+  },
+  light: {
+    body: {
+      background: Colors.grayLight,
+      color: Colors.blackLight
+    },
+    header: {
+      background: Colors.black,
+      color: Colors.grayLight,
+      logoFill: Colors.white
+    },
+    footer: {
+      background: Colors.black,
+      color: Colors.grayLight,
+      logoFill: Colors.white
+    },
+    mainInput: {
+      border: Colors.grayLight,
+      color: Colors.white,
+      placeholder: Colors.grayLight
+    }
   }
 }
