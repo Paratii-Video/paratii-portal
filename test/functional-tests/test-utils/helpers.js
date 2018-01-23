@@ -345,7 +345,7 @@ export function uploadFilesToIPFS (ipfs, files) {
           // content: pullFilereader(file)
           content: pull(
             toPull(fs.createReadStream(file)), // file here is a path to file.
-            pull.through((chunk) => console.log(chunk.length, Math.floor((meta.total + chunk.length) / meta.fileSize) * 100))
+            // pull.through((chunk) => console.log(chunk.length, Math.floor((meta.total + chunk.length) / meta.fileSize) * 100))
           )
         }]),
         node.files.addPullStream({chunkerOptions: {maxChunkSize: _chunkSize}}), // default size 262144
