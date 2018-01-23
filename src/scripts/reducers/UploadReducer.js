@@ -37,7 +37,10 @@ const reducer = {
       uploadStatus: {
         name: 'success',
         data: { ipfsHash: payload }
-      }
+      },
+      // isUploading: false,
+      progress: null,
+      ipfsHash: payload
     })
   },
   [UPDATE_UPLOAD_INFO]: (

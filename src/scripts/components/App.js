@@ -3,7 +3,8 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
-import logo from 'assets/img/paratii_logo.png'
+
+import MainHeader from 'components/MainHeader'
 
 import UploadContainer from 'containers/UploadContainer'
 import SignupContainer from 'containers/SignupContainer'
@@ -27,32 +28,13 @@ const Wrapper = styled.div`
   height: 100vh;
 `
 
-const Header = styled.header`
-  background-color: #222;
-  flex: 0 0 50px;
-  padding: 20px;
-  color: white;
-  display: flex;
-  align-items: center;
-`
-
-const Logo = styled.img`
-  height: 80px;
-`
-
 class App extends Component<Props, void> {
   render () {
-    setupKeystore()
     const { match } = this.props
+    setupKeystore()
     return (
       <Wrapper>
-        <Header>
-          <Logo src={logo} alt='logo' />
-        </Header>
-        <Route
-          exact path='/'
-          component={DebugContainer}
-        />
+        <MainHeader/>
         <Route
           path={`${match.url}uploader`}
           component={UploadContainer}
@@ -72,6 +54,9 @@ class App extends Component<Props, void> {
         <Route path={`${match.url}play/:id`} component={PlayContainer} />
         <Route
           path={`${match.url}debug`}
+          component={DebugContainer}
+        />
+        <Route
           component={DebugContainer}
         />
       </Wrapper>

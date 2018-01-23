@@ -1,6 +1,7 @@
-# paratii-portal
+<img src="https://github.com/Paratii-Video/paratiisite/blob/master/rebrand/src/svgs/paratii-logo.svg" width="200"> 
 
-![](./src/assets/img/paratii_logo.png)
+# paratii-portal
+A modular web-interface for uploading content into the peer-to-peer network behind Paratii, and to browse or organize it. It's purpose is to **1)** help populate Paratii's registries with real world data and files from creators; **2)** expose widgets and forms of interaction with the paratii-library that other developers can leverage, or platform owners can implement; **3)** battletest distributed curation concepts, whenever mature for account management. First iteration will randomize account info. and focus on the experience of uploading videos.
 
 ## Prerequisites
 
@@ -21,6 +22,15 @@ If you are on a Mac, you may need to set the path to parity:
     $ git clone https://github.com/Paratii-Video/paratii-portal
     $ cd paratii-portal
     $ yarn install
+
+### Workaround for web3 bug
+
+Currently, instead of using `yarn` to install dependencies the following steps must be taken:
+
+    $ npm install
+    $ npm install web3@1.0.0-beta.27 --save
+
+This is due to [this issue](https://github.com/ethereum/web3.js/issues/966) in the `web3.js` project.
 
 
 ## Testing
@@ -46,16 +56,24 @@ Or, when you are developing:
 
     $ yarn run dev
 
-This does two things, concurrently:
+This does three things, concurrently:
 
-* boots a simple express server listening on port `8080` that will serve up `index.html` on all routes.
-* kicks off `webpack` build
+* boots up the server
+* bundles client code with webpack
+* boots up `parity`
 
-Both processes recompile/restart on relevant file changes. In addition, the dev server is set up to support hot-module-replacement for `react` and `redux`.
+The client and server will recompile/restart on relevant file changes. In addition, the dev server is set up to support hot-module-replacement for `react` and `redux`.
 
-To also run the `parity` ethereum client concurrently, instead run:
+To run these processes separately:
 
-    $ yarn run dev-parity
+`$ yarn run build:dev`
+
+`$ yarn run server:dev`
+
+`$ yarn run parity`
+
+The application can be visited at `http://localhost:8080`
+
 
 ## Code Quality
 
