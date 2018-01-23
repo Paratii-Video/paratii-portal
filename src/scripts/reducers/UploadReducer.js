@@ -47,7 +47,10 @@ const reducer = {
     state: UploadRecord,
     { payload }: Action<VideoInfoRecord>
   ): UploadRecord => {
-    return state.setIn(['videoInfo'], payload)
+    console.log(payload)
+    state = state.setIn(['videoInfo'], payload)
+    console.log(state)
+    return state
   }
 }
 

@@ -85,7 +85,7 @@ describe('Player: ', function () {
     // server.execute(createPlaylist, '98765', 'Playlist test', ['12345', '23456'])
   })
 
-  it('play a video @watch', async function () {
+  it('play a video', async function () {
     // check sanity - the video should be available now
     assert.isOk(await paratii.core.vids.get(videoId))
 

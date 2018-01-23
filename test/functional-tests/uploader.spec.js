@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 
 describe('Uploader Tool', function () {
-  it('should have basic flow in place', function () {
+  it('should have basic flow in place @watch', function () {
     // see https://github.com/Paratii-Video/paratii-portal/issues/8
     let video = {
       title: 'Some title',
@@ -32,7 +32,7 @@ describe('Uploader Tool', function () {
     // assert that we are on a screen where we can see the status of the video upload and transcoding
   })
 
-  it('cancel upload shoud work @watch', function () {
+  it('cancel upload shoud work [but is not yet]', function () {
     // start uploading a file
     browser.url('http://localhost:8080/uploader/upload-file')
     let fileToUpload = `${__dirname}/data/data.txt`

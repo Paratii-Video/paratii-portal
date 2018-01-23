@@ -1,14 +1,10 @@
 /* @flow */
 
 import React, { Component } from 'react'
-// import styled from 'styled-components'
-// import Button from './foundations/Button'
-// import Input from './foundations/Input'
 import Wrapper from './foundations/Wrapper'
 
 type Props = {
-  video: Object,
-  videoFromPTI: Object
+  video: Object
 };
 
 class VideoStatus extends Component<Props, void> {
@@ -17,16 +13,16 @@ class VideoStatus extends Component<Props, void> {
     return (
       <Wrapper>
         <pre id="video-status">
-            Your Video is now being uploaded/beging transcoded/all ready for sharing!
+            Your Video is now being either:
+          <ul>
+            <li>being uploaded</li>
+            <li>in the process of being transcoded</li>
+            <li>all ready for sharing -- here is the link</li>
+          </ul>
           <br />
-            Once it is ready,
-            You can share your video here [link] or embed it like this [link]
+          --------------------------------------------------------
           <br />
-            Soon you willl also be able to tag the video, create playlists, and other goodies! (But not yet :-())
-          <br />
-              This is the information you entered: [Show video information here]
-          <br />
-              Click to edit yr vid [Insert link here]
+              This is the information you entered:
           <br />
           id: {video.get('id')}
           <br />
@@ -34,6 +30,11 @@ class VideoStatus extends Component<Props, void> {
           <br />
           description: {video.get('description')}
           <br />
+          Click to edit yr vid [Insert link here]
+          <br />
+          --------------------------------------------------------
+          <br />
+          Soon you willl also be able to tag the video, create playlists, and other goodies! (But not yet :-())
 
           <b>TODO: checks, progress, blabla:</b>
           <br />
