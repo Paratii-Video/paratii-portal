@@ -9,7 +9,15 @@
 //
 
 import { Paratii, utils } from 'paratii-lib'
-import testConfig from '../../../config/test.json'
+// import testConfig from '../../../config/test.json'
+import developmentConfig from '../../../config/development.json'
+
+const fs = require('fs')
+const Promise = require('bluebird')
+const path = require('path')
+const pull = require('pull-stream')
+const pullFilereader = require('pull-filereader')
+const toPull = require('stream-to-pull-stream')
 
 // this address will be used as the owner address for all paratii contracts in the tests
 let address = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
@@ -31,7 +39,7 @@ export { address, address1, address99, privateKey, address17, privateKey17, mnem
 export const SEED = 'road inherit leave arm unlock estate option merge mechanic rate blade dumb'
 export const USERADDRESS = '0xdef933d2d0203821af2a1579d77fb42b4f8dcf7b'
 
-export const paratii = new Paratii(testConfig)
+export const paratii = new Paratii(developmentConfig)
 
 export const getPath = (path) => {
   return `http://localhost:8080/${path}`
@@ -311,3 +319,60 @@ export function waitForKeystore (browser, key='keystore-anon') {
 //     Meteor.settings.public.ParatiiRegistry = address
 //   }, address)
 // }
+
+
+// next line copied from old uploader as a quick workaround to get thetests workign
+export function uploadFilesToIPFS (ipfs, files) {
+  let meta = {} // holds File metadata.
+  // let files = [file]
+
+  let _chunkSize = 262144
+  let node = ipfs
+  ipfs.start(() => {
+
+    pull(
+      pull.values(files),
+      pull.through((file) => {
+        // console.log('Adding ', file)
+        meta.fileSize = file.size
+        meta.total = 0
+      }),
+      pull.asyncMap((file, cb) => pull(
+        pull.values([{
+          path: file.name,
+          // content: pullFilereader(file)
+          content: pull(
+            toPull(fs.createReadStream(file)), // file here is a path to file.
+            pull.through((chunk) => console.log(chunk.length, Math.floor((meta.total + chunk.length) / meta.fileSize) * 100))
+          )
+        }]),
+        node.files.addPullStream({chunkerOptions: {maxChunkSize: _chunkSize}}), // default size 262144
+        pull.collect((err, res) => {
+          if (err) {
+            console.log(err)
+          }
+          const file = res[0]
+          // console.log('Adding %s finished', file.name)
+          setImmediate(() => {
+            cb()
+          })
+        })
+      )),
+      pull.collect((err, files) => {
+        if (err) {
+          console.log(err)
+        }
+        console.log('uploader Finished')
+      })
+    )
+  })
+}
+
+
+
+// const playerIsFullScreen = () => !!(
+//   document.fullscreenElement ||
+//   document.mozFullScreenElement ||
+//   document.webkitFullscreenElement ||
+//   document.msFullscreenElement
+// )

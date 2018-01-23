@@ -23,6 +23,7 @@ export const getParatiiConfig = (env: ?string = 'development'): Object => {
     case 'test':
       return testConfig
     case 'development':
+      return devConfig
     default:
       return devConfig
   }
