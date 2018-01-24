@@ -45,6 +45,7 @@ const Title = styled.header`
 `
 
 const Player = styled.div`
+  height: 100vh;
   width: 100%;
   flex: 0 0 50%;
 `
