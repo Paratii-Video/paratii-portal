@@ -64,9 +64,6 @@ class App extends Component<Props, void> {
               path={`${match.url}debug`}
               component={DebugContainer}
             />
-            <Route
-              component={DebugContainer}
-            />
           </Main>
           <MainFooter/>
         </MainTemplate>
