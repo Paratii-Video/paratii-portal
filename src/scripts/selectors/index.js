@@ -1,8 +1,9 @@
 /* @flow */
 
 import VideoRecord from 'records/VideoRecords'
+import UploadRecord from 'records/UploadRecords'
 import UserRecord from 'records/UserRecords'
-import type { RootState, UploadProgress } from 'types/ApplicationTypes'
+import type { RootState } from 'types/ApplicationTypes'
 
 /* Videos */
 export const getVideo = (state: RootState): ?VideoRecord => state.video
@@ -15,8 +16,4 @@ export const getIsLoggingIn = (state: RootState): boolean => !!(state.user && st
 export const getShouldKeepUrl = (state: RootState): boolean => !!((state.user) && (state.user.keepUrl))
 
 /* Upload */
-export const getProgress = (state: RootState): UploadProgress => state.upload.progress
-
-export const getIsUploading = (state: RootState): boolean => state.upload.isUploading
-
-export const getHasUploadInfo = (state: RootState): boolean => !!(state.upload.video)
+export const getUpload = (state: RootState): ?UploadRecord => state.upload

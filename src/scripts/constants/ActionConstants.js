@@ -16,3 +16,7 @@ export const UPLOAD_PROGRESS = createActionConstant('UPLOAD_PROGRESS')
 export const UPLOAD_FAILURE = createActionConstant('UPLOAD_FAILURE')
 export const UPLOAD_SUCCESS = createActionConstant('UPLOAD_SUCCESS')
 export const UPDATE_UPLOAD_INFO = createActionConstant('UPDATE_UPLOAD_INFO')
+
+/* Save to blockchain actions */
+export const VIDEO_DATA_PROGRESS = createActionConstant('VIDEO_DATA_PROGRESS')
+export const VIDEO_DATA_SAVED = createActionConstant('VIDEO_DATA_SAVED')

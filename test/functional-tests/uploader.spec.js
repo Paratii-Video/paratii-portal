@@ -8,8 +8,8 @@ describe('Uploader Tool', function () {
       description: 'Description of the video which can be pretty long and may contain dïàcrítics'
     }
     browser.url('http://localhost:8080/uploader/upload-file')
-    let fileToUpload = `${__dirname}/data/data.txt`
 
+    let fileToUpload = `${__dirname}/data/data.txt`
     browser.chooseFile('input[type="file"]', fileToUpload)
 
     var val = browser.getValue('input[type="file"]')
@@ -20,6 +20,7 @@ describe('Uploader Tool', function () {
     browser.click('#upload-submit')
 
     // now we should see a form to fill in
+    browser.waitForExist('#video-title')
     browser.setValue('#video-title', video.title)
     browser.setValue('#video-description', video.description)
     // submit the form
@@ -31,6 +32,15 @@ describe('Uploader Tool', function () {
     // assert that we are on a screen where we can see the status of the video upload and transcoding
   })
 
+  it('cancel upload should work [but is not yet]', function () {
+    // start uploading a file
+    browser.url('http://localhost:8080/uploader/upload-file')
+    let fileToUpload = `${__dirname}/data/data.txt`
+    browser.chooseFile('input[type="file"]', fileToUpload)
+    browser.click('#upload-submit')
+    // (the file is small so is immediately done uploading, but the cancel button should be avaiblabel in any case)
+    browser.waitForExist('#cancel-upload')
+  })
   it.skip('Upload file should have decent error handling', function () {
   })
 

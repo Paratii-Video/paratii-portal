@@ -45,12 +45,8 @@ class App extends Component<Props, void> {
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
-          <MainHeader></MainHeader>
+          <MainHeader/>
           <Main>
-            <Route
-              exact path='/'
-              component={DebugContainer}
-            />
             <Route
               path={`${match.url}uploader`}
               component={UploadContainer}
@@ -70,6 +66,9 @@ class App extends Component<Props, void> {
             <Route path={`${match.url}play/:id`} component={PlayContainer} />
             <Route
               path={`${match.url}debug`}
+              component={DebugContainer}
+            />
+            <Route
               component={DebugContainer}
             />
           </Main>

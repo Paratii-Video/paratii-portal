@@ -30,8 +30,10 @@ export async function setupKeystore () {
   }
   if (!existingWallet || existingWalletIsValid === false) {
     console.log('Creating a new wallet')
-    mnemonic = await paratii.eth.wallet.newMnemonic()
+    paratii.eth.wallet.create()
+    mnemonic = await paratii.eth.wallet.getMnemonic()
     localStorage.setItem(walletKey, JSON.stringify(paratii.eth.wallet.encrypt(defaultPassword)))
+    // TODO: needs to be encrypted
     localStorage.setItem(mnemonicKey, mnemonic)
   }
   // console.log(`Your account is: ${}`)

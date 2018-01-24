@@ -6,8 +6,8 @@ export default styled.header`
   padding: 20px;
   display: flex;
   align-items: center;
-  color: #95989a;
-  font-weight: 500;
+  color: #818181;
+  font-weight: 600;
   margin-bottom: 15px;
   overflow: hidden;
   text-overflow: ellipsis;

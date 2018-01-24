@@ -3,29 +3,24 @@ import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import VideoStatus from 'components/VideoStatus'
 import type { RootState } from 'types/ApplicationTypes'
+import VideoRecord from 'records/VideoRecords'
 
 type Props = {
-  video: Object,
-  videoFromPTI: Object
+  video: VideoRecord,
+  state: Object
 }
 
 class UploadVideoStatusContainer extends Component<Props, void> {
-  constructor (props) {
-    super(props)
-    console.log(props)
-  }
-
   render () {
-    console.log('Rendering UploadVideoStatusContainer', this.props.video)
     return (
-      <VideoStatus video={this.props.video} />
+      <VideoStatus video={this.props.video} state={this.props.state.upload} />
     )
   }
 }
 
 const mapStateToProps = (state: RootState) => ({
   state: state,
-  video: state.upload.video
+  video: state.upload.videoInfo
 })
 
 const mapDispatchToProps = dispatch => ({

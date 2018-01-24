@@ -26,7 +26,7 @@ class Debug extends Component {
     return (
       <Wrapper>
         <pre>
-          <Title>Debug page</Title>
+          <Title>Debug information that may be useful to  you, developer</Title>
           <Link to="/play/foo">Play a video</Link>
           <br />
           <Link to="/uploader/upload-file">Upload a file</Link>

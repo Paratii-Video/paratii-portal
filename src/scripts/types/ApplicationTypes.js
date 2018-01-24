@@ -17,14 +17,12 @@ export type Location = {
   state: Object
 };
 
-export type UploadProgress = {
-  value: number
-}
+export type AsyncTaskStatusName = 'idle' | 'running' | 'success' | 'error';
 
 export type VideoInfo = {
-  title: string,
-  description: string
-}
+  title: ?string,
+  description: ?string
+};
 
 export type Action<T> = {
   type: string,
@@ -59,7 +57,9 @@ export type ParatiiLib = {
     wallet: {
       decrypt: (string, password: string) => Object,
       encrypt: (password: string) => Object,
-      newMnemonic: () => string
+      // newMnemonic: () => string,
+      getMnemonic: () => string,
+      create: () => Object
     },
     vids: {
       get: (id: string) => ?Object
