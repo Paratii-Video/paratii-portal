@@ -5,11 +5,14 @@ import React, { Component } from 'react'
 
 import VideoForm from 'components/VideoForm'
 import { saveVideoInfo } from 'actions/UploadActions'
+import { getIsUploading, getIpfsHash } from 'selectors/UploadSelectors'
 
 import type { RootState } from 'types/ApplicationTypes'
 
 type Props = {
-  updateUploadInfo: (title: string, description: string) => void
+  updateUploadInfo: (title: string, description: string) => void,
+  isUploading: boolean,
+  ipfsHash: string
 }
 
 class UploadVideoFormContainer extends Component<Props, void> {
@@ -28,8 +31,9 @@ class UploadVideoFormContainer extends Component<Props, void> {
 
   handleSubmit (e) {
     const { title, description } = this.state
+    const { ipfsHash, updateUploadInfo } = this.props
     e.preventDefault()
-    this.props.updateUploadInfo({title, description})
+    updateUploadInfo({ title, description, ipfsHash })
   }
 
   render () {
@@ -37,12 +41,16 @@ class UploadVideoFormContainer extends Component<Props, void> {
       <VideoForm
         onSubmit={this.handleSubmit}
         onInputChange={this.handleInputChange}
+        canSubmit={!this.props.isUploading}
       />
     )
   }
 }
 
-const mapStateToProps = (state: RootState) => ({})
+const mapStateToProps = (state: RootState) => ({
+  isUploading: getIsUploading(state),
+  ipfsHash: getIpfsHash(state)
+})
 
 const mapDispatchToProps = dispatch => ({
   updateUploadInfo: bindActionCreators(saveVideoInfo, dispatch)

@@ -4,10 +4,11 @@ import React, { Component } from 'react'
 import VideoStatus from 'components/VideoStatus'
 import type { RootState } from 'types/ApplicationTypes'
 import VideoRecord from 'records/VideoRecords'
+import UploadRecord from 'records/UploadRecords'
 
 type Props = {
   video: VideoRecord,
-  state: Object
+  state: UploadRecord
 }
 
 class UploadVideoStatusContainer extends Component<Props, void> {

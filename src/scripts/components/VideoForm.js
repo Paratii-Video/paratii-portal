@@ -8,7 +8,8 @@ import Input from './foundations/Input'
 type Props = {
   onSubmit: () => void,
   onInputChange: (name: string, e: Object) => void,
-  onVideoInfoSubmitted: (e: Object) => void
+  onVideoInfoSubmitted: (e: Object) => void,
+  canSubmit: boolean
 };
 
 const Form = styled.form`
@@ -20,7 +21,6 @@ class VideoForm extends Component<Props, void> {
   render () {
     const { onSubmit, onInputChange } = this.props
     return (
-      // <UploadProgressBarContainer />
       <Form onSubmit={onSubmit}>
         <Input
           id='video-title'
@@ -34,11 +34,15 @@ class VideoForm extends Component<Props, void> {
           onChange={(e) => onInputChange('description', e)}
           placeholder='Description'
         />
-        <Button id='video-submit' type='submit' onClick={this.props.onVideoInfoSubmitted}>Submit</Button>
+        <Button id='video-submit' type='submit' onClick={this.props.onVideoInfoSubmitted} disabled={!this.props.canSubmit}>Submit</Button>
 
       </Form>
     )
   }
 }
-
+// next lines give a flow error..
+// VideoForm.defaultProps = {
+//   canSubmit: true
+// }
+//
 export default VideoForm

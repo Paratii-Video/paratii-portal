@@ -2,6 +2,7 @@
 [parity]
 chain = "chain.json"
 [network]
+min_peers = 0
 max_peers = 0
 [mining]
 reseal_min_period = 0
