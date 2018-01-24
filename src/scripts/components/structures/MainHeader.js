@@ -70,10 +70,10 @@ const ProfileAvatarLink = styled(Link)`
 `
 
 const ProfileAvatarImage = styled.img`
-  transition: opacity ${props => props.theme.animation.time.paint};
+  transition: filter ${props => props.theme.animation.time.paint};
 
   ${/* sc-selector */ProfileAvatarLink}:hover & {
-    opacity: ${props => props.theme.animation.hoverValues.opacity};
+    filter: brightness(1.5);
   }
 `
 
