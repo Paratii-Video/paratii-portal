@@ -12,6 +12,7 @@ type Props = {
 const MainWrapper = styled.main`
   background-color: ${props => props.theme.colors.body.background};
   flex: 1;
+  overflow: hidden;
 `
 
 //
