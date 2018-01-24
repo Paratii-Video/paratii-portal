@@ -66,6 +66,11 @@ const ProfileAvatarLink = styled(Link)`
   flex: 0 0 40px;
   height: 40px;
   margin-left: 45px;
+  overflow: hidden;
+`
+
+const ProfileAvatarImage = styled.img`
+  display: block;
 `
 
 //
@@ -86,7 +91,9 @@ class MainHeader extends Component<Props, void> {
                   <use xlinkHref="#icon-bucket"></use>
                 </ButtonBucketSVG>
               </ButtonBucket>
-              <ProfileAvatarLink to='/signup'></ProfileAvatarLink>
+              <ProfileAvatarLink to='/signup'>
+                <ProfileAvatarImage className="full-block" src="https://avatars3.githubusercontent.com/u/9802645?s=460&v=4" />
+              </ProfileAvatarLink>
             </HeaderButtons>
           </HeaderContent>
         </HeaderWrapper>
