@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-//
-
-type Props = {
-}
-
-//
+type Props = {}
 
 const SearchInputForm = styled.form`
   align-items: center;
@@ -36,8 +31,6 @@ const SearchInputSVG = styled.svg`
   height: 100%;
   width: 100%;
 `
-
-//
 
 class SearchInput extends Component<Props, void> {
   render () {

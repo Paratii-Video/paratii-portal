@@ -23,13 +23,9 @@ import MainHeader from './structures/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/MainFooter'
 
-//
-
 type Props = {
   match: RouteMatch
 };
-
-// Paratii Themes
 
 const paratiiTheme = {
   animation: Animation,
@@ -37,8 +33,6 @@ const paratiiTheme = {
   sizes: Sizes,
   colors: Themes.dark
 }
-
-//
 
 class App extends Component<Props, void> {
   render () {
@@ -68,9 +62,6 @@ class App extends Component<Props, void> {
             <Route path={`${match.url}play/:id`} component={PlayContainer} />
             <Route
               path={`${match.url}debug`}
-              component={DebugContainer}
-            />
-            <Route
               component={DebugContainer}
             />
           </Main>
