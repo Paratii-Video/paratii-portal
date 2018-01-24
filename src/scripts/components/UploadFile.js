@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Dropzone from 'react-dropzone'
 
 import Title from './foundations/Title'
 import Wrapper from './foundations/Wrapper'
@@ -34,7 +35,7 @@ const ExternUpload = styled.div`
 class UploadFile extends Component<Props, void> {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = { files: [] }
     this.onFileChosen = this.onFileChosen.bind(this)
   }
 
@@ -44,10 +45,32 @@ class UploadFile extends Component<Props, void> {
     this.setState({file: e.target.files[0]})
   }
 
+  onDrop (files) {
+    this.setState({
+      files
+    })
+    console.log(files)
+  }
+
   render () {
     return (
       <Wrapper>
         <Title>Paratii Uploadertool</Title>
+
+        <section>
+          <Dropzone onDrop={this.onDrop.bind(this)}>
+            <p>Try dropping some files here, or click to select files to upload.</p>
+          </Dropzone>
+          <aside>
+            <h2>Dropped files</h2>
+            <ul>
+              {
+                this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
+              }
+            </ul>
+          </aside>
+        </section>
+
         <UploadControls>
           <h3>Drag&apos;n Drop</h3>
           <input type='file' onChange={this.onFileChosen} />
