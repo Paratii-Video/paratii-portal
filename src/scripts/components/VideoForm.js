@@ -40,9 +40,9 @@ class VideoForm extends Component<Props, void> {
     )
   }
 }
-
-VideoForm.defaultProps = {
-  canSubmit: true
-}
-
+// next lines give a flow error..
+// VideoForm.defaultProps = {
+//   canSubmit: true
+// }
+//
 export default VideoForm

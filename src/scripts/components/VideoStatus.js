@@ -1,6 +1,8 @@
 /* @flow */
 
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+
 import Wrapper from './foundations/Wrapper'
 import VideoRecord from 'records/VideoRecords'
 
@@ -12,15 +14,17 @@ type Props = {
 class VideoStatus extends Component<Props, void> {
   render () {
     let video = this.props.video
+    let videoLink = `/play/${video.get('id')}`
     return (
       <Wrapper>
         <pre id="video-status">
       Your Video is now being either:
           <ul>
-
             <li>being uploaded (depends on this.props.state.uploadStatus: {this.props.state.uploadStatus})</li>
             <li>in the process of being transcoded</li>
-            <li>all ready for sharing -- here is the link</li>
+            <li>all ready for sharing -- here is the link:
+              <Link to={videoLink}>here is the link</Link>
+            </li>
           </ul>
           <br />
           --------------------------------------------------------
