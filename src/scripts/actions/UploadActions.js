@@ -49,18 +49,14 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
 
 export const saveVideoInfo = (videoInfo: Object) => async (dispatch: Dispatch<*>) => {
   // console.log('Saving video info')
-  // // TODO: paratii-lib shoudl generate a fresh id, we now use a placeholder
-  videoInfo.id = `foo_${Math.floor(Math.random() * 100000)}`
-  // // the owner is the user that is logged in
+  // the owner is the user that is logged in
   videoInfo.owner = paratii.config.account.address
-  // // TODO: paratii-lib has no support for the description yet (there is an issue)
-  // // TODO: once that support is there, the following line should be deleted
-  delete videoInfo.description
   dispatch(updateUploadInfo(new VideoInfoRecord(videoInfo)))
   dispatch(videoDataStart())
   paratii.core.vids.create(videoInfo)
     .then((videoInfo) => {
       console.log('Video successfully saved on blockchain!')
+      dispatch(updateUploadInfo(new VideoInfoRecord(videoInfo)))
       dispatch(videoDataSaved())
     })
     .catch((error) => {
