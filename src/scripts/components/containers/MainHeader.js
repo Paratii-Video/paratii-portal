@@ -70,7 +70,9 @@ const ProfileAvatarLink = styled(Link)`
 `
 
 const ProfileAvatarImage = styled.img`
-  display: block;
+  ${/* sc-selector */ProfileAvatarLink}:hover & {
+    opacity: 0.3;
+  }
 `
 
 //
