@@ -28,8 +28,15 @@ describe('Uploader Tool', function () {
 
     // we now should be on the status screen
     browser.isExisting('#video-status')
-    // (write a separate test for error handling on this form)
-    // assert that we are on a screen where we can see the status of the video upload and transcoding
+    // we should also find the id of the newly added video on this page
+    let videoId
+    // wait until the videoId is returned back from paratii-lib (meaning that the object has been saved)
+    browser.waitUntil(function () {
+      videoId = browser.getText('#videoId')
+      return videoId
+    })
+    console.log(videoId)
+    // TODO: we now should find a video record on the blockchain
   })
 
   it('cancel upload should work [but is not yet]', function () {
