@@ -14,6 +14,7 @@ import DebugContainer from 'containers/DebugContainer'
 import type { RouteMatch } from 'types/ApplicationTypes'
 import { setupKeystore } from 'utils/ParatiiLib'
 
+import Animation from './foundations/base/Animation'
 import Sizes from './foundations/base/Sizes'
 import Themes from './foundations/base/Themes'
 import Typography from './foundations/base/Typography'
@@ -31,6 +32,7 @@ type Props = {
 // Paratii Themes
 
 const paratiiTheme = {
+  animation: Animation,
   fonts: Typography,
   sizes: Sizes,
   colors: Themes.dark

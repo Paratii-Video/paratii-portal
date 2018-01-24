@@ -34,7 +34,7 @@ const HeaderContent = styled.div`
   justify-content: space-between;
 
   form {
-    flex-basis: 207px;
+    flex: 0 0 207px;
     transform: translate3d(82px, -5px, 0);
   }
 `
@@ -70,8 +70,10 @@ const ProfileAvatarLink = styled(Link)`
 `
 
 const ProfileAvatarImage = styled.img`
+  transition: opacity ${props => props.theme.animation.time.paint};
+
   ${/* sc-selector */ProfileAvatarLink}:hover & {
-    opacity: 0.3;
+    opacity: ${props => props.theme.animation.hoverValues.opacity};
   }
 `
 

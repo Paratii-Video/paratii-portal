@@ -26,8 +26,8 @@ const SearchInputField = styled.input`
 `
 
 const SearchInputButton = styled.button`
-  flex-basis: ${props => props.theme.sizes.searchInputLogo};
-  height: ${props => props.theme.sizes.searchInputLogo};
+  flex-basis: ${props => props.theme.sizes.searchInputButton};
+  height: ${props => props.theme.sizes.searchInputButton};
   margin-right: 10px;
 `
 

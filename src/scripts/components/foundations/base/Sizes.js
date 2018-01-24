@@ -9,7 +9,7 @@ const Sizes = {
     height: '29px',
     width: '98px'
   },
-  searchInputLogo: '17px',
+  searchInputButton: '17px',
   mainInput: {
     height: '44px'
   }
