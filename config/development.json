@@ -2,9 +2,5 @@
   "provider": "http://localhost:8545/rpc",
   "address": "0x9e2d04eef5b16CFfB4328Ddd027B55736407B275",
   "privateKey": "399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6",
-<<<<<<< HEAD
-  "registryAddress": "0xB533f8F03506866e3E9699f43620093A3C7e89FD"
-=======
-  "registryAddress": "0x9e03458758a3665A492B2424ce508FB70871Dea5"
->>>>>>> dev
+  "registryAddress": "0xAC9c0c6E0FB4a665EB1194b87AFE5d593686efAc"
 }
