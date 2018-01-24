@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import MainHeaderLogo from '../components/MainHeaderLogo'
-import SearchInput from '../components/SearchInput'
-import MainNavigation from '../components/MainNavigation'
+import MainHeaderLogo from '../widgets/MainHeaderLogo'
+import SearchInput from '../widgets/SearchInput'
+import MainNavigation from '../widgets/MainNavigation'
 import { Link } from 'react-router-dom'
 
 //

@@ -14,13 +14,13 @@ import DebugContainer from 'containers/DebugContainer'
 import type { RouteMatch } from 'types/ApplicationTypes'
 import { setupKeystore } from 'utils/ParatiiLib'
 
-import Sizes from './base/Sizes'
-import Themes from './base/Themes'
-import Typography from './base/Typography'
+import Sizes from './foundations/base/Sizes'
+import Themes from './foundations/base/Themes'
+import Typography from './foundations/base/Typography'
 import MainTemplate from './templates/MainTemplate'
-import MainHeader from './containers/MainHeader'
-import Main from './containers/Main'
-import MainFooter from './containers/MainFooter'
+import MainHeader from './structures/MainHeader'
+import Main from './structures/Main'
+import MainFooter from './structures/MainFooter'
 
 //
 
