@@ -49,30 +49,29 @@ class App extends Component<Props, void> {
               exact path='/'
               component={DebugContainer}
             />
+            <Route
+              path={`${match.url}uploader`}
+              component={UploadContainer}
+            />
+            <Route
+              path={`${match.url}signup`}
+              component={SignupContainer}
+            />
+            <Route
+              path={`${match.url}login`}
+              component={LoginContainer}
+            />
+            <Route
+              path={`${match.url}profile`}
+              component={ProfileContainer}
+            />
+            <Route path={`${match.url}play/:id`} component={PlayContainer} />
+            <Route
+              path={`${match.url}debug`}
+              component={DebugContainer}
+            />
           </Main>
           <MainFooter/>
-
-          <Route
-            path={`${match.url}uploader`}
-            component={UploadContainer}
-          />
-          <Route
-            path={`${match.url}signup`}
-            component={SignupContainer}
-          />
-          <Route
-            path={`${match.url}login`}
-            component={LoginContainer}
-          />
-          <Route
-            path={`${match.url}profile`}
-            component={ProfileContainer}
-          />
-          <Route path={`${match.url}play/:id`} component={PlayContainer} />
-          <Route
-            path={`${match.url}debug`}
-            component={DebugContainer}
-          />
         </MainTemplate>
       </ThemeProvider>
     )
