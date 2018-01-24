@@ -3,7 +3,14 @@
 import { createAction } from 'redux-actions'
 import { paratii } from 'utils/ParatiiLib'
 
-import { UPLOAD_REQUESTED, UPLOAD_PROGRESS, UPLOAD_SUCCESS, UPDATE_UPLOAD_INFO } from 'constants/ActionConstants'
+import {
+  UPLOAD_REQUESTED,
+  UPLOAD_PROGRESS,
+  UPLOAD_SUCCESS,
+  UPDATE_UPLOAD_INFO,
+  VIDEO_DATA_START,
+  VIDEO_DATA_SAVED
+} from 'constants/ActionConstants'
 
 import type { Dispatch } from 'redux'
 
@@ -13,16 +20,19 @@ const uploadRequested = createAction(UPLOAD_REQUESTED)
 const uploadProgress = createAction(UPLOAD_PROGRESS)
 const uploadSuccess = createAction(UPLOAD_SUCCESS)
 const updateUploadInfo = createAction(UPDATE_UPLOAD_INFO)
+const videoDataStart = createAction(VIDEO_DATA_START)
+const videoDataSaved = createAction(VIDEO_DATA_SAVED)
 
 export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   // the next call dispatches an asynchronous request to upload the file to ipfs
   // (the API will change and become paratii.ipfs.add(..))
+  dispatch(uploadRequested())
   paratii.ipfs.uploader.upload([file], {
     onStart: () => {
       console.log('Uploading file', file)
-      dispatch(uploadRequested())
     },
     onProgress: (chunkLength, progress) => {
+      console.log('progress: ', progress)
       dispatch(uploadProgress(progress))
     },
     onError: (err) => {
@@ -40,17 +50,18 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
 export const saveVideoInfo = (videoInfo: Object) => async (dispatch: Dispatch<*>) => {
   // console.log('Saving video info')
   // // TODO: paratii-lib shoudl generate a fresh id, we now use a placeholder
-  // videoInfo.id = `foo_${Math.floor(Math.random() * 100000)}`
+  videoInfo.id = `foo_${Math.floor(Math.random() * 100000)}`
   // // the owner is the user that is logged in
   videoInfo.owner = paratii.config.account.address
   // // TODO: paratii-lib has no support for the description yet (there is an issue)
   // // TODO: once that support is there, the following line should be deleted
-  // delete videoInfo.description
-  console.log(videoInfo)
+  delete videoInfo.description
+  dispatch(updateUploadInfo(new VideoInfoRecord(videoInfo)))
+  dispatch(videoDataStart())
   paratii.core.vids.create(videoInfo)
     .then((videoInfo) => {
-      console.log('Video successfully uploaded!')
-      dispatch(updateUploadInfo(new VideoInfoRecord(videoInfo)))
+      console.log('Video successfully saved on blockchain!')
+      dispatch(videoDataSaved())
     })
     .catch((error) => {
       console.log('-------------------')

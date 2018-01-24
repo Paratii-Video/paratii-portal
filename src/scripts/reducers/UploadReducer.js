@@ -2,7 +2,14 @@
 
 import { handleActions } from 'redux-actions'
 import type { Action } from 'types/ApplicationTypes'
-import { UPLOAD_REQUESTED, UPLOAD_PROGRESS, UPLOAD_SUCCESS, UPDATE_UPLOAD_INFO } from 'constants/ActionConstants'
+import {
+  UPLOAD_REQUESTED,
+  UPLOAD_PROGRESS,
+  UPLOAD_SUCCESS,
+  UPDATE_UPLOAD_INFO,
+  VIDEO_DATA_START,
+  VIDEO_DATA_SAVED
+} from 'constants/ActionConstants'
 import { fromJS } from 'immutable'
 import UploadRecord from 'records/UploadRecords'
 import VideoInfoRecord from 'records/VideoInfoRecords'
@@ -27,7 +34,6 @@ const reducer = {
         data: { progress: payload }
       }
     })
-    // return state.setIn(['uploadStatus', 'data', 'progress'], payload)
   },
   [UPLOAD_SUCCESS]: (
     state: UploadRecord,
@@ -37,23 +43,34 @@ const reducer = {
       uploadStatus: {
         name: 'success',
         data: { ipfsHash: payload }
-      },
-      // isUploading: false,
-      progress: null,
-      ipfsHash: payload
+      }
     })
   },
   [UPDATE_UPLOAD_INFO]: (
     state: UploadRecord,
     { payload }: Action<VideoInfoRecord>
   ): UploadRecord => {
-    state = state.setIn(['videoInfo'], payload)
-    state = state.mergeDeep({
+    return state.setIn(['videoInfo'], payload)
+  },
+  [VIDEO_DATA_START]: (
+    state: UploadRecord
+  ): UploadRecord => {
+    return state.mergeDeep({
       blockchainStatus: {
-        name: 'success'
+        name: 'running',
+        data: {}
       }
     })
-    return state
+  },
+  [VIDEO_DATA_SAVED]: (
+    state: UploadRecord
+  ): UploadRecord => {
+    return state.mergeDeep({
+      blockchainStatus: {
+        name: 'success',
+        data: {}
+      }
+    })
   }
 }
 

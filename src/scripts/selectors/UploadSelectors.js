@@ -36,3 +36,13 @@ export const getShowVideoInfo = createSelector(
     return (uploadStatus !== 'idle' && hasVideoInfo)
   }
 )
+
+export const getIpfsHash = createSelector(
+  [getUpload], (upload) => {
+    const uploadStatus = upload.getIn(['uploadStatus', 'name'])
+    return (uploadStatus === 'success'
+      ? upload.getIn(['uploadStatus', 'data', 'ipfsHash'])
+      : ''
+    )
+  }
+)
