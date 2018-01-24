@@ -2,12 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-//
-
-type Props = {
-}
-
-//
+type Props = {}
 
 const Nav = styled.nav`
   display: block;
@@ -26,8 +21,6 @@ const NavLink = styled(Link)`
   display: block;
   font-size: 14px;
 `
-
-//
 
 class MainNavigation extends Component<Props, void> {
   render () {

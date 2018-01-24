@@ -2,12 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import HR from '../foundations/HR'
 
-//
-
-type Props = {
-}
-
-//
+type Props = {}
 
 const Footer = styled.footer`
   background-color: ${props => props.theme ? props.theme.colors.footer.background : 'black'};
@@ -19,8 +14,6 @@ const FooterOpenSourceText = styled.p`
   display: block;
   text-align: center;
 `
-
-//
 
 class MainFooter extends Component<Props, void> {
   render () {

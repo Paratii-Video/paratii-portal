@@ -2,12 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-//
-
-type Props = {
-}
-
-//
+type Props = {}
 
 const MainLogo = styled.h1`
   display: block;
@@ -27,8 +22,6 @@ const MainLogoSVG = styled.svg`
   height: 100%;
   width: 100%;
 `
-
-//
 
 class MainHeaderLogo extends Component<Props, void> {
   render () {
