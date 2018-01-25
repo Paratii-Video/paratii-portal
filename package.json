@@ -52,9 +52,9 @@
   },
   "lint-staged": {
     "*.js": [
+      "prettier-standard",
       "eslint --cache",
       "stylelint",
-      "prettier-standard",
       "git add"
     ]
   },
