@@ -25,6 +25,7 @@
     "precommit": "lint-staged",
     "prep": "mkdir build/ && mkdir build/embed && cp src/index.html build/ && mkdir build/assets/",
     "prepare": "patch-package",
+    "prettify": "prettier-standard src/**/*.js test/**/*.js",
     "quality": "yarn run lint:scripts && yarn run lint:styles && yarn run flow",
     "server": "node src/server/index.js",
     "server:dev": "NODE_ENV=development yarn run deploy-contracts && NODE_ENV=development nodemon src/server/index.js --watch node_modules src/server/index.js",
