@@ -18,6 +18,7 @@ const functionalTestsDir = testDir + "/functional-tests";
 const dev = process.env.NODE_ENV === "development";
 const test = process.env.NODE_ENV === "test";
 const prod = process.env.NODE_ENV === "production";
+const prodUnbuilt = process.env.NODE_ENV === "production-notugly";
 
 const definedVariables = {
   "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
@@ -33,8 +34,9 @@ if ((dev || test) && fs.existsSync(registryConfigPath)) {
 
 const config = {
   entry: {
-    bundle: prod
+    bundle: (prod || prodUnbuilt)
       ? [scriptsDir + "/index.js"]
+
       : [
           "react-hot-loader/patch",
           scriptsDir + "/index.js",
@@ -118,6 +120,7 @@ const config = {
     new ExtractTextPlugin('embed/index.css'),
     prod
     ? new UglifyJsPlugin({
+      sourceMap: false, // this is an effor to save some memory
       uglifyOptions: {
         ecma: 6
       }

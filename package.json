@@ -27,7 +27,7 @@
     "prepare": "patch-package",
     "prettify": "prettier-standard src/**/*.js test/**/*.js",
     "quality": "yarn run lint:scripts && yarn run lint:styles && yarn run flow",
-    "server": "node src/server/index.js",
+    "server": "NODE_ENV=production-notugly node src/server/index.js",
     "server:dev": "NODE_ENV=development yarn run deploy-contracts && NODE_ENV=development nodemon src/server/index.js --watch node_modules src/server/index.js",
     "unit-test": "NODE_ENV=test karma start karma.conf.js",
     "unit-test:dev": "yarn run unit-test -- --single-run false"
@@ -115,7 +115,7 @@
     "stylelint-config-standard": "^18.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "^1.2.1",
-    "uglifyjs-webpack-plugin": "^1.1.5",
+    "uglifyjs-webpack-plugin": "^1.1.6",
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^2.0.2",
     "webpack-hot-middleware": "^2.21.0"
