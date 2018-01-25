@@ -8,7 +8,6 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          # - v1-dependencies-{{ checksum "yarn.lock" }}
           - v1-dependencies-{{ checksum "package-lock.json" }}
           - v1-dependencies-
       - run: bash <(curl https://get.parity.io -Lk)
@@ -36,7 +35,11 @@ jobs:
           command: yarn run server:dev
           background: true
       - run: yarn run chimp-test
-      # - run: yarn run build
+      - run:
+          command:
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              yarn run build
+            fi
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
