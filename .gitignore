@@ -24,4 +24,5 @@ yarn-error.log*
 
 .floo
 .flooignore
-config/development.json
+
+config/registry.json

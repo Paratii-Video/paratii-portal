@@ -5,8 +5,7 @@ import styled from 'styled-components'
 import logo from 'assets/img/paratii_logo.png'
 import Wrapper from './foundations/Wrapper'
 
-type Props = {
-}
+type Props = {}
 
 const Header = styled.header`
   background-color: #222;

@@ -5,13 +5,9 @@ import SearchInput from '../widgets/SearchInput'
 import MainNavigation from '../widgets/MainNavigation'
 import { Link } from 'react-router-dom'
 
-//
-
 type Props = {
   children: Object
-};
-
-//
+}
 
 const Header = styled.header`
   background-color: ${props => props.theme ? props.theme.colors.header.background : 'black'};
@@ -45,7 +41,7 @@ const HeaderButtons = styled.div`
   justify-content: flex-end;
 `
 
-// foundation/widgets?
+// foundation/widgets(move?)
 
 const ButtonBucket = styled.button`
   flex: 0 0 20px;
@@ -76,8 +72,6 @@ const ProfileAvatarImage = styled.img`
     filter: brightness(1.5);
   }
 `
-
-//
 
 class MainHeader extends Component<Props, void> {
   render () {

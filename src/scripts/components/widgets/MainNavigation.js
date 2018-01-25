@@ -2,12 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import NavLink from '../foundations/buttons/NavLink'
 
-//
-
-type Props = {
-}
-
-//
+type Props = {}
 
 const Nav = styled.nav`
   display: block;
@@ -20,8 +15,6 @@ const NavList = styled.ul`
 const NavItem = styled.li`
   padding-left: 45px;
 `
-
-//
 
 class MainNavigation extends Component<Props, void> {
   render () {

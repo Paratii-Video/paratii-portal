@@ -10,7 +10,7 @@
 
 import { Paratii, utils } from 'paratii-lib'
 // import testConfig from '../../../config/test.json'
-import developmentConfig from '../../../config/development.json'
+import testConfig from '../../../config/test.json'
 
 const fs = require('fs')
 const Promise = require('bluebird')
@@ -18,6 +18,13 @@ const path = require('path')
 const pull = require('pull-stream')
 const pullFilereader = require('pull-filereader')
 const toPull = require('stream-to-pull-stream')
+
+const registryConfigPath = '../../../config/registry.json';
+let registryAddressConfig = {};
+
+if (fs.existsSync(path.resolve(__dirname, registryConfigPath))) {
+  registryAddressConfig = require(registryConfigPath);
+}
 
 // this address will be used as the owner address for all paratii contracts in the tests
 let address = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
@@ -39,7 +46,10 @@ export { address, address1, address99, privateKey, address17, privateKey17, mnem
 export const SEED = 'road inherit leave arm unlock estate option merge mechanic rate blade dumb'
 export const USERADDRESS = '0xdef933d2d0203821af2a1579d77fb42b4f8dcf7b'
 
-export const paratii = new Paratii(developmentConfig)
+export const paratii = new Paratii({
+  ...testConfig,
+  ...registryAddressConfig
+})
 
 export const getPath = (path) => {
   return `http://localhost:8080/${path}`
