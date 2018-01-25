@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Button from './foundations/Button'
+import Button from './foundations/Buttons/Button'
 import Input from './foundations/Input'
 
 type Props = {

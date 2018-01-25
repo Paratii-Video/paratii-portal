@@ -45,7 +45,7 @@ const HeaderButtons = styled.div`
   justify-content: flex-end;
 `
 
-//
+// foundation/widgets?
 
 const ButtonBucket = styled.button`
   flex: 0 0 20px;
@@ -70,7 +70,7 @@ const ProfileAvatarLink = styled(Link)`
 `
 
 const ProfileAvatarImage = styled.img`
-  transition: filter ${props => props.theme.animation.time.paint};
+  transition: filter ${props => props.theme.animation.time.repaint};
 
   ${/* sc-selector */ProfileAvatarLink}:hover & {
     filter: brightness(1.5);
