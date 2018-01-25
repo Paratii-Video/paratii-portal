@@ -16,7 +16,12 @@
 //
 //
 
-import { assertUserIsLoggedIn, web3, createUserAndLogin, getEthAccountFromApp } from './test-utils/helpers.js'
+import {
+  assertUserIsLoggedIn,
+  web3,
+  createUserAndLogin,
+  getEthAccountFromApp
+} from './test-utils/helpers.js'
 import { assert } from 'chai'
 
 describe('wallet:', function () {
@@ -32,18 +37,26 @@ describe('wallet:', function () {
 
   it.skip('should show ETH balance', function () {
     browser.sendSomeETH(userAccount, 3.1)
-    browser.waitForVisible('.profile-wallet-item:last-child .profile-wallet-item-balance')
+    browser.waitForVisible(
+      '.profile-wallet-item:last-child .profile-wallet-item-balance'
+    )
     browser.waitUntil(() => {
-      const amount = browser.getText('.profile-wallet-item:last-child .profile-wallet-item-balance')
+      const amount = browser.getText(
+        '.profile-wallet-item:last-child .profile-wallet-item-balance'
+      )
       return ['3.10 ETH', '3,10 ETH'].indexOf(amount) > -1
     })
   })
 
   it.skip('should show PTI balance', function () {
     browser.sendSomePTI(userAccount, 1412.9599)
-    browser.waitForVisible('.profile-wallet-item:first-child .profile-wallet-item-balance')
+    browser.waitForVisible(
+      '.profile-wallet-item:first-child .profile-wallet-item-balance'
+    )
     browser.waitUntil(() => {
-      const amount = browser.getText('.profile-wallet-item:first-child .profile-wallet-item-balance')
+      const amount = browser.getText(
+        '.profile-wallet-item:first-child .profile-wallet-item-balance'
+      )
       return ['1,412.96 PTI', '1.412,96 PTI'].indexOf(amount) > -1
     })
   })

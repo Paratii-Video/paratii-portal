@@ -1,13 +1,8 @@
 'use strict'
 
 require('babel-register')({
-  'presets': [
-    'es2015',
-    'react'
-  ],
-  plugins: [
-    'babel-plugin-webpack-alias'
-  ]
+  presets: ['es2015', 'react'],
+  plugins: ['babel-plugin-webpack-alias']
 })
 
 const app = require('./app')

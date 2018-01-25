@@ -49,7 +49,9 @@ describe('Player: ', function () {
 
     let files = await Promise.promisify(fs.readdir)(directory)
     let ipfs = await paratii.ipfs.getIPFSInstance()
-    files = files.map(function (f) { return path.join(directory, f) })
+    files = files.map(function (f) {
+      return path.join(directory, f)
+    })
 
     await uploadFilesToIPFS(ipfs, files)
     // for (let i = 0; i < files.length; i++) {
@@ -132,34 +134,34 @@ describe('Player: ', function () {
     assert.equal(browser.getText('.player-title'), 'Test 2')
   })
 
-  it.skip('if a player is within a playlist and it ended related videos don\'t show up [TODO]', () => {
-  })
+  it.skip("if a player is within a playlist and it ended related videos don't show up [TODO]", () => {})
 
-  it.skip('if a player is not within a playlist and it ended related videos show up [TODO]', () => {
-  })
+  it.skip('if a player is not within a playlist and it ended related videos show up [TODO]', () => {})
 
   it.skip('like and dislike a video as an anonymous user', () => {
     assertUserIsNotLoggedIn(browser)
     browser.url('http://localhost:3000/play/12345?playlist=98765')
     browser.waitForClickable('#button-like')
-    browser.waitUntil(() => (
-      browser.getText('#button-like') === '0' &&
-      browser.getText('#button-dislike') === '0'
-    ))
+    browser.waitUntil(
+      () =>
+        browser.getText('#button-like') === '0' &&
+        browser.getText('#button-dislike') === '0'
+    )
 
     browser.click('#button-like')
-    browser.waitUntil(() => (
-      browser.getText('#button-like') === '1' &&
-      browser.getText('#button-dislike') === '0'
-
-    ))
+    browser.waitUntil(
+      () =>
+        browser.getText('#button-like') === '1' &&
+        browser.getText('#button-dislike') === '0'
+    )
 
     browser.click('#button-dislike')
 
-    browser.waitUntil(() => (
-      browser.getText('#button-like') === '0' &&
-      browser.getText('#button-dislike') === '1'
-    ))
+    browser.waitUntil(
+      () =>
+        browser.getText('#button-like') === '0' &&
+        browser.getText('#button-dislike') === '1'
+    )
   })
   it.skip('like and dislike a video as a logged-in user', () => {
     createUserAndLogin(browser)
@@ -167,23 +169,25 @@ describe('Player: ', function () {
     browser.url('http://localhost:3000/play/12345?playlist=98765')
     browser.url('http://localhost:3000/play/12345?playlist=98765')
     browser.waitForClickable('#button-like')
-    browser.waitUntil(() => (
-      browser.getText('#button-like') === '0' &&
-      browser.getText('#button-dislike') === '0'
-    ))
+    browser.waitUntil(
+      () =>
+        browser.getText('#button-like') === '0' &&
+        browser.getText('#button-dislike') === '0'
+    )
 
     browser.click('#button-like')
-    browser.waitUntil(() => (
-      browser.getText('#button-like') === '1' &&
-      browser.getText('#button-dislike') === '0'
-
-    ))
+    browser.waitUntil(
+      () =>
+        browser.getText('#button-like') === '1' &&
+        browser.getText('#button-dislike') === '0'
+    )
 
     browser.click('#button-dislike')
 
-    browser.waitUntil(() => (
-      browser.getText('#button-like') === '0' &&
-      browser.getText('#button-dislike') === '1'
-    ))
+    browser.waitUntil(
+      () =>
+        browser.getText('#button-like') === '0' &&
+        browser.getText('#button-dislike') === '1'
+    )
   })
 })

@@ -40,25 +40,30 @@ before(async function (done) {
   })
 
   browser.addCommand('waitUntilVideoIsPlaying', () => {
-    browser.waitUntil(() => (
-      parseInt(browser.getAttribute('#video-player', 'currentTime'), 10) !== 0 &&
-      browser.getAttribute('#video-player', 'paused') !== 'true' &&
-      browser.getAttribute('#video-player', 'ended') !== 'true'
-    ))
+    browser.waitUntil(
+      () =>
+        parseInt(browser.getAttribute('#video-player', 'currentTime'), 10) !==
+          0 &&
+        browser.getAttribute('#video-player', 'paused') !== 'true' &&
+        browser.getAttribute('#video-player', 'ended') !== 'true'
+    )
   })
 
   browser.addCommand('waitUntilBuffered', () => {
-    browser.waitUntil(() => !!browser.execute(() => {
-      const playerEl = document.querySelector('video')
-      if (playerEl && playerEl.getAttribute('id') === 'video-player') {
-        for (let i = 0; i < playerEl.buffered.length; i += 1) {
-          if (playerEl.buffered.end(i) > 0) {
-            return true
+    browser.waitUntil(
+      () =>
+        !!browser.execute(() => {
+          const playerEl = document.querySelector('video')
+          if (playerEl && playerEl.getAttribute('id') === 'video-player') {
+            for (let i = 0; i < playerEl.buffered.length; i += 1) {
+              if (playerEl.buffered.end(i) > 0) {
+                return true
+              }
+            }
           }
-        }
-      }
-      return false
-    }).value)
+          return false
+        }).value
+    )
   })
   //
   //   browser.addCommand('waitAndSetValue', function (selector, value, timeout) {
@@ -81,24 +86,28 @@ before(async function (done) {
   browser.addCommand('waitAndClick', function (selector, timeout) {
     this.waitForVisible(selector, timeout)
     this.waitForEnabled(selector, timeout)
-    browser.waitUntil(function () {
-      try {
-        browser.click(selector)
-        return true
-      } catch (err) {
-        if (err.seleniumStack.type === 'InvalidElementState') {
-          // ignore and try again
-          return false
-        } else if (err.seleniumStack.type === 'UnknownError') {
-          // 'another element would receive the click' is reported as an 'unknown error'
-          // ignore and try again
-          return false
-        } else {
-          console.log(err)
-          throw err
+    browser.waitUntil(
+      function () {
+        try {
+          browser.click(selector)
+          return true
+        } catch (err) {
+          if (err.seleniumStack.type === 'InvalidElementState') {
+            // ignore and try again
+            return false
+          } else if (err.seleniumStack.type === 'UnknownError') {
+            // 'another element would receive the click' is reported as an 'unknown error'
+            // ignore and try again
+            return false
+          } else {
+            console.log(err)
+            throw err
+          }
         }
-      }
-    }, timeout, `Could not click on ${selector} (timeout: ${timeout}s)`)
+      },
+      timeout,
+      `Could not click on ${selector} (timeout: ${timeout}s)`
+    )
   })
   //   browser.addCommand('waitUntilRequestHasStatus', function (url, status = 200, method = 'GET', timeout) {
   //     browser.waitUntil(() => {
@@ -111,7 +120,7 @@ before(async function (done) {
   //
   browser.addCommand('waitAndRemove', function (selector, timeout) {
     this.waitForVisible(selector)
-    browser.execute((selectorToRemove) => {
+    browser.execute(selectorToRemove => {
       const element = document.querySelector(selectorToRemove)
       if (element) {
         element.remove()

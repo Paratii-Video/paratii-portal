@@ -9,13 +9,10 @@ const config = require(configFilename)
 
 const paratii = new Paratii(config)
 function diagnose () {
-  paratii.diagnose()
-    .then(
-      (diagnosis) => {
-        console.log(`Using configuration file ${configFilename}`)
-        console.log(diagnosis)
-        return diagnosis
-      }
-    )
+  paratii.diagnose().then(diagnosis => {
+    console.log(`Using configuration file ${configFilename}`)
+    console.log(diagnosis)
+    return diagnosis
+  })
 }
 diagnose()

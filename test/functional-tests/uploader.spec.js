@@ -5,7 +5,8 @@ describe('Uploader Tool', function () {
     // see https://github.com/Paratii-Video/paratii-portal/issues/8
     let video = {
       title: 'Some title',
-      description: 'Description of the video which can be pretty long and may contain dïàcrítics'
+      description:
+        'Description of the video which can be pretty long and may contain dïàcrítics'
     }
     browser.url('http://localhost:8080/uploader/upload-file')
 
@@ -41,9 +42,7 @@ describe('Uploader Tool', function () {
     // (the file is small so is immediately done uploading, but the cancel button should be avaiblabel in any case)
     browser.waitForExist('#cancel-upload')
   })
-  it.skip('Upload file should have decent error handling', function () {
-  })
+  it.skip('Upload file should have decent error handling', function () {})
 
-  it.skip('Edit  video should have decent error handling', function () {
-  })
+  it.skip('Edit  video should have decent error handling', function () {})
 })
