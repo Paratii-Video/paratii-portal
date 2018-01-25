@@ -16,6 +16,7 @@ const unitTestsDir = testDir + "/unit-tests";
 const functionalTestsDir = testDir + "/functional-tests";
 
 const dev = process.env.NODE_ENV === "development";
+const test = process.env.NODE_ENV === "test";
 const prod = process.env.NODE_ENV === "production";
 
 const definedVariables = {
@@ -25,7 +26,7 @@ const definedVariables = {
 
 const registryConfigPath = `./config/registry.json`
 
-if (dev && fs.existsSync(registryConfigPath)) {
+if ((dev || test) && fs.existsSync(registryConfigPath)) {
   const registryConfig = require(registryConfigPath)
   definedVariables['process.env.REGISTRY_ADDRESS'] = JSON.stringify(registryConfig.registryAddress);
 }

@@ -7,7 +7,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "build": "yarn run clean && yarn run prep && NODE_ENV=production webpack --progress --colors",
-    "build:dev": "yarn run clean && yarn run prep && webpack --watch --colors --progress",
+    "build:dev": "yarn run clean && yarn run prep && NODE_ENV=development webpack --watch --colors --progress",
     "clean": "rm -rf build/",
     "chimp-test": "chimp chimp.config.js",
     "chimp-test:watch": "yarn run chimp-test --watch",
