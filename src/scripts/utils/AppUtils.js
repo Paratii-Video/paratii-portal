@@ -17,14 +17,29 @@ export const getRoot = (): Element => {
 }
 
 export const getParatiiConfig = (env: ?string = 'development'): Object => {
+  let config = {}
+
   switch (env) {
     case 'production':
-      return prodConfig
+      config = prodConfig
+      break
     case 'test':
-      return testConfig
+      config = testConfig
+      break
     case 'development':
-      return devConfig
     default:
-      return devConfig
+      config = devConfig
+      break
   }
+
+  const registryAddress = process.env.REGISTRY_ADDRESS
+
+  if (registryAddress) {
+    return {
+      ...config,
+      registryAddress
+    }
+  }
+
+  return config
 }
