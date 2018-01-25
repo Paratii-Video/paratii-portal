@@ -8,6 +8,7 @@ import type { ParatiiLib } from 'types/ApplicationTypes'
 
 const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 
+console.log(paratiiConfig)
 window.paratii = new Paratii(paratiiConfig)
 
 export const paratii: ParatiiLib = window.paratii
@@ -32,7 +33,10 @@ export async function setupKeystore () {
     console.log('Creating a new wallet')
     paratii.eth.wallet.create()
     mnemonic = await paratii.eth.wallet.getMnemonic()
-    localStorage.setItem(walletKey, JSON.stringify(paratii.eth.wallet.encrypt(defaultPassword)))
+    localStorage.setItem(
+      walletKey,
+      JSON.stringify(paratii.eth.wallet.encrypt(defaultPassword))
+    )
     // TODO: needs to be encrypted
     localStorage.setItem(mnemonicKey, mnemonic)
   }
