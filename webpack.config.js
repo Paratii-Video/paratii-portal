@@ -1,4 +1,5 @@
 const webpack = require("webpack");
+const fs = require('fs');
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const path = require("path");
@@ -14,7 +15,20 @@ const testDir = path.resolve(__dirname, "test");
 const unitTestsDir = testDir + "/unit-tests";
 const functionalTestsDir = testDir + "/functional-tests";
 
+const dev = process.env.NODE_ENV === "development";
 const prod = process.env.NODE_ENV === "production";
+
+const definedVariables = {
+  "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+  "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
+}
+
+const registryConfigPath = `./config/registry.json`
+
+if (dev && fs.existsSync(registryConfigPath)) {
+  const registryConfig = require(registryConfigPath)
+  definedVariables['process.env.REGISTRY_ADDRESS'] = JSON.stringify(registryConfig.registryAddress);
+}
 
 const config = {
   entry: {
@@ -99,10 +113,7 @@ const config = {
         hot: true
       },
   plugins: [
-    new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-      "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
-    }),
+    new webpack.DefinePlugin(definedVariables),
     new ExtractTextPlugin('embed/index.css'),
     prod
     ? new UglifyJsPlugin({
