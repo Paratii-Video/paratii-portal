@@ -1,6 +1,6 @@
 /* @flow */
 
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
 
@@ -8,11 +8,11 @@ import Wrapper from './foundations/Wrapper'
 
 type Props = {
   video: ?VideoRecord,
-  match:{
-    params:{
+  match: {
+    params: {
       id: String
     }
-  },
+  }
   // video:{
   //   title: String
   // }
@@ -36,7 +36,9 @@ class VideoOverlay extends Component<Props, void> {
         <Overlay id="video-overlay">
           <h2>Video Overlay</h2>
           <h5>The video id is: {this.props.match.params.id}</h5>
-          Title: { (this.props.video && this.props.video.title) || 'This video either has not title, or could not be fetched' }
+          Title:{' '}
+          {(this.props.video && this.props.video.title) ||
+            'This video either has no title, or could not be fetched'}
         </Overlay>
       </Wrapper>
     )

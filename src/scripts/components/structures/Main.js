@@ -13,9 +13,7 @@ const MainWrapper = styled.main`
 
 class Main extends Component<Props, void> {
   render () {
-    return (
-      <MainWrapper>{this.props.children}</MainWrapper>
-    )
+    return <MainWrapper>{this.props.children}</MainWrapper>
   }
 }
 

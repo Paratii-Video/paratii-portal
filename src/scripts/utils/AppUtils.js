@@ -32,12 +32,15 @@ export const getParatiiConfig = (env: ?string = 'development'): Object => {
       break
   }
 
-  const registryAddress = process.env.REGISTRY_ADDRESS
+  /// if a registry address is not given in the config file, we read it from the environment
+  if (config.registryAddress === undefined) {
+    const registryAddress = process.env.REGISTRY_ADDRESS
 
-  if (registryAddress) {
-    return {
-      ...config,
-      registryAddress
+    if (registryAddress) {
+      return {
+        ...config,
+        registryAddress
+      }
     }
   }
 

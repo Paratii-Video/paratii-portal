@@ -8,12 +8,12 @@ A modular web-interface for uploading content into the peer-to-peer network behi
 * nodejs >= 8.9.0
 * yarn
 * Install [parity](https://github.com/paritytech/parity) (ethereum client):
-    * ```$ bash <(curl https://get.parity.io -Lk)```
+   * `$ bash <(curl https://get.parity.io -Lk)`
 
 If you are on a Mac, you may need to set the path to parity:
 
-    * add the following to your `.bash_profile`: `export PATH=/Applications/Parity\ Ethereum.app/Contents/MacOS:$PATH`
-    * ``` $ source path/to/.bash_profile```
+* add the following to your `.bash_profile: export PATH=/Applications/Parity\ Ethereum.app/Contents/MacOS:$PATH`
+* `$ source path/to/.bash_profile`
 
 
 
