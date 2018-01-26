@@ -1,5 +1,5 @@
 import { css } from 'styled-components'
-import TheButton from './TheButton'
+import BaseButton from './BaseButton'
 
 //
 
@@ -8,7 +8,7 @@ const StyleButton = css`
   text-transform: uppercase;
 `
 
-const ButtonStyle = TheButton.extend`
+const ButtonStyle = BaseButton.extend`
   ${StyleButton}
 `
 

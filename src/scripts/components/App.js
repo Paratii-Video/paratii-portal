@@ -23,6 +23,8 @@ import MainHeader from './structures/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/MainFooter'
 
+import Home from './pages/Home'
+
 type Props = {
   match: RouteMatch
 };
@@ -43,6 +45,7 @@ class App extends Component<Props, void> {
         <MainTemplate>
           <MainHeader/>
           <Main>
+            <Route exact path='/' component={Home}/>
             <Route
               path={`${match.url}uploader`}
               component={UploadContainer}

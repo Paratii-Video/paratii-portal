@@ -27,9 +27,6 @@ class MainNavigation extends Component<Props, void> {
           <NavItem>
             <NavLink to='/about'>About Paratii</NavLink>
           </NavItem>
-          <NavItem>
-            <NavLink to='/about'>Outro item</NavLink>
-          </NavItem>
         </NavList>
       </Nav>
     )

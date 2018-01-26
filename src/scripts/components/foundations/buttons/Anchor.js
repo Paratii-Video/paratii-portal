@@ -1,34 +1,31 @@
 import { css } from 'styled-components'
-import TheButton from './TheButton'
+import BaseButton from './BaseButton'
 
 //
 
 const StyleAnchor = css`
   ${props => {
-    if (props.anchor) {
+    if (props.underline) {
+      let _css = 'padding-bottom: 5px; border-bottom: 1px solid '
+
       if (props.white) {
-        return css`
-          border-bottom: 1px solid ${props => props.theme.colors.button.white};
-          padding-bottom: 5px;
-        `
+        _css = _css + props.theme.colors.button.white
       } else if (props.purple) {
-        return css`
-          border-bottom: 1px solid ${props => props.theme.colors.button.purple};
-          padding-bottom: 5px;
-        `
+        console.log('props.purple:', props)
+        _css = _css + props.theme.colors.button.purple
       } else {
-        return css`
-          border-bottom: 1px solid ${props => props.theme.colors.button.gray};
-          padding-bottom: 5px;
-        `
+        _css = _css + props.theme.colors.button.gray
       }
+
+      return css`${_css};`
     }
   }}
 `
 
-const AnchorStyle = TheButton.extend`
+const AnchorStyle = BaseButton.extend`
   ${StyleAnchor}
 `
+
 const Anchor = AnchorStyle.withComponent('a')
 
 export default Anchor
