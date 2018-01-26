@@ -1,20 +1,17 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
-import Dropzone from 'react-dropzone'
+// import styled from 'styled-components'
 
 import Title from './foundations/Title'
 import Wrapper from './foundations/Wrapper'
 import Button from './foundations/Button'
 // import Input from './foundations/Input'
 
+import Dropzone from 'components/Dropzone'
+
 type Props = {
   onFileChosen: (file: Object) => void,
   onUploadRequested: (e: Object) => void
 }
-
-const DropzoneWrapper = styled.div`
-  cursor: pointer;
-`
 
 // const UploadControls = styled.div`
 //   box-shadow: 0 1px 10px #bdbdbd;
@@ -47,18 +44,6 @@ class UploadFile extends Component<Props, void> {
     this.onFileChosen = this.onFileChosen.bind(this)
   }
 
-  onDragEnter () {
-    this.setState({
-      dropzoneActive: true
-    })
-  }
-
-  onDragLeave () {
-    this.setState({
-      dropzoneActive: false
-    })
-  }
-
   onFileChosen (files) {
     const file = files[0]
     this.props.onFileChosen(file)
@@ -73,16 +58,12 @@ class UploadFile extends Component<Props, void> {
       <Wrapper>
         <Title>Paratii Uploadertool</Title>
         <section>
-          <DropzoneWrapper>
-            <Dropzone
-              onDrop={this.onFileChosen}
-              onDragEnter={this.onDragEnter.bind(this)}
-              onDragLeave={this.onDragLeave.bind(this)}
-            >
-              <p>Try dropping some files here, or click to select files to upload.</p>
-            </Dropzone>
-          </DropzoneWrapper>
-
+          <Dropzone
+            onDrop={this.onFileChosen}
+            accept='all'
+          >
+            <p>Try dropping some files here, or click to select files to upload.</p>
+          </Dropzone>
           <Button id='upload-submit' onClick={this.props.onUploadRequested}>Upload</Button>
         </section>
         {
