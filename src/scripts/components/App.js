@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 
-import UploadContainer from 'containers/UploadContainer'
 import SignupContainer from 'containers/SignupContainer'
 import LoginContainer from 'containers/LoginContainer'
 import ProfileContainer from 'containers/ProfileContainer'
@@ -51,10 +50,6 @@ class App extends Component<Props, void> {
           <MainHeader/>
           <Main>
             <Route
-              path={`${match.url}uploader`}
-              component={UploadContainer}
-            />
-            <Route
               path={`${match.url}signup`}
               component={SignupContainer}
             />
@@ -72,7 +67,7 @@ class App extends Component<Props, void> {
               component={DebugContainer}
             />
             <Route
-              path={`${match.url}magic`}
+              path={`${match.url}videos`}
               component={VideoManager}
             />
             <Route

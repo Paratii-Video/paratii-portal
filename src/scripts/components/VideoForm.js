@@ -5,13 +5,11 @@ import styled from 'styled-components'
 import Button from './foundations/Button'
 import Input from './foundations/Input'
 
-import type { UploadRecord } from 'records/UploadRecords'
-
 type Props = {
   onSubmit: () => void,
   onInputChange: (name: string, e: Object) => void,
-  key: string,
-  item: UploadRecord
+  title: ?string,
+  description: ?string
 };
 
 const Form = styled.form`
@@ -22,7 +20,7 @@ const Form = styled.form`
 
 class VideoForm extends Component<Props, void> {
   render () {
-    const { onSubmit, onInputChange } = this.props
+    const { onSubmit, onInputChange, title, description } = this.props
     return (
       <Form onSubmit={onSubmit}>
         <Input
@@ -30,12 +28,14 @@ class VideoForm extends Component<Props, void> {
           type='text'
           onChange={(e) => onInputChange('title', e)}
           placeholder='Title'
+          value={title || ''}
         />
         <Input
           id='video-description'
           type='textarea'
           onChange={(e) => onInputChange('description', e)}
           placeholder='Description'
+          value={description || ''}
         />
         <Button id='video-submit' type='submit'>Submit</Button>
 
@@ -43,9 +43,5 @@ class VideoForm extends Component<Props, void> {
     )
   }
 }
-// next lines give a flow error..
-// VideoForm.defaultProps = {
-//   canSubmit: true
-// }
-//
+
 export default VideoForm

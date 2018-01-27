@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
 import type { UploadRecord } from 'records/UploadRecords'
 
 type Props = {
-  key: string,
-  item: UploadRecord
+  id: string,
+  item: UploadRecord,
+  onClick: (id: string) => void
 };
-
-//
 
 const Item = styled.div`
   background-color: ${props => props.theme.colors.body.background};
@@ -24,10 +22,19 @@ const Label = styled.p`
 `
 
 class UploadListItem extends Component<Props, void> {
+  constructor (props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick () {
+    this.props.onClick(this.props.id)
+  }
+
   render () {
     const { item } = this.props
     return (
-      <Item>
+      <Item onClick={this.handleClick}>
         <Label>{item.filename}</Label>
       </Item>
     )

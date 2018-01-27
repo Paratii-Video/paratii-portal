@@ -5,23 +5,33 @@ import React, { Component } from 'react'
 
 import VideoForm from 'components/VideoForm'
 import { saveVideoInfo } from 'actions/UploadActions'
-import UploadRecord from 'records/UploadRecords'
+import VideoInfoRecord from 'records/VideoInfoRecords'
 
 import type { RootState } from 'types/ApplicationTypes'
 
 type Props = {
-  updateUploadInfo: (id: string, title: string, description: string) => void,
+  updateVideoInfo: (id: string, title: string, description: string) => void,
   id: string,
-  uploadInfo: UploadRecord
+  videoInfo: VideoInfoRecord
 }
 
-class UploadVideoFormContainer extends Component<Props, void> {
+class VideoFormContainer extends Component<Props, void> {
   constructor (props) {
+    console.log('constructor')
     super(props)
-    const {title, description} = this.props.uploadInfo
+    const { videoInfo } = this.props
+    const title = videoInfo.get('title')
+    const description = videoInfo.get('description')
     this.state = {title: title, description: description}
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { videoInfo } = nextProps
+    const title = videoInfo.get('title')
+    const description = videoInfo.get('description')
+    this.setState({title: title, description: description})
   }
 
   handleInputChange (input, e) {
@@ -32,9 +42,9 @@ class UploadVideoFormContainer extends Component<Props, void> {
 
   handleSubmit (e) {
     const { title, description } = this.state
-    const { id, updateUploadInfo } = this.props
+    const { id, updateVideoInfo } = this.props
     e.preventDefault()
-    updateUploadInfo(id, title, description)
+    updateVideoInfo(id, {title: title, description: description})
   }
 
   render () {
@@ -42,6 +52,8 @@ class UploadVideoFormContainer extends Component<Props, void> {
       <VideoForm
         onSubmit={this.handleSubmit}
         onInputChange={this.handleInputChange}
+        title={this.state.title}
+        description={this.state.description}
       />
     )
   }
@@ -51,7 +63,7 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateUploadInfo: bindActionCreators(saveVideoInfo, dispatch)
+  updateVideoInfo: bindActionCreators(saveVideoInfo, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploadVideoFormContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(VideoFormContainer)

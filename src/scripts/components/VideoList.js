@@ -3,14 +3,14 @@ import styled from 'styled-components'
 
 import type { UploadRecord } from 'records/UploadRecords'
 import type { Map } from 'immutable'
+import Button from './foundations/Button'
 
 import VideoListItem from 'components/VideoListItem'
 
 type Props = {
-  uploads: Map<string, UploadRecord>
+  uploads: Map<string, UploadRecord>,
+  onItemClick: (id: string) => void
 };
-
-//
 
 const Wrapper = styled.div`
   background-color: ${props => props.theme.colors.body.background};
@@ -20,15 +20,16 @@ const Wrapper = styled.div`
   width: 300px;
 `
 
-class UploadList extends Component<Props, void> {
+class VideoList extends Component<Props, void> {
   render () {
-    const { uploads } = this.props
+    const { uploads, onItemClick } = this.props
     return (
       <Wrapper>
-        {uploads.entrySeq().map(([k, v]) => <VideoListItem key={k} item={v} />)}
+        {uploads.entrySeq().map(([k, v]) => <VideoListItem key={k} id={k} item={v} onClick={onItemClick} />)}
+        <Button onClick={() => onItemClick(null)}>ADD MORE VIDEOS</Button>
       </Wrapper>
     )
   }
 }
 
-export default UploadList
+export default VideoList

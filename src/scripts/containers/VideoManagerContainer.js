@@ -26,6 +26,13 @@ class VideoManagerContainer extends Component<Props, void> {
   constructor (props) {
     super(props)
     this.state = {selectedUpload: null}
+    this.onVideoListItemClicked = this.onVideoListItemClicked.bind(this)
+  }
+
+  onVideoListItemClicked (id: string) {
+    this.setState({
+      selectedUpload: id
+    })
   }
 
   render () {
@@ -33,9 +40,9 @@ class VideoManagerContainer extends Component<Props, void> {
     const { selectedUpload } = this.state
     return (
       <Wrapper>
-        {(this.props.uploads.count() > 0) && <VideoList/>}
-        {(selectedUpload === null) && <UploadFile />}
-        {(selectedUpload !== null) && <VideoForm id={selectedUpload} uploadInfo={uploads.get(selectedUpload)}/>}
+        {(this.props.uploads.count() > 0) && <VideoList onItemClick={this.onVideoListItemClicked} />}
+        {(selectedUpload === null) && <UploadFile/>}
+        {(selectedUpload !== null) && <VideoForm id={selectedUpload} videoInfo={uploads.getIn([selectedUpload, 'videoInfo'])}/>}
       </Wrapper>
     )
   }

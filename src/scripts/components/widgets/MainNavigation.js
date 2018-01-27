@@ -35,7 +35,7 @@ class MainNavigation extends Component<Props, void> {
       <Nav>
         <NavList>
           <NavItem>
-            <NavLink to='/uploader/upload-file'>Upload video</NavLink>
+            <NavLink to='/videos'>Upload video</NavLink>
           </NavItem>
           <NavItem>
             <NavLink to='/about'>About Paratii</NavLink>
