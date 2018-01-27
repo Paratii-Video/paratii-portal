@@ -16,4 +16,4 @@ export const getIsLoggingIn = (state: RootState): boolean => !!(state.user && st
 export const getShouldKeepUrl = (state: RootState): boolean => !!((state.user) && (state.user.keepUrl))
 
 /* Upload */
-export const getUpload = (state: RootState): ?UploadRecord => state.upload
+export const getUploads = (state: RootState): ?UploadRecord => state.uploads

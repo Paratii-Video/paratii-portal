@@ -132,6 +132,7 @@
     "reselect": "^3.0.1",
     "streamspeed": "^1.1.0",
     "styled-components": "^2.3.3",
+    "uuid-js": "^0.7.5",
     "web3": "^1.0.0-beta.27"
   }
 }

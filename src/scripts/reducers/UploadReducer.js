@@ -10,47 +10,59 @@ import {
   VIDEO_DATA_START,
   VIDEO_DATA_SAVED
 } from 'constants/ActionConstants'
-import { fromJS } from 'immutable'
+import { Map } from 'immutable'
 import UploadRecord from 'records/UploadRecords'
 import VideoInfoRecord from 'records/VideoInfoRecords'
 
 const reducer = {
   [UPLOAD_REQUESTED]: (
-    state: UploadRecord
+    state: UploadRecord,
+    { payload }: Action<{id: string, filename: string}>
   ): UploadRecord => {
-    return state.mergeDeep({
-      uploadStatus: {
-        name: 'running',
-        data: { progress: 0 }
-      }
-    })
+    return state
+      .mergeDeep({
+        [payload.id]: new UploadRecord()
+      })
+      .mergeDeep({
+        [payload.id]: {
+          filename: payload.filename,
+          uploadStatus: {
+            name: 'running',
+            data: { progress: 0 }
+          }
+        }
+      })
   },
   [UPLOAD_PROGRESS]: (
     state: UploadRecord,
-    { payload }: Action<number>
+    { payload }: Action<{id: string, progress: number}>
   ): UploadRecord => {
     return state.mergeDeep({
-      uploadStatus: {
-        data: { progress: payload }
+      [payload.id]: {
+        uploadStatus: {
+          data: { progress: payload.progress }
+        }
       }
     })
   },
   [UPLOAD_SUCCESS]: (
     state: UploadRecord,
-    { payload }: Action<string>
+    { payload }: Action<{id: string, hash: string}>
   ): UploadRecord => {
     return state.mergeDeep({
-      uploadStatus: {
-        name: 'success',
-        data: { ipfsHash: payload }
+      [payload.id]: {
+        uploadStatus: {
+          name: 'success',
+          data: { ipfsHash: payload.hash }
+        }
       }
     })
   },
   [UPDATE_UPLOAD_INFO]: (
     state: UploadRecord,
-    { payload }: Action<VideoInfoRecord>
+    { payload }: Action<{id: string, videoInfo: VideoInfoRecord}>
   ): UploadRecord => {
-    return state.setIn(['videoInfo'], payload)
+    return state.setIn([payload.id, 'videoInfo'], payload.videoInfo)
   },
   [VIDEO_DATA_START]: (
     state: UploadRecord
@@ -74,4 +86,4 @@ const reducer = {
   }
 }
 
-export default handleActions(reducer, fromJS(new UploadRecord()))
+export default handleActions(reducer, Map({}))

@@ -10,7 +10,7 @@ import LoginContainer from 'containers/LoginContainer'
 import ProfileContainer from 'containers/ProfileContainer'
 import PlayContainer from 'containers/PlayContainer'
 import DebugContainer from 'containers/DebugContainer'
-import VideoList from 'containers/VideoListContainer'
+import VideoManager from 'containers/VideoManagerContainer'
 
 import type { RouteMatch } from 'types/ApplicationTypes'
 import { setupKeystore } from 'utils/ParatiiLib'
@@ -73,7 +73,7 @@ class App extends Component<Props, void> {
             />
             <Route
               path={`${match.url}magic`}
-              component={VideoList}
+              component={VideoManager}
             />
             <Route
               component={DebugContainer}

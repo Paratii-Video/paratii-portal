@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
-import { Map } from 'immutable'
 import VideoList from 'components/VideoList'
-import UploadRecord from 'records/UploadRecords'
+import type { RootState } from 'types/ApplicationTypes'
+import { getUploads } from 'selectors/index'
 
-const mapStateToProps = (state) => ({
-  uploads: Map({'1': new UploadRecord(), '2': new UploadRecord()})
+const mapStateToProps = (state : RootState) => ({
+  uploads: getUploads(state)
 })
 
 const mapDispatchToProps = () => ({})

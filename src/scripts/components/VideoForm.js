@@ -5,15 +5,18 @@ import styled from 'styled-components'
 import Button from './foundations/Button'
 import Input from './foundations/Input'
 
+import type { UploadRecord } from 'records/UploadRecords'
+
 type Props = {
   onSubmit: () => void,
   onInputChange: (name: string, e: Object) => void,
-  onVideoInfoSubmitted: (e: Object) => void,
-  canSubmit: boolean
+  key: string,
+  item: UploadRecord
 };
 
 const Form = styled.form`
   font-size: 20px;
+  width: 300px;
   margin: 10px;
 `
 
@@ -34,7 +37,7 @@ class VideoForm extends Component<Props, void> {
           onChange={(e) => onInputChange('description', e)}
           placeholder='Description'
         />
-        <Button id='video-submit' type='submit' onClick={this.props.onVideoInfoSubmitted} disabled={!this.props.canSubmit}>Submit</Button>
+        <Button id='video-submit' type='submit'>Submit</Button>
 
       </Form>
     )

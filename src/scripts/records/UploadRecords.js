@@ -5,7 +5,7 @@ import type VideoInfoRecord from './VideoInfoRecords'
 import AsyncTaskStatusRecord from './AsyncTaskStatusRecord'
 
 class Upload extends ImmutableRecord({
-  filename: 'video_01.mp4',
+  filename: null,
   videoInfo: {title: null, description: null},
   blockchainStatus: new AsyncTaskStatusRecord(),
   uploadStatus: new AsyncTaskStatusRecord(),

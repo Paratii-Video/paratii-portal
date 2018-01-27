@@ -3,14 +3,12 @@ import React, { Component } from 'react'
 
 import Title from './foundations/Title'
 import Wrapper from './foundations/Wrapper'
-import Button from './foundations/Button'
 // import Input from './foundations/Input'
 
 import Dropzone from 'components/Dropzone'
 
 type Props = {
-  onFileChosen: (file: Object) => void,
-  onUploadRequested: (e: Object) => void
+  onFileChosen: (files: Array<Object>) => void
 }
 
 // const UploadControls = styled.div`
@@ -36,21 +34,11 @@ type Props = {
 class UploadFile extends Component<Props, void> {
   constructor (props) {
     super(props)
-    this.state = {
-      files: [],
-      accept: '',
-      dropzoneActive: false
-    }
     this.onFileChosen = this.onFileChosen.bind(this)
   }
 
   onFileChosen (files) {
-    const file = files[0]
-    this.props.onFileChosen(file)
-    this.setState({
-      files,
-      dropzoneActive: false
-    })
+    this.props.onFileChosen(files)
   }
 
   render () {
@@ -60,24 +48,11 @@ class UploadFile extends Component<Props, void> {
         <section>
           <Dropzone
             onDrop={this.onFileChosen}
-            accept='all'
-          >
+            accept='all'>
+
             <p>Try dropping some files here, or click to select files to upload.</p>
           </Dropzone>
-          <Button id='upload-submit' onClick={this.props.onUploadRequested}>Upload</Button>
         </section>
-        {
-          // Just for debug
-        }
-        <pre>
-          <h5>Dropped files</h5>
-          <ul>
-            {
-              this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
-            }
-          </ul>
-          <br></br><br></br><br></br><br></br>
-        </pre>
       </Wrapper>
 
     )
