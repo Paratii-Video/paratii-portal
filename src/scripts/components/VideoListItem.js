@@ -33,9 +33,17 @@ class UploadListItem extends Component<Props, void> {
 
   render () {
     const { item } = this.props
+    let status = ''
+    if (item.getIn(['uploadStatus', 'name']) === 'running') {
+      const progress = item.getIn(['uploadStatus', 'data', 'progress'])
+      status = `Uploading (${progress}%)`
+    } else {
+      status = item.getIn(['uploadStatus', 'name'])
+    }
     return (
       <Item onClick={this.handleClick}>
         <Label>{item.filename}</Label>
+        <Label>{status}</Label>
       </Item>
     )
   }

@@ -24,13 +24,13 @@ const updateUploadInfo = createAction(UPDATE_UPLOAD_INFO)
 // const videoDataStart = createAction(VIDEO_DATA_START)
 // const videoDataSaved = createAction(VIDEO_DATA_SAVED)
 
-export const upload = (files: Array<Object>) => (dispatch: Dispatch<*>) => {
+export const upload = (files: Array<Object>) => (dispatch: Dispatch<*>, getState) => {
   // the next call dispatches an asynchronous request to upload the file to ipfs
   // (the API will change and become paratii.ipfs.add(..))
-  files.map(file => uploadFile(file, dispatch))
+  files.map(file => uploadFile(file, dispatch, getState))
 }
 
-const uploadFile = (file: Object, dispatch: Dispatch<*>) => {
+const uploadFile = (file: Object, dispatch: Dispatch<*>, getState) => {
   const uuid = UUID.create()
   dispatch(uploadRequested({id: uuid, filename: file.name}))
   paratii.ipfs.uploader.upload([file], {
@@ -38,7 +38,6 @@ const uploadFile = (file: Object, dispatch: Dispatch<*>) => {
       console.log('Uploading file', file)
     },
     onProgress: (chunkLength, progress) => {
-      console.log('progress: ', progress)
       dispatch(uploadProgress({id: uuid, progress: progress}))
     },
     onError: (err) => {
@@ -49,6 +48,18 @@ const uploadFile = (file: Object, dispatch: Dispatch<*>) => {
     },
     onFileReady: (file) => {
       dispatch(uploadSuccess({id: uuid, hash: file.hash}))
+      // const { uploads } = getState()
+      // const upload = uploads.get(uuid.hex)
+      // if (upload.getIn(['blockchainStatus', 'name']) !== 'running') {
+      //   dispatch(videoDataStart())
+      //   const videoInfo = upload.get('videoInfo').set('owner', paratii.config.account.address).toJS()
+      //   console.log(videoInfo)
+      //   paratii.core.vids.create(videoInfo)
+      //     .then((videoInfo) => {
+      //       console.log('Video successfully saved on blockchain!')
+      //       dispatch(videoDataSaved())
+      //     })
+      // }
     }
   })
 }
