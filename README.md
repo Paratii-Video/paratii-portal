@@ -28,7 +28,7 @@ If you are on a Mac, you may need to set the path to parity:
 Currently, instead of using `yarn` to install dependencies the following steps must be taken:
 
     $ npm install
-    $ npm install web3@1.0.0-beta.27 --save
+    $ npm install web3@1.0.0-beta.29 --save
 
 This is due to [this issue](https://github.com/ethereum/web3.js/issues/966) in the `web3.js` project.
 
