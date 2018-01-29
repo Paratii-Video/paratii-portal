@@ -12,9 +12,11 @@ export const ButtonStyleColor = css`
       _color = props.theme.colors.button.gray
     }
 
-    return css`color: ${_color};`
-  }}
-`
+    return css`
+      color: ${_color};
+    `
+  }};
+  `
 
 export const ButtonStyleHover = css`
   transition: opacity ${props => props.theme.animation.time.repaint};
@@ -22,12 +24,10 @@ export const ButtonStyleHover = css`
   &:hover {
     opacity: ${props => props.theme.animation.opacity.hover};
   }
-`
+  `
 
 const BaseButton = styled.div`
-  ${ButtonStyleColor}
-  ${ButtonStyleHover}
-  cursor: pointer;
-`
+  ${ButtonStyleColor} ${ButtonStyleHover} cursor: pointer;
+  `
 
 export default BaseButton

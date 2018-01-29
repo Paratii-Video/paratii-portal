@@ -17,14 +17,16 @@ const StyleAnchor = css`
         _css = _css + props.theme.colors.button.gray
       }
 
-      return css`${_css};`
+      return css`
+        ${_css};
+      `
     }
-  }}
-`
+  }};
+  `
 
 const AnchorStyle = BaseButton.extend`
-  ${StyleAnchor}
-`
+  ${StyleAnchor};
+  `
 
 const Anchor = AnchorStyle.withComponent('a')
 
