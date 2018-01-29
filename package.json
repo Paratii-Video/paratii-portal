@@ -125,7 +125,7 @@
     "immutable": "^3.8.2",
     "js-cookie": "^2.2.0",
     "paratii-lib": "github:Paratii-Video/paratii-lib#d7706356961a04d76671e531b610dd5158fb563c",
-    "paratii-mediaplayer": "0.2.0",
+    "paratii-mediaplayer": "^0.2.1",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
