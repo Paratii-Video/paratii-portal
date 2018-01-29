@@ -1,12 +1,13 @@
 const Animation = {
-  time: {
-    paint: '0.3s'
-  },
   ease: {
     smooth: 'cubic-bezier(0.4, 0.2, 0, 1)'
   },
-  hoverValues: {
-    opacity: 0.6
+  time: {
+    repaint: '0.3s'
+  },
+  opacity: {
+    hover: 0.7,
+    disabled: 0.3
   }
 }
 

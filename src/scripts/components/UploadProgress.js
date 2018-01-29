@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import type { UploadRecord } from 'records/UploadRecords'
 import Wrapper from './foundations/Wrapper'
-import Button from './foundations/Button'
+import Button from './foundations/Buttons/Button'
 
 type Props = {
   progress: number,

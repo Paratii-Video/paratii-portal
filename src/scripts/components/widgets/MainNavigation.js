@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import NavLink from '../foundations/buttons/NavLink'
 
 type Props = {}
 
@@ -14,12 +14,6 @@ const NavList = styled.ul`
 
 const NavItem = styled.li`
   padding-left: 45px;
-`
-
-const NavLink = styled(Link)`
-  color: ${props => props.theme.colors.header.color};
-  display: block;
-  font-size: 14px;
 `
 
 class MainNavigation extends Component<Props, void> {

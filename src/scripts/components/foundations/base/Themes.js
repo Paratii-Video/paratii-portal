@@ -16,6 +16,11 @@ const Themes = {
       color: Colors.grayLight,
       logoFill: Colors.white
     },
+    button: {
+      white: Colors.white,
+      gray: Colors.grayLight,
+      purple: Colors.purple
+    },
     mainInput: {
       border: Colors.grayLight,
       color: Colors.white,
@@ -36,6 +41,11 @@ const Themes = {
       background: Colors.black,
       color: Colors.grayLight,
       logoFill: Colors.white
+    },
+    button: {
+      white: Colors.white,
+      gray: Colors.grayLight,
+      purple: Colors.purple
     },
     mainInput: {
       border: Colors.grayLight,

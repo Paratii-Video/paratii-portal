@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import Title from './foundations/Title'
 import Wrapper from './foundations/Wrapper'
-import Button from './foundations/Button'
+import Button from './foundations/Buttons/Button'
 import Input from './foundations/Input'
 
 type Props = {
