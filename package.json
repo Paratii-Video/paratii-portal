@@ -122,8 +122,8 @@
     "bluebird": "^3.5.1",
     "immutable": "^3.8.2",
     "js-cookie": "^2.2.0",
-    "paratii-mediaplayer": "^0.2.1",
     "paratii-lib": "github:Paratii-Video/paratii-lib#3144481c75f3dc2029c96bd856bf851e362a041f",
+    "paratii-mediaplayer": "^0.2.2",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -134,6 +134,7 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "streamspeed": "^1.1.0",
-    "styled-components": "^2.3.3"
+    "styled-components": "^2.3.3",
+    "stylelint-config-prettier": "^2.0.0"
   }
 }
