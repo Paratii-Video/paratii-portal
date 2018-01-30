@@ -9,7 +9,7 @@ const Themes = {
     header: {
       background: Colors.black,
       iconsFill: Colors.grayLight,
-      logoFill: Colors.white
+      logoFill: Colors.purple
     },
     footer: {
       background: Colors.black,
@@ -24,11 +24,16 @@ const Themes = {
     mainInput: {
       border: Colors.grayLight,
       color: Colors.white,
-      placeholder: Colors.grayLight
+      placeholder: Colors.grayLight,
+      error: Colors.pink
     },
     FilesUploader: {
       fake: {
         background: Colors.black,
+        color: Colors.purple
+      },
+      input: {
+        background: Colors.blackDark,
         color: Colors.purple
       }
     }
@@ -57,6 +62,16 @@ const Themes = {
       border: Colors.grayLight,
       color: Colors.white,
       placeholder: Colors.grayLight
+    },
+    FilesUploader: {
+      fake: {
+        background: Colors.black,
+        color: Colors.purple
+      },
+      input: {
+        background: Colors.blackDark,
+        color: Colors.purple
+      }
     }
   }
 }
