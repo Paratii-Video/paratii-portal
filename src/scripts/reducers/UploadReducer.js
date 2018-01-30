@@ -19,8 +19,6 @@ const reducer = {
     state: UploadRecord,
     { payload }: Action<{ id: string, filename: string }>
   ): UploadRecord => {
-    console.log('PAYLOAD:', payload)
-    console.log('STATE:', state)
     state = state
       .mergeDeep({
         [payload.id]: new UploadRecord()

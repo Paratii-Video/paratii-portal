@@ -13,7 +13,10 @@ const reducer = {
   [VIDEO_DATA_LOADED]: (
     state: VideoRecord,
     { payload }: Action<string>
-  ): VideoRecord => new VideoRecord(payload),
+  ): VideoRecord => {
+    console.log('Setting selected video to:' + payload)
+    return new VideoRecord(payload)
+  },
   [VIDEO_DATA_PROGRESS]: (
     state: VideoRecord,
     { payload }: Action<string>
