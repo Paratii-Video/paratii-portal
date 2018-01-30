@@ -24,10 +24,10 @@ class UploadFile extends Component<Props, void> {
     this.onFileChosen = this.onFileChosen.bind(this)
   }
 
-  onFileChosen (e) {
-    const file = e.target.files[0]
+  onFileChosen (files) {
+    const file = files[0]
     this.props.onFileChosen(file)
-    this.setState({ file: e.target.files[0] })
+    this.setState({ file: file })
   }
 
   render () {
