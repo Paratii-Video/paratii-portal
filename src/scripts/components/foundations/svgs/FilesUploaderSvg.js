@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-//
 
 type Props = {}
 
-//
-
 const SVG = styled.svg`
-  height: 130px;
-  width: 190px;
+  display: block;
+  height: 100%;
+  width: 100%;
 `
-
-//
 
 class FilesUploaderSvg extends Component<Props, void> {
   render () {

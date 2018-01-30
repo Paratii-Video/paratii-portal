@@ -31,9 +31,10 @@ const StyleInput = css`
 const FilesUploaderInput = styled.input`
   ${StyleInput} cursor: pointer;
   left: 0;
-  opacity: 0;
+  opacity: 1;
   position: absolute;
   top: 0;
+  z-index: 2;
 `
 
 const FilesUploaderInputFake = styled.div`
@@ -43,12 +44,15 @@ const FilesUploaderInputFake = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
   text-align: center;
+  z-index: 1;
 `
 
-const SVG = styled(FilesUploaderSvg)`
-  height: 200px;
-  width: 200px;
+const Icon = styled.div`
+  height: 130px;
+  margin: 0 0 20px 36px;
+  width: 190px;
 `
 
 const ColorText = styled.p`
@@ -56,7 +60,7 @@ const ColorText = styled.p`
   font-size: ${props => props.theme.fonts.text.small};
 `
 
-const ColorTextBold = styled.span`
+const ColorTextBig = styled.span`
   display: block;
   font-size: ${props => props.theme.fonts.text.big};
 `
@@ -66,23 +70,41 @@ class UploadFile extends Component<Props, void> {
     super(props)
     this.state = {}
     this.onFileChosen = this.onFileChosen.bind(this)
+    this.onDragOver = this.onDragOver.bind(this)
   }
 
   onFileChosen (e) {
     const file = e.target.files[0]
     this.props.onFileChosen(file)
     this.setState({ file: e.target.files[0] })
+    console.log('onFileChosen', file)
+  }
+
+  onDragOver (e) {
+    console.log('DRAG', e.type, e)
   }
 
   render () {
     return (
       <Wrapper>
         <FilesUploader>
-          <FilesUploaderInput type="file" onChange={this.onFileChosen} />
+          <FilesUploaderInput
+            type="file"
+            onChange={this.onFileChosen}
+            onDrag={this.onDragOver}
+            onDragEnter={this.onDragOver}
+            onDragExit={this.onDragOver}
+            onDragLeave={this.onDragOver}
+            onDragOver={this.onDragOver}
+            onDragStart={this.onDragOver}
+            onDrop={this.onDragOver}
+          />
           <FilesUploaderInputFake>
-            <SVG />
+            <Icon>
+              <FilesUploaderSvg />
+            </Icon>
             <ColorText>
-              <ColorTextBold>Search files</ColorTextBold> or drag them here
+              <ColorTextBig>Drag your files</ColorTextBig> or search them
             </ColorText>
           </FilesUploaderInputFake>
 
