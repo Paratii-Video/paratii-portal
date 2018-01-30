@@ -8,7 +8,7 @@ describe('Uploader Tool', function () {
       description:
         'Description of the video which can be pretty long and may contain dïàcrítics'
     }
-    browser.url('http://localhost:8080/uploader/upload-file')
+    browser.url('http://localhost:8080/upload')
 
     let fileToUpload = `${__dirname}/data/data.txt`
     browser.chooseFile('input[type="file"]', fileToUpload)

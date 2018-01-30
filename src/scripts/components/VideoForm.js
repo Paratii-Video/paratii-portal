@@ -4,8 +4,10 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from './foundations/buttons/Button'
 import Input from './foundations/Input'
+import VideoRecord from 'records/VideoRecords'
 
 type Props = {
+  videoInfo: VideoRecord,
   onInputChange: (name: string, e: Object) => void,
   onSubmit: (e: Object) => void,
   canSubmit: boolean
@@ -22,6 +24,7 @@ class VideoForm extends Component<Props, void> {
     const { onInputChange } = this.props
     return (
       <Form>
+        Editing video ... [insert video.id here]
         <Input
           id="video-title"
           type="text"

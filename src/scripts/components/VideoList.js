@@ -8,7 +8,7 @@ import Button from './foundations/buttons/Button'
 import VideoListItem from 'components/VideoListItem'
 
 type Props = {
-  uploads: Map<string, UploadRecord>,
+  uploads: Map<string, UploadRecord>, // maps video ids to upload records
   onItemClick: (id: string) => void
 }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { paratii } from '../utils/ParatiiLib'
+import type { RootState } from 'types/ApplicationTypes'
 
 const DebugBox = styled.header`
   background-color: #fff;
@@ -18,14 +19,22 @@ const Title = styled.header`
   align-items: center;
   color: blue;
 `
+type Props = {
+  state: RootState
+}
 
-class Debug extends Component {
+class Debug extends Component<Props, void> {
   render () {
     delete paratii.config.paratii
     let config = JSON.stringify(paratii.config, null, 2)
+    let state = JSON.stringify(this.props, null, 2)
     let warning = null
     if (!paratii.config.registryAddress) {
-      warning = <div><b>No registry address set!</b></div>
+      warning = (
+        <div>
+          <b>No registry address set!</b>
+        </div>
+      )
     } else {
       warning = <div />
     }
@@ -39,8 +48,11 @@ class Debug extends Component {
           <br />
           {warning}
           <br />
+          <h3>paratii.config:</h3>
           {config}
-
+          <br />
+          <h3>State:</h3>
+          {state}
         </pre>
       </DebugBox>
     )

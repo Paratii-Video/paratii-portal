@@ -17,8 +17,9 @@ import VideoInfoRecord from 'records/VideoInfoRecords'
 const reducer = {
   [UPLOAD_REQUESTED]: (
     state: UploadRecord,
-    { payload }: Action<{id: string, filename: string}>
+    { payload }: Action<{ id: string, filename: string }>
   ): UploadRecord => {
+    console.log('PAYLOAD:', payload)
     return state
       .mergeDeep({
         [payload.id]: new UploadRecord()
@@ -35,7 +36,7 @@ const reducer = {
   },
   [UPLOAD_PROGRESS]: (
     state: UploadRecord,
-    { payload }: Action<{id: string, progress: number}>
+    { payload }: Action<{ id: string, progress: number }>
   ): UploadRecord => {
     return state.mergeDeep({
       [payload.id]: {
@@ -47,12 +48,12 @@ const reducer = {
   },
   [UPLOAD_SUCCESS]: (
     state: UploadRecord,
-    { payload }: Action<{id: string, hash: string}>
+    { payload }: Action<{ id: string, hash: string }>
   ): UploadRecord => {
     return state.mergeDeep({
       [payload.id]: {
         uploadStatus: {
-          name: 'success',
+          name: 'success...',
           data: { ipfsHash: payload.hash }
         }
       }
@@ -60,13 +61,14 @@ const reducer = {
   },
   [UPDATE_UPLOAD_INFO]: (
     state: UploadRecord,
-    { payload }: Action<{id: string, videoInfo: VideoInfoRecord}>
+    { payload }: Action<{ id: string, videoInfo: VideoInfoRecord }>
   ): UploadRecord => {
-    return state.setIn([payload.id, 'videoInfo'], payload.videoInfo.set('id', payload.id))
+    return state.setIn(
+      [payload.id, 'videoInfo'],
+      payload.videoInfo.set('id', payload.id)
+    )
   },
-  [VIDEO_DATA_START]: (
-    state: UploadRecord
-  ): UploadRecord => {
+  [VIDEO_DATA_START]: (state: UploadRecord): UploadRecord => {
     return state.mergeDeep({
       blockchainStatus: {
         name: 'running',
@@ -74,9 +76,7 @@ const reducer = {
       }
     })
   },
-  [VIDEO_DATA_SAVED]: (
-    state: UploadRecord
-  ): UploadRecord => {
+  [VIDEO_DATA_SAVED]: (state: UploadRecord): UploadRecord => {
     return state.mergeDeep({
       blockchainStatus: {
         name: 'success',

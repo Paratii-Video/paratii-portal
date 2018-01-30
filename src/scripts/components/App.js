@@ -49,7 +49,7 @@ class App extends Component<Props, void> {
             <Route path={`${match.url}login`} component={LoginContainer} />
             <Route path={`${match.url}profile`} component={ProfileContainer} />
             <Route path={`${match.url}play/:id`} component={PlayContainer} />
-            <Route path={`${match.url}videos`} component={VideoManager} />
+            <Route path={`${match.url}upload`} component={VideoManager} />
             <Route path={`${match.url}debug`} component={DebugContainer} />
           </Main>
           <MainFooter />

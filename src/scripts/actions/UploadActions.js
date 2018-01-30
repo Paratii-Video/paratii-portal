@@ -26,7 +26,8 @@ const videoDataSaved = createAction(VIDEO_DATA_SAVED)
 export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   // the next call dispatches an asynchronous request to upload the file to ipfs
   // (the API will change and become paratii.ipfs.add(..))
-  dispatch(uploadRequested(file))
+  let newVideoId = paratii.eth.vids.makeId()
+  dispatch(uploadRequested({ id: newVideoId, filename: file.name }))
   const uploader = paratii.ipfs.uploader.add(file)
   uploader.on('error', function (err) {
     console.log('[UPLOAD error]', err)
