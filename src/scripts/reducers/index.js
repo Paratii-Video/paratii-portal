@@ -7,7 +7,7 @@ import user from 'reducers/UserReducer'
 import uploads from 'reducers/UploadReducer'
 
 export default combineReducers({
-  video,
+  selectedVideo: video,
   user,
   uploads
 })

@@ -6,31 +6,28 @@ import React, { Component } from 'react'
 import VideoForm from 'components/VideoForm'
 import { saveVideoInfo } from 'actions/UploadActions'
 import VideoInfoRecord from 'records/VideoInfoRecords'
+import { getVideo } from 'selectors/index'
 
 import type { RootState } from 'types/ApplicationTypes'
 
 type Props = {
-  updateVideoInfo: (id: string, title: string, description: string) => void,
-  videoInfo: VideoInfoRecord
+  selectedVideo: VideoInfoRecord,
+  canSubmit: boolean
 }
 
 class VideoFormContainer extends Component<Props, void> {
   constructor (props) {
-    console.log('constructor')
     super(props)
-    const { videoInfo } = this.props
-    const title = videoInfo.get('title')
-    const description = videoInfo.get('description')
-    this.state = { title: title, description: description }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { videoInfo } = nextProps
-    const title = videoInfo.get('title')
-    const description = videoInfo.get('description')
-    this.setState({ title: title, description: description })
+  componentWillReceiveProps (nextProps: Props) {
+    const props = nextProps
+    this.setState({
+      title: props.selectedVideo.title,
+      description: props.selectedVideo.description
+    })
   }
 
   handleInputChange (input, e) {
@@ -38,35 +35,36 @@ class VideoFormContainer extends Component<Props, void> {
       [input]: e.target.value
     })
   }
-
   handleSubmit (e) {
-    console.log('handleSubmit', e)
-    const { title, description } = this.state
-    const { updateVideoInfo } = this.props
     e.preventDefault()
-    updateVideoInfo({
-      id: this.props.videoInfo.id,
-      title: title,
-      description: description
-    })
+    let videoToSave = {
+      id: this.props.selectedVideo.id,
+      title: this.state.title,
+      description: this.state.description
+    }
+    saveVideoInfo(videoToSave)
   }
 
   render () {
+    console.log('render videoformcontainer:')
+    console.log(this.props)
     return (
       <VideoForm
+        selectedVideo={this.props.selectedVideo}
         onSubmit={this.handleSubmit}
         onInputChange={this.handleInputChange}
-        title={this.state.title}
-        description={this.state.description}
       />
     )
   }
 }
 
-const mapStateToProps = (state: RootState) => ({})
+const mapStateToProps = (state: RootState) => ({
+  selectedVideo: getVideo(state)
+})
 
 const mapDispatchToProps = dispatch => ({
   updateVideoInfo: bindActionCreators(saveVideoInfo, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoFormContainer)
+// connect(mapStateToProps, mapDispatchToProps)(VideoFormContainer)

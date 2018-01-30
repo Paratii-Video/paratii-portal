@@ -1,16 +1,21 @@
-import { connect } from 'react-redux'
-
+import { Map } from 'immutable'
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import styled from 'styled-components'
+
+import { setCurrentVideo } from 'actions/VideoActions'
+
+import UploadRecord from 'records/UploadRecords'
+import VideoRecord from 'records/VideoRecords'
+
+import { getUploads } from 'selectors/index'
+
+import type { RootState } from 'types/ApplicationTypes'
+
 import VideoList from './VideoListContainer'
 import VideoForm from './VideoFormContainer'
-// import Debug from 'components/Debug'
 import Debug from './DebugContainer'
 import UploadFile from './UploadFileContainer'
-import UploadRecord from 'records/UploadRecords'
-import { Map } from 'immutable'
-import type { RootState } from 'types/ApplicationTypes'
-import { getUploads } from 'selectors/index'
-import styled from 'styled-components'
 
 const Wrapper = styled.div`
   background-color: ${props => props.theme.colors.body.background};
@@ -23,13 +28,15 @@ const Wrapper = styled.div`
 `
 
 type Props = {
-  uploads: Map<string, UploadRecord>
+  uploads: Map<string, UploadRecord>,
+  selectedVideo: VideoRecord
 }
 
 class VideoManagerContainer extends Component<Props, void> {
   constructor (props) {
     super(props)
     this.state = { selectedUpload: null }
+    setCurrentVideo(null)
     this.onVideoListItemClicked = this.onVideoListItemClicked.bind(this)
   }
 
@@ -38,23 +45,16 @@ class VideoManagerContainer extends Component<Props, void> {
     this.setState({
       selectedUpload: id
     })
+    setCurrentVideo(id)
   }
 
   render () {
-    const { uploads } = this.props
-    const { selectedUpload } = this.state
+    const selectedUpload = this.props.selectedVideo
     return (
       <Wrapper>
-        {this.props.uploads.count() > 0 && (
-          <VideoList onItemClick={this.onVideoListItemClicked} />
-        )}
+        <VideoList onItemClick={this.onVideoListItemClicked} />
         {selectedUpload === null && <UploadFile />}
-        {selectedUpload !== null && (
-          <VideoForm
-            id={selectedUpload}
-            videoInfo={uploads.getIn([selectedUpload, 'videoInfo'])}
-          />
-        )}
+        {selectedUpload !== null && <VideoForm />}
         <Debug />
       </Wrapper>
     )
@@ -62,7 +62,8 @@ class VideoManagerContainer extends Component<Props, void> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  uploads: getUploads(state)
+  uploads: getUploads(state),
+  selectedVideo: state.selectedVideo
 })
 
 const mapDispatchToProps = dispatch => ({})

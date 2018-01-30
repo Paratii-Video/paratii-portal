@@ -9,7 +9,8 @@ import {
   UPLOAD_SUCCESS,
   UPDATE_UPLOAD_INFO,
   VIDEO_DATA_START,
-  VIDEO_DATA_SAVED
+  VIDEO_DATA_SAVED,
+  VIDEO_DATA_LOADED
 } from 'constants/ActionConstants'
 
 import type { Dispatch } from 'redux'
@@ -22,11 +23,14 @@ const uploadSuccess = createAction(UPLOAD_SUCCESS)
 const updateUploadInfo = createAction(UPDATE_UPLOAD_INFO)
 const videoDataStart = createAction(VIDEO_DATA_START)
 const videoDataSaved = createAction(VIDEO_DATA_SAVED)
+const videoDataLoaded = createAction(VIDEO_DATA_LOADED)
 
 export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   // the next call dispatches an asynchronous request to upload the file to ipfs
   // (the API will change and become paratii.ipfs.add(..))
   let newVideoId = paratii.eth.vids.makeId()
+  // set the selectedVideo
+  dispatch(videoDataLoaded({ id: newVideoId }))
   dispatch(uploadRequested({ id: newVideoId, filename: file.name }))
   const uploader = paratii.ipfs.uploader.add(file)
   uploader.on('error', function (err) {

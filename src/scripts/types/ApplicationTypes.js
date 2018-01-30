@@ -30,7 +30,7 @@ export type Action<T> = {
 }
 
 export type RootState = {
-  video: ?VideoRecord,
+  selectedVideo: ?VideoRecord,
   user: ?UserRecord,
   uploads: UploadRecord
 }

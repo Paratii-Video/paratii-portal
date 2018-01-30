@@ -29,8 +29,13 @@ class VideoList extends Component<Props, void> {
       <Wrapper>
         {uploads
           .entrySeq()
-          .map(([k, v]) => (
-            <VideoListItem key={k} id={k} item={v} onClick={onItemClick} />
+          .map(([videoId, videoInfo]) => (
+            <VideoListItem
+              key={videoId}
+              id={videoId}
+              item={videoInfo}
+              onClick={onItemClick}
+            />
           ))}
         <Button onClick={() => onItemClick(null)}>ADD MORE VIDEOS</Button>
       </Wrapper>

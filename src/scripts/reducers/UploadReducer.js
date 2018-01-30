@@ -20,7 +20,8 @@ const reducer = {
     { payload }: Action<{ id: string, filename: string }>
   ): UploadRecord => {
     console.log('PAYLOAD:', payload)
-    return state
+    console.log('STATE:', state)
+    state = state
       .mergeDeep({
         [payload.id]: new UploadRecord()
       })
@@ -33,6 +34,8 @@ const reducer = {
           }
         }
       })
+    state.selectedVideo = payload.id
+    return state
   },
   [UPLOAD_PROGRESS]: (
     state: UploadRecord,
