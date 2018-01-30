@@ -18,6 +18,15 @@ if (process.env.NODE_ENV === 'development') {
   app.use(hotMiddleware(compiler))
 }
 
+if (process.env.NODE_ENV === 'production-notugly') {
+  const compiler = webpack(webpackConfig)
+  app.use(
+    devMiddleware(compiler, {
+      stats: { colors: true }
+    })
+  )
+}
+
 app.use(express.static(path.resolve(__dirname, '../../', 'build')))
 app.get('/embed/:id', videoRoute)
 app.get('*', (req, res) => {

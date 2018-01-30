@@ -9,7 +9,7 @@ import VideoRecord from 'records/VideoRecords'
 type Props = {
   video: VideoRecord,
   state: Object
-};
+}
 
 class VideoStatus extends Component<Props, void> {
   render () {
@@ -18,18 +18,22 @@ class VideoStatus extends Component<Props, void> {
     return (
       <Wrapper>
         <pre id="video-status">
-      Your Video is now being either:
+          Your Video is now being either:
           <ul>
-            <li>being uploaded (depends on this.props.state.uploadStatus: {this.props.state.uploadStatus})</li>
+            <li>
+              being uploaded (depends on this.props.state.uploadStatus:{' '}
+              {this.props.state.uploadStatus})
+            </li>
             <li>in the process of being transcoded</li>
-            <li>all ready for sharing -- here is the link:
+            <li>
+              all ready for sharing -- here is the link:
               <Link to={videoLink}>here is the link</Link>
             </li>
           </ul>
           <br />
           --------------------------------------------------------
           <br />
-              This is the information you entered:
+          This is the information you entered:
           <br />
           id: <span id="videoId">{video.get('id')}</span>
           <br />
@@ -41,7 +45,8 @@ class VideoStatus extends Component<Props, void> {
           <br />
           --------------------------------------------------------
           <br />
-          Soon you willl also be able to tag the video, create playlists, and other goodies! (But not yet :-())
+          Soon you willl also be able to tag the video, create playlists, and
+          other goodies! (But not yet :-())
           <br />
         </pre>
       </Wrapper>

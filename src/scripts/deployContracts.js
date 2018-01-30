@@ -6,35 +6,30 @@ const env = process.env.NODE_ENV || 'development'
 
 const configFilename = path.join(__dirname, `/../../config/${env}.json`)
 
+const registryFilename = path.join(__dirname, '/../../config/registry.json')
+
 const config = require(configFilename)
 
 const paratii = new Paratii(config)
-let newConfig
 
-function deployContracts () {
-  paratii.eth.deployContracts()
-    .then(
-      () => paratii.eth.getRegistryAddress()
-    )
-    .then(
-      registryAddress => {
-        console.log(`new registry address: ${registryAddress}`)
-        newConfig = {
-          ...config,
-          registryAddress
-        }
-        fs.writeFileSync(configFilename, JSON.stringify(newConfig, null, 2), 'utf-8')
-        let msg = `written new configuation to ${configFilename}`
-        console.log(msg)
+async function deployContracts () {
+  await paratii.eth.deployContracts()
+  let registryAddress = await paratii.eth.getRegistryAddress()
+  console.log(`new registry address: ${registryAddress}`)
+  const registryConfig = {
+    registryAddress
+  }
+  fs.writeFileSync(
+    registryFilename,
+    JSON.stringify(registryConfig, null, 2),
+    'utf-8'
+  )
+  const msg = `Registry address written to ${registryFilename}`
+  console.log(msg)
 
-        return msg
-      }
-    )
-    .then(
-      () => paratii.diagnose()
-    )
-    .then(
-      (diagnosis) => console.log(diagnosis)
-    )
+  let diagnosis = await paratii.diagnose()
+  console.log(diagnosis)
+  process.exit(0)
 }
+
 deployContracts()

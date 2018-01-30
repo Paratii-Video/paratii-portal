@@ -10,7 +10,7 @@
 
 import { Paratii, utils } from 'paratii-lib'
 // import testConfig from '../../../config/test.json'
-import developmentConfig from '../../../config/development.json'
+import testConfig from '../../../config/test.json'
 
 const fs = require('fs')
 const Promise = require('bluebird')
@@ -19,29 +19,52 @@ const pull = require('pull-stream')
 const pullFilereader = require('pull-filereader')
 const toPull = require('stream-to-pull-stream')
 
+const registryConfigPath = '../../../config/registry.json'
+let registryAddressConfig = {}
+
+if (fs.existsSync(path.resolve(__dirname, registryConfigPath))) {
+  registryAddressConfig = require(registryConfigPath)
+}
+
 // this address will be used as the owner address for all paratii contracts in the tests
 let address = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
-let privateKey = '399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6'
+let privateKey =
+  '399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6'
 
 // some other addresses and keys used in testing
 let address1 = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
 let address99 = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
 let address17 = '0xb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01'
-let privateKey17 = '0x348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709'
+let privateKey17 =
+  '0x348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709'
 
 // an address generated from a seed phrase
-let mnemonic23 = 'jelly better achieve collect unaware mountain thought cargo oxygen act hood bridge'
+let mnemonic23 =
+  'jelly better achieve collect unaware mountain thought cargo oxygen act hood bridge'
 // this is the first HD address generated
 let address23 = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
 
-export { address, address1, address99, privateKey, address17, privateKey17, mnemonic23, address23 }
+export {
+  address,
+  address1,
+  address99,
+  privateKey,
+  address17,
+  privateKey17,
+  mnemonic23,
+  address23
+}
 
-export const SEED = 'road inherit leave arm unlock estate option merge mechanic rate blade dumb'
+export const SEED =
+  'road inherit leave arm unlock estate option merge mechanic rate blade dumb'
 export const USERADDRESS = '0xdef933d2d0203821af2a1579d77fb42b4f8dcf7b'
 
-export const paratii = new Paratii(developmentConfig)
+export const paratii = new Paratii({
+  ...testConfig,
+  ...registryAddressConfig
+})
 
-export const getPath = (path) => {
+export const getPath = path => {
   return `http://localhost:8080/${path}`
 }
 
@@ -55,16 +78,16 @@ export const clearCookies = () => {
 //   browser.execute(nukeSessionStorage)
 // })
 
-export function nukeLocalStorage () {
+export function nukeLocalStorage() {
   localStorage.clear()
 }
 
-export function nukeSessionStorage () {
+export function nukeSessionStorage() {
   window.sessionStorage.clear()
 }
 
-export function add0x (input) {
-  if (typeof (input) !== 'string') {
+export function add0x(input) {
+  if (typeof input !== 'string') {
     return input
   } else if (input.length < 2 || input.slice(0, 2) !== '0x') {
     return `0x${input}`
@@ -147,13 +170,13 @@ export function add0x (input) {
 //   })
 // }
 //
-export function waitForKeystore (browser, key='keystore-anon') {
-  browser.waitUntil(function () {
-    return browser.execute(function (key) {
+export function waitForKeystore(browser, key = 'keystore-anon') {
+  browser.waitUntil(function() {
+    return browser.execute(function(key) {
       return localStorage.getItem(key)
     }, key).value
   })
-  return browser.execute(function (key) {
+  return browser.execute(function(key) {
     return localStorage.getItem(key)
   }, key).value
 }
@@ -322,44 +345,48 @@ export function waitForKeystore (browser, key='keystore-anon') {
 //   }, address)
 // }
 
-
 // next line copied from old uploader as a quick workaround to get thetests workign
-export function uploadFilesToIPFS (ipfs, files) {
+export function uploadFilesToIPFS(ipfs, files) {
   let meta = {} // holds File metadata.
   // let files = [file]
 
   let _chunkSize = 262144
   let node = ipfs
   ipfs.start(() => {
-
     pull(
       pull.values(files),
-      pull.through((file) => {
+      pull.through(file => {
         // console.log('Adding ', file)
         meta.fileSize = file.size
         meta.total = 0
       }),
-      pull.asyncMap((file, cb) => pull(
-        pull.values([{
-          path: file.name,
-          // content: pullFilereader(file)
-          content: pull(
-            toPull(fs.createReadStream(file)), // file here is a path to file.
-            // pull.through((chunk) => console.log(chunk.length, Math.floor((meta.total + chunk.length) / meta.fileSize) * 100))
-          )
-        }]),
-        node.files.addPullStream({chunkerOptions: {maxChunkSize: _chunkSize}}), // default size 262144
-        pull.collect((err, res) => {
-          if (err) {
-            console.log(err)
-          }
-          const file = res[0]
-          // console.log('Adding %s finished', file.name)
-          setImmediate(() => {
-            cb()
+      pull.asyncMap((file, cb) =>
+        pull(
+          pull.values([
+            {
+              path: file.name,
+              // content: pullFilereader(file)
+              content: pull(
+                toPull(fs.createReadStream(file)) // file here is a path to file.
+                // pull.through((chunk) => console.log(chunk.length, Math.floor((meta.total + chunk.length) / meta.fileSize) * 100))
+              )
+            }
+          ]),
+          node.files.addPullStream({
+            chunkerOptions: { maxChunkSize: _chunkSize }
+          }), // default size 262144
+          pull.collect((err, res) => {
+            if (err) {
+              console.log(err)
+            }
+            const file = res[0]
+            // console.log('Adding %s finished', file.name)
+            setImmediate(() => {
+              cb()
+            })
           })
-        })
-      )),
+        )
+      ),
       pull.collect((err, files) => {
         if (err) {
           console.log(err)
@@ -369,8 +396,6 @@ export function uploadFilesToIPFS (ipfs, files) {
     )
   })
 }
-
-
 
 // const playerIsFullScreen = () => !!(
 //   document.fullscreenElement ||

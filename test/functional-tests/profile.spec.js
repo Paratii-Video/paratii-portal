@@ -39,9 +39,14 @@ describe('Profile and accounts workflow:', function () {
     keystore = JSON.parse(keystore)
     assert.isOk(keystore[0].address)
     // the paratii object in the browser should also know of the address
-    let paratiiConfigAddress = (await browser.execute(function () { return window.paratii.config.account.address })).value
+    let paratiiConfigAddress = (await browser.execute(function () {
+      return window.paratii.config.account.address
+    })).value
     assert.isOk(paratiiConfigAddress)
-    assert.equal(paratiiConfigAddress.toLowerCase(), add0x(keystore[0].address).toLowerCase())
+    assert.equal(
+      paratiiConfigAddress.toLowerCase(),
+      add0x(keystore[0].address).toLowerCase()
+    )
   })
 
   it('register a new user', function () {
@@ -87,8 +92,16 @@ describe('Profile and accounts workflow:', function () {
 
     // verify page
     browser.waitForExist('#profile-email', 'page did not load')
-    assert.equal(browser.getUrl(), getPath('profile'), 'not redirect to profile page')
-    assert.equal(browser.getText('#profile-email'), 'guildenstern@rosencrantz.com', 'not same email')
+    assert.equal(
+      browser.getUrl(),
+      getPath('profile'),
+      'not redirect to profile page'
+    )
+    assert.equal(
+      browser.getText('#profile-email'),
+      'guildenstern@rosencrantz.com',
+      'not same email'
+    )
   })
 
   it.skip('login as an existing user on a device with no keystore - use existing anonymous keystore ', function () {
@@ -109,7 +122,10 @@ describe('Profile and accounts workflow:', function () {
 
     browser.waitAndClick('#nav-profile')
     browser.waitForClickable('[name="at-field-email"]')
-    browser.waitAndSetValue('[name="at-field-email"]', 'guildenstern@rosencrantz.com')
+    browser.waitAndSetValue(
+      '[name="at-field-email"]',
+      'guildenstern@rosencrantz.com'
+    )
     browser.waitAndSetValue('[name="at-field-password"]', 'password')
     browser.waitAndClick('#at-btn')
 
@@ -143,7 +159,10 @@ describe('Profile and accounts workflow:', function () {
     browser.waitAndSetValue('[name="new-password"]', 'new-password')
     browser.waitAndClick('#save-password')
     browser.waitForVisible('li.profile-wallet-item:last-child .amount')
-    const amount = await browser.getText('li.profile-wallet-item:last-child .profile-wallet-item-balance', false)
+    const amount = await browser.getText(
+      'li.profile-wallet-item:last-child .profile-wallet-item-balance',
+      false
+    )
     assert.isOk(['3.10 ETH', '3,10 ETH'].indexOf(amount) > -1)
     done()
   })
@@ -162,7 +181,10 @@ describe('Profile and accounts workflow:', function () {
     browser.url('http://localhost:3000')
     browser.waitAndClick('#nav-profile')
 
-    browser.waitAndSetValue('[name="at-field-email"]', 'guildenstern@rosencrantz.com')
+    browser.waitAndSetValue(
+      '[name="at-field-email"]',
+      'guildenstern@rosencrantz.com'
+    )
     browser.waitAndSetValue('[name="at-field-password"]', 'wrong password')
     browser.waitAndClick('#at-btn')
 
@@ -556,7 +578,7 @@ describe('Profile and accounts workflow:', function () {
   })
 
   describe('edit profile', () => {
-    it.skip('should render the current profile\'s information correctly', () => {
+    it.skip("should render the current profile's information correctly", () => {
       createUserAndLogin(browser)
       browser.url('http://localhost:3000/profile')
       browser.waitForClickable('.button-settings')
@@ -565,9 +587,18 @@ describe('Profile and accounts workflow:', function () {
       browser.click('.edit-profile-info')
       browser.waitForVisible('.modal-profile')
 
-      assert.equal(browser.getAttribute('#new-username', 'placeholder'), 'foobar baz')
-      assert.equal(browser.getAttribute('#new-email', 'placeholder'), 'guildenstern@rosencrantz.com')
-      assert.equal(browser.getAttribute('.current-avatar', 'src'), 'https://google.com/images/stock.jpg')
+      assert.equal(
+        browser.getAttribute('#new-username', 'placeholder'),
+        'foobar baz'
+      )
+      assert.equal(
+        browser.getAttribute('#new-email', 'placeholder'),
+        'guildenstern@rosencrantz.com'
+      )
+      assert.equal(
+        browser.getAttribute('.current-avatar', 'src'),
+        'https://google.com/images/stock.jpg'
+      )
     })
 
     it.skip('should not allow the user to save profile information if no new information is entered', () => {
@@ -579,7 +610,10 @@ describe('Profile and accounts workflow:', function () {
       browser.click('.edit-profile-info')
       browser.waitForVisible('.modal-profile')
 
-      assert.equal(browser.getAttribute('#save-profile-info', 'disabled'), 'true')
+      assert.equal(
+        browser.getAttribute('#save-profile-info', 'disabled'),
+        'true'
+      )
     })
 
     it.skip('should not allow the user to save profile information if only whitespace is entered into the name or email fields', () => {
@@ -592,12 +626,18 @@ describe('Profile and accounts workflow:', function () {
       browser.waitForVisible('.modal-profile')
       browser.waitAndSetValue('#new-username', '        \n ')
 
-      assert.equal(browser.getAttribute('#save-profile-info', 'disabled'), 'true')
+      assert.equal(
+        browser.getAttribute('#save-profile-info', 'disabled'),
+        'true'
+      )
 
       browser.waitForVisible('.modal-profile')
       browser.waitAndSetValue('#new-email', '       ')
 
-      assert.equal(browser.getAttribute('#save-profile-info', 'disabled'), 'true')
+      assert.equal(
+        browser.getAttribute('#save-profile-info', 'disabled'),
+        'true'
+      )
     })
 
     it.skip('should allow the user to update their name', () => {
@@ -617,7 +657,9 @@ describe('Profile and accounts workflow:', function () {
       browser.click('#save-profile-info')
 
       browser.waitUntil(() => {
-        return browser.getText('.internals-header-title') === 'my shiny new name'
+        return (
+          browser.getText('.internals-header-title') === 'my shiny new name'
+        )
       })
     })
 
@@ -627,7 +669,10 @@ describe('Profile and accounts workflow:', function () {
       browser.waitForClickable('.button-settings')
 
       browser.waitForVisible('.profile-user-email')
-      assert.equal(browser.getText('.profile-user-email'), 'guildenstern@rosencrantz.com')
+      assert.equal(
+        browser.getText('.profile-user-email'),
+        'guildenstern@rosencrantz.com'
+      )
 
       browser.click('.button-settings')
       browser.waitForClickable('.edit-profile-info')
@@ -650,7 +695,10 @@ describe('Profile and accounts workflow:', function () {
       browser.waitForClickable('.button-settings')
 
       browser.waitForVisible('.profile-user-email')
-      assert.equal(browser.getText('.profile-user-email'), 'guildenstern@rosencrantz.com')
+      assert.equal(
+        browser.getText('.profile-user-email'),
+        'guildenstern@rosencrantz.com'
+      )
 
       browser.click('.button-settings')
       browser.waitForClickable('.edit-profile-info')
@@ -668,7 +716,10 @@ describe('Profile and accounts workflow:', function () {
 
       assert.equal(browser.isVisible('.modal-profile'), true)
       browser.waitForVisible('.profile-user-email')
-      assert.equal(browser.getText('.profile-user-email'), 'guildenstern@rosencrantz.com')
+      assert.equal(
+        browser.getText('.profile-user-email'),
+        'guildenstern@rosencrantz.com'
+      )
     })
   })
 

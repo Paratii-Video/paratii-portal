@@ -17,10 +17,15 @@
 //
 //
 //
-import { assertUserIsLoggedIn, createVideo, createUserAndLogin, getEthAccountFromApp } from './test-utils/helpers.js'
+import {
+  assertUserIsLoggedIn,
+  createVideo,
+  createUserAndLogin,
+  getEthAccountFromApp
+} from './test-utils/helpers.js'
 import { assert } from 'chai'
 
-function createPlaylist () {
+function createPlaylist() {
   const playlist = {
     id: '98765',
     title: 'Around the block IPFS',
@@ -31,7 +36,7 @@ function createPlaylist () {
   Meteor.call('playlists.create', playlist)
 }
 
-function fakeVideoUnlock (address) {
+function fakeVideoUnlock(address) {
   // TODO: this function need to call the Contract instead of insert the transactin in Mongo
   // const transaction = {
   //   from: address,
@@ -43,12 +48,15 @@ function fakeVideoUnlock (address) {
   // Transactions.insert(transaction)
 }
 
-describe('Price tag status', function () {
+describe('Price tag status', function() {
   it.skip('when the video has no price', () => {
     createUserAndLogin(browser)
     server.execute(createVideo, '12345', 'Test 1', '', '', [''], 0)
     server.execute(createPlaylist)
-    browser.waitUntilRequestHasStatus('http://localhost:3000/playlists/98765', 200)
+    browser.waitUntilRequestHasStatus(
+      'http://localhost:3000/playlists/98765',
+      200
+    )
     browser.url('http:localhost:3000/playlists/98765')
     browser.waitForExist('.thumbs-list-item')
 
@@ -57,16 +65,19 @@ describe('Price tag status', function () {
     assert.isTrue(priceTag)
   })
 
-  it.skip('when the video has a price  and wasn\'t bought', () => {
+  it.skip("when the video has a price  and wasn't bought", () => {
     createUserAndLogin(browser)
     assertUserIsLoggedIn(browser)
     server.execute(createVideo, '12345', 'Test 1', '', '', [''], 10)
     server.execute(createPlaylist)
-    browser.waitUntilRequestHasStatus('http://localhost:3000/playlists/98765', 200)
+    browser.waitUntilRequestHasStatus(
+      'http://localhost:3000/playlists/98765',
+      200
+    )
     browser.url('http:localhost:3000/playlists/98765')
     browser.waitForExist('.thumbs-list-item')
     browser.moveToObject('.thumbs-list-item')
-    browser.waitUntil(function () {
+    browser.waitUntil(function() {
       return browser.getText('.thumbs-list-price') === '10 PTI'
     })
   })
@@ -78,7 +89,10 @@ describe('Price tag status', function () {
     server.execute(createVideo, '12345', 'Test 1', '', '', [''], 10)
     server.execute(createPlaylist)
     server.execute(fakeVideoUnlock, address)
-    browser.waitUntilRequestHasStatus('http://localhost:3000/playlists/98765', 200)
+    browser.waitUntilRequestHasStatus(
+      'http://localhost:3000/playlists/98765',
+      200
+    )
     browser.url('http:localhost:3000/playlists/98765')
     browser.waitForExist('.thumbs-list-item')
   })

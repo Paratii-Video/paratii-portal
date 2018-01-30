@@ -11,6 +11,7 @@
 
 # misc
 .DS_Store
+.vscode
 .env.local
 .vscode
 .env.developmenat.local
@@ -25,4 +26,5 @@ yarn-error.log*
 
 .floo
 .flooignore
-config/development.json
+
+config/registry.json

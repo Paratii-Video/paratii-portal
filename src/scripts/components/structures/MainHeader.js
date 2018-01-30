@@ -4,18 +4,17 @@ import MainHeaderLogo from '../widgets/MainHeaderLogo'
 import SearchInput from '../widgets/SearchInput'
 import MainNavigation from '../widgets/MainNavigation'
 import { Link } from 'react-router-dom'
-
-//
+import Blockies from 'react-blockies'
 
 type Props = {
   children: Object
-};
-
-//
+}
 
 const Header = styled.header`
-  background-color: ${props => props.theme ? props.theme.colors.header.background : 'black'};
-  height: ${props => props.theme.sizes ? props.theme.sizes.mainHeader.height : 'auto'};
+  background-color: ${props =>
+    props.theme ? props.theme.colors.header.background : 'black'};
+  height: ${props =>
+    props.theme.sizes ? props.theme.sizes.mainHeader.height : 'auto'};
   padding-left: 80px;
   padding-right: 80px;
 `
@@ -45,7 +44,7 @@ const HeaderButtons = styled.div`
   justify-content: flex-end;
 `
 
-//
+// foundation/widgets(move?)
 
 const ButtonBucket = styled.button`
   flex: 0 0 20px;
@@ -69,15 +68,13 @@ const ProfileAvatarLink = styled(Link)`
   overflow: hidden;
 `
 
-const ProfileAvatarImage = styled.img`
-  transition: filter ${props => props.theme.animation.time.paint};
-
-  ${/* sc-selector */ProfileAvatarLink}:hover & {
-    filter: brightness(1.5);
-  }
-`
-
+// const ProfileAvatarImage = styled.img`
+//   transition: filter ${props => props.theme.animation.time.repaint};
 //
+//   ${/* sc-selector */ProfileAvatarLink}:hover & {
+//     filter: brightness(1.5);
+//   }
+// `
 
 class MainHeader extends Component<Props, void> {
   render () {
@@ -85,18 +82,22 @@ class MainHeader extends Component<Props, void> {
       <Header>
         {this.props.children}
         <HeaderWrapper>
-          <MainHeaderLogo/>
+          <MainHeaderLogo />
           <HeaderContent>
-            <SearchInput/>
+            <SearchInput />
             <HeaderButtons>
-              <MainNavigation/>
+              <MainNavigation />
               <ButtonBucket>
                 <ButtonBucketSVG>
-                  <use xlinkHref="#icon-bucket"></use>
+                  <use xlinkHref="#icon-bucket" />
                 </ButtonBucketSVG>
               </ButtonBucket>
-              <ProfileAvatarLink to='/signup'>
-                <ProfileAvatarImage className="full-block" src="https://avatars3.githubusercontent.com/u/9802645?s=460&v=4" />
+              <ProfileAvatarLink to="/signup">
+                <Blockies
+                  seed="{window.paratii.config.account.address}"
+                  size={10}
+                  scale={4}
+                />
               </ProfileAvatarLink>
             </HeaderButtons>
           </HeaderContent>

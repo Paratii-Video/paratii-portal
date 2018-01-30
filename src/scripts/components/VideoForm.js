@@ -2,15 +2,15 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Button from './foundations/Button'
+import Button from './foundations/buttons/Button'
 import Input from './foundations/Input'
 
 type Props = {
   onSubmit: () => void,
   onInputChange: (name: string, e: Object) => void,
-  title: ?string,
-  description: ?string
-};
+  onVideoInfoSubmitted: (e: Object) => void,
+  canSubmit: boolean
+}
 
 const Form = styled.form`
   font-size: 20px;
@@ -20,25 +20,29 @@ const Form = styled.form`
 
 class VideoForm extends Component<Props, void> {
   render () {
-    const { onSubmit, onInputChange, title, description } = this.props
+    const { onSubmit, onInputChange } = this.props
     return (
       <Form onSubmit={onSubmit}>
         <Input
-          id='video-title'
-          type='text'
-          onChange={(e) => onInputChange('title', e)}
-          placeholder='Title'
-          value={title || ''}
+          id="video-title"
+          type="text"
+          onChange={e => onInputChange('title', e)}
+          placeholder="Title"
         />
         <Input
-          id='video-description'
-          type='textarea'
-          onChange={(e) => onInputChange('description', e)}
-          placeholder='Description'
-          value={description || ''}
+          id="video-description"
+          type="textarea"
+          onChange={e => onInputChange('description', e)}
+          placeholder="Description"
         />
-        <Button id='video-submit' type='submit'>Submit</Button>
-
+        <Button
+          id="video-submit"
+          type="submit"
+          onClick={this.props.onVideoInfoSubmitted}
+          disabled={!this.props.canSubmit}
+        >
+          Submit
+        </Button>
       </Form>
     )
   }

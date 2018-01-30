@@ -2,17 +2,15 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-//
-
-type Props = {
-}
-
-//
+type Props = {}
 
 const MainLogo = styled.h1`
   display: block;
-  flex: 0 0 ${props => props.theme.sizes ? props.theme.sizes.mainHeaderLogo.width : ''};
-  height: ${props => props.theme.sizes ? props.theme.sizes.mainHeaderLogo.height : ''};
+  flex: 0 0
+    ${props =>
+    props.theme.sizes ? props.theme.sizes.mainHeaderLogo.width : ''};
+  height: ${props =>
+    props.theme.sizes ? props.theme.sizes.mainHeaderLogo.height : ''};
 `
 
 const MainLogoAnchor = styled(Link)`
@@ -28,15 +26,13 @@ const MainLogoSVG = styled.svg`
   width: 100%;
 `
 
-//
-
 class MainHeaderLogo extends Component<Props, void> {
   render () {
     return (
       <MainLogo>
-        <MainLogoAnchor to='/'>
+        <MainLogoAnchor to="/">
           <MainLogoSVG>
-            <use xlinkHref="#paratii-logo"></use>
+            <use xlinkHref="#paratii-logo" />
           </MainLogoSVG>
         </MainLogoAnchor>
       </MainLogo>
