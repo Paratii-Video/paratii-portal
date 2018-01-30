@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { paratii } from '../utils/ParatiiLib'
 import type { RootState } from 'types/ApplicationTypes'
@@ -42,10 +41,6 @@ class Debug extends Component<Props, void> {
       <DebugBox>
         <pre>
           <Title>Debug information that may be useful to you, developer</Title>
-          <Link to="/play/foo">Play a video</Link>
-          <br />
-          <Link to="/uploader/upload-file">Upload a file</Link>
-          <br />
           {warning}
           <br />
           <h3>paratii.config:</h3>

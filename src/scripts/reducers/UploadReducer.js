@@ -34,13 +34,17 @@ const reducer = {
           }
         }
       })
-    state.selectedVideo = payload.id
     return state
   },
   [UPLOAD_PROGRESS]: (
     state: UploadRecord,
     { payload }: Action<{ id: string, progress: number }>
   ): UploadRecord => {
+    if (!state.get(payload.id)) {
+      console.log(payload.id)
+      console.log(state)
+      throw Error(`Unknown id: ${payload.id}`)
+    }
     return state.mergeDeep({
       [payload.id]: {
         uploadStatus: {
@@ -53,6 +57,9 @@ const reducer = {
     state: UploadRecord,
     { payload }: Action<{ id: string, hash: string }>
   ): UploadRecord => {
+    if (!state.get(payload.id)) {
+      throw Error(`Unknown id: ${payload.id}`)
+    }
     return state.mergeDeep({
       [payload.id]: {
         uploadStatus: {

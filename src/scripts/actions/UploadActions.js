@@ -38,11 +38,10 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
     throw err
   })
   uploader.on('progress', function (chunkLength, progressPercent) {
-    console.log('progress: ', progressPercent)
-    dispatch(uploadProgress(progressPercent))
+    dispatch(uploadProgress({ id: newVideoId, progress: progressPercent }))
   })
   uploader.on('fileReady', function (file) {
-    dispatch(uploadSuccess(file.hash))
+    dispatch(uploadSuccess({ id: newVideoId, hash: file.hash }))
   })
   uploader.on('done', function (files) {
     console.log('[UPLOAD done]', files)
