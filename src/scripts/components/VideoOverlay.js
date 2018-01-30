@@ -30,7 +30,6 @@ const Overlay = styled.div`
 
 class VideoOverlay extends Component<Props, void> {
   render () {
-    console.log('video overlay!!!')
     return (
       <Wrapper>
         <Overlay id="video-overlay">

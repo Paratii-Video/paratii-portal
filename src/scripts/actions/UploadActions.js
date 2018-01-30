@@ -10,7 +10,7 @@ import {
   UPDATE_UPLOAD_INFO,
   VIDEO_DATA_START,
   VIDEO_DATA_SAVED,
-  VIDEO_DATA_LOADED
+  VIDEO_SELECT
 } from 'constants/ActionConstants'
 
 import type { Dispatch } from 'redux'
@@ -23,7 +23,7 @@ const uploadSuccess = createAction(UPLOAD_SUCCESS)
 const updateUploadInfo = createAction(UPDATE_UPLOAD_INFO)
 const videoDataStart = createAction(VIDEO_DATA_START)
 const videoDataSaved = createAction(VIDEO_DATA_SAVED)
-const videoDataLoaded = createAction(VIDEO_DATA_LOADED)
+const videoDataLoaded = createAction(VIDEO_SELECT)
 
 export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   // the next call dispatches an asynchronous request to upload the file to ipfs

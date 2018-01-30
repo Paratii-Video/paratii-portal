@@ -42,7 +42,6 @@ class VideoManagerContainer extends Component<Props, void> {
   }
 
   onVideoListItemClicked (id: string) {
-    console.log('onVideoListItemClicked', id)
     this.props.setSelectedVideo(id)
   }
 

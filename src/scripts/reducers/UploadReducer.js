@@ -39,8 +39,6 @@ const reducer = {
     { payload }: Action<{ id: string, progress: number }>
   ): UploadRecord => {
     if (!state.get(payload.id)) {
-      console.log(payload.id)
-      console.log(state)
       throw Error(`Unknown id: ${payload.id}`)
     }
     return state.mergeDeep({

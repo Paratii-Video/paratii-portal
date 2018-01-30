@@ -69,7 +69,11 @@ class Dropzone extends React.Component {
       document.removeEventListener('drop', this.onDocumentDrop)
     }
     if (this.fileInputEl != null) {
-      this.fileInputEl.removeEventListener('click', this.onInputElementClick, false)
+      this.fileInputEl.removeEventListener(
+        'click',
+        this.onInputElementClick,
+        false
+      )
     }
     // Can be replaced with removeEventListener, if addEventListener works
     if (document != null) {
@@ -141,7 +145,9 @@ class Dropzone extends React.Component {
     evt.preventDefault()
 
     // Only deactivate once the dropzone and all children have been left.
-    this.dragTargets = this.dragTargets.filter(el => el !== evt.target && this.node.contains(el))
+    this.dragTargets = this.dragTargets.filter(
+      el => el !== evt.target && this.node.contains(el)
+    )
     if (this.dragTargets.length > 0) {
       return
     }
@@ -158,7 +164,14 @@ class Dropzone extends React.Component {
   }
 
   onDrop (evt) {
-    const { onDrop, onDropAccepted, onDropRejected, multiple, disablePreview, accept } = this.props
+    const {
+      onDrop,
+      onDropAccepted,
+      onDropRejected,
+      multiple,
+      disablePreview,
+      accept
+    } = this.props
     const fileList = getDataTransferItems(evt)
     const acceptedFiles = []
     const rejectedFiles = []
@@ -322,7 +335,8 @@ class Dropzone extends React.Component {
     const { isDragActive, draggedFiles } = this.state
     const filesCount = draggedFiles.length
     const isMultipleAllowed = multiple || filesCount <= 1
-    const isDragAccept = filesCount > 0 && allFilesAccepted(draggedFiles, this.props.accept)
+    const isDragAccept =
+      filesCount > 0 && allFilesAccepted(draggedFiles, this.props.accept)
     const isDragReject = filesCount > 0 && (!isDragAccept || !isMultipleAllowed)
 
     // const noStyles =
@@ -408,7 +422,9 @@ class Dropzone extends React.Component {
       <DropzoneWrapper
         // className={className}
         // style={appliedStyle}
-        {...divProps /* expand user provided props first so event handlers are never overridden */}
+        {
+        ...divProps /* expand user provided props first so event handlers are never overridden */
+        }
         onClick={this.composeHandlers(this.onClick)}
         onDragStart={this.composeHandlers(this.onDragStart)}
         onDragEnter={this.composeHandlers(this.onDragEnter)}
@@ -418,9 +434,16 @@ class Dropzone extends React.Component {
         ref={this.setRef}
         aria-disabled={disabled}
       >
-        {this.renderChildren(children, isDragActive, isDragAccept, isDragReject)}
+        {this.renderChildren(
+          children,
+          isDragActive,
+          isDragAccept,
+          isDragReject
+        )}
         <input
-          {...inputProps /* expand user provided inputProps first so inputAttributes override them */}
+          {
+          ...inputProps /* expand user provided inputProps first so inputAttributes override them */
+          }
           {...inputAttributes}
         />
       </DropzoneWrapper>
@@ -451,8 +474,8 @@ Dropzone.propTypes = {
   disableClick: PropTypes.bool,
 
   /**
- * Enable/disable the dropzone entirely
- */
+   * Enable/disable the dropzone entirely
+   */
   disabled: PropTypes.bool,
 
   /**
@@ -624,7 +647,6 @@ export function getDataTransferItems (event) {
 // Firefox versions prior to 53 return a bogus MIME type for every file drag, so dragovers with
 // that MIME type will always be accepted
 export function fileAccepted (file, accept) {
-  console.log(file.type)
   // TODO: check the mimetype - we need to parse the mimetype
   // https://github.com/okonet/attr-accept/blob/master/src/index.js
   return accept === 'all' ? true : file.type === accept

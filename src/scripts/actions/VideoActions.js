@@ -3,11 +3,11 @@
 import { createAction } from 'redux-actions'
 
 import { paratii } from 'utils/ParatiiLib'
-import { VIDEO_DATA_LOADED } from 'constants/ActionConstants'
+import { VIDEO_SELECT } from 'constants/ActionConstants'
 
 import type { Dispatch } from 'redux'
 
-export const videoDataLoaded = createAction(VIDEO_DATA_LOADED)
+export const videoDataLoaded = createAction(VIDEO_SELECT)
 
 export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
   let videoInfo = await paratii.eth.vids.get(id)
@@ -17,6 +17,5 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
 }
 
 export const setSelectedVideo = (id: string) => (dispatch: Dispatch<*>) => {
-  console.log(`set current video to ${id}`)
   dispatch(videoDataLoaded({ id: id }))
 }
