@@ -11,7 +11,6 @@ import type { RootState } from 'types/ApplicationTypes'
 
 type Props = {
   updateVideoInfo: (id: string, title: string, description: string) => void,
-  id: string,
   videoInfo: VideoInfoRecord
 }
 
@@ -22,7 +21,7 @@ class VideoFormContainer extends Component<Props, void> {
     const { videoInfo } = this.props
     const title = videoInfo.get('title')
     const description = videoInfo.get('description')
-    this.state = {title: title, description: description}
+    this.state = { title: title, description: description }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -31,7 +30,7 @@ class VideoFormContainer extends Component<Props, void> {
     const { videoInfo } = nextProps
     const title = videoInfo.get('title')
     const description = videoInfo.get('description')
-    this.setState({title: title, description: description})
+    this.setState({ title: title, description: description })
   }
 
   handleInputChange (input, e) {
@@ -42,9 +41,13 @@ class VideoFormContainer extends Component<Props, void> {
 
   handleSubmit (e) {
     const { title, description } = this.state
-    const { id, updateVideoInfo } = this.props
+    const { updateVideoInfo } = this.props
     e.preventDefault()
-    updateVideoInfo(id, {title: title, description: description})
+    updateVideoInfo({
+      id: this.props.videoInfo.id,
+      title: title,
+      description: description
+    })
   }
 
   render () {
@@ -59,8 +62,7 @@ class VideoFormContainer extends Component<Props, void> {
   }
 }
 
-const mapStateToProps = (state: RootState) => ({
-})
+const mapStateToProps = (state: RootState) => ({})
 
 const mapDispatchToProps = dispatch => ({
   updateVideoInfo: bindActionCreators(saveVideoInfo, dispatch)
