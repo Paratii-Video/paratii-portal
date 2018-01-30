@@ -1,8 +1,6 @@
 import { css } from 'styled-components'
 import BaseButton from './BaseButton'
 
-//
-
 const StyleButton = css`
   font-weight: ${props => props.theme.fonts.weight.bold};
   text-transform: uppercase;

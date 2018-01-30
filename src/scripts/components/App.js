@@ -22,7 +22,6 @@ import MainTemplate from './templates/MainTemplate'
 import MainHeader from './structures/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/MainFooter'
-
 import Home from './pages/Home'
 
 type Props = {
