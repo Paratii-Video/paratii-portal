@@ -35,26 +35,22 @@ type Props = {
 class VideoManagerContainer extends Component<Props, void> {
   constructor (props) {
     super(props)
-    this.state = { selectedUpload: null }
     setCurrentVideo(null)
     this.onVideoListItemClicked = this.onVideoListItemClicked.bind(this)
   }
 
   onVideoListItemClicked (id: string) {
     console.log('onVideoListItemClicked')
-    this.setState({
-      selectedUpload: id
-    })
     setCurrentVideo(id)
   }
 
   render () {
-    const selectedUpload = this.props.selectedVideo
+    const selectedVideo = this.props.selectedVideo
     return (
       <Wrapper>
         <VideoList onItemClick={this.onVideoListItemClicked} />
-        {selectedUpload === null && <UploadFile />}
-        {selectedUpload !== null && <VideoForm />}
+        {selectedVideo === null && <UploadFile />}
+        {selectedVideo !== null && <VideoForm />}
         <Debug />
       </Wrapper>
     )
