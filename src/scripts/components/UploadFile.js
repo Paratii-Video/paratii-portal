@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import Title from './foundations/Title'
 import Wrapper from './foundations/Wrapper'
-import Button from './foundations/Buttons/Button'
+import Button from './foundations/buttons/Button'
 import Input from './foundations/Input'
 
 type Props = {
@@ -41,7 +41,7 @@ class UploadFile extends Component<Props, void> {
   onFileChosen (e) {
     const file = e.target.files[0]
     this.props.onFileChosen(file)
-    this.setState({file: e.target.files[0]})
+    this.setState({ file: e.target.files[0] })
   }
 
   render () {
@@ -50,12 +50,14 @@ class UploadFile extends Component<Props, void> {
         <Title>Paratii Uploadertool</Title>
         <UploadControls>
           <h3>Drag&apos;n Drop</h3>
-          <input type='file' onChange={this.onFileChosen} />
+          <input type="file" onChange={this.onFileChosen} />
           <ExternUpload>
             <h5>Upload Files from Youtube or Vimeo</h5>
-            <Input/>
+            <Input />
           </ExternUpload>
-          <Button id='upload-submit' onClick={this.props.onUploadRequested}>Upload</Button>
+          <Button id="upload-submit" onClick={this.props.onUploadRequested}>
+            Upload
+          </Button>
         </UploadControls>
       </Wrapper>
     )
