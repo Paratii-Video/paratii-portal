@@ -22,11 +22,12 @@ import MainTemplate from './templates/MainTemplate'
 import MainHeader from './structures/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/MainFooter'
+
 import Home from './pages/Home'
 
 type Props = {
   match: RouteMatch
-};
+}
 
 const paratiiTheme = {
   animation: Animation,
@@ -42,32 +43,17 @@ class App extends Component<Props, void> {
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
-          <MainHeader/>
+          <MainHeader />
           <Main>
-            <Route exact path='/' component={Home}/>
-            <Route
-              path={`${match.url}uploader`}
-              component={UploadContainer}
-            />
-            <Route
-              path={`${match.url}signup`}
-              component={SignupContainer}
-            />
-            <Route
-              path={`${match.url}login`}
-              component={LoginContainer}
-            />
-            <Route
-              path={`${match.url}profile`}
-              component={ProfileContainer}
-            />
+            <Route exact path="/" component={Home} />
+            <Route path={`${match.url}uploader`} component={UploadContainer} />
+            <Route path={`${match.url}signup`} component={SignupContainer} />
+            <Route path={`${match.url}login`} component={LoginContainer} />
+            <Route path={`${match.url}profile`} component={ProfileContainer} />
             <Route path={`${match.url}play/:id`} component={PlayContainer} />
-            <Route
-              path={`${match.url}debug`}
-              component={DebugContainer}
-            />
+            <Route path={`${match.url}debug`} component={DebugContainer} />
           </Main>
-          <MainFooter/>
+          <MainFooter />
         </MainTemplate>
       </ThemeProvider>
     )

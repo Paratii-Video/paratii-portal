@@ -27,7 +27,7 @@ const SearchInputButton = styled.button`
 `
 
 const SearchInputSVG = styled.svg`
-  fill: ${props => props.theme.colors.header.color};
+  fill: ${props => props.theme.colors.header.iconsFill};
   height: 100%;
   width: 100%;
 `
@@ -40,7 +40,7 @@ class SearchInput extends Component<Props, void> {
 
         <SearchInputButton>
           <SearchInputSVG>
-            <use xlinkHref="#icon-search"></use>
+            <use xlinkHref="#icon-search" />
           </SearchInputSVG>
         </SearchInputButton>
       </SearchInputForm>

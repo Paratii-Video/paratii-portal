@@ -8,7 +8,7 @@ const Themes = {
     },
     header: {
       background: Colors.black,
-      color: Colors.grayLight,
+      iconsFill: Colors.grayLight,
       logoFill: Colors.white
     },
     footer: {
@@ -25,6 +25,12 @@ const Themes = {
       border: Colors.grayLight,
       color: Colors.white,
       placeholder: Colors.grayLight
+    },
+    FilesUploader: {
+      fake: {
+        background: Colors.black,
+        color: Colors.purple
+      }
     }
   },
   light: {
@@ -33,14 +39,14 @@ const Themes = {
       color: Colors.blackLight
     },
     header: {
-      background: Colors.black,
-      color: Colors.grayLight,
-      logoFill: Colors.white
+      background: Colors.white,
+      color: Colors.gray,
+      logoFill: Colors.black
     },
     footer: {
-      background: Colors.black,
-      color: Colors.grayLight,
-      logoFill: Colors.white
+      background: Colors.white,
+      color: Colors.gray,
+      logoFill: Colors.blackDark
     },
     button: {
       white: Colors.white,
