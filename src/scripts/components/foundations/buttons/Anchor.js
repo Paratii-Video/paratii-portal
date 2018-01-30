@@ -1,8 +1,6 @@
 import { css } from 'styled-components'
 import BaseButton from './BaseButton'
 
-//
-
 const StyleAnchor = css`
   ${props => {
     if (props.underline) {
