@@ -28,7 +28,6 @@ class VideoOverlay extends Component<Props, void> {
 
     return (
       <Overlay id="video-overlay" onClick={onClick}>
-        <h2>Video Overlay</h2>
         <h5>The video id is: {this.props.match.params.id}</h5>
         Title:{' '}
         {(this.props.video && this.props.video.title) ||

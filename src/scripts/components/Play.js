@@ -1,6 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react'
+import { Events } from 'clappr'
 import styled from 'styled-components'
 import CreatePlayer from 'paratii-mediaplayer'
 import VideoRecord from 'records/VideoRecords'
@@ -14,7 +15,9 @@ type Props = {
   fetchVideo: (id: string) => void,
   video: ?VideoRecord,
   isPlaying: boolean,
-  togglePlayPause: () => void
+  togglePlayPause: () => void,
+  isAttemptingPlay: boolean,
+  attemptPlay: () => void
 }
 
 const Wrapper = styled.div`
@@ -73,10 +76,26 @@ class Play extends Component<Props, void> {
     this.onOverlayClick = this.onOverlayClick.bind(this)
   }
 
-  onOverlayClick (): void {
-    const { togglePlayPause } = this.props
+  bindClapprEvents (): void {
+    const { attemptPlay, togglePlayPause } = this.props
+    if (this.player) {
+      this.player.on(Events.PLAYER_PLAY, () => {
+        togglePlayPause(true)
+      })
+      this.player.on(Events.PLAYER_PAUSE, () => {
+        togglePlayPause(false)
+      })
+      const playback = this.player.core.getCurrentPlayback()
+      if (playback) {
+        playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
+      }
+    }
+  }
 
-    togglePlayPause()
+  onOverlayClick (): void {
+    const { attemptPlay } = this.props
+
+    attemptPlay()
   }
 
   componentDidMount (): void {
@@ -90,7 +109,7 @@ class Play extends Component<Props, void> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    const { isPlaying } = this.props
+    const { isAttemptingPlay } = this.props
 
     let ipfsHash = ''
     if (nextProps.video) {
@@ -105,23 +124,23 @@ class Play extends Component<Props, void> {
           mimeType: 'video/mp4',
           ipfsHash: ipfsHash
         })
+        this.bindClapprEvents()
       }
     }
 
-    if (nextProps.isPlaying !== isPlaying) {
+    if (
+      nextProps.isAttemptingPlay &&
+      nextProps.isAttemptingPlay !== isAttemptingPlay
+    ) {
       if (this.player) {
-        if (nextProps.isPlaying) {
-          this.player.play()
-        } else {
-          this.player.pause()
-        }
+        this.player.play()
       }
       console.log(this.player)
     }
   }
 
   render () {
-    const { match, isPlaying } = this.props
+    const { match, isPlaying, isAttemptingPlay } = this.props
 
     const videoId = match.params.id
 
@@ -130,11 +149,13 @@ class Play extends Component<Props, void> {
         <Body>
           <Title>Play Video: {videoId} </Title>
           <PlayerWrapper>
-            {!isPlaying && (
-              <OverlayWrapper>
-                <VideoOverlay {...this.props} onClick={this.onOverlayClick} />
-              </OverlayWrapper>
-            )}
+            {false &&
+              !isPlaying &&
+              !isAttemptingPlay && (
+                <OverlayWrapper>
+                  <VideoOverlay {...this.props} onClick={this.onOverlayClick} />
+                </OverlayWrapper>
+              )}
             <Player id="player" />
           </PlayerWrapper>
         </Body>

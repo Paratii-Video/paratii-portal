@@ -26,3 +26,4 @@ export const VIDEO_DATA_SAVED = createActionConstant('VIDEO_DATA_SAVED')
 export const PLAYER_TOGGLE_PLAYPAUSE = createActionConstant(
   'PLAYER_TOGGLE_PLAYPAUSE'
 )
+export const PLAYER_ATTEMPT_PLAY = createActionConstant('PLAYER_ATTEMPT_PLAY')

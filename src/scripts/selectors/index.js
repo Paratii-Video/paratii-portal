@@ -3,7 +3,7 @@
 import VideoRecord from 'records/VideoRecords'
 import UploadRecord from 'records/UploadRecords'
 import UserRecord from 'records/UserRecords'
-import { _getIsPlaying } from 'records/PlayerRecords'
+import { _getIsPlaying, _getIsAttemptingPlay } from 'records/PlayerRecords'
 import type { RootState } from 'types/ApplicationTypes'
 
 /* Videos */
@@ -24,3 +24,5 @@ export const getUpload = (state: RootState): ?UploadRecord => state.upload
 /* Player */
 export const getIsPlaying = (state: RootState): boolean =>
   _getIsPlaying(state.player)
+export const getIsAttemptingPlay = (state: RootState): boolean =>
+  _getIsAttemptingPlay(state.player)
