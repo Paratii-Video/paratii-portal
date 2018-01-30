@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { saveVideoInfo } from 'actions/UploadActions'
 import VideoRecord from 'records/VideoRecords'
 
 import Button from './foundations/buttons/Button'
@@ -9,9 +10,7 @@ import Input from './foundations/Input'
 
 type Props = {
   selectedVideo: VideoRecord,
-  canSubmit: boolean,
-  onSubmit: () => void,
-  onInputChange: (name: string, e: Object) => void
+  canSubmit: boolean
 }
 
 const Form = styled.form`
@@ -20,28 +19,61 @@ const Form = styled.form`
   margin: 10px;
 `
 
-class VideoForm extends Component<Props, void> {
+class VideoForm extends Component<Props, Object> {
+  handleSubmit: (e: Object) => void
+  handleInputChange: (input: string, e: Object) => void
+
+  constructor (props: Props) {
+    super(props)
+    this.state = {
+      title: this.props.selectedVideo.title,
+      description: this.props.selectedVideo.description
+    }
+    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleInputChange (input: string, e: Object) {
+    this.setState({
+      [input]: e.target.value
+    })
+  }
+
+  handleSubmit (e: Object) {
+    e.preventDefault()
+    let videoToSave = {
+      id: this.props.selectedVideo.id,
+      title: this.state.title,
+      description: this.state.description
+    }
+    saveVideoInfo(videoToSave)
+  }
+
   render () {
-    // let title = this.state && this.state.title
-    // let description = this.state && this.state.description
+    const onInputChange = this.handleInputChange
     return (
       <Form>
         Editing video with id: {this.props.selectedVideo.id}
         <Input
           id="video-title"
           type="text"
-          onChange={e => this.props.onInputChange('title', e)}
-          value={this.state && this.state.title}
+          onChange={e => onInputChange('title', e)}
+          value={this.state.title}
           placeholder="Title"
         />
         <Input
           id="video-description"
           type="textarea"
-          value={this.state && this.state.description}
-          onChange={e => this.props.onInputChange('description', e)}
+          value={this.state.description}
+          onChange={e => onInputChange('description', e)}
           placeholder="Description"
         />
-        <Button id="video-submit" type="submit" onClick={this.props.onSubmit}>
+        <Button
+          id="video-submit"
+          type="submit"
+          onClick={this.handleSubmit}
+          // disabled={!this.props.canSubmit}
+        >
           Submit
         </Button>
       </Form>
