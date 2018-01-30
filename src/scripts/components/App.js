@@ -4,12 +4,12 @@ import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 
-import UploadContainer from 'containers/UploadContainer'
 import SignupContainer from 'containers/SignupContainer'
 import LoginContainer from 'containers/LoginContainer'
 import ProfileContainer from 'containers/ProfileContainer'
 import PlayContainer from 'containers/PlayContainer'
 import DebugContainer from 'containers/DebugContainer'
+import VideoManager from 'containers/VideoManagerContainer'
 
 import type { RouteMatch } from 'types/ApplicationTypes'
 import { setupKeystore } from 'utils/ParatiiLib'
@@ -50,10 +50,6 @@ class App extends Component<Props, void> {
           <MainHeader/>
           <Main>
             <Route
-              path={`${match.url}uploader`}
-              component={UploadContainer}
-            />
-            <Route
               path={`${match.url}signup`}
               component={SignupContainer}
             />
@@ -69,6 +65,10 @@ class App extends Component<Props, void> {
             <Route
               path={`${match.url}debug`}
               component={DebugContainer}
+            />
+            <Route
+              path={`${match.url}videos`}
+              component={VideoManager}
             />
             <Route
               component={DebugContainer}

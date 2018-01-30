@@ -8,18 +8,19 @@ import Input from './foundations/Input'
 type Props = {
   onSubmit: () => void,
   onInputChange: (name: string, e: Object) => void,
-  onVideoInfoSubmitted: (e: Object) => void,
-  canSubmit: boolean
+  title: ?string,
+  description: ?string
 };
 
 const Form = styled.form`
   font-size: 20px;
+  width: 300px;
   margin: 10px;
 `
 
 class VideoForm extends Component<Props, void> {
   render () {
-    const { onSubmit, onInputChange } = this.props
+    const { onSubmit, onInputChange, title, description } = this.props
     return (
       <Form onSubmit={onSubmit}>
         <Input
@@ -27,22 +28,20 @@ class VideoForm extends Component<Props, void> {
           type='text'
           onChange={(e) => onInputChange('title', e)}
           placeholder='Title'
+          value={title || ''}
         />
         <Input
           id='video-description'
           type='textarea'
           onChange={(e) => onInputChange('description', e)}
           placeholder='Description'
+          value={description || ''}
         />
-        <Button id='video-submit' type='submit' onClick={this.props.onVideoInfoSubmitted} disabled={!this.props.canSubmit}>Submit</Button>
+        <Button id='video-submit' type='submit'>Submit</Button>
 
       </Form>
     )
   }
 }
-// next lines give a flow error..
-// VideoForm.defaultProps = {
-//   canSubmit: true
-// }
-//
+
 export default VideoForm

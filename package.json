@@ -24,7 +24,6 @@
     "parity": "parity --config parity-config.toml",
     "precommit": "lint-staged",
     "prep": "mkdir build/ && mkdir build/embed && cp src/index.html build/ && mkdir build/assets/",
-    "prepare": "patch-package",
     "quality": "yarn run lint:scripts && yarn run lint:styles && yarn run flow",
     "server": "node src/server/index.js",
     "server:dev": "NODE_ENV=development yarn run deploy-contracts && NODE_ENV=development nodemon src/server/index.js --watch node_modules src/server/index.js",
@@ -120,7 +119,7 @@
     "bluebird": "^3.5.1",
     "immutable": "^3.8.2",
     "js-cookie": "^2.2.0",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#d7706356961a04d76671e531b610dd5158fb563c",
+    "paratii-lib": "github:Paratii-Video/paratii-lib",
     "paratii-mediaplayer": "0.2.0",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
@@ -133,6 +132,7 @@
     "reselect": "^3.0.1",
     "streamspeed": "^1.1.0",
     "styled-components": "^2.3.3",
+    "uuid-js": "^0.7.5",
     "web3": "^1.0.0-beta.27"
   }
 }

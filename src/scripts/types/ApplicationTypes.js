@@ -32,7 +32,7 @@ export type Action<T> = {
 export type RootState = {
   video: ?VideoRecord,
   user: ?UserRecord,
-  upload: UploadRecord
+  uploads: UploadRecord
 };
 
 export type ParatiiLibConfig = {
