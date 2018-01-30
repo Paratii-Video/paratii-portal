@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 
 import Wrapper from './foundations/Wrapper'
-import Button from './foundations/Buttons/Button'
+import Button from './foundations/buttons/Button'
 import Input from './foundations/Input'
 import FilesUploaderSvg from './foundations/svgs/FilesUploaderSvg'
 
@@ -85,6 +85,7 @@ class UploadFile extends Component<Props, void> {
               <ColorTextBold>Search files</ColorTextBold> or drag them here
             </ColorText>
           </FilesUploaderInputFake>
+
           <ExternUpload>
             <h5>Upload Files from Youtube or Vimeo</h5>
             <Input />

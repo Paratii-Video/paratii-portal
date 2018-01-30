@@ -67,6 +67,7 @@ const ProfileAvatarLink = styled(Link)`
 
 const ProfileAvatarImage = styled.img`
   transition: filter ${props => props.theme.animation.time.repaint};
+
   ${ProfileAvatarLink}:hover & {
     filter: brightness(1.5);
   }
