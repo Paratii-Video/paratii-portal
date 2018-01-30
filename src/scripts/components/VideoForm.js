@@ -6,9 +6,8 @@ import Button from './foundations/buttons/Button'
 import Input from './foundations/Input'
 
 type Props = {
-  onSubmit: () => void,
   onInputChange: (name: string, e: Object) => void,
-  onVideoInfoSubmitted: (e: Object) => void,
+  onSubmit: (e: Object) => void,
   canSubmit: boolean
 }
 
@@ -20,9 +19,9 @@ const Form = styled.form`
 
 class VideoForm extends Component<Props, void> {
   render () {
-    const { onSubmit, onInputChange } = this.props
+    const { onInputChange } = this.props
     return (
-      <Form onSubmit={onSubmit}>
+      <Form>
         <Input
           id="video-title"
           type="text"
@@ -38,8 +37,8 @@ class VideoForm extends Component<Props, void> {
         <Button
           id="video-submit"
           type="submit"
-          onClick={this.props.onVideoInfoSubmitted}
-          disabled={!this.props.canSubmit}
+          onClick={this.props.onSubmit}
+          // disabled={!this.props.canSubmit}
         >
           Submit
         </Button>

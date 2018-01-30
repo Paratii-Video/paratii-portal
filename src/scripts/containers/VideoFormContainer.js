@@ -40,6 +40,7 @@ class VideoFormContainer extends Component<Props, void> {
   }
 
   handleSubmit (e) {
+    console.log('handleSubmit', e)
     const { title, description } = this.state
     const { updateVideoInfo } = this.props
     e.preventDefault()
