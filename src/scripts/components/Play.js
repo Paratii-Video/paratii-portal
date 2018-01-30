@@ -12,17 +12,18 @@ import type { RouteMatch } from 'types/ApplicationTypes'
 type Props = {
   match: RouteMatch,
   fetchVideo: (id: string) => void,
-  video: ?VideoRecord
-};
+  video: ?VideoRecord,
+  isPlaying: boolean,
+  togglePlayPause: () => void
+}
 
 const Wrapper = styled.div`
   font-size: 20px;
-  flex: 1 1 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  height: 100%;
   position: relative;
+  flex: 0 0 100%;
 `
 
 const Body = styled.div`
@@ -45,12 +46,39 @@ const Title = styled.header`
 `
 
 const Player = styled.div`
-  height: 100vh;
   width: 100%;
-  flex: 0 0 50%;
+  height: 100%;
+`
+
+const PlayerWrapper = styled.div`
+  flex: 0 0 100%;
+  width: 100%;
+  position: relative;
+`
+
+const OverlayWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  cursor: pointer;
 `
 
 class Play extends Component<Props, void> {
+  constructor (props: Props) {
+    super(props)
+
+    this.onOverlayClick = this.onOverlayClick.bind(this)
+  }
+
+  onOverlayClick (): void {
+    const { togglePlayPause } = this.props
+
+    togglePlayPause()
+  }
+
   componentDidMount (): void {
     const videoId = this.props.match.params.id
 
@@ -62,14 +90,16 @@ class Play extends Component<Props, void> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    console.log('- - - componentWillReceiveProps')
+    const { isPlaying } = this.props
 
     let ipfsHash = ''
     if (nextProps.video) {
-      if (this.props.video == null || nextProps.video.ipfsHash !== this.props.video.ipfsHash) {
+      if (
+        this.props.video == null ||
+        nextProps.video.ipfsHash !== this.props.video.ipfsHash
+      ) {
         ipfsHash = nextProps.video.ipfsHash
-        console.log('- - - CreatePlayer')
-        CreatePlayer({
+        this.player = CreatePlayer({
           selector: '#player',
           source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
           mimeType: 'video/mp4',
@@ -77,16 +107,36 @@ class Play extends Component<Props, void> {
         })
       }
     }
+
+    if (nextProps.isPlaying !== isPlaying) {
+      if (this.player) {
+        if (nextProps.isPlaying) {
+          this.player.play()
+        } else {
+          this.player.pause()
+        }
+      }
+      console.log(this.player)
+    }
   }
 
   render () {
-    const videoId = this.props.match.params.id
+    const { match, isPlaying } = this.props
+
+    const videoId = match.params.id
+
     return (
       <Wrapper>
         <Body>
-          <Title>Play Video: { videoId } </Title>
-          <VideoOverlay {...this.props}/>
-          <Player id="player" />
+          <Title>Play Video: {videoId} </Title>
+          <PlayerWrapper>
+            {!isPlaying && (
+              <OverlayWrapper>
+                <VideoOverlay {...this.props} onClick={this.onOverlayClick} />
+              </OverlayWrapper>
+            )}
+            <Player id="player" />
+          </PlayerWrapper>
         </Body>
       </Wrapper>
     )

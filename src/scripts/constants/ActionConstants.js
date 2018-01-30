@@ -21,3 +21,8 @@ export const UPDATE_UPLOAD_INFO = createActionConstant('UPDATE_UPLOAD_INFO')
 export const VIDEO_DATA_START = createActionConstant('VIDEO_DATA_START')
 export const VIDEO_DATA_PROGRESS = createActionConstant('VIDEO_DATA_PROGRESS')
 export const VIDEO_DATA_SAVED = createActionConstant('VIDEO_DATA_SAVED')
+
+/* Player Actions */
+export const PLAYER_TOGGLE_PLAYPAUSE = createActionConstant(
+  'PLAYER_TOGGLE_PLAYPAUSE'
+)
