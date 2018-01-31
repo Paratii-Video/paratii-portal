@@ -69,7 +69,7 @@ export type ParatiiLib = {
   ipfs: {
     uploader: {
       add: Object => Object,
-      transcode: Object => Object
+      transcode: (string, Object) => Object
     }
   }
 }

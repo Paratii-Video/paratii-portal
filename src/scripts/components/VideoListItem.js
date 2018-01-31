@@ -35,22 +35,19 @@ class UploadListItem extends Component<Props, void> {
 
   render () {
     const item = this.props.item
-    let status = ''
+    let progress = 0
     if (item.getIn(['uploadStatus', 'name']) === 'running') {
-      const progress = item.getIn(['uploadStatus', 'data', 'progress'])
-      status = `Uploading (${progress}%)`
-    } else {
-      status = item.getIn(['uploadStatus', 'name'])
+      progress = item.getIn(['uploadStatus', 'data', 'progress'])
     }
     return (
       <Item onClick={this.handleClick} id="video-list-item-{item.id}">
         <Label>video id: {item.videoInfo.id}</Label>
         <Label>Filename: {item.filename}</Label>
         <Label>
-          Upload Status: <b>{item.uploadStatus.name}</b> ({status})
+          Upload Status: <b>{item.uploadStatus.name}</b> ({progress}%)
         </Label>
         <Label>
-          Blockchain Status (is the video info saved ont he blockchain?):{' '}
+          Blockchain Status (is the video info saved on the blockchain?):{' '}
           <b>{item.blockchainStatus.name}</b>
         </Label>
         <Label>
