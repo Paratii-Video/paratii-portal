@@ -55,7 +55,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
 ) => {
   console.log(`Transcoding video ${videoInfo.id} with hash ${videoInfo.hash}`)
   let transcoder = paratii.ipfs.uploader.transcode(videoInfo.hash)
-  transcoder.on('transcoder:error', function (err) {
+  transcoder.on('transcoding:error', function (err) {
     console.log('TRANSCODER ERROR', err)
     throw err
   })
