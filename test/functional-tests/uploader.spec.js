@@ -1,7 +1,8 @@
 import { assert } from 'chai'
+import { paratii } from './test-utils/helpers'
 
 describe('Uploader Tool', function () {
-  it('should have basic flow in place @watch', function () {
+  it('should have basic flow in place @watch', async function () {
     // see https://github.com/Paratii-Video/paratii-portal/issues/8
     let video = {
       title: 'Some title',
@@ -22,13 +23,29 @@ describe('Uploader Tool', function () {
 
     // now we should see a form to fill in
     browser.waitForExist('#video-title')
+    // the form should contain the id of our video
+    var videoId = browser.getValue('input#video-id')
+    assert.isOk(videoId)
+    assert.isOk(videoId.length > 8)
     browser.setValue('#video-title', video.title)
     browser.setValue('#video-description', video.description)
     // submit the form
     browser.click('#video-submit')
     // // we now should be on the status screen
-    // browser.isExisting('#video-status')
-    // // we should also find the id of the newly added video on this page
+
+    // wait untilt he video is saved on the blockchain
+    let getVideoInfoFromBlockchain = async function () {
+      try {
+        let videoInfoFromBlockchain = await paratii.eth.vids.get(videoId)
+        return videoInfoFromBlockchain
+      } catch (err) {
+        // console.log(err)
+      }
+    }
+    browser.waitUntil(getVideoInfoFromBlockchain)
+    let videoInfoFromBlockchain = await getVideoInfoFromBlockchain()
+    assert.isOk(videoInfoFromBlockchain)
+    assert.equal(videoInfoFromBlockchain.owner, paratii.config.account.address)
     // let videoId
     // // wait until the videoId is returned back from paratii-lib (meaning that the object has been saved)
     // browser.waitUntil(function () {

@@ -51,14 +51,14 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
 export const saveVideoInfo = (videoInfo: Object) => async (
   dispatch: Dispatch<*>
 ) => {
-  // console.log('Saving video info')
+  console.log('Saving video info')
   // the owner is the user that is logged in
   videoInfo.owner = paratii.config.account.address
   if (!videoInfo.id) {
     videoInfo.id = paratii.eth.vids.makeId()
   }
-  console.log('SAVING ', videoInfo)
-  dispatch(updateUploadInfo(new VideoInfoRecord(videoInfo)))
+  console.log('SAVING', videoInfo)
+  dispatch(updateUploadInfo(videoInfo.id, new VideoInfoRecord(videoInfo)))
   dispatch(videoDataStart())
   paratii.core.vids
     .create(videoInfo)

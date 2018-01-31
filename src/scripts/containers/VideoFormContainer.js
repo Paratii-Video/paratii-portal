@@ -12,7 +12,7 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateVideoInfo: bindActionCreators(saveVideoInfo, dispatch)
+  saveVideoInfo: bindActionCreators(saveVideoInfo, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoForm)

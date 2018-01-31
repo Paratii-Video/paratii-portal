@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { saveVideoInfo } from 'actions/UploadActions'
+// import { saveVideoInfo } from 'actions/UploadActions'
 import VideoRecord from 'records/VideoRecords'
 
 import Button from './foundations/buttons/Button'
@@ -10,7 +10,8 @@ import Input from './foundations/Input'
 
 type Props = {
   selectedVideo: VideoRecord,
-  canSubmit: boolean
+  canSubmit: boolean,
+  saveVideoInfo: Object => Object
 }
 
 const Form = styled.form`
@@ -46,7 +47,7 @@ class VideoForm extends Component<Props, Object> {
       title: this.state.title,
       description: this.state.description
     }
-    saveVideoInfo(videoToSave)
+    this.props.saveVideoInfo(videoToSave)
   }
 
   render () {
@@ -54,6 +55,12 @@ class VideoForm extends Component<Props, Object> {
     return (
       <Form>
         Editing video with id: {this.props.selectedVideo.id}
+        <Input
+          id="video-id"
+          type="hidden"
+          value={this.props.selectedVideo.id}
+          placeholder="Title"
+        />
         <Input
           id="video-title"
           type="text"

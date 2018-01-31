@@ -19,6 +19,8 @@ const reducer = {
     state: UploadRecord,
     { payload }: Action<{ id: string, filename: string }>
   ): UploadRecord => {
+    console.log('00000000000000000')
+    console.log(state)
     state = state
       .mergeDeep({
         [payload.id]: new UploadRecord()
@@ -38,6 +40,8 @@ const reducer = {
     state: UploadRecord,
     { payload }: Action<{ id: string, progress: number }>
   ): UploadRecord => {
+    console.log('10000000000000000')
+    console.log(state)
     if (!state.get(payload.id)) {
       throw Error(`Unknown id: ${payload.id}`)
     }
@@ -53,6 +57,8 @@ const reducer = {
     state: UploadRecord,
     { payload }: Action<{ id: string, hash: string }>
   ): UploadRecord => {
+    console.log('20000000000000000')
+    console.log(state)
     if (!state.get(payload.id)) {
       throw Error(`Unknown id: ${payload.id}`)
     }
@@ -67,12 +73,12 @@ const reducer = {
   },
   [UPDATE_UPLOAD_INFO]: (
     state: UploadRecord,
-    { payload }: Action<{ id: string, videoInfo: VideoInfoRecord }>
+    { payload }: Action<VideoInfoRecord>
   ): UploadRecord => {
-    return state.setIn(
-      [payload.id, 'videoInfo'],
-      payload.videoInfo.set('id', payload.id)
-    )
+    console.log(payload)
+    console.log('60000000000000000')
+    console.log(state)
+    return state.setIn([payload.id, 'videoInfo'], payload)
   },
   [VIDEO_DATA_START]: (state: UploadRecord): UploadRecord => {
     return state.mergeDeep({
