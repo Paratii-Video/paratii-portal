@@ -16,7 +16,7 @@ jobs:
       - run: sudo ln -s /usr/local/lib/libssl.so.1.1 /usr/lib/
       - run: sudo ln -s /usr/local/lib/libcrypto.so.1.1 /usr/lib/
       - run: sudo rm /usr/bin/openssl
-      - run: sudo rm /usr/bin/openssl
+      - run: sudo ln -s /usr/local/bin/openssl /usr/bin/
       - run: openssl version
       - run: bash <(curl https://get.parity.io -Lk)
 
