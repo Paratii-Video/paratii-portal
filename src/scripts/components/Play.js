@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import CreatePlayer from 'paratii-mediaplayer'
 import VideoRecord from 'records/VideoRecords'
+import Debug from 'containers/DebugContainer'
 
 import VideoOverlay from 'components/VideoOverlay'
 
@@ -13,10 +14,9 @@ type Props = {
   match: RouteMatch,
   fetchVideo: (id: string) => void,
   video: ?VideoRecord
-};
+}
 
 const Wrapper = styled.div`
-  font-size: 20px;
   flex: 1 1 0;
   padding: 0;
   display: flex;
@@ -66,7 +66,10 @@ class Play extends Component<Props, void> {
 
     let ipfsHash = ''
     if (nextProps.video) {
-      if (this.props.video == null || nextProps.video.ipfsHash !== this.props.video.ipfsHash) {
+      if (
+        this.props.video == null ||
+        nextProps.video.ipfsHash !== this.props.video.ipfsHash
+      ) {
         ipfsHash = nextProps.video.ipfsHash
         console.log('- - - CreatePlayer')
         CreatePlayer({
@@ -84,10 +87,11 @@ class Play extends Component<Props, void> {
     return (
       <Wrapper>
         <Body>
-          <Title>Play Video: { videoId } </Title>
-          <VideoOverlay {...this.props}/>
+          <Title>Play Video: {videoId} </Title>
+          <VideoOverlay {...this.props} />
           <Player id="player" />
         </Body>
+        <Debug />
       </Wrapper>
     )
   }
