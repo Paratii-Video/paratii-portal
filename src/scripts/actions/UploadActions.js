@@ -58,14 +58,14 @@ export const saveVideoInfo = (videoInfo: Object) => async (
     videoInfo.id = paratii.eth.vids.makeId()
   }
   console.log('SAVING', videoInfo)
-  dispatch(updateUploadInfo(videoInfo.id, new VideoInfoRecord(videoInfo)))
-  dispatch(videoDataStart())
+  dispatch(updateUploadInfo(new VideoInfoRecord(videoInfo)))
+  dispatch(videoDataStart(new VideoInfoRecord(videoInfo)))
   paratii.core.vids
     .create(videoInfo)
     .then(videoInfo => {
       console.log('Video successfully saved on blockchain!')
       dispatch(updateUploadInfo(new VideoInfoRecord(videoInfo)))
-      dispatch(videoDataSaved())
+      dispatch(videoDataSaved(new VideoInfoRecord(videoInfo)))
     })
     .catch(error => {
       console.log('-------------------')
