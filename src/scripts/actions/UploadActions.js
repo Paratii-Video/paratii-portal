@@ -10,7 +10,7 @@ import {
   UPDATE_UPLOAD_INFO,
   VIDEO_DATA_START,
   VIDEO_DATA_SAVED,
-  VIDEO_DATA_LOADED
+  VIDEO_SELECT
 } from 'constants/ActionConstants'
 
 import type { Dispatch } from 'redux'
@@ -23,7 +23,7 @@ const uploadSuccess = createAction(UPLOAD_SUCCESS)
 const updateUploadInfo = createAction(UPDATE_UPLOAD_INFO)
 const videoDataStart = createAction(VIDEO_DATA_START)
 const videoDataSaved = createAction(VIDEO_DATA_SAVED)
-const videoDataLoaded = createAction(VIDEO_DATA_LOADED)
+const videoDataLoaded = createAction(VIDEO_SELECT)
 
 export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   // the next call dispatches an asynchronous request to upload the file to ipfs
@@ -38,11 +38,10 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
     throw err
   })
   uploader.on('progress', function (chunkLength, progressPercent) {
-    console.log('progress: ', progressPercent)
-    dispatch(uploadProgress(progressPercent))
+    dispatch(uploadProgress({ id: newVideoId, progress: progressPercent }))
   })
   uploader.on('fileReady', function (file) {
-    dispatch(uploadSuccess(file.hash))
+    dispatch(uploadSuccess({ id: newVideoId, hash: file.hash }))
   })
   uploader.on('done', function (files) {
     console.log('[UPLOAD done]', files)
@@ -52,21 +51,21 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
 export const saveVideoInfo = (videoInfo: Object) => async (
   dispatch: Dispatch<*>
 ) => {
-  // console.log('Saving video info')
+  console.log('Saving video info')
   // the owner is the user that is logged in
   videoInfo.owner = paratii.config.account.address
   if (!videoInfo.id) {
     videoInfo.id = paratii.eth.vids.makeId()
   }
-  console.log('SAVING ', videoInfo)
+  console.log('SAVING', videoInfo)
   dispatch(updateUploadInfo(new VideoInfoRecord(videoInfo)))
-  dispatch(videoDataStart())
+  dispatch(videoDataStart(new VideoInfoRecord(videoInfo)))
   paratii.core.vids
     .create(videoInfo)
     .then(videoInfo => {
       console.log('Video successfully saved on blockchain!')
       dispatch(updateUploadInfo(new VideoInfoRecord(videoInfo)))
-      dispatch(videoDataSaved())
+      dispatch(videoDataSaved(new VideoInfoRecord(videoInfo)))
     })
     .catch(error => {
       console.log('-------------------')

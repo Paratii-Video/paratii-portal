@@ -44,8 +44,18 @@ class UploadListItem extends Component<Props, void> {
     }
     return (
       <Item onClick={this.handleClick} id="video-list-item-{item.id}">
-        <Label>{item.filename}</Label>
-        <Label>{status} [status]</Label>
+        <Label>video id: {item.videoInfo.id}</Label>
+        <Label>Filename: {item.filename}</Label>
+        <Label>
+          Upload Status: <b>{item.uploadStatus.name}</b> ({status})
+        </Label>
+        <Label>
+          Blockchain Status (is the video info saved ont he blockchain?):{' '}
+          <b>{item.blockchainStatus.name}</b>
+        </Label>
+        <Label>
+          Transcoding Status: <b>{item.transcodingStatus.name}</b>
+        </Label>
       </Item>
     )
   }

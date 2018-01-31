@@ -1,9 +1,10 @@
 import { Map } from 'immutable'
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { setCurrentVideo } from 'actions/VideoActions'
+import { setSelectedVideo } from 'actions/VideoActions'
 
 import UploadRecord from 'records/UploadRecords'
 import VideoRecord from 'records/VideoRecords'
@@ -29,23 +30,24 @@ const Wrapper = styled.div`
 
 type Props = {
   uploads: Map<string, UploadRecord>,
-  selectedVideo: VideoRecord
+  selectedVideo: VideoRecord,
+  setSelectedVideo: Object => void
 }
 
 class VideoManagerContainer extends Component<Props, void> {
   constructor (props) {
     super(props)
-    setCurrentVideo(null)
+    props.setSelectedVideo(null)
     this.onVideoListItemClicked = this.onVideoListItemClicked.bind(this)
   }
 
   onVideoListItemClicked (id: string) {
-    console.log('onVideoListItemClicked')
-    setCurrentVideo(id)
+    this.props.setSelectedVideo(id)
   }
 
   render () {
-    const selectedVideo = this.props.selectedVideo
+    const selectedVideo =
+      this.props.selectedVideo && this.props.selectedVideo.id
     return (
       <Wrapper>
         <VideoList onItemClick={this.onVideoListItemClicked} />
@@ -62,7 +64,9 @@ const mapStateToProps = (state: RootState) => ({
   selectedVideo: state.selectedVideo
 })
 
-const mapDispatchToProps = dispatch => ({})
+const mapDispatchToProps = dispatch => ({
+  setSelectedVideo: bindActionCreators(setSelectedVideo, dispatch)
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   VideoManagerContainer

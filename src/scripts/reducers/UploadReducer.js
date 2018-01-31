@@ -12,15 +12,12 @@ import {
 } from 'constants/ActionConstants'
 import { Map } from 'immutable'
 import UploadRecord from 'records/UploadRecords'
-import VideoInfoRecord from 'records/VideoInfoRecords'
 
 const reducer = {
   [UPLOAD_REQUESTED]: (
     state: UploadRecord,
     { payload }: Action<{ id: string, filename: string }>
   ): UploadRecord => {
-    console.log('PAYLOAD:', payload)
-    console.log('STATE:', state)
     state = state
       .mergeDeep({
         [payload.id]: new UploadRecord()
@@ -34,13 +31,15 @@ const reducer = {
           }
         }
       })
-    state.selectedVideo = payload.id
     return state
   },
   [UPLOAD_PROGRESS]: (
     state: UploadRecord,
     { payload }: Action<{ id: string, progress: number }>
   ): UploadRecord => {
+    if (!state.get(payload.id)) {
+      throw Error(`Unknown id: ${payload.id}`)
+    }
     return state.mergeDeep({
       [payload.id]: {
         uploadStatus: {
@@ -53,6 +52,9 @@ const reducer = {
     state: UploadRecord,
     { payload }: Action<{ id: string, hash: string }>
   ): UploadRecord => {
+    if (!state.get(payload.id)) {
+      throw Error(`Unknown id: ${payload.id}`)
+    }
     return state.mergeDeep({
       [payload.id]: {
         uploadStatus: {
@@ -64,27 +66,26 @@ const reducer = {
   },
   [UPDATE_UPLOAD_INFO]: (
     state: UploadRecord,
-    { payload }: Action<{ id: string, videoInfo: VideoInfoRecord }>
+    { payload }: Action<UploadRecord>
   ): UploadRecord => {
-    return state.setIn(
-      [payload.id, 'videoInfo'],
-      payload.videoInfo.set('id', payload.id)
-    )
+    return state.setIn([payload.id, 'videoInfo'], payload)
   },
-  [VIDEO_DATA_START]: (state: UploadRecord): UploadRecord => {
-    return state.mergeDeep({
-      blockchainStatus: {
-        name: 'running',
-        data: {}
-      }
+  [VIDEO_DATA_START]: (
+    state: UploadRecord,
+    { payload }: Action<UploadRecord>
+  ): UploadRecord => {
+    return state.setIn([payload.id, 'blockchainStatus'], {
+      name: 'running',
+      data: {}
     })
   },
-  [VIDEO_DATA_SAVED]: (state: UploadRecord): UploadRecord => {
-    return state.mergeDeep({
-      blockchainStatus: {
-        name: 'success',
-        data: {}
-      }
+  [VIDEO_DATA_SAVED]: (
+    state: UploadRecord,
+    { payload }: Action<UploadRecord>
+  ): UploadRecord => {
+    return state.setIn([payload.id, 'blockchainStatus'], {
+      name: 'success',
+      data: {}
     })
   }
 }

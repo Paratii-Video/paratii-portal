@@ -647,7 +647,6 @@ export function getDataTransferItems (event) {
 // Firefox versions prior to 53 return a bogus MIME type for every file drag, so dragovers with
 // that MIME type will always be accepted
 export function fileAccepted (file, accept) {
-  console.log(file.type)
   // TODO: check the mimetype - we need to parse the mimetype
   // https://github.com/okonet/attr-accept/blob/master/src/index.js
   return accept === 'all' ? true : file.type === accept

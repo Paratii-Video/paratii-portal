@@ -9,7 +9,6 @@ const StyleAnchor = css`
       if (props.white) {
         _css = _css + props.theme.colors.button.white
       } else if (props.purple) {
-        console.log('props.purple:', props)
         _css = _css + props.theme.colors.button.purple
       } else {
         _css = _css + props.theme.colors.button.gray
