@@ -9,35 +9,35 @@ export type RouteMatch = {
   url: string,
   isExact: boolean,
   params: Object
-};
+}
 
 export type Location = {
   pathname: string,
   search: string,
   state: Object
-};
+}
 
-export type AsyncTaskStatusName = 'idle' | 'running' | 'success' | 'error';
+export type AsyncTaskStatusName = 'idle' | 'running' | 'success' | 'error'
 
 export type VideoInfo = {
   title: ?string,
   description: ?string
-};
+}
 
 export type Action<T> = {
   type: string,
   payload: T
-};
+}
 
 export type RootState = {
-  video: ?VideoRecord,
+  selectedVideo: ?VideoRecord,
   user: ?UserRecord,
-  upload: UploadRecord
-};
+  uploads: UploadRecord
+}
 
 export type ParatiiLibConfig = {
   provider: string
-};
+}
 
 // TODO move this into paratii-lib repo
 export type ParatiiLib = {
@@ -50,8 +50,8 @@ export type ParatiiLib = {
   core: {
     vids: {
       get: (id: string) => ?Object,
-      create: (Object) => Object
-    },
+      create: Object => Object
+    }
   },
   eth: {
     wallet: {
@@ -62,12 +62,13 @@ export type ParatiiLib = {
       create: () => Object
     },
     vids: {
-      get: (id: string) => ?Object
+      get: (id: string) => ?Object,
+      makeId: () => string
     }
   },
   ipfs: {
     uploader: {
-      upload: ([Object], Object) => Object
-    },
+      add: Object => Object
+    }
   }
-};
+}

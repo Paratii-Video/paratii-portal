@@ -2,43 +2,77 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { saveVideoInfo } from 'actions/UploadActions'
+import VideoRecord from 'records/VideoRecords'
+
 import Button from './foundations/buttons/Button'
 import Input from './foundations/Input'
 
 type Props = {
-  onSubmit: () => void,
-  onInputChange: (name: string, e: Object) => void,
-  onVideoInfoSubmitted: (e: Object) => void,
+  selectedVideo: VideoRecord,
   canSubmit: boolean
 }
 
 const Form = styled.form`
   font-size: 20px;
+  width: 300px;
   margin: 10px;
 `
 
-class VideoForm extends Component<Props, void> {
+class VideoForm extends Component<Props, Object> {
+  handleSubmit: (e: Object) => void
+  handleInputChange: (input: string, e: Object) => void
+
+  constructor (props: Props) {
+    super(props)
+    this.state = {
+      title: this.props.selectedVideo.title,
+      description: this.props.selectedVideo.description
+    }
+    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleInputChange (input: string, e: Object) {
+    this.setState({
+      [input]: e.target.value
+    })
+  }
+
+  handleSubmit (e: Object) {
+    e.preventDefault()
+    let videoToSave = {
+      id: this.props.selectedVideo.id,
+      title: this.state.title,
+      description: this.state.description
+    }
+    saveVideoInfo(videoToSave)
+  }
+
   render () {
-    const { onSubmit, onInputChange } = this.props
+    const onInputChange = this.handleInputChange
     return (
-      <Form onSubmit={onSubmit}>
+      <Form>
+        Editing video with id: {this.props.selectedVideo.id}
         <Input
           id="video-title"
           type="text"
           onChange={e => onInputChange('title', e)}
+          value={this.state.title}
           placeholder="Title"
         />
         <Input
           id="video-description"
           type="textarea"
+          value={this.state.description}
           onChange={e => onInputChange('description', e)}
           placeholder="Description"
         />
         <Button
           id="video-submit"
           type="submit"
-          onClick={this.props.onVideoInfoSubmitted}
-          disabled={!this.props.canSubmit}
+          onClick={this.handleSubmit}
+          // disabled={!this.props.canSubmit}
         >
           Submit
         </Button>
@@ -46,9 +80,5 @@ class VideoForm extends Component<Props, void> {
     )
   }
 }
-// next lines give a flow error..
-// VideoForm.defaultProps = {
-//   canSubmit: true
-// }
-//
+
 export default VideoForm

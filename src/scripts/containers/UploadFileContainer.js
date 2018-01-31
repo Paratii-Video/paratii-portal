@@ -16,28 +16,16 @@ type Props = {
 class UploadFileContainer extends Component<Props, void> {
   constructor (props) {
     super(props)
-    this.state = { file: null }
+
     this.handleFileChosen = this.handleFileChosen.bind(this)
-    this.handleUploadRequested = this.handleUploadRequested.bind(this)
   }
 
-  handleFileChosen (file) {
-    this.setState({
-      file: file
-    })
-  }
-
-  handleUploadRequested () {
-    this.props.upload(this.state.file)
+  handleFileChosen (files) {
+    this.props.upload(files)
   }
 
   render () {
-    return (
-      <FilesUploader
-        onFileChosen={this.handleFileChosen}
-        onUploadRequested={this.handleUploadRequested}
-      />
-    )
+    return <FilesUploader onFileChosen={this.handleFileChosen} />
   }
 }
 

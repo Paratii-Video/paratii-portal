@@ -6,8 +6,11 @@ type Props = {}
 
 const MainLogo = styled.h1`
   display: block;
-  flex: 0 0 ${props => props.theme.sizes ? props.theme.sizes.mainHeaderLogo.width : ''};
-  height: ${props => props.theme.sizes ? props.theme.sizes.mainHeaderLogo.height : ''};
+  flex: 0 0
+    ${props =>
+    props.theme.sizes ? props.theme.sizes.mainHeaderLogo.width : ''};
+  height: ${props =>
+    props.theme.sizes ? props.theme.sizes.mainHeaderLogo.height : ''};
 `
 
 const MainLogoAnchor = styled(Link)`
@@ -27,9 +30,9 @@ class MainHeaderLogo extends Component<Props, void> {
   render () {
     return (
       <MainLogo>
-        <MainLogoAnchor to='/'>
+        <MainLogoAnchor to="/">
           <MainLogoSVG>
-            <use xlinkHref="#paratii-logo"></use>
+            <use xlinkHref="#paratii-logo" />
           </MainLogoSVG>
         </MainLogoAnchor>
       </MainLogo>

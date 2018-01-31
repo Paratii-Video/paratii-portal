@@ -10,6 +10,7 @@ import LoginContainer from 'containers/LoginContainer'
 import ProfileContainer from 'containers/ProfileContainer'
 import PlayContainer from 'containers/PlayContainer'
 import DebugContainer from 'containers/DebugContainer'
+import VideoManager from 'containers/VideoManagerContainer'
 
 import type { RouteMatch } from 'types/ApplicationTypes'
 import { setupKeystore } from 'utils/ParatiiLib'
@@ -51,6 +52,7 @@ class App extends Component<Props, void> {
             <Route path={`${match.url}login`} component={LoginContainer} />
             <Route path={`${match.url}profile`} component={ProfileContainer} />
             <Route path={`${match.url}play/:id`} component={PlayContainer} />
+            <Route path={`${match.url}upload`} component={VideoManager} />
             <Route path={`${match.url}debug`} component={DebugContainer} />
           </Main>
           <MainFooter />

@@ -7,7 +7,7 @@ const StyleButton = css`
 `
 
 const ButtonStyle = BaseButton.extend`
-  ${StyleButton}
+  ${StyleButton};
 `
 
 const Button = ButtonStyle.withComponent('button')

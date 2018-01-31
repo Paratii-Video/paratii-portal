@@ -6,14 +6,16 @@ import UserRecord from 'records/UserRecords'
 import type { RootState } from 'types/ApplicationTypes'
 
 /* Videos */
-export const getVideo = (state: RootState): ?VideoRecord => state.video
+export const getVideo = (state: RootState): ?VideoRecord => state.selectedVideo
 
 /* Users */
 export const getUser = (state: RootState): ?UserRecord => state.user
 
-export const getIsLoggingIn = (state: RootState): boolean => !!(state.user && state.user.isLoggingIn)
+export const getIsLoggingIn = (state: RootState): boolean =>
+  !!(state.user && state.user.isLoggingIn)
 
-export const getShouldKeepUrl = (state: RootState): boolean => !!((state.user) && (state.user.keepUrl))
+export const getShouldKeepUrl = (state: RootState): boolean =>
+  !!(state.user && state.user.keepUrl)
 
 /* Upload */
-export const getUpload = (state: RootState): ?UploadRecord => state.upload
+export const getUploads = (state: RootState): ?UploadRecord => state.uploads

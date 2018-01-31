@@ -17,3 +17,8 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
   console.log('Received video info')
   dispatch(videoDataLoaded(videoInfo))
 }
+
+export const setCurrentVideo = (id: string) => (dispatch: Dispatch<*>) => {
+  console.log(`set current video to ${id}`)
+  dispatch(videoDataLoaded({ id: id }))
+}
