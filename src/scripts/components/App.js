@@ -23,8 +23,6 @@ import MainHeader from './structures/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/MainFooter'
 
-import Home from './pages/Home'
-
 type Props = {
   match: RouteMatch
 }
@@ -45,7 +43,6 @@ class App extends Component<Props, void> {
         <MainTemplate>
           <MainHeader />
           <Main>
-            <Route path="/" component={Home} />
             <Route path={`${match.url}signup`} component={SignupContainer} />
             <Route path={`${match.url}login`} component={LoginContainer} />
             <Route path={`${match.url}profile`} component={ProfileContainer} />

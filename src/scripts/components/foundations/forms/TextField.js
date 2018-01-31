@@ -42,14 +42,13 @@ const FakeLabel = styled.span`
   transform-origin: left;
   transition: transform 0.5s ${props => props.theme.animation.ease.smooth} 0.1s;
 
-  ${InputField}:focus + &,
-  .filled & {
-      transform: translate3d(0, -22px, 0) scale(0.92);
-      transition-duration: 0.4s;
-      transition-delay: 0s;
-    }
+  .filled &,
+  ${InputField}:focus + & {
+    transform: translate3d(0, -22px, 0) scale(0.92);
+    transition-duration: 0.4s;
+    transition-delay: 0s;
   }
-  `
+`
 
 const HelperLabel = styled.span`
   color: ${props => props.theme.colors.mainInput.placeholder};
