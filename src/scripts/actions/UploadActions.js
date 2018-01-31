@@ -42,10 +42,30 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   })
   uploader.on('fileReady', function (file) {
     dispatch(uploadSuccess({ id: newVideoId, hash: file.hash }))
+    // now we can start the transcoding
+    transcodeVideo({ id: newVideoId, hash: file.hash })(dispatch)
   })
   uploader.on('done', function (files) {
     console.log('[UPLOAD done]', files)
   })
+}
+
+export const transcodeVideo = (videoInfo: Object) => async (
+  dispatch: Dispatch<*>
+) => {
+  console.log(`Transcoding video ${videoInfo.id} with hash ${videoInfo.hash}`)
+  let transcoder = paratii.ipfs.uploader.transcode(videoInfo.hash)
+  transcoder.on('transcoder:error', function (err) {
+    console.log('TRANSCODER ERROR', err)
+    throw err
+  })
+  transcoder.on('transcoding:started', function (hash, author) {
+    console.log('TRANSCODER COMMAND', hash, author)
+  })
+  // *    - 'transcoding:progress': (hash, size, percent)
+  // *    - 'transcoding:downsample:ready' (hash, size)
+  // *    - 'transcoding:done': (hash, transcoderResult) triggered when the transcoder is done - returns the hash of the transcoded file
+  //
 }
 
 export const saveVideoInfo = (videoInfo: Object) => async (
