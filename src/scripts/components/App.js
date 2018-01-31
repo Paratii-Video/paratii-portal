@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 
 import SignupContainer from 'containers/SignupContainer'
@@ -23,6 +23,7 @@ import MainHeader from './structures/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/MainFooter'
 import Home from './pages/Home'
+import NotFound from './pages/NotFound'
 
 type Props = {
   match: RouteMatch
@@ -44,13 +45,19 @@ class App extends Component<Props, void> {
         <MainTemplate>
           <MainHeader />
           <Main>
-            <Route exact path="/" component={Home} />
-            <Route path={`${match.url}signup`} component={SignupContainer} />
-            <Route path={`${match.url}login`} component={LoginContainer} />
-            <Route path={`${match.url}profile`} component={ProfileContainer} />
-            <Route path={`${match.url}play/:id`} component={PlayContainer} />
-            <Route path={`${match.url}upload`} component={VideoManager} />
-            <Route path={`${match.url}debug`} component={DebugContainer} />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path={`${match.url}signup`} component={SignupContainer} />
+              <Route path={`${match.url}login`} component={LoginContainer} />
+              <Route
+                path={`${match.url}profile`}
+                component={ProfileContainer}
+              />
+              <Route path={`${match.url}upload`} component={VideoManager} />
+              <Route path={`${match.url}debug`} component={DebugContainer} />
+              <Route path={`${match.url}play/:id`} component={PlayContainer} />
+              <Route component={NotFound} />
+            </Switch>
           </Main>
           <MainFooter />
         </MainTemplate>
