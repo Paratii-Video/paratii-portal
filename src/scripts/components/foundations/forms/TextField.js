@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 
 type Props = {
+  className: String,
   error: Boolean,
   label: String,
   helper: String
@@ -76,6 +77,7 @@ class TextField extends Component<Props, void> {
   handleClasses () {
     let klass = this.state.filled ? 'filled ' : ''
     klass += this.props.error ? 'error ' : ''
+    klass += this.props.className
 
     return klass
   }
@@ -95,11 +97,6 @@ class TextField extends Component<Props, void> {
     this.setState({
       filled: len > 0
     })
-  }
-
-  componentWillReceiveProps (props) {
-    console.log(this)
-    console.log(props)
   }
 
   render () {

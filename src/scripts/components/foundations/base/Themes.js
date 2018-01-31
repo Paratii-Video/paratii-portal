@@ -28,9 +28,12 @@ const Themes = {
       error: Colors.pink
     },
     FilesUploader: {
-      fake: {
+      drag: {
         background: Colors.black,
-        color: Colors.purple
+        color: Colors.purple,
+        color2: Colors.grayLight,
+        info: Colors.purple,
+        enter: Colors.blackLight
       },
       input: {
         background: Colors.blackDark,
@@ -64,9 +67,11 @@ const Themes = {
       placeholder: Colors.grayLight
     },
     FilesUploader: {
-      fake: {
+      drag: {
         background: Colors.black,
-        color: Colors.purple
+        color: Colors.purple,
+        color2: Colors.grayLight,
+        enter: Colors.blackLight
       },
       input: {
         background: Colors.blackDark,
