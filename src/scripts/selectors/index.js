@@ -18,4 +18,7 @@ export const getShouldKeepUrl = (state: RootState): boolean =>
   !!(state.user && state.user.keepUrl)
 
 /* Upload */
-export const getUploads = (state: RootState): ?UploadRecord => state.uploads
+// get the files to be shown in the upload manager
+export const getUploads = (state: RootState): ?UploadRecord => {
+  return state.videos
+}
