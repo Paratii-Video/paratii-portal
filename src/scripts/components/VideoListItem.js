@@ -19,10 +19,13 @@ const Item = styled.div`
   flex-direction: column;
   border: 1px solid grey;
   padding: 10px;
+  font-size: 14px;
 `
 
-const Label = styled.p`
+const Label = styled.div`
   color: white;
+  font-weight: bold;
+  margin-bottom: 10px;
 `
 
 class UploadListItem extends Component<Props, void> {
@@ -44,13 +47,20 @@ class UploadListItem extends Component<Props, void> {
     let linkToVideo = ''
     if (item.transcodingStatus.name === 'success') {
       let link = `/play/${item.videoInfo.id}`
-      linkToVideo = <NavLink to={link}>Play video</NavLink>
+      linkToVideo = (
+        <Label>
+          <h3>Link</h3>
+          <NavLink to={link}>Play video</NavLink>
+        </Label>
+      )
     }
 
     return (
       <Item onClick={this.handleClick} id="video-list-item-{item.id}">
-        <Label>video id: {item.videoInfo.id}</Label>
+        <h3>Info</h3>
+        <Label>Video id: {item.videoInfo.id}</Label>
         <Label>Filename: {item.filename}</Label>
+        <h3>Status</h3>
         <Label>
           Upload Status: <b>{item.uploadStatus.name}</b> ({progress}%)
         </Label>
@@ -60,6 +70,7 @@ class UploadListItem extends Component<Props, void> {
         </Label>
         <Label>
           Transcoding Status: <b>{item.transcodingStatus.name}</b>
+          <br />
           <br />
           {linkToVideo}
         </Label>
