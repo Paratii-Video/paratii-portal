@@ -9,7 +9,7 @@ const Themes = {
     header: {
       background: Colors.black,
       iconsFill: Colors.grayLight,
-      logoFill: Colors.purple
+      logoFill: Colors.white
     },
     footer: {
       background: Colors.black,
