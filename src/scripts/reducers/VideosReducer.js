@@ -18,11 +18,13 @@ import {
 import UploadRecord from 'records/UploadRecords'
 import type { Action } from 'types/ApplicationTypes'
 
+type VideoRecordArray = { string: UploadRecord }
+
 const reducer = {
   [UPLOAD_REQUESTED]: (
-    state: UploadRecord,
+    state: VideoRecordArray,
     { payload }: Action<{ id: string, filename: string }>
-  ): UploadRecord => {
+  ): VideoRecordArray => {
     state = state
       .mergeDeep({
         [payload.id]: new UploadRecord()
@@ -39,9 +41,9 @@ const reducer = {
     return state
   },
   [UPLOAD_PROGRESS]: (
-    state: UploadRecord,
+    state: VideoRecordArray,
     { payload }: Action<{ id: string, progress: number }>
-  ): UploadRecord => {
+  ): VideoRecordArray => {
     if (!state.get(payload.id)) {
       throw Error(`Unknown id: ${payload.id}`)
     }
@@ -54,9 +56,9 @@ const reducer = {
     })
   },
   [UPLOAD_SUCCESS]: (
-    state: UploadRecord,
+    state: VideoRecordArray,
     { payload }: Action<{ id: string, hash: string }>
-  ): UploadRecord => {
+  ): VideoRecordArray => {
     if (!state.get(payload.id)) {
       throw Error(`Unknown id: ${payload.id}`)
     }
@@ -70,9 +72,9 @@ const reducer = {
     })
   },
   [UPLOAD_LOCAL_SUCCESS]: (
-    state: UploadRecord,
+    state: VideoRecordArray,
     { payload }: Action<{ id: string, hash: string }>
-  ): UploadRecord => {
+  ): VideoRecordArray => {
     if (!state.get(payload.id)) {
       throw Error(`Unknown id: ${payload.id}`)
     }
@@ -86,60 +88,60 @@ const reducer = {
     })
   },
   [UPDATE_VIDEO_INFO]: (
-    state: UploadRecord,
+    state: VideoRecordArray,
     { payload }: Action<UploadRecord>
-  ): UploadRecord => {
+  ): VideoRecordArray => {
     return state.setIn([payload.id, 'videoInfo'], payload)
   },
   [VIDEO_DATA_START]: (
-    state: UploadRecord,
+    state: VideoRecordArray,
     { payload }: Action<UploadRecord>
-  ): UploadRecord => {
+  ): VideoRecordArray => {
     return state.setIn([payload.id, 'blockchainStatus'], {
       name: 'running',
       data: {}
     })
   },
   [VIDEO_DATA_SAVED]: (
-    state: UploadRecord,
+    state: VideoRecordArray,
     { payload }: Action<UploadRecord>
-  ): UploadRecord => {
+  ): VideoRecordArray => {
     return state.setIn([payload.id, 'blockchainStatus'], {
       name: 'success',
       data: {}
     })
   },
   [TRANSCODING_REQUESTED]: (
-    state: UploadRecord,
+    state: VideoRecordArray,
     { payload }: Action<UploadRecord>
-  ): UploadRecord => {
+  ): VideoRecordArray => {
     return state.setIn([payload.id, 'transcodingStatus'], {
       name: 'requested',
       data: {}
     })
   },
   [TRANSCODING_PROGRESS]: (
-    state: UploadRecord,
+    state: VideoRecordArray,
     { payload }: Action<UploadRecord>
-  ): UploadRecord => {
+  ): VideoRecordArray => {
     return state.setIn([payload.id, 'transcodingStatus'], {
       name: 'progress',
       data: {}
     })
   },
   [TRANSCODING_SUCCESS]: (
-    state: UploadRecord,
+    state: VideoRecordArray,
     { payload }: Action<UploadRecord>
-  ): UploadRecord => {
+  ): VideoRecordArray => {
     return state.setIn([payload.id, 'transcodingStatus'], {
       name: 'success',
       data: {}
     })
   },
   [TRANSCODING_FAILURE]: (
-    state: UploadRecord,
+    state: VideoRecordArray,
     { payload }: Action<UploadRecord>
-  ): UploadRecord => {
+  ): VideoRecordArray => {
     return state.setIn([payload.id, 'transcodingStatus'], {
       name: 'failed',
       data: {}
