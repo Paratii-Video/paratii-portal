@@ -25,6 +25,7 @@ const Wrapper = styled.div`
 class VideoList extends Component<Props, void> {
   render () {
     const { uploads, onItemClick } = this.props
+
     return (
       <Wrapper>
         {uploads
@@ -37,7 +38,9 @@ class VideoList extends Component<Props, void> {
               onClick={onItemClick}
             />
           ))}
-        <Button onClick={() => onItemClick(null)}>ADD MORE VIDEOS</Button>
+        <Button purple onClick={() => onItemClick(null)}>
+          ADD MORE VIDEOS
+        </Button>
       </Wrapper>
     )
   }
