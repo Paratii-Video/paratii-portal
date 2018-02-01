@@ -12,35 +12,41 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package-lock.json" }}
-       - run: yarn install --pure-lockfile
-       - run: npm install
-       - run: npm install web3@1.0.0-beta.29 --save
-       - save_cache:
-           paths:
-             - node_modules
-           key: v1-dependencies-{{ checksum "package-lock.json" }}
-       - run: yarn run quality
-       - run: yarn run unit-test
-       - run:
-           command: yarn run parity
-           background: true
-       - run:
-           command: yarn run build:dev
-           background: true
-       - run:
-           command: yarn run server:dev
-           background: true
-       - run: yarn run chimp-test
-       - run:
-           command: |
-             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-               yarn run build
-             fi
-       - deploy:
-           command: |
-             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-               ./deploy.sh production
-             fi
-             if [ "${CIRCLE_BRANCH}" == "dev" ]; then
-               ./deploy.sh staging
-             fi
+          - v1-dependencies-
+      # - run: bash <(curl https://get.parity.io -Lk)
+      # the next lines are a workaround around a web3 bug tracked here https://github.com/ethereum/web3.js/issues/1234
+      # as soon as this bug is fixed, we should go back to yarn install, which is faster
+      # when movign back to yarn, also the v1-dependencies key should be set back to `yarn-lock`
+      # - run: yarn install --pure-lockfile
+      - run: npm install
+      - run: npm install web3@1.0.0-beta.29 --save
+      - save_cache:
+          paths:
+            - node_modules
+          # key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+      - run: yarn run quality
+      - run: yarn run unit-test
+      - run:
+          command: yarn run parity
+          background: true
+      - run:
+          command: yarn run build:dev
+          background: true
+      - run:
+          command: yarn run server:dev
+          background: true
+      - run: yarn run chimp-test
+      - run:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              yarn run build
+            fi
+      - deploy:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./deploy.sh production
+            fi
+            if [ "${CIRCLE_BRANCH}" == "dev" ]; then
+              ./deploy.sh staging
+            fi
