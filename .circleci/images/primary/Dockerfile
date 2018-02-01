@@ -14,6 +14,12 @@ RUN yum -y install nodejs
 RUN yum -y install chromium
 
 # openssl 1.1.0
+RUN yum groups mark convert
+RUN yum groups mark convert "Development Tools"
+RUN yum groupinstall -y "Development Tools"
+
+RUN yum -y install epel-release curl wget git centos-release-scl gcc gcc-c++
+RUN yum -y install openssl libssl-devel libudev-devel openssl-devel
 
 RUN wget https://www.openssl.org/source/openssl-1.1.0.tar.gz
 RUN tar xzvf openssl-1.1.0.tar.gz && cd openssl-1.1.0 && ./config -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)' && make && make install
