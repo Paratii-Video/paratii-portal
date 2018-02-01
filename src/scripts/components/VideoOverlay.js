@@ -37,7 +37,7 @@ class VideoOverlay extends Component<Props, void> {
           <h5>The video id is: {this.props.match.params.id}</h5>
           Title:{' '}
           {(this.props.video && this.props.video.title) ||
-            'This video either has no title, or could not be fetched'}
+            'This video has no (known) title'}
         </Overlay>
       </Wrapper>
     )
