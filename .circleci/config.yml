@@ -2,10 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: leeaandrob/paratii-portal:0.0.2
-        env:
-          - DISPLAY=:99
-          - CHROME_BIN=/usr/bin/chromium-browser
+      - image: leeaandrob/centos-with-parity-1.9.0
     working_directory: ~/repo
     steps:
       - checkout
@@ -13,50 +10,40 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package-lock.json" }}
           - v1-dependencies-
-      - run: sudo apt-get update && sudo apt-get install libstdc++6 libssl-dev libudev-dev
-      - run: wget https://www.openssl.org/source/openssl-1.1.0.tar.gz
-      - run: tar xzvf openssl-1.1.0.tar.gz && cd openssl-1.1.0
-      - run: cd openssl-1.1.0 && ./config -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)' && make && sudo make install
-      - run: sudo ln -s /usr/local/lib/libssl.so.1.1 /usr/lib/
-      - run: sudo ln -s /usr/local/lib/libcrypto.so.1.1 /usr/lib/
-      - run: sudo rm /usr/bin/openssl
-      - run: sudo ln -s /usr/local/bin/openssl /usr/bin/
-      - run: openssl version
-      - run: bash <(curl https://get.parity.io -Lk)
 
       # the next lines are a workaround around a web3 bug tracked here https://github.com/ethereum/web3.js/issues/1234
       # as soon as this bug is fixed, we should go back to yarn install, which is faster
       # when movign back to yarn, also the v1-dependencies key should be set back to `yarn-lock`
-      # - run: yarn install --pure-lockfile
-      # - run: npm install
-      # - run: npm install web3@1.0.0-beta.29 --save
-      # - save_cache:
-      #     paths:
-      #       - node_modules
-      #     # key: v1-dependencies-{{ checksum "yarn.lock" }}
-      #     key: v1-dependencies-{{ checksum "package-lock.json" }}
-      # - run: yarn run quality
-      # - run: yarn run unit-test
-      # - run:
-      #     command: yarn run parity
-      #     background: true
-      # - run:
-      #     command: yarn run build:dev
-      #     background: true
-      # - run:
-      #     command: yarn run server:dev
-      #     background: true
-      # - run: yarn run chimp-test
-      # - run:
-      #     command: |
-      #       if [ "${CIRCLE_BRANCH}" == "master" ]; then
-      #         yarn run build
-      #       fi
-      # - deploy:
-      #     command: |
-      #       if [ "${CIRCLE_BRANCH}" == "master" ]; then
-      #         ./deploy.sh production
-      #       fi
-      #       if [ "${CIRCLE_BRANCH}" == "dev" ]; then
-      #         ./deploy.sh staging
-      #       fi
+       - run: yarn install --pure-lockfile
+       - run: npm install
+       - run: npm install web3@1.0.0-beta.29 --save
+       - save_cache:
+           paths:
+             - node_modules
+           # key: v1-dependencies-{{ checksum "yarn.lock" }}
+           key: v1-dependencies-{{ checksum "package-lock.json" }}
+       - run: yarn run quality
+       - run: yarn run unit-test
+       - run:
+           command: yarn run parity
+           background: true
+       - run:
+           command: yarn run build:dev
+           background: true
+       - run:
+           command: yarn run server:dev
+           background: true
+       - run: yarn run chimp-test
+       - run:
+           command: |
+             if [ "${CIRCLE_BRANCH}" == "master" ]; then
+               yarn run build
+             fi
+       - deploy:
+           command: |
+             if [ "${CIRCLE_BRANCH}" == "master" ]; then
+               ./deploy.sh production
+             fi
+             if [ "${CIRCLE_BRANCH}" == "dev" ]; then
+               ./deploy.sh staging
+             fi
