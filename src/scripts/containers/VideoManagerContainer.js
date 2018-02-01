@@ -25,7 +25,6 @@ const Wrapper = styled.div`
     sans-serif;
   display: flex;
   flex-direction: row;
-  width: 300px;
 `
 
 type Props = {

@@ -159,7 +159,7 @@ class FilesUploader extends Component<Props, void> {
           <InputText
             label="Or upload from Youtube or Vimeo"
             helper="i.e.: http://youtube.com/videoID or http://vimeo.com/videoID"
-            error={this.state.inputTextError}
+            error={false}
           />
           <Button
             id="upload-submit"

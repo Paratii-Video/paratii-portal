@@ -17,20 +17,23 @@ const StyleInput = css`
   background-color: transparent;
   font-size: 14px;
   height: ${props => props.theme.sizes.mainInput.height};
-  padding: 0 7px;
   width: 100%;
 `
 
 const InputField = styled.input`
   ${StyleInput} border-bottom: 1px solid ${props =>
-  props.theme.colors.mainInput.border};
+  props.error
+    ? props.theme.colors.mainInput.error
+    : props.theme.colors.mainInput.border};
   color: ${props => props.theme.colors.mainInput.color};
   position: relative;
   z-index: 2;
+`
 
-  .error & {
-    border-color: ${props => props.theme.colors.mainInput.error};
-  }
+const StyleFakeLabelFilled = css`
+  transform: translate3d(0, -22px, 0) scale(0.92);
+  transition-duration: 0.4s;
+  transition-delay: 0s;
 `
 
 const FakeLabel = styled.span`
@@ -40,16 +43,20 @@ const FakeLabel = styled.span`
   position: absolute;
   top: 0;
   transform-origin: left;
-  transition: transform 0.5s ${props => props.theme.animation.ease.smooth} 0.1s;
+  transform: ${props =>
+    props.filled
+      ? 'translate3d(0, -22px, 0) scale(0.92)'
+      : 'translate3d(0, 0, 0) scale(1)'};
+  transition-delay: ${props => (props.filled ? '0s' : '0.1s')};
+  transition-duration: ${props => (props.filled ? '0.4s' : '0.5s')};
+  transition-property: 'transform';
+  transition-timing-function: ${props => props.theme.animation.ease.smooth};
 
-  ${InputField}:focus + &,
-  .filled & {
-      transform: translate3d(0, -22px, 0) scale(0.92);
-      transition-duration: 0.4s;
-      transition-delay: 0s;
-    }
+  .filled &,
+  ${InputField}:focus + & {
+    ${StyleFakeLabelFilled};
   }
-  `
+`
 
 const HelperLabel = styled.span`
   color: ${props => props.theme.colors.mainInput.placeholder};
@@ -65,21 +72,12 @@ class TextField extends Component<Props, void> {
     super(props)
 
     this.state = {
-      filled: '',
+      filled: false,
       value: ''
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
-    this.handleClasses = this.handleClasses.bind(this)
-  }
-
-  handleClasses () {
-    let klass = this.state.filled ? 'filled ' : ''
-    klass += this.props.error ? 'error ' : ''
-    klass += this.props.className
-
-    return klass
   }
 
   handleChange (e) {
@@ -101,13 +99,16 @@ class TextField extends Component<Props, void> {
 
   render () {
     return (
-      <LabelField className={this.handleClasses()}>
+      <LabelField className={this.props.className}>
         <InputField
           value={this.state.value}
           onChange={this.handleChange}
           onKeyUp={this.handleKeyUp}
+          error={this.props.error}
         />
-        {this.props.label && <FakeLabel>{this.props.label}</FakeLabel>}
+        {this.props.label && (
+          <FakeLabel filled={this.state.filled}>{this.props.label}</FakeLabel>
+        )}
         {this.props.helper && <HelperLabel>{this.props.helper}</HelperLabel>}
       </LabelField>
     )
