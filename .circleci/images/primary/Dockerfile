@@ -44,7 +44,6 @@ RUN yum -y install yarn
 
 # chromedriver
 RUN rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/c/chromedriver-61.0.3163.100-1.el7.x86_64.rpm
-<<<<<<< HEAD
 RUN yum install -y Xvfb
 RUN yum install -y chromedriver
 RUN export CHROME_BIN=/usr/bin/chromium-browser
