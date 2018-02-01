@@ -11,7 +11,8 @@ describe('Uploader Tool', function () {
     }
     browser.url('http://localhost:8080/upload')
 
-    let fileToUpload = `${__dirname}/data/data.txt`
+    // let fileToUpload = `${__dirname}/data/data.txt`
+    let fileToUpload = `${__dirname}/data/pti-logo.mp4`
     browser.chooseFile('input[type="file"]', fileToUpload)
 
     // this will immediately submit (and upload) the file, so the next lines will fail

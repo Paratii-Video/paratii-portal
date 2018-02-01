@@ -12,9 +12,9 @@ import type { Action } from 'types/ApplicationTypes'
 const reducer = {
   [VIDEO_SELECT]: (
     state: VideoRecord,
-    { payload }: Action<string>
+    { payload }: Action<{ id: string }>
   ): VideoRecord => {
-    console.log('Setting selected video to:' + payload)
+    console.log('Setting selected video to:' + payload.id)
     return new VideoRecord(payload)
   },
   [VIDEO_DATA_PROGRESS]: (

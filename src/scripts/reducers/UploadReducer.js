@@ -1,17 +1,22 @@
 /* @flow */
 
+import { Map } from 'immutable'
 import { handleActions } from 'redux-actions'
-import type { Action } from 'types/ApplicationTypes'
 import {
   UPLOAD_REQUESTED,
   UPLOAD_PROGRESS,
   UPLOAD_SUCCESS,
-  UPDATE_UPLOAD_INFO,
+  UPLOAD_LOCAL_SUCCESS,
+  UPDATE_VIDEO_INFO,
   VIDEO_DATA_START,
-  VIDEO_DATA_SAVED
+  VIDEO_DATA_SAVED,
+  TRANSCODING_REQUESTED,
+  TRANSCODING_PROGRESS,
+  TRANSCODING_SUCCESS,
+  TRANSCODING_FAILURE
 } from 'constants/ActionConstants'
-import { Map } from 'immutable'
 import UploadRecord from 'records/UploadRecords'
+import type { Action } from 'types/ApplicationTypes'
 
 const reducer = {
   [UPLOAD_REQUESTED]: (
@@ -64,7 +69,23 @@ const reducer = {
       }
     })
   },
-  [UPDATE_UPLOAD_INFO]: (
+  [UPLOAD_LOCAL_SUCCESS]: (
+    state: UploadRecord,
+    { payload }: Action<{ id: string, hash: string }>
+  ): UploadRecord => {
+    if (!state.get(payload.id)) {
+      throw Error(`Unknown id: ${payload.id}`)
+    }
+    return state.mergeDeep({
+      [payload.id]: {
+        uploadStatus: {
+          name: 'uploaded to local ipfs node',
+          data: { ipfsHash: payload.hash }
+        }
+      }
+    })
+  },
+  [UPDATE_VIDEO_INFO]: (
     state: UploadRecord,
     { payload }: Action<UploadRecord>
   ): UploadRecord => {
@@ -85,6 +106,42 @@ const reducer = {
   ): UploadRecord => {
     return state.setIn([payload.id, 'blockchainStatus'], {
       name: 'success',
+      data: {}
+    })
+  },
+  [TRANSCODING_REQUESTED]: (
+    state: UploadRecord,
+    { payload }: Action<UploadRecord>
+  ): UploadRecord => {
+    return state.setIn([payload.id, 'transcodingStatus'], {
+      name: 'requested',
+      data: {}
+    })
+  },
+  [TRANSCODING_PROGRESS]: (
+    state: UploadRecord,
+    { payload }: Action<UploadRecord>
+  ): UploadRecord => {
+    return state.setIn([payload.id, 'transcodingStatus'], {
+      name: 'progress',
+      data: {}
+    })
+  },
+  [TRANSCODING_SUCCESS]: (
+    state: UploadRecord,
+    { payload }: Action<UploadRecord>
+  ): UploadRecord => {
+    return state.setIn([payload.id, 'transcodingStatus'], {
+      name: 'success',
+      data: {}
+    })
+  },
+  [TRANSCODING_FAILURE]: (
+    state: UploadRecord,
+    { payload }: Action<UploadRecord>
+  ): UploadRecord => {
+    return state.setIn([payload.id, 'transcodingStatus'], {
+      name: 'failed',
       data: {}
     })
   }
