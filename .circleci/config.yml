@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: leeaandrob/centos-with-parity-1.9.0
+      - image: leeaandrob/centos-paratii
     working_directory: ~/repo
     steps:
       - checkout
