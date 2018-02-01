@@ -3,7 +3,6 @@ jobs:
   build:
     docker:
       - image: leeaandrob/centos-paratii:0.0.1
-      - image: circleci/node:8.9.1-browsers
     working_directory: ~/repo
     steps:
       - checkout
