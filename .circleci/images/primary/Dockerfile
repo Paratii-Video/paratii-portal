@@ -31,5 +31,23 @@ RUN yum -y install yarn
 
 # chromedriver
 RUN rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/c/chromedriver-61.0.3163.100-1.el7.x86_64.rpm
+RUN yum install -y Xvfb
+RUN yum install -y chromedriver
+RUN export CHROME_BIN=/usr/bin/chromium-browser
+
+# phatomjs
+
+RUN yum install -y fontconfig freetype freetype-devel fontconfig-devel libstdc++
+RUN rpm -Uvh --force http://mirror.centos.org/centos/7/os/x86_64/Packages/bzip2-libs-1.0.6-13.el7.x86_64.rpm
+RUN yum install -y bzip2
+RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2
+RUN bunzip2 phantomjs*.tar.bz2
+RUN tar xvf phantomjs*.tar
+RUN cp phantomjs*/bin/phantomjs /usr/bin/phantomjs
+
+# firefox
+
+# RUN yum -y install firefox  libXfont Xorg
+# RUN yum -y groupinstall "X Window System" "Desktop" "Fonts" "General Purpose Desktop"
 
 RUN npm install fibers && npm install scrypt
