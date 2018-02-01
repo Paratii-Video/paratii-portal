@@ -3,20 +3,19 @@ import styled from 'styled-components'
 import { paratii } from '../utils/ParatiiLib'
 import type { RootState } from 'types/ApplicationTypes'
 
-const DebugBox = styled.header`
-  background-color: #fff;
-  border: 2px dashed red;
+const DebugBox = styled.div`
+  background-color: #ccc;
+  border: 4px dashed #f55;
   padding: 20px;
   margin: 20px;
 `
 
-const Title = styled.header`
-  background-color: #fff;
+const Title = styled.h2`
   height: 50px;
   margin-bottom: 20px;
   display: flex;
   align-items: center;
-  color: blue;
+  color: #f55;
 `
 type Props = {
   state: RootState
