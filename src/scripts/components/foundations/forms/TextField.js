@@ -54,6 +54,7 @@ const FakeLabel = styled.span`
   transition-duration: ${props => (props.filled ? '0.4s' : '0.5s')};
   transition-property: 'transform';
   transition-timing-function: ${props => props.theme.animation.ease.smooth};
+  white-space: nowrap;
 
   .filled &,
   ${InputField}:focus + & {
@@ -68,6 +69,7 @@ const HelperLabel = styled.span`
   padding: 8px 1px 0 0;
   opacity: 0.7;
   text-align: right;
+  white-space: nowrap;
 `
 
 class TextField extends Component<Props, void> {
