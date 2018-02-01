@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+
+import NavLink from 'components/foundations/buttons/NavLink'
 import type { UploadRecord } from 'records/UploadRecords'
 
 type Props = {
@@ -39,6 +41,12 @@ class UploadListItem extends Component<Props, void> {
     if (item.getIn(['uploadStatus', 'name']) === 'running') {
       progress = item.getIn(['uploadStatus', 'data', 'progress'])
     }
+    let linkToVideo = ''
+    if (item.transcodingStatus.name === 'success') {
+      let link = `/play/${item.videoInfo.id}`
+      linkToVideo = <NavLink to={link}>Play video</NavLink>
+    }
+
     return (
       <Item onClick={this.handleClick} id="video-list-item-{item.id}">
         <Label>video id: {item.videoInfo.id}</Label>
@@ -52,6 +60,8 @@ class UploadListItem extends Component<Props, void> {
         </Label>
         <Label>
           Transcoding Status: <b>{item.transcodingStatus.name}</b>
+          <br />
+          {linkToVideo}
         </Label>
       </Item>
     )

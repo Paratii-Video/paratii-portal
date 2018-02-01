@@ -73,15 +73,15 @@ export const transcodeVideo = (videoInfo: Object) => async (
   })
   transcoder.on('transcoding:error', function (err) {
     console.log('TRANSCODER ERROR', err)
-    // Once we have this, the file is fully uploaded to the transcoder
     dispatch(transcodingFailure(videoInfo, err))
-    // throw err
   })
+
   transcoder.on('transcoding:started', function (hash, author) {
     console.log('TRANSCODER STARTED', hash, author)
   })
 
   transcoder.once('transcoding:progress', function (hash, size, percent) {
+    // Once we have this, the file is fully uploaded to the transcoder
     dispatch(uploadSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
   })
   transcoder.on('transcoding:progress', function (hash, size, percent) {
@@ -93,13 +93,11 @@ export const transcodeVideo = (videoInfo: Object) => async (
     console.log('TRANSCODER DOWNSAMPLE READY', hash, size)
   })
   transcoder.on('transcoding:done', function (hash, size) {
+    // if transcoding is done, apparently we have uploaded the file first
+    dispatch(uploadSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
     dispatch(transcodingSuccess(videoInfo))
     console.log('TRANSCODER DOWNSAMPLE READY', hash, size)
   })
-  // *    - 'transcoding:progress': (hash, size, percent)
-  // *    - 'transcoding:downsample:ready' (hash, size)
-  // *    - 'transcoding:done': (hash, transcoderResult) triggered when the transcoder is done - returns the hash of the transcoded file
-  //
 }
 
 export const saveVideoInfo = (videoInfo: Object) => async (
