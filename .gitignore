@@ -11,7 +11,9 @@
 
 # misc
 .DS_Store
+.vscode
 .env.local
+.vscode
 .env.developmenat.local
 .env.test.local
 .env.production.local

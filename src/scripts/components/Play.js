@@ -149,8 +149,7 @@ class Play extends Component<Props, void> {
         <Body>
           <Title>Play Video: {videoId} </Title>
           <PlayerWrapper>
-            {false &&
-              !isPlaying &&
+            {!isPlaying &&
               !isAttemptingPlay && (
                 <OverlayWrapper>
                   <VideoOverlay {...this.props} onClick={this.onOverlayClick} />

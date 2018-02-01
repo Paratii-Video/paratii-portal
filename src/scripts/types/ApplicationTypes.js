@@ -31,9 +31,9 @@ export type Action<T> = {
 }
 
 export type RootState = {
-  video: ?VideoRecord,
+  selectedVideo: ?VideoRecord,
   user: ?UserRecord,
-  upload: UploadRecord,
+  uploads: UploadRecord,
   player: PlayerRecord
 }
 
@@ -64,12 +64,13 @@ export type ParatiiLib = {
       create: () => Object
     },
     vids: {
-      get: (id: string) => ?Object
+      get: (id: string) => ?Object,
+      makeId: () => string
     }
   },
   ipfs: {
     uploader: {
-      upload: ([Object], Object) => Object
+      add: Object => Object
     }
   }
 }

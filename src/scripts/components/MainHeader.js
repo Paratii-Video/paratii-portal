@@ -25,7 +25,7 @@ class MainHeader extends Component<Props, void> {
     return (
       <Wrapper>
         <Header>
-          <Logo src={logo} alt='logo' />
+          <Logo src={logo} alt="logo" />
         </Header>
       </Wrapper>
     )

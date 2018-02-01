@@ -35,7 +35,7 @@ class VideoStatus extends Component<Props, void> {
           <br />
           This is the information you entered:
           <br />
-          id: {video.get('id')}
+          id: <span id="videoId">{video.get('id')}</span>
           <br />
           title: {video.get('title')}
           <br />

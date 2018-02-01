@@ -40,7 +40,7 @@ class SearchInput extends Component<Props, void> {
 
         <SearchInputButton>
           <SearchInputSVG>
-            <use xlinkHref="#icon-search"></use>
+            <use xlinkHref="#icon-search" />
           </SearchInputSVG>
         </SearchInputButton>
       </SearchInputForm>

@@ -7,7 +7,7 @@ import { _getIsPlaying, _getIsAttemptingPlay } from 'records/PlayerRecords'
 import type { RootState } from 'types/ApplicationTypes'
 
 /* Videos */
-export const getVideo = (state: RootState): ?VideoRecord => state.video
+export const getVideo = (state: RootState): ?VideoRecord => state.selectedVideo
 
 /* Users */
 export const getUser = (state: RootState): ?UserRecord => state.user
@@ -19,7 +19,7 @@ export const getShouldKeepUrl = (state: RootState): boolean =>
   !!(state.user && state.user.keepUrl)
 
 /* Upload */
-export const getUpload = (state: RootState): ?UploadRecord => state.upload
+export const getUploads = (state: RootState): ?UploadRecord => state.uploads
 
 /* Player */
 export const getIsPlaying = (state: RootState): boolean =>

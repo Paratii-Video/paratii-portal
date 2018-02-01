@@ -25,7 +25,6 @@ const Overlay = styled.div`
 class VideoOverlay extends Component<Props, void> {
   render () {
     const { onClick } = this.props
-
     return (
       <Overlay id="video-overlay" onClick={onClick}>
         <h5>The video id is: {this.props.match.params.id}</h5>

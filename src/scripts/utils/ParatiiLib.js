@@ -22,7 +22,7 @@ export async function setupKeystore () {
   let existingWalletIsValid
   if (existingWallet) {
     try {
-      console.log('Found existing wallet')
+      // console.log('Found existing wallet - reading it')
       paratii.eth.wallet.decrypt(JSON.parse(existingWallet), defaultPassword)
     } catch (err) {
       console.log('Existing wallet is not valid')
@@ -30,7 +30,7 @@ export async function setupKeystore () {
     }
   }
   if (!existingWallet || existingWalletIsValid === false) {
-    console.log('Creating a new wallet')
+    // console.log('Creating a new wallet')
     paratii.eth.wallet.create()
     mnemonic = await paratii.eth.wallet.getMnemonic()
     localStorage.setItem(

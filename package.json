@@ -54,7 +54,6 @@
     "*.js": [
       "prettier-standard",
       "eslint --cache",
-      "stylelint",
       "git add"
     ]
   },
@@ -109,6 +108,7 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
     "stylelint": "^8.4.0",
+    "stylelint-config-prettier": "^2.0.0",
     "stylelint-config-standard": "^18.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "^1.2.1",
@@ -126,6 +126,7 @@
     "paratii-mediaplayer": "^1.0.0",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
+    "react-blockies": "^1.2.2",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
@@ -136,6 +137,7 @@
     "reselect": "^3.0.1",
     "streamspeed": "^1.1.0",
     "styled-components": "^2.3.3",
+    "stylelint-config-prettier": "^2.0.0",
     "web3": "^1.0.0-beta.29"
   }
 }
