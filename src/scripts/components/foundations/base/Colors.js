@@ -7,9 +7,9 @@ const Colors = {
   black: '#21262A',
   blackDark: '#1B1F24',
   purple: '#7D70FF',
-  purpleGradient: 'linear-gradient(to bottom, \'#9149EF\', \'#7D70FF\' )',
-  pink: '##E13D84',
-  pinkGradient: 'linear-gradient(to bottom, \'#E72061\', \'#DC3DCC\' )'
+  purpleGradient: "linear-gradient(to bottom, '#9149EF', '#7D70FF' )",
+  pink: '#E13D84',
+  pinkGradient: "linear-gradient(to bottom, '#E72061', '#DC3DCC' )"
 }
 
 export default Colors

@@ -7,7 +7,7 @@ import type { RootState } from 'types/ApplicationTypes'
 
 import { upload } from 'actions/UploadActions'
 
-import UploadFile from 'components/UploadFile'
+import FilesUploader from '../components/widgets/FilesUploader'
 
 type Props = {
   upload: (filename: string) => void
@@ -16,6 +16,7 @@ type Props = {
 class UploadFileContainer extends Component<Props, void> {
   constructor (props) {
     super(props)
+
     this.handleFileChosen = this.handleFileChosen.bind(this)
   }
 
@@ -24,11 +25,7 @@ class UploadFileContainer extends Component<Props, void> {
   }
 
   render () {
-    return (
-      <UploadFile
-        onFileChosen={this.handleFileChosen}
-      />
-    )
+    return <FilesUploader onFileChosen={this.handleFileChosen} />
   }
 }
 

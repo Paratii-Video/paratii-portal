@@ -8,8 +8,8 @@ const Themes = {
     },
     header: {
       background: Colors.black,
-      color: Colors.grayLight,
-      logoFill: Colors.white
+      iconsFill: Colors.grayLight,
+      logoFill: Colors.purple
     },
     footer: {
       background: Colors.black,
@@ -24,7 +24,21 @@ const Themes = {
     mainInput: {
       border: Colors.grayLight,
       color: Colors.white,
-      placeholder: Colors.grayLight
+      placeholder: Colors.grayLight,
+      error: Colors.pink
+    },
+    FilesUploader: {
+      drag: {
+        background: Colors.black,
+        color: Colors.purple,
+        color2: Colors.grayLight,
+        info: Colors.purple,
+        enter: Colors.blackLight
+      },
+      input: {
+        background: Colors.blackDark,
+        color: Colors.purple
+      }
     }
   },
   light: {
@@ -33,14 +47,14 @@ const Themes = {
       color: Colors.blackLight
     },
     header: {
-      background: Colors.black,
-      color: Colors.grayLight,
-      logoFill: Colors.white
+      background: Colors.white,
+      color: Colors.gray,
+      logoFill: Colors.black
     },
     footer: {
-      background: Colors.black,
-      color: Colors.grayLight,
-      logoFill: Colors.white
+      background: Colors.white,
+      color: Colors.gray,
+      logoFill: Colors.blackDark
     },
     button: {
       white: Colors.white,
@@ -51,6 +65,18 @@ const Themes = {
       border: Colors.grayLight,
       color: Colors.white,
       placeholder: Colors.grayLight
+    },
+    FilesUploader: {
+      drag: {
+        background: Colors.black,
+        color: Colors.purple,
+        color2: Colors.grayLight,
+        enter: Colors.blackLight
+      },
+      input: {
+        background: Colors.blackDark,
+        color: Colors.purple
+      }
     }
   }
 }
