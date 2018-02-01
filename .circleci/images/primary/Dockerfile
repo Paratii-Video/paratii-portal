@@ -14,7 +14,6 @@ RUN yum -y install nodejs
 RUN yum -y install chromium
 
 # openssl 1.1.0
-
 RUN wget https://www.openssl.org/source/openssl-1.1.0.tar.gz
 RUN tar xzvf openssl-1.1.0.tar.gz && cd openssl-1.1.0 && ./config -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)' && make && make install
 RUN ln -s /usr/local/lib64/libssl.so.1.1 /usr/lib64/
