@@ -1,3 +1,6 @@
+/* stylelint-disable */
+// Stylint issue will be fixed in future:
+// https://github.com/styled-components/stylelint-processor-styled-components/issues/34
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 
