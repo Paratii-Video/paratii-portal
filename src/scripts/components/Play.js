@@ -54,13 +54,13 @@ const Player = styled.div`
 class Play extends Component<Props, void> {
   componentDidMount (): void {
     const videoId = this.props.match.params.id
-    console.log('componentDidMount')
-    console.log(this.props.video)
-    if (videoId) {
-      this.props.fetchVideo(videoId)
-    } else {
+    if (!videoId) {
       throw Error('We should raise a 404 error here and redirect to the player')
     }
+    if (!this.props.video) {
+      this.props.fetchVideo(videoId)
+    }
+    this.createPlayer(this.props.video.ipfsHash)
   }
 
   componentWillReceiveProps (nextProps: Props): void {

@@ -11,16 +11,8 @@ describe('Uploader Tool', function () {
     }
     browser.url('http://localhost:8080/upload')
 
-    // let fileToUpload = `${__dirname}/data/data.txt`
     let fileToUpload = `${__dirname}/data/pti-logo.mp4`
     browser.chooseFile('input[type="file"]', fileToUpload)
-
-    // this will immediately submit (and upload) the file, so the next lines will fail
-    // var val = browser.getValue('input[type="file"]')
-    // // val will be something like 'C://fakepath/data.txt'
-    // assert.match(val, /data.txt$/)
-    // submit the file
-    // browser.click('#upload-submit')
 
     // now we should see a form to fill in
     browser.waitForExist('#video-title')
@@ -43,20 +35,15 @@ describe('Uploader Tool', function () {
         // console.log(err)
       }
     }
-    browser.waitUntil(getVideoInfoFromBlockchain)
+    await browser.waitUntil(getVideoInfoFromBlockchain)
     let videoInfoFromBlockchain = await getVideoInfoFromBlockchain()
     assert.isOk(videoInfoFromBlockchain)
     assert.equal(videoInfoFromBlockchain.owner, paratii.config.account.address)
-    // let videoId
-    // // wait until the videoId is returned back from paratii-lib (meaning that the object has been saved)
-    // browser.waitUntil(function () {
-    //   videoId = browser.getText('#videoId')
-    //   return videoId
-    // })
-    // console.log(videoId)
-    assert.isOk(true)
 
-    // TODO: we now should find a video record on the blockchain
+    // now wait until the transcoder is done - we should see a "play" link at this point
+    await browser.waitForExist(`a[href="/play/${videoId}"]`)
+    await browser.click(`a[href="/play/${videoId}"]`)
+    console.log('done?')
   })
 
   it.skip('cancel upload should work [but is not yet]', function () {
