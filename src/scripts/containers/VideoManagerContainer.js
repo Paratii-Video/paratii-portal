@@ -45,20 +45,18 @@ class VideoManagerContainer extends Component<Props, void> {
   render () {
     const selectedVideo =
       this.props.selectedVideo && this.props.selectedVideo.id
-    console.log('000000000000000000000000000')
-    console.log(this.props.selectedVideo)
-    console.log(this.props.videos)
 
     return (
-      <Wrapper>
-        <VideoList
-          onItemClick={this.onVideoListItemClicked}
-          videos={this.props.videos}
-        />
-        {selectedVideo === undefined && <UploadFile />}
-        {selectedVideo !== undefined && <VideoForm />}
-        <Debug />
-      </Wrapper>
+      <div>
+        <Wrapper>
+          <VideoList
+            onItemClick={this.onVideoListItemClicked}
+            videos={this.props.videos}
+          />
+          {selectedVideo === null ? <UploadFile /> : <VideoForm />}
+          <Debug />
+        </Wrapper>
+      </div>
     )
   }
 }
