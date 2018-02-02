@@ -53,7 +53,7 @@ class VideoManagerContainer extends Component<Props, void> {
             onItemClick={this.onVideoListItemClicked}
             videos={this.props.videos}
           />
-          {selectedVideo === null ? <UploadFile /> : <VideoForm />}
+          {selectedVideo === undefined ? <UploadFile /> : <VideoForm />}
           <Debug />
         </Wrapper>
       </div>
