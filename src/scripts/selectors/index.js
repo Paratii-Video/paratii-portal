@@ -6,10 +6,8 @@ import type { RootState } from 'types/ApplicationTypes'
 
 /* Videos */
 export const getVideo = (state: RootState): ?VideoRecord => {
-  console.log('CALLING getVideo')
   let videoId = state.selectedVideo
   let video = state.videos.get(videoId)
-  console.log(video)
   return video
 }
 
