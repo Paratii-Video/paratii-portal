@@ -26,7 +26,6 @@ jobs:
           # key: v1-dependencies-{{ checksum "yarn.lock" }}
           key: v1-dependencies-{{ checksum "package-lock.json" }}
       - run: yarn run quality
-      - run: export CHROME_BIN=/usr/bin/chromium-browser
       - run: yarn run unit-test
       - run:
           command: yarn run parity
