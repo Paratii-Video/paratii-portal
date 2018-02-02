@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-// import { saveVideoInfo } from 'actions/UploadActions'
 import VideoRecord from 'records/VideoRecords'
 
 import Button from './foundations/buttons/Button'
@@ -26,12 +25,18 @@ class VideoForm extends Component<Props, Object> {
 
   constructor (props: Props) {
     super(props)
-    this.state = {
-      title: this.props.selectedVideo.title,
-      description: this.props.selectedVideo.description
-    }
+    this.state = new VideoRecord(this.props.selectedVideo)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentWillReceiveProps (nextProps: Props): void {
+    this.setState(nextProps.selectedVideo)
+    this.setState({
+      id: nextProps.selectedVideo.id,
+      title: nextProps.selectedVideo.title,
+      description: nextProps.selectedVideo.description
+    })
   }
 
   handleInputChange (input: string, e: Object) {
@@ -43,7 +48,7 @@ class VideoForm extends Component<Props, Object> {
   handleSubmit (e: Object) {
     e.preventDefault()
     let videoToSave = {
-      id: this.props.selectedVideo.id,
+      id: this.state.id,
       title: this.state.title,
       description: this.state.description
     }
@@ -52,13 +57,15 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     const onInputChange = this.handleInputChange
+    console.log(`current state of videoform:`)
+    console.log(this.state.id)
     return (
       <Form>
-        Editing video with id: {this.props.selectedVideo.id}
+        Editing video {this.state.id}
         <Input
           id="video-id"
           type="hidden"
-          value={this.props.selectedVideo.id}
+          value={this.state.id}
           placeholder="Title"
         />
         <Input

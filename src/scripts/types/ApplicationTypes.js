@@ -2,7 +2,6 @@
 
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
-import UploadRecord from 'records/UploadRecords'
 
 export type RouteMatch = {
   path: string,
@@ -30,9 +29,9 @@ export type Action<T> = {
 }
 
 export type RootState = {
-  selectedVideo: ?VideoRecord,
+  selectedVideo: ?string,
   user: ?UserRecord,
-  uploads: UploadRecord
+  videos: VideoRecord
 }
 
 export type ParatiiLibConfig = {

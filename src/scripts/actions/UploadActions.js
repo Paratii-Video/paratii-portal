@@ -20,7 +20,7 @@ import {
 
 import type { Dispatch } from 'redux'
 
-import VideoInfoRecord from 'records/VideoInfoRecords'
+import VideoInfoRecord from 'records/VideoRecords'
 
 const uploadRequested = createAction(UPLOAD_REQUESTED)
 const uploadProgress = createAction(UPLOAD_PROGRESS)

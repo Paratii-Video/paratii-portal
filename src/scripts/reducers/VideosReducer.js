@@ -15,20 +15,23 @@ import {
   TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE
 } from 'constants/ActionConstants'
-import UploadRecord from 'records/UploadRecords'
+import VideoRecord from 'records/VideoRecords'
 import type { Action } from 'types/ApplicationTypes'
+
+type VideoRecordMap = Map<string, VideoRecord>
 
 const reducer = {
   [UPLOAD_REQUESTED]: (
-    state: UploadRecord,
+    state: VideoRecordMap,
     { payload }: Action<{ id: string, filename: string }>
-  ): UploadRecord => {
+  ): VideoRecordMap => {
     state = state
       .mergeDeep({
-        [payload.id]: new UploadRecord()
+        [payload.id]: new VideoRecord()
       })
       .mergeDeep({
         [payload.id]: {
+          id: payload.id,
           filename: payload.filename,
           uploadStatus: {
             name: 'running',
@@ -39,9 +42,9 @@ const reducer = {
     return state
   },
   [UPLOAD_PROGRESS]: (
-    state: UploadRecord,
+    state: VideoRecordMap,
     { payload }: Action<{ id: string, progress: number }>
-  ): UploadRecord => {
+  ): VideoRecordMap => {
     if (!state.get(payload.id)) {
       throw Error(`Unknown id: ${payload.id}`)
     }
@@ -54,9 +57,9 @@ const reducer = {
     })
   },
   [UPLOAD_SUCCESS]: (
-    state: UploadRecord,
+    state: VideoRecordMap,
     { payload }: Action<{ id: string, hash: string }>
-  ): UploadRecord => {
+  ): VideoRecordMap => {
     if (!state.get(payload.id)) {
       throw Error(`Unknown id: ${payload.id}`)
     }
@@ -70,9 +73,9 @@ const reducer = {
     })
   },
   [UPLOAD_LOCAL_SUCCESS]: (
-    state: UploadRecord,
+    state: VideoRecordMap,
     { payload }: Action<{ id: string, hash: string }>
-  ): UploadRecord => {
+  ): VideoRecordMap => {
     if (!state.get(payload.id)) {
       throw Error(`Unknown id: ${payload.id}`)
     }
@@ -86,60 +89,60 @@ const reducer = {
     })
   },
   [UPDATE_VIDEO_INFO]: (
-    state: UploadRecord,
-    { payload }: Action<UploadRecord>
-  ): UploadRecord => {
-    return state.setIn([payload.id, 'videoInfo'], payload)
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
+    return state.setIn([payload.id], payload)
   },
   [VIDEO_DATA_START]: (
-    state: UploadRecord,
-    { payload }: Action<UploadRecord>
-  ): UploadRecord => {
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
     return state.setIn([payload.id, 'blockchainStatus'], {
       name: 'running',
       data: {}
     })
   },
   [VIDEO_DATA_SAVED]: (
-    state: UploadRecord,
-    { payload }: Action<UploadRecord>
-  ): UploadRecord => {
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
     return state.setIn([payload.id, 'blockchainStatus'], {
       name: 'success',
       data: {}
     })
   },
   [TRANSCODING_REQUESTED]: (
-    state: UploadRecord,
-    { payload }: Action<UploadRecord>
-  ): UploadRecord => {
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
     return state.setIn([payload.id, 'transcodingStatus'], {
       name: 'requested',
       data: {}
     })
   },
   [TRANSCODING_PROGRESS]: (
-    state: UploadRecord,
-    { payload }: Action<UploadRecord>
-  ): UploadRecord => {
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
     return state.setIn([payload.id, 'transcodingStatus'], {
       name: 'progress',
       data: {}
     })
   },
   [TRANSCODING_SUCCESS]: (
-    state: UploadRecord,
-    { payload }: Action<UploadRecord>
-  ): UploadRecord => {
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
     return state.setIn([payload.id, 'transcodingStatus'], {
       name: 'success',
       data: {}
     })
   },
   [TRANSCODING_FAILURE]: (
-    state: UploadRecord,
-    { payload }: Action<UploadRecord>
-  ): UploadRecord => {
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
     return state.setIn([payload.id, 'transcodingStatus'], {
       name: 'failed',
       data: {}

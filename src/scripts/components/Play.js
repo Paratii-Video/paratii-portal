@@ -9,6 +9,7 @@ import Debug from 'containers/DebugContainer'
 import VideoOverlay from 'components/VideoOverlay'
 
 import type { RouteMatch } from 'types/ApplicationTypes'
+import Debug from 'containers/DebugContainer'
 
 type Props = {
   match: RouteMatch,
@@ -53,7 +54,8 @@ const Player = styled.div`
 class Play extends Component<Props, void> {
   componentDidMount (): void {
     const videoId = this.props.match.params.id
-
+    console.log('componentDidMount')
+    console.log(this.props.video)
     if (videoId) {
       this.props.fetchVideo(videoId)
     } else {
@@ -72,14 +74,18 @@ class Play extends Component<Props, void> {
       ) {
         ipfsHash = nextProps.video.ipfsHash
         console.log('- - - CreatePlayer')
-        CreatePlayer({
-          selector: '#player',
-          source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
-          mimeType: 'video/mp4',
-          ipfsHash: ipfsHash
-        })
+        this.createPlayer(ipfsHash)
       }
     }
+  }
+
+  createPlayer (ipfsHash: string): void {
+    CreatePlayer({
+      selector: '#player',
+      source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
+      mimeType: 'video/mp4',
+      ipfsHash: ipfsHash
+    })
   }
 
   render () {
@@ -90,6 +96,7 @@ class Play extends Component<Props, void> {
           <Title>Play Video: {videoId} </Title>
           <VideoOverlay {...this.props} />
           <Player id="player" />
+          <Debug />
         </Body>
         <Debug />
       </Wrapper>
