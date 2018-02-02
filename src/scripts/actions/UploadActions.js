@@ -21,7 +21,7 @@ import {
 
 import type { Dispatch } from 'redux'
 
-import VideoInfoRecord from 'records/VideoRecords'
+import VideoRecord from 'records/VideoRecords'
 
 const initVideoStore = createAction(INIT_VIDEOSTORE)
 const uploadRequested = createAction(UPLOAD_REQUESTED)
@@ -100,6 +100,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
     dispatch(uploadSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
     dispatch(transcodingSuccess({ id: videoInfo.id, hash: hash, sizes: sizes }))
     // console.log('TRANSCODER DONE', hash, sizes)
+    paratii.core.vids.update(videoInfo.id, { ipfsHash: sizes.master.hash })
   })
 }
 
@@ -109,16 +110,18 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   // the owner is the user that is logged in
   videoInfo.owner = paratii.config.account.address
   if (!videoInfo.id) {
-    videoInfo.id = paratii.eth.vids.makeId()
+    const newVideoId = paratii.eth.vids.makeId()
+    videoInfo.id = newVideoId
+    dispatch(initVideoStore({ id: newVideoId }))
   }
   // console.log('SAVING', videoInfo)
-  dispatch(updateVideoInfo(new VideoInfoRecord(videoInfo)))
-  dispatch(videoDataStart(new VideoInfoRecord(videoInfo)))
+  dispatch(updateVideoInfo(new VideoRecord(videoInfo)))
+  dispatch(videoDataStart(new VideoRecord(videoInfo)))
   paratii.core.vids
     .create(videoInfo)
     .then(videoInfo => {
-      dispatch(updateVideoInfo(new VideoInfoRecord(videoInfo)))
-      dispatch(videoDataSaved(new VideoInfoRecord(videoInfo)))
+      dispatch(updateVideoInfo(new VideoRecord(videoInfo)))
+      dispatch(videoDataSaved(new VideoRecord(videoInfo)))
     })
     .catch(error => {
       console.log(error)
