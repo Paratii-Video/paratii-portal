@@ -59,8 +59,7 @@ class VideoManagerContainer extends Component<Props, void> {
       <div>
         <Wrapper>
           {videolist}
-          {selectedVideo === null && <UploadFile />}
-          {selectedVideo !== null && <VideoForm />}
+          {selectedVideo === null ? <UploadFile /> : <VideoForm />}
         </Wrapper>
         <Debug />
       </div>
