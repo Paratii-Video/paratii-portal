@@ -24,7 +24,6 @@ RUN yum -y install epel-release curl wget git gcc gcc-c++ make
 RUN yum -y install openssl libssl-devel libudev-devel openssl-devel
 RUN curl --silent --location https://rpm.nodesource.com/setup_9.x | bash -
 RUN yum -y install nodejs
-RUN yum -y install chromium
 
 # openssl 1.1.0
 
@@ -42,11 +41,18 @@ RUN rpm -Uvh http://d1h4xl4cr1h0mo.cloudfront.net/v1.9.0/x86_64-unknown-centos-g
 RUN wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo
 RUN yum -y install yarn
 
+# chrom
+
+# RUN sh -c 'echo -e "[google-chrome]\nname=google-chrome\nbaseurl=http://dl.google.com/linux/chrome/rpm/stable/$basearch\nenabled=1\ngpgcheck=1\ngpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub"' >> /etc/yum.repos.d/google-chrome.repo
+RUN yum -y install chromium
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+RUN yum -y install ./google-chrome-stable_current_*.rpm
+RUN export CHROME_BIN=/usr/bin/google-chrome
+
 # chromedriver
 RUN rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/c/chromedriver-61.0.3163.100-1.el7.x86_64.rpm
 RUN yum install -y Xvfb
 RUN yum install -y chromedriver
-RUN export CHROME_BIN=/usr/bin/chromium-browser
 
 # phatomjs
 
