@@ -112,25 +112,51 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    return state.setIn([payload.id], payload)
+    return state.mergeDeep([payload.id], {
+      title: payload.title
+    })
   },
   [VIDEO_DATA_START]: (
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    return state.setIn([payload.id, 'blockchainStatus'], {
+    state = state.setIn([payload.id, 'blockchainStatus'], {
       name: 'running',
-      data: {}
+      data: {
+        id: payload.id,
+        title: payload.title,
+        description: payload.description,
+        owner: payload.owner
+      }
     })
+    return state
+    // return state.mergeDeep([payload.id], {
+    //   blockchainStatus: {
+    //     name: 'running',
+    //     data: {
+    //       id: payload.id,
+    //       title: payload.title,
+    //       description: payload.description,
+    //       owner: payload.owner
+    //     }
+    //   }
+    // })
   },
   [VIDEO_DATA_SAVED]: (
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    return state.setIn([payload.id, 'blockchainStatus'], {
+    state = state.setIn([payload.id, 'blockchainStatus'], {
       name: 'success',
-      data: {}
+      data: {
+        id: payload.id,
+        title: payload.title,
+        description: payload.description,
+        owner: payload.owner
+      }
     })
+    state = state.setIn([payload.id, 'title'], payload.title)
+    return state
   },
   [TRANSCODING_REQUESTED]: (
     state: VideoRecordMap,

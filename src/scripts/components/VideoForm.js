@@ -40,8 +40,9 @@ class VideoForm extends Component<Props, Object> {
   }
 
   handleInputChange (input: string, e: Object) {
+    console.log(this.state)
     this.setState({
-      [input]: e.target.value
+      input: e.target.value
     })
   }
 
@@ -59,7 +60,7 @@ class VideoForm extends Component<Props, Object> {
     const onInputChange = this.handleInputChange
     return (
       <Form>
-        Editing video {this.state.id}
+        <h5>Editing video {this.state.id}</h5>
         <Input
           id="video-id"
           type="hidden"

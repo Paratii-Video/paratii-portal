@@ -9,7 +9,6 @@ import {
   UPLOAD_PROGRESS,
   UPLOAD_SUCCESS,
   UPLOAD_LOCAL_SUCCESS,
-  UPDATE_VIDEO_INFO,
   VIDEO_DATA_START,
   VIDEO_DATA_SAVED,
   VIDEO_SELECT,
@@ -21,14 +20,11 @@ import {
 
 import type { Dispatch } from 'redux'
 
-import VideoRecord from 'records/VideoRecords'
-
 const initVideoStore = createAction(INIT_VIDEOSTORE)
 const uploadRequested = createAction(UPLOAD_REQUESTED)
 const uploadProgress = createAction(UPLOAD_PROGRESS)
 const uploadSuccess = createAction(UPLOAD_SUCCESS)
 const uploadLocalSuccess = createAction(UPLOAD_LOCAL_SUCCESS)
-const updateVideoInfo = createAction(UPDATE_VIDEO_INFO)
 const videoDataStart = createAction(VIDEO_DATA_START)
 const videoDataSaved = createAction(VIDEO_DATA_SAVED)
 const selectVideo = createAction(VIDEO_SELECT)
@@ -112,13 +108,13 @@ export const saveVideoInfo = (videoInfo: Object) => async (
     dispatch(initVideoStore({ id: newVideoId }))
   }
   // console.log('SAVING', videoInfo)
-  dispatch(updateVideoInfo(new VideoRecord(videoInfo)))
-  dispatch(videoDataStart(new VideoRecord(videoInfo)))
+  // dispatch(updateVideoInfo(new VideoRecord(videoInfo)))
+  dispatch(videoDataStart(videoInfo))
   paratii.core.vids
     .create(videoInfo)
     .then(videoInfo => {
-      dispatch(updateVideoInfo(new VideoRecord(videoInfo)))
-      dispatch(videoDataSaved(new VideoRecord(videoInfo)))
+      // dispatch(updateVideoInfo(new VideoRecord(videoInfo)))
+      dispatch(videoDataSaved(videoInfo))
     })
     .catch(error => {
       console.log(error)
