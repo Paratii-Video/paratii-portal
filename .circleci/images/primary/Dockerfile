@@ -36,11 +36,6 @@ RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.
 RUN yum -y install ./google-chrome-stable_current_*.rpm
 RUN export CHROME_BIN=/usr/bin/google-chrome
 
-# chromedriver
-RUN rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/c/chromedriver-61.0.3163.100-1.el7.x86_64.rpm
-RUN yum install -y Xvfb
-RUN yum install -y chromedriver
-
 # phatomjs
 
 RUN yum install -y fontconfig freetype freetype-devel fontconfig-devel libstdc++
