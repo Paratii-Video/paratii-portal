@@ -1,22 +1,11 @@
 import React, { Component } from 'react'
-// import styled from 'styled-components'
-
 import Title from './foundations/Title'
 import Wrapper from './foundations/Wrapper'
-// import Button from './foundations/buttons/Button'
-// import Input from './foundations/Input'
 import Dropzone from './Dropzone'
-
-// import styled from 'styled-components'
 
 type Props = {
   onFileChosen: (files: Array<Object>) => void
 }
-
-// const ExternUpload = styled.div`
-//   height: 200px;
-//   width: 100%;
-// `
 
 class UploadFile extends Component<Props, void> {
   constructor (props) {
@@ -47,11 +36,3 @@ class UploadFile extends Component<Props, void> {
 }
 
 export default UploadFile
-
-// <ExternUpload>
-//   <h5>Upload Files from Youtube or Vimeo</h5>
-//   <Input />
-// </ExternUpload>
-// <Button id="upload-submit" onClick={this.props.onUploadRequested}>
-//   Upload
-// </Button>

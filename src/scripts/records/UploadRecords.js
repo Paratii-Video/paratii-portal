@@ -11,10 +11,10 @@ class Upload extends ImmutableRecord({
   uploadStatus: new AsyncTaskStatusRecord(),
   transcodingStatus: new AsyncTaskStatusRecord()
 }) {
-  filename: string;
-  blockchainStatus: AsyncTaskStatusRecord;
-  uploadStatus: AsyncTaskStatusRecord;
-  transcodingStatus: AsyncTaskStatusRecord;
-  videoInfo: VideoInfoRecord;
+  filename: string
+  blockchainStatus: AsyncTaskStatusRecord
+  uploadStatus: AsyncTaskStatusRecord
+  transcodingStatus: AsyncTaskStatusRecord
+  videoInfo: VideoInfoRecord
 }
 export default Upload

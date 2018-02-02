@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Svgs from '../foundations/Svgs'
+import MainSvg from '../foundations/svgs/MainSvg'
 
 type Props = {
   children: Object
@@ -20,7 +20,7 @@ class MainTemplate extends Component<Props, void> {
   render () {
     return (
       <Wrapper>
-        <Svgs />
+        <MainSvg />
         {this.props.children}
       </Wrapper>
     )

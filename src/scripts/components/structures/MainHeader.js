@@ -11,10 +11,8 @@ type Props = {
 }
 
 const Header = styled.header`
-  background-color: ${props =>
-    props.theme ? props.theme.colors.header.background : 'black'};
-  height: ${props =>
-    props.theme.sizes ? props.theme.sizes.mainHeader.height : 'auto'};
+  background-color: ${props => props.theme.colors.header.background};
+  height: ${props => props.theme.sizes.mainHeader.height};
   padding-left: 80px;
   padding-right: 80px;
 `
@@ -54,7 +52,7 @@ const ButtonBucket = styled.button`
 
 const ButtonBucketSVG = styled.svg`
   display: block;
-  fill: ${props => props.theme.colors.header.color};
+  fill: ${props => props.theme.colors.header.iconsFill};
   height: 100%;
   width: 100%;
 `
@@ -71,7 +69,7 @@ const ProfileAvatarLink = styled(Link)`
 // const ProfileAvatarImage = styled.img`
 //   transition: filter ${props => props.theme.animation.time.repaint};
 //
-//   ${/* sc-selector */ProfileAvatarLink}:hover & {
+//   ${ProfileAvatarLink}:hover & {
 //     filter: brightness(1.5);
 //   }
 // `

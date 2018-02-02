@@ -9,10 +9,10 @@ class VideoInfo extends ImmutableRecord({
   ipfsHash: null,
   owner: null
 }) {
-  id: ?string;
-  title: ?string;
-  description: ?string;
-  ipfsHash: ?string;
-  owner: ?string;
+  id: ?string
+  title: ?string
+  description: ?string
+  ipfsHash: ?string
+  owner: ?string
 }
 export default VideoInfo
