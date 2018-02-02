@@ -9,7 +9,6 @@ import Debug from 'containers/DebugContainer'
 import VideoOverlay from 'components/VideoOverlay'
 
 import type { RouteMatch } from 'types/ApplicationTypes'
-import Debug from 'containers/DebugContainer'
 
 type Props = {
   match: RouteMatch,
@@ -96,7 +95,6 @@ class Play extends Component<Props, void> {
           <Title>Play Video: {videoId} </Title>
           <VideoOverlay {...this.props} />
           <Player id="player" />
-          <Debug />
         </Body>
         <Debug />
       </Wrapper>
