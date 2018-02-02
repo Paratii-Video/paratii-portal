@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import type { UploadRecord } from 'records/UploadRecords'
+import type { VideoRecord } from 'records/VideoRecords'
 import type { Map } from 'immutable'
 import Button from './foundations/buttons/Button'
 
 import VideoListItem from 'components/VideoListItem'
 
 type Props = {
-  uploads: Map<string, UploadRecord>, // maps video ids to upload records
+  videos: Map<string, VideoRecord>, // maps video ids to upload records
   onItemClick: (id: string) => void
 }
 
@@ -24,20 +24,20 @@ const Wrapper = styled.div`
 
 class VideoList extends Component<Props, void> {
   render () {
-    const { uploads, onItemClick } = this.props
     return (
       <Wrapper>
-        {uploads
+        {this.props.videos
           .entrySeq()
           .map(([videoId, videoInfo]) => (
             <VideoListItem
               key={videoId}
-              id={videoId}
-              item={videoInfo}
-              onClick={onItemClick}
+              video={videoInfo}
+              onClick={this.props.onItemClick}
             />
           ))}
-        <Button onClick={() => onItemClick(null)}>ADD MORE VIDEOS</Button>
+        <Button onClick={() => this.props.onItemClick(null)}>
+          ADD MORE VIDEOS
+        </Button>
       </Wrapper>
     )
   }

@@ -15,22 +15,23 @@ import {
   TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE
 } from 'constants/ActionConstants'
-import UploadRecord from 'records/UploadRecords'
+import VideoRecord from 'records/VideoRecords'
 import type { Action } from 'types/ApplicationTypes'
 
-type VideoRecordArray = { string: UploadRecord }
+type VideoRecordMap = Map<string, VideoRecord>
 
 const reducer = {
   [UPLOAD_REQUESTED]: (
-    state: VideoRecordArray,
+    state: VideoRecordMap,
     { payload }: Action<{ id: string, filename: string }>
-  ): VideoRecordArray => {
+  ): VideoRecordMap => {
     state = state
       .mergeDeep({
-        [payload.id]: new UploadRecord()
+        [payload.id]: new VideoRecord()
       })
       .mergeDeep({
         [payload.id]: {
+          id: payload.id,
           filename: payload.filename,
           uploadStatus: {
             name: 'running',
@@ -41,9 +42,9 @@ const reducer = {
     return state
   },
   [UPLOAD_PROGRESS]: (
-    state: VideoRecordArray,
+    state: VideoRecordMap,
     { payload }: Action<{ id: string, progress: number }>
-  ): VideoRecordArray => {
+  ): VideoRecordMap => {
     if (!state.get(payload.id)) {
       throw Error(`Unknown id: ${payload.id}`)
     }
@@ -56,9 +57,9 @@ const reducer = {
     })
   },
   [UPLOAD_SUCCESS]: (
-    state: VideoRecordArray,
+    state: VideoRecordMap,
     { payload }: Action<{ id: string, hash: string }>
-  ): VideoRecordArray => {
+  ): VideoRecordMap => {
     if (!state.get(payload.id)) {
       throw Error(`Unknown id: ${payload.id}`)
     }
@@ -72,9 +73,9 @@ const reducer = {
     })
   },
   [UPLOAD_LOCAL_SUCCESS]: (
-    state: VideoRecordArray,
+    state: VideoRecordMap,
     { payload }: Action<{ id: string, hash: string }>
-  ): VideoRecordArray => {
+  ): VideoRecordMap => {
     if (!state.get(payload.id)) {
       throw Error(`Unknown id: ${payload.id}`)
     }
@@ -88,60 +89,60 @@ const reducer = {
     })
   },
   [UPDATE_VIDEO_INFO]: (
-    state: VideoRecordArray,
-    { payload }: Action<UploadRecord>
-  ): VideoRecordArray => {
-    return state.setIn([payload.id, 'videoInfo'], payload)
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
+    return state.setIn([payload.id], payload)
   },
   [VIDEO_DATA_START]: (
-    state: VideoRecordArray,
-    { payload }: Action<UploadRecord>
-  ): VideoRecordArray => {
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
     return state.setIn([payload.id, 'blockchainStatus'], {
       name: 'running',
       data: {}
     })
   },
   [VIDEO_DATA_SAVED]: (
-    state: VideoRecordArray,
-    { payload }: Action<UploadRecord>
-  ): VideoRecordArray => {
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
     return state.setIn([payload.id, 'blockchainStatus'], {
       name: 'success',
       data: {}
     })
   },
   [TRANSCODING_REQUESTED]: (
-    state: VideoRecordArray,
-    { payload }: Action<UploadRecord>
-  ): VideoRecordArray => {
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
     return state.setIn([payload.id, 'transcodingStatus'], {
       name: 'requested',
       data: {}
     })
   },
   [TRANSCODING_PROGRESS]: (
-    state: VideoRecordArray,
-    { payload }: Action<UploadRecord>
-  ): VideoRecordArray => {
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
     return state.setIn([payload.id, 'transcodingStatus'], {
       name: 'progress',
       data: {}
     })
   },
   [TRANSCODING_SUCCESS]: (
-    state: VideoRecordArray,
-    { payload }: Action<UploadRecord>
-  ): VideoRecordArray => {
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
     return state.setIn([payload.id, 'transcodingStatus'], {
       name: 'success',
       data: {}
     })
   },
   [TRANSCODING_FAILURE]: (
-    state: VideoRecordArray,
-    { payload }: Action<UploadRecord>
-  ): VideoRecordArray => {
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
     return state.setIn([payload.id, 'transcodingStatus'], {
       name: 'failed',
       data: {}

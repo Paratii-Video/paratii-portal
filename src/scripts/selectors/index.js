@@ -1,12 +1,17 @@
 /* @flow */
 
 import VideoRecord from 'records/VideoRecords'
-import UploadRecord from 'records/UploadRecords'
 import UserRecord from 'records/UserRecords'
 import type { RootState } from 'types/ApplicationTypes'
 
 /* Videos */
-export const getVideo = (state: RootState): ?VideoRecord => state.selectedVideo
+export const getVideo = (state: RootState): ?VideoRecord => {
+  console.log('CALLING getVideo')
+  let videoId = state.selectedVideo
+  let video = state.videos.get(videoId)
+  console.log(video)
+  return video
+}
 
 /* Users */
 export const getUser = (state: RootState): ?UserRecord => state.user
@@ -19,6 +24,7 @@ export const getShouldKeepUrl = (state: RootState): boolean =>
 
 /* Upload */
 // get the files to be shown in the upload manager
-export const getUploads = (state: RootState): ?UploadRecord => {
+export const getUploads = (state: RootState): ?VideoRecord => {
+  // we just return all videos, but in the future this will be a subset
   return state.videos
 }

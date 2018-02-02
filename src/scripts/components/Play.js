@@ -8,12 +8,13 @@ import VideoRecord from 'records/VideoRecords'
 import VideoOverlay from 'components/VideoOverlay'
 
 import type { RouteMatch } from 'types/ApplicationTypes'
+import Debug from 'containers/DebugContainer'
 
 type Props = {
   match: RouteMatch,
   fetchVideo: (id: string) => void,
   video: ?VideoRecord
-};
+}
 
 const Wrapper = styled.div`
   font-size: 20px;
@@ -53,7 +54,8 @@ const Player = styled.div`
 class Play extends Component<Props, void> {
   componentDidMount (): void {
     const videoId = this.props.match.params.id
-
+    console.log('componentDidMount')
+    console.log(this.props.video)
     if (videoId) {
       this.props.fetchVideo(videoId)
     } else {
@@ -66,17 +68,24 @@ class Play extends Component<Props, void> {
 
     let ipfsHash = ''
     if (nextProps.video) {
-      if (this.props.video == null || nextProps.video.ipfsHash !== this.props.video.ipfsHash) {
+      if (
+        this.props.video == null ||
+        nextProps.video.ipfsHash !== this.props.video.ipfsHash
+      ) {
         ipfsHash = nextProps.video.ipfsHash
         console.log('- - - CreatePlayer')
-        CreatePlayer({
-          selector: '#player',
-          source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
-          mimeType: 'video/mp4',
-          ipfsHash: ipfsHash
-        })
+        this.createPlayer(ipfsHash)
       }
     }
+  }
+
+  createPlayer (ipfsHash: string): void {
+    CreatePlayer({
+      selector: '#player',
+      source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
+      mimeType: 'video/mp4',
+      ipfsHash: ipfsHash
+    })
   }
 
   render () {
@@ -84,9 +93,10 @@ class Play extends Component<Props, void> {
     return (
       <Wrapper>
         <Body>
-          <Title>Play Video: { videoId } </Title>
-          <VideoOverlay {...this.props}/>
+          <Title>Play Video: {videoId} </Title>
+          <VideoOverlay {...this.props} />
           <Player id="player" />
+          <Debug />
         </Body>
       </Wrapper>
     )

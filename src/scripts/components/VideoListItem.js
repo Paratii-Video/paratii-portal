@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 import NavLink from 'components/foundations/buttons/NavLink'
-import type { UploadRecord } from 'records/UploadRecords'
+import type { VideoRecord } from 'records/VideoRecords'
 
 type Props = {
-  id: string,
-  item: UploadRecord,
+  video: VideoRecord,
   onClick: (id: string) => void
 }
 
@@ -32,24 +31,24 @@ class UploadListItem extends Component<Props, void> {
   }
 
   handleClick () {
-    this.props.onClick(this.props.id)
+    this.props.onClick(this.props.video.id)
   }
 
   render () {
-    const item = this.props.item
+    const item = this.props.video
     let progress = 0
     if (item.getIn(['uploadStatus', 'name']) === 'running') {
       progress = item.getIn(['uploadStatus', 'data', 'progress'])
     }
     let linkToVideo = ''
     if (item.transcodingStatus.name === 'success') {
-      let link = `/play/${item.videoInfo.id}`
+      let link = `/play/${item.id}`
       linkToVideo = <NavLink to={link}>Play video</NavLink>
     }
 
     return (
       <Item onClick={this.handleClick} id="video-list-item-{item.id}">
-        <Label>video id: {item.videoInfo.id}</Label>
+        <Label>video id: {item.id}</Label>
         <Label>Filename: {item.filename}</Label>
         <Label>
           Upload Status: <b>{item.uploadStatus.name}</b> ({progress}%)
