@@ -4,6 +4,7 @@ import { createAction } from 'redux-actions'
 import { paratii } from 'utils/ParatiiLib'
 
 import {
+  INIT_VIDEOSTORE,
   UPLOAD_REQUESTED,
   UPLOAD_PROGRESS,
   UPLOAD_SUCCESS,
@@ -22,6 +23,7 @@ import type { Dispatch } from 'redux'
 
 import VideoInfoRecord from 'records/VideoRecords'
 
+const initVideoStore = createAction(INIT_VIDEOSTORE)
 const uploadRequested = createAction(UPLOAD_REQUESTED)
 const uploadProgress = createAction(UPLOAD_PROGRESS)
 const uploadSuccess = createAction(UPLOAD_SUCCESS)
@@ -29,7 +31,7 @@ const uploadLocalSuccess = createAction(UPLOAD_LOCAL_SUCCESS)
 const updateVideoInfo = createAction(UPDATE_VIDEO_INFO)
 const videoDataStart = createAction(VIDEO_DATA_START)
 const videoDataSaved = createAction(VIDEO_DATA_SAVED)
-const videoDataLoaded = createAction(VIDEO_SELECT)
+const selectVideo = createAction(VIDEO_SELECT)
 const transcodingRequested = createAction(TRANSCODING_REQUESTED)
 const transcodingProgress = createAction(TRANSCODING_PROGRESS)
 const transcodingSuccess = createAction(TRANSCODING_SUCCESS)
@@ -40,7 +42,8 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   // (the API will change and become paratii.ipfs.add(..))
   let newVideoId = paratii.eth.vids.makeId()
   // set the selectedVideo
-  dispatch(videoDataLoaded({ id: newVideoId }))
+  dispatch(initVideoStore({ id: newVideoId }))
+  dispatch(selectVideo({ id: newVideoId }))
   dispatch(uploadRequested({ id: newVideoId, filename: file.name }))
   const uploader = paratii.ipfs.uploader.add(file)
   uploader.on('error', function (err) {
@@ -92,11 +95,11 @@ export const transcodeVideo = (videoInfo: Object) => async (
   transcoder.on('transcoding:downsample:ready', function (hash, size) {
     console.log('TRANSCODER DOWNSAMPLE READY', hash, size)
   })
-  transcoder.on('transcoding:done', function (hash, size) {
+  transcoder.on('transcoding:done', function (hash, sizes) {
     // if transcoding is done, apparently we have uploaded the file first
     dispatch(uploadSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
-    dispatch(transcodingSuccess(videoInfo))
-    console.log('TRANSCODER DOWNSAMPLE READY', hash, size)
+    dispatch(transcodingSuccess({ id: videoInfo.id, hash: hash, sizes: sizes }))
+    // console.log('TRANSCODER DONE', hash, sizes)
   })
 }
 
@@ -118,7 +121,7 @@ export const saveVideoInfo = (videoInfo: Object) => async (
       dispatch(videoDataSaved(new VideoInfoRecord(videoInfo)))
     })
     .catch(error => {
-      console.log('-------------------')
       console.log(error)
+      throw error
     })
 }

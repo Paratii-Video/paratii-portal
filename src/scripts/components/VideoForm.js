@@ -57,8 +57,6 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     const onInputChange = this.handleInputChange
-    console.log(`current state of videoform:`)
-    console.log(this.state.id)
     return (
       <Form>
         Editing video {this.state.id}

@@ -44,7 +44,7 @@ class UploadListItem extends Component<Props, void> {
       progress = item.getIn(['uploadStatus', 'data', 'progress'])
     }
     let linkToVideo = ''
-    if (item.transcodingStatus.name === 'success') {
+    if (item.getIn(['transcodingStatus', 'name']) === 'success') {
       let link = `/play/${item.id}`
       linkToVideo = (
         <Label>

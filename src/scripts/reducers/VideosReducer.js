@@ -3,6 +3,7 @@
 import { Map } from 'immutable'
 import { handleActions } from 'redux-actions'
 import {
+  INIT_VIDEOSTORE,
   UPLOAD_REQUESTED,
   UPLOAD_PROGRESS,
   UPLOAD_SUCCESS,
@@ -21,24 +22,32 @@ import type { Action } from 'types/ApplicationTypes'
 type VideoRecordMap = Map<string, VideoRecord>
 
 const reducer = {
+  [INIT_VIDEOSTORE]: (
+    state: VideoRecordMap,
+    { payload }: Action<{ id: string }>
+  ): VideoRecordMap => {
+    if (state.get(payload.id) === undefined) {
+      state = state.mergeDeep({
+        [payload.id]: new VideoRecord({
+          id: payload.id
+        })
+      })
+    }
+    return state
+  },
   [UPLOAD_REQUESTED]: (
     state: VideoRecordMap,
     { payload }: Action<{ id: string, filename: string }>
   ): VideoRecordMap => {
-    state = state
-      .mergeDeep({
-        [payload.id]: new VideoRecord()
-      })
-      .mergeDeep({
-        [payload.id]: {
-          id: payload.id,
-          filename: payload.filename,
-          uploadStatus: {
-            name: 'running',
-            data: { progress: 0 }
-          }
+    state = state.mergeDeep({
+      [payload.id]: {
+        filename: payload.filename,
+        uploadStatus: {
+          name: 'running',
+          data: { progress: 0 }
         }
-      })
+      }
+    })
     return state
   },
   [UPLOAD_PROGRESS]: (
@@ -56,22 +65,7 @@ const reducer = {
       }
     })
   },
-  [UPLOAD_SUCCESS]: (
-    state: VideoRecordMap,
-    { payload }: Action<{ id: string, hash: string }>
-  ): VideoRecordMap => {
-    if (!state.get(payload.id)) {
-      throw Error(`Unknown id: ${payload.id}`)
-    }
-    return state.mergeDeep({
-      [payload.id]: {
-        uploadStatus: {
-          name: 'success...',
-          data: { ipfsHash: payload.hash }
-        }
-      }
-    })
-  },
+
   [UPLOAD_LOCAL_SUCCESS]: (
     state: VideoRecordMap,
     { payload }: Action<{ id: string, hash: string }>
@@ -79,11 +73,37 @@ const reducer = {
     if (!state.get(payload.id)) {
       throw Error(`Unknown id: ${payload.id}`)
     }
+    console.log('UPLOAD_LOCAL_SUCCESS')
+    const ipfsHashOrig = payload.hash
+    state = state.mergeDeep({
+      [payload.id]: {
+        ipfsHashOrig: ipfsHashOrig,
+        uploadStatus: {
+          name: 'uploaded to local node',
+          data: {
+            ipfsHashOrig: ipfsHashOrig
+          }
+        }
+      }
+    })
+    return state
+  },
+  [UPLOAD_SUCCESS]: (
+    state: VideoRecordMap,
+    { payload }: Action<{ id: string, hash: string }>
+  ): VideoRecordMap => {
+    if (!state.get(payload.id)) {
+      throw Error(`Unknown id: ${payload.id}`)
+    }
+    const ipfsHashOrig = payload.hash
     return state.mergeDeep({
       [payload.id]: {
+        ipfsHashOrig: ipfsHashOrig,
         uploadStatus: {
-          name: 'uploaded to local ipfs node',
-          data: { ipfsHash: payload.hash }
+          name: 'uploaded to transcoder node',
+          data: {
+            ipfsHashOrig: ipfsHashOrig
+          }
         }
       }
     })
@@ -132,12 +152,22 @@ const reducer = {
   },
   [TRANSCODING_SUCCESS]: (
     state: VideoRecordMap,
-    { payload }: Action<VideoRecord>
+    { payload }: Action<{ id: string, sizes: Object }>
   ): VideoRecordMap => {
-    return state.setIn([payload.id, 'transcodingStatus'], {
-      name: 'success',
-      data: {}
+    const ipfsHash = payload.sizes.master.hash
+    state = state.mergeDeep({
+      [payload.id]: {
+        ipfsHash: ipfsHash,
+        transcodingStatus: {
+          name: 'success',
+          data: {
+            ipfsHash: ipfsHash,
+            sizes: payload.sizes
+          }
+        }
+      }
     })
+    return state
   },
   [TRANSCODING_FAILURE]: (
     state: VideoRecordMap,
