@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 import VideoRecord from 'records/VideoRecords'
-import Wrapper from 'components/foundations/Wrapper'
 
 type Props = {
   video: ?VideoRecord,
@@ -16,38 +15,34 @@ type Props = {
   onClick: (e: Object) => void
 }
 
+const Title = styled.div`
+  font-size: 24px;
+`
+
 const Overlay = styled.div`
   width: 100%;
   height: 100%;
   flex: 0 0 100%;
+  display: flex;
   color: white;
   background: rgba(0, 0, 0, 0.8);
+  padding: 48px;
 `
 
 class VideoOverlay extends Component<Props, void> {
+  getVideoTitle (): string {
+    const { video } = this.props
+
+    return (video && video.get('title')) || 'Title Placeholder'
+  }
+
   render () {
-    const videoId = this.props.match.params.id
-    const video = this.props.video
-    if (video === undefined) {
-      return (
-        <Wrapper>
-          <Overlay id="video-overlay">
-            <h2>Video Overlay</h2>
-            <h5>This videow (with id {videoId}) could not be found!</h5>
-          </Overlay>
-        </Wrapper>
-      )
-    } else {
-      return (
-        <Wrapper>
-          <Overlay id="video-overlay">
-            <h2>Video Overlay</h2>
-            <h5>The video id is: {videoId}</h5>
-            Title: {(video && video.title) || 'This video has no (known) title'}
-          </Overlay>
-        </Wrapper>
-      )
-    }
+    const { onClick } = this.props
+    return (
+      <Overlay id="video-overlay" onClick={onClick}>
+        <Title>{this.getVideoTitle()}</Title>
+      </Overlay>
+    )
   }
 }
 
