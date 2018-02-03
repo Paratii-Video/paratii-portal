@@ -8,7 +8,9 @@ type Props = {
   style?: Object
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  display: block;
+`
 
 class Popover extends React.Component<Props, void> {
   render () {
