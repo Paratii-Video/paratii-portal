@@ -8,28 +8,18 @@ import VideoRecord from 'records/VideoRecords'
 
 import VideoOverlay from 'components/VideoOverlay'
 
-import type { RouteMatch } from 'types/ApplicationTypes'
-import Debug from 'containers/DebugContainer'
+import type { RouteMatch, ClapprPlayer } from 'types/ApplicationTypes'
 
 type Props = {
   match: RouteMatch,
-  setSelectedVideo: (id: string) => void,
+  setSelectedVideo: ({ id: string }) => void,
   fetchVideo: (id: string) => void,
   isPlaying: boolean,
-  togglePlayPause: () => void,
+  togglePlayPause: (play: boolean) => void,
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
   video: ?VideoRecord
 }
-
-const Wrapper = styled.div`
-  font-size: 20px;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  flex: 0 0 100%;
-`
 
 const Body = styled.div`
   width: 100%;
@@ -37,6 +27,17 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`
+
+const Wrapper = styled.div`
+  font-size: 20px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 0 1 75%;
+  width: 75%;
+  max-height: 450px;
 `
 
 const Title = styled.header`
@@ -72,6 +73,9 @@ const OverlayWrapper = styled.div`
 `
 
 class Play extends Component<Props, void> {
+  player: ClapprPlayer
+  onOverlayClick: () => void
+
   constructor (props: Props) {
     super(props)
 
@@ -146,7 +150,7 @@ class Play extends Component<Props, void> {
   }
 
   createPlayer (ipfsHash: string): void {
-    CreatePlayer({
+    this.player = CreatePlayer({
       selector: '#player',
       source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
       mimeType: 'video/mp4',
@@ -172,7 +176,6 @@ class Play extends Component<Props, void> {
               )}
             <Player id="player" />
           </PlayerWrapper>
-          <Debug />
         </Body>
       </Wrapper>
     )

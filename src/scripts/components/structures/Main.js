@@ -11,6 +11,8 @@ const MainWrapper = styled.main`
   display: flex;
   padding: 80px;
   overflow-x: hidden;
+  height: 100vh;
+  justify-content: center;
 `
 
 class Main extends Component<Props, void> {

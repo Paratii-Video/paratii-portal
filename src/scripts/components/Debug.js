@@ -8,6 +8,7 @@ const DebugBox = styled.div`
   border: 4px dashed #f55;
   padding: 20px;
   margin: 20px;
+  flex: 0 0 0;
 `
 
 const Title = styled.h2`

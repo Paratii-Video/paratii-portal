@@ -44,6 +44,20 @@ export type ParatiiLibConfig = {
   provider: string
 }
 
+type EventEmitter = {
+  on: (eventType: string, callback: (e: Object) => void) => void
+}
+
+// TODO move this into paratii-mediaplayer repo
+type ClapprCore = EventEmitter & {}
+
+export type ClapprPlayer = EventEmitter & {
+  core: {
+    getCurrentPlayback: () => ClapprCore
+  },
+  play: () => void
+}
+
 // TODO move this into paratii-lib repo
 export type ParatiiLib = {
   config: {
