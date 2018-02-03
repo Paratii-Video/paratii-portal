@@ -24,7 +24,8 @@ import Main from './structures/Main'
 import MainFooter from './structures/MainFooter'
 
 type Props = {
-  match: RouteMatch
+  match: RouteMatch,
+  setSelectedVideo: (id: string) => void
 }
 
 const paratiiTheme = {
@@ -46,7 +47,13 @@ class App extends Component<Props, void> {
             <Route path={`${match.url}signup`} component={SignupContainer} />
             <Route path={`${match.url}login`} component={LoginContainer} />
             <Route path={`${match.url}profile`} component={ProfileContainer} />
-            <Route path={`${match.url}play/:id`} component={PlayContainer} />
+            <Route
+              path={`${match.url}play/:id`}
+              component={PlayContainer}
+              onEnter={() => {
+                console.log('entering rout')
+              }}
+            />
             <Route path={`${match.url}upload`} component={VideoManager} />
             <Route path={`${match.url}debug`} component={DebugContainer} />
           </Main>

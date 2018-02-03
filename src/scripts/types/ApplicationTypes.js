@@ -31,10 +31,12 @@ export type Action<T> = {
   payload: T
 }
 
+export type VideoRecordMap = Immutable.Map<string, VideoRecord>
+
 export type RootState = {
   selectedVideo: ?string,
   user: ?UserRecord,
-  videos: Immutable.Map<string, VideoRecord>,
+  videos: VideoRecordMap,
   player: PlayerRecord
 }
 

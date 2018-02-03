@@ -2,7 +2,8 @@
 
 const createActionConstant = constant => `@@PARATII_PORTAL_${constant}`
 
-/* selectedVideo actions */
+/* Video actions */
+export const VIDEO_LOADED = createActionConstant('VIDEO_LOADED')
 export const VIDEO_SELECT = createActionConstant('VIDEO_SELECT')
 
 /* Login Actions */

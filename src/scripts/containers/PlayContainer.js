@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import Play from 'components/Play'
-import { fetchVideo } from 'actions/VideoActions'
+import { fetchVideo, selectVideoAction } from 'actions/VideoActions'
 import { togglePlayPause, attemptPlay } from 'actions/PlayerActions'
 import { getVideo, getIsPlaying, getIsAttemptingPlay } from 'selectors/index'
 
@@ -18,6 +18,7 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchVideo: bindActionCreators(fetchVideo, dispatch),
+  setSelectedVideo: bindActionCreators(selectVideoAction, dispatch),
   togglePlayPause: bindActionCreators(togglePlayPause, dispatch),
   attemptPlay: bindActionCreators(attemptPlay, dispatch)
 })

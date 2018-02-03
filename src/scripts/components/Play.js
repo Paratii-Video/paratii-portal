@@ -13,6 +13,7 @@ import Debug from 'containers/DebugContainer'
 
 type Props = {
   match: RouteMatch,
+  setSelectedVideo: (id: string) => void,
   fetchVideo: (id: string) => void,
   isPlaying: boolean,
   togglePlayPause: () => void,
@@ -75,6 +76,8 @@ class Play extends Component<Props, void> {
     super(props)
 
     this.onOverlayClick = this.onOverlayClick.bind(this)
+
+    this.props.setSelectedVideo({ id: this.getVideoId() })
   }
 
   bindClapprEvents (): void {
@@ -99,8 +102,14 @@ class Play extends Component<Props, void> {
     attemptPlay()
   }
 
+  getVideoId (): string {
+    const params: Object = this.props.match.params
+
+    return params.id || ''
+  }
+
   componentDidMount (): void {
-    const videoId = this.props.match.params.id
+    const videoId = this.getVideoId()
     console.log('componentDidMount')
     console.log(this.props.video)
     if (videoId) {
