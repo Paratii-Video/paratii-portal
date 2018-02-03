@@ -40,17 +40,6 @@ const Wrapper = styled.div`
   max-height: 450px;
 `
 
-const Title = styled.header`
-  display: none;
-  background-color: #fff;
-  padding: 20px;
-  align-items: center;
-  color: blue;
-  flex: 0 0 50px;
-  width: 100%;
-  text-align: left;
-`
-
 const Player = styled.div`
   width: 100%;
   height: 100%;
@@ -114,8 +103,6 @@ class Play extends Component<Props, void> {
 
   componentDidMount (): void {
     const videoId = this.getVideoId()
-    console.log('componentDidMount')
-    console.log(this.props.video)
     if (videoId) {
       this.props.fetchVideo(videoId)
     } else {
@@ -133,7 +120,6 @@ class Play extends Component<Props, void> {
         nextProps.video.ipfsHash !== this.props.video.ipfsHash
       ) {
         ipfsHash = nextProps.video.ipfsHash
-        console.log('- - - CreatePlayer')
         this.createPlayer(ipfsHash)
       }
     }
@@ -145,7 +131,6 @@ class Play extends Component<Props, void> {
       if (this.player) {
         this.player.play()
       }
-      console.log(this.player)
     }
   }
 
@@ -156,24 +141,25 @@ class Play extends Component<Props, void> {
       mimeType: 'video/mp4',
       ipfsHash: ipfsHash
     })
+    this.bindClapprEvents()
+  }
+
+  shouldShowVideoOverlay (): boolean {
+    const { isPlaying, isAttemptingPlay } = this.props
+
+    return !isPlaying && !isAttemptingPlay
   }
 
   render () {
-    const { match, isPlaying, isAttemptingPlay } = this.props
-
-    const videoId = match.params.id
-
     return (
       <Wrapper>
         <Body>
-          <Title>Play Video: {videoId} </Title>
           <PlayerWrapper>
-            {!isPlaying &&
-              !isAttemptingPlay && (
-                <OverlayWrapper>
-                  <VideoOverlay {...this.props} onClick={this.onOverlayClick} />
-                </OverlayWrapper>
-              )}
+            {this.shouldShowVideoOverlay() && (
+              <OverlayWrapper>
+                <VideoOverlay {...this.props} onClick={this.onOverlayClick} />
+              </OverlayWrapper>
+            )}
             <Player id="player" />
           </PlayerWrapper>
         </Body>
