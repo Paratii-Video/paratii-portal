@@ -47,7 +47,7 @@ class VideoForm extends Component<Props, Object> {
 
   handleSubmit (e: Object) {
     e.preventDefault()
-    let videoToSave = {
+    const videoToSave = {
       id: this.state.id,
       title: this.state.title,
       description: this.state.description

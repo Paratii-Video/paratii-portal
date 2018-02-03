@@ -15,5 +15,8 @@
   },
   "globals": {
     "browser": true
+  },
+  "rules": {
+    "prefer-const": 2
   }
 }

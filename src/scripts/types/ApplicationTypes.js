@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
+import PlayerRecord from 'records/PlayerRecord'
 
 export type RouteMatch = {
   path: string,
@@ -33,7 +34,8 @@ export type Action<T> = {
 export type RootState = {
   selectedVideo: ?string,
   user: ?UserRecord,
-  videos: Immutable.Map<string, VideoRecord>
+  videos: Immutable.Map<string, VideoRecord>,
+  player: PlayerRecord
 }
 
 export type ParatiiLibConfig = {

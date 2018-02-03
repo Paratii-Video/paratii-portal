@@ -10,6 +10,7 @@ const MainWrapper = styled.main`
   flex: 1 1 100%;
   display: flex;
   padding: 80px;
+  overflow-x: hidden;
 `
 
 class Main extends Component<Props, void> {

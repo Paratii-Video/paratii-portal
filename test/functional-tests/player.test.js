@@ -33,8 +33,8 @@ const Promise = require('bluebird')
 const path = require('path')
 
 describe('Player: ', function () {
-  let ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
-  let videoId = 'foo'
+  const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
+  const videoId = 'foo'
 
   before(async function () {
     await paratii.core.vids.create({
@@ -44,11 +44,11 @@ describe('Player: ', function () {
       ipfsHash: ipfsHash
     })
 
-    let directory = `test/functional-tests/data/${ipfsHash}`
+    const directory = `test/functional-tests/data/${ipfsHash}`
     // the next function should now be available
 
     let files = await Promise.promisify(fs.readdir)(directory)
-    let ipfs = await paratii.ipfs.getIPFSInstance()
+    const ipfs = await paratii.ipfs.getIPFSInstance()
     files = files.map(function (f) {
       return path.join(directory, f)
     })

@@ -38,7 +38,7 @@ const transcodingFailure = createAction(TRANSCODING_FAILURE)
 export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   // the next call dispatches an asynchronous request to upload the file to ipfs
   // (the API will change and become paratii.ipfs.add(..))
-  let newVideoId = paratii.eth.vids.makeId()
+  const newVideoId = paratii.eth.vids.makeId()
   // set the selectedVideo
   dispatch(videoDataLoaded({ id: newVideoId }))
   dispatch(uploadRequested({ id: newVideoId, filename: file.name }))
@@ -68,7 +68,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
   )
   dispatch(transcodingRequested(videoInfo))
   console.log(videoInfo)
-  let transcoder = paratii.ipfs.uploader.transcode(videoInfo.hash, {
+  const transcoder = paratii.ipfs.uploader.transcode(videoInfo.hash, {
     author: paratii.config.account.address
   })
   transcoder.on('transcoding:error', function (err) {
