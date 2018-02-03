@@ -14,25 +14,16 @@ import VideoManager from 'containers/VideoManagerContainer'
 import type { RouteMatch } from 'types/ApplicationTypes'
 import { setupKeystore } from 'utils/ParatiiLib'
 
-import Animation from './foundations/base/Animation'
-import Sizes from './foundations/base/Sizes'
-import Themes from './foundations/base/Themes'
-import Typography from './foundations/base/Typography'
 import MainTemplate from './templates/MainTemplate'
 import MainHeader from './structures/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/MainFooter'
 
+import { paratiiTheme } from 'constants/ApplicationConstants'
+
 type Props = {
   match: RouteMatch,
   setSelectedVideo: (id: string) => void
-}
-
-const paratiiTheme = {
-  animation: Animation,
-  fonts: Typography,
-  sizes: Sizes,
-  colors: Themes.dark
 }
 
 const PortalPlayWrapper = styled.div`

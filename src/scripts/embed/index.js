@@ -4,11 +4,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 
 import { getRoot } from 'utils/AppUtils'
 import PlayContainer from 'containers/PlayContainer'
 import createStore from 'scripts/createStore'
+import { paratiiTheme } from 'constants/ApplicationConstants'
 
 import 'styles/embed/index.scss'
 
@@ -31,9 +32,15 @@ class EmbedApp extends React.Component<Props, void> {
     const { match } = this.props
 
     return (
-      <Wrapper>
-        <Route exact path={`${match.url}embed/:id`} component={PlayContainer} />
-      </Wrapper>
+      <ThemeProvider theme={paratiiTheme}>
+        <Wrapper>
+          <Route
+            exact
+            path={`${match.url}embed/:id`}
+            component={PlayContainer}
+          />
+        </Wrapper>
+      </ThemeProvider>
     )
   }
 }

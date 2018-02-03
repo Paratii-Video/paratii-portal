@@ -26,6 +26,7 @@ const Overlay = styled.div`
   color: white;
   background: rgba(0, 0, 0, 0.8);
   padding: 48px;
+  box-sizing: border-box;
 `
 
 const TopBar = styled.div`
@@ -52,6 +53,10 @@ class VideoOverlay extends Component<Props, void> {
     return (video && video.get('title')) || 'Title Placeholder'
   }
 
+  onProfileButtonClick = (e: Object): void => {
+    e.stopPropagation()
+  }
+
   render () {
     const { onClick } = this.props
     return (
@@ -59,7 +64,10 @@ class VideoOverlay extends Component<Props, void> {
         <TopBar>
           <Title>{this.getVideoTitle()}</Title>
           <ButtonGroup>
-            <IconButton icon={'/assets/img/prof.svg'} onClick={() => {}} />
+            <IconButton
+              icon={'/assets/img/prof.svg'}
+              onClick={this.onProfileButtonClick}
+            />
           </ButtonGroup>
         </TopBar>
       </Overlay>

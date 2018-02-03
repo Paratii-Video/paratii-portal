@@ -92,3 +92,99 @@ export type ParatiiLib = {
     }
   }
 }
+
+type Animation = {
+  ease: {
+    smooth: string
+  },
+  time: {
+    repaint: string
+  },
+  opacity: {
+    hover: number,
+    disabled: number
+  }
+}
+
+type Typography = {
+  family: string,
+  weight: {
+    regular: number,
+    bold: number
+  },
+  button: {
+    size: {
+      main: string
+    }
+  },
+  text: {
+    big: string,
+    main: string,
+    small: string
+  }
+}
+
+type Sizes = {
+  mainHeader: {
+    height: string
+  },
+  mainFooter: {
+    height: string
+  },
+  mainHeaderLogo: {
+    height: string,
+    width: string
+  },
+  searchInputButton: string,
+  mainInput: {
+    height: string
+  }
+}
+
+type Colors = {
+  body: {
+    background: string,
+    color: string
+  },
+  header: {
+    background: string,
+    iconsFill: string,
+    logoFill: string
+  },
+  footer: {
+    background: string,
+    color: string,
+    logoFill: string
+  },
+  button: {
+    white: string,
+    gray: string,
+    purple: string
+  },
+  mainInput: {
+    border: string,
+    color: string,
+    placeholder: string,
+    error: string
+  },
+  FilesUploader: {
+    drag: {
+      background: string,
+      color: string,
+      color2: string,
+      info: string,
+      enter: string
+    },
+    input: {
+      background: string,
+      color: string
+    }
+  }
+}
+
+export type Theme = Object & {
+  animation: Animation,
+  fonts: Typography,
+  sizes: Sizes,
+  colors: Colors
+}
