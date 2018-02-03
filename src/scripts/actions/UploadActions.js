@@ -7,23 +7,33 @@ import {
   UPLOAD_REQUESTED,
   UPLOAD_PROGRESS,
   UPLOAD_SUCCESS,
-  UPDATE_UPLOAD_INFO,
+  UPLOAD_LOCAL_SUCCESS,
+  UPDATE_VIDEO_INFO,
   VIDEO_DATA_START,
   VIDEO_DATA_SAVED,
-  VIDEO_SELECT
+  VIDEO_SELECT,
+  TRANSCODING_REQUESTED,
+  TRANSCODING_PROGRESS,
+  TRANSCODING_SUCCESS,
+  TRANSCODING_FAILURE
 } from 'constants/ActionConstants'
 
 import type { Dispatch } from 'redux'
 
-import VideoInfoRecord from 'records/VideoInfoRecords'
+import VideoInfoRecord from 'records/VideoRecords'
 
 const uploadRequested = createAction(UPLOAD_REQUESTED)
 const uploadProgress = createAction(UPLOAD_PROGRESS)
 const uploadSuccess = createAction(UPLOAD_SUCCESS)
-const updateUploadInfo = createAction(UPDATE_UPLOAD_INFO)
+const uploadLocalSuccess = createAction(UPLOAD_LOCAL_SUCCESS)
+const updateVideoInfo = createAction(UPDATE_VIDEO_INFO)
 const videoDataStart = createAction(VIDEO_DATA_START)
 const videoDataSaved = createAction(VIDEO_DATA_SAVED)
 const videoDataLoaded = createAction(VIDEO_SELECT)
+const transcodingRequested = createAction(TRANSCODING_REQUESTED)
+const transcodingProgress = createAction(TRANSCODING_PROGRESS)
+const transcodingSuccess = createAction(TRANSCODING_SUCCESS)
+const transcodingFailure = createAction(TRANSCODING_FAILURE)
 
 export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   // the next call dispatches an asynchronous request to upload the file to ipfs
@@ -41,30 +51,70 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
     dispatch(uploadProgress({ id: newVideoId, progress: progressPercent }))
   })
   uploader.on('fileReady', function (file) {
-    dispatch(uploadSuccess({ id: newVideoId, hash: file.hash }))
+    dispatch(uploadLocalSuccess({ id: newVideoId, hash: file.hash }))
+    // now we can start the transcoding
+    transcodeVideo({ id: newVideoId, hash: file.hash })(dispatch)
   })
   uploader.on('done', function (files) {
     console.log('[UPLOAD done]', files)
   })
 }
 
+export const transcodeVideo = (videoInfo: Object) => async (
+  dispatch: Dispatch<*>
+) => {
+  console.log(
+    `Requesting to transcode video ${videoInfo.id} with hash ${videoInfo.hash}`
+  )
+  dispatch(transcodingRequested(videoInfo))
+  console.log(videoInfo)
+  let transcoder = paratii.ipfs.uploader.transcode(videoInfo.hash, {
+    author: paratii.config.account.address
+  })
+  transcoder.on('transcoding:error', function (err) {
+    console.log('TRANSCODER ERROR', err)
+    dispatch(transcodingFailure(videoInfo, err))
+  })
+
+  transcoder.on('transcoding:started', function (hash, author) {
+    console.log('TRANSCODER STARTED', hash, author)
+  })
+
+  transcoder.once('transcoding:progress', function (hash, size, percent) {
+    // Once we have this, the file is fully uploaded to the transcoder
+    dispatch(uploadSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
+  })
+  transcoder.on('transcoding:progress', function (hash, size, percent) {
+    // Once we have this, the file is fully uploaded to the transcoder
+    dispatch(transcodingProgress(videoInfo, size, percent))
+    console.log('TRANSCODER PROGRES', hash, size, percent)
+  })
+  transcoder.on('transcoding:downsample:ready', function (hash, size) {
+    console.log('TRANSCODER DOWNSAMPLE READY', hash, size)
+  })
+  transcoder.on('transcoding:done', function (hash, size) {
+    // if transcoding is done, apparently we have uploaded the file first
+    dispatch(uploadSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
+    dispatch(transcodingSuccess(videoInfo))
+    console.log('TRANSCODER DOWNSAMPLE READY', hash, size)
+  })
+}
+
 export const saveVideoInfo = (videoInfo: Object) => async (
   dispatch: Dispatch<*>
 ) => {
-  console.log('Saving video info')
   // the owner is the user that is logged in
   videoInfo.owner = paratii.config.account.address
   if (!videoInfo.id) {
     videoInfo.id = paratii.eth.vids.makeId()
   }
-  console.log('SAVING', videoInfo)
-  dispatch(updateUploadInfo(new VideoInfoRecord(videoInfo)))
+  // console.log('SAVING', videoInfo)
+  dispatch(updateVideoInfo(new VideoInfoRecord(videoInfo)))
   dispatch(videoDataStart(new VideoInfoRecord(videoInfo)))
   paratii.core.vids
     .create(videoInfo)
     .then(videoInfo => {
-      console.log('Video successfully saved on blockchain!')
-      dispatch(updateUploadInfo(new VideoInfoRecord(videoInfo)))
+      dispatch(updateVideoInfo(new VideoInfoRecord(videoInfo)))
       dispatch(videoDataSaved(new VideoInfoRecord(videoInfo)))
     })
     .catch(error => {

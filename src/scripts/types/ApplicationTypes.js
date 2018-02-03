@@ -1,9 +1,9 @@
 /* @flow */
 
+import Immutable from 'immutable'
+
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
-import UploadRecord from 'records/UploadRecords'
-import PlayerRecord from 'records/PlayerRecords'
 
 export type RouteMatch = {
   path: string,
@@ -31,10 +31,9 @@ export type Action<T> = {
 }
 
 export type RootState = {
-  selectedVideo: ?VideoRecord,
+  selectedVideo: ?string,
   user: ?UserRecord,
-  uploads: UploadRecord,
-  player: PlayerRecord
+  videos: Immutable.Map<string, VideoRecord>
 }
 
 export type ParatiiLibConfig = {
@@ -70,7 +69,8 @@ export type ParatiiLib = {
   },
   ipfs: {
     uploader: {
-      add: Object => Object
+      add: Object => Object,
+      transcode: (string, Object) => Object
     }
   }
 }

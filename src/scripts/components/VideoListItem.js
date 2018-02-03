@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import type { UploadRecord } from 'records/UploadRecords'
+
+import NavLink from 'components/foundations/buttons/NavLink'
+import type { VideoRecord } from 'records/VideoRecords'
 
 type Props = {
-  id: string,
-  item: UploadRecord,
+  video: VideoRecord,
   onClick: (id: string) => void
 }
 
@@ -17,10 +18,13 @@ const Item = styled.div`
   flex-direction: column;
   border: 1px solid grey;
   padding: 10px;
+  font-size: 14px;
 `
 
-const Label = styled.p`
+const Label = styled.div`
   color: white;
+  font-weight: bold;
+  margin-bottom: 10px;
 `
 
 class UploadListItem extends Component<Props, void> {
@@ -30,31 +34,44 @@ class UploadListItem extends Component<Props, void> {
   }
 
   handleClick () {
-    this.props.onClick(this.props.id)
+    this.props.onClick(this.props.video.id)
   }
 
   render () {
-    const item = this.props.item
-    let status = ''
+    const item = this.props.video
+    let progress = 0
     if (item.getIn(['uploadStatus', 'name']) === 'running') {
-      const progress = item.getIn(['uploadStatus', 'data', 'progress'])
-      status = `Uploading (${progress}%)`
-    } else {
-      status = item.getIn(['uploadStatus', 'name'])
+      progress = item.getIn(['uploadStatus', 'data', 'progress'])
     }
+    let linkToVideo = ''
+    if (item.transcodingStatus.name === 'success') {
+      let link = `/play/${item.id}`
+      linkToVideo = (
+        <Label>
+          <h3>Link</h3>
+          <NavLink to={link}>Play video</NavLink>
+        </Label>
+      )
+    }
+
     return (
       <Item onClick={this.handleClick} id="video-list-item-{item.id}">
-        <Label>video id: {item.videoInfo.id}</Label>
+        <h3>Info</h3>
+        <Label>Video id: {item.id}</Label>
         <Label>Filename: {item.filename}</Label>
+        <h3>Status</h3>
         <Label>
-          Upload Status: <b>{item.uploadStatus.name}</b> ({status})
+          Upload Status: <b>{item.uploadStatus.name}</b> ({progress}%)
         </Label>
         <Label>
-          Blockchain Status (is the video info saved ont he blockchain?):{' '}
+          Blockchain Status (is the video info saved on the blockchain?):{' '}
           <b>{item.blockchainStatus.name}</b>
         </Label>
         <Label>
           Transcoding Status: <b>{item.transcodingStatus.name}</b>
+          <br />
+          <br />
+          {linkToVideo}
         </Label>
       </Item>
     )

@@ -2,7 +2,9 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
+
 import VideoRecord from 'records/VideoRecords'
+import Wrapper from 'components/foundations/Wrapper'
 
 type Props = {
   video: ?VideoRecord,
@@ -24,15 +26,28 @@ const Overlay = styled.div`
 
 class VideoOverlay extends Component<Props, void> {
   render () {
-    const { onClick } = this.props
-    return (
-      <Overlay id="video-overlay" onClick={onClick}>
-        <h5>The video id is: {this.props.match.params.id}</h5>
-        Title:{' '}
-        {(this.props.video && this.props.video.title) ||
-          'This video either has no title, or could not be fetched'}
-      </Overlay>
-    )
+    const videoId = this.props.match.params.id
+    const video = this.props.video
+    if (video === undefined) {
+      return (
+        <Wrapper>
+          <Overlay id="video-overlay">
+            <h2>Video Overlay</h2>
+            <h5>This videow (with id {videoId}) could not be found!</h5>
+          </Overlay>
+        </Wrapper>
+      )
+    } else {
+      return (
+        <Wrapper>
+          <Overlay id="video-overlay">
+            <h2>Video Overlay</h2>
+            <h5>The video id is: {videoId}</h5>
+            Title: {(video && video.title) || 'This video has no (known) title'}
+          </Overlay>
+        </Wrapper>
+      )
+    }
   }
 }
 

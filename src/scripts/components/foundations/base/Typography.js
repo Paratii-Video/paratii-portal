@@ -8,6 +8,11 @@ const Typography = {
     size: {
       main: '16px'
     }
+  },
+  text: {
+    big: '24px',
+    main: '16px',
+    small: '12px'
   }
 }
 
