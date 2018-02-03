@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
-import PlayerRecord from 'records/PlayerRecord'
+import PlayerRecord from 'records/PlayerRecords'
 
 export type RouteMatch = {
   path: string,
