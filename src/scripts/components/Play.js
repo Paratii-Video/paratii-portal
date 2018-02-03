@@ -21,23 +21,12 @@ type Props = {
   video: ?VideoRecord
 }
 
-const Body = styled.div`
+const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-`
-
-const Wrapper = styled.div`
-  font-size: 20px;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  flex: 0 1 75%;
-  width: 75%;
-  max-height: 450px;
 `
 
 const Player = styled.div`
@@ -153,16 +142,14 @@ class Play extends Component<Props, void> {
   render () {
     return (
       <Wrapper>
-        <Body>
-          <PlayerWrapper>
-            {this.shouldShowVideoOverlay() && (
-              <OverlayWrapper>
-                <VideoOverlay {...this.props} onClick={this.onOverlayClick} />
-              </OverlayWrapper>
-            )}
-            <Player id="player" />
-          </PlayerWrapper>
-        </Body>
+        <PlayerWrapper>
+          {this.shouldShowVideoOverlay() && (
+            <OverlayWrapper>
+              <VideoOverlay {...this.props} onClick={this.onOverlayClick} />
+            </OverlayWrapper>
+          )}
+          <Player id="player" />
+        </PlayerWrapper>
       </Wrapper>
     )
   }

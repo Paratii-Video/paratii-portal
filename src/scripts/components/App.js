@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
-import { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 
 import SignupContainer from 'containers/SignupContainer'
 import LoginContainer from 'containers/LoginContainer'
@@ -35,6 +35,12 @@ const paratiiTheme = {
   colors: Themes.dark
 }
 
+const PortalPlayWrapper = styled.div`
+  flex: 0 1 75%;
+  width: 75%;
+  max-height: 450px;
+`
+
 class App extends Component<Props, void> {
   render () {
     const { match } = this.props
@@ -49,7 +55,11 @@ class App extends Component<Props, void> {
             <Route path={`${match.url}profile`} component={ProfileContainer} />
             <Route
               path={`${match.url}play/:id`}
-              component={PlayContainer}
+              component={props => (
+                <PortalPlayWrapper>
+                  <PlayContainer {...props} />
+                </PortalPlayWrapper>
+              )}
               onEnter={() => {
                 console.log('entering rout')
               }}
