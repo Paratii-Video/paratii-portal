@@ -91,13 +91,13 @@ describe('Player: ', function () {
     // check sanity - the video should be available now
     assert.isOk(await paratii.core.vids.get(videoId))
 
-    browser.url(`http://localhost:8080/play/${videoId}`)
+    await browser.url(`http://localhost:8080/play/${videoId}`)
     // expect('#player').to.exist
-    browser.waitAndClick('#player')
-    browser.waitForExist('.media-control')
+    await browser.waitAndClick('#player')
+    await browser.waitForExist('.media-control')
   })
 
-  it('the video has overlay informations', function () {
+  it('the video has overlay informations @watch', async function () {
     // This tests should just be very much reduced
     browser.url(`http://localhost:8080/play/${videoId}`)
     browser.waitAndClick('#player')
