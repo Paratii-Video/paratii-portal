@@ -8,14 +8,13 @@ type Props = {
   onClick: (e: Object) => void
 }
 
-const buttonDimension: string = '25px'
-
 const Button = styled.button`
-  width: ${buttonDimension};
-  height: ${buttonDimension};
+  width: 25px;
+  height: 25px;
   mask-image: ${props => `url(${props.icon})`};
   mask-position: center center;
-  mask-size: ${buttonDimension} ${buttonDimension};
+  mask-size: 22px 22px;
+  mask-repeat: no-repeat;
   background-color: ${props => props.theme.colors.button.white};
 `
 

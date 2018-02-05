@@ -9,7 +9,10 @@ type Props = {
 }
 
 const Wrapper = styled.div`
-  display: block;
+  width: 100%;
+  height: 100%;
+  border: ${({ theme }) => `3px solid ${theme.colors.popover.border}`};
+  border-radius: 4px;
 `
 
 class Popover extends React.Component<Props, void> {

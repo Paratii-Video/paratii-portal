@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import VideoRecord from 'records/VideoRecords'
 import IconButton from 'components/foundations/buttons/IconButton'
+import Popover from 'components/foundations/Popover'
 
 type Props = {
   video: ?VideoRecord,
@@ -17,6 +18,8 @@ type Props = {
   onClick: (e: Object) => void
 }
 
+const overlayPadding: string = '48px'
+
 const Overlay = styled.div`
   width: 100%;
   height: 100%;
@@ -25,7 +28,7 @@ const Overlay = styled.div`
   flex-direction: column;
   color: white;
   background: rgba(0, 0, 0, 0.8);
-  padding: 48px;
+  padding: ${overlayPadding};
   box-sizing: border-box;
 `
 
@@ -46,7 +49,23 @@ const ButtonGroup = styled.div`
   justify-content: flex-end;
 `
 
+const PopoverWrapper = styled.div`
+  position: absolute;
+  top: ${overlayPadding};
+  right: ${overlayPadding};
+  width: 200px;
+  height: 100px;
+`
+
 class VideoOverlay extends Component<Props, void> {
+  constructor (props: Props) {
+    super(props)
+
+    this.state = {
+      openPopover: false
+    }
+  }
+
   getVideoTitle (): string {
     const { video } = this.props
 
@@ -55,6 +74,9 @@ class VideoOverlay extends Component<Props, void> {
 
   onProfileButtonClick = (e: Object): void => {
     e.stopPropagation()
+    this.setState({
+      openPopover: true
+    })
   }
 
   render () {
@@ -69,6 +91,11 @@ class VideoOverlay extends Component<Props, void> {
               onClick={this.onProfileButtonClick}
             />
           </ButtonGroup>
+          {this.state.openPopover ? (
+            <PopoverWrapper>
+              <Popover>Foo bar</Popover>
+            </PopoverWrapper>
+          ) : null}
         </TopBar>
       </Overlay>
     )
