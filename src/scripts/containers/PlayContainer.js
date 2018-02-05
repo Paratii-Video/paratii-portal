@@ -9,9 +9,11 @@ import { getVideo } from 'selectors/index'
 
 import type { RootState } from 'types/ApplicationTypes'
 
-const mapStateToProps = (state: RootState) => ({
-  video: getVideo(state)
-})
+const mapStateToProps = (state: RootState) => {
+  return {
+    video: getVideo(state)
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
   fetchVideo: bindActionCreators(fetchVideo, dispatch)

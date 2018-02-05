@@ -38,6 +38,9 @@ class App extends Component<Props, void> {
   render () {
     const { match } = this.props
     setupKeystore()
+    // is tehre a videoID in this.props.match.id
+    // if videoId
+    //
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>

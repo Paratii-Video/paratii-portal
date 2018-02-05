@@ -65,7 +65,6 @@ const reducer = {
       }
     })
   },
-
   [UPLOAD_LOCAL_SUCCESS]: (
     state: VideoRecordMap,
     { payload }: Action<{ id: string, hash: string }>
@@ -112,9 +111,9 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    return state.mergeDeep([payload.id], {
-      title: payload.title
-    })
+    state = state.setIn([payload.id, 'title'], payload.title)
+    state = state.setIn([payload.id, 'description'], payload.description)
+    return state
   },
   [VIDEO_DATA_START]: (
     state: VideoRecordMap,
@@ -156,6 +155,7 @@ const reducer = {
       }
     })
     state = state.setIn([payload.id, 'title'], payload.title)
+    state = state.setIn([payload.id, 'description'], payload.description)
     return state
   },
   [TRANSCODING_REQUESTED]: (
