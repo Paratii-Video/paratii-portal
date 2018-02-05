@@ -20,6 +20,9 @@ const Form = styled.form`
 `
 
 class VideoForm extends Component<Props, Object> {
+  handleSubmit: (e: Object) => void
+  handleInputChange: (input: string, e: Object) => void
+
   constructor (props: Props) {
     super(props)
     this.state = new VideoRecord(this.props.selectedVideo)
