@@ -20,9 +20,6 @@ const Form = styled.form`
 `
 
 class VideoForm extends Component<Props, Object> {
-  handleSubmit: (e: Object) => void
-  handleInputChange: (input: string, e: Object) => void
-
   constructor (props: Props) {
     super(props)
     this.state = new VideoRecord(this.props.selectedVideo)
@@ -41,13 +38,14 @@ class VideoForm extends Component<Props, Object> {
 
   handleInputChange (input: string, e: Object) {
     console.log(this.state)
-    this.setState({
-      input: e.target.value
-    })
+    // this.setState({
+    //   input: e.target.value
+    // })
   }
 
   handleSubmit (e: Object) {
     e.preventDefault()
+    console.log(e.target.value)
     let videoToSave = {
       id: this.state.id,
       title: this.state.title,
@@ -57,7 +55,6 @@ class VideoForm extends Component<Props, Object> {
   }
 
   render () {
-    const onInputChange = this.handleInputChange
     return (
       <Form>
         <h5>Editing video {this.state.id}</h5>
@@ -70,7 +67,7 @@ class VideoForm extends Component<Props, Object> {
         <Input
           id="video-title"
           type="text"
-          onChange={e => onInputChange('title', e)}
+          onChange={e => this.handleInputChange('title', e)}
           value={this.state.title}
           placeholder="Title"
         />
@@ -78,7 +75,7 @@ class VideoForm extends Component<Props, Object> {
           id="video-description"
           type="textarea"
           value={this.state.description}
-          onChange={e => onInputChange('description', e)}
+          onChange={e => this.handleInputChange('description', e)}
           placeholder="Description"
         />
         <Button
