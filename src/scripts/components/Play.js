@@ -13,7 +13,7 @@ import Debug from 'containers/DebugContainer'
 type Props = {
   match: RouteMatch,
   fetchVideo: (id: string) => void,
-  video: ?VideoRecord
+  video: VideoRecord
 }
 
 const Wrapper = styled.div`
@@ -58,7 +58,7 @@ class Play extends Component<Props, void> {
       throw Error('We should raise a 404 error here and redirect to the player')
     }
     if (!this.props.video) {
-      this.props.fetchVideo(videoId)
+      this.props.video = this.props.fetchVideo(videoId)
     }
     this.createPlayer(this.props.video.ipfsHash)
   }

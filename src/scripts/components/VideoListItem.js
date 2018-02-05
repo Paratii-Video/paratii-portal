@@ -68,7 +68,7 @@ class UploadListItem extends Component<Props, void> {
           <b>{item.blockchainStatus.name}</b>
         </Label>
         <Label>
-          Transcoding Status: <b>{item.transcodingStatus.name}</b>
+          Transcoding Status: <b>{item.getIn(['transcodingStatus', 'name'])}</b>
           <br />
           <br />
           {linkToVideo}

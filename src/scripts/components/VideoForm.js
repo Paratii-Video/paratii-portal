@@ -40,10 +40,9 @@ class VideoForm extends Component<Props, Object> {
   }
 
   handleInputChange (input: string, e: Object) {
-    console.log(this.state)
-    // this.setState({
-    //   input: e.target.value
-    // })
+    this.setState({
+      [input]: e.target.value
+    })
   }
 
   handleSubmit (e: Object) {
