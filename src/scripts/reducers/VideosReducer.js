@@ -28,9 +28,7 @@ const reducer = {
   ): VideoRecordMap => {
     if (state.get(payload.id) === undefined) {
       state = state.mergeDeep({
-        [payload.id]: new VideoRecord({
-          id: payload.id
-        })
+        [payload.id]: new VideoRecord(payload)
       })
     }
     return state

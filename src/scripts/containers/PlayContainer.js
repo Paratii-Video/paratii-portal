@@ -5,13 +5,17 @@ import { bindActionCreators } from 'redux'
 
 import Play from 'components/Play'
 import { fetchVideo } from 'actions/VideoActions'
-import { getVideo } from 'selectors/index'
+import { getVideo as getSelectedVideoFromState } from 'selectors/index'
 
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState) => {
+  let video = getSelectedVideoFromState(state)
+  // if (!this.props.video) {
+  //   this.props.video = this.props.fetchVideo(videoId)
+  // }
   return {
-    video: getVideo(state)
+    video: video
   }
 }
 
