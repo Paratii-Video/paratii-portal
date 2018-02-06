@@ -62,12 +62,22 @@ class VideoForm extends Component<Props, Object> {
   }
 
   render () {
-    console.log(this.state)
-    const state = (
-      <div>
-        <pre>{JSON.stringify(this.state, null, 2)}</pre>
-      </div>
-    )
+    const video = this.props.selectedVideo
+    const progressUpdate = video.getIn(['uploadStatus', 'data', 'progress'])
+    const thumbImages = video.getIn([
+      'transcodingStatus',
+      'data',
+      'sizes',
+      'screenshots'
+    ])
+    const ipfsHash = video.ipfsHash
+    let thumbImage = null
+    if (thumbImages !== undefined) {
+      thumbImage = thumbImages.get(1)
+      console.log(thumbImage)
+    }
+    console.log(this.props.selectedVideo.transcodingStatus)
+    const state = JSON.stringify(this.state, null, 2)
     return (
       <WrapperForm>
         <Form>
@@ -100,8 +110,16 @@ class VideoForm extends Component<Props, Object> {
             Submit
           </Button>
         </Form>
+        <h3>Details</h3>
+        <strong>Porgress Update: </strong>
+        {progressUpdate}
+        <img
+          src={`https://gateway.paratii.video/ipfs/${ipfsHash}/${thumbImage}`}
+        />
         <h3>Video State</h3>
-        {state}
+        <div>
+          <pre>{state}</pre>
+        </div>
       </WrapperForm>
     )
   }

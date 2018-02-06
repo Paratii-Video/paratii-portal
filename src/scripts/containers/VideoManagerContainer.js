@@ -48,7 +48,7 @@ class VideoManagerContainer extends Component<Props, void> {
       this.props.selectedVideo && this.props.selectedVideo.id
 
     let videolist = null
-    if (uploads.size !== 0) {
+    if (uploads.size > 0) {
       videolist = (
         <VideoList
           onItemClick={this.onVideoListItemClicked}
@@ -61,9 +61,9 @@ class VideoManagerContainer extends Component<Props, void> {
       <div>
         <Wrapper>
           {videolist}
-          {selectedVideo === undefined ? <UploadFile /> : <VideoForm />}
-          <Debug />
+          {selectedVideo !== null ? <VideoForm /> : <UploadFile />}
         </Wrapper>
+        <Debug />
       </div>
     )
   }
