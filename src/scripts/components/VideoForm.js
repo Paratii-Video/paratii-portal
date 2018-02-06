@@ -71,7 +71,7 @@ class VideoForm extends Component<Props, Object> {
       'screenshots'
     ])
     const ipfsHash = video.ipfsHash
-    let thumbImage = null
+    let thumbImage = ''
     if (thumbImages !== undefined) {
       thumbImage = thumbImages.get(1)
       console.log(thumbImage)
