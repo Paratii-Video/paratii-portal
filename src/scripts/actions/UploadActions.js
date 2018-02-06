@@ -49,7 +49,11 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   uploader.on('fileReady', function (file) {
     dispatch(uploadLocalSuccess({ id: newVideoId, hash: file.hash }))
     // now we can start the transcoding
-    transcodeVideo({ id: newVideoId, hash: file.hash })(dispatch)
+    transcodeVideo({
+      id: newVideoId,
+      hash: file.hash,
+      size: file.size
+    })(dispatch)
   })
   uploader.on('done', function (files) {
     console.log('[UPLOAD done]', files)
@@ -65,7 +69,8 @@ export const transcodeVideo = (videoInfo: Object) => async (
   dispatch(transcodingRequested(videoInfo))
   console.log(videoInfo)
   const transcoder = paratii.ipfs.uploader.transcode(videoInfo.hash, {
-    author: paratii.config.account.address
+    author: paratii.config.account.address,
+    size: videoInfo.size
   })
   transcoder.on('transcoding:error', function (err) {
     console.log('TRANSCODER ERROR', err)
