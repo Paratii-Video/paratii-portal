@@ -69,7 +69,8 @@ export type ParatiiLib = {
   core: {
     vids: {
       get: (id: string) => ?Object,
-      create: Object => Object
+      create: Object => Object,
+      update: (id: string, Object) => Object
     }
   },
   eth: {

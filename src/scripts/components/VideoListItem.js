@@ -44,7 +44,7 @@ class UploadListItem extends Component<Props, void> {
       progress = item.getIn(['uploadStatus', 'data', 'progress'])
     }
     let linkToVideo = ''
-    if (item.transcodingStatus.name === 'success') {
+    if (item.getIn(['transcodingStatus', 'name']) === 'success') {
       const link = `/play/${item.id}`
       linkToVideo = (
         <Label>
@@ -68,7 +68,7 @@ class UploadListItem extends Component<Props, void> {
           <b>{item.blockchainStatus.name}</b>
         </Label>
         <Label>
-          Transcoding Status: <b>{item.transcodingStatus.name}</b>
+          Transcoding Status: <b>{item.getIn(['transcodingStatus', 'name'])}</b>
           <br />
           <br />
           {linkToVideo}

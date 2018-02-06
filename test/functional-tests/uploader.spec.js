@@ -2,7 +2,7 @@ import { assert } from 'chai'
 import { paratii } from './test-utils/helpers'
 
 describe('Uploader Tool', function () {
-  it('should have basic flow in place', async function () {
+  it('should have basic flow in place @watch', async function () {
     // see https://github.com/Paratii-Video/paratii-portal/issues/8
     const video = {
       title: 'Some title',
@@ -14,13 +14,6 @@ describe('Uploader Tool', function () {
     const fileToUpload = `${__dirname}/data/pti-logo.mp4`
     browser.waitForExist('input[type="file"]')
     browser.chooseFile('input[type="file"]', fileToUpload)
-
-    // this will immediately submit (and upload) the file, so the next lines will fail
-    // var val = browser.getValue('input[type="file"]')
-    // // val will be something like 'C://fakepath/data.txt'
-    // assert.match(val, /data.txt$/)
-    // submit the file
-    // browser.click('#upload-submit')
 
     // now we should see a form to fill in
     browser.waitForExist('#video-title')
@@ -47,16 +40,11 @@ describe('Uploader Tool', function () {
     const videoInfoFromBlockchain = await getVideoInfoFromBlockchain()
     assert.isOk(videoInfoFromBlockchain)
     assert.equal(videoInfoFromBlockchain.owner, paratii.config.account.address)
-    // let videoId
-    // // wait until the videoId is returned back from paratii-lib (meaning that the object has been saved)
-    // browser.waitUntil(function () {
-    //   videoId = browser.getText('#videoId')
-    //   return videoId
-    // })
-    // console.log(videoId)
-    assert.isOk(true)
 
-    // TODO: we now should find a video record on the blockchain
+    // now wait until the transcoder is done - we should see a "play" link at this point
+    // TODO: this often times out on circleci because it depends on the (external) response of the transcoder
+    // await browser.waitForExist(`a[href="/play/${videoId}"]`)
+    // await browser.click(`a[href="/play/${videoId}"]`)
   })
 
   it.skip('cancel upload should work [but is not yet]', function () {

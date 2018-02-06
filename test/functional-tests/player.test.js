@@ -34,6 +34,56 @@ describe('Player:', function () {
     // server.execute(createPlaylist, '98765', 'Playlist test', ['12345', '23456'])
   })
 
+  it.skip('click on next video', () => {
+    browser.url('http://localhost:3000/play/12345?playlist=98765')
+    browser.waitForExist('.player-overlay')
+    assert.equal(browser.getText('.player-title'), 'Test 1')
+    // Close modal
+    // browser.waitForExist('#loginModal')
+    // browser.click('#btn-editprofile-close')
+    // browser.pause(2000)
+    browser.waitAndClick('#next-video-button')
+    browser.waitForExist('.player-overlay')
+    assert.equal(browser.getText('.player-title'), 'Test 2')
+  })
+
+  it.skip('click on previous video', () => {
+    browser.url('http://localhost:3000/play/12345?playlist=98765')
+    browser.waitForExist('.player-overlay')
+    assert.equal(browser.getText('.player-title'), 'Test 1')
+    browser.waitAndClick('#previous-video-button')
+    browser.waitForExist('.player-overlay')
+    assert.equal(browser.getText('.player-title'), 'Test 2')
+  })
+
+  it.skip("if a player is within a playlist and it ended related videos don't show up [TODO]", () => {})
+
+  it.skip('if a player is not within a playlist and it ended related videos show up [TODO]', () => {})
+
+  it.skip('like and dislike a video as an anonymous user', () => {
+    browser.url('http://localhost:3000/play/12345?playlist=98765')
+    browser.waitForClickable('#button-like')
+    browser.waitUntil(
+      () =>
+        browser.getText('#button-like') === '0' &&
+        browser.getText('#button-dislike') === '0'
+    )
+
+    browser.click('#button-like')
+    browser.waitUntil(
+      () =>
+        browser.getText('#button-like') === '1' &&
+        browser.getText('#button-dislike') === '0'
+    )
+
+    browser.click('#button-dislike')
+
+    browser.waitUntil(
+      () =>
+        browser.getText('#button-like') === '0' &&
+        browser.getText('#button-dislike') === '1'
+    )
+  })
   describe('portal player', () => {
     it('plays a video', () => {
       browser.url(`http://localhost:8080/play/${videoId}`)

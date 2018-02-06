@@ -36,8 +36,8 @@ const PortalPlayWrapper = styled.div`
 
 class App extends Component<Props, void> {
   render () {
-    const { match } = this.props
     setupKeystore()
+    const { match } = this.props
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
