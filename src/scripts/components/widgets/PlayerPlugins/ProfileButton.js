@@ -17,7 +17,11 @@ const ProfileButton = (props: Props) => {
 
   return (
     <Fragment>
-      <IconButton icon="/assets/img/prof.svg" onClick={onClick} />
+      <IconButton
+        data-test-id="overlay-profile-button"
+        icon="/assets/img/prof.svg"
+        onClick={onClick}
+      />
       {popoverOpen
         ? ReactDOM.createPortal(<Popover>Foo bar</Popover>, popoverPortal)
         : null}
