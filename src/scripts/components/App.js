@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import styled, { ThemeProvider } from 'styled-components'
 
 import SignupContainer from 'containers/SignupContainer'
@@ -18,6 +18,8 @@ import MainTemplate from './templates/MainTemplate'
 import MainHeader from './structures/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/MainFooter'
+import Home from './pages/Home'
+import NotFound from './pages/NotFound'
 
 import { paratiiTheme } from 'constants/ApplicationConstants'
 
@@ -41,22 +43,26 @@ class App extends Component<Props, void> {
         <MainTemplate>
           <MainHeader />
           <Main>
-            <Route path={`${match.url}signup`} component={SignupContainer} />
-            <Route path={`${match.url}login`} component={LoginContainer} />
-            <Route path={`${match.url}profile`} component={ProfileContainer} />
-            <Route
-              path={`${match.url}play/:id`}
-              component={props => (
-                <PortalPlayWrapper>
-                  <PlayContainer {...props} />
-                </PortalPlayWrapper>
-              )}
-              onEnter={() => {
-                console.log('entering rout')
-              }}
-            />
-            <Route path={`${match.url}upload`} component={VideoManager} />
-            <Route path={`${match.url}debug`} component={DebugContainer} />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path={`${match.url}signup`} component={SignupContainer} />
+              <Route path={`${match.url}login`} component={LoginContainer} />
+              <Route
+                path={`${match.url}profile`}
+                component={ProfileContainer}
+              />
+              <Route path={`${match.url}upload`} component={VideoManager} />
+              <Route path={`${match.url}debug`} component={DebugContainer} />
+              <Route
+                path={`${match.url}play/:id`}
+                render={props => (
+                  <PortalPlayWrapper>
+                    <PlayContainer {...props} />
+                  </PortalPlayWrapper>
+                )}
+              />
+              <Route component={NotFound} />
+            </Switch>
           </Main>
           <MainFooter />
         </MainTemplate>
