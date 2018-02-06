@@ -14,9 +14,7 @@ const reducer = {
     state: string,
     { payload }: Action<{ id: string }>
   ): string => {
-    console.log('Setting selected video to:' + payload.id)
     return payload.id
-    // return new VideoRecord(payload)
   }
   // ,
   // [VIDEO_DATA_PROGRESS]: (

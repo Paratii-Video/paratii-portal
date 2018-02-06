@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 
 type Props = {
   videos: Map<string, VideoRecord>,
-  selectedVideo: VideoRecord,
+  selectedVideo: ?VideoRecord,
   setSelectedVideo: Object => void
 }
 
@@ -43,8 +43,7 @@ class VideoManagerContainer extends Component<Props, void> {
   }
 
   render () {
-    const selectedVideo =
-      this.props.selectedVideo && this.props.selectedVideo.id
+    const { selectedVideo } = this.props
 
     return (
       <div>
@@ -53,7 +52,11 @@ class VideoManagerContainer extends Component<Props, void> {
             onItemClick={this.onVideoListItemClicked}
             videos={this.props.videos}
           />
-          {selectedVideo === undefined ? <UploadFile /> : <VideoForm />}
+          {!(selectedVideo && selectedVideo.get('id')) ? (
+            <UploadFile />
+          ) : (
+            <VideoForm />
+          )}
           <Debug />
         </Wrapper>
       </div>
