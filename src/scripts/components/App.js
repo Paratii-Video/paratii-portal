@@ -36,6 +36,7 @@ const paratiiTheme = {
 
 class App extends Component<Props, void> {
   render () {
+    setupKeystore()
     const { match } = this.props
     return (
       <ThemeProvider theme={paratiiTheme}>
