@@ -53,8 +53,7 @@ class VideoForm extends Component<Props, Object> {
 
   handleSubmit (e: Object) {
     e.preventDefault()
-    console.log(e.target.value)
-    let videoToSave = {
+    const videoToSave = {
       id: this.state.id,
       title: this.state.title,
       description: this.state.description
@@ -64,7 +63,7 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     console.log(this.state)
-    let state = (
+    const state = (
       <div>
         <pre>{JSON.stringify(this.state, null, 2)}</pre>
       </div>

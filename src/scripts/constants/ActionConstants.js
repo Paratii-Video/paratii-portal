@@ -2,7 +2,8 @@
 
 const createActionConstant = constant => `@@PARATII_PORTAL_${constant}`
 
-/* selectedVideo actions */
+/* Video actions */
+export const VIDEO_LOADED = createActionConstant('VIDEO_LOADED')
 export const VIDEO_SELECT = createActionConstant('VIDEO_SELECT')
 export const INIT_VIDEOSTORE = createActionConstant('INIT_VIDEOSTORE')
 
@@ -28,6 +29,12 @@ export const UPDATE_VIDEO_INFO = createActionConstant('UPDATE_VIDEO_INFO')
 export const VIDEO_DATA_START = createActionConstant('VIDEO_DATA_START')
 export const VIDEO_DATA_PROGRESS = createActionConstant('VIDEO_DATA_PROGRESS')
 export const VIDEO_DATA_SAVED = createActionConstant('VIDEO_DATA_SAVED')
+
+/* Player Actions */
+export const PLAYER_TOGGLE_PLAYPAUSE = createActionConstant(
+  'PLAYER_TOGGLE_PLAYPAUSE'
+)
+export const PLAYER_ATTEMPT_PLAY = createActionConstant('PLAYER_ATTEMPT_PLAY')
 
 /* Transcoding actions */
 export const TRANSCODING_REQUESTED = createActionConstant(

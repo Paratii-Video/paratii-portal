@@ -14,7 +14,7 @@ const paratii = new Paratii(config)
 
 async function deployContracts () {
   await paratii.eth.deployContracts()
-  let registryAddress = await paratii.eth.getRegistryAddress()
+  const registryAddress = await paratii.eth.getRegistryAddress()
   console.log(`new registry address: ${registryAddress}`)
   const registryConfig = {
     registryAddress
@@ -27,7 +27,7 @@ async function deployContracts () {
   const msg = `Registry address written to ${registryFilename}`
   console.log(msg)
 
-  let diagnosis = await paratii.diagnose()
+  const diagnosis = await paratii.diagnose()
   console.log(diagnosis)
   process.exit(0)
 }

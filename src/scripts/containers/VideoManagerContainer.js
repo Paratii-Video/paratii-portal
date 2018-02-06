@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 
 type Props = {
   videos: Map<string, VideoRecord>,
-  selectedVideo: VideoRecord,
+  selectedVideo: ?VideoRecord,
   setSelectedVideo: Object => void
 }
 

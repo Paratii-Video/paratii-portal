@@ -63,8 +63,8 @@ describe('wallet:', function () {
 
   it.skip('should be able to send some PTI, update the balance and transaction history', function (done) {
     browser.sendSomeETH(userAccount, 1)
-    let description = 'Here is some PTI for you'
-    let toAddress = web3.eth.accounts[2]
+    const description = 'Here is some PTI for you'
+    const toAddress = web3.eth.accounts[2]
     browser.sendSomePTI(userAccount, 1412)
     // open the send PTI dialog
     browser.click('a[href="#pti"]')
@@ -101,7 +101,7 @@ describe('wallet:', function () {
   })
 
   it.skip('should be able to send some ETH, update the balance and transaction history', function (done) {
-    let description = 'Here is some ETH for you'
+    const description = 'Here is some ETH for you'
     browser.waitForExist('#public_address')
     browser.sendSomeEth(userAccount, 3)
     browser.waitForExist('#eth_amount')
