@@ -8,4 +8,5 @@ export default styled.input`
   border: none;
   border-bottom: 2px solid #ddd;
   background-color: rgba(0, 0, 0, 0);
+  margin-bottom: 15px;
 `
