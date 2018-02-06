@@ -94,9 +94,13 @@ class Play extends Component<Props, void> {
   componentDidMount (): void {
     const videoId = this.getVideoId()
     if (videoId) {
-      this.props.fetchVideo(videoId)
+      if (this.props.video) {
+        this.createPlayer(this.props.video.ipfsHash)
+      } else {
+        this.props.fetchVideo(videoId)
+      }
     } else {
-      throw Error('We should raise a 404 error here and redirect to the player')
+      throw Error('We should raise a 404 error here')
     }
   }
 
