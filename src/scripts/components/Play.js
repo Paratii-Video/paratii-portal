@@ -4,11 +4,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import CreatePlayer from 'paratii-mediaplayer'
 import VideoRecord from 'records/VideoRecords'
+import Debug from 'containers/DebugContainer'
 
 import VideoOverlay from 'components/VideoOverlay'
 
 import type { RouteMatch } from 'types/ApplicationTypes'
-import Debug from 'containers/DebugContainer'
 
 type Props = {
   match: RouteMatch,
@@ -17,7 +17,6 @@ type Props = {
 }
 
 const Wrapper = styled.div`
-  font-size: 20px;
   flex: 1 1 0;
   padding: 0;
   display: flex;
@@ -93,8 +92,8 @@ class Play extends Component<Props, void> {
           <Title>Play Video: {videoId} </Title>
           <VideoOverlay {...this.props} />
           <Player id="player" />
-          <Debug />
         </Body>
+        <Debug />
       </Wrapper>
     )
   }
