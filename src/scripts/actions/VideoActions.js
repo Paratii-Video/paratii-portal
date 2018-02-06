@@ -14,8 +14,7 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
   // TODO: previous line should be replaced with next line once the db is updated
   // let videoInfo = await paratii.core.vids.get(id)
 
-  // the next action updates store.selectedVideo
-  // TODO: this must also add the info to store.videos
+  // update the global state with the fetched information
   dispatch(selectVideoAction(videoInfo))
   dispatch(initVideoStore(videoInfo))
   return videoInfo
