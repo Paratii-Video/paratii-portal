@@ -9,6 +9,7 @@ type Props = {
 }
 
 const Button = styled.button`
+  cursor: pointer;
   width: 25px;
   height: 25px;
   mask-image: ${props => `url(${props.icon})`};

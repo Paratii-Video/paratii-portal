@@ -37,7 +37,7 @@ class EmbedApp extends React.Component<Props, void> {
           <Route
             exact
             path={`${match.url}embed/:id`}
-            component={PlayContainer}
+            render={props => <PlayContainer {...props} isEmbed />}
           />
         </Wrapper>
       </ThemeProvider>

@@ -10,10 +10,14 @@ import { getVideo, getIsPlaying, getIsAttemptingPlay } from 'selectors/index'
 
 import type { RootState } from 'types/ApplicationTypes'
 
-const mapStateToProps = (state: RootState) => ({
+const mapStateToProps = (
+  state: RootState,
+  ownProps: { isEmbed?: boolean }
+) => ({
   video: getVideo(state),
   isPlaying: getIsPlaying(state),
-  isAttemptingPlay: getIsAttemptingPlay(state)
+  isAttemptingPlay: getIsAttemptingPlay(state),
+  isEmbed: ownProps.isEmbed
 })
 
 const mapDispatchToProps = dispatch => ({

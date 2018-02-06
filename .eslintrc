@@ -14,7 +14,8 @@
     "mocha": true
   },
   "globals": {
-    "browser": true
+    "browser": true,
+    "Class": true
   },
   "rules": {
     "prefer-const": 2

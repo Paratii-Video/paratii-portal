@@ -18,7 +18,8 @@ type Props = {
   togglePlayPause: (play: boolean) => void,
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
-  video: ?VideoRecord
+  video: ?VideoRecord,
+  isEmbed?: boolean
 }
 
 const Wrapper = styled.div`

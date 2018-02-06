@@ -53,6 +53,7 @@
       "transform-flow-strip-types",
       "transform-object-rest-spread",
       "transform-class-properties",
+      "syntax-dynamic-import",
       "react-hot-loader/babel"
     ]
   },
@@ -70,6 +71,7 @@
     "babel-plugin-object-rest-spread": "^0.0.0",
     "babel-plugin-react-transform": "^3.0.0",
     "babel-plugin-styled-components": "^1.5.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",

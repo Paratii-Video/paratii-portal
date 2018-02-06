@@ -4,8 +4,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 import VideoRecord from 'records/VideoRecords'
-import IconButton from 'components/foundations/buttons/IconButton'
-import Popover from 'components/foundations/Popover'
 
 type Props = {
   video: ?VideoRecord,
@@ -16,6 +14,13 @@ type Props = {
   },
   isEmbed?: boolean,
   onClick: (e: Object) => void
+}
+
+type State = {
+  openPopover: ?string,
+  buttons: {
+    profile: ?Class<React.Component<any>>
+  }
 }
 
 const overlayPadding: string = '48px'
@@ -55,14 +60,44 @@ const PopoverWrapper = styled.div`
   right: ${overlayPadding};
   width: 200px;
   height: 100px;
+  display: ${props => (props.open ? 'block' : 'none')};
 `
 
-class VideoOverlay extends Component<Props, void> {
+class VideoOverlay extends Component<Props, State> {
+  onProfileButtonClick: (e: Object) => void
+  popoverWrapperRefCallback: (ref: HTMLElement) => void
+  popoverWrapperRef: ?HTMLElement
+
   constructor (props: Props) {
     super(props)
 
     this.state = {
-      openPopover: false
+      openPopover: null,
+      buttons: {
+        profile: null
+      }
+    }
+
+    this.loadEmbedPlugins()
+  }
+
+  loadEmbedPlugins () {
+    const { isEmbed } = this.props
+
+    if (isEmbed) {
+      import(/* webpackChunkName: ProfileButton */ 'components/widgets/PlayerPlugins/ProfileButton').then(
+        ProfileButtonModule => {
+          const ProfileButton: Class<
+            React.Component<any>
+          > = ((ProfileButtonModule.default: any): Class<React.Component<any>>)
+          this.setState(prevState => ({
+            buttons: {
+              ...prevState.buttons,
+              profile: ProfileButton
+            }
+          }))
+        }
+      )
     }
   }
 
@@ -75,27 +110,36 @@ class VideoOverlay extends Component<Props, void> {
   onProfileButtonClick = (e: Object): void => {
     e.stopPropagation()
     this.setState({
-      openPopover: true
+      openPopover: 'profile'
     })
+  }
+
+  popoverWrapperRefCallback = (ref: HTMLElement): void => {
+    this.popoverWrapperRef = ref
   }
 
   render () {
     const { onClick } = this.props
+    const { openPopover } = this.state
+    const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
+      .profile
     return (
       <Overlay id="video-overlay" onClick={onClick}>
         <TopBar>
           <Title>{this.getVideoTitle()}</Title>
           <ButtonGroup>
-            <IconButton
-              icon={'/assets/img/prof.svg'}
-              onClick={this.onProfileButtonClick}
-            />
+            {ProfileButton ? (
+              <ProfileButton
+                onClick={this.onProfileButtonClick}
+                popoverPortal={this.popoverWrapperRef}
+                popoverOpen={openPopover === 'profile'}
+              />
+            ) : null}
           </ButtonGroup>
-          {this.state.openPopover ? (
-            <PopoverWrapper>
-              <Popover>Foo bar</Popover>
-            </PopoverWrapper>
-          ) : null}
+          <PopoverWrapper
+            open={!!openPopover}
+            innerRef={this.popoverWrapperRefCallback}
+          />
         </TopBar>
       </Overlay>
     )
