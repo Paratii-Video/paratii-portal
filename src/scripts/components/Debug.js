@@ -8,6 +8,7 @@ const DebugBox = styled.div`
   border: 4px dashed #f55;
   padding: 20px;
   margin: 20px;
+  flex: 0 0 0;
 `
 
 const Title = styled.h2`
@@ -24,8 +25,8 @@ type Props = {
 class Debug extends Component<Props, void> {
   render () {
     delete paratii.config.paratii
-    let config = JSON.stringify(paratii.config, null, 2)
-    let state = JSON.stringify(this.props, null, 2)
+    const config = JSON.stringify(paratii.config, null, 2)
+    const state = JSON.stringify(this.props, null, 2)
     let warning = null
     if (!paratii.config.registryAddress) {
       warning = (

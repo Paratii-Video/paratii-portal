@@ -1,4 +1,6 @@
-const Colors = {
+/* @flow */
+
+const Colors: Object = {
   white: '#fff',
   grayLight: '#828282',
   gray: '#c7c7c7',

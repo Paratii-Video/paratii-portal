@@ -1,40 +1,13 @@
-//
-// Note for devs: WORK IN PROGRESS
-// Check https://github.com/Paratii-Video/paratii-portal/issues/25 for progress
-//
-//
-// MIGRATING FROM paratii-player/tests/
-//
-//
-// Notes:
-//    Some of these functions are already tested in paratii-mediaplayer.
-//    Those tests do not need to be migrated and can be removed..
-//
-//
-//
-//
-//
-//
-//
 import { assert } from 'chai'
-import {
-  address1,
-  assertUserIsLoggedIn,
-  assertUserIsNotLoggedIn,
-  createUserAndLogin,
-  // createPlaylist,
-  // createVideo,
-  paratii,
-  uploadFilesToIPFS
-} from './test-utils/helpers.js'
+import { address1, paratii, uploadFilesToIPFS } from './test-utils/helpers.js'
 
 const fs = require('fs')
 const Promise = require('bluebird')
 const path = require('path')
 
-describe('Player: ', function () {
-  let ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
-  let videoId = 'foo'
+describe('Player:', function () {
+  const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
+  const videoId = 'foo'
 
   before(async function () {
     await paratii.core.vids.create({
@@ -44,72 +17,21 @@ describe('Player: ', function () {
       ipfsHash: ipfsHash
     })
 
-    let directory = `test/functional-tests/data/${ipfsHash}`
-    // the next function should now be available
+    const directory = `test/functional-tests/data/${ipfsHash}`
 
     let files = await Promise.promisify(fs.readdir)(directory)
-    let ipfs = await paratii.ipfs.getIPFSInstance()
+    const ipfs = await paratii.ipfs.getIPFSInstance()
     files = files.map(function (f) {
       return path.join(directory, f)
     })
 
     await uploadFilesToIPFS(ipfs, files)
-    // for (let i = 0; i < files.length; i++) {
-    //   console.log(filepath)
-    //   let file = await Promise.promisify(fs.createReadStream)(filepath)
-    //   console.log(file)
-    //   let result = await ipfs.files.add(file)
-    //   console.log(result)
-    // }
-    // browser.addCommand('waitUntilVideoIsPlaying', () => {
-    //   browser.waitUntil(() => (
-    //     parseInt(browser.getAttribute('#video-player', 'currentTime'), 10) !== 0 &&
-    //     browser.getAttribute('#video-player', 'paused') !== 'true' &&
-    //     browser.getAttribute('#video-player', 'ended') !== 'true'
-    //   ))
-    // })
-    // browser.addCommand('waitUntilBuffered', () => {
-    //   browser.waitUntil(() => !!browser.execute(() => {
-    //     const playerEl = document.querySelector('#video-player')
-    //     for (let i = 0; i < playerEl.buffered.length; i += 1) {
-    //       if (playerEl.buffered.end(i) > 0) {
-    //         return true
-    //       }
-    //     }
-    //     return false
-    //   }).value)
-    // })
   })
 
   beforeEach(function () {
     // server.execute(createVideo, '12345', 'Test 1', '', '', [''], 0)
     // server.execute(createVideo, '23456', 'Test 2', '', '', [''], 0)
     // server.execute(createPlaylist, '98765', 'Playlist test', ['12345', '23456'])
-  })
-
-  it('play a video @watch', async function () {
-    // check sanity - the video should be available now
-    assert.isOk(await paratii.core.vids.get(videoId))
-
-    await browser.url(`http://localhost:8080/play/${videoId}`)
-    // expect('#player').to.exist
-    await browser.waitAndClick('#player')
-    await browser.waitForExist('.media-control')
-  })
-
-  it('the video has overlay informations', async function () {
-    // This tests should just be very much reduced
-    browser.url(`http://localhost:8080/play/${videoId}`)
-    browser.waitAndClick('#player')
-    browser.waitForExist('#video-overlay')
-    // assert.equal(browser.getText('.player-title'), 'Test 1')
-    // browser.waitForExist('.player-controls')
-    // assert.isTrue(browser.getAttribute('.player-container', 'class').includes('play'))
-
-    // browser.waitForExist('.player-overlay')
-    // assert.isTrue(browser.getAttribute('#nav', 'class').includes('closed'))
-    // assert.isTrue(browser.getAttribute('.player-container', 'class').includes('pause'))
-    // assert.isTrue(browser.getAttribute('.player-container', 'class').includes('pause'))
   })
 
   it.skip('click on next video', () => {
@@ -139,7 +61,6 @@ describe('Player: ', function () {
   it.skip('if a player is not within a playlist and it ended related videos show up [TODO]', () => {})
 
   it.skip('like and dislike a video as an anonymous user', () => {
-    assertUserIsNotLoggedIn(browser)
     browser.url('http://localhost:3000/play/12345?playlist=98765')
     browser.waitForClickable('#button-like')
     browser.waitUntil(
@@ -163,31 +84,51 @@ describe('Player: ', function () {
         browser.getText('#button-dislike') === '1'
     )
   })
-  it.skip('like and dislike a video as a logged-in user', () => {
-    createUserAndLogin(browser)
-    assertUserIsLoggedIn(browser)
-    browser.url('http://localhost:3000/play/12345?playlist=98765')
-    browser.url('http://localhost:3000/play/12345?playlist=98765')
-    browser.waitForClickable('#button-like')
-    browser.waitUntil(
-      () =>
-        browser.getText('#button-like') === '0' &&
-        browser.getText('#button-dislike') === '0'
-    )
+  describe('portal player', () => {
+    it('plays a video', () => {
+      browser.url(`http://localhost:8080/play/${videoId}`)
+      browser.waitAndClick('#video-overlay')
 
-    browser.click('#button-like')
-    browser.waitUntil(
-      () =>
-        browser.getText('#button-like') === '1' &&
-        browser.getText('#button-dislike') === '0'
-    )
+      browser.waitUntil(() => {
+        return browser.execute(() => {
+          const video = document.querySelector('video')
+          return video.currentTime > 0
+        }).value
+      })
+    })
+    it('shows the video title on the overlay', function () {
+      browser.url(`http://localhost:8080/play/${videoId}`)
+      browser.waitForText('#video-overlay', 'Test 1')
+    })
+    it('does not render a profile button', function () {
+      browser.url(`http://localhost:8080/play/${videoId}`)
+      browser.pause(250)
+      assert.equal(
+        browser.isExisting('[data-test-id="overlay-profile-button"]'),
+        false
+      )
+    })
+  })
 
-    browser.click('#button-dislike')
+  describe('embedded player', () => {
+    it('plays a video', () => {
+      browser.url(`http://localhost:8080/embed/${videoId}`)
+      browser.waitAndClick('#video-overlay')
 
-    browser.waitUntil(
-      () =>
-        browser.getText('#button-like') === '0' &&
-        browser.getText('#button-dislike') === '1'
-    )
+      browser.waitUntil(() => {
+        return browser.execute(() => {
+          const video = document.querySelector('video')
+          return video.currentTime > 0
+        }).value
+      })
+    })
+    it('shows the video title on the overlay', function () {
+      browser.url(`http://localhost:8080/embed/${videoId}`)
+      browser.waitForText('#video-overlay', 'Test 1')
+    })
+    it('renders a profile button', function () {
+      browser.url(`http://localhost:8080/embed/${videoId}`)
+      browser.waitForClickable('[data-test-id="overlay-profile-button"]')
+    })
   })
 })

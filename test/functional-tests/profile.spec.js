@@ -39,7 +39,7 @@ describe('Profile and accounts workflow:', function () {
     keystore = JSON.parse(keystore)
     assert.isOk(keystore[0].address)
     // the paratii object in the browser should also know of the address
-    let paratiiConfigAddress = (await browser.execute(function () {
+    const paratiiConfigAddress = (await browser.execute(function () {
       return window.paratii.config.account.address
     })).value
     assert.isOk(paratiiConfigAddress)
@@ -192,7 +192,7 @@ describe('Profile and accounts workflow:', function () {
     assertUserIsNotLoggedIn(browser)
 
     browser.waitForClickable('.main-alert.error')
-    let errorMsg = browser.getText('.main-alert.error p')
+    const errorMsg = browser.getText('.main-alert.error p')
     assert.equal(errorMsg, 'That email and password combination is incorrect.')
   })
 
@@ -224,7 +224,7 @@ describe('Profile and accounts workflow:', function () {
     browser.setValue('[name="field-password"]', 'password')
     browser.click('#btn-restorekeystore-restore')
     browser.waitUntil(function () {
-      let publicAddress = getEthAccountFromApp()
+      const publicAddress = getEthAccountFromApp()
       return publicAddress === USERADDRESS
     })
   })
@@ -250,7 +250,7 @@ describe('Profile and accounts workflow:', function () {
     // submit the form
     browser.click('#at-btn')
     browser.waitForClickable('.main-alert.error')
-    let errorMsg = browser.getText('.main-alert.error p')
+    const errorMsg = browser.getText('.main-alert.error p')
     assert.equal(errorMsg, 'Email already exists.')
   })
 

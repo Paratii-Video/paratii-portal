@@ -12,7 +12,7 @@ type Props = {
 
 class UploadProgress extends Component<Props, void> {
   render () {
-    let progress = this.props.progress
+    const progress = this.props.progress
     return (
       <Wrapper>
         Blockchain status (= the object has been saved on the blockchain?):{' '}

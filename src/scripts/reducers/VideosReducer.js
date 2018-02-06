@@ -1,6 +1,6 @@
 /* @flow */
 
-import { Map } from 'immutable'
+import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
 import {
   INIT_VIDEOSTORE,
@@ -11,15 +11,14 @@ import {
   UPDATE_VIDEO_INFO,
   VIDEO_DATA_START,
   VIDEO_DATA_SAVED,
+  VIDEO_LOADED,
   TRANSCODING_REQUESTED,
   TRANSCODING_PROGRESS,
   TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
-import type { Action } from 'types/ApplicationTypes'
-
-type VideoRecordMap = Map<string, VideoRecord>
+import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 
 const reducer = {
   [INIT_VIDEOSTORE]: (
@@ -201,7 +200,13 @@ const reducer = {
       name: 'failed',
       data: {}
     })
+  },
+  [VIDEO_LOADED]: (
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
+    return state.set(payload.get('id'), payload)
   }
 }
 
-export default handleActions(reducer, Map({}))
+export default handleActions(reducer, Immutable.Map({}))

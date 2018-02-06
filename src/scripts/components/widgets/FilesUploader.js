@@ -113,7 +113,7 @@ class FilesUploader extends Component<Props, void> {
   }
 
   onDrag (e) {
-    let status = e.type
+    const status = e.type
     let klass = ''
 
     if (status === 'dragenter' || status === 'mouseover') {
