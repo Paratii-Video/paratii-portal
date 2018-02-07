@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
-export default styled.input`
-  height: 25px;
+export default styled.textarea`
+  min-height: 100px;
   font-size: 14px;
   font-weight: 500;
   display: block;
