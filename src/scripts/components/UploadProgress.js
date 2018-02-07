@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 
-import type { UploadRecord } from 'records/UploadRecords'
+import type { VideoRecord } from 'records/VideoRecords'
 import Wrapper from './foundations/Wrapper'
 import Button from './foundations/buttons/Button'
 
 type Props = {
   progress: number,
   onCancelUpload: () => boolean,
-  state: UploadRecord
+  state: VideoRecord
 }
 
 class UploadProgress extends Component<Props, void> {
   render () {
-    let progress = this.props.progress
+    const progress = this.props.progress
     return (
       <Wrapper>
         Blockchain status (= the object has been saved on the blockchain?):{' '}

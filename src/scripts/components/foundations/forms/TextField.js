@@ -86,7 +86,7 @@ class TextField extends Component<Props, void> {
   }
 
   handleChange (e) {
-    let str = e.target.value
+    const str = e.target.value
 
     this.setState({
       value: str
@@ -94,8 +94,8 @@ class TextField extends Component<Props, void> {
   }
 
   handleKeyUp (e) {
-    let str = this.state.value
-    let len = str.length
+    const str = this.state.value
+    const len = str.length
 
     this.setState({
       filled: len > 0

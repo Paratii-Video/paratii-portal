@@ -1,4 +1,6 @@
-import Colors from './Colors'
+/* @flow */
+
+import Colors from 'components/foundations/base/Colors'
 
 const Themes = {
   dark: {
@@ -20,6 +22,11 @@ const Themes = {
       white: Colors.white,
       gray: Colors.grayLight,
       purple: Colors.purple
+    },
+    popover: {
+      border: Colors.gray,
+      background: Colors.black,
+      color: Colors.white
     },
     mainInput: {
       border: Colors.grayLight,

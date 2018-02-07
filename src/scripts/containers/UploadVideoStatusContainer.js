@@ -4,11 +4,10 @@ import React, { Component } from 'react'
 import VideoStatus from 'components/VideoStatus'
 import type { RootState } from 'types/ApplicationTypes'
 import VideoRecord from 'records/VideoRecords'
-import UploadRecord from 'records/UploadRecords'
 
 type Props = {
-  video: VideoRecord,
-  state: UploadRecord
+  video: VideoRecord, // TODO: seems a bit too much
+  state: VideoRecord
 }
 
 class UploadVideoStatusContainer extends Component<Props, void> {
@@ -24,7 +23,8 @@ const mapStateToProps = (state: RootState) => ({
   video: state.upload.videoInfo
 })
 
-const mapDispatchToProps = dispatch => ({
-})
+const mapDispatchToProps = dispatch => ({})
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploadVideoStatusContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(
+  UploadVideoStatusContainer
+)

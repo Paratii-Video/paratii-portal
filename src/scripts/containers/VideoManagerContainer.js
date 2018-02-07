@@ -6,11 +6,9 @@ import styled from 'styled-components'
 
 import { setSelectedVideo } from 'actions/VideoActions'
 
-import UploadRecord from 'records/UploadRecords'
 import VideoRecord from 'records/VideoRecords'
 
-import { getUploads } from 'selectors/index'
-
+import { getUploads, getVideo } from 'selectors/index'
 import type { RootState } from 'types/ApplicationTypes'
 
 import VideoList from './VideoListContainer'
@@ -28,8 +26,8 @@ const Wrapper = styled.div`
 `
 
 type Props = {
-  uploads: Map<string, UploadRecord>,
-  selectedVideo: VideoRecord,
+  videos: Map<string, VideoRecord>,
+  selectedVideo: ?VideoRecord,
   setSelectedVideo: Object => void
 }
 
@@ -45,22 +43,35 @@ class VideoManagerContainer extends Component<Props, void> {
   }
 
   render () {
+    const uploads = this.props.videos
     const selectedVideo =
       this.props.selectedVideo && this.props.selectedVideo.id
+
+    let videolist = null
+    if (uploads.size > 0) {
+      videolist = (
+        <VideoList
+          onItemClick={this.onVideoListItemClicked}
+          videos={this.props.videos}
+        />
+      )
+    }
+
     return (
-      <Wrapper>
-        <VideoList onItemClick={this.onVideoListItemClicked} />
-        {selectedVideo === null && <UploadFile />}
-        {selectedVideo !== null && <VideoForm />}
+      <div>
+        <Wrapper>
+          {videolist}
+          {selectedVideo !== null ? <VideoForm /> : <UploadFile />}
+        </Wrapper>
         <Debug />
-      </Wrapper>
+      </div>
     )
   }
 }
 
 const mapStateToProps = (state: RootState) => ({
-  uploads: getUploads(state),
-  selectedVideo: state.selectedVideo
+  videos: getUploads(state),
+  selectedVideo: getVideo(state)
 })
 
 const mapDispatchToProps = dispatch => ({

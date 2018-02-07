@@ -14,11 +14,11 @@ window.paratii = new Paratii(paratiiConfig)
 export const paratii: ParatiiLib = window.paratii
 
 export async function setupKeystore () {
-  let defaultPassword = DEFAULT_PASSWORD
+  const defaultPassword = DEFAULT_PASSWORD
   let mnemonic
-  let walletKey = 'keystore-anon'
-  let mnemonicKey = 'mnemonic-anon'
-  let existingWallet = localStorage.getItem(walletKey)
+  const walletKey = 'keystore-anon'
+  const mnemonicKey = 'mnemonic-anon'
+  const existingWallet = localStorage.getItem(walletKey)
   let existingWalletIsValid
   if (existingWallet) {
     try {

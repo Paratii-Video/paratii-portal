@@ -23,7 +23,7 @@
     "lint:styles": "stylelint 'src/**/*.js'",
     "parity": "parity --config parity-config.toml",
     "precommit": "lint-staged",
-    "prep": "mkdir build/ && mkdir build/embed && cp src/index.html build/ && mkdir build/assets/",
+    "prep": "mkdir build/ && mkdir build/embed && cp src/index.html build/ && mkdir build/assets/ && cp -r src/assets/ build/assets/",
     "prettify": "prettier-standard src/**/*.js test/**/*.js",
     "quality": "yarn run lint:scripts && yarn run lint:styles && yarn run flow",
     "server": "NODE_ENV=production-notugly node src/server/index.js",
@@ -33,6 +33,11 @@
   },
   "babel": {
     "env": {
+      "development": {
+        "plugins": [
+          "babel-plugin-styled-components"
+        ]
+      },
       "production": {
         "plugins": [
           "transform-flow-strip-types",
@@ -47,6 +52,8 @@
     "plugins": [
       "transform-flow-strip-types",
       "transform-object-rest-spread",
+      "transform-class-properties",
+      "syntax-dynamic-import",
       "react-hot-loader/babel"
     ]
   },
@@ -63,6 +70,9 @@
     "babel-loader": "^7.1.2",
     "babel-plugin-object-rest-spread": "^0.0.0",
     "babel-plugin-react-transform": "^3.0.0",
+    "babel-plugin-styled-components": "^1.5.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-regenerator": "^6.26.0",
@@ -119,22 +129,25 @@
   },
   "dependencies": {
     "bluebird": "^3.5.1",
+    "clappr": "^0.2.78",
     "immutable": "^3.8.2",
     "js-cookie": "^2.2.0",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#09aaed1025408a278c8d8284912b20a35d28420c",
-    "paratii-mediaplayer": "^0.2.2",
+    "paratii-lib": "github:Paratii-Video/paratii-lib#81c49190fe66975329d30690e6297d5c617709b7",
+    "paratii-mediaplayer": "^1.0.4",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
     "react-blockies": "^1.2.2",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
+    "react-transition-group": "^2.2.1",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "streamspeed": "^1.1.0",
     "styled-components": "^2.3.3",
-    "stylelint-config-prettier": "^2.0.0"
+    "stylelint-config-prettier": "^2.0.0",
+    "web3": "^1.0.0-beta.29"
   }
 }

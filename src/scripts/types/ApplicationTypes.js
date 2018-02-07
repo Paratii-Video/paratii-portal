@@ -1,8 +1,10 @@
 /* @flow */
 
+import Immutable from 'immutable'
+
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
-import UploadRecord from 'records/UploadRecords'
+import PlayerRecord from 'records/PlayerRecords'
 
 export type RouteMatch = {
   path: string,
@@ -29,14 +31,31 @@ export type Action<T> = {
   payload: T
 }
 
+export type VideoRecordMap = Immutable.Map<string, VideoRecord>
+
 export type RootState = {
-  selectedVideo: ?VideoRecord,
+  selectedVideo: ?string,
   user: ?UserRecord,
-  uploads: UploadRecord
+  videos: VideoRecordMap,
+  player: PlayerRecord
 }
 
 export type ParatiiLibConfig = {
   provider: string
+}
+
+type EventEmitter = {
+  on: (eventType: string, callback: (e: Object) => void) => void
+}
+
+// TODO move this into paratii-mediaplayer repo
+type ClapprCore = EventEmitter & {}
+
+export type ClapprPlayer = EventEmitter & {
+  core: {
+    getCurrentPlayback: () => ClapprCore
+  },
+  play: () => void
 }
 
 // TODO move this into paratii-lib repo
@@ -50,7 +69,8 @@ export type ParatiiLib = {
   core: {
     vids: {
       get: (id: string) => ?Object,
-      create: Object => Object
+      create: Object => Object,
+      update: (id: string, Object) => Object
     }
   },
   eth: {
@@ -72,4 +92,100 @@ export type ParatiiLib = {
       transcode: (string, Object) => Object
     }
   }
+}
+
+type Animation = {
+  ease: {
+    smooth: string
+  },
+  time: {
+    repaint: string
+  },
+  opacity: {
+    hover: number,
+    disabled: number
+  }
+}
+
+type Typography = {
+  family: string,
+  weight: {
+    regular: number,
+    bold: number
+  },
+  button: {
+    size: {
+      main: string
+    }
+  },
+  text: {
+    big: string,
+    main: string,
+    small: string
+  }
+}
+
+type Sizes = {
+  mainHeader: {
+    height: string
+  },
+  mainFooter: {
+    height: string
+  },
+  mainHeaderLogo: {
+    height: string,
+    width: string
+  },
+  searchInputButton: string,
+  mainInput: {
+    height: string
+  }
+}
+
+type Colors = {
+  body: {
+    background: string,
+    color: string
+  },
+  header: {
+    background: string,
+    iconsFill: string,
+    logoFill: string
+  },
+  footer: {
+    background: string,
+    color: string,
+    logoFill: string
+  },
+  button: {
+    white: string,
+    gray: string,
+    purple: string
+  },
+  mainInput: {
+    border: string,
+    color: string,
+    placeholder: string,
+    error: string
+  },
+  FilesUploader: {
+    drag: {
+      background: string,
+      color: string,
+      color2: string,
+      info: string,
+      enter: string
+    },
+    input: {
+      background: string,
+      color: string
+    }
+  }
+}
+
+export type Theme = Object & {
+  animation: Animation,
+  fonts: Typography,
+  sizes: Sizes,
+  colors: Colors
 }

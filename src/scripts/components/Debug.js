@@ -3,20 +3,20 @@ import styled from 'styled-components'
 import { paratii } from '../utils/ParatiiLib'
 import type { RootState } from 'types/ApplicationTypes'
 
-const DebugBox = styled.header`
-  background-color: #fff;
-  border: 2px dashed red;
+const DebugBox = styled.div`
+  background-color: #ccc;
+  border: 4px dashed #f55;
   padding: 20px;
   margin: 20px;
+  flex: 0 0 0;
 `
 
-const Title = styled.header`
-  background-color: #fff;
+const Title = styled.h2`
   height: 50px;
   margin-bottom: 20px;
   display: flex;
   align-items: center;
-  color: blue;
+  color: #f55;
 `
 type Props = {
   state: RootState
@@ -25,8 +25,8 @@ type Props = {
 class Debug extends Component<Props, void> {
   render () {
     delete paratii.config.paratii
-    let config = JSON.stringify(paratii.config, null, 2)
-    let state = JSON.stringify(this.props, null, 2)
+    const config = JSON.stringify(paratii.config, null, 2)
+    const state = JSON.stringify(this.props, null, 2)
     let warning = null
     if (!paratii.config.registryAddress) {
       warning = (

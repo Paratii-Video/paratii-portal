@@ -113,7 +113,7 @@ class FilesUploader extends Component<Props, void> {
   }
 
   onDrag (e) {
-    let status = e.type
+    const status = e.type
     let klass = ''
 
     if (status === 'dragenter' || status === 'mouseover') {
@@ -154,10 +154,9 @@ class FilesUploader extends Component<Props, void> {
           </UploadCoverText>
           <UploadCoverInfo>{this.state.fileName}</UploadCoverInfo>
         </UploadCover>
-
         <InputWrapper>
           <InputText
-            label="Or upload from Youtube or Vimeo"
+            label="(Not working yet) Or upload from Youtube or Vimeo"
             helper="i.e.: http://youtube.com/videoID or http://vimeo.com/videoID"
             error={this.state.inputTextError}
           />
