@@ -5,8 +5,17 @@ html, body, #root {
   width: 100%;
 }
 
+#root {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
 .full-block {
   display: block;
   height: 100%;
   width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
 }

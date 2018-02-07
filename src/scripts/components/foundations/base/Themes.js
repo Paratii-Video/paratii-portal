@@ -34,6 +34,18 @@ const Themes = {
       placeholder: Colors.grayLight,
       error: Colors.pink
     },
+    MainCard: {
+      background: Colors.black,
+      color: Colors.white,
+      padding: '80px',
+      title: {
+        color: Colors.white
+      },
+      footer: {
+        background: Colors.blackDark,
+        color: Colors.grayLight
+      }
+    },
     FilesUploader: {
       drag: {
         background: Colors.black,
@@ -72,6 +84,18 @@ const Themes = {
       border: Colors.grayLight,
       color: Colors.white,
       placeholder: Colors.grayLight
+    },
+    MainCard: {
+      background: Colors.black,
+      color: Colors.white,
+      padding: '80px',
+      title: {
+        color: Colors.white
+      },
+      footer: {
+        background: Colors.blackDark,
+        color: Colors.white
+      }
     },
     FilesUploader: {
       drag: {
