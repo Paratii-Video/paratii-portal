@@ -14,7 +14,6 @@ const Wrapper = styled.div`
   border: ${({ theme }) => `1px solid ${theme.colors.popover.border}`};
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.popover.background};
-  background-opacity: 0.5;
   padding: 10px;
 `
 
