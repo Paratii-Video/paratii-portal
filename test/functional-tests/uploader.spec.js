@@ -37,14 +37,14 @@ describe('Uploader Tool', function () {
       }
     }
     browser.waitUntil(getVideoInfoFromBlockchain, 'shoot')
-    // const videoInfoFromBlockchain = await getVideoInfoFromBlockchain()
-    // assert.isOk(videoInfoFromBlockchain)
-    // assert.equal(videoInfoFromBlockchain.owner, paratii.config.account.address)
+    const videoInfoFromBlockchain = await getVideoInfoFromBlockchain()
+    assert.isOk(videoInfoFromBlockchain)
+    assert.equal(videoInfoFromBlockchain.owner, paratii.config.account.address)
 
     // now wait until the transcoder is done - we should see a "play" link at this point
     // TODO: this often times out on circleci because it depends on the (external) response of the transcoder
-    // await browser.waitForExist(`a[href="/play/${videoId}"]`)
-    // await browser.click(`a[href="/play/${videoId}"]`)
+    await browser.waitForExist(`a[href="/play/${videoId}"]`)
+    await browser.click(`a[href="/play/${videoId}"]`)
   })
 
   it.skip('cancel upload should work [but is not yet]', function () {
