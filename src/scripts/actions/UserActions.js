@@ -2,6 +2,7 @@
 
 import { createAction } from 'redux-actions'
 import Promise from 'bluebird'
+import Cookies from 'js-cookie'
 
 import {
   LOGIN_REQUESTED,
@@ -29,11 +30,13 @@ export const login = (email: string, password: string) => (
 ) => {
   dispatch(loginRequested())
   sleep(200).then(() => {
+    Cookies.set('email', email)
     dispatch(loginSuccess({ email }))
   })
 }
 
 export const logout = () => (dispatch: Dispatch) => {
+  Cookies.remove('email')
   dispatch(logoutAction())
 }
 

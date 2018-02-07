@@ -1,6 +1,7 @@
 /* @flow */
 
 import Immutable from 'immutable'
+import Cookies from 'js-cookie'
 
 import { REQUEST_STATUS } from 'constants/ApplicationConstants'
 
@@ -12,7 +13,7 @@ export const _getLoginRequestStatus = (state: User): RequestStatus =>
   state.get('loginRequestStatus')
 
 class User extends Immutable.Record({
-  email: '',
+  email: Cookies.get('email'),
   name: '',
   keepUrl: true,
   walletKey: 'keystore-anon',
