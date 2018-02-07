@@ -5,13 +5,11 @@ import styled from 'styled-components'
 
 import VideoRecord from 'records/VideoRecords'
 
+import type { Match } from 'react-router-dom'
+
 type Props = {
   video: ?VideoRecord,
-  match: {
-    params: {
-      id: String
-    }
-  },
+  match: Match,
   isEmbed?: boolean,
   onClick: (e: Object) => void
 }

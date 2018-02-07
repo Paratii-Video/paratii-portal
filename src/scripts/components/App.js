@@ -11,7 +11,7 @@ import PlayContainer from 'containers/PlayContainer'
 import DebugContainer from 'containers/DebugContainer'
 import VideoManager from 'containers/VideoManagerContainer'
 
-import type { RouteMatch } from 'types/ApplicationTypes'
+import type { Match } from 'react-router-dom'
 
 import MainTemplate from './templates/MainTemplate'
 import MainHeader from './structures/MainHeader'
@@ -24,7 +24,7 @@ import { paratiiTheme } from 'constants/ApplicationConstants'
 
 type Props = {
   initializeApp: () => void,
-  match: RouteMatch,
+  match: Match,
   setSelectedVideo: (id: string) => void
 }
 

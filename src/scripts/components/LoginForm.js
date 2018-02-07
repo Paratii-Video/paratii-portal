@@ -22,19 +22,19 @@ class LoginForm extends Component<Props, void> {
     return (
       <Form onSubmit={onSubmit}>
         <Input
-          id="login-email"
+          data-test-id="login-email"
           type="text"
           onChange={e => onInputChange('email', e)}
           placeholder="Email"
         />
         <Input
-          id="login-password"
+          data-test-id="login-password"
           type="password"
           onChange={e => onInputChange('password', e)}
           placeholder="Password"
         />
         <Button
-          id="login-submit"
+          data-test-id="login-submit"
           type="submit"
           disabled={this.props.isLoggingIn}
         >

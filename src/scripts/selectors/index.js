@@ -3,10 +3,14 @@
 import Immutable from 'immutable'
 
 import VideoRecord from 'records/VideoRecords'
-import UserRecord, { _getWalletKey, _getMnemonicKey } from 'records/UserRecords'
+import UserRecord, {
+  _getWalletKey,
+  _getMnemonicKey,
+  _getLoginRequestStatus
+} from 'records/UserRecords'
 import { _getIsPlaying, _getIsAttemptingPlay } from 'records/PlayerRecords'
 
-import type { RootState } from 'types/ApplicationTypes'
+import type { RootState, RequestStatus } from 'types/ApplicationTypes'
 
 /* Videos */
 export const getVideo = (state: RootState): ?VideoRecord => {
@@ -22,8 +26,8 @@ export const getWalletKey = (state: RootState): string =>
 export const getMnemonicKey = (state: RootState): string =>
   _getMnemonicKey(getUser(state))
 
-export const getIsLoggingIn = (state: RootState): boolean =>
-  !!(state.user && state.user.isLoggingIn)
+export const getLoginRequestStatus = (state: RootState): RequestStatus =>
+  _getLoginRequestStatus(state.user)
 
 export const getShouldKeepUrl = (state: RootState): boolean =>
   !!(state.user && state.user.keepUrl)

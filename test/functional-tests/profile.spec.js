@@ -85,20 +85,23 @@ describe('Profile and accounts workflow:', function () {
 
     // fill form
     browser.url(getPath('login'))
-    browser.waitForEnabled('#login-email')
-    browser.setValue('#login-email', 'guildenstern@rosencrantz.com')
-    browser.setValue('#login-password', 'password')
-    browser.click('#login-submit')
+    browser.waitForEnabled('[data-test-id="login-email"]')
+    browser.setValue(
+      '[data-test-id="login-email"]',
+      'guildenstern@rosencrantz.com'
+    )
+    browser.setValue('[data-test-id="login-password"]', 'password')
+    browser.click('[data-test-id="login-submit"')
 
     // verify page
-    browser.waitForExist('#profile-email', 'page did not load')
+    browser.waitForExist('[data-test-id="profile-email"]', 'page did not load')
     assert.equal(
       browser.getUrl(),
       getPath('profile'),
       'not redirect to profile page'
     )
     assert.equal(
-      browser.getText('#profile-email'),
+      browser.getText('[data-test-id="profile-email"]'),
       'guildenstern@rosencrantz.com',
       'not same email'
     )

@@ -2,6 +2,8 @@
 
 import { handleActions } from 'redux-actions'
 
+import { REQUEST_STATUS } from 'constants/ApplicationConstants'
+
 import type { Action } from 'types/ApplicationTypes'
 import {
   LOGIN_REQUESTED,
@@ -14,7 +16,7 @@ import UserRecord from 'records/UserRecords'
 const reducer = {
   [LOGIN_REQUESTED]: (state: UserRecord): UserRecord => {
     return state.merge({
-      isLoggingIn: true,
+      loginRequestStatus: REQUEST_STATUS.PENDING,
       email: null,
       name: null
     })
@@ -24,13 +26,13 @@ const reducer = {
     { payload }: Action<{ email: string }>
   ): UserRecord => {
     return state.merge({
-      isLoggingIn: false,
+      loginRequestStatus: REQUEST_STATUS.SUCCEEDED,
       email: payload.email
     })
   },
   [LOGOUT]: (state: UserRecord): UserRecord => {
     return state.merge({
-      isLoggingIn: false,
+      loginRequestStatus: REQUEST_STATUS.NOT_STARTED,
       email: null,
       name: null,
       keepUrl: false

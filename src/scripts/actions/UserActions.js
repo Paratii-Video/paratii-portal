@@ -2,7 +2,6 @@
 
 import { createAction } from 'redux-actions'
 import Promise from 'bluebird'
-import Cookies from 'js-cookie'
 
 import {
   LOGIN_REQUESTED,
@@ -14,8 +13,7 @@ import paratii from 'utils/ParatiiLib'
 import { DEFAULT_PASSWORD } from 'constants/ParatiiLibConstants'
 import { getWalletKey, getMnemonicKey } from 'selectors/index'
 
-import type { RootState } from 'types/ApplicationTypes'
-import type { Dispatch } from 'redux'
+import type { RootState, Dispatch } from 'types/ApplicationTypes'
 
 const loginRequested = createAction(LOGIN_REQUESTED)
 const loginSuccess = createAction(LOGIN_SUCCESS)
@@ -27,18 +25,16 @@ const sleep = ms => {
 }
 
 export const login = (email: string, password: string) => (
-  dispatch: Dispatch<*>
+  dispatch: Dispatch
 ) => {
   dispatch(loginRequested())
   sleep(200).then(() => {
-    Cookies.set('email', email)
     dispatch(loginSuccess({ email }))
   })
 }
 
-export const logout = () => (dispatch: Dispatch<*>) => {
+export const logout = () => (dispatch: Dispatch) => {
   dispatch(logoutAction())
-  Cookies.remove('email')
 }
 
 const setAndSyncWalletData = ({
@@ -51,7 +47,7 @@ const setAndSyncWalletData = ({
   wallet: Object,
   mnemonicKey: string,
   mnemonic: string
-}) => (dispatch: Dispatch<*>): void => {
+}) => (dispatch: Dispatch): void => {
   dispatch(
     setWalletData({
       walletKey,
@@ -65,7 +61,7 @@ const setAndSyncWalletData = ({
 }
 
 export const setupKeystore = () => async (
-  dispatch: Dispatch<*>,
+  dispatch: Dispatch,
   getState: () => RootState
 ) => {
   paratii.eth.wallet.clear()
