@@ -9,6 +9,10 @@ const Typography = {
       main: '16px'
     }
   },
+  form: {
+    input: '16px',
+    helper: '14px'
+  },
   title: {
     big: '32px',
     main: '28px',

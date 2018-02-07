@@ -30,6 +30,7 @@ const Themes = {
     },
     mainInput: {
       border: Colors.grayLight,
+      borderFocus: Colors.purple,
       color: Colors.white,
       placeholder: Colors.grayLight,
       error: Colors.pink
@@ -82,6 +83,7 @@ const Themes = {
     },
     mainInput: {
       border: Colors.grayLight,
+      borderFocus: Colors.purple,
       color: Colors.white,
       placeholder: Colors.grayLight
     },

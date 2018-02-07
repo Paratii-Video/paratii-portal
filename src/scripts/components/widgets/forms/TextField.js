@@ -26,7 +26,7 @@ const LabelField = styled.label`
 `
 
 const StyleFakeLabelFilled = css`
-  transform: translate3d(0, -22px, 0) scale(0.92);
+  transform: translate3d(0, -22px, 0) scale(0.8);
   transition-duration: 0.4s;
   transition-delay: 0s;
 `
@@ -40,7 +40,7 @@ const FakeLabel = styled.span`
   transform-origin: left;
   transform: ${props =>
     props.filled
-      ? 'translate3d(0, -22px, 0) scale(0.92)'
+      ? 'translate3d(0, -22px, 0) scale(0.8)'
       : 'translate3d(0, 0, 0) scale(1)'};
   transition-delay: ${props => (props.filled ? '0s' : '0.1s')};
   transition-duration: ${props => (props.filled ? '0.4s' : '0.5s')};

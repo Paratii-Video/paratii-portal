@@ -2,7 +2,7 @@ import styled, { css, keyframes } from 'styled-components'
 
 const StyleInput = css`
   background-color: transparent;
-  font-size: 14px;
+  font-size: ${props => props.theme.fonts.form.input};
   height: ${props => props.theme.sizes.mainInput.height};
   width: 100%;
 `
@@ -20,7 +20,12 @@ const Input = styled.input`
     : props.theme.colors.mainInput.border};
   color: ${props => props.theme.colors.mainInput.color};
   position: relative;
+  transition: border-color ${props => props.theme.animation.time.repaint};
   z-index: 2;
+
+  &:focus {
+    border-color: ${props => props.theme.colors.mainInput.borderFocus};
+  }
 
   &:-webkit-autofill {
     animation-name: ${AutofillFix};
