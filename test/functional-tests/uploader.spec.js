@@ -36,7 +36,7 @@ describe('Uploader Tool', function () {
         console.log(err)
       }
     }
-    browser.waitUntil(getVideoInfoFromBlockchain, 'shoot')
+    browser.waitUntil(getVideoInfoFromBlockchain)
     const videoInfoFromBlockchain = await getVideoInfoFromBlockchain()
     assert.isOk(videoInfoFromBlockchain)
     assert.equal(videoInfoFromBlockchain.owner, paratii.config.account.address)
