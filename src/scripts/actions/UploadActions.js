@@ -1,7 +1,7 @@
 /* @flow */
 
 import { createAction } from 'redux-actions'
-import { paratii } from 'utils/ParatiiLib'
+import paratii from 'utils/ParatiiLib'
 
 import {
   INIT_VIDEOSTORE,

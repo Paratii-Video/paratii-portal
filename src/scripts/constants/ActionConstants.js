@@ -2,12 +2,16 @@
 
 const createActionConstant = constant => `@@PARATII_PORTAL_${constant}`
 
+/* App Actions */
+export const INITIALIZE = createActionConstant('INITIALIZE')
+
 /* Video actions */
 export const VIDEO_LOADED = createActionConstant('VIDEO_LOADED')
 export const VIDEO_SELECT = createActionConstant('VIDEO_SELECT')
 export const INIT_VIDEOSTORE = createActionConstant('INIT_VIDEOSTORE')
 
-/* Login Actions */
+/* User Actions */
+export const SET_WALLET_DATA = createActionConstant('SET_WALLET_DATA')
 export const LOGIN_REQUESTED = createActionConstant('LOGIN_REQUESTED')
 export const LOGIN_SUCCESS = createActionConstant('LOGIN_SUCCESS')
 export const LOGIN_FAILURE = createActionConstant('LOGIN_FAILURE')
@@ -21,8 +25,6 @@ export const UPLOAD_FAILURE = createActionConstant('UPLOAD_FAILURE')
 export const UPLOAD_LOCAL_SUCCESS = createActionConstant('UPLOAD_LOCAL_SUCCESS')
 // upload to the "IPFS Cloud" is finished
 export const UPLOAD_SUCCESS = createActionConstant('UPLOAD_SUCCESS')
-
-//
 export const UPDATE_VIDEO_INFO = createActionConstant('UPDATE_VIDEO_INFO')
 
 /* Save to blockchain actions */

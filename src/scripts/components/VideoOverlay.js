@@ -52,6 +52,7 @@ const ButtonGroup = styled.div`
   flex-direction: row;
   flex: 1 0 0;
   justify-content: flex-end;
+  opacity: ${({ hide }) => (hide ? 0 : 1)};
 `
 
 const PopoverWrapper = styled.div`
@@ -127,7 +128,7 @@ class VideoOverlay extends Component<Props, State> {
       <Overlay id="video-overlay" onClick={onClick}>
         <TopBar>
           <Title>{this.getVideoTitle()}</Title>
-          <ButtonGroup>
+          <ButtonGroup hide={!!this.state.openPopover}>
             {ProfileButton ? (
               <ProfileButton
                 onClick={this.onProfileButtonClick}

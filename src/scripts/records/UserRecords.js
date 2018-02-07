@@ -1,31 +1,22 @@
 /* @flow */
 
-import { Record as ImmutableRecord } from 'immutable'
-import Cookies from 'js-cookie'
+import Immutable from 'immutable'
 
-class User extends ImmutableRecord({
-  email: null,
-  name: 'John Doe', // TODO
-  isLoggingIn: false,
-  keepUrl: true
+export const _getWalletKey = (state: User): string => state.get('walletKey')
+export const _getMnemonicKey = (state: User): string => state.get('mnemonicKey')
+
+class User extends Immutable.Record({
+  email: '',
+  name: '',
+  keepUrl: true,
+  walletKey: 'keystore-anon',
+  mnemonicKey: 'mnemonic-anon'
 }) {
-  email: string;
-  name: string;
-  isLoggingIn: boolean;
-  keepUrl: boolean;
-
-  constructor (email?: string) {
-    super({email: email})
-  }
-
-  static fromCookies () {
-    const email = Cookies.get('email')
-    if (email) {
-      return new User(email)
-    } else {
-      return new User()
-    }
-  }
+  email: string
+  name: string
+  keepUrl: boolean
+  walletKey: string
+  mnemonicKey: string
 }
 
 export default User

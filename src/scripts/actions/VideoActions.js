@@ -2,7 +2,7 @@
 
 import { createAction } from 'redux-actions'
 
-import { paratii } from 'utils/ParatiiLib'
+import paratii from 'utils/ParatiiLib'
 import { VIDEO_SELECT, INIT_VIDEOSTORE } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 

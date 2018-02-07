@@ -12,7 +12,6 @@ import DebugContainer from 'containers/DebugContainer'
 import VideoManager from 'containers/VideoManagerContainer'
 
 import type { RouteMatch } from 'types/ApplicationTypes'
-import { setupKeystore } from 'utils/ParatiiLib'
 
 import MainTemplate from './templates/MainTemplate'
 import MainHeader from './structures/MainHeader'
@@ -24,6 +23,7 @@ import NotFound from './pages/NotFound'
 import { paratiiTheme } from 'constants/ApplicationConstants'
 
 type Props = {
+  initializeApp: () => void,
   match: RouteMatch,
   setSelectedVideo: (id: string) => void
 }
@@ -35,8 +35,13 @@ const PortalPlayWrapper = styled.div`
 `
 
 class App extends Component<Props, void> {
+  constructor (props: Props) {
+    super(props)
+
+    this.props.initializeApp()
+  }
+
   render () {
-    setupKeystore()
     const { match } = this.props
     return (
       <ThemeProvider theme={paratiiTheme}>

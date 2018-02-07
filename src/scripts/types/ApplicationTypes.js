@@ -35,7 +35,7 @@ export type VideoRecordMap = Immutable.Map<string, VideoRecord>
 
 export type RootState = {
   selectedVideo: ?string,
-  user: ?UserRecord,
+  user: UserRecord,
   videos: VideoRecordMap,
   player: PlayerRecord
 }
@@ -79,7 +79,8 @@ export type ParatiiLib = {
       encrypt: (password: string) => Object,
       // newMnemonic: () => string,
       getMnemonic: () => string,
-      create: () => Object
+      create: () => Object,
+      clear: () => void
     },
     vids: {
       get: (id: string) => ?Object,
