@@ -49,7 +49,7 @@ describe('Profile and accounts workflow:', function () {
     )
   })
 
-  it('register a new user @watch', function () {
+  it('register a new user', function () {
     browser.url(getPath('signup'))
 
     // fill in the form
