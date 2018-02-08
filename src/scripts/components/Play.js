@@ -7,6 +7,7 @@ import CreatePlayer from 'paratii-mediaplayer'
 import VideoRecord from 'records/VideoRecords'
 
 import VideoOverlay from 'components/VideoOverlay'
+import Debug from 'containers/DebugContainer'
 
 import type { RouteMatch, ClapprPlayer } from 'types/ApplicationTypes'
 
@@ -155,6 +156,7 @@ class Play extends Component<Props, void> {
           )}
           <Player id="player" />
         </PlayerWrapper>
+        <Debug />
       </Wrapper>
     )
   }
