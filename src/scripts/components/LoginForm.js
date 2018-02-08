@@ -18,7 +18,7 @@ class LoginForm extends Component<Props, void> {
       <SignForm onSubmit={onSubmit}>
         <TextField
           data-test-id="login-email"
-          // id="login-email"
+          id="login-email"
           type="text"
           onChange={e => onInputChange('email', e)}
           label="Email"
@@ -27,6 +27,7 @@ class LoginForm extends Component<Props, void> {
         />
         <TextField
           data-test-id="login-password"
+          id="login-password"
           type="password"
           onChange={e => onInputChange('password', e)}
           label="Password"
