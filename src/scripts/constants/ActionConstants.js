@@ -6,7 +6,8 @@ const createActionConstant = constant => `@@PARATII_PORTAL_${constant}`
 export const VIDEO_LOADED = createActionConstant('VIDEO_LOADED')
 export const VIDEO_SELECT = createActionConstant('VIDEO_SELECT')
 export const INIT_VIDEOSTORE = createActionConstant('INIT_VIDEOSTORE')
-export const VIDEO_ERROR = createActionConstant('VIDEO_NOTFOUND')
+export const VIDEOFECTH_ERROR = createActionConstant('VIDEOFECTH_ERROR')
+export const VIDEOFECTH_SUCCESS = createActionConstant('VIDEOFECTH_SUCCESS')
 
 /* Login Actions */
 export const LOGIN_REQUESTED = createActionConstant('LOGIN_REQUESTED')

@@ -16,7 +16,8 @@ import {
   TRANSCODING_PROGRESS,
   TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE,
-  VIDEO_ERROR
+  VIDEOFECTH_ERROR,
+  VIDEOFECTH_SUCCESS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
@@ -208,16 +209,26 @@ const reducer = {
   ): VideoRecordMap => {
     return state.set(payload.get('id'), payload)
   },
-  [VIDEO_ERROR]: (
+  [VIDEOFECTH_ERROR]: (
     state: VideoRecordMap,
     { payload }: Action<{ id: string, error: string }>
   ): VideoRecordMap => {
     console.log(payload)
     return state.setIn([payload.id, 'fecthStatus'], {
-      name: 'videoError',
+      name: 'failed',
       data: {
         error: payload.error.message
       }
+    })
+  },
+  [VIDEOFECTH_SUCCESS]: (
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
+    console.log(payload)
+    return state.setIn([payload.id, 'fecthStatus'], {
+      name: 'success',
+      data: {}
     })
   }
 }
