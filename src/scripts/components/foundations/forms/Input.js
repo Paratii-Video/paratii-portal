@@ -6,7 +6,7 @@ const StyleInput = css`
   height: ${props => props.theme.sizes.mainInput.height};
   width: 100%;
 `
-const AutofillFix = props => keyframes` // fix chrome yellow background
+const AutofillFix = props => keyframes`
   to {
     color: ${props.theme.colors.mainInput.color};
     background: transparent;
