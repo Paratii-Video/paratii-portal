@@ -4,7 +4,8 @@ import createTestRenderer from 'unit-tests/test-utils/createTestRenderer'
 const defaultProps = {
   match: {
     url: '/'
-  }
+  },
+  initializeApp: () => {}
 }
 
 const render = createTestRenderer(App, defaultProps)

@@ -13,7 +13,7 @@
     "chimp-test:watch": "yarn run chimp-test --watch",
     "chimp-test:concurrently": "concurrently --kill-others --success first \"NODE_ENV=test yarn run dev\" \"yarn run chimp-test\"",
     "chimp-test:concurrently:watch": "concurrently --kill-others --success all \"NODE_ENV=test yarn run dev\" \"yarn run chimp-test --watch\"",
-    "deploy-contracts": "node src/scripts/deployContracts.js",
+    "setup-dev-env": "node src/scripts/setupDevEnv.js",
     "diagnose": "node src/scripts/diagnose.js",
     "dev": "concurrently \"yarn run build:dev\" \"yarn run server:dev\" \"yarn run parity\"",
     "flow": "flow",
@@ -27,7 +27,7 @@
     "prettify": "prettier-standard src/**/*.js test/**/*.js",
     "quality": "yarn run lint:scripts && yarn run lint:styles && yarn run flow",
     "server": "NODE_ENV=production-notugly node src/server/index.js",
-    "server:dev": "NODE_ENV=development yarn run deploy-contracts && NODE_ENV=development nodemon src/server/index.js --watch node_modules src/server/index.js",
+    "server:dev": "NODE_ENV=development yarn run setup-dev-env && NODE_ENV=development nodemon src/server/index.js --watch node_modules src/server/index.js",
     "unit-test": "NODE_ENV=test karma start karma.conf.js",
     "unit-test:dev": "yarn run unit-test -- --single-run false"
   },

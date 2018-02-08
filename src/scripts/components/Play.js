@@ -9,10 +9,11 @@ import VideoRecord from 'records/VideoRecords'
 import VideoOverlay from 'components/VideoOverlay'
 import Debug from 'containers/DebugContainer'
 
-import type { RouteMatch, ClapprPlayer } from 'types/ApplicationTypes'
+import type { ClapprPlayer } from 'types/ApplicationTypes'
+import type { Match } from 'react-router-dom'
 
 type Props = {
-  match: RouteMatch,
+  match: Match,
   setSelectedVideo: ({ id: string }) => void,
   fetchVideo: (id: string) => void,
   isPlaying: boolean,

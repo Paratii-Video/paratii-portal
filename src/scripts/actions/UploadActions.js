@@ -1,7 +1,7 @@
 /* @flow */
 
 import { createAction } from 'redux-actions'
-import { paratii } from 'utils/ParatiiLib'
+import paratii from 'utils/ParatiiLib'
 
 import {
   INIT_VIDEOSTORE,
@@ -112,13 +112,14 @@ export const saveVideoInfo = (videoInfo: Object) => async (
     videoInfo.id = newVideoId
     dispatch(initVideoStore({ id: newVideoId }))
   }
-  // console.log('SAVING', videoInfo)
-  // dispatch(updateVideoInfo(new VideoRecord(videoInfo)))
   dispatch(videoDataStart(videoInfo))
+  console.log('SAVING', videoInfo)
+
   paratii.core.vids
     .create(videoInfo)
     .then(videoInfo => {
       // dispatch(updateVideoInfo(new VideoRecord(videoInfo)))
+      console.log('SAVED')
       dispatch(videoDataSaved(videoInfo))
     })
     .catch(error => {

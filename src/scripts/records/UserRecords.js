@@ -1,31 +1,31 @@
 /* @flow */
 
-import { Record as ImmutableRecord } from 'immutable'
+import Immutable from 'immutable'
 import Cookies from 'js-cookie'
 
-class User extends ImmutableRecord({
-  email: null,
-  name: 'John Doe', // TODO
-  isLoggingIn: false,
-  keepUrl: true
+import { REQUEST_STATUS } from 'constants/ApplicationConstants'
+
+import type { RequestStatus } from 'types/ApplicationTypes'
+
+export const _getWalletKey = (state: User): string => state.get('walletKey')
+export const _getMnemonicKey = (state: User): string => state.get('mnemonicKey')
+export const _getLoginRequestStatus = (state: User): RequestStatus =>
+  state.get('loginRequestStatus')
+
+class User extends Immutable.Record({
+  email: Cookies.get('email'),
+  name: '',
+  keepUrl: true,
+  walletKey: 'keystore-anon',
+  mnemonicKey: 'mnemonic-anon',
+  loginRequestStatus: REQUEST_STATUS.NOT_STARTED
 }) {
-  email: string;
-  name: string;
-  isLoggingIn: boolean;
-  keepUrl: boolean;
-
-  constructor (email?: string) {
-    super({email: email})
-  }
-
-  static fromCookies () {
-    const email = Cookies.get('email')
-    if (email) {
-      return new User(email)
-    } else {
-      return new User()
-    }
-  }
+  email: string
+  name: string
+  keepUrl: boolean
+  walletKey: string
+  mnemonicKey: string
+  loginRequestStatus: RequestStatus
 }
 
 export default User

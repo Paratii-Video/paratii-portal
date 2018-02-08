@@ -13,3 +13,12 @@ export const paratiiTheme: Theme = {
   sizes: Sizes,
   colors: Themes.dark
 }
+
+const createRequestStatus = (status: string) => `REQUEST_${status}`
+
+export const REQUEST_STATUS = {
+  NOT_STARTED: createRequestStatus('NOT_STARTED'),
+  PENDING: createRequestStatus('PENDING'),
+  SUCCEEDED: createRequestStatus('SUCCEEDED'),
+  FAILED: createRequestStatus('FAILED')
+}

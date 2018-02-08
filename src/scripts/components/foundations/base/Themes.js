@@ -25,7 +25,7 @@ const Themes = {
     },
     popover: {
       border: Colors.gray,
-      background: Colors.black,
+      background: Colors.blackTransparent,
       color: Colors.white
     },
     mainInput: {

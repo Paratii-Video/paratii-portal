@@ -391,7 +391,6 @@ export function uploadFilesToIPFS(ipfs, files) {
         if (err) {
           console.log(err)
         }
-        console.log('uploader Finished')
       })
     )
   })

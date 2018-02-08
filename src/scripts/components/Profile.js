@@ -14,11 +14,11 @@ type Props = {
 
 class Profile extends Component<Props, void> {
   render () {
-    const {name, email} = this.props.user
+    const { name, email } = this.props.user
     return (
       <Wrapper>
         <Title>{name}</Title>
-        <Label id='profile-email'>{email}</Label>
+        <Label data-test-id="profile-email">{email}</Label>
         <LogoutButton />
       </Wrapper>
     )

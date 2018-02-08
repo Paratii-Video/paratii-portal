@@ -5,13 +5,11 @@ import styled from 'styled-components'
 
 import VideoRecord from 'records/VideoRecords'
 
+import type { Match } from 'react-router-dom'
+
 type Props = {
   video: ?VideoRecord,
-  match: {
-    params: {
-      id: String
-    }
-  },
+  match: Match,
   isEmbed?: boolean,
   onClick: (e: Object) => void
 }
@@ -52,6 +50,7 @@ const ButtonGroup = styled.div`
   flex-direction: row;
   flex: 1 0 0;
   justify-content: flex-end;
+  opacity: ${({ hide }) => (hide ? 0 : 1)};
 `
 
 const PopoverWrapper = styled.div`
@@ -127,7 +126,7 @@ class VideoOverlay extends Component<Props, State> {
       <Overlay id="video-overlay" onClick={onClick}>
         <TopBar>
           <Title>{this.getVideoTitle()}</Title>
-          <ButtonGroup>
+          <ButtonGroup hide={!!this.state.openPopover}>
             {ProfileButton ? (
               <ProfileButton
                 onClick={this.onProfileButtonClick}

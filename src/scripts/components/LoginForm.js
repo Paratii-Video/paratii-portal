@@ -17,6 +17,7 @@ class LoginForm extends Component<Props, void> {
     return (
       <SignForm onSubmit={onSubmit}>
         <TextField
+          data-test-id="login-email"
           id="login-email"
           type="text"
           onChange={e => onInputChange('email', e)}
@@ -25,6 +26,7 @@ class LoginForm extends Component<Props, void> {
           disabled={this.props.isLoggingIn}
         />
         <TextField
+          data-test-id="login-password"
           id="login-password"
           type="password"
           onChange={e => onInputChange('password', e)}
@@ -33,7 +35,7 @@ class LoginForm extends Component<Props, void> {
           disabled={this.props.isLoggingIn}
         />
         <Button
-          id="login-submit"
+          data-test-id="login-submit"
           type="submit"
           disabled={this.props.isLoggingIn}
           purple
