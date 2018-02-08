@@ -41,6 +41,7 @@ const PlayerWrapper = styled.div`
   flex: 0 0 100%;
   width: 100%;
   position: relative;
+  height: 500px;
 `
 
 const OverlayWrapper = styled.div`
