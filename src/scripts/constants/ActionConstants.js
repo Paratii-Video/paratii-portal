@@ -9,8 +9,8 @@ export const INITIALIZE = createActionConstant('INITIALIZE')
 export const VIDEO_LOADED = createActionConstant('VIDEO_LOADED')
 export const VIDEO_SELECT = createActionConstant('VIDEO_SELECT')
 export const INIT_VIDEOSTORE = createActionConstant('INIT_VIDEOSTORE')
-export const VIDEOFECTH_ERROR = createActionConstant('VIDEOFECTH_ERROR')
-export const VIDEOFECTH_SUCCESS = createActionConstant('VIDEOFECTH_SUCCESS')
+export const VIDEOFETCH_ERROR = createActionConstant('VIDEOFETCH_ERROR')
+export const VIDEOFETCH_SUCCESS = createActionConstant('VIDEOFETCH_SUCCESS')
 
 /* User Actions */
 export const SET_WALLET_DATA = createActionConstant('SET_WALLET_DATA')

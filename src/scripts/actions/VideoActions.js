@@ -6,8 +6,8 @@ import paratii from 'utils/ParatiiLib'
 import {
   VIDEO_SELECT,
   INIT_VIDEOSTORE,
-  VIDEOFECTH_ERROR,
-  VIDEOFECTH_SUCCESS
+  VIDEOFETCH_ERROR,
+  VIDEOFETCH_SUCCESS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 
@@ -15,8 +15,8 @@ import type { Dispatch } from 'redux'
 
 export const selectVideoAction = createAction(VIDEO_SELECT)
 export const initVideoStore = createAction(INIT_VIDEOSTORE)
-export const videoFetchError = createAction(VIDEOFECTH_ERROR)
-export const videoFetchSuccess = createAction(VIDEOFECTH_SUCCESS)
+export const videoFetchError = createAction(VIDEOFETCH_ERROR)
+export const videoFetchSuccess = createAction(VIDEOFETCH_SUCCESS)
 
 export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
   let videoInfo
