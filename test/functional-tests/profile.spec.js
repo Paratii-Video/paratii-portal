@@ -79,19 +79,22 @@ describe('Profile and accounts workflow:', function () {
     // assertUserIsLoggedIn(browser)
   })
 
-  it.skip('login', () => {
+  it('login @watch', () => {
     // clear Cookies
     clearCookies()
 
     // fill form
     browser.url(getPath('login'))
-    browser.waitForEnabled('[data-test-id="login-email"]')
+    browser.waitForEnabled('[data-test-id="login-form"] input[type="text"]')
     browser.setValue(
-      '[data-test-id="login-email"]',
+      '[data-test-id="login-form"] input[type="text"]',
       'guildenstern@rosencrantz.com'
     )
-    browser.setValue('[data-test-id="login-password"]', 'password')
-    browser.click('[data-test-id="login-submit"')
+    browser.setValue(
+      '[data-test-id="login-form"] input[type="password"]',
+      'password'
+    )
+    browser.click('[data-test-id="login-form"] [type="submit"]')
 
     // verify page
     browser.waitForExist('[data-test-id="profile-email"]', 'page did not load')
