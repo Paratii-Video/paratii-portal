@@ -4,15 +4,26 @@ import styled, { css } from 'styled-components'
 type Props = {
   children: Object,
   title: String,
-  footer: Object
+  footer: Object,
+  full: Boolean,
+  margin: String
 }
 
 const StyleCardPadding = css`
   padding: 47px 42px;
 `
 
+export const CardContainer = styled.div`
+  display: flex;
+  justifycontent: center;
+`
+
 const CardWrapper = styled.div`
-  width: ${props => (props.full ? '66%' : '33%')};
+  flex: 1 1 100%;
+  margin: ${props => props.margin};
+  min-width: ${props => (props.full ? '' : '388px')};
+  max-width: ${props => (props.full ? '' : '33%')};
+  overflow: hidden;
 `
 
 const Main = styled.div`
@@ -40,7 +51,7 @@ const Footer = styled.div`
 class Card extends Component<Props, void> {
   render () {
     return (
-      <CardWrapper>
+      <CardWrapper full={this.props.full} margin={this.props.margin}>
         <Main>
           {this.props.title && <Title>{this.props.title}</Title>}
           {this.props.children}
