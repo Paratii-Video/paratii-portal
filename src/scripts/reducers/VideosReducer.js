@@ -71,7 +71,6 @@ const reducer = {
     if (!state.get(payload.id)) {
       throw Error(`Unknown id: ${payload.id}`)
     }
-    console.log('UPLOAD_LOCAL_SUCCESS')
     const ipfsHashOrig = payload.hash
     state = state.mergeDeep({
       [payload.id]: {
@@ -213,7 +212,6 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<{ id: string, error: Object }>
   ): VideoRecordMap => {
-    console.log(payload)
     return state.setIn([payload.id, 'fecthStatus'], {
       name: 'failed',
       data: {
@@ -225,7 +223,6 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    console.log(payload)
     return state.setIn([payload.id, 'fecthStatus'], {
       name: 'success',
       data: {}

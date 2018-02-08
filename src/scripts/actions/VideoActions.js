@@ -34,6 +34,7 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
     console.log(id)
     dispatch(videoFetchError({ id: id, error: error }))
   }
+  console.log(videoInfo)
   return videoInfo
 }
 
