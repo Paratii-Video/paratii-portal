@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import NavLink from '../foundations/buttons/NavLink'
+import NavLink from 'components/foundations/buttons/NavLink'
 
 type Props = {}
 

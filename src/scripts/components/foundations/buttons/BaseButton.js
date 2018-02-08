@@ -27,7 +27,10 @@ export const ButtonStyleHover = css`
   `
 
 const BaseButton = styled.div`
-  ${ButtonStyleColor} ${ButtonStyleHover} cursor: pointer;
+  ${ButtonStyleColor} ${ButtonStyleHover} cursor: ${props =>
+  props.disabled ? 'initial' : 'pointer'};
+  opacity: ${props => (props.disabled ? 0.5 : 1)};
+  pointer-events: ${props => (props.disabled ? 'none' : 'initial')};
   `
 
 export default BaseButton

@@ -14,9 +14,9 @@ import VideoManager from 'containers/VideoManagerContainer'
 import type { Match } from 'react-router-dom'
 
 import MainTemplate from './templates/MainTemplate'
-import MainHeader from './structures/MainHeader'
+import MainHeader from './structures/header/MainHeader'
 import Main from './structures/Main'
-import MainFooter from './structures/MainFooter'
+import MainFooter from './structures/footer/MainFooter'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 

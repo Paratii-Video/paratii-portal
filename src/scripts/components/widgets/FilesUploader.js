@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
 import Button from '../foundations/buttons/Button'
-import TextField from '../foundations/forms/TextField'
+import TextField from '../widgets/forms/TextField'
 
 type Props = {
   onFileChosen: (file: Object) => void,
@@ -158,12 +158,14 @@ class FilesUploader extends Component<Props, void> {
           <InputText
             label="(Not working yet) Or upload from Youtube or Vimeo"
             helper="i.e.: http://youtube.com/videoID or http://vimeo.com/videoID"
-            error={false}
+            error={this.state.inputTextError}
+            disabled
           />
           <Button
             id="upload-submit"
             onClick={this.props.onUploadRequested}
             purple
+            disabled
           >
             Upload
           </Button>
