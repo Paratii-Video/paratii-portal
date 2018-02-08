@@ -49,15 +49,26 @@ describe('Profile and accounts workflow:', function () {
     )
   })
 
-  it('register a new user', function () {
+  it('register a new user @watch', function () {
     browser.url(getPath('signup'))
 
     // fill in the form
-    browser.waitForEnabled('#signup-name')
-    browser.setValue('#signup-name', 'Guildenstern')
-    browser.setValue('#signup-email', 'guildenstern@rosencrantz.com')
-    browser.setValue('#signup-password', 'password')
-    browser.click('#signup-submit')
+    browser.waitForEnabled(
+      '[data-test-id="signup-form"] input[type="text"]:first-child'
+    )
+    browser.setValue(
+      '[data-test-id="signup-form"] input[type="text"]:first-child',
+      'Guildenstern'
+    )
+    browser.setValue(
+      '[data-test-id="signup-form"] input[type="text"]:nth-child(1)',
+      'guildenstern@rosencrantz.com'
+    )
+    browser.setValue(
+      '[data-test-id="signup-form"] input[type="password"]',
+      'password'
+    )
+    browser.click('[data-test-id="signup-form"] [type="submit"]')
 
     // the new user is automaticaly logged in after account creation
     // waitForUserIsLoggedIn(browser)
