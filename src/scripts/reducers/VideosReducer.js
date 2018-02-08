@@ -211,7 +211,7 @@ const reducer = {
   },
   [VIDEOFECTH_ERROR]: (
     state: VideoRecordMap,
-    { payload }: Action<{ id: string, error: string }>
+    { payload }: Action<{ id: string, error: Object }>
   ): VideoRecordMap => {
     console.log(payload)
     return state.setIn([payload.id, 'fecthStatus'], {
