@@ -33,7 +33,7 @@ describe('Uploader Tool', function () {
         const videoInfoFromBlockchain = await paratii.eth.vids.get(videoId)
         return videoInfoFromBlockchain
       } catch (err) {
-        console.log(err)
+        // console.log(err)
       }
     }
     browser.waitUntil(getVideoInfoFromBlockchain)
