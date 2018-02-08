@@ -18,7 +18,7 @@ class Signup extends Component {
           title="Sign up"
           footer={
             <FooterText>
-              Already have an account?{' '}
+              Already have an account?
               <NavLink underline="true" to="/login">
                 Log in
               </NavLink>
