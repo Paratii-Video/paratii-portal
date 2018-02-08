@@ -83,7 +83,8 @@ export type ParatiiLib = {
     vids: {
       get: (id: string) => ?Object,
       makeId: () => string
-    }
+    },
+    setAccount: (string, string) => ?Object
   },
   ipfs: {
     uploader: {

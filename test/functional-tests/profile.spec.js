@@ -79,7 +79,7 @@ describe('Profile and accounts workflow:', function () {
     // assertUserIsLoggedIn(browser)
   })
 
-  it('login', () => {
+  it('login @watch', () => {
     // clear Cookies
     clearCookies()
 
