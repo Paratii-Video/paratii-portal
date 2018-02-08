@@ -7,7 +7,6 @@ import type { ParatiiLib } from 'types/ApplicationTypes'
 
 const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 
-console.log(paratiiConfig)
 window.paratii = new Paratii(paratiiConfig)
 
 const paratii: ParatiiLib = window.paratii

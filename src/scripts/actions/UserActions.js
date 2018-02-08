@@ -80,8 +80,6 @@ export const setupKeystore = () => async (
         JSON.parse(walletString),
         DEFAULT_PASSWORD
       )
-      console.log('we have a wallet now!')
-      console.log(paratii.config.account)
       paratii.eth.setAccount(
         paratii.config.account.address,
         paratii.config.account.privateKey

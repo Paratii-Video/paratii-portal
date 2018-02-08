@@ -69,6 +69,7 @@ class App extends Component<Props, void> {
               <Route component={NotFound} />
             </Switch>
           </Main>
+          <DebugContainer />
           <MainFooter />
         </MainTemplate>
       </ThemeProvider>
