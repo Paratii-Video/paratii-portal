@@ -3,38 +3,30 @@
 // https://github.com/styled-components/stylelint-processor-styled-components/issues/34
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
+import InputField, { StyleInput } from 'components/foundations/forms/Input'
 
 type Props = {
   className: String,
   error: Boolean,
   label: String,
-  helper: String
+  helper: String,
+  margin: String,
+  disabled: Boolean,
+  id: 'String',
+  type: 'String',
+  onChange: (e: Object) => void
 }
 
 const LabelField = styled.label`
+  margin: ${props => props.margin};
+  opacity: ${props => (props.disabled ? 0.5 : 1)};
   display: block;
   position: relative;
   width: 100%;
 `
-const StyleInput = css`
-  background-color: transparent;
-  font-size: 14px;
-  height: ${props => props.theme.sizes.mainInput.height};
-  width: 100%;
-`
-
-const InputField = styled.input`
-  ${StyleInput} border-bottom: 1px solid ${props =>
-  props.error
-    ? props.theme.colors.mainInput.error
-    : props.theme.colors.mainInput.border};
-  color: ${props => props.theme.colors.mainInput.color};
-  position: relative;
-  z-index: 2;
-`
 
 const StyleFakeLabelFilled = css`
-  transform: translate3d(0, -22px, 0) scale(0.92);
+  transform: translate3d(0, -22px, 0) scale(0.8);
   transition-duration: 0.4s;
   transition-delay: 0s;
 `
@@ -48,12 +40,13 @@ const FakeLabel = styled.span`
   transform-origin: left;
   transform: ${props =>
     props.filled
-      ? 'translate3d(0, -22px, 0) scale(0.92)'
+      ? 'translate3d(0, -22px, 0) scale(0.8)'
       : 'translate3d(0, 0, 0) scale(1)'};
   transition-delay: ${props => (props.filled ? '0s' : '0.1s')};
   transition-duration: ${props => (props.filled ? '0.4s' : '0.5s')};
   transition-property: 'transform';
   transition-timing-function: ${props => props.theme.animation.ease.smooth};
+  white-space: nowrap;
 
   .filled &,
   ${InputField}:focus + & {
@@ -68,6 +61,7 @@ const HelperLabel = styled.span`
   padding: 8px 1px 0 0;
   opacity: 0.7;
   text-align: right;
+  white-space: nowrap;
 `
 
 class TextField extends Component<Props, void> {
@@ -89,6 +83,8 @@ class TextField extends Component<Props, void> {
     this.setState({
       value: str
     })
+
+    this.props.onChange(e)
   }
 
   handleKeyUp (e) {
@@ -102,12 +98,19 @@ class TextField extends Component<Props, void> {
 
   render () {
     return (
-      <LabelField className={this.props.className}>
+      <LabelField
+        className={this.props.className}
+        margin={this.props.margin}
+        disabled={this.props.disabled}
+      >
         <InputField
           value={this.state.value}
           onChange={this.handleChange}
           onKeyUp={this.handleKeyUp}
           error={this.props.error}
+          id={this.props.id}
+          type={this.props.type}
+          disabled={this.props.disabled}
         />
         {this.props.label && (
           <FakeLabel filled={this.state.filled}>{this.props.label}</FakeLabel>

@@ -11,7 +11,7 @@ const Themes = {
     header: {
       background: Colors.black,
       iconsFill: Colors.grayLight,
-      logoFill: Colors.purple
+      logoFill: Colors.white
     },
     footer: {
       background: Colors.black,
@@ -30,9 +30,22 @@ const Themes = {
     },
     mainInput: {
       border: Colors.grayLight,
+      borderFocus: Colors.purple,
       color: Colors.white,
       placeholder: Colors.grayLight,
       error: Colors.pink
+    },
+    MainCard: {
+      background: Colors.black,
+      color: Colors.white,
+      padding: '80px',
+      title: {
+        color: Colors.white
+      },
+      footer: {
+        background: Colors.blackDark,
+        color: Colors.grayLight
+      }
     },
     FilesUploader: {
       drag: {
@@ -70,8 +83,21 @@ const Themes = {
     },
     mainInput: {
       border: Colors.grayLight,
+      borderFocus: Colors.purple,
       color: Colors.white,
       placeholder: Colors.grayLight
+    },
+    MainCard: {
+      background: Colors.black,
+      color: Colors.white,
+      padding: '80px',
+      title: {
+        color: Colors.white
+      },
+      footer: {
+        background: Colors.blackDark,
+        color: Colors.white
+      }
     },
     FilesUploader: {
       drag: {

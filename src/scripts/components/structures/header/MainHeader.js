@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import MainHeaderLogo from '../widgets/MainHeaderLogo'
-import SearchInput from '../widgets/SearchInput'
-import MainNavigation from '../widgets/MainNavigation'
+import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
+import SearchInput from 'components/widgets/SearchInput'
+import MainNavigation from 'components/structures/header/MainNavigation'
 import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
 
