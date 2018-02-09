@@ -53,11 +53,22 @@ describe('Profile and accounts workflow:', function () {
     browser.url(getPath('signup'))
 
     // fill in the form
-    browser.waitForEnabled('#signup-name')
-    browser.setValue('#signup-name', 'Guildenstern')
-    browser.setValue('#signup-email', 'guildenstern@rosencrantz.com')
-    browser.setValue('#signup-password', 'password')
-    browser.click('#signup-submit')
+    browser.waitForEnabled(
+      '[data-test-id="signup-form"] input[type="text"]:first-child'
+    )
+    browser.setValue(
+      '[data-test-id="signup-form"] input[type="text"]:first-child',
+      'Guildenstern'
+    )
+    browser.setValue(
+      '[data-test-id="signup-form"] input[type="text"]:nth-child(1)',
+      'guildenstern@rosencrantz.com'
+    )
+    browser.setValue(
+      '[data-test-id="signup-form"] input[type="password"]',
+      'password'
+    )
+    browser.click('[data-test-id="signup-form"] [type="submit"]')
 
     // the new user is automaticaly logged in after account creation
     // waitForUserIsLoggedIn(browser)
@@ -79,19 +90,22 @@ describe('Profile and accounts workflow:', function () {
     // assertUserIsLoggedIn(browser)
   })
 
-  it.skip('login', () => {
+  it('login', () => {
     // clear Cookies
     clearCookies()
 
     // fill form
     browser.url(getPath('login'))
-    browser.waitForEnabled('[data-test-id="login-email"]')
+    browser.waitForEnabled('[data-test-id="login-form"] input[type="text"]')
     browser.setValue(
-      '[data-test-id="login-email"]',
+      '[data-test-id="login-form"] input[type="text"]',
       'guildenstern@rosencrantz.com'
     )
-    browser.setValue('[data-test-id="login-password"]', 'password')
-    browser.click('[data-test-id="login-submit"')
+    browser.setValue(
+      '[data-test-id="login-form"] input[type="password"]',
+      'password'
+    )
+    browser.click('[data-test-id="login-form"] [type="submit"]')
 
     // verify page
     browser.waitForExist('[data-test-id="profile-email"]', 'page did not load')

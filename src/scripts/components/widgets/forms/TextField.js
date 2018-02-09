@@ -12,7 +12,6 @@ type Props = {
   helper: String,
   margin: String,
   disabled: Boolean,
-  id: 'String',
   type: 'String',
   onChange: (e: Object) => void
 }
@@ -108,7 +107,6 @@ class TextField extends Component<Props, void> {
           onChange={this.handleChange}
           onKeyUp={this.handleKeyUp}
           error={this.props.error}
-          id={this.props.id}
           type={this.props.type}
           disabled={this.props.disabled}
         />

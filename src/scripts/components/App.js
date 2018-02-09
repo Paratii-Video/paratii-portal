@@ -29,9 +29,8 @@ type Props = {
 }
 
 const PortalPlayWrapper = styled.div`
-  flex: 0 1 75%;
-  width: 75%;
-  max-height: 450px;
+  flex: 1 0 100%;
+  display: flex;
 `
 
 class App extends Component<Props, void> {
@@ -69,7 +68,7 @@ class App extends Component<Props, void> {
               <Route component={NotFound} />
             </Switch>
           </Main>
-          <DebugContainer />
+          {/* <DebugContainer /> */}
           <MainFooter />
         </MainTemplate>
       </ThemeProvider>
