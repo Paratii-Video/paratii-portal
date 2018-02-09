@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
 
+import Card from 'components/structures/Card'
 import Button from './foundations/buttons/Button'
 import Input from './widgets/forms/TextField'
 import Textarea from './widgets/forms/TextareaField'
@@ -12,8 +13,6 @@ import RadioCheck, {
   RadioTitle
 } from 'components/widgets/forms/RadioCheck'
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
-
-import Card from 'components/structures/Card'
 
 type Props = {
   selectedVideo: VideoRecord,
@@ -102,6 +101,7 @@ class VideoForm extends Component<Props, Object> {
   constructor (props: Props) {
     super(props)
     this.state = new VideoRecord(this.props.selectedVideo)
+    console.log(this.state)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -152,7 +152,7 @@ class VideoForm extends Component<Props, Object> {
       <Card full margin="0 0 0 25px">
         <VideoFormHeader>
           <VideoFormTitle>
-            Video_01.mp4 ({this.state.id} - {ipfsHash})
+            {this.state.id} ({this.state.id} - {ipfsHash})
           </VideoFormTitle>
           <VideoFormSubTitle purple>345MB</VideoFormSubTitle>
         </VideoFormHeader>
@@ -207,20 +207,24 @@ class VideoForm extends Component<Props, Object> {
                 <VideoMediaTimeText>28:26</VideoMediaTimeText>
               </VideoMediaTime>
             </VideoMedia>
-            <VideoProgress progress="100%" marginBottom>
+            <VideoProgress progress={progressUpdate + '%'} marginBottom>
               Upload
             </VideoProgress>
             <VideoProgress progress="45%" marginBottom>
               Transcoding
             </VideoProgress>
 
-            <h3>Details</h3>
-            <strong>Porgress Update: </strong>
-            {progressUpdate}
-            <h3>Video State</h3>
-            <div>
-              <pre>{state}</pre>
-            </div>
+            <Input
+              id="video-title"
+              type="text"
+              margin="0 0 30px"
+              onChange={e => this.handleInputChange('title', e)}
+              value="<iframe width=560 height=315 src=https://"
+              label="Embed Code"
+              readonly
+            />
+
+            <p>{state}</p>
           </VideoFormInfos>
         </VideoFormWrapper>
       </Card>
