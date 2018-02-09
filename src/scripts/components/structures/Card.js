@@ -28,7 +28,7 @@ export const CardWrapper = styled.div`
 const Main = styled.div`
   background-color: ${props => props.theme.colors.MainCard.background};
   color: ${props => props.theme.colors.MainCard.color};
-  padding: ${props => (props.nopadding ? '' : '47px 42px')};
+  padding: ${props => (props.nopadding ? '' : props.theme.sizes.card.padding)};
   width: 100%;
 `
 
@@ -43,7 +43,7 @@ const Footer = styled.div`
   color: ${props => props.theme.colors.MainCard.footer.color};
   display: flex;
   flex-direction: column;
-  padding: 47px 42px;
+  padding: ${props => props.theme.sizes.card.padding};
   text-align: right;
   width: 100%;
 `

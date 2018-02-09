@@ -10,8 +10,11 @@ const Sizes = {
     width: '98px'
   },
   searchInputButton: '17px',
+  card: {
+    padding: '47px 42px'
+  },
   mainInput: {
-    height: '44'
+    height: '44px'
   },
   radio: '18px'
 }

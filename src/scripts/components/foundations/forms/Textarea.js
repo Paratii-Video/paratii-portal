@@ -8,7 +8,7 @@ const Textarea = styled.textarea`
   ${StyleFieldText} ${StyleFieldTextStates} line-height: 24px;
   min-height: ${props =>
     props.theme.sizes.mainInput.height
-      ? props.theme.sizes.mainInput.height + 'px'
+      ? props.theme.sizes.mainInput.height
       : ''};
   padding: 12px 0 0;
   overflow: hidden;
