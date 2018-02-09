@@ -152,12 +152,10 @@ class VideoForm extends Component<Props, Object> {
     return (
       <Card full margin="0 0 0 25px">
         <VideoFormHeader>
-          <VideoFormTitle>
-            {this.state.id}
-            <Hidden>
-              ({this.state.id} - {ipfsHash})
-            </Hidden>{' '}
-          </VideoFormTitle>
+          <VideoFormTitle id="video-title">{this.state.id}</VideoFormTitle>
+          <Hidden>
+            ({this.state.id} - {ipfsHash})
+          </Hidden>{' '}
           <VideoFormSubTitle purple>345MB</VideoFormSubTitle>
         </VideoFormHeader>
         <VideoFormWrapper>

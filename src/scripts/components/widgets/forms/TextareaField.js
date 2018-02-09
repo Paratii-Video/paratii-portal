@@ -20,6 +20,7 @@ type Props = {
   cols: String,
   rows: String,
   id: 'String',
+  name: 'String',
   type: 'String',
   onChange: (e: Object) => void
 }
@@ -108,6 +109,7 @@ class TextareaField extends Component<Props, void> {
           onKeyUp={this.handleKeyUp}
           error={this.props.error}
           id={this.props.id}
+          name={this.props.name}
           type={this.props.type}
           disabled={this.props.disabled}
           filled={this.state.filled}

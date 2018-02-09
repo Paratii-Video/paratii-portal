@@ -15,7 +15,7 @@ const StyleCardPadding = css`
 
 export const CardContainer = styled.div`
   display: flex;
-  justifycontent: center;
+  justify-content: center;
 `
 
 const CardWrapper = styled.div`
