@@ -132,7 +132,7 @@
     "clappr": "^0.2.78",
     "immutable": "^3.8.2",
     "js-cookie": "^2.2.0",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#81c49190fe66975329d30690e6297d5c617709b7",
+    "paratii-lib": "github:Paratii-Video/paratii-lib#11d576ecac029309513119c94ca2d4b62b2455ac",
     "paratii-mediaplayer": "^1.0.4",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
