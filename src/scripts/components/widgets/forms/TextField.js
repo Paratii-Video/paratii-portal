@@ -28,8 +28,8 @@ export const StyleInputFilled = css`
 
 export const StylePlaceholder = css`
   color: ${props => props.theme.colors.TextField.placeholder};
-  height: ${props => props.theme.sizes.mainInput.height + 'px'};
-  line-height: ${props => props.theme.sizes.mainInput.height + 'px'};
+  height: ${props => props.theme.sizes.mainInput.height};
+  line-height: ${props => props.theme.sizes.mainInput.height};
   left: 0;
   position: absolute;
   top: 0;

@@ -44,7 +44,6 @@ const Themes = {
     MainCard: {
       background: Colors.black,
       color: Colors.white,
-      padding: '80px',
       title: {
         color: Colors.white
       },

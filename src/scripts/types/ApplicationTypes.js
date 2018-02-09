@@ -109,14 +109,37 @@ type Animation = {
 
 type Typography = {
   family: string,
+  base: string,
   weight: {
+    light: number,
     regular: number,
     bold: number
   },
-  button: {
-    size: {
-      main: string
+  anchor: string,
+  button: string,
+  form: {
+    input: string,
+    helper: string
+  },
+  video: {
+    form: {
+      title: string,
+      subtitle: string
+    },
+    info: {
+      time: string,
+      progress: string,
+      percentual: string
     }
+  },
+  radio: {
+    title: string,
+    label: string
+  },
+  title: {
+    big: string,
+    main: string,
+    small: string
   },
   text: {
     big: string,
@@ -137,9 +160,13 @@ type Sizes = {
     width: string
   },
   searchInputButton: string,
+  card: {
+    padding: string
+  },
   mainInput: {
     height: string
-  }
+  },
+  radio: string
 }
 
 type Colors = {
@@ -162,11 +189,34 @@ type Colors = {
     gray: string,
     purple: string
   },
-  mainInput: {
+  popover: {
     border: string,
+    background: string,
+    color: string
+  },
+  TextField: {
+    border: string,
+    borderFocus: string,
     color: string,
     placeholder: string,
     error: string
+  },
+  Radio: {
+    title: string,
+    label: string,
+    border: string,
+    active: string
+  },
+  MainCard: {
+    background: string,
+    color: string,
+    title: {
+      color: string
+    },
+    footer: {
+      background: string,
+      color: string
+    }
   },
   FilesUploader: {
     drag: {
@@ -179,6 +229,28 @@ type Colors = {
     input: {
       background: string,
       color: string
+    }
+  },
+  VideoForm: {
+    header: {
+      border: string,
+      title: string,
+      subtitle: string,
+      subtitle2: string
+    },
+    info: {
+      time: {
+        background: string,
+        color: string
+      },
+      progress: {
+        color: string,
+        icon: string,
+        iconBg: string,
+        background: string,
+        barFrom: string,
+        barTo: string
+      }
     }
   }
 }

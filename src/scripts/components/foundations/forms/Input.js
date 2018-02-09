@@ -38,7 +38,7 @@ export const StyleFieldTextStates = css`
 
 const Input = styled.input`
   ${StyleFieldText} ${StyleFieldTextStates} height: ${props =>
-  props.theme.sizes.mainInput.height + 'px'};
+  props.theme.sizes.mainInput.height};
   position: relative;
   z-index: 2;
 `
