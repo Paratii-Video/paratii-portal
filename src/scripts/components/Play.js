@@ -109,6 +109,7 @@ class Play extends Component<Props, void> {
   componentWillReceiveProps (nextProps: Props): void {
     const { isAttemptingPlay } = this.props
     let ipfsHash = ''
+    console.log(nextProps)
     if (nextProps.video) {
       if (
         this.props.video == null ||

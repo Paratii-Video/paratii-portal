@@ -8,7 +8,6 @@ export const INITIALIZE = createActionConstant('INITIALIZE')
 /* Video actions */
 export const VIDEO_LOADED = createActionConstant('VIDEO_LOADED')
 export const VIDEO_SELECT = createActionConstant('VIDEO_SELECT')
-export const INIT_VIDEOSTORE = createActionConstant('INIT_VIDEOSTORE')
 export const VIDEOFETCH_ERROR = createActionConstant('VIDEOFETCH_ERROR')
 export const VIDEOFETCH_SUCCESS = createActionConstant('VIDEOFETCH_SUCCESS')
 

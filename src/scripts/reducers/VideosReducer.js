@@ -3,7 +3,6 @@
 import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
 import {
-  INIT_VIDEOSTORE,
   UPLOAD_REQUESTED,
   UPLOAD_PROGRESS,
   UPLOAD_SUCCESS,
@@ -23,17 +22,6 @@ import VideoRecord from 'records/VideoRecords'
 import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 
 const reducer = {
-  [INIT_VIDEOSTORE]: (
-    state: VideoRecordMap,
-    { payload }: Action<{ id: string }>
-  ): VideoRecordMap => {
-    if (state.get(payload.id) === undefined) {
-      state = state.mergeDeep({
-        [payload.id]: new VideoRecord(payload)
-      })
-    }
-    return state
-  },
   [UPLOAD_REQUESTED]: (
     state: VideoRecordMap,
     { payload }: Action<{ id: string, filename: string }>
@@ -127,17 +115,6 @@ const reducer = {
       }
     })
     return state
-    // return state.mergeDeep([payload.id], {
-    //   blockchainStatus: {
-    //     name: 'running',
-    //     data: {
-    //       id: payload.id,
-    //       title: payload.title,
-    //       description: payload.description,
-    //       owner: payload.owner
-    //     }
-    //   }
-    // })
   },
   [VIDEO_DATA_SAVED]: (
     state: VideoRecordMap,
@@ -223,10 +200,15 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    return state.setIn([payload.id, 'fecthStatus'], {
-      name: 'success',
-      data: {}
-    })
+    state = state
+      .mergeDeep({
+        [payload.id]: new VideoRecord(payload)
+      })
+      .setIn([payload.id, 'fecthStatus'], {
+        name: 'success',
+        data: {}
+      })
+    return state
   }
 }
 
