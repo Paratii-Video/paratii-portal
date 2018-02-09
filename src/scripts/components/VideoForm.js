@@ -13,6 +13,7 @@ import RadioCheck, {
   RadioTitle
 } from 'components/widgets/forms/RadioCheck'
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
+import Hidden from 'components/foundations/Hidden'
 
 type Props = {
   selectedVideo: VideoRecord,
@@ -152,7 +153,10 @@ class VideoForm extends Component<Props, Object> {
       <Card full margin="0 0 0 25px">
         <VideoFormHeader>
           <VideoFormTitle>
-            {this.state.id} ({this.state.id} - {ipfsHash})
+            {this.state.id}
+            <Hidden>
+              ({this.state.id} - {ipfsHash})
+            </Hidden>{' '}
           </VideoFormTitle>
           <VideoFormSubTitle purple>345MB</VideoFormSubTitle>
         </VideoFormHeader>
@@ -178,6 +182,7 @@ class VideoForm extends Component<Props, Object> {
               onChange={e => this.handleInputChange('description', e)}
               label="Description"
               margin="0 0 30px"
+              rows="1"
             />
             <RadioWrapper>
               <RadioTitle>Paid or free</RadioTitle>
@@ -223,8 +228,7 @@ class VideoForm extends Component<Props, Object> {
               label="Embed Code"
               readonly
             />
-
-            <p>{state}</p>
+            <Hidden>{state}</Hidden>
           </VideoFormInfos>
         </VideoFormWrapper>
       </Card>
