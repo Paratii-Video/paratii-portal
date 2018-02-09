@@ -1,35 +1,34 @@
 import React, { Component } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 type Props = {
+  className: String,
   children: Object,
   title: String,
   footer: Object,
   full: Boolean,
-  margin: String
+  margin: String,
+  nopadding: String
 }
-
-const StyleCardPadding = css`
-  padding: 47px 42px;
-`
 
 export const CardContainer = styled.div`
   display: flex;
   justify-content: center;
 `
 
-const CardWrapper = styled.div`
+export const CardWrapper = styled.div`
   flex: 1 1 100%;
   margin: ${props => props.margin};
   min-width: ${props => (props.full ? '' : '388px')};
   max-width: ${props => (props.full ? '' : '33%')};
   overflow: hidden;
+  position: relative;
 `
 
 const Main = styled.div`
-  ${StyleCardPadding} background-color: ${props =>
-  props.theme.colors.MainCard.background};
+  background-color: ${props => props.theme.colors.MainCard.background};
   color: ${props => props.theme.colors.MainCard.color};
+  padding: ${props => (props.nopadding ? '' : '47px 42px')};
   width: 100%;
 `
 
@@ -39,11 +38,12 @@ const Title = styled.h2`
 `
 
 const Footer = styled.div`
-  ${StyleCardPadding} align-items: flex-end;
+  align-items: flex-end;
   background-color: ${props => props.theme.colors.MainCard.footer.background};
   color: ${props => props.theme.colors.MainCard.footer.color};
   display: flex;
   flex-direction: column;
+  padding: 47px 42px;
   text-align: right;
   width: 100%;
 `
@@ -51,8 +51,12 @@ const Footer = styled.div`
 class Card extends Component<Props, void> {
   render () {
     return (
-      <CardWrapper full={this.props.full} margin={this.props.margin}>
-        <Main>
+      <CardWrapper
+        full={this.props.full}
+        margin={this.props.margin}
+        className={this.props.className}
+      >
+        <Main nopadding={this.props.nopadding}>
           {this.props.title && <Title>{this.props.title}</Title>}
           {this.props.children}
         </Main>
