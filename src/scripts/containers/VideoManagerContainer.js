@@ -17,7 +17,7 @@ import UploadFile from './UploadFileContainer'
 
 import Card, { CardContainer } from 'components/structures/Card'
 
-import Hidden from 'components/foudations/Hidden'
+import Hidden from 'components/foundations/Hidden'
 
 type Props = {
   videos: Map<string, VideoRecord>,
