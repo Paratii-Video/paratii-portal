@@ -190,7 +190,7 @@ class VideoForm extends Component<Props, Object> {
             />
             <RadioWrapper>
               <RadioTitle>Paid or free</RadioTitle>
-              <RadioCheck name="content-type" value="free">
+              <RadioCheck name="content-type" value="free" checked>
                 Free content
               </RadioCheck>
               <RadioCheck name="content-type" value="paid" nomargin disabled>
