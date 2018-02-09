@@ -16,6 +16,9 @@ export const paratiiTheme: Theme = {
 
 const createRequestStatus = (status: string) => `REQUEST_${status}`
 
+export const DEFAULT_WALLET_KEY: string = 'keystore-anon'
+export const DEFAULT_MNEMONIC_KEY: string = 'mnemonic-anon'
+
 export const REQUEST_STATUS = {
   NOT_STARTED: createRequestStatus('NOT_STARTED'),
   PENDING: createRequestStatus('PENDING'),
