@@ -3,7 +3,6 @@
 import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
 import {
-  INIT_VIDEOSTORE,
   UPLOAD_REQUESTED,
   UPLOAD_PROGRESS,
   UPLOAD_SUCCESS,
@@ -15,23 +14,14 @@ import {
   TRANSCODING_REQUESTED,
   TRANSCODING_PROGRESS,
   TRANSCODING_SUCCESS,
-  TRANSCODING_FAILURE
+  TRANSCODING_FAILURE,
+  VIDEOFETCH_ERROR,
+  VIDEOFETCH_SUCCESS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 
 const reducer = {
-  [INIT_VIDEOSTORE]: (
-    state: VideoRecordMap,
-    { payload }: Action<{ id: string }>
-  ): VideoRecordMap => {
-    if (state.get(payload.id) === undefined) {
-      state = state.mergeDeep({
-        [payload.id]: new VideoRecord(payload)
-      })
-    }
-    return state
-  },
   [UPLOAD_REQUESTED]: (
     state: VideoRecordMap,
     { payload }: Action<{ id: string, filename: string }>
@@ -69,7 +59,6 @@ const reducer = {
     if (!state.get(payload.id)) {
       throw Error(`Unknown id: ${payload.id}`)
     }
-    console.log('UPLOAD_LOCAL_SUCCESS')
     const ipfsHashOrig = payload.hash
     state = state.mergeDeep({
       [payload.id]: {
@@ -126,17 +115,6 @@ const reducer = {
       }
     })
     return state
-    // return state.mergeDeep([payload.id], {
-    //   blockchainStatus: {
-    //     name: 'running',
-    //     data: {
-    //       id: payload.id,
-    //       title: payload.title,
-    //       description: payload.description,
-    //       owner: payload.owner
-    //     }
-    //   }
-    // })
   },
   [VIDEO_DATA_SAVED]: (
     state: VideoRecordMap,
@@ -206,6 +184,31 @@ const reducer = {
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
     return state.set(payload.get('id'), payload)
+  },
+  [VIDEOFETCH_ERROR]: (
+    state: VideoRecordMap,
+    { payload }: Action<{ id: string, error: Object }>
+  ): VideoRecordMap => {
+    return state.setIn([payload.id, 'fecthStatus'], {
+      name: 'failed',
+      data: {
+        error: payload.error.message
+      }
+    })
+  },
+  [VIDEOFETCH_SUCCESS]: (
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord>
+  ): VideoRecordMap => {
+    state = state
+      .mergeDeep({
+        [payload.id]: new VideoRecord(payload)
+      })
+      .setIn([payload.id, 'fecthStatus'], {
+        name: 'success',
+        data: {}
+      })
+    return state
   }
 }
 

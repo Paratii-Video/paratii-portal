@@ -4,7 +4,6 @@ import { Record as ImmutableRecord } from 'immutable'
 import AsyncTaskStatusRecord from './AsyncTaskStatusRecord'
 
 class Video extends ImmutableRecord({
-  blockchainStatus: new AsyncTaskStatusRecord(),
   description: '',
   filename: null,
   id: '',
@@ -15,11 +14,12 @@ class Video extends ImmutableRecord({
   price: '',
   thumbnailUrl: '',
   title: '',
+  blockchainStatus: new AsyncTaskStatusRecord(),
   transcodingStatus: new AsyncTaskStatusRecord(),
   uploadStatus: new AsyncTaskStatusRecord(),
+  fecthStatus: new AsyncTaskStatusRecord(),
   url: ''
 }) {
-  blockchainStatus: AsyncTaskStatusRecord
   description: string
   filename: string
   id: string
@@ -30,8 +30,10 @@ class Video extends ImmutableRecord({
   price: string
   thumbnailUrl: string
   title: string
+  blockchainStatus: AsyncTaskStatusRecord
   transcodingStatus: AsyncTaskStatusRecord
   uploadStatus: AsyncTaskStatusRecord
+  fecthStatus: AsyncTaskStatusRecord
   url: string
 }
 
