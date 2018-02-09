@@ -3,18 +3,14 @@ import styled, { css } from 'styled-components'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
 import Button from '../foundations/buttons/Button'
 import TextField from '../widgets/forms/TextField'
+import Card from 'components/structures/Card'
 
 type Props = {
   onFileChosen: (file: Object) => void,
   onUploadRequested: (e: Object) => void,
-  onError: Boolean
+  onError: Boolean,
+  margin: String
 }
-
-const Wrapper = styled.div`
-  position: relative;
-  width: 490px;
-`
-
 const StyleInput = css`
   height: 490px;
   width: 100%;
@@ -75,13 +71,7 @@ const UploadCoverInfo = styled.p`
   text-align: center;
 `
 
-const InputWrapper = styled.div`
-  align-items: flex-end;
-  background-color: ${props =>
-    props.theme.colors.FilesUploader.input.background};
-  display: flex;
-  flex-direction: column;
-  padding: 53px 47px 50px;
+const FooterWrapper = styled.div`
   width: 100%;
 `
 
@@ -131,7 +121,29 @@ class FilesUploader extends Component<Props, void> {
 
   render () {
     return (
-      <Wrapper className={this.state.dragClass}>
+      <Card
+        nopadding
+        margin={this.props.margin}
+        className={this.state.dragClass}
+        footer={
+          <FooterWrapper>
+            <InputText
+              label="(Not working yet) Or upload from Youtube or Vimeo"
+              helper="i.e.: http://youtube.com/videoID or http://vimeo.com/videoID"
+              error={this.state.inputTextError}
+              disabled
+            />
+            <Button
+              id="upload-submit"
+              onClick={this.props.onUploadRequested}
+              purple
+              disabled
+            >
+              Upload
+            </Button>
+          </FooterWrapper>
+        }
+      >
         <InputFile
           type="file"
           onChange={this.onFileChosen}
@@ -154,23 +166,7 @@ class FilesUploader extends Component<Props, void> {
           </UploadCoverText>
           <UploadCoverInfo>{this.state.fileName}</UploadCoverInfo>
         </UploadCover>
-        <InputWrapper>
-          <InputText
-            label="(Not working yet) Or upload from Youtube or Vimeo"
-            helper="i.e.: http://youtube.com/videoID or http://vimeo.com/videoID"
-            error={this.state.inputTextError}
-            disabled
-          />
-          <Button
-            id="upload-submit"
-            onClick={this.props.onUploadRequested}
-            purple
-            disabled
-          >
-            Upload
-          </Button>
-        </InputWrapper>
-      </Wrapper>
+      </Card>
     )
   }
 }
