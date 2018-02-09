@@ -22,6 +22,7 @@ export const StyleFieldTextStates = css`
       ? props.theme.colors.TextField.error
       : props.theme.colors.TextField.border};
   color: ${props => props.theme.colors.TextField.color};
+  display: block;
   transition: border-color ${props => props.theme.animation.time.repaint};
   width: 100%;
 
