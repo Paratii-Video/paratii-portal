@@ -3,15 +3,15 @@
 import { handleActions } from 'redux-actions'
 
 import { REQUEST_STATUS } from 'constants/ApplicationConstants'
-
-import type { Action } from 'types/ApplicationTypes'
 import {
   LOGIN_REQUESTED,
   LOGIN_SUCCESS,
   LOGOUT,
   SET_WALLET_DATA
 } from 'constants/ActionConstants'
-import UserRecord from 'records/UserRecords'
+import UserRecord, { Wallet as WalletRecord } from 'records/UserRecords'
+
+import type { Action } from 'types/ApplicationTypes'
 
 const reducer = {
   [LOGIN_REQUESTED]: (state: UserRecord): UserRecord => {
@@ -40,11 +40,13 @@ const reducer = {
   },
   [SET_WALLET_DATA]: (
     state: UserRecord,
-    { payload: { walletKey, mnemonicKey } }
+    { payload: { walletKey, mnemonicKey, wallet, mnemonic } }
   ): UserRecord =>
     state.merge({
       walletKey,
-      mnemonicKey
+      mnemonicKey,
+      wallet: new WalletRecord(wallet),
+      mnemonic
     })
 }
 

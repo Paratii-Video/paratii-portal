@@ -47,14 +47,16 @@ const setAndSyncWalletData = ({
   mnemonicKey
 }: {
   walletKey: string,
-  wallet: Object,
+  wallet: Array<Object>,
   mnemonicKey: string,
   mnemonic: string
 }) => (dispatch: Dispatch): void => {
   dispatch(
     setWalletData({
       walletKey,
-      mnemonicKey
+      mnemonicKey,
+      wallet: (wallet || [])[0] || {},
+      mnemonic
     })
   )
   localStorage.setItem(walletKey, JSON.stringify(wallet))
@@ -71,13 +73,15 @@ export const setupKeystore = () => async (
   const walletKey: string = getWalletKey(getState())
   const mnemonicKey: string = getMnemonicKey(getState())
   const walletString: string = localStorage.getItem(walletKey) || ''
-  let wallet: ?Object
+  let decryptedWallet: ?Object
   let mnemonic: string = localStorage.getItem(mnemonicKey) || ''
   let walletIsValid: boolean = true
+  let walletToSave: ?Array<Object>
   if (walletString) {
     try {
-      wallet = paratii.eth.wallet.decrypt(
-        JSON.parse(walletString),
+      walletToSave = JSON.parse(walletString)
+      decryptedWallet = paratii.eth.wallet.decrypt(
+        walletToSave,
         DEFAULT_PASSWORD
       )
       paratii.eth.setAccount(
@@ -88,17 +92,17 @@ export const setupKeystore = () => async (
       walletIsValid = false
     }
   }
-  if (!wallet || !walletIsValid) {
+  if (!decryptedWallet || !walletIsValid) {
     paratii.eth.wallet.create()
     mnemonic = await paratii.eth.wallet.getMnemonic()
-    wallet = paratii.eth.wallet.encrypt(DEFAULT_PASSWORD)
-    dispatch(
-      setAndSyncWalletData({
-        wallet,
-        walletKey,
-        mnemonic,
-        mnemonicKey
-      })
-    )
+    walletToSave = paratii.eth.wallet.encrypt(DEFAULT_PASSWORD)
   }
+  dispatch(
+    setAndSyncWalletData({
+      wallet: walletToSave || [],
+      walletKey,
+      mnemonic,
+      mnemonicKey
+    })
+  )
 }
