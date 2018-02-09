@@ -12,6 +12,8 @@ type Props = {
   helper: String,
   margin: String,
   disabled: Boolean,
+  readonly: Boolean,
+  value: String,
   id: 'String',
   type: 'String',
   onChange: (e: Object) => void
@@ -32,11 +34,13 @@ export const StylePlaceholder = css`
   top: 0;
   transform-origin: left;
   transform: ${props =>
-    props.filled
+    props.filled || props.readonly
       ? 'translate3d(0, -22px, 0) scale(0.8)'
       : 'translate3d(0, 0, 0) scale(1)'};
-  transition-delay: ${props => (props.filled ? '0s' : '0.1s')};
-  transition-duration: ${props => (props.filled ? '0.4s' : '0.6s')};
+  transition-delay: ${props =>
+    props.filled || props.readonly ? '0s' : '0.1s'};
+  transition-duration: ${props =>
+    props.filled || props.readonly ? '0.4s' : '0.6s'};
   transition-property: 'transform';
   transition-timing-function: ${props => props.theme.animation.ease.smooth};
   white-space: nowrap;
@@ -115,9 +119,14 @@ class TextField extends Component<Props, void> {
           id={this.props.id}
           type={this.props.type}
           disabled={this.props.disabled}
+          readonly={this.props.readonly}
+          value={this.props.value}
         />
         {this.props.label && (
-          <Placeholder filled={this.state.filled}>
+          <Placeholder
+            filled={this.state.filled}
+            readonly={this.props.readonly}
+          >
             {this.props.label}
           </Placeholder>
         )}
