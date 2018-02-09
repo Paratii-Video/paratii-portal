@@ -88,6 +88,12 @@ const VideoMediaTime = styled.div`
   }
 `
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 50px 0 0;
+`
+
 const VideoMediaTimeText = styled.p`
   color: ${props => props.theme.colors.VideoForm.info.time.color};
   font-size: ${props => props.theme.fonts.video.info.time};
@@ -187,19 +193,21 @@ class VideoForm extends Component<Props, Object> {
               <RadioCheck name="content-type" value="free">
                 Free content
               </RadioCheck>
-              <RadioCheck name="content-type" value="paid" nomargin>
+              <RadioCheck name="content-type" value="paid" nomargin disabled>
                 Paid content (not available yet)
               </RadioCheck>
             </RadioWrapper>
-            <Button
-              id="video-submit"
-              type="submit"
-              onClick={this.handleSubmit}
-              // disabled={!this.props.canSubmit}
-              purple
-            >
-              Save data
-            </Button>
+            <ButtonWrapper>
+              <Button
+                id="video-submit"
+                type="submit"
+                onClick={this.handleSubmit}
+                // disabled={!this.props.canSubmit}
+                purple
+              >
+                Save data
+              </Button>
+            </ButtonWrapper>
           </Form>
           <VideoFormInfos>
             <VideoMedia>
