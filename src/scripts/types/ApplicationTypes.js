@@ -74,7 +74,7 @@ export type ParatiiLib = {
   eth: {
     wallet: {
       decrypt: (string, password: string) => Object,
-      encrypt: (password: string) => Object,
+      encrypt: (password: string) => Array<Object>,
       // newMnemonic: () => string,
       getMnemonic: () => Promise<string>,
       create: () => Object,
@@ -191,3 +191,25 @@ export type Theme = Object & {
 }
 
 export type RequestStatus = $Values<typeof REQUEST_STATUS>
+
+export type Wallet = {
+  version: number,
+  id: string,
+  address: string,
+  crypto: {
+    ciphertext: string,
+    cipherparams: {
+      iv: string
+    },
+    cipher: string,
+    kdf: string,
+    kdfparams: {
+      dklen: number,
+      salt: string,
+      n: number,
+      r: number,
+      p: number
+    },
+    mac: string
+  }
+}
