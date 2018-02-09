@@ -2,7 +2,6 @@ import { Map } from 'immutable'
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 
 import { setSelectedVideo } from 'actions/VideoActions'
 
@@ -16,14 +15,7 @@ import VideoForm from './VideoFormContainer'
 import Debug from './DebugContainer'
 import UploadFile from './UploadFileContainer'
 
-const Wrapper = styled.div`
-  background-color: ${props => props.theme.colors.body.background};
-  font-family: ${props =>
-    props.theme.fonts.family ? props.theme.fonts.family : 'Monospace'},
-    sans-serif;
-  display: flex;
-  flex-direction: row;
-`
+import Card, { CardContainer } from 'components/structures/Card'
 
 type Props = {
   videos: Map<string, VideoRecord>,
@@ -58,13 +50,13 @@ class VideoManagerContainer extends Component<Props, void> {
     }
 
     return (
-      <div>
-        <Wrapper>
-          {videolist}
-          {selectedVideo !== null ? <VideoForm /> : <UploadFile />}
-        </Wrapper>
-        <Debug />
-      </div>
+      <CardContainer>
+        <Card>{videolist}</Card>
+        {selectedVideo !== null ? <VideoForm /> : <UploadFile />}
+        <Card>
+          <Debug />
+        </Card>
+      </CardContainer>
     )
   }
 }

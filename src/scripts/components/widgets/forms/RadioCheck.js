@@ -8,6 +8,9 @@ type Props = {
   name: String,
   value: String,
   children: Object,
+  disabled: Boolean,
+  checked: Boolean,
+  nomargin: Boolean,
   onChange: (e: Object) => void
 }
 
@@ -16,7 +19,7 @@ export const RadioWrapper = styled.div`
 `
 
 export const RadioTitle = styled.p`
-  font-size: ${props => props.theme.fonts.form.helper};
+  font-size: ${props => props.theme.fonts.radio.title};
   color: ${props => props.theme.colors.Radio.title};
   margin-bottom: 15px;
 `
@@ -26,7 +29,7 @@ const RadioInput = styled.label`
   cursor: pointer;
   display: inline-flex;
   font-size: ${props => props.theme.fonts.form.input};
-  margin-right: 20px;
+  margin-right: ${props => (props.nomargin ? '' : '20px')};
   position: relative;
 
   input {
@@ -65,14 +68,21 @@ const RadioInputIcon = styled.svg`
 
 const RadioInputLabel = styled.span`
   color: ${props => props.theme.colors.Radio.label};
+  font-size: ${props => props.theme.fonts.radio.label};
   white-space: nowrap;
 `
 
 class RadioCheck extends Component<Props, void> {
   render () {
     return (
-      <RadioInput>
-        <input type="radio" name={this.props.name} value={this.props.value} />
+      <RadioInput disabled={this.props.disabled} nomargin={this.props.nomargin}>
+        <input
+          type="radio"
+          name={this.props.name}
+          value={this.props.value}
+          checked={this.props.checked}
+          disabled={this.props.disabled}
+        />
         <RadioInputBox>
           <RadioInputIcon>
             <use xlinkHref="#icon-check" />

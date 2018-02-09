@@ -28,12 +28,18 @@ const Themes = {
       background: Colors.blackTransparent,
       color: Colors.white
     },
-    mainInput: {
+    TextField: {
       border: Colors.grayLight,
       borderFocus: Colors.purple,
       color: Colors.white,
       placeholder: Colors.grayLight,
       error: Colors.pink
+    },
+    Radio: {
+      title: Colors.grayLight,
+      label: Colors.white,
+      border: Colors.grayLight,
+      active: Colors.purple
     },
     MainCard: {
       background: Colors.black,
@@ -59,56 +65,27 @@ const Themes = {
         background: Colors.blackDark,
         color: Colors.purple
       }
-    }
-  },
-  light: {
-    body: {
-      background: Colors.grayLight,
-      color: Colors.blackLight
     },
-    header: {
-      background: Colors.white,
-      color: Colors.gray,
-      logoFill: Colors.black
-    },
-    footer: {
-      background: Colors.white,
-      color: Colors.gray,
-      logoFill: Colors.blackDark
-    },
-    button: {
-      white: Colors.white,
-      gray: Colors.grayLight,
-      purple: Colors.purple
-    },
-    mainInput: {
-      border: Colors.grayLight,
-      borderFocus: Colors.purple,
-      color: Colors.white,
-      placeholder: Colors.grayLight
-    },
-    MainCard: {
-      background: Colors.black,
-      color: Colors.white,
-      padding: '80px',
-      title: {
-        color: Colors.white
+    VideoForm: {
+      header: {
+        border: Colors.grayMedium,
+        title: Colors.white,
+        subtitle: Colors.grayLight,
+        subtitle2: Colors.purple
       },
-      footer: {
-        background: Colors.blackDark,
-        color: Colors.white
-      }
-    },
-    FilesUploader: {
-      drag: {
-        background: Colors.black,
-        color: Colors.purple,
-        color2: Colors.grayLight,
-        enter: Colors.blackLight
-      },
-      input: {
-        background: Colors.blackDark,
-        color: Colors.purple
+      info: {
+        time: {
+          background: Colors.black,
+          color: Colors.white
+        },
+        progress: {
+          color: Colors.purple,
+          icon: Colors.black,
+          iconBg: Colors.purple,
+          background: Colors.grayLight,
+          barFrom: Colors.purpleGradientFrom,
+          barTo: Colors.purpleGradientTo
+        }
       }
     }
   }

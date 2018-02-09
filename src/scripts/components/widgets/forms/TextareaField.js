@@ -2,10 +2,13 @@
 // Stylint issue will be fixed in future:
 // https://github.com/styled-components/stylelint-processor-styled-components/issues/34
 import React, { Component } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { StyleFieldText } from 'components/foundations/forms/Input'
 import Textarea from 'components/foundations/forms/Textarea'
-import { StyleFakePlaceholder } from 'components/widgets/forms/TextField'
+import {
+  StyleInputFilled,
+  StylePlaceholder
+} from 'components/widgets/forms/TextField'
 
 type Props = {
   className: String,
@@ -27,15 +30,9 @@ const LabelField = styled.label`
   width: 100%;
 `
 
-const StyleFakePlaceholderFilled = css`
-  transform: translate3d(0, -22px, 0) scale(0.8);
-  transition-duration: 0.4s;
-  transition-delay: 0s;
-`
-
 const FakePlaceholder = styled.span`
-  ${StyleFieldText} ${StyleFakePlaceholder} .filled &, ${Textarea}:focus + & {
-    ${StyleFakePlaceholderFilled};
+  ${StyleFieldText} ${StylePlaceholder} .filled &, ${Textarea}:focus + & {
+    ${StyleInputFilled};
   }
 `
 
