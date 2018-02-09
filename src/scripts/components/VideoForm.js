@@ -150,7 +150,7 @@ class VideoForm extends Component<Props, Object> {
     // console.log(this.props.selectedVideo.transcodingStatus)
     const state = JSON.stringify(this.state, null, 2)
     return (
-      <Card full margin="0 0 0 25px">
+      <Card full>
         <VideoFormHeader>
           <VideoFormTitle id="video-title">{this.state.id}</VideoFormTitle>
           <Hidden>
