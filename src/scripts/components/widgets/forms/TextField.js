@@ -15,6 +15,7 @@ type Props = {
   readonly: Boolean,
   value: String,
   id: 'String',
+  name: 'String',
   type: 'String',
   onChange: (e: Object) => void
 }
@@ -120,6 +121,8 @@ class TextField extends Component<Props, void> {
           disabled={this.props.disabled}
           readonly={this.props.readonly}
           value={this.props.value}
+          id={this.props.id}
+          name={this.props.name}
         />
         {this.props.label && (
           <Placeholder
