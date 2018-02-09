@@ -17,6 +17,8 @@ import UploadFile from './UploadFileContainer'
 
 import Card, { CardContainer } from 'components/structures/Card'
 
+import Hidden from 'components/foudations/Hidden'
+
 type Props = {
   videos: Map<string, VideoRecord>,
   selectedVideo: ?VideoRecord,
@@ -53,9 +55,9 @@ class VideoManagerContainer extends Component<Props, void> {
       <CardContainer>
         <Card>{videolist}</Card>
         {selectedVideo !== null ? <VideoForm /> : <UploadFile />}
-        <Card>
+        <Hidden>
           <Debug />
-        </Card>
+        </Hidden>
       </CardContainer>
     )
   }

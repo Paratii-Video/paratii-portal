@@ -5,10 +5,11 @@ import {
 } from 'components/foundations/forms/Input'
 
 const Textarea = styled.textarea`
-  ${StyleFieldText} ${StyleFieldTextStates} height: ${props =>
-  props.height + 'px'};
-  line-height: 24px;
-  height: ${props => props.theme.sizes.mainInput.height + 'px'};
+  ${StyleFieldText} ${StyleFieldTextStates} line-height: 24px;
+  min-height: ${props =>
+    props.theme.sizes.mainInput.height
+      ? props.theme.sizes.mainInput.height + 'px'
+      : ''};
   padding: 12px 0 0;
   overflow: hidden;
   position: relative;

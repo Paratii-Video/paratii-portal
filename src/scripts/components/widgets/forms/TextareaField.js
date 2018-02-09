@@ -17,6 +17,8 @@ type Props = {
   helper: String,
   margin: String,
   disabled: Boolean,
+  cols: String,
+  rows: String,
   id: 'String',
   type: 'String',
   onChange: (e: Object) => void
@@ -36,6 +38,12 @@ const FakePlaceholder = styled.span`
   }
 `
 
+const TextField = styled(Textarea)`
+  height: ${props => props.height + 'px'};
+  margin-top: 20px;
+  padding-bottom: ${props => (props.height > 50 ? '20px' : '0px')};
+`
+
 const HelperLabel = styled.span`
   color: ${props => props.theme.colors.TextField.placeholder};
   display: block;
@@ -52,7 +60,7 @@ class TextareaField extends Component<Props, void> {
 
     this.state = {
       filled: false,
-      textareaHeight: 0,
+      textareaHeight: 44,
       value: ''
     }
 
@@ -63,20 +71,25 @@ class TextareaField extends Component<Props, void> {
   handleChange (e) {
     const str = e.target.value
 
+    console.log('handleChange', e.target.scrollHeight)
+
     this.setState({
-      value: str
+      value: str,
+      filled: str.length > 0
     })
 
     this.props.onChange(e)
   }
 
   handleKeyUp (e) {
+    const target = e.target
     const str = this.state.value
-    const len = str.length
+
+    console.log('handleKeyUp', target.scrollHeight)
 
     this.setState({
-      textareaHeight: e.target.scrollHeight,
-      filled: len > 0
+      textareaHeight: target.scrollHeight,
+      filled: str.length > 0
     })
   }
 
@@ -88,14 +101,16 @@ class TextareaField extends Component<Props, void> {
         disabled={this.props.disabled}
         type={this.props.type}
       >
-        <Textarea
-          rows="1"
+        <TextField
+          cols={this.props.cols}
+          rows={this.props.rows}
           onChange={this.handleChange}
           onKeyUp={this.handleKeyUp}
           error={this.props.error}
           id={this.props.id}
           type={this.props.type}
           disabled={this.props.disabled}
+          filled={this.state.filled}
           height={this.state.textareaHeight}
         />
         {this.props.label && (
