@@ -12,7 +12,7 @@ const SearchInputForm = styled.form`
 
 const SearchInputField = styled.input`
   background-color: transparent;
-  color: ${props => props.theme.colors.mainInput.color};
+  color: ${props => props.theme.colors.TextField.color};
   font-size: 14px;
   height: ${props => props.theme.sizes.mainInput.height};
   padding-left: 7px;

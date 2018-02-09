@@ -62,6 +62,9 @@ class MainSvg extends Component<Props, void> {
             />
           </g>
         </symbol>
+        <symbol id="icon-check" viewBox="0 0 18 18">
+          <path d="M14.6 4L7 11.3 3.4 7.8 2 9.2 7 14l9-8.7z" />
+        </symbol>
       </svg>
     )
   }

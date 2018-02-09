@@ -5,8 +5,15 @@ import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
 
 import Button from './foundations/buttons/Button'
-import Input from './foundations/Input'
-import Textarea from './foundations/Textarea'
+import Input from './widgets/forms/TextField'
+import Textarea from './widgets/forms/TextareaField'
+import RadioCheck, {
+  RadioWrapper,
+  RadioTitle
+} from 'components/widgets/forms/RadioCheck'
+import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
+
+import Card from 'components/structures/Card'
 
 type Props = {
   selectedVideo: VideoRecord,
@@ -14,14 +21,78 @@ type Props = {
   saveVideoInfo: Object => Object
 }
 
-const WrapperForm = styled.div`
-  background: #555;
+const VideoFormWrapper = styled.div`
+  display: flex;
+  width: 100%;
 `
 
-const Form = styled.form`
-  font-size: 20px;
-  width: 300px;
-  margin: 10px;
+const VideoFormHeader = styled.div`
+  border-bottom: 1px solid
+    ${props => props.theme.colors.VideoForm.header.border};
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+`
+
+const VideoFormTitle = styled.h1`
+  color: ${props => props.theme.colors.VideoForm.header.title};
+  font-size: ${props => props.theme.fonts.video.form.title};
+`
+
+const VideoFormSubTitle = styled.p`
+  color: ${props =>
+    props.purple
+      ? props.theme.colors.VideoForm.header.subtitle2
+      : props.theme.colors.VideoForm.header.subtitle};
+  font-size: ${props => props.theme.fonts.video.form.subtitle};
+  margin-top: 3px;
+`
+
+const Form = styled.div`
+  flex: 1 1 100%;
+  margin-right: 45px;
+`
+
+const VideoFormInfos = styled.div`
+  overflow: hidden;
+  flex: 1 1 584px;
+`
+
+const VideoMedia = styled.div`
+  margin-bottom: 15px;
+  position: relative;
+  width: 100%;
+`
+
+const VideoImage = styled.img`
+  display: block;
+  width: 100%;
+`
+
+const VideoMediaTime = styled.div`
+  bottom: 10px;
+  padding: 10px;
+  position: absolute;
+  right: 10px;
+
+  &::before {
+    background-color: ${props =>
+    props.theme.colors.VideoForm.info.time.background};
+    border-radius: 2px;
+    content: '';
+    height: 100%;
+    left: 0;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+`
+
+const VideoMediaTimeText = styled.p`
+  color: ${props => props.theme.colors.VideoForm.info.time.color};
+  font-size: ${props => props.theme.fonts.video.info.time};
+  position: relative;
+  z-index: 1;
 `
 
 class VideoForm extends Component<Props, Object> {
@@ -79,48 +150,81 @@ class VideoForm extends Component<Props, Object> {
     console.log(this.props.selectedVideo.transcodingStatus)
     const state = JSON.stringify(this.state, null, 2)
     return (
-      <WrapperForm>
-        <Form>
-          <h5>Editing video {this.state.id}</h5>
-          <Input
-            id="video-id"
-            type="hidden"
-            value={this.state.id}
-            placeholder="Title"
-          />
-          <Input
-            id="video-title"
-            type="text"
-            onChange={e => this.handleInputChange('title', e)}
-            value={this.state.title}
-            placeholder="Title"
-          />
-          <Textarea
-            id="video-description"
-            value={this.state.description}
-            onChange={e => this.handleInputChange('description', e)}
-            placeholder="Description"
-          />
-          <Button
-            id="video-submit"
-            type="submit"
-            onClick={this.handleSubmit}
-            // disabled={!this.props.canSubmit}
-          >
-            Submit
-          </Button>
-        </Form>
-        <h3>Details</h3>
-        <strong>Porgress Update: </strong>
-        {progressUpdate}
-        <img
-          src={`https://gateway.paratii.video/ipfs/${ipfsHash}/${thumbImage}`}
-        />
-        <h3>Video State</h3>
-        <div>
-          <pre>{state}</pre>
-        </div>
-      </WrapperForm>
+      <Card full margin="0 0 0 25px">
+        <VideoFormHeader>
+          <VideoFormTitle>
+            Video_01.mp4 ({this.state.id} - {ipfsHash})
+          </VideoFormTitle>
+          <VideoFormSubTitle purple>345MB</VideoFormSubTitle>
+        </VideoFormHeader>
+        <VideoFormWrapper>
+          <Form>
+            <Input
+              id="video-id"
+              type="hidden"
+              value={this.state.id}
+              label="Title"
+            />
+            <Input
+              id="video-title"
+              type="text"
+              margin="0 0 30px"
+              onChange={e => this.handleInputChange('title', e)}
+              value={this.state.title}
+              label="Title"
+            />
+            <Textarea
+              id="video-description"
+              value={this.state.description}
+              onChange={e => this.handleInputChange('description', e)}
+              label="Description"
+              margin="0 0 30px"
+            />
+            <RadioWrapper>
+              <RadioTitle>Paid or free</RadioTitle>
+              <RadioCheck name="content-type" value="free">
+                Free content
+              </RadioCheck>
+              <RadioCheck name="content-type" value="paid" nomargin>
+                Paid content (not available yet)
+              </RadioCheck>
+            </RadioWrapper>
+            <Button
+              id="video-submit"
+              type="submit"
+              onClick={this.handleSubmit}
+              // disabled={!this.props.canSubmit}
+              purple
+            >
+              Save data
+            </Button>
+          </Form>
+          <VideoFormInfos>
+            <VideoMedia>
+              <VideoImage
+                src={`http://paratii.video/public/images/paratii-src.png`}
+              />
+              <VideoMediaTime>
+                <VideoMediaTimeText>28:26</VideoMediaTimeText>
+              </VideoMediaTime>
+            </VideoMedia>
+            <VideoProgress progress="100%" marginBottom>
+              Upload
+            </VideoProgress>
+            <VideoProgress progress="45%" marginBottom>
+              Transcoding
+            </VideoProgress>
+
+            <h3>Details</h3>
+            <strong>Porgress Update: </strong>
+            {progressUpdate}
+            <h3>Video State</h3>
+            <div>
+              <pre>{state}</pre>
+            </div>
+          </VideoFormInfos>
+        </VideoFormWrapper>
+      </Card>
     )
   }
 }

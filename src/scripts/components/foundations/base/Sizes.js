@@ -11,8 +11,9 @@ const Sizes = {
   },
   searchInputButton: '17px',
   mainInput: {
-    height: '44px'
-  }
+    height: '44'
+  },
+  radio: '18px'
 }
 
 export default Sizes
