@@ -2,11 +2,11 @@
 
 import { createSelector } from 'reselect'
 
-import { getLoginRequestStatus, getUser, getWalletKey } from 'selectors/index'
-import User from 'records/UserRecords'
+import { getLoginRequestStatus, getUser, getWallet } from 'selectors/index'
+import User, { Wallet } from 'records/UserRecords'
 import { REQUEST_STATUS } from 'constants/ApplicationConstants'
 
-import type { RootState, RequestStatus, Wallet } from 'types/ApplicationTypes'
+import type { RootState, RequestStatus } from 'types/ApplicationTypes'
 
 export const getIsLoggingIn: (state: RootState) => boolean = createSelector(
   [getLoginRequestStatus],
@@ -20,22 +20,5 @@ export const getIsLoggedIn: (state: RootState) => boolean = createSelector(
     !!(user.get('email') && !isLoggingIn)
 )
 
-const getWallet = (state: RootState): ?Wallet => {
-  const walletKey: string = getWalletKey(state)
-
-  const walletString: ?string = localStorage.getItem(walletKey)
-
-  if (walletString) {
-    try {
-      const wallet: Wallet = JSON.parse(walletString)
-      return wallet
-    } catch (e) {}
-  }
-
-  return null
-}
-
 export const getAddress = (state: RootState): string =>
-  createSelector([getWallet], (wallet: ?Wallet) => {
-    return (wallet && wallet.address) || ''
-  })
+  createSelector([getWallet], (wallet: Wallet): string => wallet.get('address'))

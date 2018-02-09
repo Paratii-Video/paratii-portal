@@ -11,11 +11,6 @@ import {
 
 import type { RequestStatus } from 'types/ApplicationTypes'
 
-export const _getWalletKey = (state: User): string => state.get('walletKey')
-export const _getMnemonicKey = (state: User): string => state.get('mnemonicKey')
-export const _getLoginRequestStatus = (state: User): RequestStatus =>
-  state.get('loginRequestStatus')
-
 class KdfParams extends Immutable.Record({
   dklen: -1,
   salt: '',
@@ -102,5 +97,12 @@ class User extends Immutable.Record({
     })
   }
 }
+
+export const _getWalletKey = (state: User): string => state.get('walletKey')
+export const _getMnemonicKey = (state: User): string => state.get('mnemonicKey')
+export const _getWallet = (state: User): Wallet => state.get('wallet')
+export const _getMnemonic = (state: User): string => state.get('mnemonic')
+export const _getLoginRequestStatus = (state: User): RequestStatus =>
+  state.get('loginRequestStatus')
 
 export default User
