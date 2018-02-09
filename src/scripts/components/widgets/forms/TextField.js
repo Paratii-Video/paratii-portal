@@ -116,7 +116,6 @@ class TextField extends Component<Props, void> {
           onChange={this.handleChange}
           onKeyUp={this.handleKeyUp}
           error={this.props.error}
-          id={this.props.id}
           type={this.props.type}
           disabled={this.props.disabled}
           readonly={this.props.readonly}

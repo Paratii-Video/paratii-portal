@@ -12,7 +12,9 @@ type Props = {
 
 const Header = styled.header`
   background-color: ${props => props.theme.colors.header.background};
-  height: ${props => props.theme.sizes.mainHeader.height};
+  display: flex;
+  flex: 0 0 ${props => props.theme.sizes.mainHeader.height};
+  align-items: center;
   padding-left: 80px;
   padding-right: 80px;
 `

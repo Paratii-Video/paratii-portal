@@ -44,7 +44,11 @@ class UploadListItem extends Component<Props, void> {
       progress = item.getIn(['uploadStatus', 'data', 'progress'])
     }
     let linkToVideo = ''
-    if (item.getIn(['transcodingStatus', 'name']) === 'success') {
+    // TODO; find out why getIn(['blockchainStatus', 'name']) is undefined
+    if (
+      item.getIn(['transcodingStatus', 'name']) === 'success' &&
+      item.getIn(['blockchainStatus']).name === 'success'
+    ) {
       const link = `/play/${item.id}`
       linkToVideo = (
         <Label>

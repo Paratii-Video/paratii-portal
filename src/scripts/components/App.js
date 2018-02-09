@@ -11,8 +11,7 @@ import PlayContainer from 'containers/PlayContainer'
 import DebugContainer from 'containers/DebugContainer'
 import VideoManager from 'containers/VideoManagerContainer'
 
-import type { RouteMatch } from 'types/ApplicationTypes'
-import { setupKeystore } from 'utils/ParatiiLib'
+import type { Match } from 'react-router-dom'
 
 import MainTemplate from './templates/MainTemplate'
 import MainHeader from './structures/header/MainHeader'
@@ -24,19 +23,24 @@ import NotFound from './pages/NotFound'
 import { paratiiTheme } from 'constants/ApplicationConstants'
 
 type Props = {
-  match: RouteMatch,
+  initializeApp: () => void,
+  match: Match,
   setSelectedVideo: (id: string) => void
 }
 
 const PortalPlayWrapper = styled.div`
-  flex: 0 1 75%;
-  width: 75%;
-  max-height: 450px;
+  flex: 1 0 100%;
+  display: flex;
 `
 
 class App extends Component<Props, void> {
+  constructor (props: Props) {
+    super(props)
+
+    this.props.initializeApp()
+  }
+
   render () {
-    setupKeystore()
     const { match } = this.props
     return (
       <ThemeProvider theme={paratiiTheme}>
@@ -64,6 +68,7 @@ class App extends Component<Props, void> {
               <Route component={NotFound} />
             </Switch>
           </Main>
+          {/* <DebugContainer /> */}
           <MainFooter />
         </MainTemplate>
       </ThemeProvider>

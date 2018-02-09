@@ -15,9 +15,8 @@ class LoginForm extends Component<Props, void> {
   render () {
     const { onSubmit, onInputChange } = this.props
     return (
-      <SignForm onSubmit={onSubmit}>
+      <SignForm onSubmit={onSubmit} data-test-id="login-form">
         <TextField
-          id="login-email"
           type="text"
           onChange={e => onInputChange('email', e)}
           label="Email"
@@ -25,19 +24,13 @@ class LoginForm extends Component<Props, void> {
           disabled={this.props.isLoggingIn}
         />
         <TextField
-          id="login-password"
           type="password"
           onChange={e => onInputChange('password', e)}
           label="Password"
           margin="0 0 30px"
           disabled={this.props.isLoggingIn}
         />
-        <Button
-          id="login-submit"
-          type="submit"
-          disabled={this.props.isLoggingIn}
-          purple
-        >
+        <Button type="submit" disabled={this.props.isLoggingIn} purple>
           Log in
         </Button>
       </SignForm>

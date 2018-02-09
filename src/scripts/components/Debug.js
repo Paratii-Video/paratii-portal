@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { paratii } from '../utils/ParatiiLib'
+import paratii from '../utils/ParatiiLib'
 import type { RootState } from 'types/ApplicationTypes'
 
 const DebugBox = styled.div`

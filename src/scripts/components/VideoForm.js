@@ -101,7 +101,6 @@ class VideoForm extends Component<Props, Object> {
 
   constructor (props: Props) {
     super(props)
-    console.log(this.props.selectedVideo)
     this.state = new VideoRecord(this.props.selectedVideo)
     console.log(this.state)
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -148,7 +147,7 @@ class VideoForm extends Component<Props, Object> {
       thumbImage = thumbImages.get(1)
       console.log(thumbImage)
     }
-    console.log(this.props.selectedVideo.transcodingStatus)
+    // console.log(this.props.selectedVideo.transcodingStatus)
     const state = JSON.stringify(this.state, null, 2)
     return (
       <Card full margin="0 0 0 25px">

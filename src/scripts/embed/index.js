@@ -13,10 +13,10 @@ import { paratiiTheme } from 'constants/ApplicationConstants'
 
 import 'styles/embed/index.scss'
 
-import type { RouteMatch } from 'types/ApplicationTypes'
+import type { Match } from 'react-router-dom'
 
 type Props = {
-  match: RouteMatch
+  match: Match
 }
 
 const store = createStore()

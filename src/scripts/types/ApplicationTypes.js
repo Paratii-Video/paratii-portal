@@ -5,13 +5,7 @@ import Immutable from 'immutable'
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
 import PlayerRecord from 'records/PlayerRecords'
-
-export type RouteMatch = {
-  path: string,
-  url: string,
-  isExact: boolean,
-  params: Object
-}
+import { REQUEST_STATUS } from 'constants/ApplicationConstants'
 
 export type Location = {
   pathname: string,
@@ -35,10 +29,14 @@ export type VideoRecordMap = Immutable.Map<string, VideoRecord>
 
 export type RootState = {
   selectedVideo: ?string,
-  user: ?UserRecord,
+  user: UserRecord,
   videos: VideoRecordMap,
   player: PlayerRecord
 }
+
+type _ThunkAction<R> = (dispatch: Dispatch, getState?: () => RootState) => R
+type ThunkAction = _ThunkAction<any>
+export type Dispatch = (action: Action<*> | ThunkAction) => any
 
 export type ParatiiLibConfig = {
   provider: string
@@ -78,13 +76,15 @@ export type ParatiiLib = {
       decrypt: (string, password: string) => Object,
       encrypt: (password: string) => Object,
       // newMnemonic: () => string,
-      getMnemonic: () => string,
-      create: () => Object
+      getMnemonic: () => Promise<string>,
+      create: () => Object,
+      clear: () => void
     },
     vids: {
       get: (id: string) => ?Object,
       makeId: () => string
-    }
+    },
+    setAccount: (string, string) => ?Object
   },
   ipfs: {
     uploader: {
@@ -189,3 +189,5 @@ export type Theme = Object & {
   sizes: Sizes,
   colors: Colors
 }
+
+export type RequestStatus = $Values<typeof REQUEST_STATUS>

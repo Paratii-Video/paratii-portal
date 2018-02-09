@@ -36,11 +36,6 @@ jobs:
           command: yarn run server:dev
           background: true
       - run: yarn run chimp-test
-      - run:
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              yarn run build
-            fi
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then

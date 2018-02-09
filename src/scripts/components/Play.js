@@ -7,11 +7,13 @@ import CreatePlayer from 'paratii-mediaplayer'
 import VideoRecord from 'records/VideoRecords'
 
 import VideoOverlay from 'components/VideoOverlay'
+import Debug from 'containers/DebugContainer'
 
-import type { RouteMatch, ClapprPlayer } from 'types/ApplicationTypes'
+import type { ClapprPlayer } from 'types/ApplicationTypes'
+import type { Match } from 'react-router-dom'
 
 type Props = {
-  match: RouteMatch,
+  match: Match,
   setSelectedVideo: ({ id: string }) => void,
   fetchVideo: (id: string) => void,
   isPlaying: boolean,
@@ -24,7 +26,6 @@ type Props = {
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,6 +40,7 @@ const PlayerWrapper = styled.div`
   flex: 0 0 100%;
   width: 100%;
   position: relative;
+  height: 500px;
 `
 
 const OverlayWrapper = styled.div`
@@ -106,8 +108,8 @@ class Play extends Component<Props, void> {
 
   componentWillReceiveProps (nextProps: Props): void {
     const { isAttemptingPlay } = this.props
-
     let ipfsHash = ''
+    console.log(nextProps)
     if (nextProps.video) {
       if (
         this.props.video == null ||
@@ -155,6 +157,7 @@ class Play extends Component<Props, void> {
           )}
           <Player id="player" />
         </PlayerWrapper>
+        <Debug />
       </Wrapper>
     )
   }
