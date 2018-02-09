@@ -26,10 +26,12 @@ export const RadioTitle = styled.p`
 
 const RadioInput = styled.label`
   align-items: center;
-  cursor: pointer;
+  cursor: ${props => (props.disabled ? 'initial' : 'pointer')};
   display: inline-flex;
   font-size: ${props => props.theme.fonts.form.input};
   margin-right: ${props => (props.nomargin ? '' : '20px')};
+  opacity: ${props => (props.disabled ? '0.2' : '')};
+  pointer-events: ${props => (props.disabled ? 'none' : '')};
   position: relative;
 
   input {
