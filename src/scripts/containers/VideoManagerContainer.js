@@ -53,7 +53,7 @@ class VideoManagerContainer extends Component<Props, void> {
 
     return (
       <CardContainer>
-        <Card>{videolist}</Card>
+        <Card margin="0 25px 0 0">{videolist}</Card>
         {selectedVideo !== null ? <VideoForm /> : <UploadFile />}
         <Hidden>
           <Debug />
