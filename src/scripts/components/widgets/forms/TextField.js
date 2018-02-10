@@ -82,22 +82,22 @@ class TextField extends Component<Props, void> {
 
     this.handleChange = this.handleChange.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
+    this.handleFilled = this.handleFilled.bind(this)
   }
 
-  handleChange (e) {
-    console.log('handleChange', e.target.value)
+  handleFilled (e) {
     this.setState({
       filled: e.target.value.length > 0
     })
+  }
 
+  handleChange (e) {
+    this.handleFilled(e)
     this.props.onChange(e)
   }
 
   handleKeyUp (e) {
-    console.log('handleKeyUp', e.target.value)
-    this.setState({
-      filled: e.target.value.length > 0
-    })
+    this.handleFilled(e)
   }
 
   render () {
