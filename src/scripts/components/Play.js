@@ -24,7 +24,7 @@ type Props = {
 }
 
 type State = {
-  showingControls: boolean
+  mouseInOverlay: boolean
 }
 
 const Wrapper = styled.div`
@@ -64,7 +64,7 @@ class Play extends Component<Props, State> {
     super(props)
 
     this.state = {
-      showingControls: false
+      mouseInOverlay: false
     }
 
     this.onOverlayClick = this.onOverlayClick.bind(this)
@@ -90,20 +90,22 @@ class Play extends Component<Props, State> {
       if (container) {
         container.on(Events.CONTAINER_MEDIACONTROL_HIDE, () => {
           this.setState((prevState: State) => {
-            if (prevState.showingControls) {
+            if (prevState.mouseInOverlay) {
               return {
-                showingControls: false
+                mouseInOverlay: false
               }
             }
+            return {}
           })
         })
         container.on(Events.CONTAINER_MEDIACONTROL_SHOW, () => {
           this.setState((prevState: State) => {
-            if (!prevState.showingControls) {
+            if (!prevState.mouseInOverlay) {
               return {
-                showingControls: true
+                mouseInOverlay: true
               }
             }
+            return {}
           })
         })
       }
@@ -119,6 +121,14 @@ class Play extends Component<Props, State> {
   onOverlayMouseEnter = (): void => {
     if (this.player) {
       this.player.core.mediaControl.show()
+      this.player.core.mediaControl.setUserKeepVisible()
+    }
+  }
+
+  onOverlayMouseLeave = (): void => {
+    if (this.player) {
+      this.player.core.mediaControl.resetUserKeepVisible()
+      this.player.core.mediaControl.hide()
     }
   }
 
@@ -144,7 +154,6 @@ class Play extends Component<Props, State> {
   componentWillReceiveProps (nextProps: Props): void {
     const { isAttemptingPlay } = this.props
     let ipfsHash = ''
-    console.log(nextProps)
     if (nextProps.video) {
       if (
         this.props.video == null ||
@@ -176,7 +185,7 @@ class Play extends Component<Props, State> {
   }
 
   shouldShowVideoOverlay (): boolean {
-    return this.state.showingControls
+    return this.state.mouseInOverlay
   }
 
   render () {
@@ -184,7 +193,10 @@ class Play extends Component<Props, State> {
       <Wrapper>
         <PlayerWrapper>
           {this.shouldShowVideoOverlay() && (
-            <OverlayWrapper onMouseEnter={this.onOverlayMouseEnter}>
+            <OverlayWrapper
+              onMouseEnter={this.onOverlayMouseEnter}
+              onMouseLeave={this.onOverlayMouseLeave}
+            >
               <VideoOverlay {...this.props} onClick={this.onOverlayClick} />
             </OverlayWrapper>
           )}

@@ -146,7 +146,7 @@ class VideoOverlay extends Component<Props, State> {
                   onClick={this.onProfileButtonClick}
                   onClose={this.closePopover}
                   popoverPortal={this.popoverWrapperRef}
-                  popoverOpen={true || openPopover === 'profile'}
+                  popoverOpen={openPopover === 'profile'}
                 />
               </ButtonWrapper>
             ) : null}
