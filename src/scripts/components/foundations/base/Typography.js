@@ -22,6 +22,9 @@ const Typography = {
     big: '24px',
     main: '16px',
     small: '12px'
+  },
+  popover: {
+    title: '18px'
   }
 }
 

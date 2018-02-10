@@ -14,12 +14,16 @@ const Wrapper = styled.div`
   border: ${({ theme }) => `1px solid ${theme.colors.popover.border}`};
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.popover.background};
-  padding: 10px;
+  padding: 20px;
 `
 
 class Popover extends React.Component<Props, void> {
   render () {
-    return <Wrapper>{this.props.children}</Wrapper>
+    return (
+      <Wrapper onClick={(e: Object) => e.stopPropagation()}>
+        {this.props.children}
+      </Wrapper>
+    )
   }
 }
 
