@@ -17,12 +17,14 @@ type Props = {
   helper: String,
   margin: String,
   disabled: Boolean,
-  cols: String,
-  rows: String,
+  readonly: Boolean,
+  value: String,
   id: 'String',
   name: 'String',
   type: 'String',
-  onChange: (e: Object) => void
+  onChange: (e: Object) => void,
+  cols: String,
+  rows: String
 }
 
 const LabelField = styled.label`
@@ -70,13 +72,11 @@ class TextareaField extends Component<Props, void> {
   }
 
   handleChange (e) {
-    const str = e.target.value
-
-    console.log('handleChange', e.target.scrollHeight)
+    const target = e.target
 
     this.setState({
-      value: str,
-      filled: str.length > 0
+      textareaHeight: target.scrollHeight,
+      filled: target.value.length > 0
     })
 
     this.props.onChange(e)
@@ -84,13 +84,10 @@ class TextareaField extends Component<Props, void> {
 
   handleKeyUp (e) {
     const target = e.target
-    const str = this.state.value
-
-    console.log('handleKeyUp', target.scrollHeight)
 
     this.setState({
       textareaHeight: target.scrollHeight,
-      filled: str.length > 0
+      filled: target.value.length > 0
     })
   }
 
@@ -103,15 +100,17 @@ class TextareaField extends Component<Props, void> {
         type={this.props.type}
       >
         <TextField
-          cols={this.props.cols}
-          rows={this.props.rows}
           onChange={this.handleChange}
           onKeyUp={this.handleKeyUp}
           error={this.props.error}
-          id={this.props.id}
-          name={this.props.name}
           type={this.props.type}
           disabled={this.props.disabled}
+          readonly={this.props.readonly}
+          value={this.props.value}
+          id={this.props.id}
+          name={this.props.name}
+          cols={this.props.cols}
+          rows={this.props.rows}
           filled={this.state.filled}
           height={this.state.textareaHeight}
         />

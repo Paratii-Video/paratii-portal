@@ -77,7 +77,7 @@ class TextField extends Component<Props, void> {
 
     this.state = {
       filled: false,
-      value: ''
+      value: this.props.value
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -85,23 +85,18 @@ class TextField extends Component<Props, void> {
   }
 
   handleChange (e) {
-    const str = e.target.value
-
+    console.log('handleChange', e.target.value)
     this.setState({
-      value: str
+      filled: e.target.value.length > 0
     })
 
-    if (this.props.onChange) {
-      this.props.onChange(e)
-    }
+    this.props.onChange(e)
   }
 
   handleKeyUp (e) {
-    const str = this.state.value
-    const len = str.length
-
+    console.log('handleKeyUp', e.target.value)
     this.setState({
-      filled: len > 0
+      filled: e.target.value.length > 0
     })
   }
 
