@@ -16,7 +16,7 @@
   "globals": {
     "browser": true,
     "Class": true,
-    "$Values": true
+    "$Values": true,
   },
   "rules": {
     "prefer-const": 2

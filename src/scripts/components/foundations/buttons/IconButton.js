@@ -10,11 +10,11 @@ type Props = {
 
 const Button = styled.button`
   cursor: pointer;
-  width: 25px;
-  height: 25px;
+  width: 100%;
+  height: 100%;
   mask-image: ${props => `url(${props.icon})`};
   mask-position: center center;
-  mask-size: 22px 22px;
+  mask-size: contain;
   mask-repeat: no-repeat;
   background-color: ${props => props.theme.colors.button.white};
 `

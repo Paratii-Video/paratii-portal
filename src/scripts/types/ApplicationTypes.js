@@ -85,7 +85,12 @@ export type ParatiiLib = {
       makeId: () => string
     },
     setAccount: (string, string) => ?Object,
-    balanceOf: (address: string, token: ?string) => Promise<Object>
+    balanceOf: (address: string, token: ?string) => Promise<Object>,
+    web3: {
+      utils: {
+        fromWei: (value: number, toUnit: ?string) => string
+      }
+    }
   },
   ipfs: {
     uploader: {

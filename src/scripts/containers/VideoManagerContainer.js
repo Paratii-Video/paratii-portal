@@ -13,7 +13,6 @@ import type { RootState } from 'types/ApplicationTypes'
 
 import VideoList from './VideoListContainer'
 import VideoForm from './VideoFormContainer'
-import Debug from './DebugContainer'
 import UploadFile from './UploadFileContainer'
 
 const Wrapper = styled.div`
@@ -63,7 +62,6 @@ class VideoManagerContainer extends Component<Props, void> {
           {videolist}
           {selectedVideo !== null ? <VideoForm /> : <UploadFile />}
         </Wrapper>
-        <Debug />
       </div>
     )
   }

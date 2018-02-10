@@ -12,8 +12,7 @@ type Props = {
   match: Match,
   isEmbed?: boolean,
   onClick: (e: Object) => void,
-  ethBalance: number,
-  ptiBalance: number
+  ptiBalance: string
 }
 
 type State = {
@@ -55,13 +54,19 @@ const ButtonGroup = styled.div`
   opacity: ${({ hide }) => (hide ? 0 : 1)};
 `
 
+const ButtonWrapper = styled.div`
+  width: 25px;
+  height: 25px;
+`
+
 const PopoverWrapper = styled.div`
   position: absolute;
   top: ${overlayPadding};
   right: ${overlayPadding};
-  width: 200px;
-  height: 100px;
+  width: 230px;
+  height: 110px;
   display: ${props => (props.open ? 'block' : 'none')};
+  cursor: default;
 `
 
 class VideoOverlay extends Component<Props, State> {
@@ -105,13 +110,20 @@ class VideoOverlay extends Component<Props, State> {
   getVideoTitle (): string {
     const { video } = this.props
 
-    return (video && video.get('title')) || 'Title Placeholder'
+    return (video && video.get('title')) || 'Video Title'
   }
 
   onProfileButtonClick = (e: Object): void => {
     e.stopPropagation()
     this.setState({
       openPopover: 'profile'
+    })
+  }
+
+  closePopover = (e: Object): void => {
+    e.stopPropagation()
+    this.setState({
+      openPopover: null
     })
   }
 
@@ -130,11 +142,14 @@ class VideoOverlay extends Component<Props, State> {
           <Title>{this.getVideoTitle()}</Title>
           <ButtonGroup hide={!!this.state.openPopover}>
             {ProfileButton ? (
-              <ProfileButton
-                onClick={this.onProfileButtonClick}
-                popoverPortal={this.popoverWrapperRef}
-                popoverOpen={openPopover === 'profile'}
-              />
+              <ButtonWrapper>
+                <ProfileButton
+                  onClick={this.onProfileButtonClick}
+                  onClose={this.closePopover}
+                  popoverPortal={this.popoverWrapperRef}
+                  popoverOpen={true || openPopover === 'profile'}
+                />
+              </ButtonWrapper>
             ) : null}
           </ButtonGroup>
           <PopoverWrapper
