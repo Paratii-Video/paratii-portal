@@ -53,7 +53,6 @@ const Form = styled.div`
 `
 
 const VideoFormInfos = styled.div`
-  overflow: hidden;
   flex: 1 1 584px;
 `
 
@@ -108,7 +107,6 @@ class VideoForm extends Component<Props, Object> {
   constructor (props: Props) {
     super(props)
     this.state = new VideoRecord(this.props.selectedVideo)
-    console.log(this.state)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -151,9 +149,7 @@ class VideoForm extends Component<Props, Object> {
     let thumbImage = ''
     if (thumbImages !== undefined) {
       thumbImage = thumbImages.get(1)
-      console.log(thumbImage)
     }
-    // console.log(this.props.selectedVideo.transcodingStatus)
     const state = JSON.stringify(this.state, null, 2)
     return (
       <Card full>
@@ -212,6 +208,7 @@ class VideoForm extends Component<Props, Object> {
           <VideoFormInfos>
             <VideoMedia>
               <VideoImage
+                data-src={thumbImage}
                 src={`http://paratii.video/public/images/paratii-src.png`}
               />
               <VideoMediaTime>

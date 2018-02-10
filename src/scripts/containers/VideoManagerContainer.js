@@ -18,6 +18,7 @@ import UploadFile from './UploadFileContainer'
 import Card, { CardContainer } from 'components/structures/Card'
 
 import Hidden from 'components/foundations/Hidden'
+import Button from 'components/foundations/buttons/Button'
 
 type Props = {
   videos: Map<string, VideoRecord>,
@@ -53,7 +54,17 @@ class VideoManagerContainer extends Component<Props, void> {
 
     return (
       <CardContainer>
-        <Card margin="0 25px 0 0">{videolist}</Card>
+        <Card
+          margin="0 25px 0 0"
+          nopadding
+          footer={
+            <Button onClick={() => this.onVideoListItemClicked(null)}>
+              Add more videos
+            </Button>
+          }
+        >
+          {videolist}
+        </Card>
         {selectedVideo !== null ? <VideoForm /> : <UploadFile />}
         <Hidden>
           <Debug />

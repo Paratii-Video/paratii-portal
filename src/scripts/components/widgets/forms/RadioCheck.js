@@ -56,7 +56,7 @@ const RadioInputBox = styled.span`
     svg {
       transform: scale(1);
       transition: transform 0.5s ${props => props.theme.animation.ease.smooth}
-        0.1s;
+        0.2s;
     }
   }
 `

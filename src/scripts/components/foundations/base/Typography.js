@@ -21,6 +21,11 @@ const Typography = {
       time: '0.8rem',
       progress: '0.8rem',
       percentual: '0.7rem'
+    },
+    list: {
+      title: '1.5rem',
+      filename: '1rem',
+      status: '0.8rem'
     }
   },
   radio: {

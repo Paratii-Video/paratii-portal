@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import type { VideoRecord } from 'records/VideoRecords'
 import type { Map } from 'immutable'
-import Button from './foundations/buttons/Button'
 
 import VideoListItem from 'components/VideoListItem'
 
@@ -13,31 +12,39 @@ type Props = {
 }
 
 const Wrapper = styled.div`
-  background-color: ${props => props.theme.colors.body.background};
-  font-family: ${props =>
-    props.theme.fonts.family ? props.theme.fonts.family : 'Monospace'},
-    sans-serif;
   display: flex;
   flex-direction: column;
-  width: 300px;
+`
+
+const Title = styled.h3`
+  color: ${props => props.theme.colors.VideoList.title};
+  font-size: ${props => props.theme.fonts.video.list.title};
+  margin-bottom: 30px;
+  padding: ${props => props.theme.sizes.card.padding};
+  padding-bottom: 0;
+`
+
+const List = styled.ul`
+  display: block;
+  width: 100%;
 `
 
 class VideoList extends Component<Props, void> {
   render () {
     return (
       <Wrapper>
-        {this.props.videos
-          .entrySeq()
-          .map(([videoId, videoInfo]) => (
-            <VideoListItem
-              key={videoId}
-              video={videoInfo}
-              onClick={this.props.onItemClick}
-            />
-          ))}
-        <Button onClick={() => this.props.onItemClick(null)}>
-          ADD MORE VIDEOS
-        </Button>
+        <Title>Video List</Title>
+        <List>
+          {this.props.videos
+            .entrySeq()
+            .map(([videoId, videoInfo]) => (
+              <VideoListItem
+                key={videoId}
+                video={videoInfo}
+                onClick={this.props.onItemClick}
+              />
+            ))}
+        </List>
       </Wrapper>
     )
   }

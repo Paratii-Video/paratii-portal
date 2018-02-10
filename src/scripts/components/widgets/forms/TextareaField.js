@@ -69,26 +69,31 @@ class TextareaField extends Component<Props, void> {
 
     this.handleChange = this.handleChange.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
+    this.handleHeight = this.handleHeight.bind(this)
+  }
+
+  handleHeight (target) {
+    const value = target.value
+    const chars = value.length
+    let height = target.scrollHeight
+
+    if (chars < 1) {
+      height = 44
+    }
+
+    this.setState({
+      textareaHeight: height,
+      filled: chars > 0
+    })
   }
 
   handleChange (e) {
-    const target = e.target
-
-    this.setState({
-      textareaHeight: target.scrollHeight,
-      filled: target.value.length > 0
-    })
-
+    this.handleHeight(e.target)
     this.props.onChange(e)
   }
 
   handleKeyUp (e) {
-    const target = e.target
-
-    this.setState({
-      textareaHeight: target.scrollHeight,
-      filled: target.value.length > 0
-    })
+    this.handleHeight(e.target)
   }
 
   render () {

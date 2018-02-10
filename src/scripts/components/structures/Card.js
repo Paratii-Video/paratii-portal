@@ -19,7 +19,7 @@ export const CardContainer = styled.div`
 export const CardWrapper = styled.div`
   flex: 1 1 100%;
   margin: ${props => props.margin};
-  min-width: ${props => (props.full ? '' : '388px')};
+  min-width: ${props => (props.full ? '388px' : '388px')};
   max-width: ${props => (props.full ? '' : '33%')};
   overflow: hidden;
   position: relative;
@@ -33,6 +33,7 @@ const Main = styled.div`
 `
 
 const Title = styled.h2`
+  color: ${props => props.theme.colors.VideoList.title};
   font-size: ${props => props.theme.fonts.title.small};
   margin-bottom: 30px;
 `
