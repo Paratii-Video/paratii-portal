@@ -4,9 +4,11 @@ import Immutable from 'immutable'
 
 import VideoRecord from 'records/VideoRecords'
 import UserRecord, {
+  Balances,
   _getWalletKey,
   _getMnemonicKey,
-  _getLoginRequestStatus
+  _getLoginRequestStatus,
+  _getBalances
 } from 'records/UserRecords'
 import { _getIsPlaying, _getIsAttemptingPlay } from 'records/PlayerRecords'
 
@@ -25,6 +27,8 @@ export const getWalletKey = (state: RootState): string =>
   _getWalletKey(getUser(state))
 export const getMnemonicKey = (state: RootState): string =>
   _getMnemonicKey(getUser(state))
+export const getBalances = (state: RootState): Balances =>
+  _getBalances(getUser(state))
 
 export const getLoginRequestStatus = (state: RootState): RequestStatus =>
   _getLoginRequestStatus(state.user)

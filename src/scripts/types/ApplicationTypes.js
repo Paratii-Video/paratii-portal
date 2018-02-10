@@ -84,7 +84,8 @@ export type ParatiiLib = {
       get: (id: string) => ?Object,
       makeId: () => string
     },
-    setAccount: (string, string) => ?Object
+    setAccount: (string, string) => ?Object,
+    balanceOf: (address: string, token: ?string) => Promise<Object>
   },
   ipfs: {
     uploader: {

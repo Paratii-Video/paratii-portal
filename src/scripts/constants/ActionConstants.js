@@ -17,6 +17,7 @@ export const LOGIN_REQUESTED = createActionConstant('LOGIN_REQUESTED')
 export const LOGIN_SUCCESS = createActionConstant('LOGIN_SUCCESS')
 export const LOGIN_FAILURE = createActionConstant('LOGIN_FAILURE')
 export const LOGOUT = createActionConstant('LOGOUT')
+export const BALANCES_LOADED = createActionConstant('BALANCES_LOADED')
 
 /* Upload Actions */
 export const UPLOAD_REQUESTED = createActionConstant('UPLOAD_REQUESTED')

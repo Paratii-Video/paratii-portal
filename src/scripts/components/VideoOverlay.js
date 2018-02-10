@@ -11,7 +11,9 @@ type Props = {
   video: ?VideoRecord,
   match: Match,
   isEmbed?: boolean,
-  onClick: (e: Object) => void
+  onClick: (e: Object) => void,
+  ethBalance: number,
+  ptiBalance: number
 }
 
 type State = {
