@@ -17,7 +17,7 @@ type Props = {
   setSelectedVideo: ({ id: string }) => void,
   fetchVideo: (id: string) => void,
   isPlaying: boolean,
-  togglePlayPause: (play: boolean) => void,
+  togglePlayPause: (play: ?boolean) => void,
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
   video: ?VideoRecord,
@@ -120,9 +120,13 @@ class Play extends Component<Props, State> {
   }
 
   onOverlayClick (): void {
-    const { attemptPlay } = this.props
-
-    attemptPlay()
+    if (this.player) {
+      if (this.player.isPlaying()) {
+        this.player.pause()
+      } else {
+        this.player.play()
+      }
+    }
   }
 
   onOverlayMouseEnter = (): void => {

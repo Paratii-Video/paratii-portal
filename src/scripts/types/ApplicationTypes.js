@@ -62,7 +62,9 @@ export type ClapprPlayer = EventEmitter & {
       resetUserKeepVisible: () => void
     }
   },
-  play: () => void
+  isPlaying: () => boolean,
+  play: () => void,
+  pause: () => void
 }
 
 // TODO move this into paratii-lib repo

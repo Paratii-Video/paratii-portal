@@ -13,7 +13,7 @@ import type { Action } from 'types/ApplicationTypes'
 const reducer = {
   [PLAYER_TOGGLE_PLAYPAUSE]: (state: PlayerRecord, action: Action<boolean>) =>
     state.merge({
-      isPlaying: action.payload,
+      isPlaying: action.payload || !state.get('isPlaying'),
       isAttemptingPlay: false
     }),
   [PLAYER_ATTEMPT_PLAY]: (state: PlayerRecord) =>
