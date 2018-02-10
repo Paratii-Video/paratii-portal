@@ -49,11 +49,22 @@ type EventEmitter = {
 // TODO move this into paratii-mediaplayer repo
 type ClapprCore = EventEmitter & {}
 
+type ClapprContainer = EventEmitter & {}
+
 export type ClapprPlayer = EventEmitter & {
   core: {
-    getCurrentPlayback: () => ClapprCore
+    getCurrentPlayback: () => ClapprCore,
+    getCurrentContainer: () => ClapprContainer,
+    mediaControl: {
+      show: () => void,
+      hide: () => void,
+      setUserKeepVisible: () => void,
+      resetUserKeepVisible: () => void
+    }
   },
-  play: () => void
+  isPlaying: () => boolean,
+  play: () => void,
+  pause: () => void
 }
 
 // TODO move this into paratii-lib repo
