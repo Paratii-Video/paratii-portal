@@ -4,8 +4,9 @@ import React, { Component } from 'react'
 import { Events } from 'clappr'
 import styled from 'styled-components'
 import CreatePlayer from 'paratii-mediaplayer'
-import VideoRecord from 'records/VideoRecords'
+import debounce from 'lodash.debounce'
 
+import VideoRecord from 'records/VideoRecords'
 import VideoOverlay from 'components/VideoOverlay'
 
 import type { ClapprPlayer } from 'types/ApplicationTypes'
@@ -131,11 +132,15 @@ class Play extends Component<Props, State> {
     }
   }
 
-  onMouseMove = (): void => {
-    this.lastMouseMove = Date.now()
-    clearTimeout(this.playerHideTimeout)
-    this.maybeHideControls()
-  }
+  onMouseMove = debounce(
+    (): void => {
+      this.lastMouseMove = Date.now()
+      clearTimeout(this.playerHideTimeout)
+      this.maybeHideControls()
+    },
+    150,
+    { leading: true }
+  )
 
   onOverlayMouseLeave = (): void => {
     if (this.player) {
