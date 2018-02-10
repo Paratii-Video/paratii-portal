@@ -63,9 +63,10 @@ const ListItemStatus = styled.p`
   margin-bottom: 2px;
 `
 
-const Bar = VideoProgressBar.extend`
+const Bar = styled.div`
   bottom: 0;
   position: absolute;
+  width: 100%;
 `
 
 class UploadListItem extends Component<Props, void> {
@@ -112,7 +113,9 @@ class UploadListItem extends Component<Props, void> {
           </ListItemStatus>
           <ListItemStatus>{linkToVideo}</ListItemStatus>
 
-          <Bar progress={'55%'} nopercentual />
+          <Bar>
+            <VideoProgressBar progress={'55%'} nopercentual />
+          </Bar>
         </ListItemWrapper>
       </ListItem>
     )
