@@ -30,7 +30,7 @@ const Overlay = styled.div`
   display: flex;
   flex-direction: column;
   color: white;
-  background: rgba(0, 0, 0, 0.8);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   padding: ${overlayPadding};
   box-sizing: border-box;
 `

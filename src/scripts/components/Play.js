@@ -23,6 +23,10 @@ type Props = {
   isEmbed?: boolean
 }
 
+type State = {
+  showingControls: boolean
+}
+
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
@@ -47,17 +51,21 @@ const OverlayWrapper = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 50px);
   z-index: 10;
   cursor: pointer;
 `
 
-class Play extends Component<Props, void> {
+class Play extends Component<Props, State> {
   player: ClapprPlayer
   onOverlayClick: () => void
 
   constructor (props: Props) {
     super(props)
+
+    this.state = {
+      showingControls: false
+    }
 
     this.onOverlayClick = this.onOverlayClick.bind(this)
 
@@ -77,6 +85,28 @@ class Play extends Component<Props, void> {
       if (playback) {
         playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
       }
+
+      const container = this.player.core.getCurrentContainer()
+      if (container) {
+        container.on(Events.CONTAINER_MEDIACONTROL_HIDE, () => {
+          this.setState((prevState: State) => {
+            if (prevState.showingControls) {
+              return {
+                showingControls: false
+              }
+            }
+          })
+        })
+        container.on(Events.CONTAINER_MEDIACONTROL_SHOW, () => {
+          this.setState((prevState: State) => {
+            if (!prevState.showingControls) {
+              return {
+                showingControls: true
+              }
+            }
+          })
+        })
+      }
     }
   }
 
@@ -84,6 +114,12 @@ class Play extends Component<Props, void> {
     const { attemptPlay } = this.props
 
     attemptPlay()
+  }
+
+  onOverlayMouseEnter = (): void => {
+    if (this.player) {
+      this.player.core.mediaControl.show()
+    }
   }
 
   getVideoId (): string {
@@ -140,9 +176,7 @@ class Play extends Component<Props, void> {
   }
 
   shouldShowVideoOverlay (): boolean {
-    const { isPlaying, isAttemptingPlay } = this.props
-
-    return !isPlaying && !isAttemptingPlay
+    return this.state.showingControls
   }
 
   render () {
@@ -150,7 +184,7 @@ class Play extends Component<Props, void> {
       <Wrapper>
         <PlayerWrapper>
           {this.shouldShowVideoOverlay() && (
-            <OverlayWrapper>
+            <OverlayWrapper onMouseEnter={this.onOverlayMouseEnter}>
               <VideoOverlay {...this.props} onClick={this.onOverlayClick} />
             </OverlayWrapper>
           )}
