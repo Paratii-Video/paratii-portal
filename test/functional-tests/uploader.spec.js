@@ -2,7 +2,7 @@ import { assert } from 'chai'
 import { paratii } from './test-utils/helpers'
 
 describe('Uploader Tool', function () {
-  it('should have basic flow in place', async function () {
+  it('should have basic flow in place @watch', async function () {
     // see https://github.com/Paratii-Video/paratii-portal/issues/8
     const video = {
       title: 'Some title',
@@ -16,13 +16,13 @@ describe('Uploader Tool', function () {
     browser.chooseFile('input[type="file"]', fileToUpload)
 
     // now we should see a form to fill in
-    browser.waitForExist('#video-title')
     // the form should contain the id of our video
     var videoId = browser.getValue('input#video-id')
     assert.isOk(videoId)
     assert.isOk(videoId.length > 8)
-    browser.setValue('#video-title', video.title)
-    browser.setValue('#video-description', video.description)
+    // set title and video in the form
+    browser.setValue('#input-video-title', video.title)
+    browser.setValue('#input-video-description', video.description)
     // submit the form
     browser.click('#video-submit')
     // we now should be on the status screen
