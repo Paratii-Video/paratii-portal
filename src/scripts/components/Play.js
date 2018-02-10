@@ -59,6 +59,8 @@ const OverlayWrapper = styled.div`
 class Play extends Component<Props, State> {
   player: ClapprPlayer
   onOverlayClick: () => void
+  lastMouseMove: number
+  playerHideTimeout: number
 
   constructor (props: Props) {
     super(props)
@@ -66,6 +68,9 @@ class Play extends Component<Props, State> {
     this.state = {
       mouseInOverlay: false
     }
+
+    this.lastMouseMove = 0
+    this.playerHideTimeout = 0
 
     this.onOverlayClick = this.onOverlayClick.bind(this)
 
@@ -77,6 +82,7 @@ class Play extends Component<Props, State> {
     if (this.player) {
       this.player.on(Events.PLAYER_PLAY, () => {
         togglePlayPause(true)
+        this.maybeHideControls()
       })
       this.player.on(Events.PLAYER_PAUSE, () => {
         togglePlayPause(false)
@@ -125,11 +131,27 @@ class Play extends Component<Props, State> {
     }
   }
 
+  onMouseMove = (): void => {
+    this.lastMouseMove = Date.now()
+    clearTimeout(this.playerHideTimeout)
+    this.maybeHideControls()
+  }
+
   onOverlayMouseLeave = (): void => {
     if (this.player) {
       this.player.core.mediaControl.resetUserKeepVisible()
       this.player.core.mediaControl.hide()
+      clearTimeout(this.playerHideTimeout)
     }
+  }
+
+  maybeHideControls = (): void => {
+    this.playerHideTimeout = setTimeout(() => {
+      if (Date.now() - this.lastMouseMove > 2000) {
+        this.player.core.mediaControl.resetUserKeepVisible()
+        this.player.core.mediaControl.hide()
+      }
+    }, 2250)
   }
 
   getVideoId (): string {
@@ -194,6 +216,7 @@ class Play extends Component<Props, State> {
         <PlayerWrapper>
           {this.shouldShowVideoOverlay() && (
             <OverlayWrapper
+              onMouseMove={this.onMouseMove}
               onMouseEnter={this.onOverlayMouseEnter}
               onMouseLeave={this.onOverlayMouseLeave}
             >

@@ -56,7 +56,10 @@ export type ClapprPlayer = EventEmitter & {
     getCurrentPlayback: () => ClapprCore,
     getCurrentContainer: () => ClapprContainer,
     mediaControl: {
-      show: () => void
+      show: () => void,
+      hide: () => void,
+      setUserKeepVisible: () => void,
+      resetUserKeepVisible: () => void
     }
   },
   play: () => void
