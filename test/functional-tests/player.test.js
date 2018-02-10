@@ -85,7 +85,7 @@ describe('Player:', function () {
     )
   })
   describe('portal player', () => {
-    it('plays a video @watch', () => {
+    it('plays a video', () => {
       browser.url(`http://localhost:8080/play/${videoId}`)
       browser.waitAndClick('#video-overlay')
 

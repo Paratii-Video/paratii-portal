@@ -169,20 +169,20 @@ class VideoForm extends Component<Props, Object> {
               label="Title"
             />
             <Input
-              id="video-title"
               label="Title"
+              id="input-video-title"
               type="text"
               value={this.state.title}
               onChange={e => this.handleInputChange('title', e)}
               margin="0 0 30px"
             />
             <Textarea
-              id="video-description"
-              label="Description"
+              id="input-video-description"
               value={this.state.description}
+              onChange={e => this.handleInputChange('description', e)}
+              label="Description"
               rows="1"
               margin="0 0 30px"
-              onChange={e => this.handleInputChange('description', e)}
             />
             <RadioWrapper>
               <RadioTitle>Paid or free</RadioTitle>

@@ -7,7 +7,6 @@ import CreatePlayer from 'paratii-mediaplayer'
 import VideoRecord from 'records/VideoRecords'
 
 import VideoOverlay from 'components/VideoOverlay'
-import Debug from 'containers/DebugContainer'
 
 import type { ClapprPlayer } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
@@ -29,6 +28,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 0 0 100%;
 `
 
 const Player = styled.div`
@@ -40,7 +40,6 @@ const PlayerWrapper = styled.div`
   flex: 0 0 100%;
   width: 100%;
   position: relative;
-  height: 500px;
 `
 
 const OverlayWrapper = styled.div`
@@ -157,7 +156,6 @@ class Play extends Component<Props, void> {
           )}
           <Player id="player" />
         </PlayerWrapper>
-        <Debug />
       </Wrapper>
     )
   }

@@ -3,7 +3,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Route } from 'react-router-dom'
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
 import styled, { ThemeProvider } from 'styled-components'
 
 import { getRoot } from 'utils/AppUtils'
@@ -13,10 +13,16 @@ import { paratiiTheme } from 'constants/ApplicationConstants'
 
 import 'styles/embed/index.scss'
 
+import { bindActionCreators } from 'redux'
+
 import type { Match } from 'react-router-dom'
+import type { Dispatch } from 'redux'
+
+import { initializeApp } from 'actions/AppActions'
 
 type Props = {
-  match: Match
+  match: Match,
+  initializeApp: () => void
 }
 
 const store = createStore()
@@ -27,7 +33,17 @@ const Wrapper = styled.div`
   display: flex;
 `
 
+const mapDispatchToProps = (dispatch: Dispatch<*>): Object => ({
+  initializeApp: bindActionCreators(initializeApp, dispatch)
+})
+
 class EmbedApp extends React.Component<Props, void> {
+  constructor (props: Props) {
+    super(props)
+
+    this.props.initializeApp()
+  }
+
   render () {
     const { match } = this.props
 
@@ -45,10 +61,12 @@ class EmbedApp extends React.Component<Props, void> {
   }
 }
 
+const EmbedContainer = connect(undefined, mapDispatchToProps)(EmbedApp)
+
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <Route path="/" component={EmbedApp} />
+      <Route path="/" component={EmbedContainer} />
     </BrowserRouter>
   </Provider>,
   getRoot()

@@ -12,12 +12,9 @@ import type { RootState } from 'types/ApplicationTypes'
 
 import VideoList from './VideoListContainer'
 import VideoForm from './VideoFormContainer'
-import Debug from './DebugContainer'
 import UploadFile from './UploadFileContainer'
 
 import Card, { CardContainer } from 'components/structures/Card'
-
-import Hidden from 'components/foundations/Hidden'
 import Button from 'components/foundations/buttons/Button'
 
 type Props = {
@@ -66,9 +63,6 @@ class VideoManagerContainer extends Component<Props, void> {
           {videolist}
         </Card>
         {selectedVideo !== null ? <VideoForm /> : <UploadFile />}
-        <Hidden>
-          <Debug />
-        </Hidden>
       </CardContainer>
     )
   }
