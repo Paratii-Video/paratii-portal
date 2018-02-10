@@ -31,6 +31,7 @@ type Props = {
 const PortalPlayWrapper = styled.div`
   flex: 1 0 100%;
   display: flex;
+  max-height: 500px;
 `
 
 class App extends Component<Props, void> {

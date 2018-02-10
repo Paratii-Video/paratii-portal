@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 0 0 100%;
 `
 
 const Player = styled.div`
@@ -41,7 +42,6 @@ const PlayerWrapper = styled.div`
   flex: 0 0 100%;
   width: 100%;
   position: relative;
-  max-height: 500px;
 `
 
 const OverlayWrapper = styled.div`
