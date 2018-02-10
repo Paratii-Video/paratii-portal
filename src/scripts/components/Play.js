@@ -21,7 +21,9 @@ type Props = {
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
   video: ?VideoRecord,
-  isEmbed?: boolean
+  isEmbed?: boolean,
+  ethBalance: number,
+  ptiBalance: number
 }
 
 const Wrapper = styled.div`

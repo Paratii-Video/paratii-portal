@@ -8,7 +8,8 @@ import {
   LOGIN_REQUESTED,
   LOGIN_SUCCESS,
   LOGOUT,
-  SET_WALLET_DATA
+  SET_WALLET_DATA,
+  BALANCES_LOADED
 } from 'constants/ActionConstants'
 import paratii from 'utils/ParatiiLib'
 import { DEFAULT_PASSWORD } from 'constants/ParatiiLibConstants'
@@ -20,6 +21,7 @@ const loginRequested = createAction(LOGIN_REQUESTED)
 const loginSuccess = createAction(LOGIN_SUCCESS)
 const logoutAction = createAction(LOGOUT)
 const setWalletData = createAction(SET_WALLET_DATA)
+const balancesLoaded = createAction(BALANCES_LOADED)
 
 const sleep = ms => {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -38,6 +40,21 @@ export const login = (email: string, password: string) => (
 export const logout = () => (dispatch: Dispatch) => {
   Cookies.remove('email')
   dispatch(logoutAction())
+}
+
+export const loadBalances = () => (dispatch: Dispatch) => {
+  const address: string = paratii.config.account.address
+
+  if (address) {
+    paratii.eth.balanceOf(address).then(({ ETH, PTI }) => {
+      dispatch(
+        balancesLoaded({
+          ETH,
+          PTI
+        })
+      )
+    })
+  }
 }
 
 const setAndSyncWalletData = ({

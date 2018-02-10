@@ -3,15 +3,16 @@
 import { handleActions } from 'redux-actions'
 
 import { REQUEST_STATUS } from 'constants/ApplicationConstants'
-
-import type { Action } from 'types/ApplicationTypes'
 import {
   LOGIN_REQUESTED,
   LOGIN_SUCCESS,
   LOGOUT,
   SET_WALLET_DATA
 } from 'constants/ActionConstants'
-import UserRecord from 'records/UserRecords'
+import UserRecord, { Balances } from 'records/UserRecords'
+import { BALANCES_LOADED } from '../constants/ActionConstants'
+
+import type { Action } from 'types/ApplicationTypes'
 
 const reducer = {
   [LOGIN_REQUESTED]: (state: UserRecord): UserRecord => {
@@ -45,7 +46,18 @@ const reducer = {
     state.merge({
       walletKey,
       mnemonicKey
-    })
+    }),
+  [BALANCES_LOADED]: (
+    state: UserRecord,
+    { payload: { ETH, PTI } }
+  ): UserRecord =>
+    state.set(
+      'balances',
+      new Balances({
+        ETH,
+        PTI
+      })
+    )
 }
 
 export default handleActions(reducer, new UserRecord())
