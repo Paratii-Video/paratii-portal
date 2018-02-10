@@ -88,7 +88,7 @@ export type ParatiiLib = {
     balanceOf: (address: string, token: ?string) => Promise<Object>,
     web3: {
       utils: {
-        fromWei: (value: number, toUnit: ?string) => string
+        fromWei: (value: number | string, toUnit: ?string) => string
       }
     }
   },
