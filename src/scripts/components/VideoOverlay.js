@@ -136,7 +136,7 @@ class VideoOverlay extends Component<Props, State> {
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
       .profile
     return (
-      <Overlay id="video-overlay" onClick={onClick}>
+      <Overlay data-test-id="video-overlay" onClick={onClick}>
         <TopBar>
           <Title>{this.getVideoTitle()}</Title>
           <ButtonGroup hide={!!this.state.openPopover}>
