@@ -57,6 +57,8 @@ const OverlayWrapper = styled.div`
   cursor: pointer;
 `
 
+const HIDE_CONTROLS_THRESHOLD: number = 2000
+
 class Play extends Component<Props, State> {
   player: ClapprPlayer
   onOverlayClick: () => void
@@ -156,11 +158,11 @@ class Play extends Component<Props, State> {
 
   maybeHideControls = (): void => {
     this.playerHideTimeout = setTimeout(() => {
-      if (Date.now() - this.lastMouseMove > 2000) {
+      if (Date.now() - this.lastMouseMove > HIDE_CONTROLS_THRESHOLD) {
         this.player.core.mediaControl.resetUserKeepVisible()
         this.player.core.mediaControl.hide()
       }
-    }, 2250)
+    }, HIDE_CONTROLS_THRESHOLD + 250)
   }
 
   getVideoId (): string {
