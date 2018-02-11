@@ -87,7 +87,8 @@ describe('Player:', function () {
   describe('portal player', () => {
     it('plays a video', () => {
       browser.url(`http://localhost:8080/play/${videoId}`)
-      browser.waitAndClick('#video-overlay')
+      browser.waitAndClick('#player')
+      browser.waitAndClick('[data-test-id="video-overlay"]')
 
       browser.waitUntil(() => {
         return browser.execute(() => {
@@ -98,10 +99,12 @@ describe('Player:', function () {
     })
     it('shows the video title on the overlay', function () {
       browser.url(`http://localhost:8080/play/${videoId}`)
-      browser.waitForText('#video-overlay', 'Test 1')
+      browser.waitAndClick('#player')
+      browser.waitForText('[data-test-id="video-overlay"]', 'Test 1')
     })
     it('does not render a profile button', function () {
       browser.url(`http://localhost:8080/play/${videoId}`)
+      browser.waitAndClick('#player')
       browser.pause(250)
       assert.equal(
         browser.isExisting('[data-test-id="overlay-profile-button"]'),
@@ -113,7 +116,8 @@ describe('Player:', function () {
   describe('embedded player', () => {
     it('plays a video', () => {
       browser.url(`http://localhost:8080/embed/${videoId}`)
-      browser.waitAndClick('#video-overlay')
+      browser.waitAndClick('#player')
+      browser.waitAndClick('[data-test-id="video-overlay"]')
 
       browser.waitUntil(() => {
         return browser.execute(() => {
@@ -124,10 +128,12 @@ describe('Player:', function () {
     })
     it('shows the video title on the overlay', function () {
       browser.url(`http://localhost:8080/embed/${videoId}`)
-      browser.waitForText('#video-overlay', 'Test 1')
+      browser.waitAndClick('#player')
+      browser.waitForText('[data-test-id="video-overlay"]', 'Test 1')
     })
     it('renders a profile button', function () {
       browser.url(`http://localhost:8080/embed/${videoId}`)
+      browser.waitAndClick('#player')
       browser.waitForClickable('[data-test-id="overlay-profile-button"]')
     })
   })

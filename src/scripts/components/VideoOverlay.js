@@ -30,7 +30,7 @@ const Overlay = styled.div`
   display: flex;
   flex-direction: column;
   color: white;
-  background: rgba(0, 0, 0, 0.8);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   padding: ${overlayPadding};
   box-sizing: border-box;
 `
@@ -136,7 +136,7 @@ class VideoOverlay extends Component<Props, State> {
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
       .profile
     return (
-      <Overlay id="video-overlay" onClick={onClick}>
+      <Overlay data-test-id="video-overlay" onClick={onClick}>
         <TopBar>
           <Title>{this.getVideoTitle()}</Title>
           <ButtonGroup hide={!!this.state.openPopover}>
@@ -146,7 +146,7 @@ class VideoOverlay extends Component<Props, State> {
                   onClick={this.onProfileButtonClick}
                   onClose={this.closePopover}
                   popoverPortal={this.popoverWrapperRef}
-                  popoverOpen={true || openPopover === 'profile'}
+                  popoverOpen={openPopover === 'profile'}
                 />
               </ButtonWrapper>
             ) : null}
