@@ -19,7 +19,7 @@ const Wrapper = styled.div`
 const Title = styled.h3`
   color: ${props => props.theme.colors.VideoList.title};
   font-size: ${props => props.theme.fonts.video.list.title};
-  margin-bottom: 30px;
+  margin-bottom: 37px;
   padding: ${props => props.theme.sizes.card.padding};
   padding-bottom: 0;
 `
