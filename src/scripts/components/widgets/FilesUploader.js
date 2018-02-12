@@ -16,13 +16,24 @@ const StyleInput = css`
   width: 100%;
 `
 
+const Title = styled.h2`
+  color: ${props => props.theme.colors.MainCard.title.color};
+  font-size: ${props => props.theme.fonts.card.title};
+  left: 0;
+  margin-bottom: 30px;
+  padding: ${props => props.theme.sizes.card.padding};
+  position: absolute;
+  top: 0;
+  z-index: 2;
+`
+
 const InputFile = styled.input`
   ${StyleInput} cursor: pointer;
   left: 0;
   opacity: 0;
   position: absolute;
   top: 0;
-  z-index: 2;
+  z-index: 3;
 `
 
 const UploadCover = styled.div`
@@ -43,7 +54,7 @@ const UploadCover = styled.div`
 
 const UploadCoverIcon = styled.div`
   height: 130px;
-  margin: 0 0 20px 36px;
+  margin: 30px 0 20px 36px;
   transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
   width: 190px;
 
@@ -144,6 +155,7 @@ class FilesUploader extends Component<Props, void> {
           </FooterWrapper>
         }
       >
+        <Title>Upload video</Title>
         <InputFile
           type="file"
           onChange={this.onFileChosen}
