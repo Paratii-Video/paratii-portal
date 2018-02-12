@@ -35,11 +35,12 @@ const Main = styled.div`
   flex-direction: column;
   height: 100%;
   padding: ${props => (props.nopadding ? '' : props.theme.sizes.card.padding)};
+  position: relative;
   width: 100%;
 `
 
 const Title = styled.h2`
-  color: ${props => props.theme.colors.VideoList.title};
+  color: ${props => props.theme.colors.MainCard.title.color};
   font-size: ${props => props.theme.fonts.card.title};
   margin-bottom: 30px;
 `
