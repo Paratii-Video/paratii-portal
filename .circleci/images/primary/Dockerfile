@@ -5,19 +5,6 @@ MAINTAINER Leandro Barbosa <leandrobar93@gmail.com>
 WORKDIR /build
 
 RUN yum clean all
-<<<<<<< HEAD
-
-RUN yum -y install centos-release-scl
-RUN yum -y install epel-release curl wget git gcc gcc-c++ make
-RUN yum -y install openssl libssl-devel libudev-devel openssl-devel
-RUN curl --silent --location https://rpm.nodesource.com/setup_9.x | bash -
-RUN yum -y install nodejs
-RUN yum -y install chromium
-
-# openssl 1.1.0
-RUN yum groups mark convert
-RUN yum groups mark convert "Development Tools"
-RUN yum groupinstall -y "Development Tools"
 
 RUN yum -y install centos-release-scl
 RUN yum -y install epel-release curl wget git gcc gcc-c++ make
@@ -48,11 +35,6 @@ RUN yum -y install chromium
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
 RUN yum -y install ./google-chrome-stable_current_*.rpm
 RUN export CHROME_BIN=/usr/bin/google-chrome
-
-# chromedriver
-RUN rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/c/chromedriver-61.0.3163.100-1.el7.x86_64.rpm
-RUN yum install -y Xvfb
-RUN yum install -y chromedriver
 
 # phatomjs
 
