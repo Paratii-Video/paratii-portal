@@ -212,7 +212,8 @@ class Play extends Component<Props, State> {
       selector: '#player',
       source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
       mimeType: 'video/mp4',
-      ipfsHash: ipfsHash
+      ipfsHash: ipfsHash,
+      autoPlay: true
     })
     this.bindClapprEvents()
   }
