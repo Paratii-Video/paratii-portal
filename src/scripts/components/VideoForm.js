@@ -178,7 +178,11 @@ class VideoForm extends Component<Props, Object> {
     const ipfsHash = video.ipfsHash
     let thumbImage = ''
     if (thumbImages !== undefined) {
-      thumbImage = thumbImages.get(1)
+      thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${thumbImages.get(
+        1
+      )}`
+    } else {
+      thumbImage = 'http://paratii.video/public/images/paratii-src.png'
     }
     const state = JSON.stringify(this.state, null, 2)
     return (
@@ -237,10 +241,7 @@ class VideoForm extends Component<Props, Object> {
           </Form>
           <VideoFormInfos>
             <VideoMedia>
-              <VideoImage
-                data-src={thumbImage}
-                src={`http://paratii.video/public/images/paratii-src.png`}
-              />
+              <VideoImage data-src={thumbImage} src={thumbImage} />
               <VideoMediaTime>
                 <VideoMediaTimeText>28:26</VideoMediaTimeText>
               </VideoMediaTime>
