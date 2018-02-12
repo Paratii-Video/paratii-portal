@@ -8,6 +8,7 @@ import debounce from 'lodash.debounce'
 
 import VideoRecord from 'records/VideoRecords'
 import VideoOverlay from 'components/VideoOverlay'
+import NotFound from './pages/NotFound'
 
 import type { ClapprPlayer } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
@@ -69,7 +70,8 @@ class Play extends Component<Props, State> {
     super(props)
 
     this.state = {
-      mouseInOverlay: false
+      mouseInOverlay: false,
+      videoNotFound: false
     }
 
     this.lastMouseMove = 0
@@ -177,6 +179,7 @@ class Play extends Component<Props, State> {
       if (this.props.video) {
         this.createPlayer(this.props.video.ipfsHash)
       } else {
+        console.log('fecth')
         this.props.fetchVideo(videoId)
       }
     } else {
@@ -187,7 +190,9 @@ class Play extends Component<Props, State> {
   componentWillReceiveProps (nextProps: Props): void {
     const { isAttemptingPlay } = this.props
     let ipfsHash = ''
-    if (nextProps.video) {
+    console.log(nextProps.video.toJS())
+    const fecthStatus = nextProps.video.getIn(['fecthStatus']).name
+    if (nextProps.video && fecthStatus === 'success') {
       if (
         this.props.video == null ||
         nextProps.video.ipfsHash !== this.props.video.ipfsHash
@@ -195,6 +200,8 @@ class Play extends Component<Props, State> {
         ipfsHash = nextProps.video.ipfsHash
         this.createPlayer(ipfsHash)
       }
+    } else if (fecthStatus === 'failed') {
+      this.setState({ videoNotFound: true })
     }
 
     if (
@@ -223,22 +230,26 @@ class Play extends Component<Props, State> {
   }
 
   render () {
-    return (
-      <Wrapper>
-        <PlayerWrapper>
-          {this.shouldShowVideoOverlay() && (
-            <OverlayWrapper
-              onMouseMove={this.onMouseMove}
-              onMouseEnter={this.onOverlayMouseEnter}
-              onMouseLeave={this.onOverlayMouseLeave}
-            >
-              <VideoOverlay {...this.props} onClick={this.onOverlayClick} />
-            </OverlayWrapper>
-          )}
-          <Player id="player" />
-        </PlayerWrapper>
-      </Wrapper>
-    )
+    if (this.state.videoNotFound === true) {
+      return <NotFound />
+    } else {
+      return (
+        <Wrapper>
+          <PlayerWrapper>
+            {this.shouldShowVideoOverlay() && (
+              <OverlayWrapper
+                onMouseMove={this.onMouseMove}
+                onMouseEnter={this.onOverlayMouseEnter}
+                onMouseLeave={this.onOverlayMouseLeave}
+              >
+                <VideoOverlay {...this.props} onClick={this.onOverlayClick} />
+              </OverlayWrapper>
+            )}
+            <Player id="player" />
+          </PlayerWrapper>
+        </Wrapper>
+      )
+    }
   }
 }
 
