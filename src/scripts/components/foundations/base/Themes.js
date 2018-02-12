@@ -65,6 +65,13 @@ const Themes = {
         color: Colors.purple
       }
     },
+    VideoList: {
+      background: Colors.blackLight,
+      title: Colors.purple,
+      filename: Colors.white,
+      status: Colors.grayLight,
+      done: Colors.purple
+    },
     VideoForm: {
       header: {
         border: Colors.grayMedium,

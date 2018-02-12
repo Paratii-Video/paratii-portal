@@ -17,9 +17,10 @@ export const CardContainer = styled.div`
 `
 
 export const CardWrapper = styled.div`
-  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
   margin: ${props => props.margin};
-  min-width: ${props => (props.full ? '' : '388px')};
+  min-width: ${props => (props.full ? '388px' : '388px')};
   max-width: ${props => (props.full ? '' : '33%')};
   overflow: hidden;
   position: relative;
@@ -28,12 +29,17 @@ export const CardWrapper = styled.div`
 const Main = styled.div`
   background-color: ${props => props.theme.colors.MainCard.background};
   color: ${props => props.theme.colors.MainCard.color};
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100%;
   padding: ${props => (props.nopadding ? '' : props.theme.sizes.card.padding)};
   width: 100%;
 `
 
 const Title = styled.h2`
-  font-size: ${props => props.theme.fonts.title.small};
+  color: ${props => props.theme.colors.VideoList.title};
+  font-size: ${props => props.theme.fonts.card.title};
   margin-bottom: 30px;
 `
 
@@ -42,6 +48,7 @@ const Footer = styled.div`
   background-color: ${props => props.theme.colors.MainCard.footer.background};
   color: ${props => props.theme.colors.MainCard.footer.color};
   display: flex;
+  flex: 0 0 auto;
   flex-direction: column;
   padding: ${props => props.theme.sizes.card.padding};
   text-align: right;

@@ -15,6 +15,8 @@ import VideoForm from './VideoFormContainer'
 import UploadFile from './UploadFileContainer'
 
 import Card, { CardContainer } from 'components/structures/Card'
+import Button from 'components/foundations/buttons/Button'
+import PTIGuide from 'components/widgets/PTIGuide'
 
 type Props = {
   videos: Map<string, VideoRecord>,
@@ -50,8 +52,19 @@ class VideoManagerContainer extends Component<Props, void> {
 
     return (
       <CardContainer>
-        <Card margin="0 25px 0 0">{videolist}</Card>
+        <Card
+          margin="0 25px 0 0"
+          nopadding
+          footer={
+            <Button onClick={() => this.onVideoListItemClicked(null)}>
+              Add more videos
+            </Button>
+          }
+        >
+          {videolist}
+        </Card>
         {selectedVideo !== null ? <VideoForm /> : <UploadFile />}
+        {selectedVideo === null && <PTIGuide margin="0 0 0 25px" />}
       </CardContainer>
     )
   }

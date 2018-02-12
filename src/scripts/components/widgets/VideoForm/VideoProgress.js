@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import VideoProgressBar from 'components/widgets/VideoForm/VideoProgressBar'
 
 type Props = {
   progress: String,
@@ -40,39 +41,6 @@ const VideoProressSvg = styled.svg`
   transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
   width: 14px;
 `
-const VideoProgressBarWrapper = styled.div`
-  background-color: ${props =>
-    props.theme.colors.VideoForm.info.progress.background};
-  height: 1px;
-  position: relative;
-  width: 100%;
-`
-const VideoProgressBar = styled.span`
-  background: linear-gradient(
-    to right,
-    ${props => props.theme.colors.VideoForm.info.progress.barFrom} 0%,
-    ${props => props.theme.colors.VideoForm.info.progress.barTo} 100%
-  );
-  height: 100%;
-  left: -100%;
-  position: absolute;
-  transform: translate3d(
-    ${props => (props.progress ? props.progress : '0%')},
-    0,
-    0
-  );
-  transition: transform 0.1s ${props => props.theme.animation.ease.smooth};
-  width: 100%;
-`
-
-const VideoProgressPercentual = styled.span`
-  bottom: -5px;
-  color: ${props => props.theme.colors.VideoForm.info.progress.color};
-  font-size: ${props => props.theme.fonts.video.info.percentual};
-  position: absolute;
-  right: 0;
-  transform: translate3d(${props => (props.end ? '0%' : '50%')}, 100%, 0);
-`
 
 class VideoProgress extends Component<Props, void> {
   render () {
@@ -89,13 +57,8 @@ class VideoProgress extends Component<Props, void> {
             </VideoProressSvg>
           </VideoProgressIcon>
         </VideoProgressTitle>
-        <VideoProgressBarWrapper>
-          <VideoProgressBar progress={this.props.progress}>
-            <VideoProgressPercentual end={this.props.progress === '100%'}>
-              {this.props.progress}
-            </VideoProgressPercentual>
-          </VideoProgressBar>
-        </VideoProgressBarWrapper>
+
+        <VideoProgressBar progress={this.props.progress} />
       </VideoProgressWrapper>
     )
   }

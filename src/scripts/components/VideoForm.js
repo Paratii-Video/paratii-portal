@@ -53,7 +53,6 @@ const Form = styled.div`
 `
 
 const VideoFormInfos = styled.div`
-  overflow: hidden;
   flex: 1 1 584px;
 `
 
@@ -108,7 +107,6 @@ class VideoForm extends Component<Props, Object> {
   constructor (props: Props) {
     super(props)
     this.state = new VideoRecord(this.props.selectedVideo)
-    console.log(this.state)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -151,9 +149,7 @@ class VideoForm extends Component<Props, Object> {
     let thumbImage = ''
     if (thumbImages !== undefined) {
       thumbImage = thumbImages.get(1)
-      console.log(thumbImage)
     }
-    // console.log(this.props.selectedVideo.transcodingStatus)
     const state = JSON.stringify(this.state, null, 2)
     return (
       <Card full>
@@ -173,24 +169,24 @@ class VideoForm extends Component<Props, Object> {
               label="Title"
             />
             <Input
+              label="Title"
               id="input-video-title"
               type="text"
-              margin="0 0 30px"
-              onChange={e => this.handleInputChange('title', e)}
               value={this.state.title}
-              label="Title"
+              onChange={e => this.handleInputChange('title', e)}
+              margin="0 0 30px"
             />
             <Textarea
               id="input-video-description"
               value={this.state.description}
               onChange={e => this.handleInputChange('description', e)}
               label="Description"
-              margin="0 0 30px"
               rows="1"
+              margin="0 0 30px"
             />
             <RadioWrapper>
               <RadioTitle>Paid or free</RadioTitle>
-              <RadioCheck name="content-type" value="free" checked>
+              <RadioCheck name="content-type" value="free">
                 Free content
               </RadioCheck>
               <RadioCheck name="content-type" value="paid" nomargin disabled>
@@ -212,6 +208,7 @@ class VideoForm extends Component<Props, Object> {
           <VideoFormInfos>
             <VideoMedia>
               <VideoImage
+                data-src={thumbImage}
                 src={`http://paratii.video/public/images/paratii-src.png`}
               />
               <VideoMediaTime>
