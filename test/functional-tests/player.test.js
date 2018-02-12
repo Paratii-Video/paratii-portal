@@ -107,17 +107,11 @@ describe('Player:', function () {
   describe('embedded player', () => {
     it('plays a video automatically', () => {
       browser.url(`http://localhost:8080/embed/${videoId}`)
-      browser.waitUntil(() => {
-        return browser.execute(() => {
-          const video = document.querySelector('video')
-          return video.currentTime > 0
-        }).value
-      })
+      browser.waitUntilVideoIsPlaying()
     })
     it('shows the video title on the overlay', function () {
       browser.url(`http://localhost:8080/embed/${videoId}`)
       browser.waitUntilVideoIsPlaying()
-
       browser.waitForText('[data-test-id="video-overlay"]', 'Test 1')
     })
     it('renders a profile button', function () {

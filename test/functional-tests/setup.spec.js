@@ -101,7 +101,7 @@ before(async function (done) {
   })
   browser.addCommand('waitUntilVideoIsPlaying', function (
     selector = 'video',
-    timeout
+    timeout = 20000
   ) {
     this.waitUntil(
       () => {
