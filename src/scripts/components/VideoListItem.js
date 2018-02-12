@@ -72,6 +72,11 @@ const Bar = styled.div`
 class UploadListItem extends Component<Props, void> {
   constructor (props) {
     super(props)
+    this.state = {
+      uploadProgress: 0,
+      transcodingProgress: 0,
+      totalProgress: 0
+    }
     this.handleClick = this.handleClick.bind(this)
   }
 
@@ -79,12 +84,41 @@ class UploadListItem extends Component<Props, void> {
     this.props.onClick(this.props.video.id)
   }
 
+  componentWillReceiveProps (nextProps: Props): void {
+    const video = nextProps.video
+
+    if (video.getIn(['uploadStatus', 'name']) === 'running') {
+      const progress = video.getIn(['uploadStatus', 'data', 'progress'])
+      this.setState({ uploadProgress: progress })
+    } else if (
+      video.getIn(['uploadStatus', 'name']) === 'uploaded to transcoder node'
+    ) {
+      this.setState({ uploadProgress: 100 })
+    }
+
+    if (video.getIn(['transcodingStatus', 'name']) === 'progress') {
+      const progress = video.getIn(['transcodingStatus', 'data', 'progress'])
+      this.setState({ transcodingProgress: progress })
+    } else if (video.getIn(['transcodingStatus', 'name']) === 'success') {
+      this.setState({ transcodingProgress: 100 })
+    }
+
+    this.setState({
+      totalProgress: Math.round(
+        (this.state.uploadProgress + this.state.transcodingProgress) / 2
+      )
+    })
+  }
+
   render () {
     const item = this.props.video
-    let progress = 0
-    if (item.getIn(['uploadStatus', 'name']) === 'running') {
-      progress = item.getIn(['uploadStatus', 'data', 'progress'])
-    }
+    // let progress
+    // if (item.getIn(['uploadStatus', 'name']) === 'running') {
+    //   const progress = item.getIn(['uploadStatus', 'data', 'progress'])
+    //   this.setState({ uploadProgress: progress })
+    //   console.log(this.state)
+    // }
+
     let linkToVideo = ''
     // TODO; find out why getIn(['blockchainStatus', 'name']) is undefined
     if (
@@ -104,8 +138,8 @@ class UploadListItem extends Component<Props, void> {
       <ListItem onClick={this.handleClick} id="video-list-item-{item.id}">
         <ListItemWrapper>
           <ListItemFileName>{item.filename}</ListItemFileName>
-          <ListItemStatus done={progress === 0}>
-            {item.uploadStatus.name} - ({progress}%)
+          <ListItemStatus done={this.state.uploadProgress === 100}>
+            {item.uploadStatus.name} - ({this.state.uploadProgress}%)
           </ListItemStatus>
           <ListItemStatus>{item.blockchainStatus.name}</ListItemStatus>
           <ListItemStatus>
@@ -114,7 +148,10 @@ class UploadListItem extends Component<Props, void> {
           <ListItemStatus>{linkToVideo}</ListItemStatus>
 
           <Bar>
-            <VideoProgressBar progress={'55%'} nopercentual />
+            <VideoProgressBar
+              progress={this.state.totalProgress + '%'}
+              nopercentual
+            />
           </Bar>
         </ListItemWrapper>
       </ListItem>

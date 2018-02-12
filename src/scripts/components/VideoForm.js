@@ -106,7 +106,12 @@ class VideoForm extends Component<Props, Object> {
 
   constructor (props: Props) {
     super(props)
-    this.state = new VideoRecord(this.props.selectedVideo)
+    this.state = {
+      video: new VideoRecord(this.props.selectedVideo),
+      uploadProgress: 0,
+      transcodingProgress: 0,
+      totalProgress: 0
+    }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -117,6 +122,30 @@ class VideoForm extends Component<Props, Object> {
       id: nextProps.selectedVideo.id,
       title: nextProps.selectedVideo.title,
       description: nextProps.selectedVideo.description
+    })
+
+    const video = nextProps.selectedVideo
+
+    if (video.getIn(['uploadStatus', 'name']) === 'running') {
+      const progress = video.getIn(['uploadStatus', 'data', 'progress'])
+      this.setState({ uploadProgress: progress })
+    } else if (
+      video.getIn(['uploadStatus', 'name']) === 'uploaded to transcoder node'
+    ) {
+      this.setState({ uploadProgress: 100 })
+    }
+
+    if (video.getIn(['transcodingStatus', 'name']) === 'progress') {
+      const progress = video.getIn(['transcodingStatus', 'data', 'progress'])
+      this.setState({ transcodingProgress: progress })
+    } else if (video.getIn(['transcodingStatus', 'name']) === 'success') {
+      this.setState({ transcodingProgress: 100 })
+    }
+
+    this.setState({
+      totalProgress: Math.round(
+        (this.state.uploadProgress + this.state.transcodingProgress) / 2
+      )
     })
   }
 
@@ -138,7 +167,8 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     const video = this.props.selectedVideo
-    const progressUpdate = video.getIn(['uploadStatus', 'data', 'progress'])
+    // const uploadProgress = video.getIn(['uploadStatus', 'data', 'progress'])
+    // const transcodingProgress = video.getIn(['transcodingStatus', 'data', 'progress'])
     const thumbImages = video.getIn([
       'transcodingStatus',
       'data',
@@ -215,10 +245,16 @@ class VideoForm extends Component<Props, Object> {
                 <VideoMediaTimeText>28:26</VideoMediaTimeText>
               </VideoMediaTime>
             </VideoMedia>
-            <VideoProgress progress={progressUpdate + '%'} marginBottom>
+            <VideoProgress
+              progress={this.state.uploadProgress + '%'}
+              marginBottom
+            >
               Upload
             </VideoProgress>
-            <VideoProgress progress="45%" marginBottom>
+            <VideoProgress
+              progress={this.state.transcodingProgress + '%'}
+              marginBottom
+            >
               Transcoding
             </VideoProgress>
 
