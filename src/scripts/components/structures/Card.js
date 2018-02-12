@@ -20,7 +20,7 @@ export const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: ${props => props.margin};
-  min-width: ${props => (props.full ? '388px' : '388px')};
+  min-width: 388px;
   max-width: ${props => (props.full ? '' : '33%')};
   overflow: hidden;
   position: relative;
@@ -42,7 +42,7 @@ const Main = styled.div`
 const Title = styled.h2`
   color: ${props => props.theme.colors.MainCard.title.color};
   font-size: ${props => props.theme.fonts.card.title};
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 `
 
 const Footer = styled.div`
