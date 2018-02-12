@@ -48,6 +48,9 @@ describe('Uploader Tool', function () {
       }
     }
     browser.waitUntil(getVideoInfoFromBlockchain)
+    // Check if video title has been saved
+    const inputTitle = browser.getValue('#input-video-title')
+    assert.equal(inputTitle, video.title)
     const videoInfoFromBlockchain = await getVideoInfoFromBlockchain()
     assert.isOk(videoInfoFromBlockchain)
     assert.equal(videoInfoFromBlockchain.owner, paratii.config.account.address)
@@ -57,6 +60,8 @@ describe('Uploader Tool', function () {
     await browser.waitForExist(`a[href="/play/${videoId}"]`)
     await browser.click(`a[href="/play/${videoId}"]`)
   })
+
+  it('', function () {})
 
   it.skip('cancel upload should work [but is not yet]', function () {
     // start uploading a file
