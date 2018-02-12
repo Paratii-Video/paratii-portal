@@ -1,9 +1,12 @@
 /* @flow */
 
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import VideoRecord from 'records/VideoRecords'
+import { getIsPlaying } from 'selectors/index'
+import IconButton from 'components/foundations/buttons/IconButton'
 
 import type { Match } from 'react-router-dom'
 
@@ -11,7 +14,9 @@ type Props = {
   video: ?VideoRecord,
   match: Match,
   isEmbed?: boolean,
-  onClick: (e: Object) => void
+  isPlaying: boolean,
+  onClick: (e: Object) => void,
+  togglePlayPause: () => void
 }
 
 type State = {
@@ -31,13 +36,14 @@ const Overlay = styled.div`
   flex-direction: column;
   color: white;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
-  padding: ${overlayPadding};
   box-sizing: border-box;
 `
 
-const TopBar = styled.div`
+const VideoInfo = styled.div`
   display: flex;
   flex-direction: row;
+  flex: 1 0 0;
+  padding: ${overlayPadding};
 `
 
 const Title = styled.div`
@@ -66,6 +72,21 @@ const PopoverWrapper = styled.div`
   height: 110px;
   display: ${props => (props.open ? 'block' : 'none')};
   cursor: default;
+`
+
+const Controls = styled.div`
+  flex: 0 0 50px;
+  display: flex;
+  flex-direction: row;
+  background-color: blue;
+  width: 100%;
+  align-items: center;
+  padding: 0 10px;
+`
+
+const ControlButtonWrapper = styled.div`
+  width: 25px;
+  height: 25px;
 `
 
 class VideoOverlay extends Component<Props, State> {
@@ -131,13 +152,13 @@ class VideoOverlay extends Component<Props, State> {
   }
 
   render () {
-    const { onClick } = this.props
+    const { onClick, isPlaying, togglePlayPause } = this.props
     const { openPopover } = this.state
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
       .profile
     return (
       <Overlay data-test-id="video-overlay" onClick={onClick}>
-        <TopBar>
+        <VideoInfo>
           <Title>{this.getVideoTitle()}</Title>
           <ButtonGroup hide={!!this.state.openPopover}>
             {ProfileButton ? (
@@ -155,10 +176,24 @@ class VideoOverlay extends Component<Props, State> {
             open={!!openPopover}
             innerRef={this.popoverWrapperRefCallback}
           />
-        </TopBar>
+        </VideoInfo>
+        <Controls>
+          <ControlButtonWrapper>
+            <IconButton
+              icon={`/assets/img/${isPlaying ? 'pause-icon' : 'play-icon'}.svg`}
+              onClick={togglePlayPause}
+            />
+          </ControlButtonWrapper>
+        </Controls>
       </Overlay>
     )
   }
 }
 
-export default VideoOverlay
+const mapStateToProps = state => ({
+  isPlaying: getIsPlaying(state)
+})
+
+const mapDispatchToProps = dispatch => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(VideoOverlay)

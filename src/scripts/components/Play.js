@@ -25,7 +25,8 @@ type Props = {
 }
 
 type State = {
-  mouseInOverlay: boolean
+  mouseInOverlay: boolean,
+  shouldShowVideoOverlay: boolean
 }
 
 const Wrapper = styled.div`
@@ -39,6 +40,7 @@ const Wrapper = styled.div`
 const Player = styled.div`
   width: 100%;
   height: 100%;
+  pointer-events: none;
 `
 
 const PlayerWrapper = styled.div`
@@ -52,7 +54,7 @@ const OverlayWrapper = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: calc(100% - 50px);
+  height: 100%;
   z-index: 10;
   cursor: pointer;
 `
@@ -69,13 +71,14 @@ class Play extends Component<Props, State> {
     super(props)
 
     this.state = {
-      mouseInOverlay: false
+      mouseInOverlay: false,
+      shouldShowVideoOverlay: false
     }
 
     this.lastMouseMove = 0
     this.playerHideTimeout = 0
 
-    this.onOverlayClick = this.onOverlayClick.bind(this)
+    // this.onOverlayClick = this.onOverlayClick.bind(this)
 
     this.props.setSelectedVideo({ id: this.getVideoId() })
   }
@@ -85,7 +88,6 @@ class Play extends Component<Props, State> {
     if (this.player) {
       this.player.on(Events.PLAYER_PLAY, () => {
         togglePlayPause(true)
-        this.maybeHideControls()
       })
       this.player.on(Events.PLAYER_PAUSE, () => {
         togglePlayPause(false)
@@ -94,73 +96,68 @@ class Play extends Component<Props, State> {
       if (playback) {
         playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
       }
-
-      const container = this.player.core.getCurrentContainer()
-      if (container) {
-        container.on(Events.CONTAINER_MEDIACONTROL_HIDE, () => {
-          this.setState((prevState: State) => {
-            if (prevState.mouseInOverlay) {
-              return {
-                mouseInOverlay: false
-              }
-            }
-            return {}
-          })
-        })
-        container.on(Events.CONTAINER_MEDIACONTROL_SHOW, () => {
-          this.setState((prevState: State) => {
-            if (!prevState.mouseInOverlay) {
-              return {
-                mouseInOverlay: true
-              }
-            }
-            return {}
-          })
-        })
-      }
     }
   }
 
   onOverlayClick (): void {
     if (this.player) {
-      if (this.player.isPlaying()) {
-        this.player.pause()
-      } else {
-        this.player.play()
-      }
+      this.togglePlayPause()
     }
   }
 
-  onOverlayMouseEnter = (): void => {
+  onMouseEnter = (): void => {
     if (this.player) {
-      this.player.core.mediaControl.show()
-      this.player.core.mediaControl.setUserKeepVisible()
+      clearTimeout(this.playerHideTimeout)
+      this.setState({
+        shouldShowVideoOverlay: true
+      })
     }
+  }
+
+  showControls = (): void => {
+    clearTimeout(this.playerHideTimeout)
+    this.setState((prevState: State) => {
+      if (!prevState.shouldShowVideoOverlay) {
+        return {
+          shouldShowVideoOverlay: true
+        }
+      }
+    })
+    this.playerHideTimeout = setTimeout(() => {
+      this.setState((prevState: State) => {
+        if (prevState.shouldShowVideoOverlay) {
+          return {
+            shouldShowVideoOverlay: false
+          }
+        }
+      })
+    }, 2000)
   }
 
   onMouseMove = debounce(
     (): void => {
       this.lastMouseMove = Date.now()
-      clearTimeout(this.playerHideTimeout)
-      this.maybeHideControls()
+      this.showControls()
     },
     150,
     { leading: true }
   )
 
-  onOverlayMouseLeave = (): void => {
+  onMouseLeave = (): void => {
     if (this.player) {
-      this.player.core.mediaControl.resetUserKeepVisible()
-      this.player.core.mediaControl.hide()
       clearTimeout(this.playerHideTimeout)
+      console.log('leaving hiding')
+      this.playerHideTimeout = setTimeout(() => {
+        this.setState({
+          shouldShowVideoOverlay: false
+        })
+      }, 500)
     }
   }
 
   maybeHideControls = (): void => {
     this.playerHideTimeout = setTimeout(() => {
       if (Date.now() - this.lastMouseMove > HIDE_CONTROLS_THRESHOLD) {
-        this.player.core.mediaControl.resetUserKeepVisible()
-        this.player.core.mediaControl.hide()
       }
     }, HIDE_CONTROLS_THRESHOLD + 250)
   }
@@ -185,7 +182,7 @@ class Play extends Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    const { isAttemptingPlay } = this.props
+    const { isPlaying } = this.props
     let ipfsHash = ''
     if (nextProps.video) {
       if (
@@ -198,12 +195,12 @@ class Play extends Component<Props, State> {
     }
 
     if (
-      nextProps.isAttemptingPlay &&
-      nextProps.isAttemptingPlay !== isAttemptingPlay
+      this.player &&
+      nextProps.isPlaying &&
+      nextProps.isPlaying !== isPlaying &&
+      nextProps.isPlaying !== this.player.isPlaying()
     ) {
-      if (this.player) {
-        this.player.play()
-      }
+      this.player.play()
     }
   }
 
@@ -218,6 +215,22 @@ class Play extends Component<Props, State> {
     this.bindClapprEvents()
   }
 
+  togglePlayPause = (): void => {
+    if (this.player) {
+      if (this.player.isPlaying()) {
+        this.player.pause()
+      } else {
+        this.player.play()
+      }
+    }
+  }
+
+  onPlayerClick = (e: Object): void => {
+    clearTimeout(this.playerHideTimeout)
+    this.togglePlayPause()
+    this.showControls()
+  }
+
   shouldShowVideoOverlay (): boolean {
     return this.state.mouseInOverlay
   }
@@ -225,14 +238,23 @@ class Play extends Component<Props, State> {
   render () {
     return (
       <Wrapper>
-        <PlayerWrapper>
-          {this.shouldShowVideoOverlay() && (
+        <PlayerWrapper
+          onClick={this.onPlayerClick}
+          onMouseEnter={this.onMouseEnter}
+          onMouseMove={
+            (!this.state.shouldShowVideoOverlay && this.onMouseMove) ||
+            undefined
+          }
+        >
+          {this.state.shouldShowVideoOverlay && (
             <OverlayWrapper
+              onMouseLeave={this.onMouseLeave}
               onMouseMove={this.onMouseMove}
-              onMouseEnter={this.onOverlayMouseEnter}
-              onMouseLeave={this.onOverlayMouseLeave}
             >
-              <VideoOverlay {...this.props} onClick={this.onOverlayClick} />
+              <VideoOverlay
+                {...this.props}
+                togglePlayPause={this.togglePlayPause}
+              />
             </OverlayWrapper>
           )}
           <Player id="player" />

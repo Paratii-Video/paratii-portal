@@ -7,11 +7,9 @@ export const _getIsAttemptingPlay = (state: Player): boolean =>
   state.get('isAttemptingPlay')
 
 class Player extends ImmutableRecord({
-  isPlaying: false,
-  isAttemptingPlay: false
+  isPlaying: false
 }) {
   isPlaying: boolean
-  isAttemptingPlay: boolean
 }
 
 export default Player
