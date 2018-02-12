@@ -4481,6 +4481,10 @@ es6-promise@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-2.3.0.tgz#96edb9f2fdb01995822b263dd8aadab6748181bc"
 
+es6-promise@^4.2.4:
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.4.tgz#dc4221c2b16518760bd8c39a52d8f356fc00ed29"
+
 es6-promise@~4.0.3:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.0.5.tgz#7882f30adde5b240ccfa7f7d78c548330951ae42"
@@ -6661,7 +6665,6 @@ history@^4.7.2:
     aegir "^11.0.2"
     gulp "^3.9.1"
     lodash "^4.17.4"
-    streamspeed "^1.1.0"
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
@@ -8005,7 +8008,7 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
-isomorphic-fetch@^2.1.1:
+isomorphic-fetch@^2.1.1, isomorphic-fetch@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
   dependencies:
@@ -10991,9 +10994,9 @@ parallel-transform@^1.1.0:
     inherits "^2.0.3"
     readable-stream "^2.1.5"
 
-"paratii-contracts@github:Paratii-Video/paratii-contracts#8db835572fb38f694dccf4268fb66ab69f346687":
+"paratii-contracts@github:Paratii-Video/paratii-contracts#eb606943fe7051aab0936e6b67a765806a8611e2":
   version "0.0.2"
-  resolved "https://codeload.github.com/Paratii-Video/paratii-contracts/tar.gz/8db835572fb38f694dccf4268fb66ab69f346687"
+  resolved "https://codeload.github.com/Paratii-Video/paratii-contracts/tar.gz/eb606943fe7051aab0936e6b67a765806a8611e2"
   dependencies:
     babel-cli "^6.26.0"
     default-options "^1.0.0"
@@ -11001,20 +11004,25 @@ parallel-transform@^1.1.0:
     web3 "^1.0.0-beta.27"
     zeppelin-solidity "^1.3.0"
 
-"paratii-lib@github:Paratii-Video/paratii-lib#81c49190fe66975329d30690e6297d5c617709b7":
+"paratii-lib@github:Paratii-Video/paratii-lib#11d576ecac029309513119c94ca2d4b62b2455ac":
   version "0.0.1"
-  resolved "https://codeload.github.com/Paratii-Video/paratii-lib/tar.gz/81c49190fe66975329d30690e6297d5c617709b7"
+  resolved "https://codeload.github.com/Paratii-Video/paratii-lib/tar.gz/11d576ecac029309513119c94ca2d4b62b2455ac"
   dependencies:
+    async "^2.6.0"
+    babel-plugin-transform-runtime "^6.23.0"
+    bitcore-lib "^0.15.0"
+    bitcore-mnemonic "^1.5.0"
     default-options "^1.0.0"
-    ipfs "github:ya7ya/js-ipfs#paratii/v0.27"
-    paratii-contracts "github:Paratii-Video/paratii-contracts#master"
-    paratii-protocol "github:ya7ya/paratii-protocol#master"
+    es6-promise "^4.2.4"
+    ipfs "github:Paratii-Video/js-ipfs#paratii/v0.27.1"
+    isomorphic-fetch "^2.2.1"
+    once "^1.4.0"
+    paratii-contracts "github:Paratii-Video/paratii-contracts#eb606943fe7051aab0936e6b67a765806a8611e2"
+    paratii-protocol "github:Paratii-Video/paratii-protocol#master"
     promisify-node "^0.4.0"
     pull-filereader "^1.0.1"
     stream-to-pull-stream "^1.7.2"
-    vimeo-downloader "^1.0.3"
-    web3 "^1.0.0-beta.24"
-    ytdl-core "^0.18.3"
+    web3 "^1.0.0-beta.29"
 
 paratii-mediaplayer@^1.0.4:
   version "1.0.4"
