@@ -32,6 +32,9 @@ const PortalPlayWrapper = styled.div`
   flex: 1 0 100%;
   display: flex;
   max-height: 500px;
+  max-width: 825px;
+  width: 100%;
+  margin: 0 auto;
 `
 
 class App extends Component<Props, void> {

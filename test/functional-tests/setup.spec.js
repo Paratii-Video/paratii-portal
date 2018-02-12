@@ -39,16 +39,6 @@ before(async function (done) {
     this.waitForEnabled(selector, timeout)
   })
 
-  browser.addCommand('waitUntilVideoIsPlaying', () => {
-    browser.waitUntil(
-      () =>
-        parseInt(browser.getAttribute('#video-player', 'currentTime'), 10) !==
-          0 &&
-        browser.getAttribute('#video-player', 'paused') !== 'true' &&
-        browser.getAttribute('#video-player', 'ended') !== 'true'
-    )
-  })
-
   browser.addCommand('waitUntilBuffered', () => {
     browser.waitUntil(
       () =>
@@ -107,6 +97,21 @@ before(async function (done) {
       },
       timeout,
       `Could not click on ${selector} (timeout: ${timeout}s)`
+    )
+  })
+  browser.addCommand('waitUntilVideoIsPlaying', function (
+    selector = 'video',
+    timeout = 20000
+  ) {
+    this.waitUntil(
+      () => {
+        return browser.execute(() => {
+          const video = document.querySelector('video')
+          return !!(video && video.currentTime > 0)
+        }).value
+      },
+      timeout,
+      `Video did not play (timeout: ${timeout}s`
     )
   })
   //   browser.addCommand('waitUntilRequestHasStatus', function (url, status = 200, method = 'GET', timeout) {
