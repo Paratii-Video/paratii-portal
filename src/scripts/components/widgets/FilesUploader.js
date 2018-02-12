@@ -12,7 +12,7 @@ type Props = {
   margin: String
 }
 const StyleInput = css`
-  height: 490px;
+  height: 100%;
   width: 100%;
 `
 

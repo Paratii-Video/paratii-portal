@@ -12,6 +12,12 @@ const Typography = {
     input: '0.8rem',
     helper: '0.7rem'
   },
+  card: {
+    title: '1.5rem',
+    strong: '1rem',
+    text: '0.8rem',
+    index: '0.7rem'
+  },
   video: {
     form: {
       title: '1rem',
@@ -38,9 +44,9 @@ const Typography = {
     small: '24px'
   },
   text: {
-    big: '24px',
-    main: '16px',
-    small: '12px'
+    big: '1.1rem',
+    main: '1rem',
+    small: '0.8rem'
   },
   popover: {
     title: '18px'

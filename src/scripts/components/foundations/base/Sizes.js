@@ -11,7 +11,7 @@ const Sizes = {
   },
   searchInputButton: '17px',
   card: {
-    padding: '47px 42px'
+    padding: '40px 42px'
   },
   mainInput: {
     height: '44px'

@@ -65,6 +65,13 @@ class MainSvg extends Component<Props, void> {
         <symbol id="icon-check" viewBox="0 0 18 18">
           <path d="M14.6 4L7 11.3 3.4 7.8 2 9.2 7 14l9-8.7z" />
         </symbol>
+        <symbol id="icon-arrow" viewBox="700.024 2440.317 7.969 18.332">
+          <path
+            data-name="Path 329"
+            d="M707.992 2449.566a.906.906 0 0 1-.239.639l-5.667 7.979a1.152 1.152 0 0 1-1.597.239 1.141 1.141 0 0 1-.239-1.6l5.268-7.34-5.268-7.343a1.152 1.152 0 0 1 .239-1.6 1.152 1.152 0 0 1 1.6.239l5.664 7.987a1.784 1.784 0 0 1 .239.8z"
+            fill="#fff"
+          />
+        </symbol>
       </svg>
     )
   }
