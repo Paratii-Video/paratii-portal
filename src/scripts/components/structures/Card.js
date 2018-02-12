@@ -24,6 +24,7 @@ export const CardWrapper = styled.div`
   max-width: ${props => (props.full ? '' : '33%')};
   overflow: hidden;
   position: relative;
+  flex: 1;
 `
 
 const Main = styled.div`
