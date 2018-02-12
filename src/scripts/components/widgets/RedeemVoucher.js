@@ -90,7 +90,7 @@ class RedeemVoucher extends Component<Props, void> {
               <stop offset="1" stopColor="#7d70ff" />
             </linearGradient>
           </defs>
-          <g data-name="Group 342">
+          <g>
             <path
               fill="#292e43"
               d="M-47.144 2001.697H67.209a10.923 10.923 0 0 1 10.891 10.891v96.2a10.923 10.923 0 0 1-10.891 10.891H-47.144a10.923 10.923 0 0 1-10.891-10.889v-96.2a10.923 10.923 0 0 1 10.891-10.893z"
