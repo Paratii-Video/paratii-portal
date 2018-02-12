@@ -201,6 +201,7 @@ class Play extends Component<Props, State> {
         this.createPlayer(ipfsHash)
       }
     } else if (fecthStatus === 'failed') {
+      // If video not exist we set in the component state
       this.setState({ videoNotFound: true })
     }
 
@@ -230,6 +231,7 @@ class Play extends Component<Props, State> {
   }
 
   render () {
+    // If video not exist it is set in the component state
     if (this.state.videoNotFound === true) {
       return <NotFound />
     } else {
