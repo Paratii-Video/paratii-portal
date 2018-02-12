@@ -14,7 +14,6 @@ export default styled.p`
     props.bold
       ? props.theme.fonts.weight.bold
       : props.theme.fonts.weight.regular};
-
   line-height: ${props => {
     if (props.big) {
       return '24px'
