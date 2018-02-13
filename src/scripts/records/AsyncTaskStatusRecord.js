@@ -1,13 +1,13 @@
 /* @flow */
 
-import { Map, Record as ImmutableRecord } from 'immutable'
+import Immutable from 'immutable'
 import type { AsyncTaskStatusName } from 'types/ApplicationTypes'
 
-class AsyncTaskStatusRecord extends ImmutableRecord({
+class AsyncTaskStatusRecord extends Immutable.Record({
   name: 'idle',
-  data: new Map()
+  data: Immutable.Map({})
 }) {
-  name: AsyncTaskStatusName;
-  data: typeof Map
+  name: AsyncTaskStatusName
+  data: Immutable.Map<string, string | number>
 }
 export default AsyncTaskStatusRecord

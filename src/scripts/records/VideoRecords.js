@@ -1,7 +1,7 @@
 /* @flow */
 
 import { Record as ImmutableRecord } from 'immutable'
-import AsyncTaskStatusRecord from './AsyncTaskStatusRecord'
+import AsyncTaskStatusRecord from 'records/AsyncTaskStatusRecord'
 
 class Video extends ImmutableRecord({
   description: '',
