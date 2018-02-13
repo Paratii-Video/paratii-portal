@@ -5,7 +5,7 @@ const fs = require('fs')
 const Promise = require('bluebird')
 const path = require('path')
 
-describe('Player:', function () {
+describe('🎥 Player:', function () {
   const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
   const videoId = 'foo'
 

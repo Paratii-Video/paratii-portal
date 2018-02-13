@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 import { paratii } from './test-utils/helpers'
 
-describe('Uploader Tool', function () {
+describe('🦄 Uploader Tool', function () {
   it('should have basic flow in place @watch', async function () {
     // see https://github.com/Paratii-Video/paratii-portal/issues/8
     const video = {
@@ -32,7 +32,6 @@ describe('Uploader Tool', function () {
     assert.isOk(videoId)
     assert.isOk(videoId.length > 8)
     // set title and video in the form
-    browser.pause(1000)
     browser.setValue('#input-video-title', video.title)
     browser.setValue('#input-video-description', video.description)
     // submit the form
@@ -50,8 +49,9 @@ describe('Uploader Tool', function () {
     }
     browser.waitUntil(getVideoInfoFromBlockchain)
     // Check if video title has been saved
-    const inputTitle = browser.getValue('#input-video-title')
-    assert.equal(inputTitle, video.title)
+    browser.waitUntil(() => {
+      return browser.getValue('#input-video-title') === video.title
+    })
     const videoInfoFromBlockchain = await getVideoInfoFromBlockchain()
     assert.isOk(videoInfoFromBlockchain)
     assert.equal(videoInfoFromBlockchain.owner, paratii.config.account.address)
