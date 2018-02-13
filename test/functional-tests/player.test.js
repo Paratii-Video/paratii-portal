@@ -87,6 +87,7 @@ describe('Player:', function () {
   describe('portal player', () => {
     it('plays a video automatically', () => {
       browser.url(`http://localhost:8080/play/${videoId}`)
+      browser.pause(1000)
       browser.waitUntilVideoIsPlaying()
     })
     it('video not found @watch', () => {
@@ -111,8 +112,9 @@ describe('Player:', function () {
   })
 
   describe('embedded player', () => {
-    it('plays a video automatically', () => {
+    it('plays a video automatically @watch', () => {
       browser.url(`http://localhost:8080/embed/${videoId}`)
+      browser.pause(1000)
       browser.waitUntilVideoIsPlaying()
     })
     it.skip('shows the video title on the overlay', function () {
