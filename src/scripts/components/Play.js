@@ -26,7 +26,8 @@ type Props = {
 }
 
 type State = {
-  mouseInOverlay: boolean
+  mouseInOverlay: boolean,
+  videoNotFound: boolean
 }
 
 const Wrapper = styled.div`
@@ -169,7 +170,6 @@ class Play extends Component<Props, State> {
 
   getVideoId (): string {
     const params: Object = this.props.match.params
-
     return params.id || ''
   }
 
@@ -179,7 +179,6 @@ class Play extends Component<Props, State> {
       if (this.props.video) {
         this.createPlayer(this.props.video.ipfsHash)
       } else {
-        console.log('fecth')
         this.props.fetchVideo(videoId)
       }
     } else {
@@ -190,19 +189,21 @@ class Play extends Component<Props, State> {
   componentWillReceiveProps (nextProps: Props): void {
     const { isAttemptingPlay } = this.props
     let ipfsHash = ''
-    console.log(nextProps.video.toJS())
-    const fecthStatus = nextProps.video.getIn(['fecthStatus']).name
-    if (nextProps.video && fecthStatus === 'success') {
-      if (
-        this.props.video == null ||
-        nextProps.video.ipfsHash !== this.props.video.ipfsHash
-      ) {
-        ipfsHash = nextProps.video.ipfsHash
-        this.createPlayer(ipfsHash)
+
+    if (nextProps.video) {
+      const fetchStatus = nextProps.video.getIn(['fetchStatus', 'name'])
+      if (nextProps.video && fetchStatus === 'success') {
+        if (
+          this.props.video == null ||
+          nextProps.video.ipfsHash !== this.props.video.ipfsHash
+        ) {
+          ipfsHash = nextProps.video.ipfsHash
+          this.createPlayer(ipfsHash)
+        }
+      } else if (fetchStatus === 'failed') {
+        // If video not exist we set in the component state
+        this.setState({ videoNotFound: true })
       }
-    } else if (fecthStatus === 'failed') {
-      // If video not exist we set in the component state
-      this.setState({ videoNotFound: true })
     }
 
     if (

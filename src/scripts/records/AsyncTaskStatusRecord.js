@@ -1,13 +1,30 @@
 /* @flow */
 
-import { Map, Record as ImmutableRecord } from 'immutable'
+import { Record as ImmutableRecord } from 'immutable'
 import type { AsyncTaskStatusName } from 'types/ApplicationTypes'
 
-class AsyncTaskStatusRecord extends ImmutableRecord({
-  name: 'idle',
-  data: new Map()
+export class DataStatusRecord extends ImmutableRecord({
+  id: '',
+  title: '',
+  description: '',
+  owner: '',
+  ipfsHash: '',
+  sizes: '',
+  error: ''
 }) {
-  name: AsyncTaskStatusName;
-  data: typeof Map
+  id: number
+  title: string
+  description: string
+  owner: string
+  ipfsHash: string
+  sizes: string
+  error: string
 }
-export default AsyncTaskStatusRecord
+
+export class AsyncTaskStatusRecord extends ImmutableRecord({
+  name: 'idle',
+  data: new DataStatusRecord()
+}) {
+  name: AsyncTaskStatusName
+  data: DataStatusRecord
+}

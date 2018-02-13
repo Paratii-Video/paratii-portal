@@ -19,6 +19,10 @@ import {
   VIDEOFETCH_SUCCESS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
+import {
+  AsyncTaskStatusRecord,
+  DataStatusRecord
+} from 'records/AsyncTaskStatusRecord'
 import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 
 const reducer = {
@@ -189,26 +193,24 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<{ id: string, error: Object }>
   ): VideoRecordMap => {
-    return state.setIn([payload.id, 'fecthStatus'], {
-      name: 'failed',
-      data: {
-        error: payload.error.message
-      }
+    return state.mergeDeep({
+      [payload.id]: new VideoRecord({
+        fetchStatus: new AsyncTaskStatusRecord({
+          name: 'failed',
+          data: new DataStatusRecord({ error: payload.error.message })
+        })
+      })
     })
   },
   [VIDEOFETCH_SUCCESS]: (
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    state = state
-      .mergeDeep({
-        [payload.id]: new VideoRecord(payload)
+    return state.mergeDeep({
+      [payload.id]: new VideoRecord({
+        fetchStatus: new AsyncTaskStatusRecord({ name: 'success' })
       })
-      .setIn([payload.id, 'fecthStatus'], {
-        name: 'success',
-        data: {}
-      })
-    return state
+    })
   }
 }
 
