@@ -61,8 +61,6 @@ describe('Uploader Tool', function () {
     await browser.click(`a[href="/play/${videoId}"]`)
   })
 
-  it('', function () {})
-
   it.skip('cancel upload should work [but is not yet]', function () {
     // start uploading a file
     browser.url('http://localhost:8080/uploader/upload-file')
