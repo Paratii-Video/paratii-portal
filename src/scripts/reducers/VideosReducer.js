@@ -19,6 +19,8 @@ import {
   VIDEOFETCH_SUCCESS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
+import AsyncTaskStatusRecord from 'records/AsyncTaskStatusRecord'
+
 import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 
 const reducer = {
@@ -26,28 +28,31 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<{ id: string, filename: string }>
   ): VideoRecordMap => {
-    state = state.mergeDeep({
-      [payload.id]: {
+    const videoUpload: ?VideoRecord = state.get(payload.id)
+    if (!videoUpload) {
+      return state
+    }
+    return state.mergeDeep({
+      [payload.id]: new VideoRecord({
         filename: payload.filename,
-        uploadStatus: {
+        uploadStatus: new AsyncTaskStatusRecord({
           name: 'running',
-          data: { progress: 0 }
-        }
-      }
+          data: Immutable.Map({ progress: 0 })
+        })
+      })
     })
-    return state
   },
   [UPLOAD_PROGRESS]: (
     state: VideoRecordMap,
     { payload }: Action<{ id: string, progress: number }>
   ): VideoRecordMap => {
     if (!state.get(payload.id)) {
-      throw Error(`Unknown id: ${payload.id}`)
+      throw Error(`Unknown id: ${payload.id}`) // TODO: move this to an action
     }
     return state.mergeDeep({
       [payload.id]: {
         uploadStatus: {
-          data: { progress: payload.progress }
+          data: Immutable.Map({ progress: payload.progress })
         }
       }
     })
@@ -57,20 +62,21 @@ const reducer = {
     { payload }: Action<{ id: string, hash: string }>
   ): VideoRecordMap => {
     if (!state.get(payload.id)) {
-      throw Error(`Unknown id: ${payload.id}`)
+      throw Error(`Unknown id: ${payload.id}`) // TODO: move this to an action
     }
     const ipfsHashOrig = payload.hash
-    state = state.mergeDeep({
-      [payload.id]: {
+    state = state.set(
+      `${payload.id}`,
+      state.get(payload.id).merge({
         ipfsHashOrig: ipfsHashOrig,
-        uploadStatus: {
+        uploadStatus: new AsyncTaskStatusRecord({
           name: 'uploaded to local node',
-          data: {
+          data: Immutable.Map({
             ipfsHashOrig: ipfsHashOrig
-          }
-        }
-      }
-    })
+          })
+        })
+      })
+    )
     return state
   },
   [UPLOAD_SUCCESS]: (
@@ -78,18 +84,18 @@ const reducer = {
     { payload }: Action<{ id: string, hash: string }>
   ): VideoRecordMap => {
     if (!state.get(payload.id)) {
-      throw Error(`Unknown id: ${payload.id}`)
+      throw Error(`Unknown id: ${payload.id}`) // TODO: move this to an action
     }
     const ipfsHashOrig = payload.hash
     return state.mergeDeep({
       [payload.id]: {
         ipfsHashOrig: ipfsHashOrig,
-        uploadStatus: {
+        uploadStatus: new AsyncTaskStatusRecord({
           name: 'uploaded to transcoder node',
-          data: {
+          data: Immutable.Map({
             ipfsHashOrig: ipfsHashOrig
-          }
-        }
+          })
+        })
       }
     })
   },
@@ -104,31 +110,35 @@ const reducer = {
   [VIDEO_DATA_START]: (
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
-  ): VideoRecordMap => {
-    state = state.setIn([payload.id, 'blockchainStatus'], {
-      name: 'running',
-      data: {
-        id: payload.id,
-        title: payload.title,
-        description: payload.description,
-        owner: payload.owner
-      }
-    })
-    return state
-  },
+  ): VideoRecordMap =>
+    state.setIn(
+      [payload.id, 'blockchainStatus'],
+      new AsyncTaskStatusRecord({
+        name: 'running',
+        data: Immutable.Map({
+          id: payload.id,
+          title: payload.title,
+          description: payload.description,
+          owner: payload.owner
+        })
+      })
+    ),
   [VIDEO_DATA_SAVED]: (
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    state = state.setIn([payload.id, 'blockchainStatus'], {
-      name: 'success',
-      data: {
-        id: payload.id,
-        title: payload.title,
-        description: payload.description,
-        owner: payload.owner
-      }
-    })
+    state = state.setIn(
+      [payload.id, 'blockchainStatus'],
+      new AsyncTaskStatusRecord({
+        name: 'success',
+        data: Immutable.Map({
+          id: payload.id,
+          title: payload.title,
+          description: payload.description,
+          owner: payload.owner
+        })
+      })
+    )
     state = state.setIn([payload.id, 'title'], payload.title)
     state = state.setIn([payload.id, 'description'], payload.description)
     return state
@@ -137,19 +147,25 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    return state.setIn([payload.id, 'transcodingStatus'], {
-      name: 'requested',
-      data: {}
-    })
+    return state.setIn(
+      [payload.id, 'transcodingStatus'],
+      new AsyncTaskStatusRecord({
+        name: 'requested',
+        data: Immutable.Map({})
+      })
+    )
   },
   [TRANSCODING_PROGRESS]: (
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    return state.setIn([payload.id, 'transcodingStatus'], {
-      name: 'progress',
-      data: {}
-    })
+    return state.setIn(
+      [payload.id, 'transcodingStatus'],
+      new AsyncTaskStatusRecord({
+        name: 'progress',
+        data: Immutable.Map({})
+      })
+    )
   },
   [TRANSCODING_SUCCESS]: (
     state: VideoRecordMap,
@@ -159,13 +175,13 @@ const reducer = {
     state = state.mergeDeep({
       [payload.id]: {
         ipfsHash: ipfsHash,
-        transcodingStatus: {
+        transcodingStatus: new AsyncTaskStatusRecord({
           name: 'success',
-          data: {
+          data: Immutable.Map({
             ipfsHash: ipfsHash,
             sizes: payload.sizes
-          }
-        }
+          })
+        })
       }
     })
     return state
@@ -174,10 +190,13 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    return state.setIn([payload.id, 'transcodingStatus'], {
-      name: 'failed',
-      data: {}
-    })
+    return state.setIn(
+      [payload.id, 'transcodingStatus'],
+      new AsyncTaskStatusRecord({
+        name: 'failed',
+        data: Immutable.Map({})
+      })
+    )
   },
   [VIDEO_LOADED]: (
     state: VideoRecordMap,
@@ -189,27 +208,30 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<{ id: string, error: Object }>
   ): VideoRecordMap => {
-    return state.setIn([payload.id, 'fecthStatus'], {
-      name: 'failed',
-      data: {
-        error: payload.error.message
-      }
-    })
+    return state.setIn(
+      [payload.id, 'fecthStatus'],
+      new AsyncTaskStatusRecord({
+        name: 'failed',
+        data: Immutable.Map({
+          error: payload.error.message
+        })
+      })
+    )
   },
   [VIDEOFETCH_SUCCESS]: (
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
-  ): VideoRecordMap => {
-    state = state
-      .mergeDeep({
-        [payload.id]: new VideoRecord(payload)
+  ): VideoRecordMap =>
+    state.set(
+      `${payload.id}`,
+      new VideoRecord({
+        ...payload,
+        fecthStatus: new AsyncTaskStatusRecord({
+          name: 'success',
+          data: Immutable.Record({})
+        })
       })
-      .setIn([payload.id, 'fecthStatus'], {
-        name: 'success',
-        data: {}
-      })
-    return state
-  }
+    )
 }
 
 export default handleActions(reducer, Immutable.Map({}))
