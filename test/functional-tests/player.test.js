@@ -89,6 +89,11 @@ describe('Player:', function () {
       browser.url(`http://localhost:8080/play/${videoId}`)
       browser.waitUntilVideoIsPlaying()
     })
+    it('video not found @watch', () => {
+      browser.url(`http://localhost:8080/play/xxx`)
+      browser.waitForText('main h1', '404 - Oooooops, page not found')
+    })
+
     it.skip('shows the video title on the overlay', function () {
       browser.url(`http://localhost:8080/play/${videoId}`)
       browser.waitAndClick('[data-test-id="video-overlay"]')

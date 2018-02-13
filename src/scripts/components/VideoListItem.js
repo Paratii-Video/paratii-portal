@@ -128,7 +128,7 @@ class UploadListItem extends Component<Props, void> {
       const link = `/play/${item.id}`
       linkToVideo = (
         <Label>
-          <h3>Link</h3>
+          <p>Link</p>
           <NavLink to={link}>Play video</NavLink>
         </Label>
       )

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import NavLink from 'components/foundations/buttons/NavLink'
+import Anchor from 'components/foundations/buttons/Anchor'
 
 type Props = {}
 
@@ -15,6 +16,9 @@ const NavList = styled.ul`
 const NavItem = styled.li`
   padding-left: 45px;
 `
+const AnchorNav = styled(Anchor)`
+  font-size: 14px;
+`
 
 class MainNavigation extends Component<Props, void> {
   render () {
@@ -25,7 +29,9 @@ class MainNavigation extends Component<Props, void> {
             <NavLink to="/upload">Upload video</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink to="/about">About Paratii</NavLink>
+            <AnchorNav href="http://paratii.video/" target="_blank">
+              About Paratii
+            </AnchorNav>
           </NavItem>
         </NavList>
       </Nav>
