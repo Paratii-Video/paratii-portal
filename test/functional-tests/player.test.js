@@ -90,7 +90,7 @@ describe('Player:', function () {
       browser.pause(1000)
       browser.waitUntilVideoIsPlaying()
     })
-    it('video not found @watch', () => {
+    it('video not found', () => {
       browser.url(`http://localhost:8080/play/xxx`)
       browser.waitForText('main h1', '404 - Oooooops, page not found')
     })
@@ -112,7 +112,7 @@ describe('Player:', function () {
   })
 
   describe('embedded player', () => {
-    it('plays a video automatically @watch', () => {
+    it('plays a video automatically', () => {
       browser.url(`http://localhost:8080/embed/${videoId}`)
       browser.pause(1000)
       browser.waitUntilVideoIsPlaying()

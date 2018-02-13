@@ -32,6 +32,7 @@ describe('Uploader Tool', function () {
     assert.isOk(videoId)
     assert.isOk(videoId.length > 8)
     // set title and video in the form
+    browser.pause(1000)
     browser.setValue('#input-video-title', video.title)
     browser.setValue('#input-video-description', video.description)
     // submit the form
