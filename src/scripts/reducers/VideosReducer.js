@@ -207,9 +207,11 @@ const reducer = {
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
     return state.mergeDeep({
-      [payload.id]: new VideoRecord({
-        fetchStatus: new AsyncTaskStatusRecord({ name: 'success' })
-      })
+      [payload.id]: new VideoRecord(
+        state.merge(payload, {
+          fetchStatus: new AsyncTaskStatusRecord({ name: 'success' })
+        })
+      )
     })
   }
 }
