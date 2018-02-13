@@ -6,6 +6,7 @@ import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
 class Video extends ImmutableRecord({
   description: '',
   filename: null,
+  filesize: null,
   id: '',
   ipfsData: '',
   ipfsHashOrig: '',
@@ -22,6 +23,7 @@ class Video extends ImmutableRecord({
 }) {
   description: string
   filename: string
+  filesize: number
   id: string
   ipfsData: string
   ipfsHashOrig: string

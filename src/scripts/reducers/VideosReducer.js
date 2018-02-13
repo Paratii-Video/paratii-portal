@@ -28,11 +28,12 @@ import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 const reducer = {
   [UPLOAD_REQUESTED]: (
     state: VideoRecordMap,
-    { payload }: Action<{ id: string, filename: string }>
+    { payload }: Action<{ id: string, filename: string, filesize: number }>
   ): VideoRecordMap => {
     state = state.mergeDeep({
       [payload.id]: {
         filename: payload.filename,
+        filesize: payload.filesize,
         uploadStatus: {
           name: 'running',
           data: { progress: 0 }

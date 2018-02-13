@@ -14,6 +14,7 @@ import RadioCheck, {
 } from 'components/widgets/forms/RadioCheck'
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
+import { prettyBytes } from 'utils/AppUtils'
 
 type Props = {
   selectedVideo: VideoRecord,
@@ -110,19 +111,26 @@ class VideoForm extends Component<Props, Object> {
       video: new VideoRecord(this.props.selectedVideo),
       uploadProgress: 0,
       transcodingProgress: 0,
-      totalProgress: 0
+      totalProgress: 0,
+      id: '',
+      title: '',
+      description: ''
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentWillReceiveProps (nextProps: Props): void {
+    console.log(nextProps.selectedVideo)
+    console.log('titolo nei will props 1', nextProps.selectedVideo.title)
     this.setState(nextProps.selectedVideo)
     this.setState({
       id: nextProps.selectedVideo.id,
       title: nextProps.selectedVideo.title,
       description: nextProps.selectedVideo.description
     })
+
+    console.log('titolo nei will props 2', nextProps.selectedVideo.title)
 
     const video = nextProps.selectedVideo
 
@@ -142,11 +150,11 @@ class VideoForm extends Component<Props, Object> {
       this.setState({ transcodingProgress: 100 })
     }
 
-    this.setState({
+    this.setState((prevState, nextProps) => ({
       totalProgress: Math.round(
-        (this.state.uploadProgress + this.state.transcodingProgress) / 2
+        (prevState.uploadProgress + prevState.transcodingProgress) / 2
       )
-    })
+    }))
   }
 
   handleInputChange (input: string, e: Object) {
@@ -157,6 +165,8 @@ class VideoForm extends Component<Props, Object> {
 
   handleSubmit (e: Object) {
     e.preventDefault()
+    console.log('!!!!!  handlesubmit')
+    console.log(this.state)
     const videoToSave = {
       id: this.state.id,
       title: this.state.title,
@@ -167,16 +177,16 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     const video = this.props.selectedVideo
-    // const uploadProgress = video.getIn(['uploadStatus', 'data', 'progress'])
-    // const transcodingProgress = video.getIn(['transcodingStatus', 'data', 'progress'])
     const thumbImages = video.getIn([
       'transcodingStatus',
       'data',
       'sizes',
       'screenshots'
     ])
+    const fileSize = prettyBytes(video.filesize)
     const ipfsHash = video.ipfsHash
     let thumbImage = ''
+
     if (thumbImages !== undefined) {
       thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${thumbImages.get(
         1
@@ -184,6 +194,9 @@ class VideoForm extends Component<Props, Object> {
     } else {
       thumbImage = 'http://paratii.video/public/images/paratii-src.png'
     }
+    // TODO get the correct image form transcoder, now hardocoded
+    thumbImage = 'http://paratii.video/public/images/paratii-src.png'
+
     const state = JSON.stringify(this.state, null, 2)
     return (
       <Card full>
@@ -192,7 +205,7 @@ class VideoForm extends Component<Props, Object> {
           <Hidden>
             ({this.state.id} - {ipfsHash})
           </Hidden>{' '}
-          <VideoFormSubTitle purple>345MB</VideoFormSubTitle>
+          <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>
         </VideoFormHeader>
         <VideoFormWrapper>
           <Form>
@@ -200,7 +213,7 @@ class VideoForm extends Component<Props, Object> {
               id="video-id"
               type="hidden"
               value={this.state.id}
-              label="Title"
+              label="Id"
             />
             <Input
               label="Title"

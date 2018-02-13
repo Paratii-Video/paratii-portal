@@ -37,7 +37,13 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   const newVideoId = paratii.eth.vids.makeId()
   dispatch(videoFetchSuccess({ id: newVideoId }))
   dispatch(selectVideo({ id: newVideoId }))
-  dispatch(uploadRequested({ id: newVideoId, filename: file.name }))
+  dispatch(
+    uploadRequested({
+      id: newVideoId,
+      filename: file.name,
+      filesize: file.size
+    })
+  )
   const uploader = paratii.ipfs.uploader.add(file)
   uploader.on('error', function (err) {
     console.log('[UPLOAD error]', err)
@@ -47,7 +53,9 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
     dispatch(uploadProgress({ id: newVideoId, progress: progressPercent }))
   })
   uploader.on('fileReady', function (file) {
-    dispatch(uploadLocalSuccess({ id: newVideoId, hash: file.hash }))
+    dispatch(
+      uploadLocalSuccess({ id: newVideoId, hash: file.hash, size: file.size })
+    )
     // now we can start the transcoding
     transcodeVideo({
       id: newVideoId,
