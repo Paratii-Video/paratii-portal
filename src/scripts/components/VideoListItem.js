@@ -50,7 +50,7 @@ const ListItemFileName = styled.h4`
   margin-bottom: 4px;
 `
 
-const ListItemStatus = styled.p`
+const ListItemStatus = styled.div`
   color: ${props =>
     props.done
       ? props.theme.colors.VideoList.done
@@ -103,21 +103,15 @@ class UploadListItem extends Component<Props, void> {
       this.setState({ transcodingProgress: 100 })
     }
 
-    this.setState({
+    this.setState((prevState, nextProps) => ({
       totalProgress: Math.round(
-        (this.state.uploadProgress + this.state.transcodingProgress) / 2
+        (prevState.uploadProgress + prevState.transcodingProgress) / 2
       )
-    })
+    }))
   }
 
   render () {
     const item = this.props.video
-    // let progress
-    // if (item.getIn(['uploadStatus', 'name']) === 'running') {
-    //   const progress = item.getIn(['uploadStatus', 'data', 'progress'])
-    //   this.setState({ uploadProgress: progress })
-    //   console.log(this.state)
-    // }
 
     let linkToVideo = ''
     // TODO; find out why getIn(['blockchainStatus', 'name']) is undefined
