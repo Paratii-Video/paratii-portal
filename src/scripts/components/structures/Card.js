@@ -20,10 +20,11 @@ export const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: ${props => props.margin};
-  min-width: ${props => (props.full ? '388px' : '388px')};
+  min-width: 388px;
   max-width: ${props => (props.full ? '' : '33%')};
   overflow: hidden;
   position: relative;
+  flex: 1;
 `
 
 const Main = styled.div`
@@ -34,13 +35,14 @@ const Main = styled.div`
   flex-direction: column;
   height: 100%;
   padding: ${props => (props.nopadding ? '' : props.theme.sizes.card.padding)};
+  position: relative;
   width: 100%;
 `
 
 const Title = styled.h2`
-  color: ${props => props.theme.colors.VideoList.title};
+  color: ${props => props.theme.colors.MainCard.title.color};
   font-size: ${props => props.theme.fonts.card.title};
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 `
 
 const Footer = styled.div`
