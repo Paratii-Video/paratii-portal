@@ -182,6 +182,8 @@ class Play extends Component<Props, State> {
         this.props.fetchVideo(videoId)
       }
     } else {
+      // If video not exist we set in the component state
+      this.setState({ videoNotFound: true })
       throw Error('We should raise a 404 error here')
     }
   }
@@ -189,7 +191,7 @@ class Play extends Component<Props, State> {
   componentWillReceiveProps (nextProps: Props): void {
     const { isAttemptingPlay } = this.props
     let ipfsHash = ''
-
+    console.log(nextProps.video)
     if (nextProps.video) {
       const fetchStatus = nextProps.video.getIn(['fetchStatus', 'name'])
       if (nextProps.video && fetchStatus === 'success') {
