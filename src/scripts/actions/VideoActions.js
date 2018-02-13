@@ -20,9 +20,11 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
   let videoInfo
   // update the global state with the fetched information
   try {
-    videoInfo = await paratii.eth.vids.get(id)
-    // TODO: previous line should be replaced with next line once the db is updated
-    // let videoInfo = await paratii.core.vids.get(id)
+    if (process.env.NODE_ENV === 'development') {
+      videoInfo = await paratii.eth.vids.get(id)
+    } else {
+      videoInfo = await paratii.core.vids.get(id)
+    }
     dispatch(selectVideoAction(new VideoRecord(videoInfo)))
     dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
   } catch (error) {
