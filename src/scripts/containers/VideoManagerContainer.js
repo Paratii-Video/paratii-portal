@@ -53,7 +53,7 @@ class VideoManagerContainer extends Component<Props, void> {
 
     return (
       <CardContainer>
-        {selectedVideo !== null ? (
+        {selectedVideo ? (
           <Card
             margin="0 25px 0 0"
             nopadding
@@ -69,13 +69,9 @@ class VideoManagerContainer extends Component<Props, void> {
           <UploadFile />
         )}
 
-        {selectedVideo !== null ? (
-          <VideoForm />
-        ) : (
-          <RedeemVoucher margin="0 25px" />
-        )}
+        {selectedVideo ? <VideoForm /> : <RedeemVoucher margin="0 25px" />}
 
-        {selectedVideo === null && <PTIGuide />}
+        {!selectedVideo && <PTIGuide />}
       </CardContainer>
     )
   }

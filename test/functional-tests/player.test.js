@@ -89,7 +89,7 @@ describe('Player:', function () {
       browser.url(`http://localhost:8080/play/${videoId}`)
       browser.waitUntilVideoIsPlaying()
     })
-    it('video not found @watch', () => {
+    it('video not found', () => {
       browser.url(`http://localhost:8080/play/xxx`)
       browser.waitForText('main h1', '404 - Oooooops, page not found')
     })

@@ -4,7 +4,6 @@ import { createAction } from 'redux-actions'
 import paratii from 'utils/ParatiiLib'
 
 import {
-  VIDEOFETCH_SUCCESS,
   UPLOAD_REQUESTED,
   UPLOAD_PROGRESS,
   UPLOAD_SUCCESS,
@@ -17,10 +16,11 @@ import {
   TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE
 } from 'constants/ActionConstants'
+import VideoRecord from 'records/VideoRecords'
+import { videoFetchSuccess } from 'actions/VideoActions'
 
 import type { Dispatch } from 'redux'
 
-const videoFetchSuccess = createAction(VIDEOFETCH_SUCCESS)
 const uploadRequested = createAction(UPLOAD_REQUESTED)
 const uploadProgress = createAction(UPLOAD_PROGRESS)
 const uploadSuccess = createAction(UPLOAD_SUCCESS)
@@ -35,7 +35,7 @@ const transcodingFailure = createAction(TRANSCODING_FAILURE)
 
 export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   const newVideoId = paratii.eth.vids.makeId()
-  dispatch(videoFetchSuccess({ id: newVideoId }))
+  dispatch(videoFetchSuccess(new VideoRecord({ id: newVideoId })))
   dispatch(selectVideo({ id: newVideoId }))
   dispatch(uploadRequested({ id: newVideoId, filename: file.name }))
   const uploader = paratii.ipfs.uploader.add(file)
@@ -110,7 +110,7 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   if (!videoInfo.id) {
     const newVideoId = paratii.eth.vids.makeId()
     videoInfo.id = newVideoId
-    dispatch(videoFetchSuccess(videoInfo))
+    dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
   }
   dispatch(videoDataStart(videoInfo))
   console.log('SAVING', videoInfo)
