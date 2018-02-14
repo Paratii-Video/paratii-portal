@@ -50,6 +50,8 @@ module.name_mapper='^types\/\(.*\)$' -> '<PROJECT_ROOT>/src/scripts/types/\1'
 module.name_mapper='^types$' -> '<PROJECT_ROOT>/src/scripts/types'
 module.name_mapper='^utils\/\(.*\)$' -> '<PROJECT_ROOT>/src/scripts/utils/\1'
 module.name_mapper='^utils$' -> '<PROJECT_ROOT>/src/scripts/utils'
+module.name_mapper='^unit-tests\/\(.*\)$' -> '<PROJECT_ROOT>/test/unit-tests/\1'
+module.name_mapper='^unit-tests$' -> '<PROJECT_ROOT>/test/unit-tests'
 
 esproposal.class_static_fields=enable
 suppress_type=$FlowIssue
