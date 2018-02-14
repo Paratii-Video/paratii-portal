@@ -10,6 +10,7 @@
 if [[ $1 == staging ]]; then
     # ok
     echo "deploying to $1"
+    ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && sh deploy_portal.sh $1 </dev/null"
 elif [[ $1 == production ]]; then
     # ok
     echo "deploying to $1"
