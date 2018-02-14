@@ -53,13 +53,10 @@ const reducer = {
     if (!payload || !state.get(payload.id)) {
       throw Error(`Unknown id: ${(payload && payload.id) || 'undefined'}`)
     }
-    return state.mergeDeep({
-      [payload.id]: {
-        uploadStatus: {
-          data: { progress: payload.progress }
-        }
-      }
-    })
+    return state.setIn(
+      [payload.id, 'uploadStatus', 'data', 'progress'],
+      payload.progress
+    )
   },
   [UPLOAD_LOCAL_SUCCESS]: (
     state: VideoRecordMap,
@@ -69,18 +66,20 @@ const reducer = {
       throw Error(`Unknown id: ${(payload && payload.id) || 'undefined'}`)
     }
     const ipfsHashOrig = payload.hash
-    state = state.mergeDeep({
-      [payload.id]: {
-        ipfsHashOrig: ipfsHashOrig,
-        uploadStatus: {
-          name: 'uploaded to local node',
-          data: {
-            ipfsHashOrig: ipfsHashOrig
-          }
-        }
+    return state.withMutations(
+      (mutableState: VideoRecordMap): VideoRecordMap => {
+        mutableState.setIn([payload.id, 'ipfsHashOrig'], ipfsHashOrig)
+        mutableState.setIn(
+          [payload.id, 'uploadStatus', 'name'],
+          'uploaded to local node'
+        )
+        mutableState.setIn(
+          [payload.id, 'uploadStatus', 'data', 'ipfsHashOrig'],
+          ipfsHashOrig
+        )
+        return mutableState
       }
-    })
-    return state
+    )
   },
   [UPLOAD_SUCCESS]: (
     state: VideoRecordMap,
@@ -90,17 +89,20 @@ const reducer = {
       throw Error(`Unknown id: ${(payload && payload.id) || 'undefined'}`)
     }
     const ipfsHashOrig = payload.hash
-    return state.mergeDeep({
-      [payload.id]: {
-        ipfsHashOrig: ipfsHashOrig,
-        uploadStatus: {
-          name: 'uploaded to transcoder node',
-          data: {
-            ipfsHashOrig: ipfsHashOrig
-          }
-        }
+    return state.withMutations(
+      (mutableState: VideoRecordMap): VideoRecordMap => {
+        mutableState.setIn([payload.id, 'ipfsHashOrig'], ipfsHashOrig)
+        mutableState.setIn(
+          [payload.id, 'uploadStatus', 'name'],
+          'uploaded to transcoder node'
+        )
+        mutableState.setIn(
+          [payload.id, 'uploadStatus', 'data', 'ipfsHashOrig'],
+          ipfsHashOrig
+        )
+        return mutableState
       }
-    })
+    )
   },
   [UPDATE_VIDEO_INFO]: (
     state: VideoRecordMap,
