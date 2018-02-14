@@ -1,3 +1,5 @@
+/* @flow */
+
 import { createStore } from 'redux'
 import Immutable from 'immutable'
 
@@ -10,7 +12,6 @@ import {
   UPDATE_VIDEO_INFO,
   VIDEO_DATA_START,
   VIDEO_DATA_SAVED,
-  VIDEO_LOADED,
   TRANSCODING_REQUESTED,
   TRANSCODING_PROGRESS,
   TRANSCODING_SUCCESS,
@@ -28,8 +29,9 @@ import {
   getDefaultAsyncTaskStatus,
   getDefaultDataStatus
 } from 'unit-tests/fixtures/VideoFixtures'
+import { expect } from 'chai'
 
-describe.only('Video Reducer', () => {
+describe('Video Reducer', () => {
   describe('UPLOAD_REQUESTED', () => {
     it('should do nothing if there is no payload', () => {
       const store = createStore(reducer)
@@ -960,6 +962,115 @@ describe.only('Video Reducer', () => {
       })
     })
   })
+  describe('TRANSCODING_PROGRESS', () => {
+    it('should do nothing if there is no payload', () => {
+      const store = createStore(reducer)
+      expect(store.getState().toJS()).to.deep.equal({})
+      store.dispatch({
+        type: TRANSCODING_PROGRESS
+      })
+      expect(store.getState().toJS()).to.deep.equal({})
+    })
+    it('should do nothing when there is no id in the payload', () => {
+      const store = createStore(
+        reducer,
+        Immutable.Map({
+          '999': new VideoRecord()
+        })
+      )
+      expect(store.getState().toJS()).to.deep.equal({
+        '999': getDefaultVideo()
+      })
+      store.dispatch({
+        type: TRANSCODING_PROGRESS,
+        payload: {
+          foo: 'bar'
+        }
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '999': getDefaultVideo()
+      })
+    })
+    it('should do nothing when there is no matching id in the store', () => {
+      const store = createStore(
+        reducer,
+        Immutable.Map({
+          '123': new VideoRecord({}),
+          '999': new VideoRecord({})
+        })
+      )
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': getDefaultVideo(),
+        '999': getDefaultVideo()
+      })
+      store.dispatch({
+        type: TRANSCODING_PROGRESS,
+        payload: {
+          id: '111'
+        }
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': getDefaultVideo(),
+        '999': getDefaultVideo()
+      })
+    })
+    it('should update the transcoding status of the matching video in the store', () => {
+      const store = createStore(
+        reducer,
+        Immutable.Map({
+          '123': new VideoRecord({}),
+          '999': new VideoRecord({}),
+          '888': new VideoRecord({
+            title: 'foobar',
+            description: 'great video',
+            uploadStatus: new AsyncTaskStatusRecord({
+              name: 'uploaded to transcoder node'
+            })
+          })
+        })
+      )
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': getDefaultVideo(),
+        '999': getDefaultVideo(),
+        '888': {
+          ...getDefaultVideo(),
+          title: 'foobar',
+          description: 'great video',
+          uploadStatus: {
+            ...getDefaultAsyncTaskStatus(),
+            name: 'uploaded to transcoder node'
+          }
+        }
+      })
+      store.dispatch({
+        type: TRANSCODING_PROGRESS,
+        payload: {
+          id: '888'
+        }
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': getDefaultVideo(),
+        '999': getDefaultVideo(),
+        '888': {
+          ...getDefaultVideo(),
+          title: 'foobar',
+          description: 'great video',
+          uploadStatus: {
+            ...getDefaultAsyncTaskStatus(),
+            name: 'uploaded to transcoder node'
+          },
+          transcodingStatus: {
+            ...getDefaultAsyncTaskStatus(),
+            name: 'progress',
+            data: {
+              ...getDefaultDataStatus()
+            }
+          }
+        }
+      })
+    })
+  })
+
   describe('TRANSCODING_SUCCESS', () => {
     it('should do nothing if there is no payload', () => {
       const store = createStore(reducer)
@@ -1248,7 +1359,7 @@ describe.only('Video Reducer', () => {
       })
     })
   })
-  describe.only('VIDEO_LOADED', () => {
+  describe('VIDEOFETCH_SUCCESS', () => {
     it('should add a new video to an empty store', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
@@ -1258,7 +1369,7 @@ describe.only('Video Reducer', () => {
         ipfsHash: 'q999'
       })
       store.dispatch({
-        type: VIDEO_LOADED,
+        type: VIDEOFETCH_SUCCESS,
         payload: newVideo
       })
       expect(store.getState().toJS()).to.deep.equal({
@@ -1266,7 +1377,11 @@ describe.only('Video Reducer', () => {
           ...getDefaultVideo(),
           id: '222',
           title: 'foobar',
-          ipfsHash: 'q999'
+          ipfsHash: 'q999',
+          fetchStatus: {
+            ...getDefaultAsyncTaskStatus(),
+            name: 'success'
+          }
         }
       })
     })
@@ -1274,23 +1389,23 @@ describe.only('Video Reducer', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
       store.dispatch({
-        type: VIDEO_LOADED
+        type: VIDEOFETCH_SUCCESS
       })
       expect(store.getState().toJS()).to.deep.equal({})
     })
     it('should do nothing if the payload is missing an id', () => {
-        const store = createStore(reducer)
-        expect(store.getState().toJS()).to.deep.equal({})
-        const newVideo = new VideoRecord({
-          id: undefined,
-          title: 'foobar',
-          ipfsHash: 'q999'
-        })
-        store.dispatch({
-          type: VIDEO_LOADED,
-          payload: newVideo
-        })
-        expect(store.getState().toJS()).to.deep.equal({})
+      const store = createStore(reducer)
+      expect(store.getState().toJS()).to.deep.equal({})
+      const newVideo = new VideoRecord({
+        id: undefined,
+        title: 'foobar',
+        ipfsHash: 'q999'
+      })
+      store.dispatch({
+        type: VIDEOFETCH_SUCCESS,
+        payload: newVideo
+      })
+      expect(store.getState().toJS()).to.deep.equal({})
     })
     it('should add a new video to a store with other videos', () => {
       const newVideo = new VideoRecord({
@@ -1334,7 +1449,7 @@ describe.only('Video Reducer', () => {
         }
       })
       store.dispatch({
-        type: VIDEO_LOADED,
+        type: VIDEOFETCH_SUCCESS,
         payload: newVideo
       })
       expect(store.getState().toJS()).to.deep.equal({
@@ -1358,7 +1473,114 @@ describe.only('Video Reducer', () => {
           ...getDefaultVideo(),
           id: '222',
           title: 'foobar',
-          ipfsHash: 'q999'
+          ipfsHash: 'q999',
+          fetchStatus: {
+            ...getDefaultAsyncTaskStatus(),
+            name: 'success'
+          }
+        }
+      })
+    })
+  })
+  describe('VIDEOFETCH_ERROR', () => {
+    it('should do nothing if there is no payload', () => {
+      const store = createStore(reducer)
+      expect(store.getState().toJS()).to.deep.equal({})
+      store.dispatch({
+        type: VIDEOFETCH_ERROR
+      })
+      expect(store.getState().toJS()).to.deep.equal({})
+    })
+    it('should do nothing when there is no id in the payload', () => {
+      const store = createStore(
+        reducer,
+        Immutable.Map({
+          '999': new VideoRecord()
+        })
+      )
+      expect(store.getState().toJS()).to.deep.equal({
+        '999': getDefaultVideo()
+      })
+      store.dispatch({
+        type: VIDEOFETCH_ERROR,
+        payload: {
+          foo: 'bar'
+        }
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '999': getDefaultVideo()
+      })
+    })
+    it('should create a video and set its status to error if the video was not in the store', () => {
+      const store = createStore(
+        reducer,
+        Immutable.Map({
+          '123': new VideoRecord({}),
+          '999': new VideoRecord({})
+        })
+      )
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': getDefaultVideo(),
+        '999': getDefaultVideo()
+      })
+      store.dispatch({
+        type: VIDEOFETCH_ERROR,
+        payload: {
+          id: '333',
+          error: {
+            message: 'bazbar'
+          }
+        }
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': getDefaultVideo(),
+        '999': getDefaultVideo(),
+        '333': {
+          ...getDefaultVideo(),
+          fetchStatus: {
+            ...getDefaultAsyncTaskStatus(),
+            name: 'failed',
+            data: {
+              ...getDefaultDataStatus(),
+              error: 'bazbar'
+            }
+          }
+        }
+      })
+    })
+    it('should update the fetch status of the matching video in the store', () => {
+      const store = createStore(
+        reducer,
+        Immutable.Map({
+          '123': new VideoRecord({}),
+          '999': new VideoRecord({})
+        })
+      )
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': getDefaultVideo(),
+        '999': getDefaultVideo()
+      })
+      store.dispatch({
+        type: VIDEOFETCH_ERROR,
+        payload: {
+          id: '999',
+          error: {
+            message: 'bazbar'
+          }
+        }
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': getDefaultVideo(),
+        '999': {
+          ...getDefaultVideo(),
+          fetchStatus: {
+            ...getDefaultAsyncTaskStatus(),
+            name: 'failed',
+            data: {
+              ...getDefaultDataStatus(),
+              error: 'bazbar'
+            }
+          }
         }
       })
     })

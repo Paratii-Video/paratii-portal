@@ -10,7 +10,6 @@ import {
   UPDATE_VIDEO_INFO,
   VIDEO_DATA_START,
   VIDEO_DATA_SAVED,
-  VIDEO_LOADED,
   TRANSCODING_REQUESTED,
   TRANSCODING_PROGRESS,
   TRANSCODING_SUCCESS,
@@ -178,10 +177,15 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    return state.setIn([payload.id, 'transcodingStatus'], {
-      name: 'progress',
-      data: {}
-    })
+    if (!payload || !payload.id || !state.get(payload.id)) {
+      return state
+    }
+    return state.setIn(
+      [payload.id, 'transcodingStatus'],
+      new AsyncTaskStatusRecord({
+        name: 'progress'
+      })
+    )
   },
   [TRANSCODING_SUCCESS]: (
     state: VideoRecordMap,
@@ -221,19 +225,13 @@ const reducer = {
       })
     )
   },
-  [VIDEO_LOADED]: (
-    state: VideoRecordMap,
-    { payload }: Action<VideoRecord>
-  ): VideoRecordMap => {
-    if (!payload || !payload.get('id')) {
-      return state
-    }
-    return state.set(payload.get('id'), payload)
-  },
   [VIDEOFETCH_ERROR]: (
     state: VideoRecordMap,
     { payload }: Action<{ id: string, error: Object }>
   ): VideoRecordMap => {
+    if (!payload || !payload.id) {
+      return state
+    }
     return state.mergeDeep({
       [payload.id]: new VideoRecord({
         fetchStatus: new AsyncTaskStatusRecord({
@@ -247,13 +245,13 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    return state.mergeDeep({
-      [payload.id]: new VideoRecord(
-        state.merge(payload, {
-          fetchStatus: new AsyncTaskStatusRecord({ name: 'success' })
-        })
-      )
-    })
+    if (!payload || !payload.get('id')) {
+      return state
+    }
+    return state.set(
+      payload.id,
+      payload.set('fetchStatus', new AsyncTaskStatusRecord({ name: 'success' }))
+    )
   }
 }
 
