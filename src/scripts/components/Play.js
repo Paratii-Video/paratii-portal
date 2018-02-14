@@ -8,6 +8,7 @@ import debounce from 'lodash.debounce'
 
 import VideoRecord from 'records/VideoRecords'
 import VideoOverlay from 'components/VideoOverlay'
+import NotFound from './pages/NotFound'
 
 import type { ClapprPlayer } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
@@ -26,7 +27,8 @@ type Props = {
 
 type State = {
   mouseInOverlay: boolean,
-  shouldShowVideoOverlay: boolean
+  shouldShowVideoOverlay: boolean,
+  videoNotFound: boolean
 }
 
 const Wrapper = styled.div`
@@ -72,7 +74,8 @@ class Play extends Component<Props, State> {
 
     this.state = {
       mouseInOverlay: false,
-      shouldShowVideoOverlay: false
+      shouldShowVideoOverlay: false,
+      videoNotFound: false
     }
 
     this.lastMouseMove = 0
@@ -164,7 +167,6 @@ class Play extends Component<Props, State> {
 
   getVideoId (): string {
     const params: Object = this.props.match.params
-
     return params.id || ''
   }
 
@@ -177,6 +179,8 @@ class Play extends Component<Props, State> {
         this.props.fetchVideo(videoId)
       }
     } else {
+      // If video not exist we set in the component state
+      this.setState({ videoNotFound: true })
       throw Error('We should raise a 404 error here')
     }
   }
@@ -185,12 +189,18 @@ class Play extends Component<Props, State> {
     const { isPlaying } = this.props
     let ipfsHash = ''
     if (nextProps.video) {
-      if (
-        this.props.video == null ||
-        nextProps.video.ipfsHash !== this.props.video.ipfsHash
-      ) {
-        ipfsHash = nextProps.video.ipfsHash
-        this.createPlayer(ipfsHash)
+      const fetchStatus = nextProps.video.getIn(['fetchStatus', 'name'])
+      if (nextProps.video && fetchStatus === 'success') {
+        if (
+          this.props.video == null ||
+          nextProps.video.ipfsHash !== this.props.video.ipfsHash
+        ) {
+          ipfsHash = nextProps.video.ipfsHash
+          this.createPlayer(ipfsHash)
+        }
+      } else if (fetchStatus === 'failed') {
+        // If video not exist we set in the component state
+        this.setState({ videoNotFound: true })
       }
     }
 
@@ -236,31 +246,35 @@ class Play extends Component<Props, State> {
   }
 
   render () {
-    return (
-      <Wrapper>
-        <PlayerWrapper
-          onClick={this.onPlayerClick}
-          onMouseEnter={this.onMouseEnter}
-          onMouseMove={
-            (!this.state.shouldShowVideoOverlay && this.onMouseMove) ||
-            undefined
-          }
-        >
-          {this.state.shouldShowVideoOverlay && (
-            <OverlayWrapper
-              onMouseLeave={this.onMouseLeave}
-              onMouseMove={this.onMouseMove}
-            >
-              <VideoOverlay
-                {...this.props}
-                togglePlayPause={this.togglePlayPause}
-              />
-            </OverlayWrapper>
-          )}
-          <Player id="player" />
-        </PlayerWrapper>
-      </Wrapper>
-    )
+    if (this.state.videoNotFound) {
+      return <NotFound />
+    } else {
+      return (
+        <Wrapper>
+          <PlayerWrapper
+            onClick={this.onPlayerClick}
+            onMouseEnter={this.onMouseEnter}
+            onMouseMove={
+              (!this.state.shouldShowVideoOverlay && this.onMouseMove) ||
+              undefined
+            }
+          >
+            {this.state.shouldShowVideoOverlay && (
+              <OverlayWrapper
+                onMouseLeave={this.onMouseLeave}
+                onMouseMove={this.onMouseMove}
+              >
+                <VideoOverlay
+                  {...this.props}
+                  togglePlayPause={this.togglePlayPause}
+                />
+              </OverlayWrapper>
+            )}
+            <Player id="player" />
+          </PlayerWrapper>
+        </Wrapper>
+      )
+    }
   }
 }
 
