@@ -18,6 +18,7 @@ import type { RootState, RequestStatus } from 'types/ApplicationTypes'
 export const getVideo = (state: RootState): ?VideoRecord => {
   const videoId: ?string = state.selectedVideo
   const video = videoId && state.videos.get(videoId)
+  console.log('selector', video)
   return video || null
 }
 

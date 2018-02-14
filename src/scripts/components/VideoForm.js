@@ -177,7 +177,7 @@ class VideoForm extends Component<Props, Object> {
   handleSubmit (e: Object) {
     e.preventDefault()
     console.log('!!!!!  handlesubmit')
-    console.log(this.state)
+    console.log(this.state.title)
     const videoToSave = {
       id: this.state.id,
       title: this.state.title,
@@ -203,7 +203,7 @@ class VideoForm extends Component<Props, Object> {
       thumbImage = 'http://paratii.video/public/images/paratii-src.png'
     }
     // TODO get the correct image form transcoder, now hardocoded
-    thumbImage = 'http://paratii.video/public/images/paratii-src.png'
+    // thumbImage = 'http://paratii.video/public/images/paratii-src.png'
 
     const state = JSON.stringify(this.state, null, 2)
     return (
