@@ -10,10 +10,11 @@
 if [[ $1 == staging ]]; then
     # ok
     echo "deploying to $1"
-    ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && sh deploy_portal.sh $1 </dev/null"
+    ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && bash ./deploy_portal.sh staging $1 </dev/null"
 elif [[ $1 == production ]]; then
     # ok
     echo "deploying to $1"
+    ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && bash ./deploy_portal.sh production $1 </dev/null"
 else
     echo "unknown parameter - please specify one of 'staging' or 'production'"
     exit
