@@ -208,7 +208,7 @@ const reducer = {
         name: 'success',
         data: new DataStatusRecord({
           ipfsHash,
-          sizes: Immutable.Map(payload.sizes)
+          sizes: Immutable.fromJS(payload.sizes)
         })
       })
     )
