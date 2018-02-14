@@ -16,7 +16,7 @@ import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
 
 type Props = {
-  selectedVideo: VideoRecord,
+  selectedVideo: ?VideoRecord,
   canSubmit: boolean,
   saveVideoInfo: Object => Object
 }
@@ -117,36 +117,51 @@ class VideoForm extends Component<Props, Object> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    this.setState(nextProps.selectedVideo)
-    this.setState({
-      id: nextProps.selectedVideo.id,
-      title: nextProps.selectedVideo.title,
-      description: nextProps.selectedVideo.description
-    })
+    const { selectedVideo } = nextProps
+    const nextSelectedVideo: ?VideoRecord = selectedVideo
+    if (nextSelectedVideo) {
+      this.setState(nextSelectedVideo)
+      this.setState({
+        id: nextSelectedVideo.id,
+        title: nextSelectedVideo.title,
+        description: nextSelectedVideo.description
+      })
 
-    const video = nextProps.selectedVideo
+      if (nextSelectedVideo.getIn(['uploadStatus', 'name']) === 'running') {
+        const progress = nextSelectedVideo.getIn([
+          'uploadStatus',
+          'data',
+          'progress'
+        ])
+        this.setState({ uploadProgress: progress })
+      } else if (
+        nextSelectedVideo.getIn(['uploadStatus', 'name']) ===
+        'uploaded to transcoder node'
+      ) {
+        this.setState({ uploadProgress: 100 })
+      }
 
-    if (video.getIn(['uploadStatus', 'name']) === 'running') {
-      const progress = video.getIn(['uploadStatus', 'data', 'progress'])
-      this.setState({ uploadProgress: progress })
-    } else if (
-      video.getIn(['uploadStatus', 'name']) === 'uploaded to transcoder node'
-    ) {
-      this.setState({ uploadProgress: 100 })
+      if (
+        nextSelectedVideo.getIn(['transcodingStatus', 'name']) === 'progress'
+      ) {
+        const progress = nextSelectedVideo.getIn([
+          'transcodingStatus',
+          'data',
+          'progress'
+        ])
+        this.setState({ transcodingProgress: progress })
+      } else if (
+        nextSelectedVideo.getIn(['transcodingStatus', 'name']) === 'success'
+      ) {
+        this.setState({ transcodingProgress: 100 })
+      }
+
+      this.setState({
+        totalProgress: Math.round(
+          (this.state.uploadProgress + this.state.transcodingProgress) / 2
+        )
+      })
     }
-
-    if (video.getIn(['transcodingStatus', 'name']) === 'progress') {
-      const progress = video.getIn(['transcodingStatus', 'data', 'progress'])
-      this.setState({ transcodingProgress: progress })
-    } else if (video.getIn(['transcodingStatus', 'name']) === 'success') {
-      this.setState({ transcodingProgress: 100 })
-    }
-
-    this.setState({
-      totalProgress: Math.round(
-        (this.state.uploadProgress + this.state.transcodingProgress) / 2
-      )
-    })
   }
 
   handleInputChange (input: string, e: Object) {
@@ -166,18 +181,15 @@ class VideoForm extends Component<Props, Object> {
   }
 
   render () {
-    const video = this.props.selectedVideo
+    const video: ?VideoRecord = this.props.selectedVideo
     // const uploadProgress = video.getIn(['uploadStatus', 'data', 'progress'])
     // const transcodingProgress = video.getIn(['transcodingStatus', 'data', 'progress'])
-    const thumbImages = video.getIn([
-      'transcodingStatus',
-      'data',
-      'sizes',
-      'screenshots'
-    ])
-    const ipfsHash = video.ipfsHash
+    const thumbImages =
+      video &&
+      video.getIn(['transcodingStatus', 'data', 'sizes', 'screenshots'])
+    const ipfsHash = video && video.get('ipfsHash')
     let thumbImage = ''
-    if (thumbImages !== undefined) {
+    if (thumbImages) {
       thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${thumbImages.get(
         1
       )}`
