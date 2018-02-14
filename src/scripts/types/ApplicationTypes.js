@@ -5,7 +5,10 @@ import Immutable from 'immutable'
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
 import PlayerRecord from 'records/PlayerRecords'
-import { REQUEST_STATUS } from 'constants/ApplicationConstants'
+import {
+  REQUEST_STATUS,
+  TRANSITION_STATE
+} from 'constants/ApplicationConstants'
 
 export type Location = {
   pathname: string,
@@ -280,3 +283,5 @@ export type Theme = Object & {
 }
 
 export type RequestStatus = $Values<typeof REQUEST_STATUS>
+
+export type TransitionState = $Values<typeof TRANSITION_STATE>

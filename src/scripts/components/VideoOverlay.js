@@ -7,8 +7,10 @@ import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
 import { getIsPlaying } from 'selectors/index'
 import IconButton from 'components/foundations/buttons/IconButton'
+import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
 import type { Match } from 'react-router-dom'
+import type { TransitionState } from 'types/ApplicationTypes'
 
 type Props = {
   video: ?VideoRecord,
@@ -16,7 +18,8 @@ type Props = {
   isEmbed?: boolean,
   isPlaying: boolean,
   onClick: (e: Object) => void,
-  togglePlayPause: () => void
+  togglePlayPause: () => void,
+  transitionState: TransitionState
 }
 
 type State = {
@@ -35,8 +38,20 @@ const Overlay = styled.div`
   display: flex;
   flex-direction: column;
   color: white;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   box-sizing: border-box;
+  opacity: ${({ transitionState }) => {
+    switch (transitionState) {
+      case TRANSITION_STATE.ENTERING:
+      case TRANSITION_STATE.EXITED:
+        return '0'
+      case TRANSITION_STATE.EXITING:
+      case TRANSITION_STATE.ENTERED:
+      default:
+        return '1.0'
+    }
+  }};
+  transition: all ${({ theme }) => theme.animation.time.repaint}
+    ${({ theme }) => theme.animation.ease.smooth};
 `
 
 const VideoInfo = styled.div`
@@ -44,6 +59,22 @@ const VideoInfo = styled.div`
   flex-direction: row;
   flex: 1 0 0;
   padding: ${overlayPadding};
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  transform: translateY(
+    ${({ transitionState }) => {
+    switch (transitionState) {
+      case TRANSITION_STATE.ENTERING:
+      case TRANSITION_STATE.EXITED:
+        return '-75px'
+      case TRANSITION_STATE.EXITING:
+      case TRANSITION_STATE.ENTERED:
+      default:
+        return 0
+    }
+  }}
+  );
+  transition: all ${({ theme }) => theme.animation.time.repaint}
+    ${({ theme }) => theme.animation.ease.smooth};
 `
 
 const Title = styled.div`
@@ -74,14 +105,30 @@ const PopoverWrapper = styled.div`
   cursor: default;
 `
 
+const CONTROLS_HEIGHT: string = '50px'
+
 const Controls = styled.div`
-  flex: 0 0 50px;
+  flex: 0 0 ${CONTROLS_HEIGHT};
   display: flex;
   flex-direction: row;
-  background-color: blue;
   width: 100%;
   align-items: center;
   padding: 0 10px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  transform: translateY(
+    ${({ transitionState }) => {
+    switch (transitionState) {
+      case TRANSITION_STATE.ENTERING:
+      case TRANSITION_STATE.EXITED:
+        return CONTROLS_HEIGHT
+      case TRANSITION_STATE.EXITING:
+      case TRANSITION_STATE.ENTERED:
+      default:
+        return 0
+    }
+  }}
+  );
+  transition: all 250ms linear;
 `
 
 const ControlButtonWrapper = styled.div`
@@ -152,13 +199,17 @@ class VideoOverlay extends Component<Props, State> {
   }
 
   render () {
-    const { onClick, isPlaying, togglePlayPause } = this.props
+    const { onClick, isPlaying, togglePlayPause, transitionState } = this.props
     const { openPopover } = this.state
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
       .profile
     return (
-      <Overlay data-test-id="video-overlay" onClick={onClick}>
-        <VideoInfo>
+      <Overlay
+        data-test-id="video-overlay"
+        onClick={onClick}
+        transitionState={transitionState}
+      >
+        <VideoInfo transitionState={transitionState}>
           <Title>{this.getVideoTitle()}</Title>
           <ButtonGroup hide={!!this.state.openPopover}>
             {ProfileButton ? (
@@ -177,11 +228,14 @@ class VideoOverlay extends Component<Props, State> {
             innerRef={this.popoverWrapperRefCallback}
           />
         </VideoInfo>
-        <Controls>
+        <Controls transitionState={transitionState}>
           <ControlButtonWrapper>
             <IconButton
               icon={`/assets/img/${isPlaying ? 'pause-icon' : 'play-icon'}.svg`}
-              onClick={togglePlayPause}
+              onClick={(e: Object) => {
+                e.stopPropagation()
+                togglePlayPause()
+              }}
             />
           </ControlButtonWrapper>
         </Controls>

@@ -5,6 +5,7 @@ import { Events } from 'clappr'
 import styled from 'styled-components'
 import CreatePlayer from 'paratii-mediaplayer'
 import debounce from 'lodash.debounce'
+import Transition from 'react-transition-group/Transition'
 
 import VideoRecord from 'records/VideoRecords'
 import VideoOverlay from 'components/VideoOverlay'
@@ -37,6 +38,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   flex: 0 0 100%;
+  overflow: hidden;
 `
 
 const Player = styled.div`
@@ -81,8 +83,6 @@ class Play extends Component<Props, State> {
     this.lastMouseMove = 0
     this.playerHideTimeout = 0
 
-    // this.onOverlayClick = this.onOverlayClick.bind(this)
-
     this.props.setSelectedVideo({ id: this.getVideoId() })
   }
 
@@ -111,9 +111,7 @@ class Play extends Component<Props, State> {
   onMouseEnter = (): void => {
     if (this.player) {
       clearTimeout(this.playerHideTimeout)
-      this.setState({
-        shouldShowVideoOverlay: true
-      })
+      this.showControls()
     }
   }
 
@@ -134,7 +132,7 @@ class Play extends Component<Props, State> {
           }
         }
       })
-    }, 2000)
+    }, HIDE_CONTROLS_THRESHOLD)
   }
 
   onMouseMove = debounce(
@@ -143,18 +141,17 @@ class Play extends Component<Props, State> {
       this.showControls()
     },
     150,
-    { leading: true }
+    { leading: true, trailing: false }
   )
 
   onMouseLeave = (): void => {
     if (this.player) {
       clearTimeout(this.playerHideTimeout)
-      console.log('leaving hiding')
       this.playerHideTimeout = setTimeout(() => {
         this.setState({
           shouldShowVideoOverlay: false
         })
-      }, 500)
+      })
     }
   }
 
@@ -241,10 +238,6 @@ class Play extends Component<Props, State> {
     this.showControls()
   }
 
-  shouldShowVideoOverlay (): boolean {
-    return this.state.mouseInOverlay
-  }
-
   render () {
     if (this.state.videoNotFound) {
       return <NotFound />
@@ -254,22 +247,21 @@ class Play extends Component<Props, State> {
           <PlayerWrapper
             onClick={this.onPlayerClick}
             onMouseEnter={this.onMouseEnter}
-            onMouseMove={
-              (!this.state.shouldShowVideoOverlay && this.onMouseMove) ||
-              undefined
-            }
           >
-            {this.state.shouldShowVideoOverlay && (
-              <OverlayWrapper
-                onMouseLeave={this.onMouseLeave}
-                onMouseMove={this.onMouseMove}
-              >
-                <VideoOverlay
-                  {...this.props}
-                  togglePlayPause={this.togglePlayPause}
-                />
-              </OverlayWrapper>
-            )}
+            <Transition in={this.state.shouldShowVideoOverlay} timeout={0}>
+              {(transitionState: ?string) => (
+                <OverlayWrapper
+                  onMouseLeave={this.onMouseLeave}
+                  onMouseMove={this.onMouseMove}
+                >
+                  <VideoOverlay
+                    {...this.props}
+                    transitionState={transitionState}
+                    togglePlayPause={this.togglePlayPause}
+                  />
+                </OverlayWrapper>
+              )}
+            </Transition>
             <Player id="player" />
           </PlayerWrapper>
         </Wrapper>
