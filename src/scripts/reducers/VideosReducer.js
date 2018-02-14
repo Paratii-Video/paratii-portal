@@ -28,25 +28,31 @@ import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 const reducer = {
   [UPLOAD_REQUESTED]: (
     state: VideoRecordMap,
-    { payload }: Action<{ id: string, filename: string }>
+    { payload }: Action<{ id: string, filename: string }> = {}
   ): VideoRecordMap => {
-    state = state.mergeDeep({
-      [payload.id]: {
+    if (!payload || !payload.id) {
+      return state
+    }
+    const videoRecord: VideoRecord = state.get(payload.id) || new VideoRecord()
+    return state.set(
+      payload.id,
+      videoRecord.merge({
         filename: payload.filename,
-        uploadStatus: {
+        uploadStatus: videoRecord.get('uploadStatus').merge({
           name: 'running',
-          data: { progress: 0 }
-        }
-      }
-    })
-    return state
+          data: videoRecord.getIn(['uploadStatus', 'data']).merge({
+            progress: 0
+          })
+        })
+      })
+    )
   },
   [UPLOAD_PROGRESS]: (
     state: VideoRecordMap,
-    { payload }: Action<{ id: string, progress: number }>
+    { payload }: Action<{ id: string, progress: number }> = {}
   ): VideoRecordMap => {
-    if (!state.get(payload.id)) {
-      throw Error(`Unknown id: ${payload.id}`)
+    if (!payload || !state.get(payload.id)) {
+      throw Error(`Unknown id: ${(payload && payload.id) || 'undefined'}`)
     }
     return state.mergeDeep({
       [payload.id]: {
@@ -58,10 +64,10 @@ const reducer = {
   },
   [UPLOAD_LOCAL_SUCCESS]: (
     state: VideoRecordMap,
-    { payload }: Action<{ id: string, hash: string }>
+    { payload }: Action<{ id: string, hash: string }> = {}
   ): VideoRecordMap => {
-    if (!state.get(payload.id)) {
-      throw Error(`Unknown id: ${payload.id}`)
+    if (!payload || !state.get(payload.id)) {
+      throw Error(`Unknown id: ${(payload && payload.id) || 'undefined'}`)
     }
     const ipfsHashOrig = payload.hash
     state = state.mergeDeep({
@@ -81,8 +87,8 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<{ id: string, hash: string }>
   ): VideoRecordMap => {
-    if (!state.get(payload.id)) {
-      throw Error(`Unknown id: ${payload.id}`)
+    if (!payload || !state.get(payload.id)) {
+      throw Error(`Unknown id: ${(payload && payload.id) || 'undefined'}`)
     }
     const ipfsHashOrig = payload.hash
     return state.mergeDeep({
@@ -99,40 +105,56 @@ const reducer = {
   },
   [UPDATE_VIDEO_INFO]: (
     state: VideoRecordMap,
-    { payload }: Action<VideoRecord>
+    { payload }: Action<{ id: string, title: string, description: string }> = {}
   ): VideoRecordMap => {
-    state = state.setIn([payload.id, 'title'], payload.title)
-    state = state.setIn([payload.id, 'description'], payload.description)
+    if (!payload || !payload.id || !state.get(payload.id)) {
+      return state
+    }
     return state
+      .setIn([payload.id, 'title'], payload.title)
+      .setIn([payload.id, 'description'], payload.description)
   },
   [VIDEO_DATA_START]: (
     state: VideoRecordMap,
-    { payload }: Action<VideoRecord>
+    { payload }: Action<VideoRecord> = {}
   ): VideoRecordMap => {
-    state = state.setIn([payload.id, 'blockchainStatus'], {
-      name: 'running',
-      data: {
-        id: payload.id,
-        title: payload.title,
-        description: payload.description,
-        owner: payload.owner
-      }
-    })
+    if (!payload || !payload.id || !state.get(payload.id)) {
+      return state
+    }
+
+    state = state.setIn(
+      [payload.id, 'blockchainStatus'],
+      new AsyncTaskStatusRecord({
+        name: 'running',
+        data: new DataStatusRecord({
+          id: payload.id,
+          title: payload.title,
+          description: payload.description,
+          owner: payload.owner
+        })
+      })
+    )
     return state
   },
   [VIDEO_DATA_SAVED]: (
     state: VideoRecordMap,
-    { payload }: Action<VideoRecord>
+    { payload }: Action<VideoRecord> = {}
   ): VideoRecordMap => {
-    state = state.setIn([payload.id, 'blockchainStatus'], {
-      name: 'success',
-      data: {
-        id: payload.id,
-        title: payload.title,
-        description: payload.description,
-        owner: payload.owner
-      }
-    })
+    if (!payload || !payload.id || !state.get(payload.id)) {
+      return state
+    }
+    state = state.setIn(
+      [payload.id, 'blockchainStatus'],
+      new AsyncTaskStatusRecord({
+        name: 'success',
+        data: new DataStatusRecord({
+          id: payload.id,
+          title: payload.title,
+          description: payload.description,
+          owner: payload.owner
+        })
+      })
+    )
     state = state.setIn([payload.id, 'title'], payload.title)
     state = state.setIn([payload.id, 'description'], payload.description)
     return state
