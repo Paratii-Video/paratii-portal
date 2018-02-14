@@ -37,6 +37,7 @@ const reducer = {
       payload.id,
       videoRecord.merge({
         filename: payload.filename,
+        filesize: payload.filesize,
         uploadStatus: videoRecord.get('uploadStatus').merge({
           name: 'running',
           data: videoRecord.getIn(['uploadStatus', 'data']).merge({
