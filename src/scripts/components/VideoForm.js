@@ -187,7 +187,7 @@ class VideoForm extends Component<Props, Object> {
     const thumbImages =
       video &&
       video.getIn(['transcodingStatus', 'data', 'sizes', 'screenshots'])
-    const ipfsHash = video && video.get('ipfsHash')
+    const ipfsHash = (video && video.get('ipfsHash')) || ''
     let thumbImage = ''
     if (thumbImages) {
       thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${thumbImages.get(
