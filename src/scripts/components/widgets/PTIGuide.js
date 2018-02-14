@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
-import Anchor from 'components/foundations/buttons/Anchor'
-import Button from 'components/foundations/buttons/Button'
+import Button from 'components/foundations/Button'
 import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
 
@@ -74,6 +73,8 @@ const Index = styled.div`
   padding: 0 5px;
   pointer-events: none;
 `
+
+const Anchor = Button.withComponent('a')
 
 class PTIGuide extends Component<Props, void> {
   constructor (props) {
@@ -198,7 +199,12 @@ class PTIGuide extends Component<Props, void> {
                   you&apos;re willing to claim some extra test PTIs, ask
                   questions, or make suggestions about the token&apos;s feature
                   set itself, don&apos;t hesitate to{' '}
-                  <Anchor purple href="mailto:we@paratii.video" target="_blank">
+                  <Anchor
+                    anchor
+                    purple
+                    href="mailto:we@paratii.video"
+                    target="_blank"
+                  >
                     get in touch.
                   </Anchor>
                 </Text>

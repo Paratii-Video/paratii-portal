@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
 
 import Card from 'components/structures/Card'
-import Button from './foundations/buttons/Button'
+import Button from './foundations/Button'
 import Input from './widgets/forms/TextField'
 import Textarea from './widgets/forms/TextareaField'
 import RadioCheck, {

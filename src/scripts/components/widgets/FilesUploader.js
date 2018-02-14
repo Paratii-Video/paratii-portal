@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
-import Button from '../foundations/buttons/Button'
+import Button from '../foundations/Button'
 import TextField from '../widgets/forms/TextField'
 import Card from 'components/structures/Card'
 

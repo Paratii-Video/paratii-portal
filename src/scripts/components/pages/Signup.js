@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import SignupFormContainer from 'containers/SignupFormContainer'
-import Anchor from 'components/foundations/buttons/Anchor'
+import Button from 'components/foundations/Button'
 import Card from 'components/structures/Card'
 
 const FooterText = styled.p`
   font-size: ${props => props.theme.fonts.text.small};
 `
-const NavLink = Anchor.withComponent(Link)
+const NavLink = Button.withComponent(Link)
 
 class Signup extends Component {
   render () {
@@ -19,7 +19,7 @@ class Signup extends Component {
           footer={
             <FooterText>
               Already have an account?
-              <NavLink underline="true" to="/login">
+              <NavLink anchor="true" to="/login">
                 Log in
               </NavLink>
             </FooterText>
