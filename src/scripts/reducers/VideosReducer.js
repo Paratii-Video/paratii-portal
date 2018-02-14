@@ -211,15 +211,23 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    return state.setIn([payload.id, 'transcodingStatus'], {
-      name: 'failed',
-      data: {}
-    })
+    if (!payload || !payload.id || !state.get(payload.id)) {
+      return state
+    }
+    return state.setIn(
+      [payload.id, 'transcodingStatus'],
+      new AsyncTaskStatusRecord({
+        name: 'failed'
+      })
+    )
   },
   [VIDEO_LOADED]: (
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
+    if (!payload || !payload.get('id')) {
+      return state
+    }
     return state.set(payload.get('id'), payload)
   },
   [VIDEOFETCH_ERROR]: (

@@ -960,7 +960,7 @@ describe.only('Video Reducer', () => {
       })
     })
   })
-  describe.only('TRANSCODING_SUCCESS', () => {
+  describe('TRANSCODING_SUCCESS', () => {
     it('should do nothing if there is no payload', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
@@ -1129,6 +1129,236 @@ describe.only('Video Reducer', () => {
               }
             }
           }
+        }
+      })
+    })
+  })
+  describe('TRANSCODING_FAILURE', () => {
+    it('should do nothing if there is no payload', () => {
+      const store = createStore(reducer)
+      expect(store.getState().toJS()).to.deep.equal({})
+      store.dispatch({
+        type: TRANSCODING_FAILURE
+      })
+      expect(store.getState().toJS()).to.deep.equal({})
+    })
+    it('should do nothing when there is no id in the payload', () => {
+      const store = createStore(
+        reducer,
+        Immutable.Map({
+          '999': new VideoRecord()
+        })
+      )
+      expect(store.getState().toJS()).to.deep.equal({
+        '999': getDefaultVideo()
+      })
+      store.dispatch({
+        type: TRANSCODING_FAILURE,
+        payload: {
+          foo: 'bar'
+        }
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '999': getDefaultVideo()
+      })
+    })
+    it('should do nothing when there is no matching id in the store', () => {
+      const store = createStore(
+        reducer,
+        Immutable.Map({
+          '123': new VideoRecord({}),
+          '999': new VideoRecord({})
+        })
+      )
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': getDefaultVideo(),
+        '999': getDefaultVideo()
+      })
+      store.dispatch({
+        type: TRANSCODING_FAILURE,
+        payload: {
+          id: '111'
+        }
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': getDefaultVideo(),
+        '999': getDefaultVideo()
+      })
+    })
+    it('should update the transcoding status of the matching video in the store', () => {
+      const store = createStore(
+        reducer,
+        Immutable.Map({
+          '123': new VideoRecord({}),
+          '999': new VideoRecord({}),
+          '888': new VideoRecord({
+            title: 'foobar',
+            ipfsHash: 'q82gh20',
+            description: 'great video',
+            uploadStatus: new AsyncTaskStatusRecord({
+              name: 'uploaded to transcoder node'
+            }),
+            transcodingStatus: new AsyncTaskStatusRecord({
+              name: 'running'
+            })
+          })
+        })
+      )
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': getDefaultVideo(),
+        '999': getDefaultVideo(),
+        '888': {
+          ...getDefaultVideo(),
+          title: 'foobar',
+          ipfsHash: 'q82gh20',
+          description: 'great video',
+          uploadStatus: {
+            ...getDefaultAsyncTaskStatus(),
+            name: 'uploaded to transcoder node'
+          },
+          transcodingStatus: {
+            ...getDefaultAsyncTaskStatus(),
+            name: 'running'
+          }
+        }
+      })
+      store.dispatch({
+        type: TRANSCODING_FAILURE,
+        payload: {
+          id: '888'
+        }
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': getDefaultVideo(),
+        '999': getDefaultVideo(),
+        '888': {
+          ...getDefaultVideo(),
+          title: 'foobar',
+          description: 'great video',
+          ipfsHash: 'q82gh20',
+          uploadStatus: {
+            ...getDefaultAsyncTaskStatus(),
+            name: 'uploaded to transcoder node'
+          },
+          transcodingStatus: {
+            ...getDefaultAsyncTaskStatus(),
+            name: 'failed'
+          }
+        }
+      })
+    })
+  })
+  describe.only('VIDEO_LOADED', () => {
+    it('should add a new video to an empty store', () => {
+      const store = createStore(reducer)
+      expect(store.getState().toJS()).to.deep.equal({})
+      const newVideo = new VideoRecord({
+        id: '222',
+        title: 'foobar',
+        ipfsHash: 'q999'
+      })
+      store.dispatch({
+        type: VIDEO_LOADED,
+        payload: newVideo
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '222': {
+          ...getDefaultVideo(),
+          id: '222',
+          title: 'foobar',
+          ipfsHash: 'q999'
+        }
+      })
+    })
+    it('should do nothing if there is no payload', () => {
+      const store = createStore(reducer)
+      expect(store.getState().toJS()).to.deep.equal({})
+      store.dispatch({
+        type: VIDEO_LOADED
+      })
+      expect(store.getState().toJS()).to.deep.equal({})
+    })
+    it('should do nothing if the payload is missing an id', () => {
+        const store = createStore(reducer)
+        expect(store.getState().toJS()).to.deep.equal({})
+        const newVideo = new VideoRecord({
+          id: undefined,
+          title: 'foobar',
+          ipfsHash: 'q999'
+        })
+        store.dispatch({
+          type: VIDEO_LOADED,
+          payload: newVideo
+        })
+        expect(store.getState().toJS()).to.deep.equal({})
+    })
+    it('should add a new video to a store with other videos', () => {
+      const newVideo = new VideoRecord({
+        id: '222',
+        title: 'foobar',
+        ipfsHash: 'q999'
+      })
+      const store = createStore(
+        reducer,
+        Immutable.Map({
+          '888': new VideoRecord({
+            description: 'baz'
+          }),
+          '444': new VideoRecord({
+            title: 'foo',
+            transcodingStatus: new AsyncTaskStatusRecord({
+              name: 'running',
+              data: new DataStatusRecord({
+                progress: 0
+              })
+            })
+          })
+        })
+      )
+      expect(store.getState().toJS()).to.deep.equal({
+        '888': {
+          ...getDefaultVideo(),
+          description: 'baz'
+        },
+        '444': {
+          ...getDefaultVideo(),
+          title: 'foo',
+          transcodingStatus: {
+            ...getDefaultAsyncTaskStatus(),
+            name: 'running',
+            data: {
+              ...getDefaultDataStatus(),
+              progress: 0
+            }
+          }
+        }
+      })
+      store.dispatch({
+        type: VIDEO_LOADED,
+        payload: newVideo
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '888': {
+          ...getDefaultVideo(),
+          description: 'baz'
+        },
+        '444': {
+          ...getDefaultVideo(),
+          title: 'foo',
+          transcodingStatus: {
+            ...getDefaultAsyncTaskStatus(),
+            name: 'running',
+            data: {
+              ...getDefaultDataStatus(),
+              progress: 0
+            }
+          }
+        },
+        '222': {
+          ...getDefaultVideo(),
+          id: '222',
+          title: 'foobar',
+          ipfsHash: 'q999'
         }
       })
     })
