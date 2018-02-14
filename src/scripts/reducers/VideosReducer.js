@@ -163,10 +163,16 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    return state.setIn([payload.id, 'transcodingStatus'], {
-      name: 'requested',
-      data: {}
-    })
+    if (!payload || !payload.id || !state.get(payload.id)) {
+      return state
+    }
+    return state.setIn(
+      [payload.id, 'transcodingStatus'],
+      new AsyncTaskStatusRecord({
+        name: 'requested',
+        data: new DataStatusRecord({})
+      })
+    )
   },
   [TRANSCODING_PROGRESS]: (
     state: VideoRecordMap,
@@ -181,20 +187,25 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<{ id: string, sizes: Object }>
   ): VideoRecordMap => {
-    const ipfsHash = payload.sizes.master.hash
-    state = state.mergeDeep({
-      [payload.id]: {
-        ipfsHash: ipfsHash,
-        transcodingStatus: {
-          name: 'success',
-          data: {
-            ipfsHash: ipfsHash,
-            sizes: payload.sizes
-          }
-        }
-      }
-    })
-    return state
+    if (!payload || !payload.id || !state.get(payload.id)) {
+      return state
+    }
+    const ipfsHash =
+      payload.sizes && payload.sizes.master && payload.sizes.master.hash
+    if (!ipfsHash) {
+      return state
+    }
+
+    return state.setIn([payload.id, 'ipfsHash'], ipfsHash).setIn(
+      [payload.id, 'transcodingStatus'],
+      new AsyncTaskStatusRecord({
+        name: 'success',
+        data: new DataStatusRecord({
+          ipfsHash,
+          sizes: Immutable.Map(payload.sizes)
+        })
+      })
+    )
   },
   [TRANSCODING_FAILURE]: (
     state: VideoRecordMap,
