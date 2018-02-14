@@ -35,7 +35,7 @@ jobs:
       - run:
           command: yarn run server:dev
           background: true
-      - run: yarn run chimp-test
+      - run: node src/scripts/waitForServer.js && yarn run chimp-test
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
