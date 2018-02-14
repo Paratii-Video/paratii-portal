@@ -191,7 +191,7 @@ class VideoForm extends Component<Props, Object> {
     const thumbImages =
       video &&
       video.getIn(['transcodingStatus', 'data', 'sizes', 'screenshots'])
-    const fileSize = prettyBytes(video.filesize)
+    const fileSize = prettyBytes((video && video.get('filesize')) || 0)
     const ipfsHash = (video && video.get('ipfsHash')) || ''
     let thumbImage = ''
     if (thumbImages) {
