@@ -232,14 +232,15 @@ const reducer = {
     if (!payload || !payload.id) {
       return state
     }
-    return state.mergeDeep({
-      [payload.id]: new VideoRecord({
+    return state.set(
+      payload.id,
+      new VideoRecord({
         fetchStatus: new AsyncTaskStatusRecord({
           name: 'failed',
           data: new DataStatusRecord({ error: payload.error.message })
         })
       })
-    })
+    )
   },
   [VIDEOFETCH_SUCCESS]: (
     state: VideoRecordMap,
