@@ -176,8 +176,6 @@ class VideoForm extends Component<Props, Object> {
 
   handleSubmit (e: Object) {
     e.preventDefault()
-    console.log('!!!!!  handlesubmit')
-    console.log(this.state.title)
     const videoToSave = {
       id: this.state.id,
       title: this.state.title,
@@ -192,7 +190,6 @@ class VideoForm extends Component<Props, Object> {
       video &&
       video.getIn(['transcodingStatus', 'data', 'sizes', 'screenshots'])
     const fileSize = prettyBytes((video && video.get('filesize')) || 0)
-    console.log(video)
     const ipfsHash = (video && video.get('ipfsHash')) || ''
     let thumbImage = ''
     if (thumbImages) {

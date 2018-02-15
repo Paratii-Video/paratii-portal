@@ -41,7 +41,6 @@ describe('🎥 Player:', function () {
     // Close modal
     // browser.waitForExist('#loginModal')
     // browser.click('#btn-editprofile-close')
-    // browser.pause(2000)
     browser.waitAndClick('#next-video-button')
     browser.waitForExist('.player-overlay')
     assert.equal(browser.getText('.player-title'), 'Test 2')
@@ -87,7 +86,6 @@ describe('🎥 Player:', function () {
   describe('portal player', () => {
     it('plays a video automatically', () => {
       browser.url(`http://localhost:8080/play/${videoId}`)
-      browser.pause(1000)
       browser.waitUntilVideoIsPlaying()
     })
     it('video not found', () => {
@@ -114,7 +112,6 @@ describe('🎥 Player:', function () {
   describe('embedded player', () => {
     it('plays a video automatically', () => {
       browser.url(`http://localhost:8080/embed/${videoId}`)
-      browser.pause(1000)
       browser.waitUntilVideoIsPlaying()
     })
     it.skip('shows the video title on the overlay', function () {
