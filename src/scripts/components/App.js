@@ -45,6 +45,7 @@ class App extends Component<Props, void> {
     this.props.initializeApp()
 
     this.state = {
+      modalContent: Object,
       showModal: false
     }
 
@@ -52,8 +53,10 @@ class App extends Component<Props, void> {
     this.closeModal = this.closeModal.bind(this)
   }
 
-  showModal (view) {
+  showModal (View) {
+    console.log('showModal', View)
     this.setState({
+      modalContent: View,
       showModal: true
     })
   }
@@ -69,7 +72,11 @@ class App extends Component<Props, void> {
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
-          <Modal show={this.state.showModal} closeModal={this.closeModal} />
+          <Modal
+            show={this.state.showModal}
+            closeModal={this.closeModal}
+            content={this.state.modalContent}
+          />
 
           <MainHeader />
           <Main>

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Btn from 'components/foundations/Button'
 import HR from 'components/foundations/HR'
 import styled from 'styled-components'
+import ModalStake from 'components/widgets/modals/ModalStake'
 
 type Props = {
   showModal: Object
@@ -13,20 +14,13 @@ const Wrapper = styled.div`
   width: 200px;
 `
 
-const view = styled.div`
-  background: purple;
-  height: 100px;
-  width: 100px;
-`
-
 class Home extends Component<Props, void> {
   render () {
     return (
       <Wrapper>
-        <HR />
         <Btn
           onClick={() => {
-            this.props.showModal(view)
+            this.props.showModal(<ModalStake />)
           }}
           purple
         >

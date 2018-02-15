@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 
 type Props = {
-  children: Object,
+  content: Object,
   closeModal: Object,
   show: Boolean
 }
@@ -38,10 +38,10 @@ const Container = styled.div`
   background: ${props => props.theme.colors.Modal.content};
   position: relative;
   opacity: ${props => (props.show ? '1' : '0')};
-  transform: translate3d(0, ${props => (props.show ? '' : '50%')}, 0);
+  transform: translate3d(0, ${props => (props.show ? '' : '100px')}, 0);
   transition: transform ${props => (props.show ? '0.8s' : '0.6s')}
       ${props => props.theme.animation.ease.smooth},
-    opacity ${props => props.theme.animation.time.repaint} linear
+    opacity ${props => (props.show ? '0.3s' : '0.2s')} linear
       ${props => (props.show ? '0.1s' : '')};
   width: 490px;
   z-index: 2;
@@ -79,7 +79,7 @@ class Modal extends Component<Props, void> {
               <use xlinkHref="#icon-close" />
             </SVG>
           </CloseButton>
-          <Content>{this.props.children}</Content>
+          <Content>{this.props.content}</Content>
         </Container>
         <Background show={this.props.show} />
       </Wrapper>
