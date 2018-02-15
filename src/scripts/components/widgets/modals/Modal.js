@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from 'components/foundations/Button'
-import { createStore } from 'redux'
 
 type Props = {
-  content: Object,
+  children: Object,
+  closeModal: Object,
   show: Boolean
 }
 
@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   height: 100%;
   justify-content: center;
   left: 0;
+  pointer-events: ${props => (props.show ? '' : 'none')};
   position: fixed;
   top: 0;
   width: 100%;
@@ -36,6 +37,12 @@ const Background = styled.span`
 const Container = styled.div`
   background: ${props => props.theme.colors.Modal.content};
   position: relative;
+  opacity: ${props => (props.show ? '1' : '0')};
+  transform: translate3d(0, ${props => (props.show ? '' : '50%')}, 0);
+  transition: transform ${props => (props.show ? '0.8s' : '0.6s')}
+      ${props => props.theme.animation.ease.smooth},
+    opacity ${props => props.theme.animation.time.repaint} linear
+      ${props => (props.show ? '0.1s' : '')};
   width: 490px;
   z-index: 2;
 `
@@ -46,6 +53,7 @@ const CloseButton = styled(Button)`
   right: 30px;
   top: 30px;
   width: 20px;
+  z-index: 3;
 `
 
 const SVG = styled.svg`
@@ -61,47 +69,19 @@ const Content = styled.div`
   width: 100%;
 `
 
-const reducer = (initialState = 0, action) => {
-  console.log((initialState = 0), action)
-}
-
-export const store = createStore(reducer, 1)
-
-store.subscribe(() => {
-  console.log('store changed', store.getState())
-})
-
 class Modal extends Component<Props, void> {
-  constructor (props: Props) {
-    super(props)
-
-    this.state = {
-      show: this.props.show
-    }
-
-    this.closeModal = this.closeModal.bind(this)
-  }
-
-  closeModal () {
-    this.setState({
-      show: !this.state.show
-    })
-  }
-
   render () {
     return (
-      <Wrapper show={this.state.show}>
-        <Container show={this.state.show}>
-          <CloseButton onClick={this.closeModal}>
+      <Wrapper show={this.props.show}>
+        <Container show={this.props.show}>
+          <CloseButton onClick={this.props.closeModal}>
             <SVG>
               <use xlinkHref="#icon-close" />
             </SVG>
           </CloseButton>
-          <Content>
-            <this.props.content />
-          </Content>
+          <Content>{this.props.children}</Content>
         </Container>
-        <Background show={this.state.show} />
+        <Background show={this.props.show} />
       </Wrapper>
     )
   }

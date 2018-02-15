@@ -14,6 +14,7 @@ import VideoManager from 'containers/VideoManagerContainer'
 import type { Match } from 'react-router-dom'
 
 import MainTemplate from './templates/MainTemplate'
+import Modal from './widgets/modals/Modal'
 import MainHeader from './structures/header/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/footer/MainFooter'
@@ -42,6 +43,25 @@ class App extends Component<Props, void> {
     super(props)
 
     this.props.initializeApp()
+
+    this.state = {
+      showModal: false
+    }
+
+    this.showModal = this.showModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+  }
+
+  showModal (view) {
+    this.setState({
+      showModal: true
+    })
+  }
+
+  closeModal (view) {
+    this.setState({
+      showModal: false
+    })
   }
 
   render () {
@@ -49,10 +69,16 @@ class App extends Component<Props, void> {
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
+          <Modal show={this.state.showModal} closeModal={this.closeModal} />
+
           <MainHeader />
           <Main>
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route
+                exact
+                path="/"
+                render={props => <Home showModal={this.showModal} />}
+              />
               <Route path={`${match.url}signup`} component={SignupContainer} />
               <Route path={`${match.url}login`} component={LoginContainer} />
               <Route
