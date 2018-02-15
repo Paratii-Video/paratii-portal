@@ -221,7 +221,7 @@ class VideoForm extends Component<Props, Object> {
               id="video-id"
               type="hidden"
               value={this.state.id}
-              label="Id"
+              label="Title"
             />
             <Input
               label="Title"
