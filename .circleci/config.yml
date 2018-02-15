@@ -46,5 +46,5 @@ jobs:
               ./deploy.sh staging
             fi
             if [ "${CIRCLE_BRANCH}" == "feature/deploy-automation" ]; then
-              ./deploy.sh production
+              ./deploy.sh staging
             fi
