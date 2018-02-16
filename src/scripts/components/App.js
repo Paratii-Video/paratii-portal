@@ -54,7 +54,6 @@ class App extends Component<Props, void> {
   }
 
   showModal (View) {
-    console.log('showModal', View)
     this.setState({
       modalContent: View,
       showModal: true
