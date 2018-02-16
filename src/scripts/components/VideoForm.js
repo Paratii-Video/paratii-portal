@@ -25,6 +25,10 @@ type Props = {
 const VideoFormWrapper = styled.div`
   display: flex;
   width: 100%;
+
+  @media (max-width: 1024px) {
+    flex-wrap: wrap;
+  }
 `
 
 const VideoFormHeader = styled.div`
@@ -51,10 +55,19 @@ const VideoFormSubTitle = styled.p`
 const Form = styled.div`
   flex: 1 1 100%;
   margin-right: 45px;
+
+  @media (max-width: 1024px) {
+    flex: 1 1 100%;
+    margin: 0 0 50px;
+  }
 `
 
 const VideoFormInfos = styled.div`
   flex: 1 1 584px;
+
+  @media (max-width: 1024px) {
+    flex: 1 1 100%;
+  }
 `
 
 const VideoMedia = styled.div`
@@ -237,12 +250,12 @@ class VideoForm extends Component<Props, Object> {
               margin="0 0 30px"
             />
             <RadioWrapper>
-              <RadioTitle>Paid or free</RadioTitle>
+              <RadioTitle>What kind of content?</RadioTitle>
               <RadioCheck name="content-type" value="free">
-                Free content
+                Free
               </RadioCheck>
               <RadioCheck name="content-type" value="paid" nomargin disabled>
-                Paid content (not available yet)
+                Paid (not available yet)
               </RadioCheck>
             </RadioWrapper>
             <ButtonWrapper>

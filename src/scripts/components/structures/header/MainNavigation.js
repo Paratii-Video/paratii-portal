@@ -33,6 +33,9 @@ class MainNavigation extends Component<Props, void> {
       <Nav>
         <NavList>
           <NavItem>
+            <NavLink to="/my-videos">My videos</NavLink>
+          </NavItem>
+          <NavItem>
             <NavLink to="/upload">Upload video</NavLink>
           </NavItem>
           <NavItem>

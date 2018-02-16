@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
+import PTIGuideSvg from '../foundations/svgs/PTIGuideSvg'
 import Button from 'components/foundations/Button'
 import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
@@ -42,7 +42,7 @@ const Icon = styled.div`
 `
 
 const Content = styled.div`
-  padding: ${props => props.theme.sizes.card.padding};
+  padding: 40px 42px 0;
 `
 
 const TextStrong = styled(Text)`
@@ -114,7 +114,7 @@ class PTIGuide extends Component<Props, void> {
             <Item active={this.state.page === 0}>
               <Title>PTI Guide</Title>
               <Icon>
-                <FilesUploaderSvg />
+                <PTIGuideSvg />
               </Icon>
               <Content>
                 <TextStrong bold>
@@ -136,7 +136,7 @@ class PTIGuide extends Component<Props, void> {
             <Item active={this.state.page === 1}>
               <Title>PTI Guide</Title>
               <Icon>
-                <FilesUploaderSvg />
+                <PTIGuideSvg />
               </Icon>
               <Content>
                 <TextStrong bold>
@@ -160,7 +160,7 @@ class PTIGuide extends Component<Props, void> {
             <Item active={this.state.page === 2}>
               <Title>PTI Guide</Title>
               <Icon>
-                <FilesUploaderSvg />
+                <PTIGuideSvg />
               </Icon>
               <Content>
                 <TextStrong bold>
@@ -183,7 +183,7 @@ class PTIGuide extends Component<Props, void> {
             <Item active={this.state.page === 2}>
               <Title>PTI Guide</Title>
               <Icon>
-                <FilesUploaderSvg />
+                <PTIGuideSvg />
               </Icon>
               <Content>
                 <TextStrong bold>

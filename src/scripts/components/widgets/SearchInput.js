@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Button from 'components/foundations/Button'
 
 type Props = {}
 
@@ -20,7 +21,7 @@ const SearchInputField = styled.input`
   width: 100%;
 `
 
-const SearchInputButton = styled.button`
+const SearchInputButton = styled(Button)`
   flex-basis: ${props => props.theme.sizes.searchInputButton};
   height: ${props => props.theme.sizes.searchInputButton};
   margin-right: 10px;
