@@ -15,7 +15,7 @@ import VideoForm from './VideoFormContainer'
 import UploadFile from './UploadFileContainer'
 
 import Card, { CardContainer } from 'components/structures/Card'
-import Button from 'components/foundations/buttons/Button'
+import Button from 'components/foundations/Button'
 import PTIGuide from 'components/widgets/PTIGuide'
 import RedeemVoucher from 'components/widgets/RedeemVoucher'
 

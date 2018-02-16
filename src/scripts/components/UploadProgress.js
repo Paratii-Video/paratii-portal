@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import type { VideoRecord } from 'records/VideoRecords'
 import Wrapper from './foundations/Wrapper'
-import Button from './foundations/buttons/Button'
+import Button from './foundations/Button'
 
 type Props = {
   progress: number,

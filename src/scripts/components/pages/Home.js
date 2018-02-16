@@ -1,22 +1,31 @@
 import React, { Component } from 'react'
-import Anchor from '../foundations/buttons/Anchor'
-import Button from '../foundations/buttons/Button'
-import NavLink from '../foundations/buttons/NavLink'
+import Btn from 'components/foundations/Button'
+import styled from 'styled-components'
 
 type Props = {}
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+  width: 200px;
+`
+
+const Anchor = Btn.withComponent('a')
 
 class Home extends Component<Props, void> {
   render () {
     return (
-      <div>
-        <Anchor purple underline>
+      <Wrapper>
+        <Btn>Paratii</Btn>
+        <Btn white>Paratii</Btn>
+        <Btn purple>Paratii</Btn>
+        <Btn underline>Paratii</Btn>
+        <Anchor white anchor>
           Paratii
         </Anchor>
-        <Button purple>Paratii</Button>
-        <NavLink purple="true" to="/">
+        <Anchor purple anchor>
           Paratii
-        </NavLink>
-      </div>
+        </Anchor>
+      </Wrapper>
     )
   }
 }

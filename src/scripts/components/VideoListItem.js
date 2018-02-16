@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
-import NavLink from 'components/foundations/buttons/NavLink'
+import { Link } from 'react-router-dom'
+import Button from 'components/foundations/Button'
 import type { VideoRecord } from 'records/VideoRecords'
 import VideoProgressBar from 'components/widgets/VideoForm/VideoProgressBar'
 
@@ -68,6 +68,8 @@ const Bar = styled.div`
   position: absolute;
   width: 100%;
 `
+
+const NavLink = Button.withComponent(Link)
 
 class UploadListItem extends Component<Props, void> {
   constructor (props) {
