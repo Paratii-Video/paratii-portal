@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
 
 import Card from 'components/structures/Card'
-import Button from './foundations/buttons/Button'
+import Button from './foundations/Button'
 import Input from './widgets/forms/TextField'
 import Textarea from './widgets/forms/TextareaField'
 import RadioCheck, {
@@ -14,6 +14,7 @@ import RadioCheck, {
 } from 'components/widgets/forms/RadioCheck'
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
+import { prettyBytes } from 'utils/AppUtils'
 
 type Props = {
   selectedVideo: ?VideoRecord,
@@ -24,6 +25,10 @@ type Props = {
 const VideoFormWrapper = styled.div`
   display: flex;
   width: 100%;
+
+  @media (max-width: 1024px) {
+    flex-wrap: wrap;
+  }
 `
 
 const VideoFormHeader = styled.div`
@@ -50,10 +55,19 @@ const VideoFormSubTitle = styled.p`
 const Form = styled.div`
   flex: 1 1 100%;
   margin-right: 45px;
+
+  @media (max-width: 1024px) {
+    flex: 1 1 100%;
+    margin: 0 0 50px;
+  }
 `
 
 const VideoFormInfos = styled.div`
   flex: 1 1 584px;
+
+  @media (max-width: 1024px) {
+    flex: 1 1 100%;
+  }
 `
 
 const VideoMedia = styled.div`
@@ -110,7 +124,10 @@ class VideoForm extends Component<Props, Object> {
       video: new VideoRecord(this.props.selectedVideo),
       uploadProgress: 0,
       transcodingProgress: 0,
-      totalProgress: 0
+      totalProgress: 0,
+      id: '',
+      title: '',
+      description: ''
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -155,13 +172,13 @@ class VideoForm extends Component<Props, Object> {
       ) {
         this.setState({ transcodingProgress: 100 })
       }
-
-      this.setState({
-        totalProgress: Math.round(
-          (this.state.uploadProgress + this.state.transcodingProgress) / 2
-        )
-      })
     }
+
+    this.setState((prevState, nextProps) => ({
+      totalProgress: Math.round(
+        (prevState.uploadProgress + prevState.transcodingProgress) / 2
+      )
+    }))
   }
 
   handleInputChange (input: string, e: Object) {
@@ -182,11 +199,10 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     const video: ?VideoRecord = this.props.selectedVideo
-    // const uploadProgress = video.getIn(['uploadStatus', 'data', 'progress'])
-    // const transcodingProgress = video.getIn(['transcodingStatus', 'data', 'progress'])
     const thumbImages =
       video &&
       video.getIn(['transcodingStatus', 'data', 'sizes', 'screenshots'])
+    const fileSize = prettyBytes((video && video.get('filesize')) || 0)
     const ipfsHash = (video && video.get('ipfsHash')) || ''
     let thumbImage = ''
     if (thumbImages) {
@@ -196,6 +212,9 @@ class VideoForm extends Component<Props, Object> {
     } else {
       thumbImage = 'http://paratii.video/public/images/paratii-src.png'
     }
+    // TODO get the correct image form transcoder, now hardocoded
+    // thumbImage = 'http://paratii.video/public/images/paratii-src.png'
+
     const state = JSON.stringify(this.state, null, 2)
     return (
       <Card full>
@@ -204,7 +223,7 @@ class VideoForm extends Component<Props, Object> {
           <Hidden>
             ({this.state.id} - {ipfsHash})
           </Hidden>{' '}
-          <VideoFormSubTitle purple>345MB</VideoFormSubTitle>
+          <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>
         </VideoFormHeader>
         <VideoFormWrapper>
           <Form>
@@ -231,12 +250,12 @@ class VideoForm extends Component<Props, Object> {
               margin="0 0 30px"
             />
             <RadioWrapper>
-              <RadioTitle>Paid or free</RadioTitle>
+              <RadioTitle>What kind of content?</RadioTitle>
               <RadioCheck name="content-type" value="free">
-                Free content
+                Free
               </RadioCheck>
               <RadioCheck name="content-type" value="paid" nomargin disabled>
-                Paid content (not available yet)
+                Paid (not available yet)
               </RadioCheck>
             </RadioWrapper>
             <ButtonWrapper>

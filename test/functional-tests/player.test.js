@@ -5,7 +5,7 @@ const fs = require('fs')
 const Promise = require('bluebird')
 const path = require('path')
 
-describe('Player:', function () {
+describe('🎥 Player:', function () {
   const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
   const videoId = 'foo'
 
@@ -41,7 +41,6 @@ describe('Player:', function () {
     // Close modal
     // browser.waitForExist('#loginModal')
     // browser.click('#btn-editprofile-close')
-    // browser.pause(2000)
     browser.waitAndClick('#next-video-button')
     browser.waitForExist('.player-overlay')
     assert.equal(browser.getText('.player-title'), 'Test 2')

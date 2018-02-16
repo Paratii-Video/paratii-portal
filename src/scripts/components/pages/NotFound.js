@@ -1,5 +1,5 @@
 import React from 'react'
-import Anchor from '../foundations/buttons/Anchor'
+import Button from '../foundations/Button'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -29,6 +29,8 @@ const Text = styled.p`
   line-height: 24px;
   margin-top: 45px;
 `
+
+const NavLink = Button.withComponent('a')
 
 const NotFound = () => (
   <Wrapper>
@@ -65,14 +67,14 @@ const NotFound = () => (
       This page is not available yet. A passionate team is either building it,
       or unaware of it, as of now. Want to help us move faster? Why don’t you
       report the issue on our{' '}
-      <Anchor
+      <NavLink
         href="https://github.com/Paratii-Video/"
         target="_blank"
-        underline
+        anchor
         purple
       >
         Github
-      </Anchor>?
+      </NavLink>?
     </Text>
   </Wrapper>
 )

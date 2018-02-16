@@ -3,8 +3,7 @@ import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import TextField from './forms/TextField'
-import Button from '../foundations/buttons/Button'
-import Anchor from '../foundations/buttons/Anchor'
+import Button from '../foundations/Button'
 import Text from '../foundations/Text'
 import Card from '../structures/Card'
 
@@ -27,8 +26,9 @@ const Wrapper = styled.div`
 `
 
 const SubmitButton = styled(Button)`
-  margin: 30px 0;
+  margin: 30px 0 0;
 `
+const Anchor = Button.withComponent('a')
 
 class RedeemVoucher extends Component<Props, Object> {
   redeemVoucher: (e: Object) => void
@@ -66,7 +66,7 @@ class RedeemVoucher extends Component<Props, Object> {
         footer={
           <Text small>
             Have no voucher?{' '}
-            <Anchor href="/" purple>
+            <Anchor href="/" purple anchor>
               Drop us a line
             </Anchor>{' '}
             and we might hand out some. Remember: these are testnet tokens. No

@@ -3,7 +3,7 @@ const Sizes = {
     height: '96px'
   },
   mainFooter: {
-    height: '192px'
+    height: '96px'
   },
   mainHeaderLogo: {
     height: '29px',

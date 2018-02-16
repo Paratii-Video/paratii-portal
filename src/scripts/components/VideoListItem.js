@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
-import NavLink from 'components/foundations/buttons/NavLink'
+import { Link } from 'react-router-dom'
+import Button from 'components/foundations/Button'
 import type { VideoRecord } from 'records/VideoRecords'
 import VideoProgressBar from 'components/widgets/VideoForm/VideoProgressBar'
 
@@ -50,7 +50,7 @@ const ListItemFileName = styled.h4`
   margin-bottom: 4px;
 `
 
-const ListItemStatus = styled.p`
+const ListItemStatus = styled.div`
   color: ${props =>
     props.done
       ? props.theme.colors.VideoList.done
@@ -68,6 +68,8 @@ const Bar = styled.div`
   position: absolute;
   width: 100%;
 `
+
+const NavLink = Button.withComponent(Link)
 
 class UploadListItem extends Component<Props, void> {
   constructor (props) {
@@ -103,21 +105,15 @@ class UploadListItem extends Component<Props, void> {
       this.setState({ transcodingProgress: 100 })
     }
 
-    this.setState({
+    this.setState((prevState, nextProps) => ({
       totalProgress: Math.round(
-        (this.state.uploadProgress + this.state.transcodingProgress) / 2
+        (prevState.uploadProgress + prevState.transcodingProgress) / 2
       )
-    })
+    }))
   }
 
   render () {
     const item = this.props.video
-    // let progress
-    // if (item.getIn(['uploadStatus', 'name']) === 'running') {
-    //   const progress = item.getIn(['uploadStatus', 'data', 'progress'])
-    //   this.setState({ uploadProgress: progress })
-    //   console.log(this.state)
-    // }
 
     let linkToVideo = ''
     // TODO; find out why getIn(['blockchainStatus', 'name']) is undefined
