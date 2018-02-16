@@ -14,6 +14,7 @@ import RadioCheck, {
 } from 'components/widgets/forms/RadioCheck'
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
+import { prettyBytes } from 'utils/AppUtils'
 
 type Props = {
   selectedVideo: ?VideoRecord,
@@ -110,7 +111,10 @@ class VideoForm extends Component<Props, Object> {
       video: new VideoRecord(this.props.selectedVideo),
       uploadProgress: 0,
       transcodingProgress: 0,
-      totalProgress: 0
+      totalProgress: 0,
+      id: '',
+      title: '',
+      description: ''
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -155,13 +159,13 @@ class VideoForm extends Component<Props, Object> {
       ) {
         this.setState({ transcodingProgress: 100 })
       }
-
-      this.setState({
-        totalProgress: Math.round(
-          (this.state.uploadProgress + this.state.transcodingProgress) / 2
-        )
-      })
     }
+
+    this.setState((prevState, nextProps) => ({
+      totalProgress: Math.round(
+        (prevState.uploadProgress + prevState.transcodingProgress) / 2
+      )
+    }))
   }
 
   handleInputChange (input: string, e: Object) {
@@ -182,11 +186,10 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     const video: ?VideoRecord = this.props.selectedVideo
-    // const uploadProgress = video.getIn(['uploadStatus', 'data', 'progress'])
-    // const transcodingProgress = video.getIn(['transcodingStatus', 'data', 'progress'])
     const thumbImages =
       video &&
       video.getIn(['transcodingStatus', 'data', 'sizes', 'screenshots'])
+    const fileSize = prettyBytes((video && video.get('filesize')) || 0)
     const ipfsHash = (video && video.get('ipfsHash')) || ''
     let thumbImage = ''
     if (thumbImages) {
@@ -196,6 +199,9 @@ class VideoForm extends Component<Props, Object> {
     } else {
       thumbImage = 'http://paratii.video/public/images/paratii-src.png'
     }
+    // TODO get the correct image form transcoder, now hardocoded
+    // thumbImage = 'http://paratii.video/public/images/paratii-src.png'
+
     const state = JSON.stringify(this.state, null, 2)
     return (
       <Card full>
@@ -204,7 +210,7 @@ class VideoForm extends Component<Props, Object> {
           <Hidden>
             ({this.state.id} - {ipfsHash})
           </Hidden>{' '}
-          <VideoFormSubTitle purple>345MB</VideoFormSubTitle>
+          <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>
         </VideoFormHeader>
         <VideoFormWrapper>
           <Form>

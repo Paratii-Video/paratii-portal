@@ -59,13 +59,15 @@ describe('Video Reducer', () => {
         type: UPLOAD_REQUESTED,
         payload: {
           id: '111',
-          filename: 'bazbar.mp4'
+          filename: 'bazbar.mp4',
+          filesize: '11111'
         }
       })
       expect(store.getState().toJS()).to.deep.equal({
         '111': {
           ...getDefaultVideo(),
           filename: 'bazbar.mp4',
+          filesize: '11111',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'running',
@@ -103,7 +105,8 @@ describe('Video Reducer', () => {
         type: UPLOAD_REQUESTED,
         payload: {
           id: '111',
-          filename: 'bazbar.mp4'
+          filename: 'bazbar.mp4',
+          filesize: '11111'
         }
       })
       expect(store.getState().toJS()).to.deep.equal({
@@ -118,6 +121,7 @@ describe('Video Reducer', () => {
         '111': {
           ...getDefaultVideo(),
           filename: 'bazbar.mp4',
+          filesize: '11111',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'running',
@@ -141,6 +145,7 @@ describe('Video Reducer', () => {
           }),
           '111': new VideoRecord({
             title: 'test123',
+            filesize: '11111',
             uploadStatus: new AsyncTaskStatusRecord({
               name: 'running',
               data: new DataStatusRecord({
@@ -162,6 +167,7 @@ describe('Video Reducer', () => {
         '111': {
           ...getDefaultVideo(),
           title: 'test123',
+          filesize: '11111',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'running',
@@ -176,7 +182,8 @@ describe('Video Reducer', () => {
         type: UPLOAD_REQUESTED,
         payload: {
           id: '111',
-          filename: 'bazbar.mp4'
+          filename: 'bazbar.mp4',
+          filesize: '11111'
         }
       })
       expect(store.getState().toJS()).to.deep.equal({
@@ -192,6 +199,7 @@ describe('Video Reducer', () => {
           ...getDefaultVideo(),
           title: 'test123',
           filename: 'bazbar.mp4',
+          filesize: '11111',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'running',

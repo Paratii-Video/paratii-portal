@@ -18,6 +18,7 @@ export const getDefaultAsyncTaskStatus = () => ({
 export const getDefaultVideo = () => ({
   description: '',
   filename: null,
+  filesize: null,
   id: '',
   ipfsData: '',
   ipfsHashOrig: '',

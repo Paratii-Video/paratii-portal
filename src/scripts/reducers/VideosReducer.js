@@ -27,7 +27,7 @@ import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 const reducer = {
   [UPLOAD_REQUESTED]: (
     state: VideoRecordMap,
-    { payload }: Action<{ id: string, filename: string }> = {}
+    { payload }: Action<{ id: string, filename: string, filesize: number }>
   ): VideoRecordMap => {
     if (!payload || !payload.id) {
       return state
@@ -37,6 +37,7 @@ const reducer = {
       payload.id,
       videoRecord.merge({
         filename: payload.filename,
+        filesize: payload.filesize,
         uploadStatus: videoRecord.get('uploadStatus').merge({
           name: 'running',
           data: videoRecord.getIn(['uploadStatus', 'data']).merge({
