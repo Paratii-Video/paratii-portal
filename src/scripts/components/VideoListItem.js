@@ -121,7 +121,7 @@ class UploadListItem extends Component<Props, void> {
       item.getIn(['transcodingStatus', 'name']) === 'success' &&
       item.getIn(['blockchainStatus']).name === 'success'
     ) {
-      const link = `/embed/${item.id}`
+      const link = `/play/${item.id}`
       linkToVideo = (
         <Label>
           <p>Link</p>
