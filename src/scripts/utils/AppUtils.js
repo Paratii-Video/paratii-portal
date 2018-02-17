@@ -32,7 +32,7 @@ export const getParatiiConfig = (env: ?string = 'development'): Object => {
       break
   }
 
-  /// if a registry address is not given in the config file, we read it from the environment
+  // If a registry address is not given in the config file, we read it from the environment
   if (config.registryAddress === undefined) {
     const registryAddress = process.env.REGISTRY_ADDRESS
 
@@ -45,4 +45,16 @@ export const getParatiiConfig = (env: ?string = 'development'): Object => {
   }
 
   return config
+}
+
+export const prettyBytes = (num: ?number): string => {
+  if (num === null || num === undefined) {
+    num = 0
+  }
+  const UNITS = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+  const exponent = Math.min(Math.floor(Math.log10(num) / 3), UNITS.length - 1)
+  const numStr = Number((num / Math.pow(1000, exponent)).toPrecision(3))
+  const unit = UNITS[exponent]
+
+  return numStr + '' + unit
 }

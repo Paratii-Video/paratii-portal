@@ -39,7 +39,7 @@ describe('Profile and accounts workflow:', function () {
     keystore = JSON.parse(keystore)
     assert.isOk(keystore[0].address)
     // the paratii object in the browser should also know of the address
-    let paratiiConfigAddress = (await browser.execute(function () {
+    const paratiiConfigAddress = (await browser.execute(function () {
       return window.paratii.config.account.address
     })).value
     assert.isOk(paratiiConfigAddress)
@@ -53,11 +53,22 @@ describe('Profile and accounts workflow:', function () {
     browser.url(getPath('signup'))
 
     // fill in the form
-    browser.waitForEnabled('#signup-name')
-    browser.setValue('#signup-name', 'Guildenstern')
-    browser.setValue('#signup-email', 'guildenstern@rosencrantz.com')
-    browser.setValue('#signup-password', 'password')
-    browser.click('#signup-submit')
+    browser.waitForEnabled(
+      '[data-test-id="signup-form"] input[type="text"]:first-child'
+    )
+    browser.setValue(
+      '[data-test-id="signup-form"] input[type="text"]:first-child',
+      'Guildenstern'
+    )
+    browser.setValue(
+      '[data-test-id="signup-form"] input[type="text"]:nth-child(1)',
+      'guildenstern@rosencrantz.com'
+    )
+    browser.setValue(
+      '[data-test-id="signup-form"] input[type="password"]',
+      'password'
+    )
+    browser.click('[data-test-id="signup-form"] [type="submit"]')
 
     // the new user is automaticaly logged in after account creation
     // waitForUserIsLoggedIn(browser)
@@ -85,20 +96,26 @@ describe('Profile and accounts workflow:', function () {
 
     // fill form
     browser.url(getPath('login'))
-    browser.waitForEnabled('#login-email')
-    browser.setValue('#login-email', 'guildenstern@rosencrantz.com')
-    browser.setValue('#login-password', 'password')
-    browser.click('#login-submit')
+    browser.waitForEnabled('[data-test-id="login-form"] input[type="text"]')
+    browser.setValue(
+      '[data-test-id="login-form"] input[type="text"]',
+      'guildenstern@rosencrantz.com'
+    )
+    browser.setValue(
+      '[data-test-id="login-form"] input[type="password"]',
+      'password'
+    )
+    browser.click('[data-test-id="login-form"] [type="submit"]')
 
     // verify page
-    browser.waitForExist('#profile-email', 'page did not load')
+    browser.waitForExist('[data-test-id="profile-email"]', 'page did not load')
     assert.equal(
       browser.getUrl(),
       getPath('profile'),
       'not redirect to profile page'
     )
     assert.equal(
-      browser.getText('#profile-email'),
+      browser.getText('[data-test-id="profile-email"]'),
       'guildenstern@rosencrantz.com',
       'not same email'
     )
@@ -192,7 +209,7 @@ describe('Profile and accounts workflow:', function () {
     assertUserIsNotLoggedIn(browser)
 
     browser.waitForClickable('.main-alert.error')
-    let errorMsg = browser.getText('.main-alert.error p')
+    const errorMsg = browser.getText('.main-alert.error p')
     assert.equal(errorMsg, 'That email and password combination is incorrect.')
   })
 
@@ -224,7 +241,7 @@ describe('Profile and accounts workflow:', function () {
     browser.setValue('[name="field-password"]', 'password')
     browser.click('#btn-restorekeystore-restore')
     browser.waitUntil(function () {
-      let publicAddress = getEthAccountFromApp()
+      const publicAddress = getEthAccountFromApp()
       return publicAddress === USERADDRESS
     })
   })
@@ -250,7 +267,7 @@ describe('Profile and accounts workflow:', function () {
     // submit the form
     browser.click('#at-btn')
     browser.waitForClickable('.main-alert.error')
-    let errorMsg = browser.getText('.main-alert.error p')
+    const errorMsg = browser.getText('.main-alert.error p')
     assert.equal(errorMsg, 'Email already exists.')
   })
 

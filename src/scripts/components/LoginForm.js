@@ -1,9 +1,9 @@
 /* @flow */
 
 import React, { Component } from 'react'
-import styled from 'styled-components'
-import Button from './foundations/buttons/Button'
-import Input from './foundations/Input'
+import SignForm from 'components/foundations/forms/SignForm'
+import Button from 'components/foundations/Button'
+import TextField from 'components/widgets/forms/TextField'
 
 type Props = {
   onSubmit: () => void,
@@ -11,36 +11,29 @@ type Props = {
   isLoggingIn: boolean
 }
 
-const Form = styled.form`
-  font-size: 20px;
-  margin: 10px;
-`
-
 class LoginForm extends Component<Props, void> {
   render () {
     const { onSubmit, onInputChange } = this.props
     return (
-      <Form onSubmit={onSubmit}>
-        <Input
-          id="login-email"
+      <SignForm onSubmit={onSubmit} data-test-id="login-form">
+        <TextField
           type="text"
           onChange={e => onInputChange('email', e)}
-          placeholder="Email"
+          label="Email"
+          margin="0 0 30px"
+          disabled={this.props.isLoggingIn}
         />
-        <Input
-          id="login-password"
+        <TextField
           type="password"
           onChange={e => onInputChange('password', e)}
-          placeholder="Password"
-        />
-        <Button
-          id="login-submit"
-          type="submit"
+          label="Password"
+          margin="0 0 30px"
           disabled={this.props.isLoggingIn}
-        >
-          Login
+        />
+        <Button type="submit" disabled={this.props.isLoggingIn} purple>
+          Log in
         </Button>
-      </Form>
+      </SignForm>
     )
   }
 }

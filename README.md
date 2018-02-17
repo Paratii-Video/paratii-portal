@@ -7,9 +7,9 @@ A modular web-interface for uploading content into the peer-to-peer network behi
 
 * nodejs >= 8.9.0
 * yarn
+* libssl1.1 (for parity >= 1.8.7)
 * Install [parity](https://github.com/paritytech/parity) (ethereum client):
-   * `$ wget -q http://d1h4xl4cr1h0mo.cloudfront.net/v1.8.6/x86_64-unknown-debian-gnu/parity_1.8.6_amd64.deb`
-   * `sudo dpkg -i parity_1.8.6_amd64.deb`
+   * `bash <(curl https://get.parity.io -Lk)`
 
 If you are on a Mac, you may need to set the path to parity:
 
@@ -29,10 +29,6 @@ If you are on a Mac, you may need to set the path to parity:
 Currently, instead of using `yarn` to install dependencies the following steps must be taken:
 
     $ npm install
-    $ npm install web3@1.0.0-beta.29 --save
-
-This is due to [this issue](https://github.com/ethereum/web3.js/issues/966) in the `web3.js` project.
-
 
 ## Testing
 

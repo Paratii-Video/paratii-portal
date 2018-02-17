@@ -13,8 +13,8 @@ type Props = {
 
 class VideoStatus extends Component<Props, void> {
   render () {
-    let video = this.props.video
-    let videoLink = `/play/${video.get('id')}`
+    const video = this.props.video
+    const videoLink = `/play/${video.get('id')}`
     return (
       <Wrapper>
         <pre id="video-status">

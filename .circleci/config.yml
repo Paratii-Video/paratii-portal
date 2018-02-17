@@ -19,7 +19,6 @@ jobs:
       # when movign back to yarn, also the v1-dependencies key should be set back to `yarn-lock`
       # - run: yarn install --pure-lockfile
       - run: npm install
-      - run: npm install web3@1.0.0-beta.29 --save
       - save_cache:
           paths:
             - node_modules
@@ -36,12 +35,8 @@ jobs:
       - run:
           command: yarn run server:dev
           background: true
+      - run: node src/scripts/waitForServer.js
       - run: yarn run chimp-test
-      - run:
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              yarn run build
-            fi
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then

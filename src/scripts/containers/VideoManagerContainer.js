@@ -2,7 +2,6 @@ import { Map } from 'immutable'
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 
 import { setSelectedVideo } from 'actions/VideoActions'
 
@@ -13,21 +12,16 @@ import type { RootState } from 'types/ApplicationTypes'
 
 import VideoList from './VideoListContainer'
 import VideoForm from './VideoFormContainer'
-import Debug from './DebugContainer'
 import UploadFile from './UploadFileContainer'
 
-const Wrapper = styled.div`
-  background-color: ${props => props.theme.colors.body.background};
-  font-family: ${props =>
-    props.theme.fonts.family ? props.theme.fonts.family : 'Monospace'},
-    sans-serif;
-  display: flex;
-  flex-direction: row;
-`
+import Card, { CardContainer } from 'components/structures/Card'
+import Button from 'components/foundations/Button'
+import PTIGuide from 'components/widgets/PTIGuide'
+import RedeemVoucher from 'components/widgets/RedeemVoucher'
 
 type Props = {
   videos: Map<string, VideoRecord>,
-  selectedVideo: VideoRecord,
+  selectedVideo: ?VideoRecord,
   setSelectedVideo: Object => void
 }
 
@@ -43,20 +37,42 @@ class VideoManagerContainer extends Component<Props, void> {
   }
 
   render () {
+    const uploads = this.props.videos
     const selectedVideo =
       this.props.selectedVideo && this.props.selectedVideo.id
 
+    let videolist = null
+    if (uploads.size > 0) {
+      videolist = (
+        <VideoList
+          onItemClick={this.onVideoListItemClicked}
+          videos={this.props.videos}
+        />
+      )
+    }
+
     return (
-      <div>
-        <Wrapper>
-          <VideoList
-            onItemClick={this.onVideoListItemClicked}
-            videos={this.props.videos}
-          />
-          {selectedVideo === undefined ? <UploadFile /> : <VideoForm />}
-          <Debug />
-        </Wrapper>
-      </div>
+      <CardContainer>
+        {selectedVideo ? (
+          <Card
+            margin="0 25px 0 0"
+            nopadding
+            footer={
+              <Button onClick={() => this.onVideoListItemClicked(null)}>
+                Add more videos
+              </Button>
+            }
+          >
+            {videolist}
+          </Card>
+        ) : (
+          <UploadFile />
+        )}
+
+        {selectedVideo ? <VideoForm /> : <RedeemVoucher margin="0 25px" />}
+
+        {!selectedVideo && <PTIGuide />}
+      </CardContainer>
     )
   }
 }

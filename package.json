@@ -13,7 +13,7 @@
     "chimp-test:watch": "yarn run chimp-test --watch",
     "chimp-test:concurrently": "concurrently --kill-others --success first \"NODE_ENV=test yarn run dev\" \"yarn run chimp-test\"",
     "chimp-test:concurrently:watch": "concurrently --kill-others --success all \"NODE_ENV=test yarn run dev\" \"yarn run chimp-test --watch\"",
-    "deploy-contracts": "node src/scripts/deployContracts.js",
+    "setup-dev-env": "node src/scripts/setupDevEnv.js",
     "diagnose": "node src/scripts/diagnose.js",
     "dev": "concurrently \"yarn run build:dev\" \"yarn run server:dev\" \"yarn run parity\"",
     "flow": "flow",
@@ -23,16 +23,21 @@
     "lint:styles": "stylelint 'src/**/*.js'",
     "parity": "parity --config parity-config.toml",
     "precommit": "lint-staged",
-    "prep": "mkdir build/ && mkdir build/embed && cp src/index.html build/ && mkdir build/assets/",
+    "prep": "mkdir build/ && mkdir build/embed && cp src/index.html build/ && mkdir build/assets/ && cp -r src/assets/ build/assets/",
     "prettify": "prettier-standard src/**/*.js test/**/*.js",
     "quality": "yarn run lint:scripts && yarn run lint:styles && yarn run flow",
     "server": "NODE_ENV=production-notugly node src/server/index.js",
-    "server:dev": "NODE_ENV=development yarn run deploy-contracts && NODE_ENV=development nodemon src/server/index.js --watch node_modules src/server/index.js",
+    "server:dev": "NODE_ENV=development yarn run setup-dev-env && NODE_ENV=development nodemon src/server/index.js --watch node_modules src/server/index.js",
     "unit-test": "NODE_ENV=test karma start karma.conf.js",
     "unit-test:dev": "yarn run unit-test -- --single-run false"
   },
   "babel": {
     "env": {
+      "development": {
+        "plugins": [
+          "babel-plugin-styled-components"
+        ]
+      },
       "production": {
         "plugins": [
           "transform-flow-strip-types",
@@ -47,6 +52,8 @@
     "plugins": [
       "transform-flow-strip-types",
       "transform-object-rest-spread",
+      "transform-class-properties",
+      "syntax-dynamic-import",
       "react-hot-loader/babel"
     ]
   },
@@ -63,6 +70,9 @@
     "babel-loader": "^7.1.2",
     "babel-plugin-object-rest-spread": "^0.0.0",
     "babel-plugin-react-transform": "^3.0.0",
+    "babel-plugin-styled-components": "^1.5.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-regenerator": "^6.26.0",
@@ -119,22 +129,26 @@
   },
   "dependencies": {
     "bluebird": "^3.5.1",
+    "clappr": "^0.2.78",
     "immutable": "^3.8.2",
     "js-cookie": "^2.2.0",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#09aaed1025408a278c8d8284912b20a35d28420c",
-    "paratii-mediaplayer": "^0.2.2",
+    "lodash.debounce": "^4.0.8",
+    "paratii-lib": "github:Paratii-Video/paratii-lib#ecaf5e333c203524e5cceefea40640ad26c7cc31",
+    "paratii-mediaplayer": "^1.1.1",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
     "react-blockies": "^1.2.2",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
+    "react-transition-group": "^2.2.1",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "streamspeed": "^1.1.0",
     "styled-components": "^2.3.3",
-    "stylelint-config-prettier": "^2.0.0"
+    "stylelint-config-prettier": "^2.0.0",
+    "web3": "^1.0.0-beta.29"
   }
 }

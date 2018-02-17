@@ -1,47 +1,41 @@
 /* @flow */
 
 import React, { Component } from 'react'
-import styled from 'styled-components'
-import Button from './foundations/buttons/Button'
-import Input from './foundations/Input'
+import SignForm from 'components/foundations/forms/SignForm'
+import Button from 'components/foundations/Button'
+import TextField from 'components/widgets/forms/TextField'
 
 type Props = {
   onSubmit: () => void,
   onInputChange: (name: string, e: Object) => void
 }
-
-const Form = styled.form`
-  font-size: 20px;
-  margin: 10px;
-`
-
 class SignupForm extends Component<Props, void> {
   render () {
     const { onSubmit, onInputChange } = this.props
     return (
-      <Form onSubmit={onSubmit}>
-        <Input
-          id="signup-name"
+      <SignForm onSubmit={onSubmit} data-test-id="signup-form">
+        <TextField
           type="text"
           onChange={e => onInputChange('name', e)}
-          placeholder="Name"
+          label="Name"
+          margin="0 0 30px"
         />
-        <Input
-          id="signup-email"
+        <TextField
           type="text"
           onChange={e => onInputChange('email', e)}
-          placeholder="Email"
+          label="Email"
+          margin="0 0 30px"
         />
-        <Input
-          id="signup-password"
+        <TextField
           type="password"
           onChange={e => onInputChange('password', e)}
-          placeholder="Password"
+          label="Password"
+          margin="0 0 30px"
         />
-        <Button id="signup-submit" type="submit">
-          Register
+        <Button type="submit" purple>
+          Sign up
         </Button>
-      </Form>
+      </SignForm>
     )
   }
 }

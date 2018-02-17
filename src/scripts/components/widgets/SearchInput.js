@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Button from 'components/foundations/Button'
 
 type Props = {}
 
@@ -12,7 +13,7 @@ const SearchInputForm = styled.form`
 
 const SearchInputField = styled.input`
   background-color: transparent;
-  color: ${props => props.theme.colors.mainInput.color};
+  color: ${props => props.theme.colors.TextField.color};
   font-size: 14px;
   height: ${props => props.theme.sizes.mainInput.height};
   padding-left: 7px;
@@ -20,7 +21,7 @@ const SearchInputField = styled.input`
   width: 100%;
 `
 
-const SearchInputButton = styled.button`
+const SearchInputButton = styled(Button)`
   flex-basis: ${props => props.theme.sizes.searchInputButton};
   height: ${props => props.theme.sizes.searchInputButton};
   margin-right: 10px;

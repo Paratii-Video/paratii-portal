@@ -1,35 +1,41 @@
 /* @flow */
 
 import { Record as ImmutableRecord } from 'immutable'
-import AsyncTaskStatusRecord from './AsyncTaskStatusRecord'
+import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
 
 class Video extends ImmutableRecord({
-  blockchainStatus: new AsyncTaskStatusRecord(),
   description: '',
   filename: null,
+  filesize: null,
   id: '',
   ipfsData: '',
+  ipfsHashOrig: '',
   ipfsHash: '',
   owner: '',
   price: '',
   thumbnailUrl: '',
   title: '',
+  blockchainStatus: new AsyncTaskStatusRecord(),
   transcodingStatus: new AsyncTaskStatusRecord(),
   uploadStatus: new AsyncTaskStatusRecord(),
+  fetchStatus: new AsyncTaskStatusRecord(),
   url: ''
 }) {
-  blockchainStatus: AsyncTaskStatusRecord
   description: string
   filename: string
+  filesize: number
   id: string
   ipfsData: string
+  ipfsHashOrig: string
   ipfsHash: string
   owner: string
   price: string
   thumbnailUrl: string
   title: string
+  blockchainStatus: AsyncTaskStatusRecord
   transcodingStatus: AsyncTaskStatusRecord
   uploadStatus: AsyncTaskStatusRecord
+  fetchStatus: AsyncTaskStatusRecord
   url: string
 }
 

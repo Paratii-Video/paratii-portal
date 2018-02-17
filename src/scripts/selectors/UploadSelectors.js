@@ -38,8 +38,8 @@ export const getShowVideoInfo = createSelector(
 )
 
 export const getIpfsHash = createSelector([getUpload], upload => {
-  const uploadStatus = upload.getIn(['uploadStatus', 'name'])
+  const uploadStatus = upload.getIn(['transcodingStatus', 'name'])
   return uploadStatus === 'success'
-    ? upload.getIn(['uploadStatus', 'data', 'ipfsHash'])
+    ? upload.getIn(['transcodingStatus', 'data', 'ipfsHash'])
     : ''
 })

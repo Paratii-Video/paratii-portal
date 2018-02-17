@@ -2,56 +2,162 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
+
 import VideoRecord from 'records/VideoRecords'
 
-import Wrapper from './foundations/Wrapper'
+import type { Match } from 'react-router-dom'
 
 type Props = {
   video: ?VideoRecord,
-  match: {
-    params: {
-      id: String
-    }
-  }
-  // video:{
-  //   title: String
-  // }
+  match: Match,
+  isEmbed?: boolean,
+  onClick: (e: Object) => void
 }
+
+type State = {
+  openPopover: ?string,
+  buttons: {
+    profile: ?Class<React.Component<any>>
+  }
+}
+
+const overlayPadding: string = '48px'
 
 const Overlay = styled.div`
   width: 100%;
-  top: 0;
-  left: 0;
+  height: 100%;
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
   color: white;
-  background: rgba(0, 0, 0, 0.8);
-  position: absolute;
-  z-index: 10;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  padding: ${overlayPadding};
+  box-sizing: border-box;
 `
 
-class VideoOverlay extends Component<Props, void> {
-  render () {
-    const videoId = this.props.match.params.id
-    const video = this.props.video
-    if (video === undefined) {
-      return (
-        <Wrapper>
-          <Overlay id="video-overlay">
-            <h2>Video Overlay</h2>
-            <h5>This videow (with id {videoId}) could not be found!</h5>
-          </Overlay>
-        </Wrapper>
-      )
-    } else {
-      return (
-        <Wrapper>
-          <Overlay id="video-overlay">
-            <h2>Video Overlay</h2>
-            <h5>The video id is: {videoId}</h5>
-            Title: {(video && video.title) || 'This video has no (known) title'}
-          </Overlay>
-        </Wrapper>
+const TopBar = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const Title = styled.div`
+  font-size: 24px;
+  flex: 1 0 50%;
+`
+
+const ButtonGroup = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 0;
+  justify-content: flex-end;
+  opacity: ${({ hide }) => (hide ? 0 : 1)};
+`
+
+const ButtonWrapper = styled.div`
+  width: 25px;
+  height: 25px;
+`
+
+const PopoverWrapper = styled.div`
+  position: absolute;
+  top: ${overlayPadding};
+  right: ${overlayPadding};
+  width: 230px;
+  height: 110px;
+  display: ${props => (props.open ? 'block' : 'none')};
+  cursor: default;
+`
+
+class VideoOverlay extends Component<Props, State> {
+  onProfileButtonClick: (e: Object) => void
+  popoverWrapperRefCallback: (ref: HTMLElement) => void
+  popoverWrapperRef: ?HTMLElement
+
+  constructor (props: Props) {
+    super(props)
+
+    this.state = {
+      openPopover: null,
+      buttons: {
+        profile: null
+      }
+    }
+
+    this.loadEmbedPlugins()
+  }
+
+  loadEmbedPlugins () {
+    const { isEmbed } = this.props
+
+    if (isEmbed) {
+      import(/* webpackChunkName: ProfileButton */ 'components/widgets/PlayerPlugins/ProfileButton').then(
+        ProfileButtonModule => {
+          const ProfileButton: Class<
+            React.Component<any>
+          > = ((ProfileButtonModule.default: any): Class<React.Component<any>>)
+          this.setState(prevState => ({
+            buttons: {
+              ...prevState.buttons,
+              profile: ProfileButton
+            }
+          }))
+        }
       )
     }
+  }
+
+  getVideoTitle (): string {
+    const { video } = this.props
+
+    return (video && video.get('title')) || 'Video Title'
+  }
+
+  onProfileButtonClick = (e: Object): void => {
+    e.stopPropagation()
+    this.setState({
+      openPopover: 'profile'
+    })
+  }
+
+  closePopover = (e: Object): void => {
+    e.stopPropagation()
+    this.setState({
+      openPopover: null
+    })
+  }
+
+  popoverWrapperRefCallback = (ref: HTMLElement): void => {
+    this.popoverWrapperRef = ref
+  }
+
+  render () {
+    const { onClick } = this.props
+    const { openPopover } = this.state
+    const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
+      .profile
+    return (
+      <Overlay data-test-id="video-overlay" onClick={onClick}>
+        <TopBar>
+          <Title>{this.getVideoTitle()}</Title>
+          <ButtonGroup hide={!!this.state.openPopover}>
+            {ProfileButton ? (
+              <ButtonWrapper>
+                <ProfileButton
+                  onClick={this.onProfileButtonClick}
+                  onClose={this.closePopover}
+                  popoverPortal={this.popoverWrapperRef}
+                  popoverOpen={openPopover === 'profile'}
+                />
+              </ButtonWrapper>
+            ) : null}
+          </ButtonGroup>
+          <PopoverWrapper
+            open={!!openPopover}
+            innerRef={this.popoverWrapperRefCallback}
+          />
+        </TopBar>
+      </Overlay>
+    )
   }
 }
 
