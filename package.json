@@ -66,7 +66,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.3",
+    "babel-eslint": "^8.2.1",
     "babel-loader": "^7.1.2",
     "babel-plugin-object-rest-spread": "^0.0.0",
     "babel-plugin-react-transform": "^3.0.0",
@@ -87,7 +87,7 @@
     "cssnano": "^3.10.0",
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "eslint": "^4.13.1",
+    "eslint": "^4.16.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^11.0.0-beta.0",
     "eslint-plugin-flowtype": "^2.40.1",

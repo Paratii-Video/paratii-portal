@@ -30,6 +30,7 @@ if (process.env.NODE_ENV === 'production-notugly') {
 app.use(express.static(path.resolve(__dirname, '../../', 'build')))
 app.get('/embed/:id', videoRoute)
 app.get('*', (req, res) => {
+  console.log('test')
   res.sendFile(path.resolve(__dirname, '../../', 'build', 'index.html'))
 })
 
