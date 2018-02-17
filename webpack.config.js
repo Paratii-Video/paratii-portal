@@ -2,7 +2,6 @@ const webpack = require("webpack");
 const fs = require('fs');
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const MinifyPlugin = require("babel-minify-webpack-plugin");
 const path = require("path");
 
 const srcDir = path.resolve(__dirname, "src");
