@@ -42,7 +42,7 @@ class VideoList extends Component<Props, void> {
   render () {
     const footer = this.props.selectedVideo ? (
       <Button onClick={() => this.onVideoListItemClicked(null)}>
-        Add more videos
+        Add another video
       </Button>
     ) : (
       ''
