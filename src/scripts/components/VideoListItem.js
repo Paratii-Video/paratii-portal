@@ -10,11 +10,11 @@ type Props = {
   onClick: (id: string) => void
 }
 
-const Label = styled.div`
-  color: white;
-  font-weight: bold;
-  margin-bottom: 10px;
-`
+// const Label = styled.div`
+//   color: white;
+//   font-weight: bold;
+//   margin-bottom: 10px;
+// `
 
 const ListItem = styled.li`
   cursor: pointer;
@@ -113,38 +113,30 @@ class VideoListItem extends Component<Props, void> {
   }
 
   render () {
+    let statusMessage, isReady, linkToVideo
     const video = this.props.video
 
-    let linkToVideo = ''
-    // TODO; find out why getIn(['blockchainStatus', 'name']) is undefined
-    if (
-      video.getIn(['transcodingStatus', 'name']) === 'success' &&
-      video.getIn(['blockchainStatus']).name === 'success'
-    ) {
-      const link = `/play/${video.id}`
-      linkToVideo = (
-        <Label>
-          <p>Link</p>
-          <NavLink to={link}>Play video</NavLink>
-        </Label>
-      )
-    }
     const title = video.title || video.filename
+    if (video.blockchainStatus.name !== 'success') {
+      statusMessage = 'Please provide a title and description'
+      isReady = false
+    } else if (video.transcodingStatus.name === 'success') {
+      statusMessage = 'Your video is ready!'
+      isReady = true
+    }
+    if (isReady) {
+      const link = `/play/${video.id}`
+      linkToVideo = <NavLink to={link}>Play video</NavLink>
+    }
 
     return (
       <ListItem onClick={this.handleClick} id="video-list-item-{video.id}">
         <ListItemWrapper>
           <ListItemHeader>{title}</ListItemHeader>
-          <ListItemStatus done={this.state.uploadProgress === 100}>
-            {video.uploadStatus.name} - ({this.state.uploadProgress}%)
+          <ListItemStatus done={isReady}>
+            <b>{statusMessage}</b>
+            {linkToVideo}
           </ListItemStatus>
-          <ListItemStatus>saved?: {video.blockchainStatus.name}</ListItemStatus>
-          <ListItemStatus>
-            transcoded?:
-            {video.getIn(['transcodingStatus', 'name'])}
-          </ListItemStatus>
-          <ListItemStatus>{linkToVideo}</ListItemStatus>
-
           <Bar>
             <VideoProgressBar
               progress={this.state.totalProgress + '%'}

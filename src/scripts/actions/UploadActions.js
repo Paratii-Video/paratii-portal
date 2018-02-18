@@ -33,6 +33,7 @@ const transcodingProgress = createAction(TRANSCODING_PROGRESS)
 const transcodingSuccess = createAction(TRANSCODING_SUCCESS)
 const transcodingFailure = createAction(TRANSCODING_FAILURE)
 
+// upload the video to the local ipfs node
 export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   const newVideoId = paratii.eth.vids.makeId()
   dispatch(videoFetchSuccess(new VideoRecord({ id: newVideoId })))
@@ -48,9 +49,6 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   uploader.on('error', function (err) {
     console.log('[UPLOAD error]', err)
     throw err
-  })
-  uploader.on('progress', function (chunkLength, progressPercent) {
-    dispatch(uploadProgress({ id: newVideoId, progress: progressPercent }))
   })
   uploader.on('fileReady', function (file) {
     dispatch(
@@ -91,10 +89,10 @@ export const transcodeVideo = (videoInfo: Object) => async (
 
   transcoder.once('transcoding:progress', function (hash, size, percent) {
     // Once we have this, the file is fully uploaded to the transcoder
+    dispatch(uploadProgress({ id: videoInfo.id, progress: 100 }))
     dispatch(uploadSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
   })
   transcoder.on('transcoding:progress', function (hash, size, percent) {
-    // Once we have this, the file is fully uploaded to the transcoder
     dispatch(transcodingProgress(videoInfo, size, percent))
     console.log('TRANSCODER PROGRES', hash, size, percent)
   })
@@ -106,7 +104,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
     dispatch(uploadSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
     dispatch(transcodingSuccess({ id: videoInfo.id, hash: hash, sizes: sizes }))
     // console.log('TRANSCODER DONE', hash, sizes)
-    // paratii.core.vids.update(videoInfo.id, { ipfsHash: sizes.master.hash })
+    paratii.core.vids.update(videoInfo.id, { ipfsHash: sizes.master.hash })
   })
 }
 
@@ -121,17 +119,16 @@ export const saveVideoInfo = (videoInfo: Object) => async (
     dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
   }
   dispatch(videoDataStart(videoInfo))
-  console.log('SAVING', videoInfo)
+  // console.log('SAVING', videoInfo)
 
   paratii.core.vids
     .create(videoInfo)
     .then(videoInfo => {
-      // dispatch(updateVideoInfo(new VideoRecord(videoInfo)))
-      console.log('SAVED')
+      // console.log('SAVED')
       dispatch(videoDataSaved(videoInfo))
     })
     .catch(error => {
-      console.log(error)
+      // console.log(error)
       throw error
     })
 }
