@@ -144,43 +144,14 @@ class VideoForm extends Component<Props, Object> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    const nextSelectedVideo: ?VideoRecord = nextProps.selectedVideo
-    if (nextSelectedVideo) {
-      this.setState(nextSelectedVideo)
+    const selectedVideo: ?VideoRecord = nextProps.selectedVideo
+    if (selectedVideo) {
+      this.setState(selectedVideo)
       this.setState({
-        id: nextSelectedVideo.id,
-        title: nextSelectedVideo.title,
-        description: nextSelectedVideo.description
+        id: selectedVideo.id,
+        title: selectedVideo.title,
+        description: selectedVideo.description
       })
-
-      if (nextSelectedVideo.getIn(['uploadStatus', 'name']) === 'running') {
-        const progress = nextSelectedVideo.getIn([
-          'uploadStatus',
-          'data',
-          'progress'
-        ])
-        this.setState({ uploadProgress: progress })
-      } else if (
-        nextSelectedVideo.getIn(['uploadStatus', 'name']) ===
-        'uploaded to remote'
-      ) {
-        this.setState({ uploadProgress: 100 })
-      }
-
-      if (
-        nextSelectedVideo.getIn(['transcodingStatus', 'name']) === 'progress'
-      ) {
-        const progress = nextSelectedVideo.getIn([
-          'transcodingStatus',
-          'data',
-          'progress'
-        ])
-        this.setState({ transcodingProgress: progress })
-      } else if (
-        nextSelectedVideo.getIn(['transcodingStatus', 'name']) === 'success'
-      ) {
-        this.setState({ transcodingProgress: 100 })
-      }
     }
 
     this.setState((prevState, nextProps) => ({
@@ -223,7 +194,7 @@ class VideoForm extends Component<Props, Object> {
         1
       )}`
     } else {
-      thumbImage = 'https://paratii.video/public/images/paratii-src.png'
+      thumbImage = 'http://paratii.video/public/images/paratii-src.png'
     }
 
     const urlToPlay = `/play/${video.id}`
@@ -285,6 +256,11 @@ class VideoForm extends Component<Props, Object> {
                 Save data
               </Button>
             </ButtonWrapper>
+            <tt>
+              this.state.id: {this.state.id}
+              <br />
+              video.id: {video.id}
+            </tt>
           </Form>
 
           <VideoFormInfoBox>
@@ -297,20 +273,22 @@ class VideoForm extends Component<Props, Object> {
               </VideoMediaTime>
             </VideoMedia>
             <VideoProgress
-              progress={this.state.uploadProgress + '%'}
+              progress={video.uploadStatus.data.progress + '%'}
               marginBottom
             >
-              Upload
-              {video.uploadStatus.name}
-              {video.uploadStatus.data.progress}
+              Uploader: {video.uploadStatus.name}
             </VideoProgress>
             <VideoProgress
-              progress={this.state.transcodingProgress + '%'}
+              progress={video.transcodingStatus.data.progress + '%'}
               marginBottom
             >
-              Transcoding
-              {video.transcodingStatus.name}
-              {video.transcodingStatus.data.progress}
+              Transcoder: {video.transcodingStatus.name}
+            </VideoProgress>
+            <VideoProgress
+              progress={video.storageStatus.data.progress + '%'}
+              marginBottom
+            >
+              Data storage: {video.storageStatus.name}
             </VideoProgress>
             <Hidden>
               <Input

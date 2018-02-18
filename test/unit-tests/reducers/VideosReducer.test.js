@@ -731,7 +731,7 @@ describe('Video Reducer', () => {
             ...getDefaultAsyncTaskStatus(),
             name: 'uploaded to remote'
           },
-          blockchainStatus: {
+          storageStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'running',
             data: {
@@ -846,7 +846,7 @@ describe('Video Reducer', () => {
             ...getDefaultAsyncTaskStatus(),
             name: 'uploaded to remote'
           },
-          blockchainStatus: {
+          storageStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'success',
             data: {

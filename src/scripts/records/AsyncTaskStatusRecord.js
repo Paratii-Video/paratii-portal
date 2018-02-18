@@ -11,7 +11,7 @@ export class DataStatusRecord extends ImmutableRecord({
   ipfsHash: '',
   ipfsHashOrig: '',
   sizes: '',
-  progress: '',
+  progress: 0,
   error: ''
 }) {
   id: number

@@ -27,7 +27,7 @@ export const getDefaultVideo = () => ({
   price: '',
   thumbnailUrl: '',
   title: '',
-  blockchainStatus: getDefaultAsyncTaskStatus(),
+  storageStatus: getDefaultAsyncTaskStatus(),
   transcodingStatus: getDefaultAsyncTaskStatus(),
   uploadStatus: getDefaultAsyncTaskStatus(),
   fetchStatus: getDefaultAsyncTaskStatus(),

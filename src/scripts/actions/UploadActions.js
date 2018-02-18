@@ -23,7 +23,7 @@ import type { Dispatch } from 'redux'
 
 const uploadRequested = createAction(UPLOAD_REQUESTED)
 const uploadProgress = createAction(UPLOAD_PROGRESS)
-const uploadSuccess = createAction(UPLOAD_REMOTE_SUCCESS)
+const uploadRemoteSuccess = createAction(UPLOAD_REMOTE_SUCCESS)
 const uploadLocalSuccess = createAction(UPLOAD_LOCAL_SUCCESS)
 const videoDataStart = createAction(VIDEO_DATA_START)
 const videoDataSaved = createAction(VIDEO_DATA_SAVED)
@@ -90,7 +90,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
   transcoder.once('transcoding:progress', function (hash, size, percent) {
     // Once we have this, the file is fully uploaded to the transcoder
     dispatch(uploadProgress({ id: videoInfo.id, progress: 100 }))
-    dispatch(uploadSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
+    dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
   })
   transcoder.on('transcoding:progress', function (hash, size, percent) {
     dispatch(transcodingProgress(videoInfo, size, percent))
@@ -101,7 +101,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
   })
   transcoder.on('transcoding:done', function (hash, sizes) {
     // if transcoding is done, apparently we have uploaded the file first
-    dispatch(uploadSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
+    dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
     dispatch(transcodingSuccess({ id: videoInfo.id, hash: hash, sizes: sizes }))
     // console.log('TRANSCODER DONE', hash, sizes)
     paratii.core.vids.update(videoInfo.id, { ipfsHash: sizes.master.hash })

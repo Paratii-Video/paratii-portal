@@ -16,7 +16,7 @@ class UploadProgress extends Component<Props, void> {
     return (
       <Wrapper>
         Blockchain status (= the object has been saved on the blockchain?):{' '}
-        {this.props.state.blockchainStatus.name}
+        {this.props.state.storageStatus.name}
         <br />
         Upload status (= the object has been pinned?):{' '}
         {this.props.state.uploadStatus.name}

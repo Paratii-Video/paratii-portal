@@ -87,21 +87,21 @@ class VideoListItem extends Component<Props, void> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    const video = nextProps.video
+    // const video = nextProps.video
 
-    if (video.getIn(['uploadStatus', 'name']) === 'running') {
-      const progress = video.getIn(['uploadStatus', 'data', 'progress'])
-      this.setState({ uploadProgress: progress })
-    } else if (video.getIn(['uploadStatus', 'name']) === 'uploaded to remote') {
-      this.setState({ uploadProgress: 100 })
-    }
-
-    if (video.getIn(['transcodingStatus', 'name']) === 'progress') {
-      const progress = video.getIn(['transcodingStatus', 'data', 'progress'])
-      this.setState({ transcodingProgress: progress })
-    } else if (video.getIn(['transcodingStatus', 'name']) === 'success') {
-      this.setState({ transcodingProgress: 100 })
-    }
+    // if (video.getIn(['uploadStatus', 'name']) === 'running') {
+    //   const progress = video.getIn(['uploadStatus', 'data', 'progress'])
+    //   this.setState({ uploadProgress: progress })
+    // } else if (video.getIn(['uploadStatus', 'name']) === 'uploaded to remote') {
+    //   this.setState({ uploadProgress: 100 })
+    // }
+    //
+    // if (video.getIn(['transcodingStatus', 'name']) === 'progress') {
+    //   const progress = video.getIn(['transcodingStatus', 'data', 'progress'])
+    //   this.setState({ transcodingProgress: progress })
+    // } else if (video.getIn(['transcodingStatus', 'name']) === 'success') {
+    //   this.setState({ transcodingProgress: 100 })
+    // }
 
     this.setState((prevState, nextProps) => ({
       totalProgress: Math.round(
@@ -116,7 +116,10 @@ class VideoListItem extends Component<Props, void> {
     const video = this.props.video
 
     const title = video.title || video.filename
-    if (video.blockchainStatus.name !== 'success') {
+    if (!video || !video.id) {
+      return <ListItem>Something when wrong - no video known</ListItem>
+    }
+    if (video.storageStatus.name !== 'success') {
       statusMessage = 'Please provide a title and description'
       isReady = false
     } else if (video.transcodingStatus.name === 'success') {
