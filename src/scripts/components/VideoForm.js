@@ -199,6 +199,9 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     const video: VideoRecord = this.props.selectedVideo
+    if (!video) {
+      return <Card>No video selected!</Card>
+    }
     const title = video.title || video.filename
     const thumbImages =
       video &&
@@ -224,7 +227,9 @@ class VideoForm extends Component<Props, Object> {
           <Hidden>
             ({this.state.id} - {ipfsHash})
           </Hidden>{' '}
-          <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>
+          <VideoFormSubTitle purple>
+            {video.title ? video.filename : ''} {fileSize}
+          </VideoFormSubTitle>
         </VideoFormHeader>
         <VideoFormWrapper>
           <Form>
@@ -283,12 +288,16 @@ class VideoForm extends Component<Props, Object> {
               marginBottom
             >
               Upload
+              {video.uploadStatus.name}
+              {video.uploadStatus.data.progress}
             </VideoProgress>
             <VideoProgress
               progress={this.state.transcodingProgress + '%'}
               marginBottom
             >
               Transcoding
+              {video.transcodingStatus.name}
+              {video.transcodingStatus.data.progress}
             </VideoProgress>
             <Hidden>
               <Input
