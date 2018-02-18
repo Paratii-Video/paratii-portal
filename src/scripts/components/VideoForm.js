@@ -122,21 +122,35 @@ class VideoForm extends Component<Props, Object> {
   constructor (props: Props) {
     super(props)
     const selectedVideo = this.props.selectedVideo
+    console.log('constructor')
+    console.log(selectedVideo)
+    console.log(selectedVideo.id)
     this.state = {
-      video: new VideoRecord(selectedVideo),
-      uploadProgress: 0,
-      transcodingProgress: 0,
-      totalProgress: 0,
+      // video: new VideoRecord(selectedVideo)
+      // uploadProgress: 0,
+      // transcodingProgress: 0,
+      // totalProgress: 0,
       id: '',
       title: '',
       description: ''
     }
-    if (selectedVideo) {
+    if (selectedVideo.id) {
+      console.log('set STate')
+      console.log(selectedVideo.id)
       this.setState({
         id: selectedVideo.id,
         title: selectedVideo.title,
         description: selectedVideo.description
       })
+      console.log(this.state.id)
+    } else {
+      console.log(3)
+      this.setState({
+        id: '',
+        title: '',
+        description: ''
+      })
+      console.log(this.state.id)
     }
 
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -144,21 +158,25 @@ class VideoForm extends Component<Props, Object> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
+    console.log('received props')
     const selectedVideo: ?VideoRecord = nextProps.selectedVideo
     if (selectedVideo) {
-      this.setState(selectedVideo)
+      console.log(4)
+      // this.setState(selectedVideo)
+      console.log(selectedVideo)
       this.setState({
         id: selectedVideo.id,
         title: selectedVideo.title,
         description: selectedVideo.description
       })
+      console.log(this.state.id)
     }
 
-    this.setState((prevState, nextProps) => ({
-      totalProgress: Math.round(
-        (prevState.uploadProgress + prevState.transcodingProgress) / 2
-      )
-    }))
+    // // this.setState((prevState, nextProps) => ({
+    // //   totalProgress: Math.round(
+    // //     (prevState.uploadProgress + prevState.transcodingProgress) / 2
+    // //   )
+    // }))
   }
 
   handleInputChange (input: string, e: Object) {
@@ -257,7 +275,7 @@ class VideoForm extends Component<Props, Object> {
               </Button>
             </ButtonWrapper>
             <tt>
-              this.state.id: {this.state.id}
+              this.state.id...: {this.state.id}
               <br />
               video.id: {video.id}
               <br />

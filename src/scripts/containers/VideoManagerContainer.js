@@ -28,7 +28,7 @@ class VideoManagerContainer extends Component<Props, void> {
       <CardContainer>
         {showList ? <VideoList /> : ''}
         {showForm ? <VideoForm /> : <UploadFile />}
-        {!showList ? <RedeemVoucher /> : ''}
+        {!showList ? <RedeemVoucher margin="0 25px 0 0" /> : ''}
         {!showForm && <PTIGuide />}
       </CardContainer>
     )

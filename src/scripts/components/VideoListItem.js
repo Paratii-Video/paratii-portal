@@ -7,7 +7,7 @@ import VideoProgressBar from 'components/widgets/VideoForm/VideoProgressBar'
 
 type Props = {
   video: VideoRecord,
-  onClick: (id: string) => void
+  setSelectedVideo: (id: string) => void
 }
 
 // const Label = styled.div`
@@ -83,26 +83,10 @@ class VideoListItem extends Component<Props, void> {
   }
 
   handleClick () {
-    this.props.onClick(this.props.video.id)
+    this.props.setSelectedVideo(this.props.video.id)
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    // const video = nextProps.video
-
-    // if (video.getIn(['uploadStatus', 'name']) === 'running') {
-    //   const progress = video.getIn(['uploadStatus', 'data', 'progress'])
-    //   this.setState({ uploadProgress: progress })
-    // } else if (video.getIn(['uploadStatus', 'name']) === 'uploaded to remote') {
-    //   this.setState({ uploadProgress: 100 })
-    // }
-    //
-    // if (video.getIn(['transcodingStatus', 'name']) === 'progress') {
-    //   const progress = video.getIn(['transcodingStatus', 'data', 'progress'])
-    //   this.setState({ transcodingProgress: progress })
-    // } else if (video.getIn(['transcodingStatus', 'name']) === 'success') {
-    //   this.setState({ transcodingProgress: 100 })
-    // }
-
     this.setState((prevState, nextProps) => ({
       totalProgress: Math.round(
         (prevState.uploadProgress + prevState.transcodingProgress) / 2
