@@ -260,6 +260,10 @@ class VideoForm extends Component<Props, Object> {
               this.state.id: {this.state.id}
               <br />
               video.id: {video.id}
+              <br />
+              this.state.title: {this.state.title}
+              <br />
+              video.title: {video.title}
             </tt>
           </Form>
 

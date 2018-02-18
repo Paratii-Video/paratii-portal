@@ -1,10 +1,8 @@
 import { Map } from 'immutable'
 
 import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { setSelectedVideo } from 'actions/VideoActions'
 import { CardContainer } from 'components/structures/Card'
 import PTIGuide from 'components/widgets/PTIGuide'
 import VideoRecord from 'records/VideoRecords'
@@ -18,27 +16,20 @@ import UploadFile from './UploadFileContainer'
 
 type Props = {
   videos: Map<string, VideoRecord>,
-  selectedVideo: ?VideoRecord,
-  setSelectedVideo: Object => void
+  selectedVideo: ?VideoRecord
 }
 
 class VideoManagerContainer extends Component<Props, void> {
-  constructor (props) {
-    super(props)
-    props.setSelectedVideo(null)
-  }
-
   render () {
-    const selectedVideo = this.props.selectedVideo
-
+    const showForm = this.props.selectedVideo
     const showList = this.props.videos.size > 0 || this.selectedVideo
 
     return (
       <CardContainer>
         {showList ? <VideoList /> : ''}
-        {selectedVideo ? <VideoForm /> : <UploadFile />}
+        {showForm ? <VideoForm /> : <UploadFile />}
         {!showList ? <RedeemVoucher /> : ''}
-        {!selectedVideo && <PTIGuide />}
+        {!showForm && <PTIGuide />}
       </CardContainer>
     )
   }
@@ -49,9 +40,7 @@ const mapStateToProps = (state: RootState) => ({
   selectedVideo: getVideo(state)
 })
 
-const mapDispatchToProps = dispatch => ({
-  setSelectedVideo: bindActionCreators(setSelectedVideo, dispatch)
-})
+const mapDispatchToProps = dispatch => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   VideoManagerContainer

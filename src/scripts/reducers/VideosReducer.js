@@ -202,8 +202,10 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
+    // FIXME: this is probably wrong
     const ipfsHash =
       payload.sizes && payload.sizes.master && payload.sizes.master.hash
+
     if (!ipfsHash) {
       return state
     }

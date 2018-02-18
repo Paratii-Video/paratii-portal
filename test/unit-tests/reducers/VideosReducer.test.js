@@ -41,6 +41,7 @@ describe('Video Reducer', () => {
       })
       expect(store.getState().toJS()).to.deep.equal({})
     })
+
     it('should do nothing if there is no id in the payload', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
@@ -52,6 +53,7 @@ describe('Video Reducer', () => {
       })
       expect(store.getState().toJS()).to.deep.equal({})
     })
+
     it('should add a video if there are no videos in the store', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
