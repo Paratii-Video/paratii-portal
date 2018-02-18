@@ -44,7 +44,7 @@ const ListItemWrapper = styled.div`
   }
 `
 
-const ListItemFileName = styled.h4`
+const ListItemHeader = styled.h4`
   color: ${props => props.theme.colors.VideoList.filename};
   font-size: ${props => props.theme.fonts.video.list.filename};
   margin-bottom: 4px;
@@ -113,15 +113,15 @@ class VideoListItem extends Component<Props, void> {
   }
 
   render () {
-    const item = this.props.video
+    const video = this.props.video
 
     let linkToVideo = ''
     // TODO; find out why getIn(['blockchainStatus', 'name']) is undefined
     if (
-      item.getIn(['transcodingStatus', 'name']) === 'success' &&
-      item.getIn(['blockchainStatus']).name === 'success'
+      video.getIn(['transcodingStatus', 'name']) === 'success' &&
+      video.getIn(['blockchainStatus']).name === 'success'
     ) {
-      const link = `/play/${item.id}`
+      const link = `/play/${video.id}`
       linkToVideo = (
         <Label>
           <p>Link</p>
@@ -130,16 +130,18 @@ class VideoListItem extends Component<Props, void> {
       )
     }
 
+    const title = video.title || video.filename
     return (
-      <ListItem onClick={this.handleClick} id="video-list-item-{item.id}">
+      <ListItem onClick={this.handleClick} id="video-list-item-{video.id}">
         <ListItemWrapper>
-          <ListItemFileName>{item.filename}</ListItemFileName>
+          <ListItemHeader>{title}</ListItemHeader>
           <ListItemStatus done={this.state.uploadProgress === 100}>
-            {item.uploadStatus.name} - ({this.state.uploadProgress}%)
+            {video.uploadStatus.name} - ({this.state.uploadProgress}%)
           </ListItemStatus>
-          <ListItemStatus>{item.blockchainStatus.name}</ListItemStatus>
+          <ListItemStatus>saved?: {video.blockchainStatus.name}</ListItemStatus>
           <ListItemStatus>
-            {item.getIn(['transcodingStatus', 'name'])}
+            transcoded?:
+            {video.getIn(['transcodingStatus', 'name'])}
           </ListItemStatus>
           <ListItemStatus>{linkToVideo}</ListItemStatus>
 

@@ -17,7 +17,7 @@ import Hidden from 'components/foundations/Hidden'
 import { prettyBytes } from 'utils/AppUtils'
 
 type Props = {
-  selectedVideo: ?VideoRecord,
+  selectedVideo: VideoRecord,
   canSubmit: boolean,
   saveVideoInfo: Object => Object
 }
@@ -198,7 +198,8 @@ class VideoForm extends Component<Props, Object> {
   }
 
   render () {
-    const video: ?VideoRecord = this.props.selectedVideo
+    const video: VideoRecord = this.props.selectedVideo
+    const title = video.title || video.filename
     const thumbImages =
       video &&
       video.getIn(['transcodingStatus', 'data', 'sizes', 'screenshots'])
@@ -212,14 +213,14 @@ class VideoForm extends Component<Props, Object> {
     } else {
       thumbImage = 'http://paratii.video/public/images/paratii-src.png'
     }
-    // TODO get the correct image form transcoder, now hardocoded
-    // thumbImage = 'http://paratii.video/public/images/paratii-src.png'
+
+    const urlForShare = `https://portal.paratii.video/play/${video.id}`
 
     const state = JSON.stringify(this.state, null, 2)
     return (
       <Card full>
         <VideoFormHeader>
-          <VideoFormTitle id="video-title">{this.state.id}</VideoFormTitle>
+          <VideoFormTitle id="video-title">{title}</VideoFormTitle>
           <Hidden>
             ({this.state.id} - {ipfsHash})
           </Hidden>{' '}
@@ -289,14 +290,24 @@ class VideoForm extends Component<Props, Object> {
             >
               Transcoding
             </VideoProgress>
-
+            <Hidden>
+              <Input
+                id="video-title"
+                type="text"
+                margin="0 0 30px"
+                onChange={e => this.handleInputChange('title', e)}
+                value="<iframe width=560 height=315 src=https://"
+                label="Embed Code"
+                readonly
+              />
+            </Hidden>
             <Input
               id="video-title"
               type="text"
               margin="0 0 30px"
               onChange={e => this.handleInputChange('title', e)}
-              value="<iframe width=560 height=315 src=https://"
-              label="Embed Code"
+              value={urlForShare}
+              label="Share this video"
               readonly
             />
             <Hidden>{state}</Hidden>

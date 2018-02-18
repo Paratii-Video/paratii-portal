@@ -28,13 +28,8 @@ class VideoManagerContainer extends Component<Props, void> {
   constructor (props) {
     super(props)
     props.setSelectedVideo(null)
-    // this.onVideoListItemClicked = this.onVideoListItemClicked.bind(this)
   }
 
-  // onVideoListItemClicked (id: string) {
-  //   this.props.setSelectedVideo(id)
-  // }
-  //
   render () {
     const selectedVideo =
       this.props.selectedVideo && this.props.selectedVideo.id

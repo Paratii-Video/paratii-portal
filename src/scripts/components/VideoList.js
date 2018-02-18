@@ -14,11 +14,6 @@ type Props = {
   onItemClick: (id: string) => void
 }
 
-// const Wrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-// `
-
 const Title = styled.h3`
   color: ${props => props.theme.colors.VideoList.title};
   font-size: ${props => props.theme.fonts.video.list.title};
