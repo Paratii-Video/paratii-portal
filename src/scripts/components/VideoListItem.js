@@ -71,7 +71,7 @@ const Bar = styled.div`
 
 const NavLink = Button.withComponent(Link)
 
-class UploadListItem extends Component<Props, void> {
+class VideoListItem extends Component<Props, void> {
   constructor (props) {
     super(props)
     this.state = {
@@ -155,4 +155,4 @@ class UploadListItem extends Component<Props, void> {
   }
 }
 
-export default UploadListItem
+export default VideoListItem

@@ -14,8 +14,7 @@ import VideoList from './VideoListContainer'
 import VideoForm from './VideoFormContainer'
 import UploadFile from './UploadFileContainer'
 
-import Card, { CardContainer } from 'components/structures/Card'
-import Button from 'components/foundations/Button'
+import { CardContainer } from 'components/structures/Card'
 import PTIGuide from 'components/widgets/PTIGuide'
 import RedeemVoucher from 'components/widgets/RedeemVoucher'
 
@@ -29,48 +28,44 @@ class VideoManagerContainer extends Component<Props, void> {
   constructor (props) {
     super(props)
     props.setSelectedVideo(null)
-    this.onVideoListItemClicked = this.onVideoListItemClicked.bind(this)
+    // this.onVideoListItemClicked = this.onVideoListItemClicked.bind(this)
   }
 
-  onVideoListItemClicked (id: string) {
-    this.props.setSelectedVideo(id)
-  }
-
+  // onVideoListItemClicked (id: string) {
+  //   this.props.setSelectedVideo(id)
+  // }
+  //
   render () {
-    const uploads = this.props.videos
     const selectedVideo =
       this.props.selectedVideo && this.props.selectedVideo.id
 
-    let videolist = null
-    if (uploads.size > 0) {
-      videolist = (
-        <VideoList
-          onItemClick={this.onVideoListItemClicked}
-          videos={this.props.videos}
-        />
-      )
+    let ConditionalVideoList
+    if (this.props.videos.size > 0) {
+      ConditionalVideoList = <VideoList />
     }
+    //   videoList = (
+    //     <Card
+    //       margin="0 25px 0 0"
+    //       nopadding
+    //       footer={
+    //         <Button onClick={() => this.onVideoListItemClicked(null)}>
+    //           Add more videos
+    //         </Button>
+    //       }
+    //     >
+    //       <VideoList
+    //         onItemClick={this.onVideoListItemClicked}
+    //         videos={this.props.videos}
+    //       />
+    //     </Card>
+    //   )
+    // }
 
     return (
       <CardContainer>
-        {selectedVideo ? (
-          <Card
-            margin="0 25px 0 0"
-            nopadding
-            footer={
-              <Button onClick={() => this.onVideoListItemClicked(null)}>
-                Add more videos
-              </Button>
-            }
-          >
-            {videolist}
-          </Card>
-        ) : (
-          <UploadFile />
-        )}
-
-        {selectedVideo ? <VideoForm /> : <RedeemVoucher margin="0 25px" />}
-
+        {ConditionalVideoList}
+        {selectedVideo ? <VideoForm /> : <UploadFile />}
+        <RedeemVoucher margin="0 25px" />
         {!selectedVideo && <PTIGuide />}
       </CardContainer>
     )

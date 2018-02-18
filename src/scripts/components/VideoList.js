@@ -5,16 +5,19 @@ import type { VideoRecord } from 'records/VideoRecords'
 import type { Map } from 'immutable'
 
 import VideoListItem from 'components/VideoListItem'
+import Card from 'components/structures/Card'
+import Button from 'components/foundations/Button'
 
 type Props = {
   videos: Map<string, VideoRecord>, // maps video ids to upload records
+  setSelectedVideo: Object => void,
   onItemClick: (id: string) => void
 }
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`
+// const Wrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+// `
 
 const Title = styled.h3`
   color: ${props => props.theme.colors.VideoList.title};
@@ -30,9 +33,27 @@ const List = styled.ul`
 `
 
 class VideoList extends Component<Props, void> {
+  constructor (props) {
+    super(props)
+    props.setSelectedVideo(null)
+    this.onVideoListItemClicked = this.onVideoListItemClicked.bind(this)
+  }
+
+  onVideoListItemClicked (id: string) {
+    this.props.setSelectedVideo(id)
+  }
+
   render () {
     return (
-      <Wrapper>
+      <Card
+        margin="0 25px 0 0"
+        nopadding
+        footer={
+          <Button onClick={() => this.onVideoListItemClicked(null)}>
+            Add more videos
+          </Button>
+        }
+      >
         <Title>Video List</Title>
         <List>
           {this.props.videos
@@ -41,11 +62,11 @@ class VideoList extends Component<Props, void> {
               <VideoListItem
                 key={videoId}
                 video={videoInfo}
-                onClick={this.props.onItemClick}
+                onClick={this.onVideoListItemClicked}
               />
             ))}
         </List>
-      </Wrapper>
+      </Card>
     )
   }
 }
