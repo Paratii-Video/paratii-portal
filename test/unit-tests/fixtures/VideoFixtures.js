@@ -6,7 +6,7 @@ export const getDefaultDataStatus = () => ({
   ipfsHash: '',
   ipfsHashOrig: '',
   sizes: '',
-  progress: '',
+  progress: 0,
   error: ''
 })
 

@@ -522,8 +522,8 @@ describe('Video Reducer', () => {
             data: {
               ...getDefaultDataStatus(),
               title: 'foo',
-              progress: 44,
-              ipfsHashOrig: 'Qjow875hgaahaw'
+              ipfsHashOrig: 'Qjow875hgaahaw',
+              progress: 100
             }
           }
         },
@@ -801,6 +801,7 @@ describe('Video Reducer', () => {
         '999': getDefaultVideo()
       })
     })
+
     it('should update the blockchain status and data of the matching video in the store', () => {
       const store = createStore(
         reducer,
@@ -853,6 +854,7 @@ describe('Video Reducer', () => {
             name: 'success',
             data: {
               ...getDefaultDataStatus(),
+              progress: 100,
               id: '888',
               title: 'bazbar',
               description: 'foobaz',
@@ -1243,6 +1245,7 @@ describe('Video Reducer', () => {
             data: {
               ...getDefaultDataStatus(),
               ipfsHash: 'q82gh20',
+              progress: 100,
               sizes: {
                 master: {
                   hash: 'q82gh20'
