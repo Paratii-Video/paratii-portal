@@ -127,7 +127,7 @@ class FilesUploader extends Component<Props, void> {
     return (
       <Card
         nopadding
-        margin={this.props.margin}
+        margin="0 25px 0 0"
         className={this.state.dragClass}
         footer={
           <FooterWrapper>

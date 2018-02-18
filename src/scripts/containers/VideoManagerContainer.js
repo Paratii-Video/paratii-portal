@@ -7,7 +7,7 @@ import { setSelectedVideo } from 'actions/VideoActions'
 
 import VideoRecord from 'records/VideoRecords'
 
-import { getUploads, getVideo } from 'selectors/index'
+import { getVideos, getVideo } from 'selectors/index'
 import type { RootState } from 'types/ApplicationTypes'
 
 import VideoList from './VideoListContainer'
@@ -16,7 +16,6 @@ import UploadFile from './UploadFileContainer'
 
 import { CardContainer } from 'components/structures/Card'
 import PTIGuide from 'components/widgets/PTIGuide'
-import RedeemVoucher from 'components/widgets/RedeemVoucher'
 
 type Props = {
   videos: Map<string, VideoRecord>,
@@ -38,29 +37,10 @@ class VideoManagerContainer extends Component<Props, void> {
     if (this.props.videos.size > 0) {
       ConditionalVideoList = <VideoList />
     }
-    //   videoList = (
-    //     <Card
-    //       margin="0 25px 0 0"
-    //       nopadding
-    //       footer={
-    //         <Button onClick={() => this.onVideoListItemClicked(null)}>
-    //           Add more videos
-    //         </Button>
-    //       }
-    //     >
-    //       <VideoList
-    //         onItemClick={this.onVideoListItemClicked}
-    //         videos={this.props.videos}
-    //       />
-    //     </Card>
-    //   )
-    // }
-
     return (
       <CardContainer>
         {ConditionalVideoList}
         {selectedVideo ? <VideoForm /> : <UploadFile />}
-        <RedeemVoucher margin="0 25px" />
         {!selectedVideo && <PTIGuide />}
       </CardContainer>
     )
@@ -68,7 +48,7 @@ class VideoManagerContainer extends Component<Props, void> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  videos: getUploads(state),
+  videos: getVideos(state),
   selectedVideo: getVideo(state)
 })
 

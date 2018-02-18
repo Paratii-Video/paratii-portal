@@ -129,8 +129,8 @@ class VideoListItem extends Component<Props, void> {
         </Label>
       )
     }
-
     const title = video.title || video.filename
+
     return (
       <ListItem onClick={this.handleClick} id="video-list-item-{video.id}">
         <ListItemWrapper>

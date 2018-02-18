@@ -11,6 +11,8 @@ import PlayContainer from 'containers/PlayContainer'
 import DebugContainer from 'containers/DebugContainer'
 import VideoManager from 'containers/VideoManagerContainer'
 
+import RedeemVoucher from 'components/widgets/RedeemVoucher'
+
 import type { Match } from 'react-router-dom'
 
 import MainTemplate from './templates/MainTemplate'
@@ -60,6 +62,7 @@ class App extends Component<Props, void> {
                 component={ProfileContainer}
               />
               <Route path={`${match.url}upload`} component={VideoManager} />
+              <Route path={`${match.url}voucher`} component={RedeemVoucher} />
               <Route path={`${match.url}debug`} component={DebugContainer} />
               <Route
                 path={`${match.url}play/:id`}

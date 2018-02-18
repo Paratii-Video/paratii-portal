@@ -10,8 +10,8 @@ import Button from 'components/foundations/Button'
 
 type Props = {
   videos: Map<string, VideoRecord>, // maps video ids to upload records
-  setSelectedVideo: Object => void,
-  onItemClick: (id: string) => void
+  setSelectedVideo: Object => void
+  // onItemClick: (id: string) => void
 }
 
 const Title = styled.h3`
