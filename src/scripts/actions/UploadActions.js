@@ -6,7 +6,7 @@ import paratii from 'utils/ParatiiLib'
 import {
   UPLOAD_REQUESTED,
   UPLOAD_PROGRESS,
-  UPLOAD_SUCCESS,
+  UPLOAD_REMOTE_SUCCESS,
   UPLOAD_LOCAL_SUCCESS,
   VIDEO_DATA_START,
   VIDEO_DATA_SAVED,
@@ -23,7 +23,7 @@ import type { Dispatch } from 'redux'
 
 const uploadRequested = createAction(UPLOAD_REQUESTED)
 const uploadProgress = createAction(UPLOAD_PROGRESS)
-const uploadSuccess = createAction(UPLOAD_SUCCESS)
+const uploadSuccess = createAction(UPLOAD_REMOTE_SUCCESS)
 const uploadLocalSuccess = createAction(UPLOAD_LOCAL_SUCCESS)
 const videoDataStart = createAction(VIDEO_DATA_START)
 const videoDataSaved = createAction(VIDEO_DATA_SAVED)
@@ -117,9 +117,9 @@ export const saveVideoInfo = (videoInfo: Object) => async (
     const newVideoId = paratii.eth.vids.makeId()
     videoInfo.id = newVideoId
     dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
+    // dispatch(selectVideo(videoInfo.id))
   }
   dispatch(videoDataStart(videoInfo))
-  // console.log('SAVING', videoInfo)
 
   paratii.core.vids
     .create(videoInfo)

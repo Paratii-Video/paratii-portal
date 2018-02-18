@@ -11,6 +11,7 @@ import VideoRecord from 'records/VideoRecords'
 import { getVideos, getVideo } from 'selectors/index'
 import type { RootState } from 'types/ApplicationTypes'
 
+import RedeemVoucher from 'components/widgets/RedeemVoucher'
 import VideoList from './VideoListContainer'
 import VideoForm from './VideoFormContainer'
 import UploadFile from './UploadFileContainer'
@@ -30,14 +31,13 @@ class VideoManagerContainer extends Component<Props, void> {
   render () {
     const selectedVideo = this.props.selectedVideo
 
-    let ConditionalVideoList
-    if (this.props.videos.size > 0) {
-      ConditionalVideoList = <VideoList />
-    }
+    const showList = this.props.videos.size > 0 || this.selectedVideo
+
     return (
       <CardContainer>
-        {ConditionalVideoList}
+        {showList ? <VideoList /> : ''}
         {selectedVideo ? <VideoForm /> : <UploadFile />}
+        {!showList ? <RedeemVoucher /> : ''}
         {!selectedVideo && <PTIGuide />}
       </CardContainer>
     )

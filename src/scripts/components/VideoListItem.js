@@ -92,9 +92,7 @@ class VideoListItem extends Component<Props, void> {
     if (video.getIn(['uploadStatus', 'name']) === 'running') {
       const progress = video.getIn(['uploadStatus', 'data', 'progress'])
       this.setState({ uploadProgress: progress })
-    } else if (
-      video.getIn(['uploadStatus', 'name']) === 'uploaded to transcoder node'
-    ) {
+    } else if (video.getIn(['uploadStatus', 'name']) === 'uploaded to remote') {
       this.setState({ uploadProgress: 100 })
     }
 
@@ -113,7 +111,8 @@ class VideoListItem extends Component<Props, void> {
   }
 
   render () {
-    let statusMessage, isReady, linkToVideo
+    let statusMessage, linkToVideo
+    let isReady = false
     const video = this.props.video
 
     const title = video.title || video.filename
@@ -121,8 +120,11 @@ class VideoListItem extends Component<Props, void> {
       statusMessage = 'Please provide a title and description'
       isReady = false
     } else if (video.transcodingStatus.name === 'success') {
-      statusMessage = 'Your video is ready!'
+      statusMessage = 'Your video is now ready to play'
       isReady = true
+    } else if (!video.filename) {
+      statusMessage = 'No file was uploaded (this is an error)'
+      isReady = false
     }
     if (isReady) {
       const link = `/play/${video.id}`

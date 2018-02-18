@@ -45,6 +45,9 @@ class MainNavigation extends Component<Props, void> {
             <NavLink to="/upload">Upload video</NavLink>
           </NavItem>
           <NavItem>
+            <NavLink to="/debug">Debug</NavLink>
+          </NavItem>
+          <NavItem>
             <Anchor href="http://paratii.video/" target="_blank">
               About Paratii
             </Anchor>

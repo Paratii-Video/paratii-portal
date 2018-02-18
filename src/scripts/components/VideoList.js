@@ -10,6 +10,7 @@ import Button from 'components/foundations/Button'
 
 type Props = {
   videos: Map<string, VideoRecord>, // maps video ids to upload records
+  selectedVideo: VideoRecord,
   setSelectedVideo: Object => void
   // onItemClick: (id: string) => void
 }
@@ -30,7 +31,7 @@ const List = styled.ul`
 class VideoList extends Component<Props, void> {
   constructor (props) {
     super(props)
-    props.setSelectedVideo(null)
+    // props.setSelectedVideo(null)
     this.onVideoListItemClicked = this.onVideoListItemClicked.bind(this)
   }
 
@@ -39,16 +40,15 @@ class VideoList extends Component<Props, void> {
   }
 
   render () {
+    const footer = this.props.selectedVideo ? (
+      <Button onClick={() => this.onVideoListItemClicked(null)}>
+        Add more videos
+      </Button>
+    ) : (
+      ''
+    )
     return (
-      <Card
-        margin="0 25px 0 0"
-        nopadding
-        footer={
-          <Button onClick={() => this.onVideoListItemClicked(null)}>
-            Add more videos
-          </Button>
-        }
-      >
+      <Card margin="0 25px 0 0" nopadding footer={footer}>
         <Title>Video List</Title>
         <List>
           {this.props.videos

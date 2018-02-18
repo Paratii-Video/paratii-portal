@@ -1,6 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
 
@@ -62,7 +63,7 @@ const Form = styled.div`
   }
 `
 
-const VideoFormInfos = styled.div`
+const VideoFormInfoBox = styled.div`
   flex: 1 1 584px;
 
   @media (max-width: 1024px) {
@@ -120,8 +121,9 @@ class VideoForm extends Component<Props, Object> {
 
   constructor (props: Props) {
     super(props)
+    const selectedVideo = this.props.selectedVideo
     this.state = {
-      video: new VideoRecord(this.props.selectedVideo),
+      video: new VideoRecord(selectedVideo),
       uploadProgress: 0,
       transcodingProgress: 0,
       totalProgress: 0,
@@ -129,13 +131,20 @@ class VideoForm extends Component<Props, Object> {
       title: '',
       description: ''
     }
+    if (selectedVideo) {
+      this.setState({
+        id: selectedVideo.id,
+        title: selectedVideo.title,
+        description: selectedVideo.description
+      })
+    }
+
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    const { selectedVideo } = nextProps
-    const nextSelectedVideo: ?VideoRecord = selectedVideo
+    const nextSelectedVideo: ?VideoRecord = nextProps.selectedVideo
     if (nextSelectedVideo) {
       this.setState(nextSelectedVideo)
       this.setState({
@@ -153,7 +162,7 @@ class VideoForm extends Component<Props, Object> {
         this.setState({ uploadProgress: progress })
       } else if (
         nextSelectedVideo.getIn(['uploadStatus', 'name']) ===
-        'uploaded to transcoder node'
+        'uploaded to remote'
       ) {
         this.setState({ uploadProgress: 100 })
       }
@@ -198,8 +207,8 @@ class VideoForm extends Component<Props, Object> {
   }
 
   render () {
-    const video: VideoRecord = this.props.selectedVideo
-    if (!video) {
+    const video: ?VideoRecord = this.props.selectedVideo
+    if (!video || !video.id) {
       return <Card>No video selected!</Card>
     }
     const title = video.title || video.filename
@@ -214,10 +223,11 @@ class VideoForm extends Component<Props, Object> {
         1
       )}`
     } else {
-      thumbImage = 'http://paratii.video/public/images/paratii-src.png'
+      thumbImage = 'https://paratii.video/public/images/paratii-src.png'
     }
 
-    const urlForShare = `https://portal.paratii.video/play/${video.id}`
+    const urlToPlay = `/play/${video.id}`
+    const urlForSharing = `https://portal.paratii.video/play/${video.id}`
 
     const state = JSON.stringify(this.state, null, 2)
     return (
@@ -276,9 +286,12 @@ class VideoForm extends Component<Props, Object> {
               </Button>
             </ButtonWrapper>
           </Form>
-          <VideoFormInfos>
+
+          <VideoFormInfoBox>
             <VideoMedia>
-              <VideoImage data-src={thumbImage} src={thumbImage} />
+              <Link to={urlToPlay}>
+                <VideoImage data-src={thumbImage} src={thumbImage} />
+              </Link>
               <VideoMediaTime>
                 <VideoMediaTimeText>28:26</VideoMediaTimeText>
               </VideoMediaTime>
@@ -315,12 +328,12 @@ class VideoForm extends Component<Props, Object> {
               type="text"
               margin="0 0 30px"
               onChange={e => this.handleInputChange('title', e)}
-              value={urlForShare}
+              value={urlForSharing}
               label="Share this video"
               readonly
             />
             <Hidden>{state}</Hidden>
-          </VideoFormInfos>
+          </VideoFormInfoBox>
         </VideoFormWrapper>
       </Card>
     )

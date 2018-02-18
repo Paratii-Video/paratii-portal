@@ -5,7 +5,7 @@ import { handleActions } from 'redux-actions'
 import {
   UPLOAD_REQUESTED,
   UPLOAD_PROGRESS,
-  UPLOAD_SUCCESS,
+  UPLOAD_REMOTE_SUCCESS,
   UPLOAD_LOCAL_SUCCESS,
   UPDATE_VIDEO_INFO,
   VIDEO_DATA_START,
@@ -82,7 +82,7 @@ const reducer = {
       }
     )
   },
-  [UPLOAD_SUCCESS]: (
+  [UPLOAD_REMOTE_SUCCESS]: (
     state: VideoRecordMap,
     { payload }: Action<{ id: string, hash: string }>
   ): VideoRecordMap => {
@@ -95,7 +95,7 @@ const reducer = {
         mutableState.setIn([payload.id, 'ipfsHashOrig'], ipfsHashOrig)
         mutableState.setIn(
           [payload.id, 'uploadStatus', 'name'],
-          'uploaded to transcoder node'
+          'uploaded to remote'
         )
         mutableState.setIn(
           [payload.id, 'uploadStatus', 'data', 'ipfsHashOrig'],

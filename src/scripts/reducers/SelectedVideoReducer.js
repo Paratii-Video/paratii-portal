@@ -1,12 +1,7 @@
 /* @flow */
 
 import { handleActions } from 'redux-actions'
-import {
-  VIDEO_SELECT
-  // VIDEO_DATA_PROGRESS,
-  // VIDEO_DATA_SAVED
-} from 'constants/ActionConstants'
-// import VideoRecord from 'records/VideoRecords'
+import { VIDEO_SELECT } from 'constants/ActionConstants'
 import type { Action } from 'types/ApplicationTypes'
 
 const reducer = {
@@ -16,18 +11,6 @@ const reducer = {
   ): string => {
     return payload.id
   }
-  // ,
-  // [VIDEO_DATA_PROGRESS]: (
-  //   state: string,
-  //   { payload }: Action<string>
-  // ): string => {
-  //   return payload.id
-  //   // new VideoRecord(payload),
-  // }
-  // [VIDEO_DATA_SAVED]: (
-  //   state: string,
-  //   { payload }: Action<string>
-  // ): VideoRecord => new VideoRecord(payload)
 }
 
 export default handleActions(reducer, null)

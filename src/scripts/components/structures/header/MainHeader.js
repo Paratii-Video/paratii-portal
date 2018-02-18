@@ -74,7 +74,7 @@ class MainHeader extends Component<Props, void> {
               <MainNavigation />
               <ProfileAvatarLink to="/signup">
                 <Blockies
-                  seed="{window.paratii.config.account.address}"
+                  seed={window.paratii.config.account.address}
                   size={10}
                   scale={4}
                 />
