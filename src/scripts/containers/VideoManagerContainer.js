@@ -1,21 +1,19 @@
 import { Map } from 'immutable'
+
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { setSelectedVideo } from 'actions/VideoActions'
-
+import { CardContainer } from 'components/structures/Card'
+import PTIGuide from 'components/widgets/PTIGuide'
 import VideoRecord from 'records/VideoRecords'
-
 import { getVideos, getVideo } from 'selectors/index'
 import type { RootState } from 'types/ApplicationTypes'
 
 import VideoList from './VideoListContainer'
 import VideoForm from './VideoFormContainer'
 import UploadFile from './UploadFileContainer'
-
-import { CardContainer } from 'components/structures/Card'
-import PTIGuide from 'components/widgets/PTIGuide'
 
 type Props = {
   videos: Map<string, VideoRecord>,
@@ -30,8 +28,7 @@ class VideoManagerContainer extends Component<Props, void> {
   }
 
   render () {
-    const selectedVideo =
-      this.props.selectedVideo && this.props.selectedVideo.id
+    const selectedVideo = this.props.selectedVideo
 
     let ConditionalVideoList
     if (this.props.videos.size > 0) {
