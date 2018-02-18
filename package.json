@@ -133,7 +133,7 @@
     "immutable": "^3.8.2",
     "js-cookie": "^2.2.0",
     "lodash.debounce": "^4.0.8",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#b2f1a7d43bec4ed277dd6f8a7f969536301bb879",
+    "paratii-lib": "github:Paratii-Video/paratii-lib#dd51e8542347d1dcf4f53239cbcbb77e3997532c",
     "paratii-mediaplayer": "^1.1.1",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
