@@ -11,8 +11,8 @@ jobs:
           - v1-dependencies-{{ checksum "package-lock.json" }}
           # - v1-dependencies-
       # - run: bash <(curl https://get.parity.io -Lk)
-      - run: wget -q http://d1h4xl4cr1h0mo.cloudfront.net/v1.8.6/x86_64-unknown-debian-gnu/parity_1.8.6_amd64.deb
-      - run: sudo dpkg -i parity_1.8.6_amd64.deb
+      # - run: wget -q http://d1h4xl4cr1h0mo.cloudfront.net/v1.8.6/x86_64-unknown-debian-gnu/parity_1.8.6_amd64.deb
+      #- run: sudo dpkg -i parity_1.8.6_amd64.deb
 
       # the next lines are a workaround around a web3 bug tracked here https://github.com/ethereum/web3.js/issues/1234
       # as soon as this bug is fixed, we should go back to yarn install, which is faster
