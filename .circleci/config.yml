@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9.1-browsers
+      - image: leeaandrob/paratii-db:0.0.1
     working_directory: ~/repo
     steps:
       - checkout
