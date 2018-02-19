@@ -8,6 +8,7 @@ import {
   VIDEOFETCH_ERROR,
   VIDEOFETCH_SUCCESS
 } from 'constants/ActionConstants'
+
 import VideoRecord from 'records/VideoRecords'
 
 import type { Dispatch } from 'redux'

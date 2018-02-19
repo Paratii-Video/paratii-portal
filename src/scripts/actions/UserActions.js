@@ -102,6 +102,7 @@ export const setupKeystore = () => async (
         paratii.config.account.privateKey
       )
     } catch (err) {
+      // wallet is not valid, we will create a new wallet
       walletIsValid = false
     }
   }

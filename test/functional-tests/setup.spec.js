@@ -1,6 +1,6 @@
 /* @flow */
 
-import { paratii } from './test-utils/helpers'
+// import { paratii } from './test-utils/helpers'
 import chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 
@@ -33,7 +33,7 @@ before(async function (done) {
   //     await paratii.eth.getRegistryAddress()
   //   )
   // }
-  console.log(`Using registry at ${await paratii.eth.getRegistryAddress()}`)
+  // console.log(`Using registry at ${await paratii.eth.getRegistryAddress()}`)
   browser.addCommand('waitForClickable', function (selector, timeout) {
     this.waitForVisible(selector, timeout)
     this.waitForEnabled(selector, timeout)

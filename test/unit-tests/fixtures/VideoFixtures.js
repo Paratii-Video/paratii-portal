@@ -6,7 +6,7 @@ export const getDefaultDataStatus = () => ({
   ipfsHash: '',
   ipfsHashOrig: '',
   sizes: '',
-  progress: '',
+  progress: 0,
   error: ''
 })
 
@@ -18,6 +18,7 @@ export const getDefaultAsyncTaskStatus = () => ({
 export const getDefaultVideo = () => ({
   description: '',
   filename: null,
+  filesize: null,
   id: '',
   ipfsData: '',
   ipfsHashOrig: '',
@@ -26,7 +27,7 @@ export const getDefaultVideo = () => ({
   price: '',
   thumbnailUrl: '',
   title: '',
-  blockchainStatus: getDefaultAsyncTaskStatus(),
+  storageStatus: getDefaultAsyncTaskStatus(),
   transcodingStatus: getDefaultAsyncTaskStatus(),
   uploadStatus: getDefaultAsyncTaskStatus(),
   fetchStatus: getDefaultAsyncTaskStatus(),

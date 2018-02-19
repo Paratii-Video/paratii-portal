@@ -3,26 +3,27 @@
 import { Record as ImmutableRecord } from 'immutable'
 import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
 
-class Video
-  extends ImmutableRecord({
-    description: '',
-    filename: null,
-    id: '',
-    ipfsData: '',
-    ipfsHashOrig: '',
-    ipfsHash: '',
-    owner: '',
-    price: '',
-    thumbnailUrl: '',
-    title: '',
-    blockchainStatus: new AsyncTaskStatusRecord(),
-    transcodingStatus: new AsyncTaskStatusRecord(),
-    uploadStatus: new AsyncTaskStatusRecord(),
-    fetchStatus: new AsyncTaskStatusRecord(),
-    url: ''
-  }) {
+class Video extends ImmutableRecord({
+  description: '',
+  filename: null,
+  filesize: null,
+  id: '',
+  ipfsData: '',
+  ipfsHashOrig: '',
+  ipfsHash: '',
+  owner: '',
+  price: '',
+  thumbnailUrl: '',
+  title: '',
+  storageStatus: new AsyncTaskStatusRecord(),
+  transcodingStatus: new AsyncTaskStatusRecord(),
+  uploadStatus: new AsyncTaskStatusRecord(),
+  fetchStatus: new AsyncTaskStatusRecord(),
+  url: ''
+}) {
   description: string
   filename: string
+  filesize: number
   id: string
   ipfsData: string
   ipfsHashOrig: string
@@ -31,7 +32,7 @@ class Video
   price: string
   thumbnailUrl: string
   title: string
-  blockchainStatus: AsyncTaskStatusRecord
+  storageStatus: AsyncTaskStatusRecord
   transcodingStatus: AsyncTaskStatusRecord
   uploadStatus: AsyncTaskStatusRecord
   fetchStatus: AsyncTaskStatusRecord

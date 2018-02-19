@@ -5,7 +5,7 @@ import { handleActions } from 'redux-actions'
 import {
   UPLOAD_REQUESTED,
   UPLOAD_PROGRESS,
-  UPLOAD_SUCCESS,
+  UPLOAD_REMOTE_SUCCESS,
   UPLOAD_LOCAL_SUCCESS,
   UPDATE_VIDEO_INFO,
   VIDEO_DATA_START,
@@ -27,7 +27,7 @@ import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 const reducer = {
   [UPLOAD_REQUESTED]: (
     state: VideoRecordMap,
-    { payload }: Action<{ id: string, filename: string }> = {}
+    { payload }: Action<{ id: string, filename: string, filesize: number }>
   ): VideoRecordMap => {
     if (!payload || !payload.id) {
       return state
@@ -37,6 +37,7 @@ const reducer = {
       payload.id,
       videoRecord.merge({
         filename: payload.filename,
+        filesize: payload.filesize,
         uploadStatus: videoRecord.get('uploadStatus').merge({
           name: 'running',
           data: videoRecord.getIn(['uploadStatus', 'data']).merge({
@@ -81,7 +82,7 @@ const reducer = {
       }
     )
   },
-  [UPLOAD_SUCCESS]: (
+  [UPLOAD_REMOTE_SUCCESS]: (
     state: VideoRecordMap,
     { payload }: Action<{ id: string, hash: string }>
   ): VideoRecordMap => {
@@ -94,11 +95,15 @@ const reducer = {
         mutableState.setIn([payload.id, 'ipfsHashOrig'], ipfsHashOrig)
         mutableState.setIn(
           [payload.id, 'uploadStatus', 'name'],
-          'uploaded to transcoder node'
+          'uploaded to remote'
         )
         mutableState.setIn(
           [payload.id, 'uploadStatus', 'data', 'ipfsHashOrig'],
           ipfsHashOrig
+        )
+        mutableState.setIn(
+          [payload.id, 'uploadStatus', 'data', 'progress'],
+          100
         )
         return mutableState
       }
@@ -124,7 +129,7 @@ const reducer = {
     }
 
     state = state.setIn(
-      [payload.id, 'blockchainStatus'],
+      [payload.id, 'storageStatus'],
       new AsyncTaskStatusRecord({
         name: 'running',
         data: new DataStatusRecord({
@@ -144,21 +149,22 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
-    state = state.setIn(
-      [payload.id, 'blockchainStatus'],
-      new AsyncTaskStatusRecord({
-        name: 'success',
-        data: new DataStatusRecord({
-          id: payload.id,
-          title: payload.title,
-          description: payload.description,
-          owner: payload.owner
-        })
-      })
-    )
-    state = state.setIn([payload.id, 'title'], payload.title)
-    state = state.setIn([payload.id, 'description'], payload.description)
     return state
+      .setIn(
+        [payload.id, 'storageStatus'],
+        new AsyncTaskStatusRecord({
+          name: 'success',
+          data: new DataStatusRecord({
+            id: payload.id,
+            title: payload.title,
+            description: payload.description,
+            owner: payload.owner,
+            progress: 100
+          })
+        })
+      )
+      .setIn([payload.id, 'title'], payload.title)
+      .setIn([payload.id, 'description'], payload.description)
   },
   [TRANSCODING_REQUESTED]: (
     state: VideoRecordMap,
@@ -196,8 +202,10 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
+    // FIXME: this is probably wrong
     const ipfsHash =
       payload.sizes && payload.sizes.master && payload.sizes.master.hash
+
     if (!ipfsHash) {
       return state
     }
@@ -208,7 +216,8 @@ const reducer = {
         name: 'success',
         data: new DataStatusRecord({
           ipfsHash,
-          sizes: Immutable.fromJS(payload.sizes)
+          sizes: Immutable.fromJS(payload.sizes),
+          progress: 100
         })
       })
     )

@@ -4,17 +4,12 @@ import { Link } from 'react-router-dom'
 import Button from 'components/foundations/Button'
 import type { VideoRecord } from 'records/VideoRecords'
 import VideoProgressBar from 'components/widgets/VideoForm/VideoProgressBar'
+import { humanReadableStatus } from 'utils/AppUtils'
 
 type Props = {
   video: VideoRecord,
-  onClick: (id: string) => void
+  setSelectedVideo: (id: string) => void
 }
-
-const Label = styled.div`
-  color: white;
-  font-weight: bold;
-  margin-bottom: 10px;
-`
 
 const ListItem = styled.li`
   cursor: pointer;
@@ -44,13 +39,13 @@ const ListItemWrapper = styled.div`
   }
 `
 
-const ListItemFileName = styled.h4`
+const ListItemHeader = styled.h4`
   color: ${props => props.theme.colors.VideoList.filename};
   font-size: ${props => props.theme.fonts.video.list.filename};
   margin-bottom: 4px;
 `
 
-const ListItemStatus = styled.p`
+const ListItemStatus = styled.div`
   color: ${props =>
     props.done
       ? props.theme.colors.VideoList.done
@@ -71,7 +66,7 @@ const Bar = styled.div`
 
 const NavLink = Button.withComponent(Link)
 
-class UploadListItem extends Component<Props, void> {
+class VideoListItem extends Component<Props, void> {
   constructor (props) {
     super(props)
     this.state = {
@@ -83,72 +78,46 @@ class UploadListItem extends Component<Props, void> {
   }
 
   handleClick () {
-    this.props.onClick(this.props.video.id)
+    this.props.setSelectedVideo(this.props.video.id)
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    const video = nextProps.video
-
-    if (video.getIn(['uploadStatus', 'name']) === 'running') {
-      const progress = video.getIn(['uploadStatus', 'data', 'progress'])
-      this.setState({ uploadProgress: progress })
-    } else if (
-      video.getIn(['uploadStatus', 'name']) === 'uploaded to transcoder node'
-    ) {
-      this.setState({ uploadProgress: 100 })
-    }
-
-    if (video.getIn(['transcodingStatus', 'name']) === 'progress') {
-      const progress = video.getIn(['transcodingStatus', 'data', 'progress'])
-      this.setState({ transcodingProgress: progress })
-    } else if (video.getIn(['transcodingStatus', 'name']) === 'success') {
-      this.setState({ transcodingProgress: 100 })
-    }
-
-    this.setState({
+    this.setState((prevState, nextProps) => ({
       totalProgress: Math.round(
-        (this.state.uploadProgress + this.state.transcodingProgress) / 2
+        (prevState.uploadProgress + prevState.transcodingProgress) / 2
       )
-    })
+    }))
   }
 
   render () {
-    const item = this.props.video
-    // let progress
-    // if (item.getIn(['uploadStatus', 'name']) === 'running') {
-    //   const progress = item.getIn(['uploadStatus', 'data', 'progress'])
-    //   this.setState({ uploadProgress: progress })
-    //   console.log(this.state)
-    // }
+    let linkToVideo
+    let isReady = false
+    const video = this.props.video
 
-    let linkToVideo = ''
-    // TODO; find out why getIn(['blockchainStatus', 'name']) is undefined
-    if (
-      item.getIn(['transcodingStatus', 'name']) === 'success' &&
-      item.getIn(['blockchainStatus']).name === 'success'
-    ) {
-      const link = `/play/${item.id}`
-      linkToVideo = (
-        <Label>
-          <p>Link</p>
-          <NavLink to={link}>Play video</NavLink>
-        </Label>
-      )
+    const title = video.title || video.filename
+    if (!video || !video.id) {
+      return <ListItem>Something when wrong - no video known</ListItem>
     }
+    if (
+      video.storageStatus.name === 'success' &&
+      video.transcodingStatus.name === 'success'
+    ) {
+      isReady = true
+    }
+    if (isReady) {
+      const link = `/play/${video.id}`
+      linkToVideo = <NavLink to={link}>Play video</NavLink>
+    }
+    const statusMessage = humanReadableStatus(video, 'main')
 
     return (
-      <ListItem onClick={this.handleClick} id="video-list-item-{item.id}">
+      <ListItem onClick={this.handleClick} id="video-list-item-{video.id}">
         <ListItemWrapper>
-          <ListItemFileName>{item.filename}</ListItemFileName>
-          <ListItemStatus done={this.state.uploadProgress === 100}>
-            {item.uploadStatus.name} - ({this.state.uploadProgress}%)
+          <ListItemHeader>{title}</ListItemHeader>
+          <ListItemStatus done={isReady}>
+            <b>{statusMessage}</b>
+            {linkToVideo}
           </ListItemStatus>
-          <ListItemStatus>{item.blockchainStatus.name}</ListItemStatus>
-          <ListItemStatus>
-            {item.getIn(['transcodingStatus', 'name'])}
-          </ListItemStatus>
-          <ListItemStatus>{linkToVideo}</ListItemStatus>
-
           <Bar>
             <VideoProgressBar
               progress={this.state.totalProgress + '%'}
@@ -161,4 +130,4 @@ class UploadListItem extends Component<Props, void> {
   }
 }
 
-export default UploadListItem
+export default VideoListItem

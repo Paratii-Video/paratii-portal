@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import HR from 'components/foundations/HR'
+import Button from 'components/foundations/Button'
 
 type Props = {}
 
@@ -12,16 +12,22 @@ const Footer = styled.footer`
 
 const FooterOpenSourceText = styled.p`
   color: ${props => props.theme.colors.footer.color};
+  font-size: ${props => props.theme.fonts.footer.text};
   display: block;
-  text-align: center;
 `
+
+const Anchor = Button.withComponent('a')
 
 class MainFooter extends Component<Props, void> {
   render () {
     return (
       <Footer>
-        <HR />
-        <FooterOpenSourceText>we ❤ open source</FooterOpenSourceText>
+        <FooterOpenSourceText>
+          Discover all about Paratii on{' '}
+          <Anchor anchor purple href="http://paratii.video/" target="_blank">
+            paratii.video
+          </Anchor>
+        </FooterOpenSourceText>
       </Footer>
     )
   }

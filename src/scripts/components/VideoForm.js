@@ -1,6 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
 
@@ -14,16 +15,15 @@ import RadioCheck, {
 } from 'components/widgets/forms/RadioCheck'
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
-
-type Props = {
-  selectedVideo: ?VideoRecord,
-  canSubmit: boolean,
-  saveVideoInfo: Object => Object
-}
+import { prettyBytes } from 'utils/AppUtils'
 
 const VideoFormWrapper = styled.div`
   display: flex;
   width: 100%;
+
+  @media (max-width: 1024px) {
+    flex-wrap: wrap;
+  }
 `
 
 const VideoFormHeader = styled.div`
@@ -50,10 +50,19 @@ const VideoFormSubTitle = styled.p`
 const Form = styled.div`
   flex: 1 1 100%;
   margin-right: 45px;
+
+  @media (max-width: 1024px) {
+    flex: 1 1 100%;
+    margin: 0 0 50px;
+  }
 `
 
-const VideoFormInfos = styled.div`
+const VideoFormInfoBox = styled.div`
   flex: 1 1 584px;
+
+  @media (max-width: 1024px) {
+    flex: 1 1 100%;
+  }
 `
 
 const VideoMedia = styled.div`
@@ -99,6 +108,11 @@ const VideoMediaTimeText = styled.p`
   position: relative;
   z-index: 1;
 `
+type Props = {
+  selectedVideo: VideoRecord,
+  canSubmit: boolean,
+  saveVideoInfo: Object => Object
+}
 
 class VideoForm extends Component<Props, Object> {
   handleSubmit: (e: Object) => void
@@ -106,60 +120,23 @@ class VideoForm extends Component<Props, Object> {
 
   constructor (props: Props) {
     super(props)
+    const selectedVideo = this.props.selectedVideo
     this.state = {
-      video: new VideoRecord(this.props.selectedVideo),
-      uploadProgress: 0,
-      transcodingProgress: 0,
-      totalProgress: 0
+      id: selectedVideo.id,
+      title: selectedVideo.title,
+      description: selectedVideo.description
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    const { selectedVideo } = nextProps
-    const nextSelectedVideo: ?VideoRecord = selectedVideo
-    if (nextSelectedVideo) {
-      this.setState(nextSelectedVideo)
+    const selectedVideo: ?VideoRecord = nextProps.selectedVideo
+    if (selectedVideo && this.state.id !== selectedVideo.id) {
       this.setState({
-        id: nextSelectedVideo.id,
-        title: nextSelectedVideo.title,
-        description: nextSelectedVideo.description
-      })
-
-      if (nextSelectedVideo.getIn(['uploadStatus', 'name']) === 'running') {
-        const progress = nextSelectedVideo.getIn([
-          'uploadStatus',
-          'data',
-          'progress'
-        ])
-        this.setState({ uploadProgress: progress })
-      } else if (
-        nextSelectedVideo.getIn(['uploadStatus', 'name']) ===
-        'uploaded to transcoder node'
-      ) {
-        this.setState({ uploadProgress: 100 })
-      }
-
-      if (
-        nextSelectedVideo.getIn(['transcodingStatus', 'name']) === 'progress'
-      ) {
-        const progress = nextSelectedVideo.getIn([
-          'transcodingStatus',
-          'data',
-          'progress'
-        ])
-        this.setState({ transcodingProgress: progress })
-      } else if (
-        nextSelectedVideo.getIn(['transcodingStatus', 'name']) === 'success'
-      ) {
-        this.setState({ transcodingProgress: 100 })
-      }
-
-      this.setState({
-        totalProgress: Math.round(
-          (this.state.uploadProgress + this.state.transcodingProgress) / 2
-        )
+        id: selectedVideo.id,
+        title: selectedVideo.title,
+        description: selectedVideo.description
       })
     }
   }
@@ -181,12 +158,20 @@ class VideoForm extends Component<Props, Object> {
   }
 
   render () {
-    const video: ?VideoRecord = this.props.selectedVideo
-    // const uploadProgress = video.getIn(['uploadStatus', 'data', 'progress'])
-    // const transcodingProgress = video.getIn(['transcodingStatus', 'data', 'progress'])
+    const video: VideoRecord = this.props.selectedVideo
+    if (!this.state.id) {
+      return (
+        <Card>
+          No video selected!
+          {this.props.selectedVideo.id}
+        </Card>
+      )
+    }
+    const title = video.title || video.filename
     const thumbImages =
       video &&
       video.getIn(['transcodingStatus', 'data', 'sizes', 'screenshots'])
+    const fileSize = prettyBytes((video && video.get('filesize')) || 0)
     const ipfsHash = (video && video.get('ipfsHash')) || ''
     let thumbImage = ''
     if (thumbImages) {
@@ -196,15 +181,17 @@ class VideoForm extends Component<Props, Object> {
     } else {
       thumbImage = 'http://paratii.video/public/images/paratii-src.png'
     }
-    const state = JSON.stringify(this.state, null, 2)
+
+    const urlToPlay = `/play/${video.id}`
+    const urlForSharing = `https://portal.paratii.video/play/${video.id}`
+
     return (
       <Card full>
         <VideoFormHeader>
-          <VideoFormTitle id="video-title">{this.state.id}</VideoFormTitle>
-          <Hidden>
-            ({this.state.id} - {ipfsHash})
-          </Hidden>{' '}
-          <VideoFormSubTitle purple>345MB</VideoFormSubTitle>
+          <VideoFormTitle id="video-title">{title}</VideoFormTitle>
+          <VideoFormSubTitle purple>
+            {video.title ? video.filename : ''} {fileSize}
+          </VideoFormSubTitle>
         </VideoFormHeader>
         <VideoFormWrapper>
           <Form>
@@ -231,12 +218,12 @@ class VideoForm extends Component<Props, Object> {
               margin="0 0 30px"
             />
             <RadioWrapper>
-              <RadioTitle>Paid or free</RadioTitle>
+              <RadioTitle>What kind of content?</RadioTitle>
               <RadioCheck name="content-type" value="free">
-                Free content
+                Free
               </RadioCheck>
               <RadioCheck name="content-type" value="paid" nomargin disabled>
-                Paid content (not available yet)
+                Paid (not available yet)
               </RadioCheck>
             </RadioWrapper>
             <ButtonWrapper>
@@ -251,37 +238,55 @@ class VideoForm extends Component<Props, Object> {
               </Button>
             </ButtonWrapper>
           </Form>
-          <VideoFormInfos>
+
+          <VideoFormInfoBox>
             <VideoMedia>
-              <VideoImage data-src={thumbImage} src={thumbImage} />
+              <Link to={urlToPlay}>
+                <VideoImage data-src={thumbImage} src={thumbImage} />
+              </Link>
               <VideoMediaTime>
                 <VideoMediaTimeText>28:26</VideoMediaTimeText>
               </VideoMediaTime>
             </VideoMedia>
             <VideoProgress
-              progress={this.state.uploadProgress + '%'}
+              progress={video.uploadStatus.data.progress + '%'}
               marginBottom
             >
-              Upload
+              Uploader: {video.uploadStatus.name}
             </VideoProgress>
             <VideoProgress
-              progress={this.state.transcodingProgress + '%'}
+              progress={video.transcodingStatus.data.progress + '%'}
               marginBottom
             >
-              Transcoding
+              Transcoder: {video.transcodingStatus.name}
             </VideoProgress>
-
+            <VideoProgress
+              progress={video.storageStatus.data.progress + '%'}
+              marginBottom
+            >
+              Data: {video.storageStatus.name}
+            </VideoProgress>
+            <Hidden>
+              <Input
+                id="video-title"
+                type="text"
+                margin="0 0 30px"
+                onChange={e => this.handleInputChange('title', e)}
+                value="<iframe width=560 height=315 src=https://"
+                label="Embed Code"
+                readonly
+              />
+            </Hidden>
             <Input
               id="video-title"
               type="text"
               margin="0 0 30px"
               onChange={e => this.handleInputChange('title', e)}
-              value="<iframe width=560 height=315 src=https://"
-              label="Embed Code"
+              value={urlForSharing}
+              label="Share this video"
               readonly
             />
-            <Hidden>{state}</Hidden>
-          </VideoFormInfos>
+          </VideoFormInfoBox>
         </VideoFormWrapper>
       </Card>
     )

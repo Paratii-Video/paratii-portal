@@ -3,7 +3,8 @@ import styled from 'styled-components'
 
 type Props = {
   progress: String,
-  nopercentual: String
+  nopercentual: String,
+  end: ?boolean
 }
 
 const Wrapper = styled.div`
@@ -47,7 +48,7 @@ class VideoProgressBar extends Component<Props, void> {
         <BarWrapper>
           <Bar progress={this.props.progress}>
             {!this.props.nopercentual && (
-              <Precentual end={this.props.progress === '100%'}>
+              <Precentual end={this.props.progress === '100%' ? 1 : 0}>
                 {this.props.progress}
               </Precentual>
             )}

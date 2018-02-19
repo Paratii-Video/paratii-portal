@@ -7,7 +7,7 @@ import reducer from 'reducers/VideosReducer'
 import {
   UPLOAD_REQUESTED,
   UPLOAD_PROGRESS,
-  UPLOAD_SUCCESS,
+  UPLOAD_REMOTE_SUCCESS,
   UPLOAD_LOCAL_SUCCESS,
   UPDATE_VIDEO_INFO,
   VIDEO_DATA_START,
@@ -41,6 +41,7 @@ describe('Video Reducer', () => {
       })
       expect(store.getState().toJS()).to.deep.equal({})
     })
+
     it('should do nothing if there is no id in the payload', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
@@ -52,6 +53,7 @@ describe('Video Reducer', () => {
       })
       expect(store.getState().toJS()).to.deep.equal({})
     })
+
     it('should add a video if there are no videos in the store', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
@@ -59,13 +61,15 @@ describe('Video Reducer', () => {
         type: UPLOAD_REQUESTED,
         payload: {
           id: '111',
-          filename: 'bazbar.mp4'
+          filename: 'bazbar.mp4',
+          filesize: '11111'
         }
       })
       expect(store.getState().toJS()).to.deep.equal({
         '111': {
           ...getDefaultVideo(),
           filename: 'bazbar.mp4',
+          filesize: '11111',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'running',
@@ -103,7 +107,8 @@ describe('Video Reducer', () => {
         type: UPLOAD_REQUESTED,
         payload: {
           id: '111',
-          filename: 'bazbar.mp4'
+          filename: 'bazbar.mp4',
+          filesize: '11111'
         }
       })
       expect(store.getState().toJS()).to.deep.equal({
@@ -118,6 +123,7 @@ describe('Video Reducer', () => {
         '111': {
           ...getDefaultVideo(),
           filename: 'bazbar.mp4',
+          filesize: '11111',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'running',
@@ -141,6 +147,7 @@ describe('Video Reducer', () => {
           }),
           '111': new VideoRecord({
             title: 'test123',
+            filesize: '11111',
             uploadStatus: new AsyncTaskStatusRecord({
               name: 'running',
               data: new DataStatusRecord({
@@ -162,6 +169,7 @@ describe('Video Reducer', () => {
         '111': {
           ...getDefaultVideo(),
           title: 'test123',
+          filesize: '11111',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'running',
@@ -176,7 +184,8 @@ describe('Video Reducer', () => {
         type: UPLOAD_REQUESTED,
         payload: {
           id: '111',
-          filename: 'bazbar.mp4'
+          filename: 'bazbar.mp4',
+          filesize: '11111'
         }
       })
       expect(store.getState().toJS()).to.deep.equal({
@@ -192,6 +201,7 @@ describe('Video Reducer', () => {
           ...getDefaultVideo(),
           title: 'test123',
           filename: 'bazbar.mp4',
+          filesize: '11111',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'running',
@@ -415,13 +425,13 @@ describe('Video Reducer', () => {
       })
     })
   })
-  describe('UPLOAD_SUCCESS', () => {
+  describe('UPLOAD_REMOTE_SUCCESS', () => {
     it('should throw if there is no payload', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
       expect(() =>
         store.dispatch({
-          type: UPLOAD_SUCCESS
+          type: UPLOAD_REMOTE_SUCCESS
         })
       ).to.throw()
     })
@@ -430,7 +440,7 @@ describe('Video Reducer', () => {
       expect(store.getState().toJS()).to.deep.equal({})
       expect(() =>
         store.dispatch({
-          type: UPLOAD_SUCCESS,
+          type: UPLOAD_REMOTE_SUCCESS,
           payload: {
             foo: 'bar'
           }
@@ -451,7 +461,7 @@ describe('Video Reducer', () => {
       })
       expect(() =>
         store.dispatch({
-          type: UPLOAD_SUCCESS,
+          type: UPLOAD_REMOTE_SUCCESS,
           payload: {
             id: '111'
           }
@@ -494,7 +504,7 @@ describe('Video Reducer', () => {
         '999': getDefaultVideo()
       })
       store.dispatch({
-        type: UPLOAD_SUCCESS,
+        type: UPLOAD_REMOTE_SUCCESS,
         payload: {
           id: '888',
           hash: 'Qjow875hgaahaw'
@@ -508,12 +518,12 @@ describe('Video Reducer', () => {
           ipfsHashOrig: 'Qjow875hgaahaw',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node',
+            name: 'uploaded to remote',
             data: {
               ...getDefaultDataStatus(),
               title: 'foo',
-              progress: 44,
-              ipfsHashOrig: 'Qjow875hgaahaw'
+              ipfsHashOrig: 'Qjow875hgaahaw',
+              progress: 100
             }
           }
         },
@@ -582,7 +592,7 @@ describe('Video Reducer', () => {
             title: 'foobar',
             description: 'great video',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to transcoder node'
+              name: 'uploaded to remote'
             })
           }),
           '999': new VideoRecord({})
@@ -596,7 +606,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           }
         },
         '999': getDefaultVideo()
@@ -617,7 +627,7 @@ describe('Video Reducer', () => {
           description: 'even better description',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           }
         },
         '999': getDefaultVideo()
@@ -685,7 +695,7 @@ describe('Video Reducer', () => {
             title: 'foobar',
             description: 'great video',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to transcoder node'
+              name: 'uploaded to remote'
             })
           }),
           '999': new VideoRecord({})
@@ -699,7 +709,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           }
         },
         '999': getDefaultVideo()
@@ -721,9 +731,9 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           },
-          blockchainStatus: {
+          storageStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'running',
             data: {
@@ -791,6 +801,7 @@ describe('Video Reducer', () => {
         '999': getDefaultVideo()
       })
     })
+
     it('should update the blockchain status and data of the matching video in the store', () => {
       const store = createStore(
         reducer,
@@ -800,7 +811,7 @@ describe('Video Reducer', () => {
             title: 'foobar',
             description: 'great video',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to transcoder node'
+              name: 'uploaded to remote'
             })
           }),
           '999': new VideoRecord({})
@@ -814,7 +825,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           }
         },
         '999': getDefaultVideo()
@@ -836,13 +847,14 @@ describe('Video Reducer', () => {
           description: 'foobaz',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           },
-          blockchainStatus: {
+          storageStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'success',
             data: {
               ...getDefaultDataStatus(),
+              progress: 100,
               id: '888',
               title: 'bazbar',
               description: 'foobaz',
@@ -916,7 +928,7 @@ describe('Video Reducer', () => {
             title: 'foobar',
             description: 'great video',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to transcoder node'
+              name: 'uploaded to remote'
             })
           })
         })
@@ -930,7 +942,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           }
         }
       })
@@ -949,7 +961,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           },
           transcodingStatus: {
             ...getDefaultAsyncTaskStatus(),
@@ -1024,7 +1036,7 @@ describe('Video Reducer', () => {
             title: 'foobar',
             description: 'great video',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to transcoder node'
+              name: 'uploaded to remote'
             })
           })
         })
@@ -1038,7 +1050,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           }
         }
       })
@@ -1057,7 +1069,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           },
           transcodingStatus: {
             ...getDefaultAsyncTaskStatus(),
@@ -1133,7 +1145,7 @@ describe('Video Reducer', () => {
             title: 'foobar',
             description: 'great video',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to transcoder node'
+              name: 'uploaded to remote'
             })
           })
         })
@@ -1147,7 +1159,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           }
         }
       })
@@ -1171,7 +1183,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           }
         }
       })
@@ -1186,7 +1198,7 @@ describe('Video Reducer', () => {
             title: 'foobar',
             description: 'great video',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to transcoder node'
+              name: 'uploaded to remote'
             })
           })
         })
@@ -1200,7 +1212,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           }
         }
       })
@@ -1225,7 +1237,7 @@ describe('Video Reducer', () => {
           ipfsHash: 'q82gh20',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           },
           transcodingStatus: {
             ...getDefaultAsyncTaskStatus(),
@@ -1233,6 +1245,7 @@ describe('Video Reducer', () => {
             data: {
               ...getDefaultDataStatus(),
               ipfsHash: 'q82gh20',
+              progress: 100,
               sizes: {
                 master: {
                   hash: 'q82gh20'
@@ -1307,7 +1320,7 @@ describe('Video Reducer', () => {
             ipfsHash: 'q82gh20',
             description: 'great video',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to transcoder node'
+              name: 'uploaded to remote'
             }),
             transcodingStatus: new AsyncTaskStatusRecord({
               name: 'running'
@@ -1325,7 +1338,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           },
           transcodingStatus: {
             ...getDefaultAsyncTaskStatus(),
@@ -1349,7 +1362,7 @@ describe('Video Reducer', () => {
           ipfsHash: 'q82gh20',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to transcoder node'
+            name: 'uploaded to remote'
           },
           transcodingStatus: {
             ...getDefaultAsyncTaskStatus(),

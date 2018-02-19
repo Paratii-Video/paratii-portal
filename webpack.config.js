@@ -120,11 +120,13 @@ const config = {
     new ExtractTextPlugin('embed/index.css'),
     prod
     ? new UglifyJsPlugin({
-      sourceMap: false, // this is an effor to save some memory
-      uglifyOptions: {
-        ecma: 6
-      }
-    })
+        sourceMap: false, // this is an effor to save some memory
+        uglifyOptions: {
+          ecma: 6,
+          mangle: false,
+          compress: false
+        }
+      })
     : new webpack.HotModuleReplacementPlugin()
   ]
 };

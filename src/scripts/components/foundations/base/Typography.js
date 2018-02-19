@@ -8,6 +8,9 @@ const Typography = {
   },
   anchor: '0.75rem',
   button: '0.8rem',
+  footer: {
+    text: '0.7rem'
+  },
   form: {
     input: '0.8rem',
     helper: '0.7rem'

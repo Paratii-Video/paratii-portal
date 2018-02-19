@@ -25,7 +25,9 @@ export const UPLOAD_FAILURE = createActionConstant('UPLOAD_FAILURE')
 // local upload has finished
 export const UPLOAD_LOCAL_SUCCESS = createActionConstant('UPLOAD_LOCAL_SUCCESS')
 // upload to the "IPFS Cloud" is finished
-export const UPLOAD_SUCCESS = createActionConstant('UPLOAD_SUCCESS')
+export const UPLOAD_REMOTE_SUCCESS = createActionConstant(
+  'UPLOAD_REMOTE_SUCCESS'
+)
 export const UPDATE_VIDEO_INFO = createActionConstant('UPDATE_VIDEO_INFO')
 
 /* Save to blockchain actions */

@@ -75,13 +75,6 @@ const UploadCoverTextBig = styled.span`
   margin-bottom: 15px;
 `
 
-const UploadCoverInfo = styled.p`
-  color: ${props => props.theme.colors.FilesUploader.drag.color2};
-  font-size: ${props => props.theme.fonts.text.small};
-  margin: 20px 0 0;
-  text-align: center;
-`
-
 const FooterWrapper = styled.div`
   width: 100%;
 `
@@ -134,7 +127,7 @@ class FilesUploader extends Component<Props, void> {
     return (
       <Card
         nopadding
-        margin={this.props.margin}
+        margin="0 25px 0 0"
         className={this.state.dragClass}
         footer={
           <FooterWrapper>
@@ -176,7 +169,6 @@ class FilesUploader extends Component<Props, void> {
             <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
             choose a file
           </UploadCoverText>
-          <UploadCoverInfo>{this.state.fileName}</UploadCoverInfo>
         </UploadCover>
       </Card>
     )
