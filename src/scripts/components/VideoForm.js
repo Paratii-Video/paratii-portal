@@ -158,7 +158,7 @@ class VideoForm extends Component<Props, Object> {
   }
 
   render () {
-    const video: ?VideoRecord = this.props.selectedVideo
+    const video: VideoRecord = this.props.selectedVideo
     if (!this.state.id) {
       return (
         <Card>
