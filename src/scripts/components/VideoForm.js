@@ -17,12 +17,6 @@ import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
 import { prettyBytes } from 'utils/AppUtils'
 
-type Props = {
-  selectedVideo: VideoRecord,
-  canSubmit: boolean,
-  saveVideoInfo: Object => Object
-}
-
 const VideoFormWrapper = styled.div`
   display: flex;
   width: 100%;
@@ -114,6 +108,11 @@ const VideoMediaTimeText = styled.p`
   position: relative;
   z-index: 1;
 `
+type Props = {
+  selectedVideo: VideoRecord,
+  canSubmit: boolean,
+  saveVideoInfo: Object => Object
+}
 
 class VideoForm extends Component<Props, Object> {
   handleSubmit: (e: Object) => void
@@ -122,61 +121,24 @@ class VideoForm extends Component<Props, Object> {
   constructor (props: Props) {
     super(props)
     const selectedVideo = this.props.selectedVideo
-    console.log('constructor')
-    console.log(selectedVideo)
-    console.log(selectedVideo.id)
     this.state = {
-      // video: new VideoRecord(selectedVideo)
-      // uploadProgress: 0,
-      // transcodingProgress: 0,
-      // totalProgress: 0,
-      id: '',
-      title: '',
-      description: ''
+      id: selectedVideo.id,
+      title: selectedVideo.title,
+      description: selectedVideo.description
     }
-    if (selectedVideo.id) {
-      console.log('set STate')
-      console.log(selectedVideo.id)
-      this.setState({
-        id: selectedVideo.id,
-        title: selectedVideo.title,
-        description: selectedVideo.description
-      })
-      console.log(this.state.id)
-    } else {
-      console.log(3)
-      this.setState({
-        id: '',
-        title: '',
-        description: ''
-      })
-      console.log(this.state.id)
-    }
-
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    console.log('received props')
     const selectedVideo: ?VideoRecord = nextProps.selectedVideo
     if (selectedVideo) {
-      console.log(4)
-      // this.setState(selectedVideo)
-      console.log(selectedVideo)
       this.setState({
         id: selectedVideo.id,
         title: selectedVideo.title,
         description: selectedVideo.description
       })
-      console.log(this.state.id)
     }
-
-    // // this.setState((prevState, nextProps) => ({
-    // //   totalProgress: Math.round(
-    // //     (prevState.uploadProgress + prevState.transcodingProgress) / 2
-    // //   )
-    // }))
   }
 
   handleInputChange (input: string, e: Object) {
@@ -197,8 +159,13 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     const video: ?VideoRecord = this.props.selectedVideo
-    if (!video || !video.id) {
-      return <Card>No video selected!</Card>
+    if (!this.state.id) {
+      return (
+        <Card>
+          No video selected!
+          {this.props.selectedVideo.id}
+        </Card>
+      )
     }
     const title = video.title || video.filename
     const thumbImages =
@@ -218,7 +185,6 @@ class VideoForm extends Component<Props, Object> {
     const urlToPlay = `/play/${video.id}`
     const urlForSharing = `https://portal.paratii.video/play/${video.id}`
 
-    const state = JSON.stringify(this.state, null, 2)
     return (
       <Card full>
         <VideoFormHeader>
@@ -332,7 +298,6 @@ class VideoForm extends Component<Props, Object> {
               label="Share this video"
               readonly
             />
-            <Hidden>{state}</Hidden>
           </VideoFormInfoBox>
         </VideoFormWrapper>
       </Card>
