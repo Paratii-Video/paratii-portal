@@ -4,17 +4,12 @@ import { Link } from 'react-router-dom'
 import Button from 'components/foundations/Button'
 import type { VideoRecord } from 'records/VideoRecords'
 import VideoProgressBar from 'components/widgets/VideoForm/VideoProgressBar'
+import { humanReadableStatus } from 'utils/AppUtils'
 
 type Props = {
   video: VideoRecord,
   setSelectedVideo: (id: string) => void
 }
-
-// const Label = styled.div`
-//   color: white;
-//   font-weight: bold;
-//   margin-bottom: 10px;
-// `
 
 const ListItem = styled.li`
   cursor: pointer;
@@ -95,7 +90,7 @@ class VideoListItem extends Component<Props, void> {
   }
 
   render () {
-    let statusMessage, linkToVideo
+    let linkToVideo
     let isReady = false
     const video = this.props.video
 
@@ -103,23 +98,17 @@ class VideoListItem extends Component<Props, void> {
     if (!video || !video.id) {
       return <ListItem>Something when wrong - no video known</ListItem>
     }
-    if (video.storageStatus.name !== 'success') {
-      statusMessage = 'Please provide a title and description'
-      isReady = false
-    } else if (video.transcodingStatus.name === 'success') {
-      statusMessage = 'Your video is now ready to play'
+    if (
+      video.storageStatus.name === 'success' &&
+      video.transcodingStatus.name === 'success'
+    ) {
       isReady = true
-    } else if (video.transcodingStatus.name === 'failed') {
-      statusMessage = 'Your video could not be transcoded'
-      isReady = true
-    } else if (!video.filename) {
-      statusMessage = 'No file was uploaded (this is an error)'
-      isReady = false
     }
     if (isReady) {
       const link = `/play/${video.id}`
       linkToVideo = <NavLink to={link}>Play video</NavLink>
     }
+    const statusMessage = humanReadableStatus(video, 'main')
 
     return (
       <ListItem onClick={this.handleClick} id="video-list-item-{video.id}">

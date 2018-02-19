@@ -132,7 +132,7 @@ class VideoForm extends Component<Props, Object> {
 
   componentWillReceiveProps (nextProps: Props): void {
     const selectedVideo: ?VideoRecord = nextProps.selectedVideo
-    if (selectedVideo) {
+    if (selectedVideo && this.state.id !== selectedVideo.id) {
       this.setState({
         id: selectedVideo.id,
         title: selectedVideo.title,
@@ -189,9 +189,6 @@ class VideoForm extends Component<Props, Object> {
       <Card full>
         <VideoFormHeader>
           <VideoFormTitle id="video-title">{title}</VideoFormTitle>
-          <Hidden>
-            ({this.state.id} - {ipfsHash})
-          </Hidden>{' '}
           <VideoFormSubTitle purple>
             {video.title ? video.filename : ''} {fileSize}
           </VideoFormSubTitle>
@@ -240,15 +237,6 @@ class VideoForm extends Component<Props, Object> {
                 Save data
               </Button>
             </ButtonWrapper>
-            <tt>
-              this.state.id...: {this.state.id}
-              <br />
-              video.id: {video.id}
-              <br />
-              this.state.title: {this.state.title}
-              <br />
-              video.title: {video.title}
-            </tt>
           </Form>
 
           <VideoFormInfoBox>
@@ -276,7 +264,7 @@ class VideoForm extends Component<Props, Object> {
               progress={video.storageStatus.data.progress + '%'}
               marginBottom
             >
-              Data storage: {video.storageStatus.name}
+              Data: {video.storageStatus.name}
             </VideoProgress>
             <Hidden>
               <Input

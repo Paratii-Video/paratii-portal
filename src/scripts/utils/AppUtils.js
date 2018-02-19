@@ -3,6 +3,7 @@
 import devConfig from 'config/development.json'
 import testConfig from 'config/test.json'
 import prodConfig from 'config/production.json'
+import VideoRecord from 'records/VideoRecords'
 
 export const getRoot = (): Element => {
   let root: ?Element = document.getElementById('root')
@@ -57,4 +58,30 @@ export const prettyBytes = (num: ?number): string => {
   const unit = UNITS[exponent]
 
   return numStr + '' + unit
+}
+
+export function humanReadableStatus (video: VideoRecord, type: string) {
+  let statusMessage
+  switch (type) {
+    case 'main':
+      if (video.storageStatus.name !== 'success') {
+        statusMessage = 'Please provide a title and description'
+      } else if (video.transcodingStatus.name === 'success') {
+        statusMessage = 'Your video is now ready to play'
+      } else if (video.transcodingStatus.name === 'failed') {
+        statusMessage = 'Your video could not be transcoded'
+      } else if (!video.filename) {
+        statusMessage = 'No file was uploaded (this is an error)'
+      }
+      break
+    case 'transcoding':
+      break
+    case 'upload':
+      break
+    case 'storage':
+      break
+    default:
+      break
+  }
+  return statusMessage
 }
