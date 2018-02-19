@@ -18,7 +18,7 @@ jobs:
       # as soon as this bug is fixed, we should go back to yarn install, which is faster
       # when movign back to yarn, also the v1-dependencies key should be set back to `yarn-lock`
       # - run: yarn install --pure-lockfile
-      - run: yum install bzip2
+      - run: yum install bzip2 -y
       - run: npm install
       - save_cache:
           paths:
