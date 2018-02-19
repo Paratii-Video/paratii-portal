@@ -10,6 +10,7 @@ import ProfileContainer from 'containers/ProfileContainer'
 import PlayContainer from 'containers/PlayContainer'
 import DebugContainer from 'containers/DebugContainer'
 import VideoManager from 'containers/VideoManagerContainer'
+import WalletContainer from 'containers/WalletContainer'
 
 import type { Match } from 'react-router-dom'
 
@@ -101,6 +102,7 @@ class App extends Component<Props, State> {
               />
               <Route path={`${match.url}upload`} component={VideoManager} />
               <Route path={`${match.url}debug`} component={DebugContainer} />
+              <Route path={`${match.url}wallet`} component={WalletContainer} />
               <Route
                 path={`${match.url}play/:id`}
                 render={props => (
