@@ -10,9 +10,6 @@ import ProfileContainer from 'containers/ProfileContainer'
 import PlayContainer from 'containers/PlayContainer'
 import DebugContainer from 'containers/DebugContainer'
 import VideoManager from 'containers/VideoManagerContainer'
-import Wallet from 'containers/WalletContainer'
-
-import RedeemVoucher from 'components/widgets/RedeemVoucher'
 
 import type { Match } from 'react-router-dom'
 
@@ -32,6 +29,11 @@ type Props = {
   setSelectedVideo: (id: string) => void
 }
 
+type State = {
+  modalContent: Object,
+  showModal: boolean
+}
+
 const PortalPlayWrapper = styled.div`
   flex: 1 0 100%;
   display: flex;
@@ -41,7 +43,10 @@ const PortalPlayWrapper = styled.div`
   margin: 0 auto;
 `
 
-class App extends Component<Props, void> {
+class App extends Component<Props, State> {
+  showModal: () => void
+  closeModal: () => void
+
   constructor (props: Props) {
     super(props)
 
@@ -56,14 +61,14 @@ class App extends Component<Props, void> {
     this.closeModal = this.closeModal.bind(this)
   }
 
-  showModal (View) {
+  showModal (View: Object): void {
     this.setState({
       modalContent: View,
       showModal: true
     })
   }
 
-  closeModal (view) {
+  closeModal (): void {
     this.setState({
       showModal: false
     })
@@ -95,8 +100,6 @@ class App extends Component<Props, void> {
                 component={ProfileContainer}
               />
               <Route path={`${match.url}upload`} component={VideoManager} />
-              <Route path={`${match.url}voucher`} component={RedeemVoucher} />
-              <Route path={`${match.url}wallet`} component={Wallet} />
               <Route path={`${match.url}debug`} component={DebugContainer} />
               <Route
                 path={`${match.url}play/:id`}
