@@ -55,7 +55,7 @@ class MainNavigation extends Component<Props, void> {
               About Paratii
             </Anchor>
           </NavItem>
-          <NavItem>
+          <NavItem data-test-id="nav-pti-balance">
             <PTIBalanceContainer />
           </NavItem>
         </NavList>
