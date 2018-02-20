@@ -22,7 +22,7 @@ const NumberWrapper = styled.span`
   display: flex;
 `
 
-const REFRESH_BALANCES_INTERVAL_MS: number = 1000
+const REFRESH_BALANCES_INTERVAL_MS: number = 2000
 
 class PTIBalance extends React.Component<Props, void> {
   intervalId: ?number
