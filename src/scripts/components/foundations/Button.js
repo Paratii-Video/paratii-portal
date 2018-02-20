@@ -20,7 +20,7 @@ export const ButtonStyleColor = css`
 
 export const StyleAnchor = css`
   ${props => {
-    if (props.anchor) {
+    if (props.underline) {
       let _css = 'padding-bottom: 5px; border-bottom: 1px solid '
 
       if (props.white) {
