@@ -265,22 +265,17 @@ class VideoForm extends Component<Props, Object> {
               </VideoMediaTime>
             </VideoMedia>
             <VideoProgress
-              progress={video.uploadStatus.data.progress + '%'}
+              progress={
+                video.uploadStatus.data.progress === 100
+                  ? video.transcodingStatus.data.progress + '%'
+                  : video.transcodingStatus.data.progress + '%'
+              }
               marginBottom
+              marginTop
             >
-              Uploader: {video.uploadStatus.name}
-            </VideoProgress>
-            <VideoProgress
-              progress={video.transcodingStatus.data.progress + '%'}
-              marginBottom
-            >
-              Transcoder: {video.transcodingStatus.name}
-            </VideoProgress>
-            <VideoProgress
-              progress={video.storageStatus.data.progress + '%'}
-              marginBottom
-            >
-              Data: {video.storageStatus.name}
+              {video.uploadStatus.data.progress === 100
+                ? '2/2 - Transcoder: ' + video.transcodingStatus.name
+                : '1/2 - Uploader: ' + video.uploadStatus.name}
             </VideoProgress>
             <Hidden>
               <Input
@@ -296,7 +291,7 @@ class VideoForm extends Component<Props, Object> {
             <Input
               id="video-title"
               type="text"
-              margin="55px 0 25px"
+              margin="0 0 25px"
               onChange={e => this.handleInputChange('title', e)}
               value={urlForSharing}
               label="Share this video"
@@ -316,7 +311,11 @@ class VideoForm extends Component<Props, Object> {
               </InfoTextLink>
             </InfoText>
             <ButtonWrapper>
-              <Button type="submit" purple>
+              <Button
+                type="submit"
+                purple
+                disabled={video.uploadStatus.data.progress !== 100}
+              >
                 Publish
               </Button>
             </ButtonWrapper>
