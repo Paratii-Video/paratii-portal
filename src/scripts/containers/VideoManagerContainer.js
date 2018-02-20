@@ -6,13 +6,14 @@ import { connect } from 'react-redux'
 import { CardContainer } from 'components/structures/Card'
 import PTIGuide from 'components/widgets/PTIGuide'
 import VideoRecord from 'records/VideoRecords'
-import { getVideos, getVideo } from 'selectors/index'
+import { getVideos } from 'selectors/index'
+import { getSelectedUploaderVideo } from 'selectors/UploaderSelectors'
 import type { RootState } from 'types/ApplicationTypes'
 
 import RedeemVoucher from 'components/widgets/RedeemVoucher'
-import VideoList from './VideoListContainer'
-import VideoForm from './VideoFormContainer'
-import UploadFile from './UploadFileContainer'
+import VideoList from 'containers/VideoListContainer'
+import VideoForm from 'containers/VideoFormContainer'
+import UploadFile from 'containers/UploadFileContainer'
 
 type Props = {
   videos: Map<string, VideoRecord>,
@@ -37,7 +38,7 @@ class VideoManagerContainer extends Component<Props, void> {
 
 const mapStateToProps = (state: RootState) => ({
   videos: getVideos(state),
-  selectedVideo: getVideo(state)
+  selectedVideo: getSelectedUploaderVideo(state)
 })
 
 const mapDispatchToProps = dispatch => ({})

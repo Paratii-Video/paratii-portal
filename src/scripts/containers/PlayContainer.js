@@ -4,9 +4,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import Play from 'components/Play'
-import { fetchVideo, selectVideoAction } from 'actions/VideoActions'
-import { togglePlayPause, attemptPlay } from 'actions/PlayerActions'
-import { getVideo, getIsPlaying, getIsAttemptingPlay } from 'selectors/index'
+import { fetchVideo } from 'actions/VideoActions'
+import {
+  togglePlayPause,
+  attemptPlay,
+  playerVideoSelect
+} from 'actions/PlayerActions'
+import { getIsPlaying, getIsAttemptingPlay } from 'selectors/index'
+import { getPlayingVideo } from 'selectors/PlayerSelectors'
 
 import type { RootState } from 'types/ApplicationTypes'
 
@@ -14,7 +19,7 @@ const mapStateToProps = (
   state: RootState,
   ownProps: { isEmbed?: boolean }
 ) => ({
-  video: getVideo(state),
+  video: getPlayingVideo(state),
   isPlaying: getIsPlaying(state),
   isAttemptingPlay: getIsAttemptingPlay(state),
   isEmbed: ownProps.isEmbed
@@ -22,7 +27,7 @@ const mapStateToProps = (
 
 const mapDispatchToProps = dispatch => ({
   fetchVideo: bindActionCreators(fetchVideo, dispatch),
-  setSelectedVideo: bindActionCreators(selectVideoAction, dispatch),
+  setSelectedVideo: bindActionCreators(playerVideoSelect, dispatch),
   togglePlayPause: bindActionCreators(togglePlayPause, dispatch),
   attemptPlay: bindActionCreators(attemptPlay, dispatch)
 })
