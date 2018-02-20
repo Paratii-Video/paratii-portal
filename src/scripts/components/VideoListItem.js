@@ -8,6 +8,7 @@ import { humanReadableStatus } from 'utils/AppUtils'
 
 type Props = {
   video: VideoRecord,
+  selected?: boolean,
   setSelectedVideo: (id: string) => void
 }
 
@@ -17,10 +18,8 @@ const ListItem = styled.li`
   flex-direction: column;
   padding: 20px 50px 0;
   transition: opacity ${props => props.theme.animation.time.repaint};
-
-  &:nth-child(odd) {
-    background-color: ${props => props.theme.colors.VideoList.background};
-  }
+  background-color: ${props =>
+    (props.selected && props.theme.colors.VideoList.selectedBackground) || ''};
 
   &:hover {
     opacity: ${props => props.theme.animation.opacity.hover};
@@ -90,9 +89,10 @@ class VideoListItem extends Component<Props, void> {
   }
 
   render () {
+    const { video, selected } = this.props
+
     let linkToVideo
     let isReady = false
-    const video = this.props.video
 
     const title = video.title || video.filename
     if (!video || !video.id) {
@@ -111,7 +111,11 @@ class VideoListItem extends Component<Props, void> {
     const statusMessage = humanReadableStatus(video, 'main')
 
     return (
-      <ListItem onClick={this.handleClick} id="video-list-item-{video.id}">
+      <ListItem
+        onClick={this.handleClick}
+        id={`video-list-item-${video.get('id')}`}
+        selected={selected}
+      >
         <ListItemWrapper>
           <ListItemHeader>{title}</ListItemHeader>
           <ListItemStatus done={isReady}>
