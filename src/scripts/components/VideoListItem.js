@@ -18,17 +18,8 @@ const ListItem = styled.li`
   flex-direction: column;
   padding: 20px 50px 0;
   transition: opacity ${props => props.theme.animation.time.repaint};
-
-  &:nth-child(odd) {
-    background-color: ${props => props.theme.colors.VideoList.background};
-  }
-
-  &:nth-child(odd),
-  &:nth-child(even) {
-    background-color: ${props =>
-    (props.selected && props.theme.colors.VideoList.selectedBackground) ||
-      ''};
-  }
+  background-color: ${props =>
+    (props.selected && props.theme.colors.VideoList.selectedBackground) || ''};
 
   &:hover {
     opacity: ${props => props.theme.animation.opacity.hover};
