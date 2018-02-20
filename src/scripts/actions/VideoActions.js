@@ -21,8 +21,10 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
     } else {
       videoInfo = await paratii.core.vids.get(id)
     }
-    dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
-    dispatch(playerVideoSelect(videoInfo.id))
+    if (videoInfo && videoInfo.id) {
+      dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
+      dispatch(playerVideoSelect(videoInfo.id))
+    }
   } catch (error) {
     dispatch(videoFetchError({ id: id, error: error }))
   }
