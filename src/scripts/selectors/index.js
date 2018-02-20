@@ -1,8 +1,5 @@
 /* @flow */
 
-import Immutable from 'immutable'
-
-import VideoRecord from 'records/VideoRecords'
 import UserRecord, {
   Balances,
   _getWalletKey,
@@ -10,16 +7,18 @@ import UserRecord, {
   _getLoginRequestStatus,
   _getBalances
 } from 'records/UserRecords'
-import { _getIsPlaying, _getIsAttemptingPlay } from 'records/PlayerRecords'
+import {
+  _getIsPlaying,
+  _getIsAttemptingPlay,
+  _getPlayerVideoId
+} from 'records/PlayerRecords'
+import { _getSelectedUploaderVideoId } from 'records/UploaderRecords'
 
-import type { RootState, RequestStatus } from 'types/ApplicationTypes'
-
-/* Videos */
-export const getVideo = (state: RootState): ?VideoRecord => {
-  const videoId: ?string = state.selectedVideo
-  const video = videoId && state.videos.get(videoId)
-  return video || null
-}
+import type {
+  RootState,
+  RequestStatus,
+  VideoRecordMap
+} from 'types/ApplicationTypes'
 
 /* Users */
 export const getUser = (state: RootState): UserRecord => state.user
@@ -41,11 +40,14 @@ export const getIsPlaying = (state: RootState): boolean =>
   _getIsPlaying(state.player)
 export const getIsAttemptingPlay = (state: RootState): boolean =>
   _getIsAttemptingPlay(state.player)
+export const getPlayerVideoId = (state: RootState): string =>
+  _getPlayerVideoId(state.player)
 
-// get the files to be shown in the upload manager
-export const getVideos = (
-  state: RootState
-): Immutable.Map<string, VideoRecord> => {
-  // we just return all videos, but in the future this will be a subset
+/* Videos */
+export const getVideos = (state: RootState): VideoRecordMap => {
   return state.videos
 }
+
+/* Uploader */
+export const getSelectedUploaderVideoId = (state: RootState): string =>
+  _getSelectedUploaderVideoId(state.uploader)

@@ -2,13 +2,13 @@
 
 import { combineReducers } from 'redux'
 
-import selectedVideo from 'reducers/SelectedVideoReducer'
+import uploader from 'reducers/UploaderReducer'
 import user from 'reducers/UserReducer'
 import player from 'reducers/PlayerReducer'
 import videos from 'reducers/VideosReducer'
 
 export default combineReducers({
-  selectedVideo,
+  uploader,
   user,
   videos,
   player

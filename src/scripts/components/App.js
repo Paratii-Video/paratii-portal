@@ -10,13 +10,12 @@ import ProfileContainer from 'containers/ProfileContainer'
 import PlayContainer from 'containers/PlayContainer'
 import DebugContainer from 'containers/DebugContainer'
 import VideoManager from 'containers/VideoManagerContainer'
-import Wallet from 'containers/WalletContainer'
-
-import RedeemVoucher from 'components/widgets/RedeemVoucher'
+import WalletContainer from 'containers/WalletContainer'
 
 import type { Match } from 'react-router-dom'
 
 import MainTemplate from './templates/MainTemplate'
+import Modal from './widgets/modals/Modal'
 import MainHeader from './structures/header/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/footer/MainFooter'
@@ -31,6 +30,11 @@ type Props = {
   setSelectedVideo: (id: string) => void
 }
 
+type State = {
+  modalContent: Object,
+  showModal: boolean
+}
+
 const PortalPlayWrapper = styled.div`
   flex: 1 0 100%;
   display: flex;
@@ -40,11 +44,35 @@ const PortalPlayWrapper = styled.div`
   margin: 0 auto;
 `
 
-class App extends Component<Props, void> {
+class App extends Component<Props, State> {
+  showModal: () => void
+  closeModal: () => void
+
   constructor (props: Props) {
     super(props)
 
     this.props.initializeApp()
+
+    this.state = {
+      modalContent: Object,
+      showModal: false
+    }
+
+    this.showModal = this.showModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+  }
+
+  showModal (View: Object): void {
+    this.setState({
+      modalContent: View,
+      showModal: true
+    })
+  }
+
+  closeModal (): void {
+    this.setState({
+      showModal: false
+    })
   }
 
   render () {
@@ -52,10 +80,20 @@ class App extends Component<Props, void> {
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
+          <Modal
+            show={this.state.showModal}
+            closeModal={this.closeModal}
+            content={this.state.modalContent}
+          />
+
           <MainHeader />
           <Main>
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route
+                exact
+                path="/"
+                render={props => <Home showModal={this.showModal} />}
+              />
               <Route path={`${match.url}signup`} component={SignupContainer} />
               <Route path={`${match.url}login`} component={LoginContainer} />
               <Route
@@ -63,9 +101,8 @@ class App extends Component<Props, void> {
                 component={ProfileContainer}
               />
               <Route path={`${match.url}upload`} component={VideoManager} />
-              <Route path={`${match.url}voucher`} component={RedeemVoucher} />
-              <Route path={`${match.url}wallet`} component={Wallet} />
               <Route path={`${match.url}debug`} component={DebugContainer} />
+              <Route path={`${match.url}wallet`} component={WalletContainer} />
               <Route
                 path={`${match.url}play/:id`}
                 render={props => (

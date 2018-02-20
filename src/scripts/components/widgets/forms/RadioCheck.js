@@ -10,6 +10,7 @@ type Props = {
   children: Object,
   disabled: Boolean,
   checked: Boolean,
+  checkbox: Boolean,
   nomargin: Boolean,
   onChange: (e: Object) => void
 }
@@ -72,6 +73,7 @@ const RadioInputIcon = styled.svg`
 const RadioInputLabel = styled.span`
   color: ${props => props.theme.colors.Radio.label};
   font-size: ${props => props.theme.fonts.radio.label};
+  user-select: none;
   white-space: nowrap;
 `
 
@@ -80,7 +82,7 @@ class RadioCheck extends Component<Props, void> {
     return (
       <RadioInput disabled={this.props.disabled} nomargin={this.props.nomargin}>
         <input
-          type="radio"
+          type={this.props.checkbox ? 'checkbox' : 'radio'}
           name={this.props.name}
           value={this.props.value}
           checked={this.props.checked}

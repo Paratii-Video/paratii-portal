@@ -15,7 +15,7 @@ import type { Match } from 'react-router-dom'
 
 type Props = {
   match: Match,
-  setSelectedVideo: ({ id: string }) => void,
+  setSelectedVideo: (id: string) => void,
   fetchVideo: (id: string) => void,
   isPlaying: boolean,
   togglePlayPause: (play: ?boolean) => void,
@@ -80,7 +80,7 @@ class Play extends Component<Props, State> {
 
     this.onOverlayClick = this.onOverlayClick.bind(this)
 
-    this.props.setSelectedVideo({ id: this.getVideoId() })
+    this.props.setSelectedVideo(this.getVideoId())
   }
 
   bindClapprEvents (): void {

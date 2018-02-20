@@ -8,5 +8,4 @@ max_peers = 0
 reseal_min_period = 0
 [rpc]
 cors = "*"
-[websockets]
-origins = ["localhost:8080", "127.0.0.1:8080", "0.0.0.0:8080"]
+hosts = ["localhost:8080", "127.0.0.1:8080", "0.0.0.0:8080"]

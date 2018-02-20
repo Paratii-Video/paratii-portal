@@ -23,6 +23,9 @@ const Typography = {
     text: '0.8rem',
     index: '0.7rem'
   },
+  modal: {
+    title: '2rem'
+  },
   video: {
     form: {
       title: '1rem',
@@ -62,7 +65,7 @@ const Typography = {
     tinylLineHeight: '1.88'
   },
   popover: {
-    title: '18px'
+    title: '1.12rem'
   }
 }
 

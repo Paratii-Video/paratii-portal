@@ -1,18 +1,20 @@
 import { connect } from 'react-redux'
 
-import { setSelectedVideo } from 'actions/VideoActions'
 import { bindActionCreators } from 'redux'
-import { getVideos, getVideo } from 'selectors/index'
+
+import { getVideos } from 'selectors/index'
+import { getSelectedUploaderVideo } from 'selectors/UploaderSelectors'
+import { selectUploaderVideo } from 'actions/UploaderActions'
 import type { RootState } from 'types/ApplicationTypes'
 import VideoListItem from 'components/VideoListItem'
 
 const mapStateToProps = (state: RootState) => ({
   videos: getVideos(state),
-  selectedVideo: getVideo(state)
+  selectedVideo: getSelectedUploaderVideo(state)
 })
 
 const mapDispatchToProps = dispatch => ({
-  setSelectedVideo: bindActionCreators(setSelectedVideo, dispatch)
+  setSelectedVideo: bindActionCreators(selectUploaderVideo, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoListItem)
