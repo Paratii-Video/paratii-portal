@@ -9,7 +9,6 @@ type Props = {
   value: String,
   children: Object,
   disabled: Boolean,
-  checked: Boolean,
   defaultChecked: Boolean,
   checkbox: Boolean,
   nomargin: Boolean,
@@ -86,8 +85,8 @@ class RadioCheck extends Component<Props, void> {
           type={this.props.checkbox ? 'checkbox' : 'radio'}
           name={this.props.name}
           value={this.props.value}
-          checked={this.props.defaultChecked}
           disabled={this.props.disabled}
+          checked={this.props.defaultChecked}
         />
         <RadioInputBox>
           <RadioInputIcon>
