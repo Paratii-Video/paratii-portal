@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
-import SearchInput from 'components/widgets/SearchInput'
 import MainNavigation from 'components/structures/header/MainNavigation'
 import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
@@ -22,13 +21,13 @@ const Header = styled.header`
 const HeaderWrapper = styled.div`
   align-items: center;
   display: flex;
+  justify-content: space-between;
   width: 100%;
 `
 
 const HeaderContent = styled.div`
   align-items: center;
   display: flex;
-  flex: 1;
   height: 100%;
   justify-content: space-between;
 
@@ -45,19 +44,6 @@ const HeaderButtons = styled.div`
 `
 
 // foundation/widgets(move?)
-
-const ButtonBucket = styled.button`
-  flex: 0 0 20px;
-  height: 23px;
-  margin-left: 45px;
-`
-
-const ButtonBucketSVG = styled.svg`
-  display: block;
-  fill: ${props => props.theme.colors.header.iconsFill};
-  height: 100%;
-  width: 100%;
-`
 
 const ProfileAvatarLink = styled(Link)`
   background-color: ${props => props.theme.colors.header.color};
@@ -84,17 +70,11 @@ class MainHeader extends Component<Props, void> {
         <HeaderWrapper>
           <MainHeaderLogo />
           <HeaderContent>
-            <SearchInput />
             <HeaderButtons>
               <MainNavigation />
-              <ButtonBucket>
-                <ButtonBucketSVG>
-                  <use xlinkHref="#icon-bucket" />
-                </ButtonBucketSVG>
-              </ButtonBucket>
               <ProfileAvatarLink to="/signup">
                 <Blockies
-                  seed="{window.paratii.config.account.address}"
+                  seed={window.paratii.config.account.address}
                   size={10}
                   scale={4}
                 />

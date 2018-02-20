@@ -29,7 +29,7 @@ const RadioInput = styled.label`
   cursor: ${props => (props.disabled ? 'initial' : 'pointer')};
   display: inline-flex;
   font-size: ${props => props.theme.fonts.form.input};
-  margin-right: ${props => (props.nomargin ? '' : '20px')};
+  margin: 0 ${props => (props.nomargin ? '0' : '20px')} 20px 0;
   opacity: ${props => (props.disabled ? '0.2' : '')};
   pointer-events: ${props => (props.disabled ? 'none' : '')};
   position: relative;

@@ -1,8 +1,9 @@
+/* @flow */
+import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import TextField from './forms/TextField'
-import Button from '../foundations/buttons/Button'
-import Anchor from '../foundations/buttons/Anchor'
+import Button from '../foundations/Button'
 import Text from '../foundations/Text'
 import Card from '../structures/Card'
 
@@ -25,36 +26,35 @@ const Wrapper = styled.div`
 `
 
 const SubmitButton = styled(Button)`
-  margin: 30px 0;
+  margin: 30px 0 0;
 `
+const Anchor = Button.withComponent('a')
 
-class RedeemVoucher extends Component<Props, void> {
-  constructor (props) {
+class RedeemVoucher extends Component<Props, Object> {
+  redeemVoucher: (e: Object) => void
+  handleChange: (e: Object) => void
+
+  constructor (props: Props) {
     super(props)
-
     this.state = {
-      total: 2,
-      page: 0
+      voucher: ''
     }
-
-    this.pagination = this.pagination.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.redeemVoucher = this.redeemVoucher.bind(this)
   }
 
-  pagination (direction) {
-    let page = this.state.page
+  handleChange (event: Object) {
+    this.setState({ voucher: event.target.value })
+  }
 
-    page = direction === 'next' ? page + 1 : page - 1
+  redeemVoucher (event: Object) {
+    event.preventDefault()
+    const voucherCode = this.state.voucher
+    console.log(voucherCode)
 
-    if (page < 0) {
-      page = 0
-    }
-
-    if (page > this.state.total) {
-      page = this.state.total
-    }
-
-    this.setState({
-      page: page
+    console.log(paratii.eth.vouchers)
+    paratii.eth.vouchers.redeem(voucherCode).then(resp => {
+      console.log(resp)
     })
   }
 
@@ -66,7 +66,7 @@ class RedeemVoucher extends Component<Props, void> {
         footer={
           <Text small>
             Have no voucher?{' '}
-            <Anchor href="/" purple>
+            <Anchor href="/" purple anchor>
               Drop us a line
             </Anchor>{' '}
             and we might hand out some. Remember: these are testnet tokens. No
@@ -105,8 +105,11 @@ class RedeemVoucher extends Component<Props, void> {
           </g>
         </Icon>
         <Wrapper>
-          <TextField label="Enter code here to receive test PTIs" />
-          <SubmitButton>Submit</SubmitButton>
+          <TextField
+            onChange={this.handleChange}
+            label="Enter code here to receive test PTIs"
+          />
+          <SubmitButton onClick={this.redeemVoucher}> Submit</SubmitButton>
         </Wrapper>
       </Card>
     )

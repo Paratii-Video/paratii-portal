@@ -43,7 +43,7 @@ export const getIsAttemptingPlay = (state: RootState): boolean =>
   _getIsAttemptingPlay(state.player)
 
 // get the files to be shown in the upload manager
-export const getUploads = (
+export const getVideos = (
   state: RootState
 ): Immutable.Map<string, VideoRecord> => {
   // we just return all videos, but in the future this will be a subset

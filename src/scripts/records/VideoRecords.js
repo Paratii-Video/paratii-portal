@@ -6,6 +6,7 @@ import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
 class Video extends ImmutableRecord({
   description: '',
   filename: null,
+  filesize: null,
   id: '',
   ipfsData: '',
   ipfsHashOrig: '',
@@ -14,7 +15,7 @@ class Video extends ImmutableRecord({
   price: '',
   thumbnailUrl: '',
   title: '',
-  blockchainStatus: new AsyncTaskStatusRecord(),
+  storageStatus: new AsyncTaskStatusRecord(),
   transcodingStatus: new AsyncTaskStatusRecord(),
   uploadStatus: new AsyncTaskStatusRecord(),
   fetchStatus: new AsyncTaskStatusRecord(),
@@ -22,6 +23,7 @@ class Video extends ImmutableRecord({
 }) {
   description: string
   filename: string
+  filesize: number
   id: string
   ipfsData: string
   ipfsHashOrig: string
@@ -30,7 +32,7 @@ class Video extends ImmutableRecord({
   price: string
   thumbnailUrl: string
   title: string
-  blockchainStatus: AsyncTaskStatusRecord
+  storageStatus: AsyncTaskStatusRecord
   transcodingStatus: AsyncTaskStatusRecord
   uploadStatus: AsyncTaskStatusRecord
   fetchStatus: AsyncTaskStatusRecord

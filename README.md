@@ -7,7 +7,8 @@ A modular web-interface for uploading content into the peer-to-peer network behi
 
 * nodejs >= 8.9.0
 * yarn
-* libssl1.1 (for parity >= 1.8.7)
+* libssl1.1 (required by parity >= 1.8.7)
+* parity >= 1.9
 * Install [parity](https://github.com/paritytech/parity) (ethereum client):
    * `bash <(curl https://get.parity.io -Lk)`
 
