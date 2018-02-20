@@ -21,6 +21,9 @@ const Typography = {
     text: '0.8rem',
     index: '0.7rem'
   },
+  modal: {
+    title: '2rem'
+  },
   video: {
     form: {
       title: '1rem',
@@ -42,9 +45,9 @@ const Typography = {
     label: '0.8rem'
   },
   title: {
-    big: '32px',
-    main: '28px',
-    small: '24px'
+    big: '2rem',
+    main: '1.75rem',
+    small: '1.5rem'
   },
   text: {
     big: '1.1rem',
@@ -52,7 +55,7 @@ const Typography = {
     small: '0.8rem'
   },
   popover: {
-    title: '18px'
+    title: '1.12rem'
   }
 }
 
