@@ -6,7 +6,7 @@ const createActionConstant = constant => `@@PARATII_PORTAL_${constant}`
 export const INITIALIZE = createActionConstant('INITIALIZE')
 
 /* Video actions */
-export const VIDEO_SELECT = createActionConstant('VIDEO_SELECT')
+export const PLAYER_VIDEO_SELECT = createActionConstant('PLAYER_VIDEO_SELECT')
 export const VIDEOFETCH_ERROR = createActionConstant('VIDEOFETCH_ERROR')
 export const VIDEOFETCH_SUCCESS = createActionConstant('VIDEOFETCH_SUCCESS')
 
@@ -29,6 +29,7 @@ export const UPLOAD_REMOTE_SUCCESS = createActionConstant(
   'UPLOAD_REMOTE_SUCCESS'
 )
 export const UPDATE_VIDEO_INFO = createActionConstant('UPDATE_VIDEO_INFO')
+export const UPLOAD_VIDEO_SELECT = createActionConstant('UPLOAD_VIDEO_SELECT')
 
 /* Save to blockchain actions */
 export const VIDEO_DATA_START = createActionConstant('VIDEO_DATA_START')

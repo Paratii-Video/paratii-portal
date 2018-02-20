@@ -57,6 +57,7 @@ const Button = styled.button`
   opacity: ${props => (props.disabled ? 0.5 : 1)};
   pointer-events: ${props => (props.disabled ? 'none' : '')};
   text-transform: ${props => (props.anchor ? '' : 'uppercase')};
+  user-select: ${props => (props.anchor ? '' : 'none')};
   `
 
 export default Button

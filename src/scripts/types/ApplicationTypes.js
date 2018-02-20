@@ -5,6 +5,7 @@ import Immutable from 'immutable'
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
 import PlayerRecord from 'records/PlayerRecords'
+import UploaderRecord from 'records/UploaderRecords'
 import {
   REQUEST_STATUS,
   TRANSITION_STATE
@@ -31,7 +32,7 @@ export type Action<T> = {
 export type VideoRecordMap = Immutable.Map<string, VideoRecord>
 
 export type RootState = {
-  selectedVideo: ?string,
+  uploader: UploaderRecord,
   user: UserRecord,
   videos: VideoRecordMap,
   player: PlayerRecord

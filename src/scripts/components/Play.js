@@ -16,7 +16,7 @@ import type { Match } from 'react-router-dom'
 
 type Props = {
   match: Match,
-  setSelectedVideo: ({ id: string }) => void,
+  setSelectedVideo: (id: string) => void,
   fetchVideo: (id: string) => void,
   isPlaying: boolean,
   togglePlayPause: (play: ?boolean) => void,
@@ -45,11 +45,14 @@ const Player = styled.div`
   width: 100%;
   height: 100%;
   pointer-events: none;
+  display: flex;
+  align-items: center;
 `
 
 const PlayerWrapper = styled.div`
   flex: 0 0 100%;
   width: 100%;
+  height: 100%;
   position: relative;
 `
 
@@ -83,7 +86,9 @@ class Play extends Component<Props, State> {
     this.lastMouseMove = 0
     this.playerHideTimeout = 0
 
-    this.props.setSelectedVideo({ id: this.getVideoId() })
+    this.onOverlayClick = this.onOverlayClick.bind(this)
+
+    this.props.setSelectedVideo(this.getVideoId())
   }
 
   bindClapprEvents (): void {
