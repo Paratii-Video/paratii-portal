@@ -235,7 +235,7 @@ class VideoForm extends Component<Props, Object> {
             />
             <RadioWrapper>
               <RadioTitle>What kind of content?</RadioTitle>
-              <RadioCheck name="content-type" value="free" checked>
+              <RadioCheck name="content-type" value="free" defaultChecked>
                 Free
               </RadioCheck>
               <RadioCheck name="content-type" value="paid" nomargin disabled>
@@ -296,13 +296,13 @@ class VideoForm extends Component<Props, Object> {
             <Input
               id="video-title"
               type="text"
-              margin="55px 0 15px"
+              margin="55px 0 25px"
               onChange={e => this.handleInputChange('title', e)}
               value={urlForSharing}
               label="Share this video"
               readonly
             />
-            <InfoText small>
+            <InfoText tiny>
               By clicking on the “Publish” button you acknowledge that you agree
               to Paratii’s Terms of Service and Community Guidelines. Please be
               sure not to violate others’ copyright or privacy rights.{' '}
