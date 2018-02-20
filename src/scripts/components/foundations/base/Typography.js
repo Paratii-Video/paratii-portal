@@ -62,7 +62,7 @@ const Typography = {
     bigLineHeight: '1.5',
     mainLineHeight: '1.75',
     smallLineHeight: '1.88',
-    tinylLineHeight: '1.88'
+    tinyLineHeight: '1.7'
   },
   popover: {
     title: '1.12rem'
