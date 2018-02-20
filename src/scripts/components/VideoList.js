@@ -39,6 +39,8 @@ class VideoList extends Component<Props, void> {
   }
 
   render () {
+    const { selectedVideo } = this.props
+
     const footer = this.props.selectedVideo ? (
       <Button onClick={() => this.onVideoListItemClicked(null)}>
         Add another video
@@ -54,6 +56,7 @@ class VideoList extends Component<Props, void> {
             <VideoListItem
               key={videoId}
               video={videoInfo}
+              selected={selectedVideo && selectedVideo.get('id') === videoId}
               // onClick={this.onVideoListItemClicked}
             />
           ))}

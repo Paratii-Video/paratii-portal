@@ -7,14 +7,9 @@ import VideoProgressBar from 'components/widgets/VideoForm/VideoProgressBar'
 
 type Props = {
   video: VideoRecord,
+  selected?: boolean,
   setSelectedVideo: (id: string) => void
 }
-
-// const Label = styled.div`
-//   color: white;
-//   font-weight: bold;
-//   margin-bottom: 10px;
-// `
 
 const ListItem = styled.li`
   cursor: pointer;
@@ -25,6 +20,13 @@ const ListItem = styled.li`
 
   &:nth-child(odd) {
     background-color: ${props => props.theme.colors.VideoList.background};
+  }
+
+  &:nth-child(odd),
+  &:nth-child(even) {
+    background-color: ${props =>
+    (props.selected && props.theme.colors.VideoList.selectedBackground) ||
+      ''};
   }
 
   &:hover {
@@ -95,9 +97,10 @@ class VideoListItem extends Component<Props, void> {
   }
 
   render () {
+    const { video, selected } = this.props
+
     let statusMessage, linkToVideo
     let isReady = false
-    const video = this.props.video
 
     const title = video.title || video.filename
     if (!video || !video.id) {
@@ -122,7 +125,11 @@ class VideoListItem extends Component<Props, void> {
     }
 
     return (
-      <ListItem onClick={this.handleClick} id="video-list-item-{video.id}">
+      <ListItem
+        onClick={this.handleClick}
+        id={`video-list-item-${video.get('id')}`}
+        selected={selected}
+      >
         <ListItemWrapper>
           <ListItemHeader>{title}</ListItemHeader>
           <ListItemStatus done={isReady}>

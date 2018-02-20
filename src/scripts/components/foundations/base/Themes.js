@@ -67,6 +67,7 @@ const Themes = {
     },
     VideoList: {
       background: Colors.blackLight,
+      selectedBackground: Colors.purpleTransparent,
       title: Colors.purple,
       filename: Colors.white,
       status: Colors.grayLight,
