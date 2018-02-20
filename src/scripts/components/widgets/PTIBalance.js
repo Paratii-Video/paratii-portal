@@ -22,7 +22,7 @@ class PTIBalance extends React.Component<Props, void> {
 
   componentWillMount = (): void => {
     const { loadBalances } = this.props
-    this.intervalId = setInterval(loadBalances(), REFRESH_BALANCES_INTERVAL_MS)
+    this.intervalId = setInterval(loadBalances, REFRESH_BALANCES_INTERVAL_MS)
   }
 
   componentWillUnmount = (): void => {
