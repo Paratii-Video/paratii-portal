@@ -71,7 +71,7 @@ class RedeemVoucher extends Component<Props, Object> {
         title="Redeem your voucher"
         footer={
           <FooterWrapper>
-            <Text small>
+            <Text small gray>
               Have no voucher?{' '}
               <Anchor href="/" purple anchor>
                 Drop us a line

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
 import TextField from '../widgets/forms/TextField'
-import Card, { Title } from 'components/structures/Card'
+import Card, { CardTitle } from 'components/structures/Card'
 
 type Props = {
   onFileChosen: (file: Object) => void,
@@ -15,7 +15,7 @@ const StyleInput = css`
   width: 100%;
 `
 
-const CardTitle = Title.extend`
+const Title = CardTitle.extend`
   left: 0;
   margin-bottom: 30px;
   padding: ${props => props.theme.sizes.card.padding};
@@ -137,7 +137,7 @@ class FilesUploader extends Component<Props, void> {
           </FooterWrapper>
         }
       >
-        <CardTitle>Upload video</CardTitle>
+        <Title>Upload video</Title>
         <InputFile
           type="file"
           onChange={this.onFileChosen}

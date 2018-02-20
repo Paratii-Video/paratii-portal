@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PTIGuideSvg from '../foundations/svgs/PTIGuideSvg'
 import Button from 'components/foundations/Button'
 import Text from 'components/foundations/Text'
-import Card, { Title } from 'components/structures/Card'
+import Card, { CardTitle } from 'components/structures/Card'
 
 type Props = {
   margin: String
@@ -28,33 +28,35 @@ const Item = styled.section`
 `
 
 const Header = styled.div`
-  margin-bottom: 50px;
   padding: ${props => props.theme.sizes.card.padding};
   padding-bottom: 0;
 `
 
 const Subtitle = Text.extend`
   color: ${props => props.theme.colors.MainCard.subtitle};
-  margin-top: 10px;
 `
 
 const TitleIcon = styled.svg`
   fill: ${props => props.theme.colors.MainCard.subtitleIcon};
   display: inline-block;
-  height: 20px;
+  height: 14px;
   margin-right: 10px;
   transform: translate3d(0, 3px, 0);
-  width: 20px;
+  width: 14px;
 `
 
 const Icon = styled.div`
   height: 130px;
-  margin: 0 0 20px;
+  margin: 50px 0 20px;
   width: 100%;
 `
 
 const Content = styled.div`
   padding: 40px 42px 0;
+`
+
+const ContentTitle = Text.extend`
+  text-align: center;
 `
 
 const TextStrong = styled(Text)`
@@ -93,7 +95,7 @@ class PTIGuide extends Component<Props, void> {
     super(props)
 
     this.state = {
-      total: 3,
+      total: 4,
       page: 0
     }
 
@@ -125,8 +127,8 @@ class PTIGuide extends Component<Props, void> {
           <List page={this.state.page}>
             <Item active={this.state.page === 0}>
               <Header>
-                <Title>PTI Guide</Title>
-                <Subtitle>
+                <CardTitle>What is the PTI?</CardTitle>
+                <Subtitle tiny>
                   <TitleIcon>
                     <use xlinkHref="#icon-alert" />
                   </TitleIcon>
@@ -137,13 +139,23 @@ class PTIGuide extends Component<Props, void> {
                 <PTIGuideSvg />
               </Icon>
               <Content>
+                <ContentTitle big purple>
+                  PTI Guide
+                </ContentTitle>
+              </Content>
+            </Item>
+            <Item active={this.state.page === 1}>
+              <Header>
+                <CardTitle>PTI Guide</CardTitle>
+              </Header>
+              <Content>
                 <TextStrong>
                   PTI is the native token of the Paratii open system. We call it
                   a &ldquo;system&rdquo; because the network executes operations
                   with PTIs although nobody &ldquo;owns&rdquo; the machinery who
                   does the job.
                 </TextStrong>
-                <Text small>
+                <Text gray small>
                   PTI tokens are issued, distributed and collected by smart
                   contracts that live on the Ethereum blockchain. Every new
                   registered user on Paratii earns some tokens to experiment
@@ -153,13 +165,10 @@ class PTIGuide extends Component<Props, void> {
                 </Text>
               </Content>
             </Item>
-            <Item active={this.state.page === 1}>
+            <Item active={this.state.page === 2}>
               <Header>
-                <Title>PTI Guide</Title>
+                <CardTitle>PTI Guide</CardTitle>
               </Header>
-              <Icon>
-                <PTIGuideSvg />
-              </Icon>
               <Content>
                 <TextStrong>
                   The basic operation here is staking. Whenever you upload a
@@ -167,7 +176,7 @@ class PTIGuide extends Component<Props, void> {
                   to it&rdquo;, as it enters the system. Think of it as a
                   security deposit.
                 </TextStrong>
-                <Text small>
+                <Text gray small>
                   At any time, you will be able to retrieve your tokens back,
                   which also delists the video from this web portal and related
                   interfaces. On the other hand, those who leave tokens staked
@@ -179,20 +188,17 @@ class PTIGuide extends Component<Props, void> {
                 </Text>
               </Content>
             </Item>
-            <Item active={this.state.page === 2}>
+            <Item active={this.state.page === 3}>
               <Header>
-                <Title>PTI Guide</Title>
+                <CardTitle>PTI Guide</CardTitle>
               </Header>
-              <Icon>
-                <PTIGuideSvg />
-              </Icon>
               <Content>
                 <TextStrong>
                   Videos will be subject to “flags”. Flagging a video means
                   matching its stake, by putting up an equivalent amount for
                   challenge.
                 </TextStrong>
-                <Text small>
+                <Text gray small>
                   Any user can then go in favour or disfavour that video’s
                   presence on the system. Videos collectively rejected lose
                   their stakes - forfeited PTIs go to voters in the challenge
@@ -204,20 +210,17 @@ class PTIGuide extends Component<Props, void> {
                 </Text>
               </Content>
             </Item>
-            <Item active={this.state.page === 2}>
+            <Item active={this.state.page === 4}>
               <Header>
-                <Title>PTI Guide</Title>
+                <CardTitle>PTI Guide</CardTitle>
               </Header>
-              <Icon>
-                <PTIGuideSvg />
-              </Icon>
               <Content>
                 <TextStrong>
                   Soon, PTIs will also be usable for facilitating micro
                   payments. Creators will have monetisation options to directly
                   receive value from their audiences and/or advertisers.
                 </TextStrong>
-                <Text small>
+                <Text gray small>
                   Most important for now is that you understand PTIs as an entry
                   ticket to take part in an economy that belongs to you as much
                   as you are willing to belong to it. Tokens displayed here are

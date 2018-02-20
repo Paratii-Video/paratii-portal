@@ -10,8 +10,8 @@ type Props = {
 }
 
 const VideoProgressWrapper = styled.div`
-  margin-bottom: ${props => (props.marginBottom ? '30px' : '')};
-  margin-top: ${props => (props.marginTop ? '30px' : '')};
+  margin-bottom: ${props => (props.marginBottom ? '32px' : '')};
+  margin-top: ${props => (props.marginTop ? '32px' : '')};
   width: 100%;
 `
 

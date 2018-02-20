@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import BaseTitle from '../foundations/Title'
 import styled from 'styled-components'
 
 type Props = {
@@ -46,11 +47,13 @@ const Header = styled.div`
   margin-bottom: 50px;
 `
 
-export const Title = styled.h2`
+const Title = BaseTitle.extend`
   color: ${props => props.theme.colors.MainCard.title};
   font-size: ${props => props.theme.fonts.card.title};
   font-weight: ${props => props.theme.fonts.weight.regular};
 `
+
+export const CardTitle = Title.withComponent('h2')
 
 const Footer = styled.div`
   align-items: flex-end;
@@ -74,7 +77,7 @@ class Card extends Component<Props, void> {
         <Main nopadding={this.props.nopadding}>
           {this.props.title && (
             <Header>
-              <Title>{this.props.title}</Title>
+              <CardTitle>{this.props.title}</CardTitle>
             </Header>
           )}
           {this.props.children}
