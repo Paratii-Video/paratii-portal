@@ -35,17 +35,17 @@ const InputFile = styled.input`
 
 const UploadCover = styled.div`
   ${StyleInput} align-items: center;
-  background-color: ${props =>
-    props.theme.colors.FilesUploader.drag.background};
+  background-size: cover;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
-  transition: background ${props => props.theme.animation.time.repaint};
+  transition: background ${props => props.theme.animation.time.repaint} 0.2s;
   z-index: 1;
 
   .dragenter & {
     background-color: ${props => props.theme.colors.FilesUploader.drag.enter};
+    transition-delay: 0.16s;
   }
 `
 

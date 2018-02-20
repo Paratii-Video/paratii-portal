@@ -29,7 +29,9 @@ export const CardWrapper = styled.div`
 `
 
 const Main = styled.div`
-  background-color: ${props => props.theme.colors.MainCard.background};
+  background: ${props => props.theme.colors.MainCard.background}
+    url('assets/svg/card-bg.svg') no-repeat 50% 0;
+  background-size: cover;
   color: ${props => props.theme.colors.MainCard.color};
   display: flex;
   flex: 1;

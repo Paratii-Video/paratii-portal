@@ -58,7 +58,7 @@ const Themes = {
         color: Colors.purple,
         color2: Colors.grayLight,
         info: Colors.purple,
-        enter: Colors.blackLight
+        enter: Colors.blackTransparent
       },
       input: {
         background: Colors.blackDark,

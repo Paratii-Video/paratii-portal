@@ -43,9 +43,9 @@ const Typography = {
     label: '0.8rem'
   },
   title: {
-    big: '32px',
-    main: '28px',
-    small: '24px'
+    big: '2rem',
+    main: '1.75rem',
+    small: '1.5rem'
   },
   text: {
     big: '1.1rem',
