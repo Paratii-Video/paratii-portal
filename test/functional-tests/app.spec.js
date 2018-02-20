@@ -10,10 +10,9 @@ describe('Portal application', () => {
   describe('Nav bar', () => {
     it("should render the user's PTI balance", () => {
       browser.url('http://localhost:8080')
-      browser.waitUntil(() => {
-        console.log(browser.getText('[data-test-id="nav-pti-balance"]'))
-        return browser.getText('[data-test-id="nav-pti-balance"]') === '0\nPTI'
-      })
+      browser.waitUntil(
+        () => browser.getText('[data-test-id="nav-pti-balance"]') === '0\nPTI'
+      )
     })
   })
 })
