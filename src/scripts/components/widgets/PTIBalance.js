@@ -45,8 +45,7 @@ class PTIBalance extends React.Component<Props, void> {
       <Wrapper>
         <NumberWrapper>
           <TruncatedText maxWidth="60px">{balance}</TruncatedText>
-        </NumberWrapper>{' '}
-        PTI
+        </NumberWrapper>PTI
       </Wrapper>
     )
   }
