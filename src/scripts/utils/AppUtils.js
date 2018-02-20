@@ -2,7 +2,7 @@
 
 import devConfig from 'config/development.json'
 import testConfig from 'config/test.json'
-import prodConfig from 'config/production.json'
+import prodConfig from 'config/newproduction.json'
 
 export const getRoot = (): Element => {
   let root: ?Element = document.getElementById('root')
