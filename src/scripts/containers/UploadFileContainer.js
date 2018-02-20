@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 
 import type { RootState } from 'types/ApplicationTypes'
 
-import { upload } from 'actions/UploadActions'
+import { upload } from 'actions/UploaderActions'
 
 import FilesUploader from '../components/widgets/FilesUploader'
 
