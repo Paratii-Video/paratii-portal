@@ -91,7 +91,8 @@ const Themes = {
           background: Colors.grayLight,
           barFrom: Colors.purpleGradientFrom,
           barTo: Colors.purpleGradientTo
-        }
+        },
+        text: Colors.grayLight
       }
     }
   }

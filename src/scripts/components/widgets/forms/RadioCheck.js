@@ -33,6 +33,7 @@ const RadioInput = styled.label`
   opacity: ${props => (props.disabled ? '0.2' : '')};
   pointer-events: ${props => (props.disabled ? 'none' : '')};
   position: relative;
+  user-select: none;
 
   input {
     opacity: 0;
