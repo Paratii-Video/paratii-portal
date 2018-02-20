@@ -72,6 +72,9 @@ class MainSvg extends Component<Props, void> {
             fill="#fff"
           />
         </symbol>
+        <symbol id="icon-alert" viewBox="312 1887 20 20">
+          <path d="M322 1907a10 10 0 1 0-10-10 10.066 10.066 0 0 0 10 10zm-1.415-15.849a1.415 1.415 0 0 1 2.83 0v7.17a1.415 1.415 0 0 1-2.83 0zm1.415 9.811a1.604 1.604 0 0 1 0 3.208 1.604 1.604 0 0 1 0-3.208z" />
+        </symbol>
       </svg>
     )
   }

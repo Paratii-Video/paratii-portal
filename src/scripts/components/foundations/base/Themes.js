@@ -44,9 +44,9 @@ const Themes = {
     MainCard: {
       background: Colors.black,
       color: Colors.white,
-      title: {
-        color: Colors.white
-      },
+      title: Colors.white,
+      subtitle: Colors.white,
+      subtitleIcon: Colors.purple,
       footer: {
         background: Colors.blackDark,
         color: Colors.grayLight

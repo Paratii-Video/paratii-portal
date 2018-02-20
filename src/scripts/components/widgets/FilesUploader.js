@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
-import Button from '../foundations/Button'
 import TextField from '../widgets/forms/TextField'
-import Card from 'components/structures/Card'
+import Card, { Title } from 'components/structures/Card'
 
 type Props = {
   onFileChosen: (file: Object) => void,
@@ -16,9 +15,7 @@ const StyleInput = css`
   width: 100%;
 `
 
-const Title = styled.h2`
-  color: ${props => props.theme.colors.MainCard.title.color};
-  font-size: ${props => props.theme.fonts.card.title};
+const CardTitle = Title.extend`
   left: 0;
   margin-bottom: 30px;
   padding: ${props => props.theme.sizes.card.padding};
@@ -54,7 +51,7 @@ const UploadCover = styled.div`
 
 const UploadCoverIcon = styled.div`
   height: 130px;
-  margin: 30px 0 20px 36px;
+  margin: 30px 0 20px 35px;
   transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
   width: 190px;
 
@@ -137,18 +134,10 @@ class FilesUploader extends Component<Props, void> {
               error={this.state.inputTextError}
               disabled
             />
-            <Button
-              id="upload-submit"
-              onClick={this.props.onUploadRequested}
-              purple
-              disabled
-            >
-              Upload
-            </Button>
           </FooterWrapper>
         }
       >
-        <Title>Upload video</Title>
+        <CardTitle>Upload video</CardTitle>
         <InputFile
           type="file"
           onChange={this.onFileChosen}

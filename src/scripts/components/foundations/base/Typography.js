@@ -17,6 +17,7 @@ const Typography = {
   },
   card: {
     title: '1.5rem',
+    subtitle: '1rem',
     strong: '1rem',
     text: '0.8rem',
     index: '0.7rem'

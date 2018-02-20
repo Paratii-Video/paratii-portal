@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PTIGuideSvg from '../foundations/svgs/PTIGuideSvg'
 import Button from 'components/foundations/Button'
 import Text from 'components/foundations/Text'
-import Card from 'components/structures/Card'
+import Card, { Title } from 'components/structures/Card'
 
 type Props = {
   margin: String
@@ -27,12 +27,24 @@ const Item = styled.section`
   width: 100%;
 `
 
-const Title = styled.h2`
-  color: ${props => props.theme.colors.MainCard.title.color};
-  font-size: ${props => props.theme.fonts.title.small};
+const Header = styled.div`
   margin-bottom: 50px;
   padding: ${props => props.theme.sizes.card.padding};
   padding-bottom: 0;
+`
+
+const Subtitle = Text.extend`
+  color: ${props => props.theme.colors.MainCard.subtitle};
+  margin-top: 10px;
+`
+
+const TitleIcon = styled.svg`
+  fill: ${props => props.theme.colors.MainCard.subtitleIcon};
+  display: inline-block;
+  height: 20px;
+  margin-right: 10px;
+  transform: translate3d(0, 3px, 0);
+  width: 20px;
 `
 
 const Icon = styled.div`
@@ -112,12 +124,20 @@ class PTIGuide extends Component<Props, void> {
         <Wrapper>
           <List page={this.state.page}>
             <Item active={this.state.page === 0}>
-              <Title>PTI Guide</Title>
+              <Header>
+                <Title>PTI Guide</Title>
+                <Subtitle>
+                  <TitleIcon>
+                    <use xlinkHref="#icon-alert" />
+                  </TitleIcon>
+                  Suggested reading before you upload any content
+                </Subtitle>
+              </Header>
               <Icon>
                 <PTIGuideSvg />
               </Icon>
               <Content>
-                <TextStrong bold>
+                <TextStrong>
                   PTI is the native token of the Paratii open system. We call it
                   a &ldquo;system&rdquo; because the network executes operations
                   with PTIs although nobody &ldquo;owns&rdquo; the machinery who
@@ -134,12 +154,14 @@ class PTIGuide extends Component<Props, void> {
               </Content>
             </Item>
             <Item active={this.state.page === 1}>
-              <Title>PTI Guide</Title>
+              <Header>
+                <Title>PTI Guide</Title>
+              </Header>
               <Icon>
                 <PTIGuideSvg />
               </Icon>
               <Content>
-                <TextStrong bold>
+                <TextStrong>
                   The basic operation here is staking. Whenever you upload a
                   video, 5 of your tokens will be automatically &ldquo;attached
                   to it&rdquo;, as it enters the system. Think of it as a
@@ -158,12 +180,14 @@ class PTIGuide extends Component<Props, void> {
               </Content>
             </Item>
             <Item active={this.state.page === 2}>
-              <Title>PTI Guide</Title>
+              <Header>
+                <Title>PTI Guide</Title>
+              </Header>
               <Icon>
                 <PTIGuideSvg />
               </Icon>
               <Content>
-                <TextStrong bold>
+                <TextStrong>
                   Videos will be subject to “flags”. Flagging a video means
                   matching its stake, by putting up an equivalent amount for
                   challenge.
@@ -181,12 +205,14 @@ class PTIGuide extends Component<Props, void> {
               </Content>
             </Item>
             <Item active={this.state.page === 2}>
-              <Title>PTI Guide</Title>
+              <Header>
+                <Title>PTI Guide</Title>
+              </Header>
               <Icon>
                 <PTIGuideSvg />
               </Icon>
               <Content>
-                <TextStrong bold>
+                <TextStrong>
                   Soon, PTIs will also be usable for facilitating micro
                   payments. Creators will have monetisation options to directly
                   receive value from their audiences and/or advertisers.
