@@ -10,7 +10,7 @@ import {
   UPLOAD_LOCAL_SUCCESS,
   VIDEO_DATA_START,
   VIDEO_DATA_SAVED,
-  VIDEO_SELECT,
+  UPLOAD_VIDEO_SELECT,
   TRANSCODING_REQUESTED,
   TRANSCODING_PROGRESS,
   TRANSCODING_SUCCESS,
@@ -21,13 +21,13 @@ import { videoFetchSuccess } from 'actions/VideoActions'
 
 import type { Dispatch } from 'redux'
 
+export const selectUploaderVideo = createAction(UPLOAD_VIDEO_SELECT)
 const uploadRequested = createAction(UPLOAD_REQUESTED)
 const uploadProgress = createAction(UPLOAD_PROGRESS)
 const uploadRemoteSuccess = createAction(UPLOAD_REMOTE_SUCCESS)
 const uploadLocalSuccess = createAction(UPLOAD_LOCAL_SUCCESS)
 const videoDataStart = createAction(VIDEO_DATA_START)
 const videoDataSaved = createAction(VIDEO_DATA_SAVED)
-const selectVideo = createAction(VIDEO_SELECT)
 const transcodingRequested = createAction(TRANSCODING_REQUESTED)
 const transcodingProgress = createAction(TRANSCODING_PROGRESS)
 const transcodingSuccess = createAction(TRANSCODING_SUCCESS)
@@ -37,7 +37,7 @@ const transcodingFailure = createAction(TRANSCODING_FAILURE)
 export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   const newVideoId = paratii.eth.vids.makeId()
   dispatch(videoFetchSuccess(new VideoRecord({ id: newVideoId })))
-  dispatch(selectVideo({ id: newVideoId }))
+  dispatch(selectUploaderVideo(newVideoId))
   dispatch(
     uploadRequested({
       id: newVideoId,

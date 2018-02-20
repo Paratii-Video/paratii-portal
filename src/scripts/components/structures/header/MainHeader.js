@@ -54,14 +54,6 @@ const ProfileAvatarLink = styled(Link)`
   overflow: hidden;
 `
 
-// const ProfileAvatarImage = styled.img`
-//   transition: filter ${props => props.theme.animation.time.repaint};
-//
-//   ${ProfileAvatarLink}:hover & {
-//     filter: brightness(1.5);
-//   }
-// `
-
 class MainHeader extends Component<Props, void> {
   render () {
     return (
@@ -72,7 +64,7 @@ class MainHeader extends Component<Props, void> {
           <HeaderContent>
             <HeaderButtons>
               <MainNavigation />
-              <ProfileAvatarLink to="/signup">
+              <ProfileAvatarLink to="/wallet">
                 <Blockies
                   seed={window.paratii.config.account.address}
                   size={10}

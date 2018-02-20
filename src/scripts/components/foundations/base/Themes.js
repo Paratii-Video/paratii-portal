@@ -23,6 +23,14 @@ const Themes = {
       gray: Colors.grayLight,
       purple: Colors.purple
     },
+    Modal: {
+      background: Colors.blackTransparent,
+      content: Colors.blackDark,
+      close: Colors.white,
+      title: Colors.purple,
+      hightlight: Colors.white,
+      color: Colors.grayLight
+    },
     popover: {
       border: Colors.gray,
       background: Colors.blackTransparent,
