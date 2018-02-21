@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+
 import Button from 'components/foundations/Button'
 import Hidden from 'components/foundations/Hidden'
+import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 
 type Props = {}
 
@@ -12,6 +14,7 @@ const Nav = styled.nav`
 
 const NavList = styled.ul`
   display: flex;
+  align-items: center;
 `
 
 const NavItem = styled.li`
@@ -51,6 +54,9 @@ class MainNavigation extends Component<Props, void> {
             <Anchor href="http://paratii.video/" target="_blank">
               About Paratii
             </Anchor>
+          </NavItem>
+          <NavItem data-test-id="nav-pti-balance">
+            <PTIBalanceContainer />
           </NavItem>
         </NavList>
       </Nav>

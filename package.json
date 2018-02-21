@@ -149,6 +149,7 @@
     "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
+    "short-number": "^1.0.6",
     "streamspeed": "^1.1.0",
     "styled-components": "^2.3.3",
     "stylelint-config-prettier": "^2.0.0",

@@ -1,5 +1,7 @@
 /* @flow */
 
+import shortNumber from 'short-number'
+
 import devConfig from 'config/development.json'
 import testConfig from 'config/test.json'
 import prodConfig from 'config/production.json'
@@ -84,4 +86,12 @@ export function humanReadableStatus (video: VideoRecord, type: string) {
       break
   }
   return statusMessage
+}
+
+export const formatBalance = (rawBalance: number): string => {
+  if (rawBalance < 1e19) {
+    return shortNumber(rawBalance)
+  }
+
+  return `${rawBalance.toExponential(2)}`
 }
