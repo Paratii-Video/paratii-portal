@@ -45,7 +45,6 @@ export default styled.p`
       return props.theme.fonts.text.mainLineHeight
     }
   }};
-
   overflow-wrap: break-word;
   word-wrap: break-word;
 `
