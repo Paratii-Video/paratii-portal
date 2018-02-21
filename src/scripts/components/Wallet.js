@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Card from 'components/structures/Card'
+import Text from 'components/foundations/Text'
 
 type Props = {
   user: Object
@@ -10,9 +11,9 @@ class Wallet extends Component<Props> {
     const balance = this.props.user.balances.ETH
     return (
       <Card title="Wallet">
-        <p>
+        <Text>
           You have <b>{balance}</b> PTI
-        </p>
+        </Text>
       </Card>
     )
   }
