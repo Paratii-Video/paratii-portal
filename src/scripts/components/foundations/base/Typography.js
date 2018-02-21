@@ -57,7 +57,7 @@ const Typography = {
   text: {
     big: '1.1rem',
     main: '1rem',
-    small: '0.8rem',
+    small: '0.9rem',
     tiny: '0.7rem',
     bigLineHeight: '1.5',
     mainLineHeight: '1.75',

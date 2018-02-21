@@ -35,7 +35,7 @@ const InputFile = styled.input`
 
 const UploadCover = styled.div`
   ${StyleInput} align-items: center;
-  background-size: cover;
+  background: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;

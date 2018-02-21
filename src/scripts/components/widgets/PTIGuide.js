@@ -140,7 +140,7 @@ class PTIGuide extends Component<Props, void> {
               </Icon>
               <Content>
                 <ContentTitle big purple>
-                  PTI Guide
+                  Discover how to use your PTIs
                 </ContentTitle>
               </Content>
             </Item>
