@@ -218,6 +218,9 @@ class Play extends Component<Props, State> {
   }
 
   createPlayer (ipfsHash: string): void {
+    if (this.player) {
+      this.player.remove()
+    }
     this.player = CreatePlayer({
       selector: '#player',
       source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
