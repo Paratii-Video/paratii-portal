@@ -123,7 +123,6 @@ const config = {
         sourceMap: false, // this is an effor to save some memory
         uglifyOptions: {
           ecma: 6,
-          // mangle: false,
           mangle: {
             reserved:
             ['DAGNode', 'DAGLink','Name', 'Tsize', 'Hash', 'Block', '_idB58String',
