@@ -35,6 +35,7 @@ jobs:
       - run:
           command: yarn run server:dev
           background: true
+      - run: node src/scripts/waitForServer.js
       - run: yarn run chimp-test
       - run:
           command: |
