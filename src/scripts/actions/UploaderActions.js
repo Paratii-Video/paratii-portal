@@ -63,6 +63,10 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   })
   uploader.on('done', function (files) {
     console.log('[UPLOAD done]', files)
+    paratii.core.vids.create({
+      id: newVideoId,
+      owner: paratii.config.account.address
+    })
   })
 }
 
@@ -92,6 +96,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
     dispatch(uploadProgress({ id: videoInfo.id, progress: 100 }))
     dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
   })
+
   transcoder.on('transcoding:progress', function (hash, size, percent) {
     dispatch(transcodingProgress(videoInfo, size, percent))
     console.log('TRANSCODER PROGRES', hash, size, percent)
@@ -99,12 +104,13 @@ export const transcodeVideo = (videoInfo: Object) => async (
   transcoder.on('transcoding:downsample:ready', function (hash, size) {
     console.log('TRANSCODER DOWNSAMPLE READY', hash, size)
   })
+
   transcoder.on('transcoding:done', function (hash, sizes) {
     // if transcoding is done, apparently we have uploaded the file first
     dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
     dispatch(transcodingSuccess({ id: videoInfo.id, hash: hash, sizes: sizes }))
     // console.log('TRANSCODER DONE', hash, sizes)
-    paratii.core.vids.update(videoInfo.id, { ipfsHash: sizes.master.hash })
+    paratii.core.vids.upsert({ id: videoInfo.id, ipfsHash: hash })
   })
 }
 
@@ -112,6 +118,8 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   dispatch: Dispatch<*>
 ) => {
   // the owner is the user that is logged in
+  console.log('dispacth')
+  console.log(videoInfo)
   videoInfo.owner = paratii.config.account.address
   if (!videoInfo.id) {
     const newVideoId = paratii.eth.vids.makeId()
@@ -122,7 +130,7 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   dispatch(videoDataStart(videoInfo))
 
   paratii.core.vids
-    .create(videoInfo)
+    .upsert(videoInfo)
     .then(videoInfo => {
       // console.log('SAVED')
       dispatch(videoDataSaved(videoInfo))
