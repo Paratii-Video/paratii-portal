@@ -74,6 +74,11 @@ const config = {
     },
     aliasFields: ["browser"]
   },
+  node: {
+    net: 'empty',
+    tls: 'empty',
+    dns: 'empty'
+  },
   module: {
     loaders: [
       {
