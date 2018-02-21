@@ -311,6 +311,9 @@ class VideoForm extends Component<Props, Object> {
               </InfoTextLink>
             </InfoText>
             <ButtonWrapper>
+              <Button margin="0 20px 0 0" type="button">
+                Cancel
+              </Button>
               <Button
                 type="submit"
                 purple

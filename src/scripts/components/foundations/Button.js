@@ -54,6 +54,7 @@ const Button = styled.button`
     props.anchor
       ? props.theme.fonts.weight.regular
       : props.theme.fonts.weight.bold};
+  margin: ${props => props.margin};
   opacity: ${props => (props.disabled ? 0.5 : 1)};
   pointer-events: ${props => (props.disabled ? 'none' : '')};
   text-transform: ${props => (props.anchor ? '' : 'uppercase')};
