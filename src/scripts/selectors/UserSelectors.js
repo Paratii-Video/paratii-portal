@@ -6,6 +6,7 @@ import { getLoginRequestStatus, getUser, getBalances } from 'selectors/index'
 import User, { Balances } from 'records/UserRecords'
 import { REQUEST_STATUS } from 'constants/ApplicationConstants'
 import paratii from 'utils/ParatiiLib'
+import { formatBalance } from 'utils/AppUtils'
 
 import type { RootState, RequestStatus } from 'types/ApplicationTypes'
 
@@ -23,7 +24,7 @@ export const getIsLoggedIn: (state: RootState) => boolean = createSelector(
 
 const getEthBalance: (state: RootState) => string = createSelector(
   [getBalances],
-  (balances: Balances): number => balances.get('ETH')
+  (balances: Balances): string => balances.get('ETH')
 )
 
 export const getFormattedEthBalance: (
@@ -33,12 +34,12 @@ export const getFormattedEthBalance: (
     paratii.eth.web3.utils.fromWei(ethBalance, 'ether'),
     10
   )
-  return (!isNaN(balance) && balance.toLocaleString()) || '0'
+  return (!isNaN(balance) && formatBalance(balance)) || '0'
 })
 
 const getPtiBalance: (state: RootState) => string = createSelector(
   [getBalances],
-  (balances: Balances): number => balances.get('PTI')
+  (balances: Balances): string => balances.get('PTI')
 )
 
 export const getFormattedPtiBalance: (
@@ -48,5 +49,5 @@ export const getFormattedPtiBalance: (
     paratii.eth.web3.utils.fromWei(ptiBalance, 'ether'),
     10
   )
-  return (!isNaN(balance) && balance.toLocaleString()) || '0'
+  return (!isNaN(balance) && formatBalance(balance)) || '0'
 })
