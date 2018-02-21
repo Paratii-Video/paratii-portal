@@ -11,7 +11,7 @@ describe('Portal application', () => {
     it("should render the user's PTI balance", () => {
       browser.url('http://localhost:8080')
       browser.waitUntil(
-        () => browser.getText('[data-test-id="nav-pti-balance"]') === '0\nPTI'
+        () => browser.getText('[data-test-id="nav-pti-balance"]') === '21M\nPTI'
       )
     })
   })
