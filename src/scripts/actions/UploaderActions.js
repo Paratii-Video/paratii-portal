@@ -110,7 +110,11 @@ export const transcodeVideo = (videoInfo: Object) => async (
     dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
     dispatch(transcodingSuccess({ id: videoInfo.id, hash: hash, sizes: sizes }))
     // console.log('TRANSCODER DONE', hash, sizes)
-    paratii.core.vids.upsert({ id: videoInfo.id, ipfsHash: hash })
+    paratii.core.vids.upsert({
+      id: videoInfo.id,
+      ipfsHash: hash,
+      owner: paratii.config.account.address
+    })
   })
 }
 
