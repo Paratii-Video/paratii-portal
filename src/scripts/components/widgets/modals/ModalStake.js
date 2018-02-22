@@ -39,7 +39,8 @@ const Footer = styled.div`
   width: 100%;
 `
 
-class ModalStake extends Component<Props, void> {
+class ModalStake extends Component<Props, Object> {
+  apply: (e: Object) => void
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -51,11 +52,11 @@ class ModalStake extends Component<Props, void> {
   apply (event: Object) {
     event.preventDefault()
     paratii.eth.tcr
-      .checkEligiblityAndApply(this.props.videoId, 5)
+      .checkEligiblityAndApply(this.props.videoId.toString(), 5)
       .then(resp => {
         if (resp && resp === true) {
           console.log(
-            `video ${this.props.videoId} successfully applied to TCR Listing`
+            `video ${this.props.videoId.toString()} successfully applied to TCR Listing`
           )
         } else {
           console.error(
