@@ -107,6 +107,10 @@ export type ParatiiLib = {
       utils: {
         fromWei: (value: number | string, toUnit: ?string) => string
       }
+    },
+    tcr: {
+      apply: (string, number) => Promise<Object>,
+      checkEligiblityAndApply: (string, number) => Promise<Object>
     }
   },
   ipfs: {
