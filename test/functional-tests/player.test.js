@@ -84,7 +84,7 @@ describe('🎥 Player:', function () {
     )
   })
   describe('portal player', () => {
-    it('plays a video automatically', () => {
+    it.skip('plays a video automatically', () => {
       browser.url(`http://localhost:8080/play/${videoId}`)
       browser.waitUntilVideoIsPlaying()
     })
@@ -110,7 +110,7 @@ describe('🎥 Player:', function () {
   })
 
   describe('embedded player', () => {
-    it('plays a video automatically', () => {
+    it.skip('plays a video automatically', () => {
       browser.url(`http://localhost:8080/embed/${videoId}`)
       browser.waitUntilVideoIsPlaying()
     })

@@ -81,6 +81,7 @@ export type ParatiiLib = {
     vids: {
       get: (id: string) => ?Object,
       create: Object => Object,
+      upsert: Object => Object,
       update: (id: string, Object) => Object
     }
   },

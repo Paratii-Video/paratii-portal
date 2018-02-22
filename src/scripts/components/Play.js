@@ -223,7 +223,7 @@ class Play extends Component<Props, State> {
     }
     this.player = CreatePlayer({
       selector: '#player',
-      source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
+      source: `https://gateway.paratii.video/ipfs/${ipfsHash}`,
       mimeType: 'video/mp4',
       ipfsHash: ipfsHash,
       autoPlay: true
