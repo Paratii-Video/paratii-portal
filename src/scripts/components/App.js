@@ -54,7 +54,7 @@ class App extends Component<Props, State> {
     this.props.initializeApp()
 
     this.state = {
-      modalContent: Object,
+      modalContent: false,
       showModal: false
     }
 
