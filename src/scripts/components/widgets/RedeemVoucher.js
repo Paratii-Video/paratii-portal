@@ -73,7 +73,7 @@ class RedeemVoucher extends Component<Props, Object> {
           <FooterWrapper>
             <Text small gray>
               Have no voucher?{' '}
-              <Anchor href="/" purple anchor>
+              <Anchor href="mailto:we@paratii.video" purple anchor>
                 Drop us a line
               </Anchor>{' '}
               and we might hand out some. Remember: these are testnet tokens. No
