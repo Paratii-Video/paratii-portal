@@ -52,9 +52,9 @@ const Themes = {
     MainCard: {
       background: Colors.black,
       color: Colors.white,
-      title: {
-        color: Colors.white
-      },
+      title: Colors.white,
+      subtitle: Colors.white,
+      subtitleIcon: Colors.purple,
       footer: {
         background: Colors.blackDark,
         color: Colors.grayLight
@@ -66,7 +66,7 @@ const Themes = {
         color: Colors.purple,
         color2: Colors.grayLight,
         info: Colors.purple,
-        enter: Colors.blackLight
+        enter: Colors.blackTransparent
       },
       input: {
         background: Colors.blackDark,
@@ -99,7 +99,8 @@ const Themes = {
           background: Colors.grayLight,
           barFrom: Colors.purpleGradientFrom,
           barTo: Colors.purpleGradientTo
-        }
+        },
+        text: Colors.grayLight
       }
     }
   }

@@ -28,7 +28,13 @@ const Wrapper = styled.div`
 const SubmitButton = styled(Button)`
   margin: 30px 0 0;
 `
+
 const Anchor = Button.withComponent('a')
+
+const FooterWrapper = styled.div`
+  padding-bottom: 11px;
+  padding-top: 12px;
+`
 
 class RedeemVoucher extends Component<Props, Object> {
   redeemVoucher: (e: Object) => void
@@ -64,14 +70,16 @@ class RedeemVoucher extends Component<Props, Object> {
         margin={this.props.margin}
         title="Redeem your voucher"
         footer={
-          <Text small>
-            Have no voucher?{' '}
-            <Anchor href="/" purple anchor>
-              Drop us a line
-            </Anchor>{' '}
-            and we might hand out some. Remember: these are testnet tokens. No
-            real value (yet)!
-          </Text>
+          <FooterWrapper>
+            <Text small gray>
+              Have no voucher?{' '}
+              <Anchor href="mailto:we@paratii.video" purple anchor>
+                Drop us a line
+              </Anchor>{' '}
+              and we might hand out some. Remember: these are testnet tokens. No
+              real value (yet)!
+            </Text>
+          </FooterWrapper>
         }
       >
         <Icon
@@ -92,7 +100,7 @@ class RedeemVoucher extends Component<Props, Object> {
           </defs>
           <g>
             <path
-              fill="#292e43"
+              fill="#2F3057"
               d="M-47.144 2001.697H67.209a10.923 10.923 0 0 1 10.891 10.891v96.2a10.923 10.923 0 0 1-10.891 10.891H-47.144a10.923 10.923 0 0 1-10.891-10.889v-96.2a10.923 10.923 0 0 1 10.891-10.893z"
               data-name="Path 357"
             />

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 
 type Props = {
-  content: Object,
+  content: String,
   closeModal: Object,
   show: Boolean
 }

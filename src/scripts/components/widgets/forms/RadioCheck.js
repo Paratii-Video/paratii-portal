@@ -9,7 +9,7 @@ type Props = {
   value: String,
   children: Object,
   disabled: Boolean,
-  checked: Boolean,
+  defaultChecked: Boolean,
   checkbox: Boolean,
   nomargin: Boolean,
   onChange: (e: Object) => void
@@ -34,6 +34,7 @@ const RadioInput = styled.label`
   opacity: ${props => (props.disabled ? '0.2' : '')};
   pointer-events: ${props => (props.disabled ? 'none' : '')};
   position: relative;
+  user-select: none;
 
   input {
     opacity: 0;
@@ -84,8 +85,8 @@ class RadioCheck extends Component<Props, void> {
           type={this.props.checkbox ? 'checkbox' : 'radio'}
           name={this.props.name}
           value={this.props.value}
-          checked={this.props.checked}
           disabled={this.props.disabled}
+          checked={this.props.defaultChecked}
         />
         <RadioInputBox>
           <RadioInputIcon>

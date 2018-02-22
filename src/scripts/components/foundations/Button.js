@@ -20,7 +20,7 @@ export const ButtonStyleColor = css`
 
 export const StyleAnchor = css`
   ${props => {
-    if (props.anchor) {
+    if (props.underline) {
       let _css = 'padding-bottom: 5px; border-bottom: 1px solid '
 
       if (props.white) {
@@ -54,6 +54,7 @@ const Button = styled.button`
     props.anchor
       ? props.theme.fonts.weight.regular
       : props.theme.fonts.weight.bold};
+  margin: ${props => props.margin};
   opacity: ${props => (props.disabled ? 0.5 : 1)};
   pointer-events: ${props => (props.disabled ? 'none' : '')};
   text-transform: ${props => (props.anchor ? '' : 'uppercase')};

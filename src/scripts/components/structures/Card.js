@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import BaseTitle from '../foundations/Title'
 import styled from 'styled-components'
 
 type Props = {
@@ -17,18 +18,21 @@ export const CardContainer = styled.div`
 `
 
 export const CardWrapper = styled.div`
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   margin: ${props => props.margin};
   min-width: 388px;
-  max-width: ${props => (props.full ? '' : '33%')};
+  max-width: ${props => (props.full ? '' : '395px')};
   overflow: hidden;
   position: relative;
-  flex: 1;
+  flex: 1 1 ${props => (props.full ? '100%' : '33%')};
 `
 
 const Main = styled.div`
-  background-color: ${props => props.theme.colors.MainCard.background};
+  background: ${props => props.theme.colors.MainCard.background}
+    url('assets/svg/card-bg.svg') no-repeat 50% 0;
+  background-size: cover;
   color: ${props => props.theme.colors.MainCard.color};
   display: flex;
   flex: 1;
@@ -39,11 +43,17 @@ const Main = styled.div`
   width: 100%;
 `
 
-const Title = styled.h2`
-  color: ${props => props.theme.colors.MainCard.title.color};
-  font-size: ${props => props.theme.fonts.card.title};
+const Header = styled.div`
   margin-bottom: 50px;
 `
+
+const Title = BaseTitle.extend`
+  color: ${props => props.theme.colors.MainCard.title};
+  font-size: ${props => props.theme.fonts.card.title};
+  font-weight: ${props => props.theme.fonts.weight.regular};
+`
+
+export const CardTitle = Title.withComponent('h2')
 
 const Footer = styled.div`
   align-items: flex-end;
@@ -53,7 +63,6 @@ const Footer = styled.div`
   flex: 0 0 auto;
   flex-direction: column;
   padding: ${props => props.theme.sizes.card.padding};
-  text-align: right;
   width: 100%;
 `
 
@@ -66,7 +75,11 @@ class Card extends Component<Props, void> {
         className={this.props.className}
       >
         <Main nopadding={this.props.nopadding}>
-          {this.props.title && <Title>{this.props.title}</Title>}
+          {this.props.title && (
+            <Header>
+              <CardTitle>{this.props.title}</CardTitle>
+            </Header>
+          )}
           {this.props.children}
         </Main>
         {this.props.footer && <Footer>{this.props.footer}</Footer>}

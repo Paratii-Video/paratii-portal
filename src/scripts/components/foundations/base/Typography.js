@@ -1,6 +1,7 @@
 const Typography = {
   family: 'Roboto',
   base: '16px',
+  lineHeight: '24px',
   weight: {
     light: 300,
     regular: 400,
@@ -17,6 +18,7 @@ const Typography = {
   },
   card: {
     title: '1.5rem',
+    subtitle: '1rem',
     strong: '1rem',
     text: '0.8rem',
     index: '0.7rem'
@@ -47,12 +49,20 @@ const Typography = {
   title: {
     big: '2rem',
     main: '1.75rem',
-    small: '1.5rem'
+    small: '1.5rem',
+    bigLineHeight: '1.7',
+    mainLineHeight: '1.6',
+    smallLineHeight: '1.6'
   },
   text: {
     big: '1.1rem',
     main: '1rem',
-    small: '0.8rem'
+    small: '0.9rem',
+    tiny: '0.7rem',
+    bigLineHeight: '1.5',
+    mainLineHeight: '1.75',
+    smallLineHeight: '1.88',
+    tinyLineHeight: '1.7'
   },
   popover: {
     title: '1.12rem'

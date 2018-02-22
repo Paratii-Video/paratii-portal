@@ -7,7 +7,7 @@ type Props = {}
 const Footer = styled.footer`
   background-color: ${props =>
     props.theme ? props.theme.colors.footer.background : 'black'};
-  padding: 42px 64px;
+  padding: ${props => props.theme.sizes.mainFooter.padding};
 `
 
 const FooterOpenSourceText = styled.p`

@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 const BarWrapper = styled.div`
   background-color: ${props =>
     props.theme.colors.VideoForm.info.progress.background};
-  height: 1px;
+  height: 2px;
   position: relative;
   width: 100%;
 `
@@ -38,7 +38,7 @@ const Precentual = styled.span`
   font-size: ${props => props.theme.fonts.video.info.percentual};
   position: absolute;
   right: 0;
-  transform: translate3d(${props => (props.end ? '0%' : '50%')}, 100%, 0);
+  transform: translate3d(${props => (props.end ? '0%' : '100%')}, 100%, 0);
 `
 
 class VideoProgressBar extends Component<Props, void> {
