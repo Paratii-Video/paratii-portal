@@ -13,7 +13,6 @@ import RadioCheck, {
   RadioWrapper,
   RadioTitle
 } from './widgets/forms/RadioCheck'
-import Text from './foundations/Text'
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
 import { prettyBytes } from 'utils/AppUtils'
@@ -111,13 +110,6 @@ const VideoMediaTime = styled.div`
     width: 100%;
   }
 `
-
-const InfoText = Text.extend`
-  color: ${props => props.theme.colors.VideoForm.info.text};
-  display: block;
-`
-
-const InfoTextLink = Button.withComponent('a')
 
 const VideoMediaTimeText = styled.p`
   color: ${props => props.theme.colors.VideoForm.info.time.color};
@@ -301,19 +293,6 @@ class VideoForm extends Component<Props, Object> {
               label="Share this video"
               readonly
             />
-            <InfoText tiny>
-              By clicking on the “Publish” button you acknowledge that you agree
-              to Paratii’s Terms of Service and Community Guidelines. Please be
-              sure not to violate others’ copyright or privacy rights.{' '}
-              <InfoTextLink
-                purple
-                anchor
-                href="http://paratii.video/"
-                target="_blank"
-              >
-                Learn more
-              </InfoTextLink>
-            </InfoText>
             <ButtonWrapper>
               <Button margin="0 20px 0 0" type="button">
                 Cancel
