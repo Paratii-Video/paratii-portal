@@ -246,6 +246,17 @@ class VideoForm extends Component<Props, Object> {
                 Paid (not available yet)
               </RadioCheck>
             </RadioWrapper>
+            <ButtonWrapper>
+              <Button
+                id="video-submit"
+                type="submit"
+                onClick={this.handleSubmit}
+                // disabled={!this.props.canSubmit}
+                purple
+              >
+                Save data
+              </Button>
+            </ButtonWrapper>
           </Form>
 
           <VideoFormInfoBox>
@@ -308,7 +319,6 @@ class VideoForm extends Component<Props, Object> {
                 Cancel
               </Button>
               <Button
-                id="video-submit"
                 type="submit"
                 purple
                 disabled={video.uploadStatus.data.progress !== 100}
