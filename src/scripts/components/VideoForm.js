@@ -155,7 +155,8 @@ class VideoForm extends Component<Props, Object> {
       this.setState({
         id: selectedVideo.id,
         title: selectedVideo.title,
-        description: selectedVideo.description
+        description: selectedVideo.description,
+        duration: selectedVideo.duration
       })
     }
   }
@@ -186,23 +187,35 @@ class VideoForm extends Component<Props, Object> {
         </Card>
       )
     }
+
     const title = video.title || video.filename
+    const duration = (video && video.get('duration')) || ''
+    let durationBox = null
+    if (duration) {
+      durationBox = (
+        <VideoMediaTime>
+          <VideoMediaTimeText>{duration}</VideoMediaTimeText>
+        </VideoMediaTime>
+      )
+    }
+
+    const fileSize = prettyBytes((video && video.get('filesize')) || 0)
+    const ipfsHash = (video && video.get('ipfsHash')) || ''
+    const urlToPlay = `/play/${video.id}`
+    const urlForSharing = `https://portal.paratii.video/play/${video.id}`
+
     const thumbImages =
       video &&
       video.getIn(['transcodingStatus', 'data', 'sizes', 'screenshots'])
-    const fileSize = prettyBytes((video && video.get('filesize')) || 0)
-    const ipfsHash = (video && video.get('ipfsHash')) || ''
+
     let thumbImage = ''
     if (thumbImages) {
       thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${thumbImages.get(
         1
       )}`
     } else {
-      thumbImage = 'http://paratii.video/public/images/paratii-src.png'
+      thumbImage = 'https://paratii.video/public/images/paratii-src.png'
     }
-
-    const urlToPlay = `/play/${video.id}`
-    const urlForSharing = `https://portal.paratii.video/play/${video.id}`
 
     return (
       <Card full>
@@ -263,9 +276,7 @@ class VideoForm extends Component<Props, Object> {
               <Link to={urlToPlay}>
                 <VideoImage data-src={thumbImage} src={thumbImage} />
               </Link>
-              <VideoMediaTime>
-                <VideoMediaTimeText>28:26</VideoMediaTimeText>
-              </VideoMediaTime>
+              {durationBox}
             </VideoMedia>
             <VideoProgress
               progress={

@@ -197,7 +197,7 @@ const reducer = {
   },
   [TRANSCODING_SUCCESS]: (
     state: VideoRecordMap,
-    { payload }: Action<{ id: string, sizes: Object }>
+    { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
@@ -209,18 +209,20 @@ const reducer = {
     if (!ipfsHash) {
       return state
     }
-
-    return state.setIn([payload.id, 'ipfsHash'], ipfsHash).setIn(
-      [payload.id, 'transcodingStatus'],
-      new AsyncTaskStatusRecord({
-        name: 'success',
-        data: new DataStatusRecord({
-          ipfsHash,
-          sizes: Immutable.fromJS(payload.sizes),
-          progress: 100
+    return state
+      .setIn([payload.id, 'ipfsHash'], ipfsHash)
+      .setIn(
+        [payload.id, 'transcodingStatus'],
+        new AsyncTaskStatusRecord({
+          name: 'success',
+          data: new DataStatusRecord({
+            ipfsHash,
+            sizes: Immutable.fromJS(payload.sizes),
+            progress: 100
+          })
         })
-      })
-    )
+      )
+      .setIn([payload.id, 'duration'], payload.duration)
   },
   [TRANSCODING_FAILURE]: (
     state: VideoRecordMap,
