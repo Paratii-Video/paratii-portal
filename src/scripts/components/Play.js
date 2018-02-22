@@ -228,6 +228,7 @@ class Play extends Component<Props, State> {
       ipfsHash: ipfsHash,
       autoPlay: true
     })
+    this.player.play()
     this.bindClapprEvents()
   }
 
