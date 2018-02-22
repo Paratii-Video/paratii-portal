@@ -129,8 +129,6 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   dispatch: Dispatch<*>
 ) => {
   // the owner is the user that is logged in
-  console.log('dispacth')
-  console.log(videoInfo)
   videoInfo.owner = paratii.config.account.address
   if (!videoInfo.id) {
     const newVideoId = paratii.eth.vids.makeId()
