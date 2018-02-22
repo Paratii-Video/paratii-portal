@@ -18,7 +18,8 @@ import UploadFile from 'containers/UploadFileContainer'
 type Props = {
   videos: Map<string, VideoRecord>,
   selectedVideo: ?VideoRecord,
-  showModal: (View: Object) => void
+  showModal: (View: Object) => void,
+  closeModal: () => void
 }
 
 class VideoManagerContainer extends Component<Props, void> {
@@ -30,7 +31,10 @@ class VideoManagerContainer extends Component<Props, void> {
       <CardContainer>
         {showList ? <VideoList /> : ''}
         {showForm ? (
-          <VideoForm showModal={this.props.showModal} />
+          <VideoForm
+            showModal={this.props.showModal}
+            closeModal={this.props.closeModal}
+          />
         ) : (
           <UploadFile />
         )}

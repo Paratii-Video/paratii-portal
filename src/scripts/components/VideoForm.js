@@ -7,13 +7,12 @@ import VideoRecord from 'records/VideoRecords'
 
 import Card from './structures/Card'
 import Button from './foundations/Button'
-import Input from './widgets/forms/TextField'
+import TextField from './widgets/forms/TextField'
 import Textarea from './widgets/forms/TextareaField'
 import RadioCheck, {
   RadioWrapper,
   RadioTitle
 } from './widgets/forms/RadioCheck'
-import Text from './foundations/Text'
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
 import { prettyBytes } from 'utils/AppUtils'
@@ -112,13 +111,6 @@ const VideoMediaTime = styled.div`
   }
 `
 
-const InfoText = Text.extend`
-  color: ${props => props.theme.colors.VideoForm.info.text};
-  display: block;
-`
-
-const InfoTextLink = Button.withComponent('a')
-
 const VideoMediaTimeText = styled.p`
   color: ${props => props.theme.colors.VideoForm.info.time.color};
   font-size: ${props => props.theme.fonts.video.info.time};
@@ -130,7 +122,8 @@ type Props = {
   selectedVideo: VideoRecord,
   canSubmit: boolean,
   saveVideoInfo: Object => Object,
-  showModal: (View: Object) => void
+  showModal: (View: Object) => void,
+  closeModal: () => void
 }
 
 class VideoForm extends Component<Props, Object> {
@@ -214,13 +207,13 @@ class VideoForm extends Component<Props, Object> {
         </VideoFormHeader>
         <VideoFormWrapper>
           <Form>
-            <Input
+            <TextField
               id="video-id"
               type="hidden"
               value={this.state.id}
               label="Title"
             />
-            <Input
+            <TextField
               label="Title"
               id="input-video-title"
               type="text"
@@ -281,7 +274,7 @@ class VideoForm extends Component<Props, Object> {
                 : '1/2 - Uploader: ' + video.uploadStatus.name}
             </VideoProgress>
             <Hidden>
-              <Input
+              <TextField
                 id="video-title"
                 type="text"
                 margin="0 0 30px"
@@ -291,7 +284,7 @@ class VideoForm extends Component<Props, Object> {
                 readonly
               />
             </Hidden>
-            <Input
+            <TextField
               id="video-title"
               type="text"
               margin="0 0 25px"
@@ -300,19 +293,6 @@ class VideoForm extends Component<Props, Object> {
               label="Share this video"
               readonly
             />
-            <InfoText tiny>
-              By clicking on the “Publish” button you acknowledge that you agree
-              to Paratii’s Terms of Service and Community Guidelines. Please be
-              sure not to violate others’ copyright or privacy rights.{' '}
-              <InfoTextLink
-                purple
-                anchor
-                href="http://paratii.video/"
-                target="_blank"
-              >
-                Learn more
-              </InfoTextLink>
-            </InfoText>
             <ButtonWrapper>
               <Button margin="0 20px 0 0" type="button">
                 Cancel
@@ -322,7 +302,12 @@ class VideoForm extends Component<Props, Object> {
                 purple
                 disabled={video.uploadStatus.data.progress !== 100}
                 onClick={() => {
-                  this.props.showModal(<ModalStake />)
+                  this.props.showModal(
+                    <ModalStake
+                      videoId={this.state.id}
+                      closeModal={this.props.closeModal}
+                    />
+                  )
                 }}
               >
                 Publish

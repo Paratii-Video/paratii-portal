@@ -31,7 +31,7 @@ type Props = {
 }
 
 type State = {
-  modalContent: Object,
+  modalContent: any,
   showModal: boolean
 }
 
@@ -54,7 +54,7 @@ class App extends Component<Props, State> {
     this.props.initializeApp()
 
     this.state = {
-      modalContent: Object,
+      modalContent: false,
       showModal: false
     }
 
@@ -77,14 +77,13 @@ class App extends Component<Props, State> {
 
   render () {
     const { match } = this.props
+    const HTMLModal = this.state.modalContent
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
-          <Modal
-            show={this.state.showModal}
-            closeModal={this.closeModal}
-            content={this.state.modalContent}
-          />
+          <Modal show={this.state.showModal} closeModal={this.closeModal}>
+            {HTMLModal}
+          </Modal>
           <MainHeader />
           <Main>
             <Switch>
@@ -97,7 +96,12 @@ class App extends Component<Props, State> {
               />
               <Route
                 path={`${match.url}upload`}
-                render={props => <VideoManager showModal={this.showModal} />}
+                render={props => (
+                  <VideoManager
+                    showModal={this.showModal}
+                    closeModal={this.closeModal}
+                  />
+                )}
               />
               <Route path={`${match.url}debug`} component={DebugContainer} />
               <Route path={`${match.url}wallet`} component={WalletContainer} />

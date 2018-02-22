@@ -86,7 +86,7 @@ class RadioCheck extends Component<Props, void> {
           name={this.props.name}
           value={this.props.value}
           disabled={this.props.disabled}
-          checked={this.props.defaultChecked}
+          defaultChecked={this.props.defaultChecked}
         />
         <RadioInputBox>
           <RadioInputIcon>
