@@ -35,7 +35,7 @@ describe('🦄 Uploader Tool', function () {
     browser.setValue('#input-video-title', video.title)
     browser.setValue('#input-video-description', video.description)
     // submit the form
-    browser.click('#video-submit')
+    browser.waitAndClick('#video-submit')
     // we now should be on the status screen
 
     // wait until the video is saved on the blockchain
