@@ -130,7 +130,8 @@ type Props = {
   selectedVideo: VideoRecord,
   canSubmit: boolean,
   saveVideoInfo: Object => Object,
-  showModal: (View: Object) => void
+  showModal: (View: Object) => void,
+  closeModal: () => void
 }
 
 class VideoForm extends Component<Props, Object> {
@@ -245,17 +246,6 @@ class VideoForm extends Component<Props, Object> {
                 Paid (not available yet)
               </RadioCheck>
             </RadioWrapper>
-            <ButtonWrapper>
-              <Button
-                id="video-submit"
-                type="submit"
-                onClick={this.handleSubmit}
-                // disabled={!this.props.canSubmit}
-                purple
-              >
-                Save data
-              </Button>
-            </ButtonWrapper>
           </Form>
 
           <VideoFormInfoBox>
@@ -318,11 +308,17 @@ class VideoForm extends Component<Props, Object> {
                 Cancel
               </Button>
               <Button
+                id="video-submit"
                 type="submit"
                 purple
                 disabled={video.uploadStatus.data.progress !== 100}
                 onClick={() => {
-                  this.props.showModal(<ModalStake videoId={this.state.id} />)
+                  this.props.showModal(
+                    <ModalStake
+                      videoId={this.state.id}
+                      closeModal={this.props.closeModal}
+                    />
+                  )
                 }}
               >
                 Publish

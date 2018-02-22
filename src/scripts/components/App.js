@@ -96,7 +96,12 @@ class App extends Component<Props, State> {
               />
               <Route
                 path={`${match.url}upload`}
-                render={props => <VideoManager showModal={this.showModal} />}
+                render={props => (
+                  <VideoManager
+                    showModal={this.showModal}
+                    closeModal={this.closeModal}
+                  />
+                )}
               />
               <Route path={`${match.url}debug`} component={DebugContainer} />
               <Route path={`${match.url}wallet`} component={WalletContainer} />

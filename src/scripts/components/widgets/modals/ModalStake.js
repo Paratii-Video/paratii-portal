@@ -7,7 +7,8 @@ import Button from 'components/foundations/Button'
 import RadioCheck from 'components/widgets/forms/RadioCheck'
 
 type Props = {
-  videoId: String
+  videoId: String,
+  closeModal: () => void
 }
 
 const Wrapper = styled.div`
@@ -44,6 +45,7 @@ class ModalStake extends Component<Props, Object> {
   constructor (props: Props) {
     super(props)
     this.state = {
+      errorMessage: false,
       agreedTOC: false // TODO
     }
     this.apply = this.apply.bind(this)
@@ -51,14 +53,23 @@ class ModalStake extends Component<Props, Object> {
 
   apply (event: Object) {
     event.preventDefault()
+
     paratii.eth.tcr
       .checkEligiblityAndApply(this.props.videoId.toString(), 5)
       .then(resp => {
         if (resp && resp === true) {
+          this.setState({
+            errorMessage: false
+          })
+          this.props.closeModal()
           console.log(
             `video ${this.props.videoId.toString()} successfully applied to TCR Listing`
           )
         } else {
+          this.setState({
+            errorMessage:
+              'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
+          })
           console.error(
             'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
           )
@@ -91,6 +102,11 @@ class ModalStake extends Component<Props, Object> {
         <RadioCheck checkbox name="nowarning" value="nowarning">
           Don’t show this warning again
         </RadioCheck>
+        {this.state.errorMessage && (
+          <MainText pink small>
+            {this.state.errorMessage}
+          </MainText>
+        )}
         <Footer>
           <Button purple onClick={this.apply}>
             Continue

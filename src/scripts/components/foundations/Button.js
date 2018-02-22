@@ -8,6 +8,8 @@ export const ButtonStyleColor = css`
       _color = props.theme.colors.button.white
     } else if (props.purple) {
       _color = props.theme.colors.button.purple
+    } else if (props.pink) {
+      _color = props.theme.colors.button.pink
     } else {
       _color = props.theme.colors.button.gray
     }

@@ -21,7 +21,8 @@ const Themes = {
     button: {
       white: Colors.white,
       gray: Colors.grayLight,
-      purple: Colors.purple
+      purple: Colors.purple,
+      pink: Colors.pink
     },
     Modal: {
       background: Colors.blackTransparent,
