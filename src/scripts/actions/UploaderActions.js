@@ -77,7 +77,6 @@ export const transcodeVideo = (videoInfo: Object) => async (
     `Requesting to transcode video ${videoInfo.id} with hash ${videoInfo.hash}`
   )
   dispatch(transcodingRequested(videoInfo))
-  console.log(videoInfo)
   const transcoder = paratii.ipfs.uploader.transcode(videoInfo.hash, {
     author: paratii.config.account.address,
     size: videoInfo.size
@@ -109,10 +108,10 @@ export const transcodeVideo = (videoInfo: Object) => async (
     // if transcoding is done, apparently we have uploaded the file first
     dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
     dispatch(transcodingSuccess({ id: videoInfo.id, hash: hash, sizes: sizes }))
-    // console.log('TRANSCODER DONE', hash, sizes)
+    console.log('TRANSCODER DONE', hash, sizes)
     paratii.core.vids.upsert({
       id: videoInfo.id,
-      ipfsHash: hash,
+      ipfsHash: sizes.master.hash,
       owner: paratii.config.account.address
     })
   })
