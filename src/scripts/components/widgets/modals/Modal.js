@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 
 type Props = {
-  content: String,
+  children: any,
   closeModal: Object,
   show: Boolean
 }
@@ -79,7 +79,7 @@ class Modal extends Component<Props, void> {
               <use xlinkHref="#icon-close" />
             </SVG>
           </CloseButton>
-          <Content>{this.props.content}</Content>
+          <Content>{this.props.children}</Content>
         </Container>
         <Background show={this.props.show} />
       </Wrapper>

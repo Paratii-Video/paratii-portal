@@ -77,14 +77,13 @@ class App extends Component<Props, State> {
 
   render () {
     const { match } = this.props
+    const HTMLModal = this.state.modalContent
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
-          <Modal
-            show={this.state.showModal}
-            closeModal={this.closeModal}
-            content={this.state.modalContent}
-          />
+          <Modal show={this.state.showModal} closeModal={this.closeModal}>
+            {HTMLModal}
+          </Modal>
           <MainHeader />
           <Main>
             <Switch>

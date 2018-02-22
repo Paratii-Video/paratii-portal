@@ -7,7 +7,7 @@ import VideoRecord from 'records/VideoRecords'
 
 import Card from './structures/Card'
 import Button from './foundations/Button'
-import Input from './widgets/forms/TextField'
+import TextField from './widgets/forms/TextField'
 import Textarea from './widgets/forms/TextareaField'
 import RadioCheck, {
   RadioWrapper,
@@ -214,13 +214,13 @@ class VideoForm extends Component<Props, Object> {
         </VideoFormHeader>
         <VideoFormWrapper>
           <Form>
-            <Input
+            <TextField
               id="video-id"
               type="hidden"
               value={this.state.id}
               label="Title"
             />
-            <Input
+            <TextField
               label="Title"
               id="input-video-title"
               type="text"
@@ -281,7 +281,7 @@ class VideoForm extends Component<Props, Object> {
                 : '1/2 - Uploader: ' + video.uploadStatus.name}
             </VideoProgress>
             <Hidden>
-              <Input
+              <TextField
                 id="video-title"
                 type="text"
                 margin="0 0 30px"
@@ -291,7 +291,7 @@ class VideoForm extends Component<Props, Object> {
                 readonly
               />
             </Hidden>
-            <Input
+            <TextField
               id="video-title"
               type="text"
               margin="0 0 25px"

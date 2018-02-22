@@ -80,6 +80,8 @@ class TextField extends Component<Props, void> {
       value: this.props.value
     }
 
+    this.handleFocus = this.handleFocus.bind(this)
+    this.handleBlur = this.handleBlur.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
     this.handleFilled = this.handleFilled.bind(this)
@@ -100,6 +102,14 @@ class TextField extends Component<Props, void> {
     this.handleFilled(e)
   }
 
+  handleFocus (e) {
+    if (this.props.readonly) {
+      e.target.select()
+    }
+  }
+
+  handleBlur (e) {}
+
   render () {
     return (
       <LabelField
@@ -111,6 +121,8 @@ class TextField extends Component<Props, void> {
         <InputField
           onChange={this.handleChange}
           onKeyUp={this.handleKeyUp}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
           error={this.props.error}
           type={this.props.type}
           disabled={this.props.disabled}
