@@ -31,7 +31,7 @@ type Props = {
 }
 
 type State = {
-  modalContent: Object,
+  modalContent: String,
   showModal: boolean
 }
 
@@ -62,9 +62,9 @@ class App extends Component<Props, State> {
     this.closeModal = this.closeModal.bind(this)
   }
 
-  showModal (View: Object): void {
+  showModal (content: Object): void {
     this.setState({
-      modalContent: View,
+      modalContent: content,
       showModal: true
     })
   }
@@ -85,22 +85,20 @@ class App extends Component<Props, State> {
             closeModal={this.closeModal}
             content={this.state.modalContent}
           />
-
           <MainHeader />
           <Main>
             <Switch>
-              <Route
-                exact
-                path="/"
-                render={props => <Home showModal={this.showModal} />}
-              />
+              <Route exact path="/" component={Home} />
               <Route path={`${match.url}signup`} component={SignupContainer} />
               <Route path={`${match.url}login`} component={LoginContainer} />
               <Route
                 path={`${match.url}profile`}
                 component={ProfileContainer}
               />
-              <Route path={`${match.url}upload`} component={VideoManager} />
+              <Route
+                path={`${match.url}upload`}
+                render={props => <VideoManager showModal={this.showModal} />}
+              />
               <Route path={`${match.url}debug`} component={DebugContainer} />
               <Route path={`${match.url}wallet`} component={WalletContainer} />
               <Route

@@ -17,6 +17,7 @@ import Text from './foundations/Text'
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
 import { prettyBytes } from 'utils/AppUtils'
+import ModalStake from 'components/widgets/modals/ModalStake'
 
 const VideoFormHeader = styled.div`
   border-bottom: 1px solid
@@ -124,10 +125,12 @@ const VideoMediaTimeText = styled.p`
   position: relative;
   z-index: 1;
 `
+
 type Props = {
   selectedVideo: VideoRecord,
   canSubmit: boolean,
-  saveVideoInfo: Object => Object
+  saveVideoInfo: Object => Object,
+  showModal: (View: Object) => void
 }
 
 class VideoForm extends Component<Props, Object> {
@@ -318,6 +321,9 @@ class VideoForm extends Component<Props, Object> {
                 type="submit"
                 purple
                 disabled={video.uploadStatus.data.progress !== 100}
+                onClick={() => {
+                  this.props.showModal(<ModalStake />)
+                }}
               >
                 Publish
               </Button>

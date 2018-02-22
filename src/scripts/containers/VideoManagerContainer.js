@@ -17,7 +17,8 @@ import UploadFile from 'containers/UploadFileContainer'
 
 type Props = {
   videos: Map<string, VideoRecord>,
-  selectedVideo: ?VideoRecord
+  selectedVideo: ?VideoRecord,
+  showModal: (View: Object) => void
 }
 
 class VideoManagerContainer extends Component<Props, void> {
@@ -28,7 +29,11 @@ class VideoManagerContainer extends Component<Props, void> {
     return (
       <CardContainer>
         {showList ? <VideoList /> : ''}
-        {showForm ? <VideoForm /> : <UploadFile />}
+        {showForm ? (
+          <VideoForm showModal={this.props.showModal} />
+        ) : (
+          <UploadFile />
+        )}
         {!showList ? <RedeemVoucher margin="0 25px 0 0" /> : ''}
         {!showForm && <PTIGuide />}
       </CardContainer>
