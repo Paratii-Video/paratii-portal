@@ -31,7 +31,7 @@ type Props = {
 }
 
 type State = {
-  modalContent: Object,
+  modalContent: any,
   showModal: boolean
 }
 
