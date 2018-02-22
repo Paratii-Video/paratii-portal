@@ -1,10 +1,14 @@
+/* @flow */
+import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import RadioCheck from 'components/widgets/forms/RadioCheck'
 
-type Props = {}
+type Props = {
+  videoId: String
+}
 
 const Wrapper = styled.div`
   color: ${props => props.theme.colors.Modal.color};
@@ -36,6 +40,34 @@ const Footer = styled.div`
 `
 
 class ModalStake extends Component<Props, void> {
+  constructor (props: Props) {
+    super(props)
+    this.state = {
+      agreedTOC: false // TODO
+    }
+    this.apply = this.apply.bind(this)
+  }
+
+  apply (event: Object) {
+    event.preventDefault()
+    paratii.eth.tcr
+      .checkEligiblityAndApply(this.props.videoId, 5)
+      .then(resp => {
+        if (resp && resp === true) {
+          console.log(
+            `video ${this.props.videoId} successfully applied to TCR Listing`
+          )
+        } else {
+          console.error(
+            'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
+          )
+        }
+      })
+      .catch(e => {
+        if (e) throw e
+      })
+  }
+
   render () {
     return (
       <Wrapper>
@@ -59,7 +91,9 @@ class ModalStake extends Component<Props, void> {
           Don’t show this warning again
         </RadioCheck>
         <Footer>
-          <Button purple>Continue</Button>
+          <Button purple onClick={this.apply}>
+            Continue
+          </Button>
         </Footer>
       </Wrapper>
     )

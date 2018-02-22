@@ -322,7 +322,7 @@ class VideoForm extends Component<Props, Object> {
                 purple
                 disabled={video.uploadStatus.data.progress !== 100}
                 onClick={() => {
-                  this.props.showModal(<ModalStake />)
+                  this.props.showModal(<ModalStake videoId={this.state.id} />)
                 }}
               >
                 Publish
