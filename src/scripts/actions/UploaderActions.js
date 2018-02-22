@@ -63,7 +63,7 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   })
   uploader.on('done', function (files) {
     console.log('[UPLOAD done]', files)
-    paratii.core.vids.create({
+    paratii.core.vids.upsert({
       id: newVideoId,
       owner: paratii.config.account.address
     })
@@ -120,7 +120,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
       id: videoInfo.id,
       ipfsHash: sizes.master.hash,
       owner: paratii.config.account.address,
-      duration: videoInfo.duration
+      duration: sizes.duration
     })
   })
 }
@@ -137,7 +137,7 @@ export const saveVideoInfo = (videoInfo: Object) => async (
     // dispatch(selectVideo(videoInfo.id))
   }
   dispatch(videoDataStart(videoInfo))
-
+  console.log(videoInfo)
   paratii.core.vids
     .upsert(videoInfo)
     .then(videoInfo => {
