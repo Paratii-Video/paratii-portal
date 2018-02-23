@@ -7,7 +7,17 @@ import { getSelectedUploaderVideoId, getVideos } from 'selectors/index'
 import type VideoRecord from 'records/VideoRecords'
 import type { RootState, VideoRecordMap } from 'types/ApplicationTypes'
 
-/* Upload */
+export const getUploaderVideos: (
+  state: RootState
+) => VideoRecordMap = createSelector(
+  [getVideos],
+  (videos: VideoRecordMap): VideoRecordMap =>
+    videos.filter(
+      (video: VideoRecord): boolean =>
+        video.getIn(['uploadStatus', 'name']) !== 'idle'
+    )
+)
+
 export const getSelectedUploaderVideo: (
   state: RootState
 ) => ?VideoRecord = createSelector(
