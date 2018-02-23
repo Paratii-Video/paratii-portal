@@ -46,8 +46,8 @@ const TitleIcon = styled.svg`
 `
 
 const Icon = styled.div`
-  height: 130px;
-  margin: 50px 0 20px;
+  height: 155px;
+  margin: 35px 0 20px;
   width: 100%;
 `
 
@@ -122,7 +122,7 @@ class PTIGuide extends Component<Props, void> {
 
   render () {
     return (
-      <Card nopadding margin={this.props.margin}>
+      <Card nopadding {...this.props} fullAtFirstBreak>
         <Wrapper>
           <List page={this.state.page}>
             <Item active={this.state.page === 0}>

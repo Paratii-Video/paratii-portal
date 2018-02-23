@@ -39,6 +39,7 @@ const UploadCover = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 75px 0;
   position: relative;
   transition: background ${props => props.theme.animation.time.repaint} 0.2s;
   z-index: 1;
@@ -50,7 +51,7 @@ const UploadCover = styled.div`
 `
 
 const UploadCoverIcon = styled.div`
-  height: 130px;
+  height: 126px;
   margin: 30px 0 20px 35px;
   transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
   width: 190px;
@@ -123,8 +124,8 @@ class FilesUploader extends Component<Props, void> {
   render () {
     return (
       <Card
+        {...this.props}
         nopadding
-        margin="0 25px 0 0"
         className={this.state.dragClass}
         footer={
           <FooterWrapper>

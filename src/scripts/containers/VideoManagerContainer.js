@@ -22,14 +22,24 @@ type Props = {
   closeModal: () => void
 }
 
+const Wrapper = CardContainer.extend`
+  margin: 0 auto;
+  max-width: 1500px;
+  width: 100%;
+
+  @media (max-width: 1280px) {
+    padding: ${props => (props.padding ? '0 2%' : '0')};
+  }
+`
+
 class VideoManagerContainer extends Component<Props, void> {
   render () {
     const showForm = this.props.selectedVideo
     const showList = this.props.videos.size > 0 || this.selectedVideo
 
     return (
-      <CardContainer>
-        {showList ? <VideoList /> : ''}
+      <Wrapper padding={!showForm}>
+        {showList ? <VideoList withFull={showForm} marginRight /> : ''}
         {showForm ? (
           <VideoForm
             showModal={this.props.showModal}
@@ -38,9 +48,9 @@ class VideoManagerContainer extends Component<Props, void> {
         ) : (
           <UploadFile />
         )}
-        {!showList ? <RedeemVoucher margin="0 25px 0 0" /> : ''}
-        {!showForm && <PTIGuide />}
-      </CardContainer>
+        {!showList ? <RedeemVoucher marginLeft /> : ''}
+        {!showForm && <PTIGuide marginLeft />}
+      </Wrapper>
     )
   }
 }
