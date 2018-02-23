@@ -136,7 +136,7 @@
     "ipfs-bitswap": "^0.19.0",
     "js-cookie": "^2.2.0",
     "lodash.debounce": "^4.0.8",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#7563e9a494e511d7bd7f1e9761fe80de5055449c",
+    "paratii-lib": "github:Paratii-Video/paratii-lib#b92e523218ddf522c1d2786a0ff28f3c0a298eef",
     "paratii-mediaplayer": "^2.0.0",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
