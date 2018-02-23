@@ -2,11 +2,8 @@
 
 import type { $Request, $Response } from 'express'
 
-// import paratii from 'utils/ParatiiLib'
-
 import { Paratii } from 'paratii-lib/dist/paratii'
 import { getParatiiConfig } from 'utils/AppUtils'
-// import type { ParatiiLib } from 'types/ApplicationTypes'
 
 const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 
@@ -16,10 +13,11 @@ export default paratii
 
 module.exports = (req: $Request, res: $Response) => {
   const { id } = req.params
-  // const video = {}
-  // video.title = 'Great title'
-  // video.description = 'Cool video, please watch it.'
   const video = paratii.core.vids.get(id)
+  // TODO: reaise a 404 at this point
+  if (!video) {
+    throw new Error(`No video was found with this id: ${id}`)
+  }
   // TODO: we need a way to get the ipfs hash of a thumbnail. These should be saved inparatii-db
   const thumbnailUrl =
     'http://paratii.video/imagens/cropped-logo_colorido_horizontal.png'
@@ -27,7 +25,7 @@ module.exports = (req: $Request, res: $Response) => {
   const embedUrl = `https://portal.paratii.video/embed/${id}`
   const height = `1080`
   const width = `1920`
-  // this needs to ba a video - just as the thumbnail, we need to save these data from paratii-db
+  // this needs to be the has of a video - just as the thumbnail, we need to save these data from paratii-db
   const ipfSource = `https://gateway.paratii.video/ipfs/QmSs64S5J8C9H6ZFYR44YGEB6pLq2SRLYe3MZdUoyNX7EH`
 
   res.send(`
