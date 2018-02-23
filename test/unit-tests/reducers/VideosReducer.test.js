@@ -62,7 +62,8 @@ describe('Video Reducer', () => {
         payload: {
           id: '111',
           filename: 'bazbar.mp4',
-          filesize: '11111'
+          filesize: '11111',
+          owner: '1234567789'
         }
       })
       expect(store.getState().toJS()).to.deep.equal({
@@ -70,6 +71,7 @@ describe('Video Reducer', () => {
           ...getDefaultVideo(),
           filename: 'bazbar.mp4',
           filesize: '11111',
+          owner: '1234567789',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'running',
@@ -108,7 +110,8 @@ describe('Video Reducer', () => {
         payload: {
           id: '111',
           filename: 'bazbar.mp4',
-          filesize: '11111'
+          filesize: '11111',
+          owner: '1234567789'
         }
       })
       expect(store.getState().toJS()).to.deep.equal({
@@ -124,6 +127,7 @@ describe('Video Reducer', () => {
           ...getDefaultVideo(),
           filename: 'bazbar.mp4',
           filesize: '11111',
+          owner: '1234567789',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'running',
@@ -148,6 +152,7 @@ describe('Video Reducer', () => {
           '111': new VideoRecord({
             title: 'test123',
             filesize: '11111',
+            owner: '1234567789',
             uploadStatus: new AsyncTaskStatusRecord({
               name: 'running',
               data: new DataStatusRecord({
@@ -170,6 +175,7 @@ describe('Video Reducer', () => {
           ...getDefaultVideo(),
           title: 'test123',
           filesize: '11111',
+          owner: '1234567789',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'running',
@@ -185,7 +191,8 @@ describe('Video Reducer', () => {
         payload: {
           id: '111',
           filename: 'bazbar.mp4',
-          filesize: '11111'
+          filesize: '11111',
+          owner: '1234567789'
         }
       })
       expect(store.getState().toJS()).to.deep.equal({
@@ -202,6 +209,7 @@ describe('Video Reducer', () => {
           title: 'test123',
           filename: 'bazbar.mp4',
           filesize: '11111',
+          owner: '1234567789',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'running',
