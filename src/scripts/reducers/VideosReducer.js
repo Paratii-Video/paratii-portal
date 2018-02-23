@@ -34,6 +34,7 @@ const reducer = {
       id: string,
       filename: string,
       filesize: number,
+      owner: string,
       author: string
     }>
   ): VideoRecordMap => {
@@ -52,7 +53,8 @@ const reducer = {
             progress: 0
           })
         }),
-        author: payload.author
+        author: payload.author,
+        owner: payload.owner
       })
     )
   },
@@ -136,7 +138,6 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
-
     state = state.setIn(
       [payload.id, 'storageStatus'],
       new AsyncTaskStatusRecord({
