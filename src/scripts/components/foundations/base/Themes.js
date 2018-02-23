@@ -16,6 +16,7 @@ const Themes = {
     footer: {
       background: Colors.black,
       color: Colors.white,
+      color2: Colors.grayLight,
       logoFill: Colors.white
     },
     button: {

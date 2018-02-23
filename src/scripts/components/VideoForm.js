@@ -29,7 +29,7 @@ const VideoFormWrapper = styled.div`
   display: flex;
   width: 100%;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1150px) {
     flex-wrap: wrap;
   }
 `
@@ -54,7 +54,7 @@ const Form = styled.div`
   padding-bottom: 70px;
   position: relative;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1150px) {
     flex: 1 1 100%;
     margin: 0 0 50px;
   }
@@ -65,7 +65,7 @@ const VideoFormInfoBox = styled.div`
   padding-bottom: 70px;
   position: relative;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1150px) {
     flex: 1 1 100%;
   }
 `
@@ -240,6 +240,14 @@ class VideoForm extends Component<Props, Object> {
               onChange={e => this.handleInputChange('description', e)}
               label="Description"
               rows="1"
+              margin="0 0 30px"
+            />
+            <TextField
+              label="Video Owner"
+              id="input-video-owner"
+              type="text"
+              value={this.state.owner}
+              onChange={e => this.handleInputChange('owner', e)}
               margin="0 0 30px"
             />
             <RadioWrapper>
