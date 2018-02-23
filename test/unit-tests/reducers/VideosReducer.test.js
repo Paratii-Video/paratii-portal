@@ -1197,6 +1197,7 @@ describe('Video Reducer', () => {
           '888': new VideoRecord({
             title: 'foobar',
             description: 'great video',
+            duration: '',
             uploadStatus: new AsyncTaskStatusRecord({
               name: 'uploaded to remote'
             })
@@ -1210,6 +1211,7 @@ describe('Video Reducer', () => {
           ...getDefaultVideo(),
           title: 'foobar',
           description: 'great video',
+          duration: '',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
             name: 'uploaded to remote'
@@ -1220,6 +1222,7 @@ describe('Video Reducer', () => {
         type: TRANSCODING_SUCCESS,
         payload: {
           id: '888',
+          duration: '1:00',
           sizes: {
             master: {
               hash: 'q82gh20'
@@ -1234,6 +1237,7 @@ describe('Video Reducer', () => {
           ...getDefaultVideo(),
           title: 'foobar',
           description: 'great video',
+          duration: '1:00',
           ipfsHash: 'q82gh20',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
