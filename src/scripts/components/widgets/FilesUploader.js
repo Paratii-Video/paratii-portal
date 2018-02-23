@@ -16,12 +16,7 @@ const StyleInput = css`
 `
 
 const Title = CardTitle.extend`
-  left: 0;
-  margin-bottom: 30px;
-  padding: ${props => props.theme.sizes.card.padding};
-  position: absolute;
-  top: 0;
-  z-index: 2;
+  padding: 40px 42px;
 `
 
 const InputFile = styled.input`
@@ -34,12 +29,10 @@ const InputFile = styled.input`
 `
 
 const UploadCover = styled.div`
-  ${StyleInput} align-items: center;
-  background: 0;
+  ${StyleInput} background: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 75px 0;
+  padding-bottom: 80px;
   position: relative;
   transition: background ${props => props.theme.animation.time.repaint} 0.2s;
   z-index: 1;
@@ -51,8 +44,13 @@ const UploadCover = styled.div`
 `
 
 const UploadCoverIcon = styled.div`
+  margin: 30px 0 20px;
+  width: 100%;
+`
+
+const Icon = styled.div`
   height: 126px;
-  margin: 30px 0 20px 35px;
+  margin: 0 auto;
   transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
   width: 190px;
 
@@ -138,7 +136,6 @@ class FilesUploader extends Component<Props, void> {
           </FooterWrapper>
         }
       >
-        <Title>Upload video</Title>
         <InputFile
           type="file"
           onChange={this.onFileChosen}
@@ -152,8 +149,11 @@ class FilesUploader extends Component<Props, void> {
         />
 
         <UploadCover>
+          <Title>Upload video</Title>
           <UploadCoverIcon>
-            <FilesUploaderSvg />
+            <Icon>
+              <FilesUploaderSvg />
+            </Icon>
           </UploadCoverIcon>
           <UploadCoverText>
             <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or

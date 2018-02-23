@@ -6,6 +6,7 @@ type Props = {}
 const SVG = styled.svg`
   display: block;
   height: 100%;
+  transform: translate3d(8px, 0, 0);
   width: 100%;
 `
 
