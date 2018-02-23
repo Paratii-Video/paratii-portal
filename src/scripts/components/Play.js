@@ -97,6 +97,7 @@ const SVGButton = styled.svg`
 
 const ShareTitle = Title.extend`
   font-size: ${props => props.theme.fonts.video.share.title};
+  margin-bottom: 20px;
 `
 
 const Anchor = Button.withComponent('a')
@@ -111,9 +112,9 @@ const ShareButtons = styled.div`
 `
 
 const ShareLink = Anchor.extend`
-  height: 40px;
+  height: 30px;
   margin: 0 10px;
-  width: 40px;
+  width: 30px;
 `
 
 const ShareLinkIcon = styled.img`
