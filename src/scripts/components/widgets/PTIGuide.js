@@ -86,6 +86,7 @@ const Index = styled.div`
   line-height: 20px;
   padding: 0 5px;
   pointer-events: none;
+  user-select: none;
 `
 
 const Anchor = Button.withComponent('a')
