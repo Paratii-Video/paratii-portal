@@ -218,8 +218,12 @@ class Play extends Component<Props, State> {
   }
 
   createPlayer (ipfsHash: string): void {
+    console.log(this.player)
     if (this.player) {
       this.player.remove()
+    }
+    if (!ipfsHash) {
+      throw new Error("Can't create player without ipfsHash")
     }
     this.player = CreatePlayer({
       selector: '#player',
@@ -228,7 +232,9 @@ class Play extends Component<Props, State> {
       ipfsHash: ipfsHash,
       autoPlay: true
     })
+    this.player.play()
     this.bindClapprEvents()
+    this.player.play()
   }
 
   shouldShowVideoOverlay (): boolean {

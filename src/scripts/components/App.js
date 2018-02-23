@@ -8,8 +8,8 @@ import SignupContainer from 'containers/SignupContainer'
 import LoginContainer from 'containers/LoginContainer'
 import ProfileContainer from 'containers/ProfileContainer'
 import PlayContainer from 'containers/PlayContainer'
-import DebugContainer from 'containers/DebugContainer'
 import VideoManager from 'containers/VideoManagerContainer'
+import DebugContainer from 'containers/DebugContainer'
 import WalletContainer from 'containers/WalletContainer'
 
 import type { Match } from 'react-router-dom'
@@ -20,6 +20,7 @@ import MainHeader from './structures/header/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/footer/MainFooter'
 import Home from './pages/Home'
+import Voucher from './pages/Voucher'
 import NotFound from './pages/NotFound'
 
 import { paratiiTheme } from 'constants/ApplicationConstants'
@@ -103,6 +104,7 @@ class App extends Component<Props, State> {
                   />
                 )}
               />
+              <Route path={`${match.url}voucher`} component={Voucher} />
               <Route path={`${match.url}debug`} component={DebugContainer} />
               <Route path={`${match.url}wallet`} component={WalletContainer} />
               <Route

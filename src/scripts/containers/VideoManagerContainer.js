@@ -6,8 +6,10 @@ import { connect } from 'react-redux'
 import { CardContainer } from 'components/structures/Card'
 import PTIGuide from 'components/widgets/PTIGuide'
 import VideoRecord from 'records/VideoRecords'
-import { getVideos } from 'selectors/index'
-import { getSelectedUploaderVideo } from 'selectors/UploaderSelectors'
+import {
+  getSelectedUploaderVideo,
+  getUploaderVideos
+} from 'selectors/UploaderSelectors'
 import type { RootState } from 'types/ApplicationTypes'
 
 import RedeemVoucher from 'components/widgets/RedeemVoucher'
@@ -56,7 +58,7 @@ class VideoManagerContainer extends Component<Props, void> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  videos: getVideos(state),
+  videos: getUploaderVideos(state),
   selectedVideo: getSelectedUploaderVideo(state)
 })
 

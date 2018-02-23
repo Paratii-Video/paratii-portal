@@ -6,7 +6,7 @@ const env = process.env.NODE_ENV || 'development'
 
 const configFilename = path.join(__dirname, `/../../config/${env}.json`)
 
-const registryFilename = path.join(__dirname, '/../../config/registry.json')
+const registryFilename = '/tmp/registry.json'
 
 const config = require(configFilename)
 

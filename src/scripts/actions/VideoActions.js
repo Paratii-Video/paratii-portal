@@ -20,6 +20,9 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
       videoInfo = await paratii.eth.vids.get(id)
     } else {
       videoInfo = await paratii.core.vids.get(id)
+      if (videoInfo) {
+        videoInfo.id = videoInfo._id
+      }
     }
     console.log(videoInfo)
     if (videoInfo && videoInfo.id) {

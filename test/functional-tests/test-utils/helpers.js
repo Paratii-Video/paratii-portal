@@ -19,7 +19,7 @@ const pull = require('pull-stream')
 const pullFilereader = require('pull-filereader')
 const toPull = require('stream-to-pull-stream')
 
-const registryConfigPath = '../../../config/registry.json'
+const registryConfigPath = '/tmp/registry.json'
 let registryAddressConfig = {}
 
 if (fs.existsSync(path.resolve(__dirname, registryConfigPath))) {
