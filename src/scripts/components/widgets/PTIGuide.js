@@ -46,8 +46,8 @@ const TitleIcon = styled.svg`
 `
 
 const Icon = styled.div`
-  height: 130px;
-  margin: 50px 0 20px;
+  height: 155px;
+  margin: 35px 0 20px;
   width: 100%;
 `
 
@@ -122,7 +122,7 @@ class PTIGuide extends Component<Props, void> {
 
   render () {
     return (
-      <Card nopadding margin={this.props.margin}>
+      <Card nopadding {...this.props} fullAtFirstBreak>
         <Wrapper>
           <List page={this.state.page}>
             <Item active={this.state.page === 0}>
@@ -242,7 +242,10 @@ class PTIGuide extends Component<Props, void> {
           </List>
         </Wrapper>
         <Footer>
-          <ArrowButton onClick={() => this.pagination('prev')}>
+          <ArrowButton
+            onClick={() => this.pagination('prev')}
+            disabled={this.state.page === 0}
+          >
             <ButtonIcon inverse>
               <use xlinkHref="#icon-arrow" />
             </ButtonIcon>
@@ -250,7 +253,10 @@ class PTIGuide extends Component<Props, void> {
           <Index>
             {this.state.page + 1}/{this.state.total + 1}
           </Index>
-          <ArrowButton onClick={() => this.pagination('next')}>
+          <ArrowButton
+            onClick={() => this.pagination('next')}
+            disabled={this.state.page >= this.state.total}
+          >
             <ButtonIcon>
               <use xlinkHref="#icon-arrow" />
             </ButtonIcon>

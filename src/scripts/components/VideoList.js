@@ -24,6 +24,7 @@ const Title = styled.h3`
 
 const List = styled.ul`
   display: block;
+  padding-bottom: 80px;
   width: 100%;
 `
 
@@ -49,7 +50,7 @@ class VideoList extends Component<Props, void> {
       ''
     )
     return (
-      <Card margin="0 25px 0 0" nopadding footer={footer}>
+      <Card {...this.props} nopadding footer={footer}>
         <Title>Video List</Title>
         <List>
           {this.props.videos.entrySeq().map(([videoId, videoInfo]) => (

@@ -7,13 +7,11 @@ import Button from '../foundations/Button'
 import Text from '../foundations/Text'
 import Card from '../structures/Card'
 
-type Props = {
-  margin: String
-}
+type Props = {}
 
 const Icon = styled.svg`
   display: block;
-  height: 130px;
+  height: 163px;
   margin: 0 auto 45px;
   width: 100%;
 `
@@ -32,8 +30,8 @@ const SubmitButton = styled(Button)`
 const Anchor = Button.withComponent('a')
 
 const FooterWrapper = styled.div`
-  padding-bottom: 11px;
-  padding-top: 12px;
+  padding-bottom: 15px;
+  padding-top: 17px;
 `
 
 class RedeemVoucher extends Component<Props, Object> {
@@ -67,13 +65,18 @@ class RedeemVoucher extends Component<Props, Object> {
   render () {
     return (
       <Card
-        margin={this.props.margin}
+        {...this.props}
         title="Redeem your voucher"
         footer={
           <FooterWrapper>
             <Text small gray>
               Have no voucher?{' '}
-              <Anchor href="mailto:we@paratii.video" purple anchor>
+              <Anchor
+                href="mailto:we@paratii.video"
+                target="_blank"
+                purple
+                anchor
+              >
                 Drop us a line
               </Anchor>{' '}
               and we might hand out some. Remember: these are testnet tokens. No

@@ -8,25 +8,50 @@ type Props = {
   title: String,
   footer: Object,
   full: Boolean,
+  fullAtFirstBreak: Boolean,
   margin: String,
-  nopadding: String
+  marginLeft: Boolean,
+  marginRight: Boolean,
+  nopadding: String,
+  withFull: Boolean
 }
 
 export const CardContainer = styled.div`
   display: flex;
   justify-content: center;
+
+  @media (max-width: 1280px) {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
 `
 
 export const CardWrapper = styled.div`
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  margin: ${props => props.margin};
-  min-width: 388px;
-  max-width: ${props => (props.full ? '' : '395px')};
+  margin-left: ${props => (props.marginLeft ? '25px' : null)};
+  margin-right: ${props => (props.marginRight ? '25px' : null)};
+  min-width: ${props => (!props.full ? '395px' : null)};
   overflow: hidden;
   position: relative;
-  flex: 1 1 ${props => (props.full ? '100%' : '33%')};
+  width: ${props => (props.full ? '64%' : '33%')};
+
+  @media (max-width: 1280px) {
+    margin: 0 0 40px;
+    min-width: ${props => (!props.full ? '295px' : null)};
+    min-width: ${props => (props.withFull ? 'initial' : null)};
+    width: ${props => (props.fullAtFirstBreak ? '100%' : null)};
+    width: ${props =>
+    !props.fullAtFirstBreak && !props.full && !props.withFull ? '48%' : null};
+  }
+
+  @media (max-width: 995px) {
+    flex: 1 1 100%;
+    max-width: initial;
+    margin: 0 0 25px;
+    width: 100%;
+  }
 `
 
 const Main = styled.div`
@@ -71,7 +96,10 @@ class Card extends Component<Props, void> {
     return (
       <CardWrapper
         full={this.props.full}
-        margin={this.props.margin}
+        fullAtFirstBreak={this.props.fullAtFirstBreak}
+        withFull={this.props.withFull}
+        marginLeft={this.props.marginLeft}
+        marginRight={this.props.marginRight}
         className={this.props.className}
       >
         <Main nopadding={this.props.nopadding}>

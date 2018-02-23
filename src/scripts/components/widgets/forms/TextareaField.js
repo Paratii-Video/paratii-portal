@@ -53,7 +53,6 @@ const HelperLabel = styled.span`
   font-size: 12px;
   padding: 8px 1px 0 0;
   opacity: 0.7;
-  text-align: right;
   white-space: nowrap;
 `
 
