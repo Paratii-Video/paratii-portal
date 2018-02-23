@@ -127,7 +127,7 @@ class PTIGuide extends Component<Props, void> {
           <List page={this.state.page}>
             <Item active={this.state.page === 0}>
               <Header>
-                <CardTitle>What is the PTI?</CardTitle>
+                <CardTitle>What is PTI?</CardTitle>
                 <Subtitle tiny>
                   <TitleIcon>
                     <use xlinkHref="#icon-alert" />
