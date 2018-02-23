@@ -104,6 +104,12 @@ const Themes = {
         },
         text: Colors.grayLight
       }
+    },
+    VideoPlayer: {
+      header: {
+        title: Colors.white,
+        icons: Colors.white
+      }
     }
   }
 }

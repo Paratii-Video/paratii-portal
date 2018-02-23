@@ -8,6 +8,8 @@ import debounce from 'lodash.debounce'
 
 import VideoRecord from 'records/VideoRecords'
 import VideoOverlay from 'components/VideoOverlay'
+import Button from 'components/foundations/Button'
+import Title from 'components/foundations/Title'
 import NotFound from './pages/NotFound'
 
 import type { ClapprPlayer } from 'types/ApplicationTypes'
@@ -27,7 +29,8 @@ type Props = {
 
 type State = {
   mouseInOverlay: boolean,
-  videoNotFound: boolean
+  videoNotFound: boolean,
+  showShareModal: boolean
 }
 
 const Wrapper = styled.div`
@@ -55,8 +58,68 @@ const OverlayWrapper = styled.div`
   left: 0;
   width: 100%;
   height: calc(100% - 50px);
-  z-index: 10;
+  z-index: 5;
   cursor: pointer;
+`
+
+const ShareOverlay = styled.div`
+  align-items: center;
+  background-color: ${props => props.theme.colors.Modal.background};
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  opacity: ${props => (props.show ? 1 : 0)};
+  position: absolute;
+  pointer-events: ${props => (!props.show ? 'none' : null)};
+  transition: opacity ${props => props.theme.animation.time.repaint};
+  top: 0;
+  width: 100%;
+  z-index: 10;
+`
+
+const CloseButton = Button.extend`
+  height: 20px;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  width: 20px;
+  z-index: 3;
+`
+
+const SVGButton = styled.svg`
+  fill: ${props => props.theme.colors.VideoPlayer.header.icons};
+  display: block;
+  height: 100%;
+  width: 100%;
+`
+
+const ShareTitle = Title.extend`
+  font-size: ${props => props.theme.fonts.video.share.title};
+`
+
+const Anchor = Button.withComponent('a')
+
+const AnchorLink = Anchor.extend`
+  font-size: ${props => props.theme.fonts.video.share.link};
+`
+
+const ShareButtons = styled.div`
+  display: flex;
+  margin-top: 20px;
+`
+
+const ShareLink = Anchor.extend`
+  height: 40px;
+  margin: 0 10px;
+  width: 40px;
+`
+
+const ShareLinkIcon = styled.img`
+  display: block;
+  height: 100%;
+  width: 100%;
 `
 
 const HIDE_CONTROLS_THRESHOLD: number = 2000
@@ -64,6 +127,7 @@ const HIDE_CONTROLS_THRESHOLD: number = 2000
 class Play extends Component<Props, State> {
   player: ClapprPlayer
   onOverlayClick: () => void
+  toggleShareModal: () => void
   lastMouseMove: number
   playerHideTimeout: number
 
@@ -72,13 +136,15 @@ class Play extends Component<Props, State> {
 
     this.state = {
       mouseInOverlay: false,
-      videoNotFound: false
+      videoNotFound: false,
+      showShareModal: false
     }
 
     this.lastMouseMove = 0
     this.playerHideTimeout = 0
 
     this.onOverlayClick = this.onOverlayClick.bind(this)
+    this.toggleShareModal = this.toggleShareModal.bind(this)
 
     this.props.setSelectedVideo(this.getVideoId())
   }
@@ -132,6 +198,12 @@ class Play extends Component<Props, State> {
         this.player.play()
       }
     }
+  }
+
+  toggleShareModal (): void {
+    this.setState({
+      showShareModal: !this.state.showShareModal
+    })
   }
 
   onOverlayMouseEnter = (): void => {
@@ -255,10 +327,44 @@ class Play extends Component<Props, State> {
                 onMouseEnter={this.onOverlayMouseEnter}
                 onMouseLeave={this.onOverlayMouseLeave}
               >
-                <VideoOverlay {...this.props} onClick={this.onOverlayClick} />
+                <VideoOverlay
+                  {...this.props}
+                  onClick={this.onOverlayClick}
+                  openShare={this.toggleShareModal}
+                />
               </OverlayWrapper>
             )}
             <Player id="player" />
+            <ShareOverlay show={this.state.showShareModal}>
+              <CloseButton onClick={this.toggleShareModal}>
+                <SVGButton>
+                  <use xlinkHref="#icon-close" />
+                </SVGButton>
+              </CloseButton>
+              <ShareTitle small>Share this video</ShareTitle>
+              <AnchorLink
+                href="https://paratii.video/7P6G2-SZlhg"
+                target="_blank"
+                anchor
+                white
+              >
+                https://paratii.video/7P6G2-SZlhg
+              </AnchorLink>
+              <ShareButtons>
+                <ShareLink href="./" target="_blank" anchor>
+                  <ShareLinkIcon src="/assets/svg/icons-share-email.svg" />
+                </ShareLink>
+                <ShareLink href="./" target="_blank" anchor>
+                  <ShareLinkIcon src="/assets/svg/icons-share-telegram.svg" />
+                </ShareLink>
+                <ShareLink href="./" target="_blank" anchor>
+                  <ShareLinkIcon src="/assets/svg/icons-share-twitter.svg" />
+                </ShareLink>
+                <ShareLink href="./" target="_blank" anchor>
+                  <ShareLinkIcon src="/assets/svg/icons-share-whatsapp.svg" />
+                </ShareLink>
+              </ShareButtons>
+            </ShareOverlay>
           </PlayerWrapper>
         </Wrapper>
       )

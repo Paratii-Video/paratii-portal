@@ -40,6 +40,10 @@ const Typography = {
       title: '1.5rem',
       filename: '1rem',
       status: '0.8rem'
+    },
+    share: {
+      title: '1.5rem',
+      link: '1.5rem'
     }
   },
   radio: {

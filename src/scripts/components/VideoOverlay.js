@@ -2,7 +2,8 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
+import Button from 'components/foundations/Button'
+import Title from 'components/foundations/Title'
 import VideoRecord from 'records/VideoRecords'
 
 import type { Match } from 'react-router-dom'
@@ -11,7 +12,8 @@ type Props = {
   video: ?VideoRecord,
   match: Match,
   isEmbed?: boolean,
-  onClick: (e: Object) => void
+  onClick: (e: Object) => void,
+  openShare: (e: Object) => void
 }
 
 type State = {
@@ -21,7 +23,7 @@ type State = {
   }
 }
 
-const overlayPadding: string = '48px'
+const overlayPadding: string = '30px 38px 0'
 
 const Overlay = styled.div`
   width: 100%;
@@ -40,12 +42,13 @@ const TopBar = styled.div`
   flex-direction: row;
 `
 
-const Title = styled.div`
-  font-size: 24px;
+const PlayerTitle = Title.extend`
+  color: ${props => props.theme.colors.VideoPlayer.header.title};
   flex: 1 0 50%;
 `
 
 const ButtonGroup = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: row;
   flex: 1 0 0;
@@ -56,6 +59,19 @@ const ButtonGroup = styled.div`
 const ButtonWrapper = styled.div`
   width: 25px;
   height: 25px;
+`
+
+const ShareButton = Button.extend`
+  display: block;
+  height: 18px;
+  width: 30px;
+`
+
+const SVGButton = styled.svg`
+  fill: ${props => props.theme.colors.VideoPlayer.header.icons};
+  display: block;
+  height: 100%;
+  width: 100%;
 `
 
 const PopoverWrapper = styled.div`
@@ -131,15 +147,20 @@ class VideoOverlay extends Component<Props, State> {
   }
 
   render () {
-    const { onClick } = this.props
+    const { onClick, openShare } = this.props
     const { openPopover } = this.state
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
       .profile
     return (
       <Overlay data-test-id="video-overlay" onClick={onClick}>
         <TopBar>
-          <Title>{this.getVideoTitle()}</Title>
+          <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>
           <ButtonGroup hide={!!this.state.openPopover}>
+            <ShareButton onClick={openShare}>
+              <SVGButton>
+                <use xlinkHref="#icon-player-share" />
+              </SVGButton>
+            </ShareButton>
             {ProfileButton ? (
               <ButtonWrapper>
                 <ProfileButton
