@@ -242,6 +242,14 @@ class VideoForm extends Component<Props, Object> {
               rows="1"
               margin="0 0 30px"
             />
+            <TextField
+              label="Video Owner"
+              id="input-video-owner"
+              type="text"
+              value={this.state.owner}
+              onChange={e => this.handleInputChange('owner', e)}
+              margin="0 0 30px"
+            />
             <RadioWrapper>
               <RadioTitle>What kind of content?</RadioTitle>
               <RadioCheck name="content-type" value="free" defaultChecked>
