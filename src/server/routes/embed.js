@@ -9,11 +9,9 @@ const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 
 const paratii = new Paratii(paratiiConfig)
 
-export default paratii
-
-module.exports = (req: $Request, res: $Response) => {
+module.exports = async (req: $Request, res: $Response) => {
   const { id } = req.params
-  const video = paratii.core.vids.get(id)
+  const video = await paratii.core.vids.get(id)
   // TODO: reaise a 404 at this point
   if (!video) {
     throw new Error(`No video was found with this id: ${id}`)
