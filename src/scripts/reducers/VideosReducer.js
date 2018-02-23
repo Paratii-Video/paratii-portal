@@ -30,7 +30,12 @@ const reducer = {
     state: VideoRecordMap,
     {
       payload
-    }: Action<{ id: string, filename: string, filesize: number, owner: string }>
+    }: Action<{
+      id: string,
+      filename: string,
+      filesize: number,
+      author: string
+    }>
   ): VideoRecordMap => {
     if (!payload || !payload.id) {
       return state
@@ -47,7 +52,7 @@ const reducer = {
             progress: 0
           })
         }),
-        owner: payload.owner
+        author: payload.author
       })
     )
   },
@@ -140,6 +145,7 @@ const reducer = {
           id: payload.id,
           title: payload.title,
           description: payload.description,
+          author: payload.author,
           owner: payload.owner
         })
       })
@@ -153,6 +159,7 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
+    console.log(payload)
     return state
       .setIn(
         [payload.id, 'storageStatus'],
@@ -162,6 +169,7 @@ const reducer = {
             id: payload.id,
             title: payload.title,
             description: payload.description,
+            author: payload.author,
             owner: payload.owner,
             progress: 100
           })
@@ -169,6 +177,7 @@ const reducer = {
       )
       .setIn([payload.id, 'title'], payload.title)
       .setIn([payload.id, 'description'], payload.description)
+      .setIn([payload.id, 'author'], payload.author)
   },
   [TRANSCODING_REQUESTED]: (
     state: VideoRecordMap,
