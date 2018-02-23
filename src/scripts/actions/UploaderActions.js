@@ -36,7 +36,11 @@ const transcodingFailure = createAction(TRANSCODING_FAILURE)
 // upload the video to the local ipfs node
 export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   const newVideoId = paratii.eth.vids.makeId()
-  dispatch(videoFetchSuccess(new VideoRecord({ id: newVideoId })))
+  dispatch(
+    videoFetchSuccess(
+      new VideoRecord({ id: newVideoId, owner: paratii.config.account.address })
+    )
+  )
   dispatch(selectUploaderVideo(newVideoId))
   dispatch(
     uploadRequested({
