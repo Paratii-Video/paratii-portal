@@ -138,7 +138,8 @@ class VideoForm extends Component<Props, Object> {
       title: selectedVideo.title,
       description: selectedVideo.description,
       duration: selectedVideo.duration,
-      author: selectedVideo.author
+      author: selectedVideo.author,
+      isSaved: false
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -263,17 +264,27 @@ class VideoForm extends Component<Props, Object> {
                 Paid (not available yet)
               </RadioCheck>
             </RadioWrapper>
-            <ButtonWrapper>
-              <Button
-                id="video-submit"
-                type="submit"
-                onClick={this.handleSubmit}
-                // disabled={!this.props.canSubmit}
-                purple
-              >
-                Save data
-              </Button>
-            </ButtonWrapper>
+            {!this.state.isSaved && (
+              <ButtonWrapper>
+                <Button
+                  id="video-submit"
+                  type="submit"
+                  disabled={video.uploadStatus.data.progress !== 100}
+                  onClick={e => {
+                    this.handleSubmit(e)
+                    this.props.showModal(
+                      <ModalStake
+                        videoId={this.state.id}
+                        closeModal={this.props.closeModal}
+                      />
+                    )
+                  }}
+                  purple
+                >
+                  Publish
+                </Button>
+              </ButtonWrapper>
+            )}
           </Form>
 
           <VideoFormInfoBox>
@@ -316,26 +327,13 @@ class VideoForm extends Component<Props, Object> {
               label="Share this video"
               readonly
             />
-            <ButtonWrapper>
-              <Button margin="0 20px 0 0" type="button">
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                purple
-                disabled={video.uploadStatus.data.progress !== 100}
-                onClick={() => {
-                  this.props.showModal(
-                    <ModalStake
-                      videoId={this.state.id}
-                      closeModal={this.props.closeModal}
-                    />
-                  )
-                }}
-              >
-                Publish
-              </Button>
-            </ButtonWrapper>
+            {this.state.isSaved && (
+              <ButtonWrapper>
+                <Button type="submit" purple onClick={this.handleSubmit}>
+                  Save
+                </Button>
+              </ButtonWrapper>
+            )}
           </VideoFormInfoBox>
         </VideoFormWrapper>
       </Card>
