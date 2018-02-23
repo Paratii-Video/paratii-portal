@@ -748,8 +748,8 @@ describe('Video Reducer', () => {
         '123': getDefaultVideo(),
         '888': {
           ...getDefaultVideo(),
-          title: 'bazbar',
-          description: 'foobaz',
+          title: 'foobar',
+          description: 'great video',
           owner: '1234567789',
           author: 'me',
           uploadStatus: {
@@ -762,8 +762,8 @@ describe('Video Reducer', () => {
             data: {
               ...getDefaultDataStatus(),
               id: '888',
-              title: 'foobar',
-              description: 'great video',
+              title: 'bazbar',
+              description: 'foobaz',
               author: 'me',
               owner: '1234567789'
             }
@@ -858,16 +858,16 @@ describe('Video Reducer', () => {
         },
         '999': getDefaultVideo()
       })
-      // store.dispatch({
-      //   type: VIDEO_DATA_SAVED,
-      //   payload: {
-      //     id: '888',
-      //     title: 'bazbar',
-      //     description: 'foobaz',
-      //     owner: '1234567789',
-      //     author: 'me'
-      //   }
-      // })
+      store.dispatch({
+        type: VIDEO_DATA_SAVED,
+        payload: {
+          id: '888',
+          title: 'bazbar',
+          description: 'foobaz',
+          owner: '1234567789',
+          author: 'me'
+        }
+      })
       // expect(store.getState().toJS()).to.deep.equal({
       //   '123': getDefaultVideo(),
       //   '888': {
