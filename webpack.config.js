@@ -25,7 +25,7 @@ const definedVariables = {
   "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
 }
 
-const registryConfigPath = `./config/registry.json`
+const registryConfigPath = `/tmp/registry.json`
 
 if ((dev || test) && fs.existsSync(registryConfigPath)) {
   const registryConfig = require(registryConfigPath)
