@@ -242,7 +242,10 @@ class PTIGuide extends Component<Props, void> {
           </List>
         </Wrapper>
         <Footer>
-          <ArrowButton onClick={() => this.pagination('prev')}>
+          <ArrowButton
+            onClick={() => this.pagination('prev')}
+            disabled={this.state.page === 0}
+          >
             <ButtonIcon inverse>
               <use xlinkHref="#icon-arrow" />
             </ButtonIcon>
@@ -250,7 +253,10 @@ class PTIGuide extends Component<Props, void> {
           <Index>
             {this.state.page + 1}/{this.state.total + 1}
           </Index>
-          <ArrowButton onClick={() => this.pagination('next')}>
+          <ArrowButton
+            onClick={() => this.pagination('next')}
+            disabled={this.state.page >= this.state.total}
+          >
             <ButtonIcon>
               <use xlinkHref="#icon-arrow" />
             </ButtonIcon>
