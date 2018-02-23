@@ -29,7 +29,6 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
         videoInfo.id = videoInfo._id
       }
     }
-    console.log(videoInfo)
     if (videoInfo && videoInfo.id) {
       dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
       dispatch(playerVideoSelect(videoInfo.id))

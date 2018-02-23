@@ -46,8 +46,7 @@ const reducer = {
           data: videoRecord.getIn(['uploadStatus', 'data']).merge({
             progress: 0
           })
-        }),
-        owner: payload.owner
+        })
       })
     )
   },
