@@ -15,7 +15,8 @@ import {
   TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE,
   VIDEOFETCH_ERROR,
-  VIDEOFETCH_SUCCESS
+  VIDEOFETCH_SUCCESS,
+  VIDEOS_FETCH_SUCCESS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import {
@@ -27,7 +28,9 @@ import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 const reducer = {
   [UPLOAD_REQUESTED]: (
     state: VideoRecordMap,
-    { payload }: Action<{ id: string, filename: string, filesize: number }>
+    {
+      payload
+    }: Action<{ id: string, filename: string, filesize: number, owner: string }>
   ): VideoRecordMap => {
     if (!payload || !payload.id) {
       return state
@@ -43,7 +46,8 @@ const reducer = {
           data: videoRecord.getIn(['uploadStatus', 'data']).merge({
             progress: 0
           })
-        })
+        }),
+        owner: payload.owner
       })
     )
   },
@@ -266,7 +270,23 @@ const reducer = {
       payload.id,
       payload.set('fetchStatus', new AsyncTaskStatusRecord({ name: 'success' }))
     )
-  }
+  },
+  [VIDEOS_FETCH_SUCCESS]: (
+    state: VideoRecordMap,
+    { payload }: Action<Array<Object>>
+  ): VideoRecordMap =>
+    state.merge(
+      payload.reduce(
+        (mergingVideos: Object, { _id, ...videoProps }: Object): Object => {
+          mergingVideos[_id] = new VideoRecord({
+            ...videoProps,
+            id: _id
+          })
+          return mergingVideos
+        },
+        {}
+      )
+    )
 }
 
 export default handleActions(reducer, Immutable.Map({}))
