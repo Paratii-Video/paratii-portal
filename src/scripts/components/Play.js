@@ -291,7 +291,7 @@ class Play extends Component<Props, State> {
 
   createPlayer (ipfsHash: string): void {
     console.log(this.player)
-    if (this.player) {
+    if (this.player && this.player.remove) {
       this.player.remove()
     }
     if (!ipfsHash) {

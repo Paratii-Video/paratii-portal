@@ -16,6 +16,9 @@ class Video extends ImmutableRecord({
   price: '',
   thumbnailUrl: '',
   title: '',
+  author: '',
+  free: '',
+  publish: '',
   storageStatus: new AsyncTaskStatusRecord(),
   transcodingStatus: new AsyncTaskStatusRecord(),
   uploadStatus: new AsyncTaskStatusRecord(),
@@ -34,6 +37,9 @@ class Video extends ImmutableRecord({
   price: string
   thumbnailUrl: string
   title: string
+  author: string
+  free: string
+  publish: string
   storageStatus: AsyncTaskStatusRecord
   transcodingStatus: AsyncTaskStatusRecord
   uploadStatus: AsyncTaskStatusRecord
