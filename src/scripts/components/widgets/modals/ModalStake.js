@@ -57,7 +57,7 @@ class ModalStake extends Component<Props, Object> {
     paratii.eth.tcr
       .checkEligiblityAndApply(
         this.props.videoId.toString(),
-        paratii.eth.web3.utils.toWei(String(5))
+        paratii.eth.web3.utils.toWei(5 + '')
       )
       .then(resp => {
         if (resp && resp === true) {
