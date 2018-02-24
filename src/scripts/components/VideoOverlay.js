@@ -23,6 +23,11 @@ type State = {
   }
 }
 
+const Wrapper = styled.div`
+  height: 100%;
+  width: 100%;
+`
+
 const overlayPadding: string = '30px 38px 0'
 
 const Overlay = styled.div`
@@ -154,7 +159,7 @@ class VideoOverlay extends Component<Props, State> {
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
       .profile
     return (
-      <div>
+      <Wrapper>
         <ShareButton onClick={openShare}>
           <SVGButton>
             <use xlinkHref="#icon-player-share" />
@@ -181,7 +186,7 @@ class VideoOverlay extends Component<Props, State> {
             />
           </TopBar>
         </Overlay>
-      </div>
+      </Wrapper>
     )
   }
 }
