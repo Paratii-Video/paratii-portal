@@ -83,7 +83,7 @@ const CloseButton = Button.extend`
   height: 20px;
   position: absolute;
   right: 30px;
-  top: 30px;
+  top: 27px;
   width: 20px;
   z-index: 3;
 `
@@ -113,7 +113,7 @@ const ShareButtons = styled.div`
 
 const ShareLink = Anchor.extend`
   height: 30px;
-  margin: 0 10px;
+  margin: 0 5px;
   width: 30px;
 `
 
@@ -311,7 +311,7 @@ class Play extends Component<Props, State> {
   }
 
   shouldShowVideoOverlay (): boolean {
-    return this.state.mouseInOverlay
+    return true // this.state.mouseInOverlay
   }
 
   render () {

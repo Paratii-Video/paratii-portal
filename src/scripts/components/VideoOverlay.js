@@ -62,8 +62,10 @@ const ButtonWrapper = styled.div`
 `
 
 const ShareButton = Button.extend`
-  display: block;
   height: 18px;
+  position: absolute;
+  right: 25px;
+  top: 28px;
   width: 30px;
 `
 
@@ -152,32 +154,34 @@ class VideoOverlay extends Component<Props, State> {
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
       .profile
     return (
-      <Overlay data-test-id="video-overlay" onClick={onClick}>
-        <TopBar>
-          <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>
-          <ButtonGroup hide={!!this.state.openPopover}>
-            <ShareButton onClick={openShare}>
-              <SVGButton>
-                <use xlinkHref="#icon-player-share" />
-              </SVGButton>
-            </ShareButton>
-            {ProfileButton ? (
-              <ButtonWrapper>
-                <ProfileButton
-                  onClick={this.onProfileButtonClick}
-                  onClose={this.closePopover}
-                  popoverPortal={this.popoverWrapperRef}
-                  popoverOpen={openPopover === 'profile'}
-                />
-              </ButtonWrapper>
-            ) : null}
-          </ButtonGroup>
-          <PopoverWrapper
-            open={!!openPopover}
-            innerRef={this.popoverWrapperRefCallback}
-          />
-        </TopBar>
-      </Overlay>
+      <div>
+        <ShareButton onClick={openShare}>
+          <SVGButton>
+            <use xlinkHref="#icon-player-share" />
+          </SVGButton>
+        </ShareButton>
+        <Overlay data-test-id="video-overlay" onClick={onClick}>
+          <TopBar>
+            <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>
+            <ButtonGroup>
+              {ProfileButton ? (
+                <ButtonWrapper>
+                  <ProfileButton
+                    onClick={this.onProfileButtonClick}
+                    onClose={this.closePopover}
+                    popoverPortal={this.popoverWrapperRef}
+                    popoverOpen={openPopover === 'profile'}
+                  />
+                </ButtonWrapper>
+              ) : null}
+            </ButtonGroup>
+            <PopoverWrapper
+              open={!!openPopover}
+              innerRef={this.popoverWrapperRefCallback}
+            />
+          </TopBar>
+        </Overlay>
+      </div>
     )
   }
 }
