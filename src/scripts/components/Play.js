@@ -368,33 +368,37 @@ class Play extends Component<Props, State> {
               </OverlayWrapper>
             )}
             <Player id="player" />
-            <ShareOverlay show={this.state.showShareModal}>
-              <CloseButton onClick={this.toggleShareModal}>
-                <SVGButton>
-                  <use xlinkHref="#icon-close" />
-                </SVGButton>
-              </CloseButton>
-              <ShareTitle small />
-              <AnchorLink
-                href={this.ourUrl() + '/play/' + this.props.video.id}
-                target="_blank"
-                anchor
-                white
-              >
-                {this.ourUrl() + '/play/' + this.props.video.id}
-              </AnchorLink>
-              <ShareButtons>
-                <ShareLink href={this.telegram()} target="_blank" anchor>
-                  <ShareLinkIcon src="/assets/assets/svg/icons-share-telegram.svg" />
-                </ShareLink>
-                <ShareLink href={this.twitter()} target="_blank" anchor>
-                  <ShareLinkIcon src="/assets/assets/svg/icons-share-twitter.svg" />
-                </ShareLink>
-                <ShareLink href={this.whatsapp()} target="_blank" anchor>
-                  <ShareLinkIcon src="/assets/assets/svg/icons-share-whatsapp.svg" />
-                </ShareLink>
-              </ShareButtons>
-            </ShareOverlay>
+            {this.props.video ? (
+              <ShareOverlay show={this.state.showShareModal}>
+                <CloseButton onClick={this.toggleShareModal}>
+                  <SVGButton>
+                    <use xlinkHref="#icon-close" />
+                  </SVGButton>
+                </CloseButton>
+                <ShareTitle small />
+                <AnchorLink
+                  href={this.ourUrl() + '/play/' + this.props.video.id}
+                  target="_blank"
+                  anchor
+                  white
+                >
+                  {this.ourUrl() + '/play/' + this.props.video.id}
+                </AnchorLink>
+                <ShareButtons>
+                  <ShareLink href={this.telegram()} target="_blank" anchor>
+                    <ShareLinkIcon src="/assets/assets/svg/icons-share-telegram.svg" />
+                  </ShareLink>
+                  <ShareLink href={this.twitter()} target="_blank" anchor>
+                    <ShareLinkIcon src="/assets/assets/svg/icons-share-twitter.svg" />
+                  </ShareLink>
+                  <ShareLink href={this.whatsapp()} target="_blank" anchor>
+                    <ShareLinkIcon src="/assets/assets/svg/icons-share-whatsapp.svg" />
+                  </ShareLink>
+                </ShareButtons>
+              </ShareOverlay>
+            ) : (
+              ''
+            )}
           </PlayerWrapper>
         </Wrapper>
       )
