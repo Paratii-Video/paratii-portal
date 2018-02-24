@@ -14,7 +14,6 @@ import NotFound from './pages/NotFound'
 
 import type { ClapprPlayer } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
-const CreatePlayer = null // eslint-disable-line no-unused-vars
 
 type Props = {
   match: Match,
@@ -321,61 +320,32 @@ class Play extends Component<Props, State> {
     return 'https://portal.paratii.video'
   }
   facebook () {
-    if (this.props.video) {
-      const id = this.props.video.id
-      var baseurl = 'https://www.facebook.com/sharer/sharer.php?u='
-      if (id) {
-        return baseurl + this.ourUrl() + '/embed/' + id
-      }
-    }
+    var baseurl = 'https://www.facebook.com/sharer/sharer.php?u='
+    return baseurl + this.ourUrl() + '/embed/' + this.props.video.id
   }
   twitter () {
-    if (this.props.video) {
-      const id = this.props.video.id
-      const title = this.props.video.title
-      var baseurl = 'https://twitter.com/intent/tweet'
-      if (id && title) {
-        var url = '?url=' + this.ourUrl() + '/embed/' + id
-        var text = '&text=🎬 Worth a watch: ' + title
-        return baseurl + url + text
-      }
-    }
+    var baseurl = 'https://twitter.com/intent/tweet'
+    var url = '?url=' + this.ourUrl() + '/embed/' + this.props.video.id
+    var text = '&text=🎬 Worth a watch: ' + this.props.video.title
+    return baseurl + url + text
   }
   whatsapp () {
-    if (this.props.video) {
-      const id = this.props.video.id
-      const title = this.props.video.title
-      var baseurl = 'whatsapp://send?text='
-      if (id && title) {
-        var url = this.ourUrl() + '/embed/' + id
-        var text = '🎬 Worth a watch: ' + title + ' '
-        return baseurl + text + url
-      }
-    }
+    var baseurl = 'whatsapp://send?text='
+    var url = this.ourUrl() + '/embed/' + this.props.video.id
+    var text = '🎬 Worth a watch: ' + this.props.video.title + ' '
+    return baseurl + text + url
   }
   whatsappDesktop () {
-    if (this.props.video) {
-      const id = this.props.video.id
-      const title = this.props.video.title
-      var baseurl = 'https://web.whatsapp.com/send?text='
-      if (id && title) {
-        var url = this.ourUrl() + '/embed/' + id
-        var text = '🎬 Worth a watch: ' + title + ' '
-        return baseurl + text + url
-      }
-    }
+    var baseurl = 'https://web.whatsapp.com/send?text='
+    var url = this.ourUrl() + '/embed/' + this.props.video.id
+    var text = '🎬 Worth a watch: ' + this.props.video.title + ' '
+    return baseurl + text + url
   }
   telegram () {
-    if (this.props.video) {
-      const id = this.props.video.id
-      const title = this.props.video.title
-      var baseurl = 'https://t.me/share/url'
-      if (id && title) {
-        var url = '?url=' + this.ourUrl() + '/embed/' + id
-        var text = '&text=🎬 Worth a watch: ' + title
-        return baseurl + url + text
-      }
-    }
+    var baseurl = 'https://t.me/share/url'
+    var url = '?url=' + this.ourUrl() + '/embed/' + this.props.video.id
+    var text = '&text=🎬 Worth a watch: ' + this.props.video.title
+    return baseurl + url + text
   }
 
   render () {
@@ -383,62 +353,57 @@ class Play extends Component<Props, State> {
     if (this.state.videoNotFound === true) {
       return <NotFound />
     } else {
-      if (this.props.video) {
-        const id = this.props.video.id
-        if (id) {
-          return (
-            <Wrapper>
-              <PlayerWrapper>
-                {this.shouldShowVideoOverlay() && (
-                  <OverlayWrapper
-                    onMouseMove={this.onMouseMove}
-                    onMouseEnter={this.onOverlayMouseEnter}
-                    onMouseLeave={this.onOverlayMouseLeave}
-                  >
-                    <VideoOverlay
-                      {...this.props}
-                      onClick={this.onOverlayClick}
-                      openShare={this.toggleShareModal}
-                    />
-                  </OverlayWrapper>
-                )}
-                <Player id="player" />
-                {this.props.video ? (
-                  <ShareOverlay show={this.state.showShareModal}>
-                    <CloseButton onClick={this.toggleShareModal}>
-                      <SVGButton>
-                        <use xlinkHref="#icon-close" />
-                      </SVGButton>
-                    </CloseButton>
-                    <ShareTitle small />
-                    <AnchorLink
-                      href={this.ourUrl() + '/play/' + id}
-                      target="_blank"
-                      anchor
-                      white
-                    >
-                      {this.ourUrl() + '/play/' + id}
-                    </AnchorLink>
-                    <ShareButtons>
-                      <ShareLink href={this.telegram()} target="_blank" anchor>
-                        <ShareLinkIcon src="/assets/assets/svg/icons-share-telegram.svg" />
-                      </ShareLink>
-                      <ShareLink href={this.twitter()} target="_blank" anchor>
-                        <ShareLinkIcon src="/assets/assets/svg/icons-share-twitter.svg" />
-                      </ShareLink>
-                      <ShareLink href={this.whatsapp()} target="_blank" anchor>
-                        <ShareLinkIcon src="/assets/assets/svg/icons-share-whatsapp.svg" />
-                      </ShareLink>
-                    </ShareButtons>
-                  </ShareOverlay>
-                ) : (
-                  ''
-                )}
-              </PlayerWrapper>
-            </Wrapper>
-          )
-        }
-      }
+      return (
+        <Wrapper>
+          <PlayerWrapper>
+            {this.shouldShowVideoOverlay() && (
+              <OverlayWrapper
+                onMouseMove={this.onMouseMove}
+                onMouseEnter={this.onOverlayMouseEnter}
+                onMouseLeave={this.onOverlayMouseLeave}
+              >
+                <VideoOverlay
+                  {...this.props}
+                  onClick={this.onOverlayClick}
+                  openShare={this.toggleShareModal}
+                />
+              </OverlayWrapper>
+            )}
+            <Player id="player" />
+            {this.props.video ? (
+              <ShareOverlay show={this.state.showShareModal}>
+                <CloseButton onClick={this.toggleShareModal}>
+                  <SVGButton>
+                    <use xlinkHref="#icon-close" />
+                  </SVGButton>
+                </CloseButton>
+                <ShareTitle small />
+                <AnchorLink
+                  href={this.ourUrl() + '/play/' + this.props.video.id}
+                  target="_blank"
+                  anchor
+                  white
+                >
+                  {this.ourUrl() + '/play/' + this.props.video.id}
+                </AnchorLink>
+                <ShareButtons>
+                  <ShareLink href={this.telegram()} target="_blank" anchor>
+                    <ShareLinkIcon src="/assets/assets/svg/icons-share-telegram.svg" />
+                  </ShareLink>
+                  <ShareLink href={this.twitter()} target="_blank" anchor>
+                    <ShareLinkIcon src="/assets/assets/svg/icons-share-twitter.svg" />
+                  </ShareLink>
+                  <ShareLink href={this.whatsapp()} target="_blank" anchor>
+                    <ShareLinkIcon src="/assets/assets/svg/icons-share-whatsapp.svg" />
+                  </ShareLink>
+                </ShareButtons>
+              </ShareOverlay>
+            ) : (
+              ''
+            )}
+          </PlayerWrapper>
+        </Wrapper>
+      )
     }
   }
 }
