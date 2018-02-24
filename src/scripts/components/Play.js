@@ -251,13 +251,13 @@ class Play extends Component<Props, State> {
   componentDidMount (): void {
     const videoId = this.getVideoIdFromRequest()
     if (videoId) {
-      if (this.props.video) {
+      if (this.props.video && this.props.video.ipfsHash) {
         this.createPlayer(this.props.video.ipfsHash)
       } else {
         this.props.fetchVideo(videoId)
       }
     } else {
-      throw Error('We should raise a 404 error here')
+      this.setState({ videoNotFound: true })
     }
   }
 
@@ -273,7 +273,6 @@ class Play extends Component<Props, State> {
       } else if (fetchStatus === 'failed') {
         // If video not exist we set in the component state
         this.setState({ videoNotFound: true })
-        throw Error('We should raise a 404 error here')
       }
     }
 
