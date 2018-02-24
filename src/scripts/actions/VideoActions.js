@@ -21,13 +21,9 @@ export const videosFetchSuccess = createAction(VIDEOS_FETCH_SUCCESS)
 export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
   let videoInfo
   try {
-    if (process.env.NODE_ENV === 'development') {
-      videoInfo = await paratii.eth.vids.get(id)
-    } else {
-      videoInfo = await paratii.core.vids.get(id)
-      if (videoInfo) {
-        videoInfo.id = videoInfo._id
-      }
+    videoInfo = await paratii.core.vids.get(id)
+    if (videoInfo) {
+      videoInfo.id = videoInfo._id
     }
     if (videoInfo && videoInfo.id) {
       dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))

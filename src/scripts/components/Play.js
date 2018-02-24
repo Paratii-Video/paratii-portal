@@ -23,14 +23,15 @@ type Props = {
   togglePlayPause: (play: ?boolean) => void,
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
-  video: ?VideoRecord,
+  video: VideoRecord,
   isEmbed?: boolean
 }
 
 type State = {
   mouseInOverlay: boolean,
   videoNotFound: boolean,
-  showShareModal: boolean
+  showShareModal: boolean,
+  playerCreated: string
 }
 
 const Wrapper = styled.div`
@@ -138,7 +139,8 @@ class Play extends Component<Props, State> {
     this.state = {
       mouseInOverlay: false,
       videoNotFound: false,
-      showShareModal: false
+      showShareModal: false,
+      playerCreated: ''
     }
 
     this.lastMouseMove = 0
@@ -147,7 +149,7 @@ class Play extends Component<Props, State> {
     this.onOverlayClick = this.onOverlayClick.bind(this)
     this.toggleShareModal = this.toggleShareModal.bind(this)
 
-    this.props.setSelectedVideo(this.getVideoId())
+    this.props.setSelectedVideo(this.getVideoIdFromRequest())
   }
 
   bindClapprEvents (): void {
@@ -241,13 +243,13 @@ class Play extends Component<Props, State> {
     }, HIDE_CONTROLS_THRESHOLD + 250)
   }
 
-  getVideoId (): string {
+  getVideoIdFromRequest (): string {
     const params: Object = this.props.match.params
     return params.id || ''
   }
 
   componentDidMount (): void {
-    const videoId = this.getVideoId()
+    const videoId = this.getVideoIdFromRequest()
     if (videoId) {
       if (this.props.video) {
         this.createPlayer(this.props.video.ipfsHash)
@@ -255,28 +257,23 @@ class Play extends Component<Props, State> {
         this.props.fetchVideo(videoId)
       }
     } else {
-      // If video not exist we set in the component state
-      this.setState({ videoNotFound: true })
       throw Error('We should raise a 404 error here')
     }
   }
 
   componentWillReceiveProps (nextProps: Props): void {
     const { isAttemptingPlay } = this.props
-    let ipfsHash = ''
     if (nextProps.video) {
+      // ?? why the next lines?
       const fetchStatus = nextProps.video.getIn(['fetchStatus', 'name'])
       if (nextProps.video && fetchStatus === 'success') {
-        if (
-          this.props.video == null ||
-          nextProps.video.ipfsHash !== this.props.video.ipfsHash
-        ) {
-          ipfsHash = nextProps.video.ipfsHash
-          this.createPlayer(ipfsHash)
+        if (this.state.playerCreated !== nextProps.video.ipfsHash) {
+          this.createPlayer(nextProps.video.ipfsHash)
         }
       } else if (fetchStatus === 'failed') {
         // If video not exist we set in the component state
         this.setState({ videoNotFound: true })
+        throw Error('We should raise a 404 error here')
       }
     }
 
@@ -291,7 +288,7 @@ class Play extends Component<Props, State> {
   }
 
   createPlayer (ipfsHash: string): void {
-    console.log(this.player)
+    this.setState({ playerCreated: ipfsHash })
     if (this.player && this.player.remove) {
       this.player.remove()
     }
@@ -314,42 +311,58 @@ class Play extends Component<Props, State> {
     return this.state.mouseInOverlay
   }
 
-  ourUrl () {
+  portalUrl () {
+    // FIXME: do not hardcode this heres
     return 'https://portal.paratii.video'
   }
   facebook () {
-    var baseurl = 'https://www.facebook.com/sharer/sharer.php?u='
-    return baseurl + this.ourUrl() + '/embed/' + this.props.video.id
+    if (this.props.video) {
+      var baseurl = 'https://www.facebook.com/sharer/sharer.php?u='
+      return baseurl + this.portalUrl() + '/embed/' + this.props.video.id
+    }
   }
   twitter () {
-    var baseurl = 'https://twitter.com/intent/tweet'
-    var url = '?url=' + this.ourUrl() + '/embed/' + this.props.video.id
-    var text = '&text=🎬 Worth a watch: ' + this.props.video.title
-    return baseurl + url + text
+    if (this.props.video) {
+      var baseurl = 'https://twitter.com/intent/tweet'
+      var url = '?url=' + this.portalUrl() + '/embed/' + this.props.video.id
+      var text = '&text=🎬 Worth a watch: ' + this.props.video.title
+      return baseurl + url + text
+    }
   }
   whatsapp () {
-    var baseurl = 'whatsapp://send?text='
-    var url = this.ourUrl() + '/embed/' + this.props.video.id
-    var text = '🎬 Worth a watch: ' + this.props.video.title + ' '
-    return baseurl + text + url
+    if (this.props.video) {
+      var baseurl = 'whatsapp://send?text='
+      var url = this.portalUrl() + '/embed/' + this.props.video.id
+      var text = '🎬 Worth a watch: ' + this.props.video.title + ' '
+      return baseurl + text + url
+    }
   }
   whatsappDesktop () {
-    var baseurl = 'https://web.whatsapp.com/send?text='
-    var url = this.ourUrl() + '/embed/' + this.props.video.id
-    var text = '🎬 Worth a watch: ' + this.props.video.title + ' '
-    return baseurl + text + url
+    if (this.props.video) {
+      var baseurl = 'https://web.whatsapp.com/send?text='
+      var url = this.portalUrl() + '/embed/' + this.props.video.id
+      var text = '🎬 Worth a watch: ' + this.props.video.title + ' '
+      return baseurl + text + url
+    }
   }
   telegram () {
-    var baseurl = 'https://t.me/share/url'
-    var url = '?url=' + this.ourUrl() + '/embed/' + this.props.video.id
-    var text = '&text=🎬 Worth a watch: ' + this.props.video.title
-    return baseurl + url + text
+    if (this.props.video) {
+      var baseurl = 'https://t.me/share/url'
+      var url = '?url=' + this.portalUrl() + '/embed/' + this.props.video.id
+      var text = '&text=🎬 Worth a watch: ' + this.props.video.title
+      return baseurl + url + text
+    }
   }
 
   render () {
     // If video not exist it is set in the component state
     if (this.state.videoNotFound === true) {
-      return <NotFound />
+      return (
+        <Wrapper>
+          did not find a video
+          <NotFound />
+        </Wrapper>
+      )
     } else {
       return (
         <Wrapper>
@@ -377,12 +390,12 @@ class Play extends Component<Props, State> {
                 </CloseButton>
                 <ShareTitle small />
                 <AnchorLink
-                  href={this.ourUrl() + '/play/' + this.props.video.id}
+                  href={this.portalUrl() + '/play/' + this.props.video.id}
                   target="_blank"
                   anchor
                   white
                 >
-                  {this.ourUrl() + '/play/' + this.props.video.id}
+                  {this.portalUrl() + '/play/' + this.props.video.id}
                 </AnchorLink>
                 <ShareButtons>
                   <ShareLink href={this.telegram()} target="_blank" anchor>
