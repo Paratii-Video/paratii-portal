@@ -314,6 +314,38 @@ class Play extends Component<Props, State> {
     return this.state.mouseInOverlay
   }
 
+  ourUrl () {
+    return 'https://portal.paratii.video'
+  }
+  facebook () {
+    var baseurl = 'https://www.facebook.com/sharer/sharer.php?u='
+    return baseurl + this.ourUrl() + '/embed/' + this.props.video.id
+  }
+  twitter () {
+    var baseurl = 'https://twitter.com/intent/tweet'
+    var url = '?url=' + this.ourUrl() + '/embed/' + this.props.video.id
+    var text = '&text=🎬 Worth a watch: ' + this.props.video.title
+    return baseurl + url + text
+  }
+  whatsapp () {
+    var baseurl = 'whatsapp://send?text='
+    var url = this.ourUrl() + '/embed/' + this.props.video.id
+    var text = '🎬 Worth a watch: ' + this.props.video.title + ' '
+    return baseurl + text + url
+  }
+  whatsappDesktop () {
+    var baseurl = 'https://web.whatsapp.com/send?text='
+    var url = this.ourUrl() + '/embed/' + this.props.video.id
+    var text = '🎬 Worth a watch: ' + this.props.video.title + ' '
+    return baseurl + text + url
+  }
+  telegram () {
+    var baseurl = 'https://t.me/share/url'
+    var url = '?url=' + this.ourUrl() + '/embed/' + this.props.video.id
+    var text = '&text=🎬 Worth a watch: ' + this.props.video.title
+    return baseurl + url + text
+  }
+
   render () {
     // If video not exist it is set in the component state
     if (this.state.videoNotFound === true) {
@@ -344,24 +376,21 @@ class Play extends Component<Props, State> {
               </CloseButton>
               <ShareTitle small>Share this video</ShareTitle>
               <AnchorLink
-                href="https://paratii.video/7P6G2-SZlhg"
+                href={this.ourUrl() + '/play/' + this.props.video.id}
                 target="_blank"
                 anchor
                 white
               >
-                https://paratii.video/7P6G2-SZlhg
+                {this.ourUrl() + '/play/' + this.props.video.id}
               </AnchorLink>
               <ShareButtons>
-                <ShareLink href="./" target="_blank" anchor>
-                  <ShareLinkIcon src="/assets/assets/svg/icons-share-email.svg" />
-                </ShareLink>
-                <ShareLink href="./" target="_blank" anchor>
+                <ShareLink href={this.telegram()} target="_blank" anchor>
                   <ShareLinkIcon src="/assets/assets/svg/icons-share-telegram.svg" />
                 </ShareLink>
-                <ShareLink href="./" target="_blank" anchor>
+                <ShareLink href={this.twitter()} target="_blank" anchor>
                   <ShareLinkIcon src="/assets/assets/svg/icons-share-twitter.svg" />
                 </ShareLink>
-                <ShareLink href="./" target="_blank" anchor>
+                <ShareLink href={this.whatsapp()} target="_blank" anchor>
                   <ShareLinkIcon src="/assets/assets/svg/icons-share-whatsapp.svg" />
                 </ShareLink>
               </ShareButtons>
