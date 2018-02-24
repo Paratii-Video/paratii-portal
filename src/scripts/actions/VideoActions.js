@@ -21,7 +21,13 @@ export const videosFetchSuccess = createAction(VIDEOS_FETCH_SUCCESS)
 export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
   let videoInfo
   try {
-    videoInfo = await paratii.core.vids.get(id)
+    if (process.env.NODE_ENV === 'development') {
+      // FIXME: this is a workaround for getting the tests to run in circle
+      videoInfo = await paratii.eth.vids.get(id)
+    } else {
+      videoInfo = await paratii.core.vids.get(id)
+    }
+
     if (videoInfo) {
       videoInfo.id = videoInfo._id
     }
