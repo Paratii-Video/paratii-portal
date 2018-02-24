@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { Events } from 'clappr'
 import styled from 'styled-components'
-import CreatePlayer from 'paratii-mediaplayer'
+// import CreatePlayer from 'paratii-mediaplayer'
 import debounce from 'lodash.debounce'
 
 import VideoRecord from 'records/VideoRecords'
@@ -298,16 +298,18 @@ class Play extends Component<Props, State> {
     if (!ipfsHash) {
       throw new Error("Can't create player without ipfsHash")
     }
-    this.player = CreatePlayer({
-      selector: '#player',
-      source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
-      mimeType: 'video/mp4',
-      ipfsHash: ipfsHash,
-      autoPlay: true
+    import('paratii-mediaplayer').then(CreatePlayer => {
+      this.player = CreatePlayer({
+        selector: '#player',
+        source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
+        mimeType: 'video/mp4',
+        ipfsHash: ipfsHash,
+        autoPlay: true
+      })
+      this.player.play()
+      this.bindClapprEvents()
+      this.player.play()
     })
-    this.player.play()
-    this.bindClapprEvents()
-    this.player.play()
   }
 
   shouldShowVideoOverlay (): boolean {
