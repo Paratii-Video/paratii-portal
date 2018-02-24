@@ -374,7 +374,7 @@ class Play extends Component<Props, State> {
                   <use xlinkHref="#icon-close" />
                 </SVGButton>
               </CloseButton>
-              <ShareTitle small>Share this video</ShareTitle>
+              <ShareTitle small />
               <AnchorLink
                 href={this.ourUrl() + '/play/' + this.props.video.id}
                 target="_blank"
