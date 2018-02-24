@@ -353,16 +353,16 @@ class Play extends Component<Props, State> {
               </AnchorLink>
               <ShareButtons>
                 <ShareLink href="./" target="_blank" anchor>
-                  <ShareLinkIcon src="/assets/svg/icons-share-email.svg" />
+                  <ShareLinkIcon src="/assets/assets/svg/icons-share-email.svg" />
                 </ShareLink>
                 <ShareLink href="./" target="_blank" anchor>
-                  <ShareLinkIcon src="/assets/svg/icons-share-telegram.svg" />
+                  <ShareLinkIcon src="/assets/assets/svg/icons-share-telegram.svg" />
                 </ShareLink>
                 <ShareLink href="./" target="_blank" anchor>
-                  <ShareLinkIcon src="/assets/svg/icons-share-twitter.svg" />
+                  <ShareLinkIcon src="/assets/assets/svg/icons-share-twitter.svg" />
                 </ShareLink>
                 <ShareLink href="./" target="_blank" anchor>
-                  <ShareLinkIcon src="/assets/svg/icons-share-whatsapp.svg" />
+                  <ShareLinkIcon src="/assets/assets/svg/icons-share-whatsapp.svg" />
                 </ShareLink>
               </ShareButtons>
             </ShareOverlay>
