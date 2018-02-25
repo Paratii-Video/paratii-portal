@@ -8,6 +8,8 @@ import debounce from 'lodash.debounce'
 
 import VideoRecord from 'records/VideoRecords'
 import VideoOverlay from 'components/VideoOverlay'
+import Button from 'components/foundations/Button'
+import Title from 'components/foundations/Title'
 import NotFound from './pages/NotFound'
 
 import type { ClapprPlayer } from 'types/ApplicationTypes'
@@ -21,13 +23,15 @@ type Props = {
   togglePlayPause: (play: ?boolean) => void,
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
-  video: ?VideoRecord,
+  video: VideoRecord,
   isEmbed?: boolean
 }
 
 type State = {
   mouseInOverlay: boolean,
-  videoNotFound: boolean
+  videoNotFound: boolean,
+  showShareModal: boolean,
+  playerCreated: string
 }
 
 const Wrapper = styled.div`
@@ -55,8 +59,69 @@ const OverlayWrapper = styled.div`
   left: 0;
   width: 100%;
   height: calc(100% - 50px);
-  z-index: 10;
+  z-index: 5;
   cursor: pointer;
+`
+
+const ShareOverlay = styled.div`
+  align-items: center;
+  background-color: ${props => props.theme.colors.Modal.background};
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  opacity: ${props => (props.show ? 1 : 0)};
+  position: absolute;
+  pointer-events: ${props => (!props.show ? 'none' : null)};
+  transition: opacity ${props => props.theme.animation.time.repaint};
+  top: 0;
+  width: 100%;
+  z-index: 10;
+`
+
+const CloseButton = Button.extend`
+  height: 20px;
+  position: absolute;
+  right: 30px;
+  top: 27px;
+  width: 20px;
+  z-index: 3;
+`
+
+const SVGButton = styled.svg`
+  fill: ${props => props.theme.colors.VideoPlayer.header.icons};
+  display: block;
+  height: 100%;
+  width: 100%;
+`
+
+const ShareTitle = Title.extend`
+  font-size: ${props => props.theme.fonts.video.share.title};
+  margin-bottom: 20px;
+`
+
+const Anchor = Button.withComponent('a')
+
+const AnchorLink = Anchor.extend`
+  font-size: ${props => props.theme.fonts.video.share.link};
+`
+
+const ShareButtons = styled.div`
+  display: flex;
+  margin-top: 20px;
+`
+
+const ShareLink = Anchor.extend`
+  height: 30px;
+  margin: 0 5px;
+  width: 30px;
+`
+
+const ShareLinkIcon = styled.img`
+  display: block;
+  height: 100%;
+  width: 100%;
 `
 
 const HIDE_CONTROLS_THRESHOLD: number = 2000
@@ -64,6 +129,7 @@ const HIDE_CONTROLS_THRESHOLD: number = 2000
 class Play extends Component<Props, State> {
   player: ClapprPlayer
   onOverlayClick: () => void
+  toggleShareModal: () => void
   lastMouseMove: number
   playerHideTimeout: number
 
@@ -72,15 +138,18 @@ class Play extends Component<Props, State> {
 
     this.state = {
       mouseInOverlay: false,
-      videoNotFound: false
+      videoNotFound: false,
+      showShareModal: false,
+      playerCreated: ''
     }
 
     this.lastMouseMove = 0
     this.playerHideTimeout = 0
 
     this.onOverlayClick = this.onOverlayClick.bind(this)
+    this.toggleShareModal = this.toggleShareModal.bind(this)
 
-    this.props.setSelectedVideo(this.getVideoId())
+    this.props.setSelectedVideo(this.getVideoIdFromRequest())
   }
 
   bindClapprEvents (): void {
@@ -134,6 +203,12 @@ class Play extends Component<Props, State> {
     }
   }
 
+  toggleShareModal (): void {
+    this.setState({
+      showShareModal: !this.state.showShareModal
+    })
+  }
+
   onOverlayMouseEnter = (): void => {
     if (this.player) {
       this.player.core.mediaControl.show()
@@ -168,38 +243,32 @@ class Play extends Component<Props, State> {
     }, HIDE_CONTROLS_THRESHOLD + 250)
   }
 
-  getVideoId (): string {
+  getVideoIdFromRequest (): string {
     const params: Object = this.props.match.params
     return params.id || ''
   }
 
   componentDidMount (): void {
-    const videoId = this.getVideoId()
+    const videoId = this.getVideoIdFromRequest()
     if (videoId) {
-      if (this.props.video) {
+      if (this.props.video && this.props.video.ipfsHash) {
         this.createPlayer(this.props.video.ipfsHash)
       } else {
         this.props.fetchVideo(videoId)
       }
     } else {
-      // If video not exist we set in the component state
       this.setState({ videoNotFound: true })
-      throw Error('We should raise a 404 error here')
     }
   }
 
   componentWillReceiveProps (nextProps: Props): void {
     const { isAttemptingPlay } = this.props
-    let ipfsHash = ''
     if (nextProps.video) {
+      // ?? why the next lines?
       const fetchStatus = nextProps.video.getIn(['fetchStatus', 'name'])
       if (nextProps.video && fetchStatus === 'success') {
-        if (
-          this.props.video == null ||
-          nextProps.video.ipfsHash !== this.props.video.ipfsHash
-        ) {
-          ipfsHash = nextProps.video.ipfsHash
-          this.createPlayer(ipfsHash)
+        if (this.state.playerCreated !== nextProps.video.ipfsHash) {
+          this.createPlayer(nextProps.video.ipfsHash)
         }
       } else if (fetchStatus === 'failed') {
         // If video not exist we set in the component state
@@ -218,8 +287,8 @@ class Play extends Component<Props, State> {
   }
 
   createPlayer (ipfsHash: string): void {
-    console.log(this.player)
-    if (this.player) {
+    this.setState({ playerCreated: ipfsHash })
+    if (this.player && this.player.remove) {
       this.player.remove()
     }
     if (!ipfsHash) {
@@ -238,13 +307,61 @@ class Play extends Component<Props, State> {
   }
 
   shouldShowVideoOverlay (): boolean {
-    return this.state.mouseInOverlay
+    return true // this.state.mouseInOverlay
+  }
+
+  portalUrl () {
+    // FIXME: do not hardcode this heres
+    return 'https://portal.paratii.video'
+  }
+  facebook () {
+    if (this.props.video) {
+      var baseurl = 'https://www.facebook.com/sharer/sharer.php?u='
+      return baseurl + this.portalUrl() + '/embed/' + this.props.video.id
+    }
+  }
+  twitter () {
+    if (this.props.video) {
+      var baseurl = 'https://twitter.com/intent/tweet'
+      var url = '?url=' + this.portalUrl() + '/embed/' + this.props.video.id
+      var text = '&text=🎬 Worth a watch: ' + this.props.video.title
+      return baseurl + url + text
+    }
+  }
+  whatsapp () {
+    if (this.props.video) {
+      var baseurl = 'whatsapp://send?text='
+      var url = this.portalUrl() + '/embed/' + this.props.video.id
+      var text = '🎬 Worth a watch: ' + this.props.video.title + ' '
+      return baseurl + text + url
+    }
+  }
+  whatsappDesktop () {
+    if (this.props.video) {
+      var baseurl = 'https://web.whatsapp.com/send?text='
+      var url = this.portalUrl() + '/embed/' + this.props.video.id
+      var text = '🎬 Worth a watch: ' + this.props.video.title + ' '
+      return baseurl + text + url
+    }
+  }
+  telegram () {
+    if (this.props.video) {
+      var baseurl = 'https://t.me/share/url'
+      var url = '?url=' + this.portalUrl() + '/embed/' + this.props.video.id
+      var text = '&text=🎬 Worth a watch: ' + this.props.video.title
+      return baseurl + url + text
+    }
   }
 
   render () {
     // If video not exist it is set in the component state
     if (this.state.videoNotFound === true) {
-      return <NotFound />
+      return (
+        <Wrapper>
+          did not find a video
+          <NotFound />
+        </Wrapper>
+      )
     } else {
       return (
         <Wrapper>
@@ -255,10 +372,46 @@ class Play extends Component<Props, State> {
                 onMouseEnter={this.onOverlayMouseEnter}
                 onMouseLeave={this.onOverlayMouseLeave}
               >
-                <VideoOverlay {...this.props} onClick={this.onOverlayClick} />
+                <VideoOverlay
+                  {...this.props}
+                  onClick={this.onOverlayClick}
+                  toggleShareModal={this.toggleShareModal}
+                  showShareModal={this.state.showShareModal}
+                />
               </OverlayWrapper>
             )}
             <Player id="player" />
+            {this.props.video ? (
+              <ShareOverlay show={this.state.showShareModal}>
+                <CloseButton onClick={this.toggleShareModal}>
+                  <SVGButton>
+                    <use xlinkHref="#icon-close" />
+                  </SVGButton>
+                </CloseButton>
+                <ShareTitle small />
+                <AnchorLink
+                  href={this.portalUrl() + '/play/' + this.props.video.id}
+                  target="_blank"
+                  anchor
+                  white
+                >
+                  {this.portalUrl() + '/play/' + this.props.video.id}
+                </AnchorLink>
+                <ShareButtons>
+                  <ShareLink href={this.telegram()} target="_blank" anchor>
+                    <ShareLinkIcon src="/assets/assets/svg/icons-share-telegram.svg" />
+                  </ShareLink>
+                  <ShareLink href={this.twitter()} target="_blank" anchor>
+                    <ShareLinkIcon src="/assets/assets/svg/icons-share-twitter.svg" />
+                  </ShareLink>
+                  <ShareLink href={this.whatsapp()} target="_blank" anchor>
+                    <ShareLinkIcon src="/assets/assets/svg/icons-share-whatsapp.svg" />
+                  </ShareLink>
+                </ShareButtons>
+              </ShareOverlay>
+            ) : (
+              ''
+            )}
           </PlayerWrapper>
         </Wrapper>
       )

@@ -136,7 +136,9 @@ class VideoForm extends Component<Props, Object> {
     this.state = {
       id: selectedVideo.id,
       title: selectedVideo.title,
-      description: selectedVideo.description
+      description: selectedVideo.description,
+      duration: selectedVideo.duration,
+      author: selectedVideo.author
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -149,7 +151,8 @@ class VideoForm extends Component<Props, Object> {
         id: selectedVideo.id,
         title: selectedVideo.title,
         description: selectedVideo.description,
-        duration: selectedVideo.duration
+        duration: selectedVideo.duration,
+        author: selectedVideo.author
       })
     }
   }
@@ -165,7 +168,8 @@ class VideoForm extends Component<Props, Object> {
     const videoToSave = {
       id: this.state.id,
       title: this.state.title,
-      description: this.state.description
+      description: this.state.description,
+      author: this.state.author
     }
     this.props.saveVideoInfo(videoToSave)
   }
@@ -246,8 +250,8 @@ class VideoForm extends Component<Props, Object> {
               label="Video Owner"
               id="input-video-owner"
               type="text"
-              value={this.state.owner}
-              onChange={e => this.handleInputChange('owner', e)}
+              value={this.state.author}
+              onChange={e => this.handleInputChange('author', e)}
               margin="0 0 30px"
             />
             <RadioWrapper>

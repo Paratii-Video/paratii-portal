@@ -12,7 +12,8 @@ export class DataStatusRecord extends ImmutableRecord({
   ipfsHashOrig: '',
   sizes: '',
   progress: 0,
-  error: ''
+  error: '',
+  author: ''
 }) {
   id: number
   title: string
@@ -23,6 +24,7 @@ export class DataStatusRecord extends ImmutableRecord({
   sizes: string
   progress: number
   error: string
+  author: string
 }
 
 export class AsyncTaskStatusRecord extends ImmutableRecord({

@@ -3,6 +3,7 @@
 import { createSelector } from 'reselect'
 
 import { getSelectedUploaderVideoId, getVideos } from 'selectors/index'
+import paratii from 'utils/ParatiiLib'
 
 import type VideoRecord from 'records/VideoRecords'
 import type { RootState, VideoRecordMap } from 'types/ApplicationTypes'
@@ -14,7 +15,7 @@ export const getUploaderVideos: (
   (videos: VideoRecordMap): VideoRecordMap =>
     videos.filter(
       (video: VideoRecord): boolean =>
-        video.getIn(['uploadStatus', 'name']) !== 'idle'
+        video.get('owner') === paratii.config.account.address
     )
 )
 
