@@ -12,8 +12,9 @@ type Props = {
   video: ?VideoRecord,
   match: Match,
   isEmbed?: boolean,
+  showShareModal?: boolean,
   onClick: (e: Object) => void,
-  openShare: (e: Object) => void
+  toggleShareModal: (e: Object) => void
 }
 
 type State = {
@@ -110,23 +111,23 @@ class VideoOverlay extends Component<Props, State> {
   }
 
   loadEmbedPlugins () {
-    const { isEmbed } = this.props
-
-    if (isEmbed) {
-      import(/* webpackChunkName: ProfileButton */ 'components/widgets/PlayerPlugins/ProfileButton').then(
-        ProfileButtonModule => {
-          const ProfileButton: Class<
-            React.Component<any>
-          > = ((ProfileButtonModule.default: any): Class<React.Component<any>>)
-          this.setState(prevState => ({
-            buttons: {
-              ...prevState.buttons,
-              profile: ProfileButton
-            }
-          }))
-        }
-      )
-    }
+    // Disabled this as it is not working
+    // const { isEmbed } = this.props
+    // if (isEmbed) {
+    //   import(/* webpackChunkName: ProfileButton */ 'components/widgets/PlayerPlugins/ProfileButton').then(
+    //     ProfileButtonModule => {
+    //       const ProfileButton: Class<
+    //         React.Component<any>
+    //       > = ((ProfileButtonModule.default: any): Class<React.Component<any>>)
+    //       this.setState(prevState => ({
+    //         buttons: {
+    //           ...prevState.buttons,
+    //           profile: ProfileButton
+    //         }
+    //       }))
+    //     }
+    //   )
+    // }
   }
 
   getVideoTitle (): string {
@@ -154,16 +155,18 @@ class VideoOverlay extends Component<Props, State> {
   }
 
   render () {
-    const { onClick, openShare } = this.props
+    const { onClick, toggleShareModal } = this.props
     const { openPopover } = this.state
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
       .profile
     return (
       <Wrapper>
-        <ShareButton onClick={openShare}>
-          <SVGButton>
-            <use xlinkHref="#icon-player-share" />
-          </SVGButton>
+        <ShareButton onClick={toggleShareModal}>
+          {!this.props.showShareModal && (
+            <SVGButton>
+              <use xlinkHref="#icon-player-share" />
+            </SVGButton>
+          )}
         </ShareButton>
         <Overlay data-test-id="video-overlay" onClick={onClick}>
           <TopBar>

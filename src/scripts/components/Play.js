@@ -375,7 +375,8 @@ class Play extends Component<Props, State> {
                 <VideoOverlay
                   {...this.props}
                   onClick={this.onOverlayClick}
-                  openShare={this.toggleShareModal}
+                  toggleShareModal={this.toggleShareModal}
+                  showShareModal={this.state.showShareModal}
                 />
               </OverlayWrapper>
             )}
