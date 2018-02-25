@@ -4,15 +4,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import Play from 'components/Play'
-import { fetchVideo } from 'actions/VideoActions'
 import {
   togglePlayPause,
   attemptPlay,
   playerVideoSelect
 } from 'actions/PlayerActions'
+import { fetchVideo } from 'actions/VideoActions'
 import { getIsPlaying, getIsAttemptingPlay } from 'selectors/index'
 import { getPlayingVideo } from 'selectors/PlayerSelectors'
-
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (

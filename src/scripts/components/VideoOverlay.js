@@ -12,8 +12,9 @@ type Props = {
   video: ?VideoRecord,
   match: Match,
   isEmbed?: boolean,
+  showShareModal?: boolean,
   onClick: (e: Object) => void,
-  openShare: (e: Object) => void
+  toggleShareModal: (e: Object) => void
 }
 
 type State = {
@@ -22,6 +23,11 @@ type State = {
     profile: ?Class<React.Component<any>>
   }
 }
+
+const Wrapper = styled.div`
+  height: 100%;
+  width: 100%;
+`
 
 const overlayPadding: string = '30px 38px 0'
 
@@ -62,8 +68,10 @@ const ButtonWrapper = styled.div`
 `
 
 const ShareButton = Button.extend`
-  display: block;
   height: 18px;
+  position: absolute;
+  right: 25px;
+  top: 28px;
   width: 30px;
 `
 
@@ -103,23 +111,23 @@ class VideoOverlay extends Component<Props, State> {
   }
 
   loadEmbedPlugins () {
-    const { isEmbed } = this.props
-
-    if (isEmbed) {
-      import(/* webpackChunkName: ProfileButton */ 'components/widgets/PlayerPlugins/ProfileButton').then(
-        ProfileButtonModule => {
-          const ProfileButton: Class<
-            React.Component<any>
-          > = ((ProfileButtonModule.default: any): Class<React.Component<any>>)
-          this.setState(prevState => ({
-            buttons: {
-              ...prevState.buttons,
-              profile: ProfileButton
-            }
-          }))
-        }
-      )
-    }
+    // Disabled this as it is not working
+    // const { isEmbed } = this.props
+    // if (isEmbed) {
+    //   import(/* webpackChunkName: ProfileButton */ 'components/widgets/PlayerPlugins/ProfileButton').then(
+    //     ProfileButtonModule => {
+    //       const ProfileButton: Class<
+    //         React.Component<any>
+    //       > = ((ProfileButtonModule.default: any): Class<React.Component<any>>)
+    //       this.setState(prevState => ({
+    //         buttons: {
+    //           ...prevState.buttons,
+    //           profile: ProfileButton
+    //         }
+    //       }))
+    //     }
+    //   )
+    // }
   }
 
   getVideoTitle (): string {
@@ -147,37 +155,41 @@ class VideoOverlay extends Component<Props, State> {
   }
 
   render () {
-    const { onClick, openShare } = this.props
+    const { onClick, toggleShareModal } = this.props
     const { openPopover } = this.state
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
       .profile
     return (
-      <Overlay data-test-id="video-overlay" onClick={onClick}>
-        <TopBar>
-          <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>
-          <ButtonGroup hide={!!this.state.openPopover}>
-            <ShareButton onClick={openShare}>
-              <SVGButton>
-                <use xlinkHref="#icon-player-share" />
-              </SVGButton>
-            </ShareButton>
-            {ProfileButton ? (
-              <ButtonWrapper>
-                <ProfileButton
-                  onClick={this.onProfileButtonClick}
-                  onClose={this.closePopover}
-                  popoverPortal={this.popoverWrapperRef}
-                  popoverOpen={openPopover === 'profile'}
-                />
-              </ButtonWrapper>
-            ) : null}
-          </ButtonGroup>
-          <PopoverWrapper
-            open={!!openPopover}
-            innerRef={this.popoverWrapperRefCallback}
-          />
-        </TopBar>
-      </Overlay>
+      <Wrapper>
+        <ShareButton onClick={toggleShareModal}>
+          {!this.props.showShareModal && (
+            <SVGButton>
+              <use xlinkHref="#icon-player-share" />
+            </SVGButton>
+          )}
+        </ShareButton>
+        <Overlay data-test-id="video-overlay" onClick={onClick}>
+          <TopBar>
+            <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>
+            <ButtonGroup>
+              {ProfileButton ? (
+                <ButtonWrapper>
+                  <ProfileButton
+                    onClick={this.onProfileButtonClick}
+                    onClose={this.closePopover}
+                    popoverPortal={this.popoverWrapperRef}
+                    popoverOpen={openPopover === 'profile'}
+                  />
+                </ButtonWrapper>
+              ) : null}
+            </ButtonGroup>
+            <PopoverWrapper
+              open={!!openPopover}
+              innerRef={this.popoverWrapperRefCallback}
+            />
+          </TopBar>
+        </Overlay>
+      </Wrapper>
     )
   }
 }

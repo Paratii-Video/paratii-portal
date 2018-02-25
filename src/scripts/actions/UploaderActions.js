@@ -141,7 +141,6 @@ export const saveVideoInfo = (videoInfo: Object) => async (
     // dispatch(selectVideo(videoInfo.id))
   }
   dispatch(videoDataStart(videoInfo))
-  console.log(videoInfo)
   paratii.core.vids
     .upsert(videoInfo)
     .then(videoInfo => {
