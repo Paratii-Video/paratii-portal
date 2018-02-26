@@ -7,5 +7,5 @@ max_peers = 0
 [mining]
 reseal_min_period = 0
 [rpc]
-cors = ["*"]
+cors = "*"
 hosts = ["localhost:8080", "127.0.0.1:8080", "0.0.0.0:8080"]
