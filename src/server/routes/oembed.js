@@ -14,7 +14,7 @@ module.exports = async (req: $Request, res: $Response) => {
 
   const baseUrl = 'https://portal.paratii.video'
   const parsedExternalUrl = parseUrl(req.query.url)
-  const parsedInternalUrl = parseUrl('http://localhost:8080')
+  const parsedInternalUrl = parseUrl(baseUrl)
   console.log(parsedInternalUrl)
   console.log(parsedExternalUrl)
   res.setHeader('Content-Type', 'application/json')
