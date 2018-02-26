@@ -75,15 +75,14 @@ class TextField extends Component<Props, void> {
     super(props)
 
     this.state = {
-      filled: false,
+      filled: this.props.value ? this.props.value.length > 0 : false,
       value: this.props.value
     }
 
-    this.handleFocus = this.handleFocus.bind(this)
-    this.handleBlur = this.handleBlur.bind(this)
+    this.handleFilled = this.handleFilled.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
-    this.handleFilled = this.handleFilled.bind(this)
+    this.handleFocus = this.handleFocus.bind(this)
   }
 
   handleFilled (e) {
@@ -93,6 +92,9 @@ class TextField extends Component<Props, void> {
   }
 
   handleChange (e) {
+    this.setState({
+      value: e.target.value
+    })
     this.handleFilled(e)
     this.props.onChange(e)
   }
@@ -102,12 +104,11 @@ class TextField extends Component<Props, void> {
   }
 
   handleFocus (e) {
+    this.handleFilled(e)
     if (this.props.readonly) {
       e.target.select()
     }
   }
-
-  handleBlur (e) {}
 
   render () {
     return (
@@ -121,14 +122,13 @@ class TextField extends Component<Props, void> {
           onChange={this.handleChange}
           onKeyUp={this.handleKeyUp}
           onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
           error={this.props.error}
-          type={this.props.type}
+          type={this.props.type || 'text'}
           disabled={this.props.disabled}
           readonly={this.props.readonly}
-          value={this.props.value}
           id={this.props.id}
           name={this.props.name}
+          value={this.state.value}
         />
         {this.props.label && (
           <Placeholder
