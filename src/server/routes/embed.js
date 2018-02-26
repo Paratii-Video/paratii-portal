@@ -79,7 +79,7 @@ module.exports = async (req: $Request, res: $Response) => {
         <meta property="og:video:width" content="${width}" />
         <meta property="og:video:height" content="${height}" />
         <meta property="og:type" content="video.other" />
-        <meta property="og:url" content="${url}" />
+        <meta property="og:url" content="${embedUrl}" />
         <meta property="og:title" content="${video.title}" />
         <meta property="og:image" content="${thumbnailUrl}" />
         <meta property="og:description" content="${video.description}" />
