@@ -4,10 +4,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
-import RadioCheck from 'components/widgets/forms/RadioCheck'
+import UserRecord from 'records/UserRecords'
 
 type Props = {
   videoId: String,
+  user: UserRecord,
   closeModal: () => void
 }
 
@@ -84,37 +85,61 @@ class ModalStake extends Component<Props, Object> {
   }
 
   render () {
+    const balance = this.props.user.balances.PTI
+    // FIXME: format this better
+    const balanceInPTI = balance / 10 ** 18
+    const minDeposit = 5
+    const balanceIsTooLow = balance < minDeposit * 10 ** 18
     return (
       <Wrapper>
-        <Title>Stake 5 PTI</Title>
+        <Title>Stake {minDeposit} PTI</Title>
         <Highlight>
-          By publishing this video you agree to make a stake deposit of 5 PTI.
-          The tokens still belong to you, and can be retrieved, along with the
-          video, any time.
+          By publishing this video you agree to make a stake deposit of{' '}
+          {minDeposit} PTI. The tokens still belong to you, and can be
+          retrieved, along with the video, any time.
         </Highlight>
-        <MainText small>
-          For now, with no monetary value, this is mostly an experiment. Soon,
-          the community will curate all the content published. Well-received
-          videos will see their stakes increase, earning PTIs to their creators.
-          Illegal content may lose its stake. Want to know how exactly this is
-          going to play out?{' '}
-          <Anchor anchor purple href="./">
-            Learn More
-          </Anchor>
-        </MainText>
-        <RadioCheck checkbox name="nowarning" value="nowarning">
-          Don’t show this warning again
-        </RadioCheck>
+
+        {!balanceIsTooLow ? (
+          <MainText small>
+            For now, with no monetary value, this is mostly an experiment. Soon,
+            the community will curate all the content published. Well-received
+            videos will see their stakes increase, earning PTIs to their
+            creators. Illegal content may lose its stake. Want to know how
+            exactly this is going to play out?{' '}
+            <Anchor anchor purple href="./">
+              Learn More
+            </Anchor>
+          </MainText>
+        ) : (
+          ''
+        )}
         {this.state.errorMessage && (
           <MainText pink small>
             {this.state.errorMessage}
           </MainText>
         )}
-        <Footer>
-          <Button purple onClick={this.apply}>
-            Continue
-          </Button>
-        </Footer>
+        {balanceIsTooLow ? (
+          <MainText pink>
+            Your balance is too low: you need to stake at least {minDeposit}{' '}
+            PTI, but you only have {balanceInPTI}. Have no voucher?{' '}
+            <Anchor
+              href="mailto:we@paratii.video"
+              target="_blank"
+              purple
+              anchor
+            >
+              Drop us a line
+            </Anchor>{' '}
+            and we might hand out some. Remember: these are testnet tokens. No
+            real value (yet)!
+          </MainText>
+        ) : (
+          <Footer>
+            <Button purple onClick={this.apply}>
+              Continue
+            </Button>
+          </Footer>
+        )}
       </Wrapper>
     )
   }

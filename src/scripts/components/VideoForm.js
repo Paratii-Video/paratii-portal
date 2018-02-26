@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
+import UserRecord from 'records/UserRecords'
 
 import Card from './structures/Card'
 import Button from './foundations/Button'
@@ -123,7 +124,9 @@ type Props = {
   canSubmit: boolean,
   saveVideoInfo: Object => Object,
   showModal: (View: Object) => void,
-  closeModal: () => void
+  closeModal: () => void,
+  user: UserRecord,
+  balance: String
 }
 
 class VideoForm extends Component<Props, Object> {
@@ -137,6 +140,7 @@ class VideoForm extends Component<Props, Object> {
       id: selectedVideo.id,
       title: selectedVideo.title,
       description: selectedVideo.description,
+      // FIXME: we are not editing duration, so we do not need to store it in the state
       duration: selectedVideo.duration,
       author: selectedVideo.author
     }
@@ -329,6 +333,7 @@ class VideoForm extends Component<Props, Object> {
                     <ModalStake
                       videoId={this.state.id}
                       closeModal={this.props.closeModal}
+                      user={this.props.user}
                     />
                   )
                 }}
