@@ -27,9 +27,10 @@ module.exports = async (req: $Request, res: $Response) => {
   // this needs to be the has of a video - just as the thumbnail, we need to save these data from paratii-db
   // FIXME: this must be ipfsHashOrig
   const ipfsSource = `https://gateway.paratii.video/ipfs/QmSs64S5J8C9H6ZFYR44YGEB6pLq2SRLYe3MZdUoyNX7EH`
-
   let script = ''
+  // $FlowFixMe
   const route = req.route.path
+
   switch (route) {
     case '/embed/:id':
       script = '<script type="text/javascript" src="/embed/bundle.js"></script>'
