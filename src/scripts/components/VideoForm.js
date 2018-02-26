@@ -179,8 +179,6 @@ class VideoForm extends Component<Props, Object> {
       author: this.state.author
     }
     this.props.saveVideoInfo(videoToSave)
-
-    console.log('handleSubmit')
   }
 
   onSubmit (e: Object) {
