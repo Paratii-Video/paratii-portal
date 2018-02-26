@@ -87,9 +87,9 @@ class ModalStake extends Component<Props, Object> {
   render () {
     const balance = this.props.user.balances.PTI
     // FIXME: format this better
-    const balanceInPTI = balance / 10 ** 18
+    const balanceInPTI = Number(balance) / 10 ** 18
     const minDeposit = 5
-    const balanceIsTooLow = balance < minDeposit * 10 ** 18
+    const balanceIsTooLow = Number(balance) < minDeposit * 10 ** 18
     return (
       <Wrapper>
         <Title>Stake {minDeposit} PTI</Title>
