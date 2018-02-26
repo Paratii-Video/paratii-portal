@@ -46,7 +46,8 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
     uploadRequested({
       id: newVideoId,
       filename: file.name,
-      filesize: file.size
+      filesize: file.size,
+      owner: paratii.config.account.address
     })
   )
   const uploader = paratii.ipfs.uploader.add(file)
@@ -54,7 +55,15 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
     console.log('[UPLOAD error]', err)
     throw err
   })
+  uploader.on('done', function (files) {
+    console.log('[UPLOAD done]', files)
+    paratii.core.vids.upsert({
+      id: newVideoId,
+      owner: paratii.config.account.address
+    })
+  })
   uploader.on('fileReady', function (file) {
+    console.log(file)
     dispatch(
       uploadLocalSuccess({ id: newVideoId, hash: file.hash, size: file.size })
     )
@@ -64,13 +73,6 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
       hash: file.hash,
       size: file.size
     })(dispatch)
-  })
-  uploader.on('done', function (files) {
-    console.log('[UPLOAD done]', files)
-    paratii.core.vids.upsert({
-      id: newVideoId,
-      owner: paratii.config.account.address
-    })
   })
 }
 
@@ -85,6 +87,11 @@ export const transcodeVideo = (videoInfo: Object) => async (
     author: paratii.config.account.address,
     size: videoInfo.size
   })
+
+  transcoder.on('uploader:progress', function (hash, size, percent) {
+    console.log('upload progress', percent)
+  })
+
   transcoder.on('transcoding:error', function (err) {
     console.log('TRANSCODER ERROR', err)
     dispatch(transcodingFailure(videoInfo, err))
@@ -119,7 +126,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
         duration: sizes.duration
       })
     )
-    console.log('TRANSCODER DONE', hash, sizes)
+    console.log('TRANSCODER DONE', hash, sizes, videoInfo.id)
     paratii.core.vids.upsert({
       id: videoInfo.id,
       ipfsHash: sizes.master.hash,
