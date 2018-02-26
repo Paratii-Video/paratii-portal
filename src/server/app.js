@@ -5,7 +5,6 @@ const hotMiddleware = require('webpack-hot-middleware')
 const webpack = require('webpack')
 const webpackConfig = require('../../webpack.config.js')
 const videoRoute = require('./routes/embed')
-// const oembedRoute = require('./routes/oembed')
 
 const app = express()
 
