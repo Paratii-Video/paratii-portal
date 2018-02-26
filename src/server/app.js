@@ -5,6 +5,7 @@ const hotMiddleware = require('webpack-hot-middleware')
 const webpack = require('webpack')
 const webpackConfig = require('../../webpack.config.js')
 const videoRoute = require('./routes/embed')
+const oembedRoute = require('./routes/oembed')
 
 const app = express()
 
@@ -30,6 +31,7 @@ if (process.env.NODE_ENV === 'production-notugly') {
 app.use(express.static(path.resolve(__dirname, '../../', 'build')))
 app.get('/embed/:id', videoRoute)
 app.get('/play/:id', videoRoute)
+app.get('/oembed', oembedRoute)
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../', 'build', 'index.html'))
 })
