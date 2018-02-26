@@ -319,13 +319,13 @@ class Play extends Component<Props, State> {
   facebook () {
     if (this.props.video) {
       var baseurl = 'https://www.facebook.com/sharer/sharer.php?u='
-      return baseurl + this.portalUrl() + '/embed/' + this.props.video.id
+      return baseurl + this.portalUrl() + '/play/' + this.props.video.id
     }
   }
   twitter () {
     if (this.props.video) {
       var baseurl = 'https://twitter.com/intent/tweet'
-      var url = '?url=' + this.portalUrl() + '/embed/' + this.props.video.id
+      var url = '?url=' + this.portalUrl() + '/play/' + this.props.video.id
       var text = '&text=🎬 Worth a watch: ' + this.props.video.title
       return baseurl + url + text
     }
@@ -333,7 +333,7 @@ class Play extends Component<Props, State> {
   whatsapp () {
     if (this.props.video) {
       var baseurl = 'whatsapp://send?text='
-      var url = this.portalUrl() + '/embed/' + this.props.video.id
+      var url = this.portalUrl() + '/play/' + this.props.video.id
       var text = '🎬 Worth a watch: ' + this.props.video.title + ' '
       return baseurl + text + url
     }
@@ -341,7 +341,7 @@ class Play extends Component<Props, State> {
   whatsappDesktop () {
     if (this.props.video) {
       var baseurl = 'https://web.whatsapp.com/send?text='
-      var url = this.portalUrl() + '/embed/' + this.props.video.id
+      var url = this.portalUrl() + '/play/' + this.props.video.id
       var text = '🎬 Worth a watch: ' + this.props.video.title + ' '
       return baseurl + text + url
     }
@@ -349,7 +349,7 @@ class Play extends Component<Props, State> {
   telegram () {
     if (this.props.video) {
       var baseurl = 'https://t.me/share/url'
-      var url = '?url=' + this.portalUrl() + '/embed/' + this.props.video.id
+      var url = '?url=' + this.portalUrl() + '/play/' + this.props.video.id
       var text = '&text=🎬 Worth a watch: ' + this.props.video.title
       return baseurl + url + text
     }
