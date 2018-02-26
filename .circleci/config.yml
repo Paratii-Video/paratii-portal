@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: leeaandrob/paratii-portal:0.0.3
+      - image: leeaandrob/paratii-portal:0.0.5
         env:
           - DISPLAY=:99
           - CHROME_BIN=/usr/bin/google-chrome
