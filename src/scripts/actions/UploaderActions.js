@@ -90,6 +90,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
 
   transcoder.on('uploader:progress', function (hash, size, percent) {
     console.log('upload progress', percent)
+    dispatch(uploadProgress({ id: videoInfo.id, progress: percent }))
   })
 
   transcoder.on('transcoding:error', function (err) {
@@ -115,7 +116,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
     console.log('TRANSCODER DOWNSAMPLE READY', hash, size)
   })
 
-  transcoder.on('transcoding:done', function (hash, sizes) {
+  transcoder.once('transcoding:done', function (hash, sizes) {
     // if transcoding is done, apparently we have uploaded the file first
     dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
     dispatch(

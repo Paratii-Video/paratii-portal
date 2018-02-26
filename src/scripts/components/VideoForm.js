@@ -121,6 +121,7 @@ const VideoMediaTimeText = styled.p`
 type Props = {
   selectedVideo: VideoRecord,
   canSubmit: boolean,
+  progress: Number,
   saveVideoInfo: Object => Object,
   showModal: (View: Object) => void,
   closeModal: () => void
@@ -197,6 +198,7 @@ class VideoForm extends Component<Props, Object> {
     }
 
     const fileSize = prettyBytes((video && video.get('filesize')) || 0)
+    // console.log((video && video.get('filesize')) || 0)
     const ipfsHash = (video && video.get('ipfsHash')) || ''
     const urlToPlay = `/play/${video.id}`
     const urlForSharing = `https://portal.paratii.video/play/${video.id}`
@@ -213,6 +215,10 @@ class VideoForm extends Component<Props, Object> {
     } else {
       thumbImage = 'https://paratii.video/public/images/paratii-src.png'
     }
+
+    const uploadProgress = video.uploadStatus.data.progress
+    const transcodingStatus = video.transcodingStatus.data.progress
+    const progress = Math.ceil((uploadProgress + transcodingStatus) / 2)
 
     return (
       <Card full>
@@ -283,15 +289,7 @@ class VideoForm extends Component<Props, Object> {
               </Link>
               {durationBox}
             </VideoMedia>
-            <VideoProgress
-              progress={
-                video.uploadStatus.data.progress === 100
-                  ? video.transcodingStatus.data.progress + '%'
-                  : video.transcodingStatus.data.progress + '%'
-              }
-              marginBottom
-              marginTop
-            >
+            <VideoProgress progress={progress + '%'} marginBottom marginTop>
               {video.uploadStatus.data.progress === 100
                 ? '2/2 - Transcoder: ' + video.transcodingStatus.name
                 : '1/2 - Uploader: ' + video.uploadStatus.name}
