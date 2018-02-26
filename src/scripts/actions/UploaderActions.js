@@ -18,8 +18,8 @@ import {
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import { videoFetchSuccess } from 'actions/VideoActions'
-
 import type { Dispatch } from 'redux'
+import { store } from '../index'
 
 export const selectUploaderVideo = createAction(UPLOAD_VIDEO_SELECT)
 const uploadRequested = createAction(UPLOAD_REQUESTED)
@@ -32,6 +32,8 @@ const transcodingRequested = createAction(TRANSCODING_REQUESTED)
 const transcodingProgress = createAction(TRANSCODING_PROGRESS)
 const transcodingSuccess = createAction(TRANSCODING_SUCCESS)
 const transcodingFailure = createAction(TRANSCODING_FAILURE)
+
+console.log(store)
 
 // upload the video to the local ipfs node
 export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
@@ -57,9 +59,13 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   })
   uploader.on('done', function (files) {
     console.log('[UPLOAD done]', files)
+    const file = files[0]
     paratii.core.vids.upsert({
       id: newVideoId,
-      owner: paratii.config.account.address
+      owner: paratii.config.account.address,
+      ipfsHashOrig: file.hash,
+      file: file.path,
+      filesize: file.size
     })
   })
   uploader.on('fileReady', function (file) {
@@ -149,6 +155,7 @@ export const saveVideoInfo = (videoInfo: Object) => async (
     // dispatch(selectVideo(videoInfo.id))
   }
   dispatch(videoDataStart(videoInfo))
+
   paratii.core.vids
     .upsert(videoInfo)
     .then(videoInfo => {
