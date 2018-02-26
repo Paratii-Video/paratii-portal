@@ -9,6 +9,7 @@ const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 const paratii = new Paratii(paratiiConfig)
 
 module.exports = async (req: $Request, res: $Response) => {
+  // $FlowFixMe
   const route = req.route.path
 
   if (process.env.NODE_ENV === 'development' && route === '/play/:id') {
@@ -46,7 +47,6 @@ module.exports = async (req: $Request, res: $Response) => {
   // FIXME: this must be ipfsHashOrig
   const ipfsSource = `https://gateway.paratii.video/ipfs/QmSs64S5J8C9H6ZFYR44YGEB6pLq2SRLYe3MZdUoyNX7EH`
   let script = ''
-  // $FlowFixMe
 
   switch (route) {
     case '/embed/:id':
