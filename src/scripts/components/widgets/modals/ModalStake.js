@@ -4,11 +4,10 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
-import RadioCheck from 'components/widgets/forms/RadioCheck'
 
 type Props = {
   videoId: String,
-  closeModal: () => void
+  onSuccess: boolean => void
 }
 
 const Wrapper = styled.div`
@@ -64,7 +63,7 @@ class ModalStake extends Component<Props, Object> {
           this.setState({
             errorMessage: false
           })
-          this.props.closeModal()
+          this.props.onSuccess()
           console.log(
             `video ${this.props.videoId.toString()} successfully applied to TCR Listing`
           )
@@ -102,9 +101,6 @@ class ModalStake extends Component<Props, Object> {
             Learn More
           </Anchor>
         </MainText>
-        <RadioCheck checkbox name="nowarning" value="nowarning">
-          Don’t show this warning again
-        </RadioCheck>
         {this.state.errorMessage && (
           <MainText pink small>
             {this.state.errorMessage}
