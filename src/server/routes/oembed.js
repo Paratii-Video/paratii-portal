@@ -6,7 +6,7 @@ const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 const paratii = new Paratii(paratiiConfig)
 
 module.exports = async (req: $Request, res: $Response) => {
-  var oembedresponse = {}
+  const oembedresponse = {}
   if (req.query.url === undefined) {
     oembedresponse.error = 'urlMissing'
     res.end(JSON.stringify(oembedresponse))
@@ -35,9 +35,9 @@ module.exports = async (req: $Request, res: $Response) => {
     if (video) {
       const thumbUrl =
         'http://paratii.video/imagens/cropped-logo_colorido_horizontal.png'
-      var videoTitle = video.title
-      var videoDescription = video.description
-      var creatorName = video.author
+      const videoTitle = video.title
+      const videoDescription = video.description
+      const creatorName = video.author
       oembedresponse.success = 'true'
       oembedresponse.version = '1.0'
       oembedresponse.type = 'rich'
@@ -75,10 +75,10 @@ module.exports = async (req: $Request, res: $Response) => {
 }
 
 function parseUrl (url) {
-  var match = url.match(
+  const match = url.match(
     /^(http|https|ftp)?(?:[:/]*)([a-z0-9.-]*)(?::([0-9]+))?(\/[^?#]*)?(?:\?([^#]*))?(?:#(.*))?$/i
   )
-  var ret = {}
+  const ret = {}
 
   ret['protocol'] = ''
   ret['host'] = match[2]
