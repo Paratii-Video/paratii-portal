@@ -83,12 +83,6 @@ const ButtonWrapper = styled.div`
   margin-left: 20px;
   z-index: 5;
 `
-// bottom: 0;
-// display: inline-flex;
-// justify-content: flex-end;
-// left: 0;
-// margin: 10px 0 0;
-// width: 100%;
 
 const VideoMedia = styled.div`
   margin-bottom: 15px;
@@ -96,9 +90,14 @@ const VideoMedia = styled.div`
   width: 100%;
 `
 
-const VideoImage = styled.img`
+const VideoImage = styled.div`
   display: block;
   width: 100%;
+  padding-top: 60%;
+  width: 100%;
+  background-image: url(${({ src }) => src});
+  background-size: cover;
+  background-position: center center;
 `
 
 const VideoMediaTime = styled.div`
