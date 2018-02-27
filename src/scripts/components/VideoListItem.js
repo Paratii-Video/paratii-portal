@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import Button from 'components/foundations/Button'
 import type { VideoRecord } from 'records/VideoRecords'
 import VideoProgressBar from 'components/widgets/VideoForm/VideoProgressBar'
-import { humanReadableStatus } from 'utils/AppUtils'
 
 type Props = {
   video: VideoRecord,
@@ -108,7 +107,19 @@ class VideoListItem extends Component<Props, void> {
       const link = `/play/${video.id}`
       linkToVideo = <NavLink to={link}>Play video</NavLink>
     }
-    const statusMessage = humanReadableStatus(video, 'main')
+
+    let statusMessage = ''
+
+    if (video.storageStatus.name !== 'success' && title === null) {
+      statusMessage = 'Please provide a title and description'
+    } else if (video.transcodingStatus.name === 'success') {
+      statusMessage = 'Your video is now ready to play'
+    } else if (video.transcodingStatus.name === 'failed') {
+      statusMessage = 'Your video could not be transcoded'
+    }
+    // } else if (!video.filename) {
+    //   statusMessage = 'No file was uploaded (this is an error)'
+    // }
 
     return (
       <ListItem
@@ -120,6 +131,7 @@ class VideoListItem extends Component<Props, void> {
           <ListItemHeader>{title}</ListItemHeader>
           <ListItemStatus done={isReady}>
             <b>{statusMessage}</b>
+            <br />
             {linkToVideo}
           </ListItemStatus>
           <Bar>
