@@ -52,7 +52,7 @@ const Form = styled.div`
   flex: 1 1 100%;
   margin-right: 45px;
   padding-bottom: 70px;
-
+  position: relative;
   @media (max-width: 1150px) {
     flex: 1 1 100%;
     margin: 0 0 50px;
@@ -68,16 +68,27 @@ const VideoFormInfoBox = styled.div`
     flex: 1 1 100%;
   }
 `
+const ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin: 50px 0 0;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: baseline;
+`
 
 const ButtonWrapper = styled.div`
-  bottom: 0;
-  display: flex;
-  justify-content: flex-end;
-  left: 0;
-  margin: 50px 0 0;
-  width: 100%;
+  margin-left: 20px;
   z-index: 5;
 `
+// bottom: 0;
+// display: inline-flex;
+// justify-content: flex-end;
+// left: 0;
+// margin: 10px 0 0;
+// width: 100%;
 
 const VideoMedia = styled.div`
   margin-bottom: 15px;
@@ -116,8 +127,12 @@ const VideoMediaTimeText = styled.p`
   position: relative;
   z-index: 1;
 `
-const ButtonContainer = styled.div`
+const PublishLabel = styled.div`
+  color: ${props => props.theme.colors.button.gray};
+  font-size: ${props => props.theme.fonts.text.tiny};
   position: absolute;
+  bottom: 0;
+  z-index: 1;
 `
 
 type Props = {
@@ -334,9 +349,6 @@ class VideoForm extends Component<Props, Object> {
             </RadioWrapper>
             <ButtonContainer>
               {publishButton}
-              {!isPublishable && !isPublished
-                ? 'you can publish this video as soon as it is ready'
-                : ''}
               {saveButton}
             </ButtonContainer>
           </Form>
@@ -372,6 +384,14 @@ class VideoForm extends Component<Props, Object> {
               label="Share this video"
               readonly
             />
+            {!isPublishable && !isPublished ? (
+              <PublishLabel>
+                You can publish this video as soon as it is{' '}
+                <strong>ready</strong>
+              </PublishLabel>
+            ) : (
+              ''
+            )}
           </VideoFormInfoBox>
         </VideoFormWrapper>
       </Card>
