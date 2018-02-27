@@ -37,8 +37,7 @@ module.exports = async (req: $Request, res: $Response) => {
 
   console.log(video)
   // TODO: we need a way to get the ipfs hash of a thumbnail. These should be saved inparatii-db
-  const thumbnailUrl =
-    'http://paratii.video/imagens/cropped-logo_colorido_horizontal.png'
+  const thumbnailUrl = 'https://paratii.video/public/images/paratii-src.png'
   const url = `https://portal.paratii.video/play/${id}`
   const embedUrl = `https://portal.paratii.video/embed/${id}`
   const height = `1080`
@@ -63,7 +62,7 @@ module.exports = async (req: $Request, res: $Response) => {
       <head>
         <title>${video.title}</title>
         <link rel="stylesheet" type="text/css" href="/embed/index.css">
-
+        <meta name="description" content="${video.description}" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta property="twitter:card" content="player" />
         <meta property="twitter:title" content="${video.title}" />
@@ -83,6 +82,8 @@ module.exports = async (req: $Request, res: $Response) => {
         <meta property="og:title" content="${video.title}" />
         <meta property="og:image" content="${thumbnailUrl}" />
         <meta property="og:description" content="${video.description}" />
+        <meta property="og:description" content="' + videoDescription />
+
       </head>
       <body>
         <div id="root"></div>
