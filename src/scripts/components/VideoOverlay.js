@@ -162,7 +162,6 @@ const ProgressIndicator = styled.div`
   height: 20px;
   background-color: ${({ theme }) =>
     theme.colors.VideoPlayer.progress.scrubber};
-  transition: left 100ms linear;
   border-radius: 50%;
 `
 
