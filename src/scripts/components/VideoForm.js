@@ -175,6 +175,7 @@ class VideoForm extends Component<Props, Object> {
         id: selectedVideo.id,
         title: selectedVideo.title,
         description: selectedVideo.description,
+        // FIXME: we are not editing duration, so we do not need to store it in the state
         duration: selectedVideo.duration,
         author: selectedVideo.author
       })
@@ -188,6 +189,7 @@ class VideoForm extends Component<Props, Object> {
   }
 
   handlePublish () {
+    // this function is called by VideoModal
     this.handleSubmit()
     const videoToSave = {
       id: this.state.id,
@@ -317,7 +319,7 @@ class VideoForm extends Component<Props, Object> {
               label="Title"
               id="input-video-title"
               type="text"
-              value={title}
+              value={this.state.title}
               onChange={e => this.handleInputChange('title', e)}
               margin="0 0 30px"
             />
