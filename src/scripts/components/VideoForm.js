@@ -95,6 +95,7 @@ const VideoImage = styled.div`
   display: block;
   width: 100%;
   padding-top: 60%;
+  background-color: black;
   background-image: url(${({ src }) => src});
   background-size: cover;
   background-position: center center;
