@@ -141,25 +141,25 @@ export const transcodeVideo = (videoInfo: Object) => async (
     console.log('TRANSCODER DOWNSAMPLE READY', hash, size)
   })
 
-  transcoder.once('transcoding:done', function (hash, sizes) {
+  transcoder.once('transcoding:done', function (hash, result) {
     // if transcoding is done, apparently we have uploaded the file first
     dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
     dispatch(
       transcodingSuccess({
         id: videoInfo.id,
         hash: hash,
-        sizes: sizes,
-        duration: sizes.duration
+        result: result,
+        duration: result.duration
       })
     )
-    console.log('TRANSCODER DONE', hash, sizes, videoInfo.id)
+    console.log('TRANSCODER DONE', hash, result, videoInfo.id)
     upsertVideo(
       videoInfo.id,
       {
         id: videoInfo.id,
-        ipfsHash: sizes.master.hash,
+        ipfsHash: result.master.hash,
         owner: paratii.config.account.address,
-        duration: sizes.duration
+        duration: result.duration
       },
       getState()
     )
