@@ -218,7 +218,7 @@ const reducer = {
     }
     // FIXME: this is probably wrong
     const ipfsHash =
-      payload.sizes && payload.sizes.master && payload.sizes.master.hash
+      payload.result && payload.result.master && payload.result.master.hash
 
     if (!ipfsHash) {
       return state
@@ -231,7 +231,7 @@ const reducer = {
           name: 'success',
           data: new DataStatusRecord({
             ipfsHash,
-            sizes: Immutable.fromJS(payload.sizes),
+            result: Immutable.fromJS(payload.result),
             progress: 100
           })
         })
