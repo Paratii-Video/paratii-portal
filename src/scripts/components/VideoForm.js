@@ -53,6 +53,7 @@ const Form = styled.div`
   margin-right: 45px;
   padding-bottom: 70px;
   position: relative;
+
   @media (max-width: 1150px) {
     flex: 1 1 100%;
     margin: 0 0 50px;
@@ -94,7 +95,6 @@ const VideoImage = styled.div`
   display: block;
   width: 100%;
   padding-top: 60%;
-  width: 100%;
   background-image: url(${({ src }) => src});
   background-size: cover;
   background-position: center center;
