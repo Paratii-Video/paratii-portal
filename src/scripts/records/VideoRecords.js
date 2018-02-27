@@ -7,7 +7,7 @@ class Video extends ImmutableRecord({
   description: '',
   filename: null,
   filesize: null,
-  duration: null,
+  duration: 0,
   id: '',
   ipfsData: '',
   ipfsHashOrig: '',
@@ -28,7 +28,7 @@ class Video extends ImmutableRecord({
   description: string
   filename: string
   filesize: number
-  duration: string
+  duration: number
   id: string
   ipfsData: string
   ipfsHashOrig: string

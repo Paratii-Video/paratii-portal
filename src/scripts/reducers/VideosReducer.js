@@ -16,7 +16,8 @@ import {
   TRANSCODING_FAILURE,
   VIDEOFETCH_ERROR,
   VIDEOFETCH_SUCCESS,
-  VIDEOS_FETCH_SUCCESS
+  VIDEOS_FETCH_SUCCESS,
+  UPDATE_VIDEO_TIME
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import {
@@ -296,7 +297,18 @@ const reducer = {
         },
         {}
       )
-    )
+    ),
+  [UPDATE_VIDEO_TIME]: (
+    state: VideoRecordMap,
+    { payload: { id, duration } }: Action<{ id: string, duration: number }>
+  ): VideoRecordMap => {
+    const video: ?VideoRecord = state.get(id)
+    if (video) {
+      return state.set(id, video.set('duration', duration))
+    }
+
+    return state
+  }
 }
 
 export default handleActions(reducer, Immutable.Map({}))

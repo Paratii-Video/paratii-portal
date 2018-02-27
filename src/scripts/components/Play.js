@@ -22,10 +22,12 @@ type Props = {
   fetchVideo: (id: string) => void,
   isPlaying: boolean,
   togglePlayPause: (play: ?boolean) => void,
+  updateVideoTime: ({ duration: number, time: number, id: string }) => void,
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
   video: VideoRecord,
-  isEmbed?: boolean
+  isEmbed?: boolean,
+  currentTimeSeconds: number
 }
 
 type State = {
@@ -161,7 +163,7 @@ class Play extends Component<Props, State> {
   }
 
   bindClapprEvents (): void {
-    const { attemptPlay, togglePlayPause } = this.props
+    const { attemptPlay, togglePlayPause, video } = this.props
     if (this.player) {
       this.player.on(Events.PLAYER_PLAY, () => {
         togglePlayPause(true)
@@ -172,6 +174,16 @@ class Play extends Component<Props, State> {
       const playback = this.player.core.getCurrentPlayback()
       if (playback) {
         playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
+        playback.on(
+          Events.PLAYBACK_TIMEUPDATE,
+          ({ current, total }: { current: number, total: number }) => {
+            this.props.updateVideoTime({
+              duration: total,
+              id: video.get('id'),
+              time: current
+            })
+          }
+        )
       }
     }
   }
@@ -370,6 +382,8 @@ class Play extends Component<Props, State> {
     }
   }
   render () {
+    const { currentTimeSeconds } = this.props
+
     if (this.state.videoNotFound) {
       return <NotFound />
     } else {
@@ -379,7 +393,10 @@ class Play extends Component<Props, State> {
             onClick={this.onPlayerClick}
             onMouseEnter={this.onMouseEnter}
           >
-            <Transition in={this.state.shouldShowVideoOverlay} timeout={0}>
+            <Transition
+              in={this.state.shouldShowVideoOverlay || true}
+              timeout={0}
+            >
               {(transitionState: ?string) => (
                 <OverlayWrapper
                   onMouseLeave={this.onMouseLeave}
@@ -389,6 +406,7 @@ class Play extends Component<Props, State> {
                     {...this.props}
                     transitionState={transitionState}
                     togglePlayPause={this.togglePlayPause}
+                    playbackTimeSeconds={currentTimeSeconds}
                   />
                 </OverlayWrapper>
               )}

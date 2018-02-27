@@ -22,7 +22,8 @@ type Props = {
   togglePlayPause: () => void,
   transitionState: TransitionState,
   showShareModal?: boolean,
-  toggleShareModal: (e: Object) => void
+  toggleShareModal: (e: Object) => void,
+  playbackTimeSeconds: number
 }
 
 type State = {
@@ -129,15 +130,15 @@ const PopoverWrapper = styled.div`
   cursor: default;
 `
 
-const CONTROLS_HEIGHT: string = '50px'
+const CONTROLS_HEIGHT: string = '75px'
+const CONTROL_BUTTONS_HEIGHT: string = '50px'
 
 const Controls = styled.div`
   flex: 0 0 ${CONTROLS_HEIGHT};
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   align-items: center;
-  padding: 0 10px;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   transform: translateY(
     ${({ transitionState }) => {
@@ -153,6 +154,35 @@ const Controls = styled.div`
   }}
   );
   transition: all 250ms linear;
+`
+
+const ProgressIndicator = styled.div`
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  transition: left 100ms linear;
+`
+
+/* prettier-ignore */
+const ProgressBar = styled.div`
+  width: 100%;
+  height: 5px;
+  background-color: blue;
+
+  ${/* sc-selector */ProgressIndicator} {
+    left: ${({ currentTime, totalDuration }) => (!totalDuration ? 0 : Math.max(0, Math.min(100, currentTime * 100 / totalDuration)))}%;
+  }
+`
+
+const ControlButtons = styled.div`
+  width: 100%;
+  flex: 1 1 ${CONTROL_BUTTONS_HEIGHT};
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  padding: 0 10px;
+  height: ${CONTROL_BUTTONS_HEIGHT};
 `
 
 const ControlButtonWrapper = styled.div`
@@ -228,7 +258,9 @@ class VideoOverlay extends Component<Props, State> {
       toggleShareModal,
       isPlaying,
       togglePlayPause,
-      transitionState
+      transitionState,
+      playbackTimeSeconds,
+      video
     } = this.props
     const { openPopover } = this.state
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
@@ -267,17 +299,25 @@ class VideoOverlay extends Component<Props, State> {
             />
           </VideoInfo>
           <Controls transitionState={transitionState}>
-            <ControlButtonWrapper>
-              <IconButton
-                icon={`/assets/img/${
-                  isPlaying ? 'pause-icon' : 'play-icon'
-                }.svg`}
-                onClick={(e: Object) => {
-                  e.stopPropagation()
-                  togglePlayPause()
-                }}
-              />
-            </ControlButtonWrapper>
+            <ProgressBar
+              currentTime={playbackTimeSeconds}
+              totalDuration={(video && video.get('duration')) || 0}
+            >
+              <ProgressIndicator />
+            </ProgressBar>
+            <ControlButtons>
+              <ControlButtonWrapper>
+                <IconButton
+                  icon={`/assets/img/${
+                    isPlaying ? 'pause-icon' : 'play-icon'
+                  }.svg`}
+                  onClick={(e: Object) => {
+                    e.stopPropagation()
+                    togglePlayPause()
+                  }}
+                />
+              </ControlButtonWrapper>
+            </ControlButtons>
           </Controls>
         </Overlay>
       </Wrapper>

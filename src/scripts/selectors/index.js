@@ -10,7 +10,8 @@ import UserRecord, {
 import {
   _getIsPlaying,
   _getIsAttemptingPlay,
-  _getPlayerVideoId
+  _getPlayerVideoId,
+  _getPlayerCurrentTimeSeconds
 } from 'records/PlayerRecords'
 import { _getSelectedUploaderVideoId } from 'records/UploaderRecords'
 
@@ -42,6 +43,8 @@ export const getIsAttemptingPlay = (state: RootState): boolean =>
   _getIsAttemptingPlay(state.player)
 export const getPlayerVideoId = (state: RootState): string =>
   _getPlayerVideoId(state.player)
+export const getPlayerCurrentTimeSeconds = (state: RootState): number =>
+  _getPlayerCurrentTimeSeconds(state.player)
 
 /* Videos */
 export const getVideos = (state: RootState): VideoRecordMap => {
