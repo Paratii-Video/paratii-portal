@@ -42,17 +42,19 @@ const Footer = styled.div`
 `
 
 class ModalStake extends Component<Props, Object> {
-  apply: (e: Object) => void
+  onSubmit: (e: Object) => void
   constructor (props: Props) {
     super(props)
     this.state = {
       errorMessage: false,
       agreedTOC: false // TODO
     }
-    this.apply = this.apply.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+    // this.handlePublish = this.handlePublish.bind(this)
+    // this.handlePublish = this.handlePublish.bind(this)
   }
 
-  apply (event: Object) {
+  onSubmit (event: Object) {
     event.preventDefault()
 
     paratii.eth.tcr
@@ -135,7 +137,7 @@ class ModalStake extends Component<Props, Object> {
           </MainText>
         ) : (
           <Footer>
-            <Button purple onClick={this.apply}>
+            <Button purple onClick={this.onSubmit}>
               Continue
             </Button>
           </Footer>

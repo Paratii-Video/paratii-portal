@@ -23,18 +23,17 @@ export const getDefaultVideo = () => ({
   duration: null,
   author: '',
   free: '',
-  publish: '',
+  published: null,
   id: '',
-  ipfsData: '',
+  // ipfsData: '',
   ipfsHashOrig: '',
   ipfsHash: '',
   owner: '',
   price: '',
-  thumbnailUrl: '',
+  thumbnails: [],
   title: '',
   storageStatus: getDefaultAsyncTaskStatus(),
   transcodingStatus: getDefaultAsyncTaskStatus(),
   uploadStatus: getDefaultAsyncTaskStatus(),
-  fetchStatus: getDefaultAsyncTaskStatus(),
-  url: ''
+  fetchStatus: getDefaultAsyncTaskStatus()
 })
