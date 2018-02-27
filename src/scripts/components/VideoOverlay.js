@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   width: 100%;
 `
 
-const overlayPadding: string = '30px 38px 0'
+const overlayPadding: string = '20px 25px 0'
 
 const Overlay = styled.div`
   width: 100%;
@@ -40,7 +40,6 @@ const Overlay = styled.div`
   color: white;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   padding: ${overlayPadding};
-  box-sizing: border-box;
 `
 
 const TopBar = styled.div`
