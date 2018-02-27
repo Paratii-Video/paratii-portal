@@ -128,7 +128,9 @@ type Props = {
 }
 
 class VideoForm extends Component<Props, Object> {
-  handleSubmit: (e: Object) => void
+  handleSubmit: () => void
+  handlePublish: () => void
+  onSubmit: (e: Object) => void
   handleInputChange: (input: string, e: Object) => void
 
   constructor (props: Props) {

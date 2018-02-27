@@ -7,7 +7,7 @@ import Button from 'components/foundations/Button'
 
 type Props = {
   videoId: String,
-  onSuccess: boolean => void
+  onSuccess: () => void
 }
 
 const Wrapper = styled.div`
