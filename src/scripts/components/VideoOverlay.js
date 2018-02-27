@@ -23,7 +23,8 @@ type Props = {
   transitionState: TransitionState,
   showShareModal?: boolean,
   toggleShareModal: (e: Object) => void,
-  playbackTimeSeconds: number
+  playbackTimeSeconds: number,
+  bufferedTimeSeconds: number
 }
 
 type State = {
@@ -160,25 +161,31 @@ const ProgressIndicator = styled.div`
   position: absolute;
   width: 20px;
   height: 20px;
+  border-radius: 50%;
   background-color: ${({ theme }) =>
     theme.colors.VideoPlayer.progress.scrubber};
-  border-radius: 50%;
+`
+
+const ProgressBuffer = styled.div`
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: 100%;
+  background: ${({ theme }) => theme.colors.VideoPlayer.progress.base};
 `
 
 /* prettier-ignore */
 const ProgressBar = styled.div`
   width: 100%;
   height: 5px;
-  background: linear-gradient(to right, ${({ theme }) => `${
-    theme.colors.VideoPlayer.progress.barFrom
-  }, ${
-    theme.colors.VideoPlayer.progress.barTo
-  }`});
   display: flex;
+  justify-content: flex-end;  
   align-items: center;
-
+  background: linear-gradient(to right, ${({ theme }) => `${theme.colors.VideoPlayer.progress.barFrom}, ${theme.colors.VideoPlayer.progress.barTo}`});
   ${/* sc-selector */ProgressIndicator} {
     left: ${({ currentTime, totalDuration }) => (!totalDuration ? 0 : Math.max(0, Math.min(100, currentTime * 100 / totalDuration)))}%;
+  }
+  ${/* sc-selector */ProgressBuffer} {
+    flex-basis: ${({ bufferTime, totalDuration }) => 100 - (!totalDuration ? 0 : Math.max(0, Math.min(100, bufferTime * 100 / totalDuration)))}%
   }
 `
 
@@ -267,6 +274,7 @@ class VideoOverlay extends Component<Props, State> {
       togglePlayPause,
       transitionState,
       playbackTimeSeconds,
+      bufferedTimeSeconds,
       video
     } = this.props
     const { openPopover } = this.state
@@ -308,8 +316,13 @@ class VideoOverlay extends Component<Props, State> {
           <Controls transitionState={transitionState}>
             <ProgressBar
               currentTime={playbackTimeSeconds}
+              bufferTime={bufferedTimeSeconds}
               totalDuration={(video && video.get('duration')) || 0}
             >
+              <ProgressBuffer
+                bufferTime={bufferedTimeSeconds}
+                totalDuration={bufferedTimeSeconds}
+              />
               <ProgressIndicator />
             </ProgressBar>
             <ControlButtons>

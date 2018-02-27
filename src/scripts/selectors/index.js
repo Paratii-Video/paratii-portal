@@ -11,7 +11,8 @@ import {
   _getIsPlaying,
   _getIsAttemptingPlay,
   _getPlayerVideoId,
-  _getPlayerCurrentTimeSeconds
+  _getPlayerCurrentTimeSeconds,
+  _getPlayerCurrentBufferedTimeSeconds
 } from 'records/PlayerRecords'
 import { _getSelectedUploaderVideoId } from 'records/UploaderRecords'
 
@@ -45,6 +46,8 @@ export const getPlayerVideoId = (state: RootState): string =>
   _getPlayerVideoId(state.player)
 export const getPlayerCurrentTimeSeconds = (state: RootState): number =>
   _getPlayerCurrentTimeSeconds(state.player)
+export const getPlayerCurrentBufferedTimeSeconds = (state: RootState): number =>
+  _getPlayerCurrentBufferedTimeSeconds(state.player)
 
 /* Videos */
 export const getVideos = (state: RootState): VideoRecordMap => {

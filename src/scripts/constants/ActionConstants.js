@@ -43,6 +43,9 @@ export const PLAYER_TOGGLE_PLAYPAUSE = createActionConstant(
 )
 export const PLAYER_ATTEMPT_PLAY = createActionConstant('PLAYER_ATTEMPT_PLAY')
 export const UPDATE_VIDEO_TIME = createActionConstant('UPDATE_VIDEO_TIME')
+export const UPDATE_VIDEO_BUFFERED_TIME = createActionConstant(
+  'UPDATE_VIDEO_BUFFERED_TIME'
+)
 
 /* Transcoding actions */
 export const TRANSCODING_REQUESTED = createActionConstant(

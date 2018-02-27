@@ -23,11 +23,13 @@ type Props = {
   isPlaying: boolean,
   togglePlayPause: (play: ?boolean) => void,
   updateVideoTime: ({ duration: number, time: number, id: string }) => void,
+  updateVideoBufferedTime: ({ time: number }) => void,
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
   video: VideoRecord,
   isEmbed?: boolean,
-  currentTimeSeconds: number
+  currentTimeSeconds: number,
+  currentBufferedTimeSeconds: number
 }
 
 type State = {
@@ -176,10 +178,18 @@ class Play extends Component<Props, State> {
         playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
         playback.on(
           Events.PLAYBACK_TIMEUPDATE,
-          ({ current, total }: { current: number, total: number }) => {
+          ({ current, total }: { current: number, total: number }): void => {
             this.props.updateVideoTime({
               duration: total,
               id: video.get('id'),
+              time: current
+            })
+          }
+        )
+        playback.on(
+          Events.PLAYBACK_PROGRESS,
+          ({ current }: { current: number }): void => {
+            this.props.updateVideoBufferedTime({
               time: current
             })
           }
@@ -382,7 +392,7 @@ class Play extends Component<Props, State> {
     }
   }
   render () {
-    const { currentTimeSeconds } = this.props
+    const { currentTimeSeconds, currentBufferedTimeSeconds } = this.props
 
     if (this.state.videoNotFound) {
       return <NotFound />
@@ -407,6 +417,7 @@ class Play extends Component<Props, State> {
                     transitionState={transitionState}
                     togglePlayPause={this.togglePlayPause}
                     playbackTimeSeconds={currentTimeSeconds}
+                    bufferedTimeSeconds={currentBufferedTimeSeconds}
                   />
                 </OverlayWrapper>
               )}

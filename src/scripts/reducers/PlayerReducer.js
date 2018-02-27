@@ -7,7 +7,8 @@ import {
   PLAYER_TOGGLE_PLAYPAUSE,
   PLAYER_ATTEMPT_PLAY,
   PLAYER_VIDEO_SELECT,
-  UPDATE_VIDEO_TIME
+  UPDATE_VIDEO_TIME,
+  UPDATE_VIDEO_BUFFERED_TIME
 } from 'constants/ActionConstants'
 
 import type { Action } from 'types/ApplicationTypes'
@@ -25,7 +26,12 @@ const reducer = {
   [UPDATE_VIDEO_TIME]: (
     state: PlayerRecord,
     action: Action<{ time: number }>
-  ) => state.set('currentTimeSeconds', action.payload.time)
+  ): PlayerRecord => state.set('currentTimeSeconds', action.payload.time),
+  [UPDATE_VIDEO_BUFFERED_TIME]: (
+    state: PlayerRecord,
+    action: Action<{ time: number }>
+  ): PlayerRecord =>
+    state.set('currentBufferedTimeSeconds', action.payload.time)
 }
 
 export default handleActions(reducer, new PlayerRecord())

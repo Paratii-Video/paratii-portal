@@ -113,7 +113,8 @@ const Themes = {
       progress: {
         barFrom: Colors.purpleGradientFrom,
         barTo: Colors.purpleGradientTo,
-        scrubber: Colors.white
+        scrubber: Colors.white,
+        base: Colors.grayLight
       }
     }
   }
