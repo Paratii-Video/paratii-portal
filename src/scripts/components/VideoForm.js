@@ -1,5 +1,3 @@
-/* @flow */
-
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -17,7 +15,7 @@ import RadioCheck, {
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
 import { prettyBytes } from 'utils/AppUtils'
-import ModalStake from 'components/widgets/modals/ModalStake'
+import ModalStake from 'containers/ModalStakeContainer'
 
 const VideoFormHeader = styled.div`
   border-bottom: 1px solid
@@ -77,7 +75,6 @@ const ButtonWrapper = styled.div`
   justify-content: flex-end;
   left: 0;
   margin: 50px 0 0;
-  position: absolute;
   width: 100%;
   z-index: 5;
 `
@@ -118,6 +115,9 @@ const VideoMediaTimeText = styled.p`
   font-size: ${props => props.theme.fonts.video.info.time};
   position: relative;
   z-index: 1;
+`
+const ButtonContainer = styled.div`
+  position: absolute;
 `
 
 type Props = {
@@ -175,6 +175,14 @@ class VideoForm extends Component<Props, Object> {
 
   handlePublish () {
     this.handleSubmit()
+    const videoToSave = {
+      id: this.state.id,
+      title: this.state.title,
+      description: this.state.description,
+      author: this.state.author,
+      published: true
+    }
+    this.props.saveVideoInfo(videoToSave)
     this.props.closeModal()
   }
 
@@ -244,6 +252,37 @@ class VideoForm extends Component<Props, Object> {
     const transcodingStatus = video.transcodingStatus.data.progress
     const progress = Math.ceil((uploadProgress + transcodingStatus) / 2)
 
+    const isPublished = video.published === true
+    const isPublishable =
+      video.transcodingStatus.name === 'success' && isPublished === false
+
+    const publishButton = (
+      <ButtonWrapper>
+        <Button
+          id="video-submit"
+          type="submit"
+          onClick={this.onSubmit}
+          disabled={!isPublishable}
+          purple
+        >
+          Publish
+        </Button>
+      </ButtonWrapper>
+    )
+
+    const saveButton = (
+      <ButtonWrapper>
+        <Button
+          id="video-submit"
+          type="submit"
+          onClick={this.handleSubmit}
+          purple
+        >
+          Save
+        </Button>
+      </ButtonWrapper>
+    )
+
     return (
       <Card full>
         <VideoFormHeader>
@@ -293,17 +332,13 @@ class VideoForm extends Component<Props, Object> {
                 Paid (not available yet)
               </RadioCheck>
             </RadioWrapper>
-            <ButtonWrapper>
-              <Button
-                id="video-submit"
-                type="submit"
-                onClick={this.onSubmit}
-                disabled={video.uploadStatus.data.progress !== 100}
-                purple
-              >
-                Publish
-              </Button>
-            </ButtonWrapper>
+            <ButtonContainer>
+              {publishButton}
+              {!isPublishable && !isPublished
+                ? 'you can publish this video as soon as it is ready'
+                : ''}
+              {saveButton}
+            </ButtonContainer>
           </Form>
           <VideoFormInfoBox>
             <VideoMedia>
