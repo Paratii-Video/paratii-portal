@@ -254,7 +254,7 @@ class VideoForm extends Component<Props, Object> {
 
     const thumbImages =
       video &&
-      video.getIn(['transcodingStatus', 'data', 'sizes', 'screenshots'])
+      video.getIn(['transcodingStatus', 'data', 'result', 'screenshots'])
 
     let thumbImage = ''
     if (thumbImages) {

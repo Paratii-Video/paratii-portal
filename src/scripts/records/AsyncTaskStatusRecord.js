@@ -10,7 +10,7 @@ export class DataStatusRecord extends ImmutableRecord({
   owner: '',
   ipfsHash: '',
   ipfsHashOrig: '',
-  sizes: '',
+  result: '',
   progress: 0,
   error: '',
   author: ''
@@ -22,7 +22,7 @@ export class DataStatusRecord extends ImmutableRecord({
   owner: string
   ipfsHash: string
   ipfsHashOrig: string
-  sizes: string
+  result: Object
   progress: number
   error: string
 }
