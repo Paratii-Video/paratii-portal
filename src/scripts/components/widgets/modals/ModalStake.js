@@ -9,8 +9,7 @@ import UserRecord from 'records/UserRecords'
 type Props = {
   videoId: String,
   user: UserRecord,
-  onSuccess: () => void,
-  closeModal: () => void
+  onSuccess: () => void
 }
 
 const Wrapper = styled.div`
