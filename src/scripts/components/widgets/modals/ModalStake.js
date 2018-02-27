@@ -9,7 +9,7 @@ import UserRecord from 'records/UserRecords'
 type Props = {
   videoId: String,
   user: UserRecord,
-  closeModal: () => void
+  onSuccess: () => void
 }
 
 const Wrapper = styled.div`
@@ -65,7 +65,7 @@ class ModalStake extends Component<Props, Object> {
           this.setState({
             errorMessage: false
           })
-          this.props.closeModal()
+          this.props.onSuccess()
           console.log(
             `video ${this.props.videoId.toString()} successfully applied to TCR Listing`
           )
@@ -98,7 +98,6 @@ class ModalStake extends Component<Props, Object> {
           {minDeposit} PTI. The tokens still belong to you, and can be
           retrieved, along with the video, any time.
         </Highlight>
-
         {!balanceIsTooLow ? (
           <MainText small>
             For now, with no monetary value, this is mostly an experiment. Soon,
@@ -113,6 +112,7 @@ class ModalStake extends Component<Props, Object> {
         ) : (
           ''
         )}
+
         {this.state.errorMessage && (
           <MainText pink small>
             {this.state.errorMessage}
