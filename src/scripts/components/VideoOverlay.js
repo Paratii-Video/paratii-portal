@@ -160,15 +160,23 @@ const ProgressIndicator = styled.div`
   position: absolute;
   width: 20px;
   height: 20px;
-  background-color: red;
+  background-color: ${({ theme }) =>
+    theme.colors.VideoPlayer.progress.scrubber};
   transition: left 100ms linear;
+  border-radius: 50%;
 `
 
 /* prettier-ignore */
 const ProgressBar = styled.div`
   width: 100%;
   height: 5px;
-  background-color: blue;
+  background: linear-gradient(to right, ${({ theme }) => `${
+    theme.colors.VideoPlayer.progress.barFrom
+  }, ${
+    theme.colors.VideoPlayer.progress.barTo
+  }`});
+  display: flex;
+  align-items: center;
 
   ${/* sc-selector */ProgressIndicator} {
     left: ${({ currentTime, totalDuration }) => (!totalDuration ? 0 : Math.max(0, Math.min(100, currentTime * 100 / totalDuration)))}%;

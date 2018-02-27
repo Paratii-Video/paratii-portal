@@ -109,6 +109,11 @@ const Themes = {
       header: {
         title: Colors.white,
         icons: Colors.white
+      },
+      progress: {
+        barFrom: Colors.purpleGradientFrom,
+        barTo: Colors.purpleGradientTo,
+        scrubber: Colors.white
       }
     }
   }
