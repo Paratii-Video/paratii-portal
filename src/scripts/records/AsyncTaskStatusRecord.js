@@ -16,6 +16,7 @@ export class DataStatusRecord extends ImmutableRecord({
   author: ''
 }) {
   id: number
+  author: string
   title: string
   description: string
   owner: string
@@ -24,7 +25,6 @@ export class DataStatusRecord extends ImmutableRecord({
   sizes: string
   progress: number
   error: string
-  author: string
 }
 
 export class AsyncTaskStatusRecord extends ImmutableRecord({

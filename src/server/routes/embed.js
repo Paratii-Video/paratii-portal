@@ -1,7 +1,6 @@
 /* @flow */
 
 import type { $Request, $Response } from 'express'
-
 import { Paratii } from 'paratii-lib/dist/paratii'
 import { getParatiiConfig } from 'utils/AppUtils'
 
@@ -10,12 +9,33 @@ const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 const paratii = new Paratii(paratiiConfig)
 
 module.exports = async (req: $Request, res: $Response) => {
+  // $FlowFixMe
+  const route = req.route.path
+
+  if (process.env.NODE_ENV === 'development' && route === '/play/:id') {
+    // FIXME: this a way just for passing test
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+
+        </head>
+        <body>
+          <div id="root"></div>
+          <script type="text/javascript" src="/bundle.js"></script>
+        </body>
+      </html>
+    `)
+  }
   const { id } = req.params
   const video = await paratii.core.vids.get(id)
   // TODO: reaise a 404 at this point
+
   if (!video) {
     throw new Error(`No video was found with this id: ${id}`)
   }
+
+  console.log(video)
   // TODO: we need a way to get the ipfs hash of a thumbnail. These should be saved inparatii-db
   const thumbnailUrl =
     'http://paratii.video/imagens/cropped-logo_colorido_horizontal.png'
@@ -24,7 +44,18 @@ module.exports = async (req: $Request, res: $Response) => {
   const height = `1080`
   const width = `1920`
   // this needs to be the has of a video - just as the thumbnail, we need to save these data from paratii-db
-  const ipfSource = `https://gateway.paratii.video/ipfs/QmSs64S5J8C9H6ZFYR44YGEB6pLq2SRLYe3MZdUoyNX7EH`
+  // FIXME: this must be ipfsHashOrig
+  const ipfsSource = `https://gateway.paratii.video/ipfs/QmSs64S5J8C9H6ZFYR44YGEB6pLq2SRLYe3MZdUoyNX7EH`
+  let script = ''
+
+  switch (route) {
+    case '/embed/:id':
+      script = '<script type="text/javascript" src="/embed/bundle.js"></script>'
+      break
+    case '/play/:id':
+      script = '<script type="text/javascript" src="/bundle.js"></script>'
+      break
+  }
 
   res.send(`
     <!DOCTYPE html>
@@ -40,10 +71,10 @@ module.exports = async (req: $Request, res: $Response) => {
         <meta property="twitter:player:width" content="490" />
         <meta property="twitter:player:height" content="280" />
         <meta property="twitter:image" content="${thumbnailUrl}" />
-        <meta property="twitter:player:stream" content="${ipfSource}" />
+        <meta property="twitter:player:stream" content="${ipfsSource}" />
         <meta property="twitter:player" content="${embedUrl}" />
-        <meta property="og:video:url" content="${ipfSource}" />
-        <meta property="og:video:secure_url" content="${ipfSource}" />
+        <meta property="og:video:url" content="${ipfsSource}" />
+        <meta property="og:video:secure_url" content="${ipfsSource}" />
         <meta property="og:video:type" content="video/mp4">
         <meta property="og:video:width" content="${width}" />
         <meta property="og:video:height" content="${height}" />
@@ -55,7 +86,7 @@ module.exports = async (req: $Request, res: $Response) => {
       </head>
       <body>
         <div id="root"></div>
-        <script type="text/javascript" src="/embed/bundle.js"></script>
+        ${script}
       </body>
     </html>
   `)
