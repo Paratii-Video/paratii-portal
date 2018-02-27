@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import Button from '../foundations/Button'
+import Title from '../foundations/Title'
+import Text from '../foundations/Text'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -12,22 +14,10 @@ const Wrapper = styled.div`
   width: 100%;
 `
 
-const Title = styled.h1`
-  font-size: 32px;
-  color: ${props => props.theme.colors.button.purple};
-  margin-bottom: 90px;
-`
-
 const SVG = styled.svg`
   display: block;
+  margin: 90px 0 45px;
   width: 100%;
-`
-
-const Text = styled.p`
-  font-size: ${props => props.theme.fonts.video.form.title};
-  color: #676b6e;
-  line-height: 24px;
-  margin-top: 45px;
 `
 
 type Props = {
@@ -40,7 +30,8 @@ class NotFound extends Component<Props, void> {
   render () {
     return (
       <Wrapper>
-        <Title>Oooooops, page not found - {this.props.children}</Title>
+        <Title purple>Oooooops, page not found</Title>
+        <Text gray>{this.props.children}</Text>
         <SVG viewBox="1644 3231.982 710.6 165.593">
           <defs>
             <linearGradient
@@ -69,7 +60,7 @@ class NotFound extends Component<Props, void> {
             />
           </g>
         </SVG>
-        <Text>
+        <Text gray>
           This page is not available yet. A passionate team is either building
           it, or unaware of it, as of now. Want to help us move faster? Why
           don’t you report the issue on our{' '}
