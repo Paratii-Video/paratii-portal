@@ -35,12 +35,26 @@ export const getSelectedUploaderVideo: (
   }
 )
 
-export const getUploadProgress = createSelector(
-  [getSelectedUploaderVideo],
-  upload => {
-    return (upload && upload.getIn(['uploadStatus', 'data', 'progress'])) || 0
-  }
-)
+// export const getUploadProgress = createSelector(
+//   [getSelectedUploaderVideo],
+//   upload => {
+//     return (upload && parseInt(upload.getIn(['uploadStatus', 'data', 'progress']))) || 0
+//   }
+// )
+//
+// export const getTranscodingProgress = createSelector(
+//   [getSelectedUploaderVideo],
+//   upload => {
+//     return (upload && parseInt(upload.getIn(['transcodingStatus', 'data', 'progress']))) || 0
+//   }
+// )
+//
+// export const getTotalProgress = createSelector(
+//   [getSelectedUploaderVideo],
+//   upload => {
+//     return ((getUploadProgress() + getTranscodingProgress()) / 2) || 0
+//   }
+// )
 
 export const getIsUploading = createSelector(
   [getSelectedUploaderVideo],

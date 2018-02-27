@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
+import UserRecord from 'records/UserRecords'
 
 import Card from './structures/Card'
 import Button from './foundations/Button'
@@ -122,9 +123,12 @@ const VideoMediaTimeText = styled.p`
 type Props = {
   selectedVideo: VideoRecord,
   canSubmit: boolean,
+  progress: Number,
   saveVideoInfo: Object => Object,
   showModal: (View: Object) => void,
-  closeModal: () => void
+  closeModal: () => void,
+  user: UserRecord,
+  balance: String
 }
 
 class VideoForm extends Component<Props, Object> {
@@ -140,6 +144,7 @@ class VideoForm extends Component<Props, Object> {
       id: selectedVideo.id,
       title: selectedVideo.title,
       description: selectedVideo.description,
+      // FIXME: we are not editing duration, so we do not need to store it in the state
       duration: selectedVideo.duration,
       author: selectedVideo.author
     }
@@ -187,7 +192,11 @@ class VideoForm extends Component<Props, Object> {
     e.preventDefault()
 
     this.props.showModal(
-      <ModalStake videoId={this.state.id} onSuccess={this.handlePublish} />
+      <ModalStake
+        videoId={this.state.id}
+        onSuccess={this.handlePublish}
+        user={this.props.user}
+      />
     )
   }
 
@@ -214,6 +223,7 @@ class VideoForm extends Component<Props, Object> {
     }
 
     const fileSize = prettyBytes((video && video.get('filesize')) || 0)
+    // console.log((video && video.get('filesize')) || 0)
     const ipfsHash = (video && video.get('ipfsHash')) || ''
     const urlToPlay = `/play/${video.id}`
     const urlForSharing = `https://portal.paratii.video/play/${video.id}`
@@ -230,6 +240,10 @@ class VideoForm extends Component<Props, Object> {
     } else {
       thumbImage = 'https://paratii.video/public/images/paratii-src.png'
     }
+
+    const uploadProgress = video.uploadStatus.data.progress
+    const transcodingStatus = video.transcodingStatus.data.progress
+    const progress = Math.ceil((uploadProgress + transcodingStatus) / 2)
 
     return (
       <Card full>
@@ -299,15 +313,7 @@ class VideoForm extends Component<Props, Object> {
               </Link>
               {durationBox}
             </VideoMedia>
-            <VideoProgress
-              progress={
-                video.uploadStatus.data.progress === 100
-                  ? video.transcodingStatus.data.progress + '%'
-                  : video.transcodingStatus.data.progress + '%'
-              }
-              marginBottom
-              marginTop
-            >
+            <VideoProgress progress={progress + '%'} marginBottom marginTop>
               {video.uploadStatus.data.progress === 100
                 ? '2/2 - Transcoder: ' + video.transcodingStatus.name
                 : '1/2 - Uploader: ' + video.uploadStatus.name}

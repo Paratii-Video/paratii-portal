@@ -38,7 +38,7 @@ const Wrapper = CardContainer.extend`
 class VideoManagerContainer extends Component<Props, void> {
   render () {
     const showForm = this.props.selectedVideo
-    const showList = this.props.videos.size > 0 || this.selectedVideo
+    const showList = this.props.videos.size > 0 || this.props.selectedVideo
 
     return (
       <Wrapper padding={!showForm}>
