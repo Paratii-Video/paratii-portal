@@ -43,8 +43,7 @@ const FakePlaceholder = styled.span`
 
 const TextField = styled(Textarea)`
   height: ${props => props.height + 'px'};
-  margin-top: 20px;
-  padding-bottom: ${props => (props.height > 50 ? '20px' : '0px')};
+  padding-bottom: ${props => (props.height > 50 ? '10px' : '0px')};
 `
 
 const HelperLabel = styled.span`
@@ -53,7 +52,6 @@ const HelperLabel = styled.span`
   font-size: 12px;
   padding: 8px 1px 0 0;
   opacity: 0.7;
-  text-align: right;
   white-space: nowrap;
 `
 
@@ -62,14 +60,16 @@ class TextareaField extends Component<Props, void> {
     super(props)
 
     this.state = {
-      filled: false,
       textareaHeight: 44,
-      value: ''
+      filled: this.props.value ? this.props.value.length > 0 : false,
+      value: this.props.value
     }
 
+    this.handleHeight = this.handleHeight.bind(this)
+    this.handleFilled = this.handleFilled.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
-    this.handleHeight = this.handleHeight.bind(this)
+    this.handleFocus = this.handleFocus.bind(this)
   }
 
   handleHeight (target) {
@@ -87,13 +87,31 @@ class TextareaField extends Component<Props, void> {
     })
   }
 
+  handleFilled (e) {
+    this.setState({
+      filled: e.target.value.length > 0
+    })
+  }
+
   handleChange (e) {
+    this.setState({
+      value: e.target.value
+    })
+    this.handleFilled(e)
     this.handleHeight(e.target)
     this.props.onChange(e)
   }
 
   handleKeyUp (e) {
+    this.handleFilled(e)
     this.handleHeight(e.target)
+  }
+
+  handleFocus (e) {
+    this.handleHeight(e.target)
+    if (this.props.readonly) {
+      e.target.select()
+    }
   }
 
   render () {
@@ -107,17 +125,16 @@ class TextareaField extends Component<Props, void> {
         <TextField
           onChange={this.handleChange}
           onKeyUp={this.handleKeyUp}
-          error={this.props.error}
-          type={this.props.type}
-          disabled={this.props.disabled}
-          readonly={this.props.readonly}
-          value={this.props.value}
-          id={this.props.id}
-          name={this.props.name}
+          onFocus={this.handleFocus}
           cols={this.props.cols}
           rows={this.props.rows}
-          filled={this.state.filled}
           height={this.state.textareaHeight}
+          error={this.props.error}
+          disabled={this.props.disabled}
+          readonly={this.props.readonly}
+          id={this.props.id}
+          name={this.props.name}
+          value={this.state.value}
         />
         {this.props.label && (
           <FakePlaceholder filled={this.state.filled}>

@@ -15,7 +15,8 @@ import {
   TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE,
   VIDEOFETCH_ERROR,
-  VIDEOFETCH_SUCCESS
+  VIDEOFETCH_SUCCESS,
+  VIDEOS_FETCH_SUCCESS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import {
@@ -27,7 +28,15 @@ import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 const reducer = {
   [UPLOAD_REQUESTED]: (
     state: VideoRecordMap,
-    { payload }: Action<{ id: string, filename: string, filesize: number }>
+    {
+      payload
+    }: Action<{
+      id: string,
+      filename: string,
+      filesize: number,
+      owner: string,
+      author: string
+    }>
   ): VideoRecordMap => {
     if (!payload || !payload.id) {
       return state
@@ -43,7 +52,9 @@ const reducer = {
           data: videoRecord.getIn(['uploadStatus', 'data']).merge({
             progress: 0
           })
-        })
+        }),
+        author: payload.author,
+        owner: payload.owner
       })
     )
   },
@@ -127,7 +138,6 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
-
     state = state.setIn(
       [payload.id, 'storageStatus'],
       new AsyncTaskStatusRecord({
@@ -136,6 +146,7 @@ const reducer = {
           id: payload.id,
           title: payload.title,
           description: payload.description,
+          author: payload.author,
           owner: payload.owner
         })
       })
@@ -149,6 +160,7 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
+    console.log(payload)
     return state
       .setIn(
         [payload.id, 'storageStatus'],
@@ -158,6 +170,7 @@ const reducer = {
             id: payload.id,
             title: payload.title,
             description: payload.description,
+            author: payload.author,
             owner: payload.owner,
             progress: 100
           })
@@ -165,6 +178,7 @@ const reducer = {
       )
       .setIn([payload.id, 'title'], payload.title)
       .setIn([payload.id, 'description'], payload.description)
+      .setIn([payload.id, 'author'], payload.author)
   },
   [TRANSCODING_REQUESTED]: (
     state: VideoRecordMap,
@@ -197,7 +211,7 @@ const reducer = {
   },
   [TRANSCODING_SUCCESS]: (
     state: VideoRecordMap,
-    { payload }: Action<{ id: string, sizes: Object }>
+    { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
@@ -209,18 +223,20 @@ const reducer = {
     if (!ipfsHash) {
       return state
     }
-
-    return state.setIn([payload.id, 'ipfsHash'], ipfsHash).setIn(
-      [payload.id, 'transcodingStatus'],
-      new AsyncTaskStatusRecord({
-        name: 'success',
-        data: new DataStatusRecord({
-          ipfsHash,
-          sizes: Immutable.fromJS(payload.sizes),
-          progress: 100
+    return state
+      .setIn([payload.id, 'ipfsHash'], ipfsHash)
+      .setIn(
+        [payload.id, 'transcodingStatus'],
+        new AsyncTaskStatusRecord({
+          name: 'success',
+          data: new DataStatusRecord({
+            ipfsHash,
+            sizes: Immutable.fromJS(payload.sizes),
+            progress: 100
+          })
         })
-      })
-    )
+      )
+      .setIn([payload.id, 'duration'], payload.duration)
   },
   [TRANSCODING_FAILURE]: (
     state: VideoRecordMap,
@@ -264,7 +280,23 @@ const reducer = {
       payload.id,
       payload.set('fetchStatus', new AsyncTaskStatusRecord({ name: 'success' }))
     )
-  }
+  },
+  [VIDEOS_FETCH_SUCCESS]: (
+    state: VideoRecordMap,
+    { payload }: Action<Array<Object>>
+  ): VideoRecordMap =>
+    state.merge(
+      payload.reduce(
+        (mergingVideos: Object, { _id, ...videoProps }: Object): Object => {
+          mergingVideos[_id] = new VideoRecord({
+            ...videoProps,
+            id: _id
+          })
+          return mergingVideos
+        },
+        {}
+      )
+    )
 }
 
 export default handleActions(reducer, Immutable.Map({}))

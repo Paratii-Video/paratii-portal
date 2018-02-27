@@ -25,7 +25,7 @@ const definedVariables = {
   "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
 }
 
-const registryConfigPath = `./config/registry.json`
+const registryConfigPath = `/tmp/registry.json`
 
 if ((dev || test) && fs.existsSync(registryConfigPath)) {
   const registryConfig = require(registryConfigPath)
@@ -74,6 +74,11 @@ const config = {
     },
     aliasFields: ["browser"]
   },
+  node: {
+      net: 'empty',
+      tls: 'empty',
+      dns: 'empty'
+    },
   module: {
     loaders: [
       {
@@ -123,7 +128,16 @@ const config = {
         sourceMap: false, // this is an effor to save some memory
         uglifyOptions: {
           ecma: 6,
-          mangle: false,
+          mangle: {
+            reserved:
+            ['DAGNode', 'DAGLink','Name', 'Tsize', 'Hash', 'Block', '_idB58String',
+            'Multiaddr', 'WebSockets']
+            // NOTE I'm still working on this. keep this commented out for now.
+            // ['_links', 'links', '_data', 'data', 'mutlihash', '_multihash',
+            //   'serialized', '_serialized', 'size', '_size',
+            // '_id', 'peerId._id', 'peerId._idB58String', 'peerId', 'id', 'multiaddr',
+            // 'multiaddrs', 'buffer', 'Buffer',
+          },
           compress: false
         }
       })

@@ -1,4 +1,5 @@
 {
-  "provider": "https://chain.paratii.video/rpc",
-  "registryAddress": "0x0B101ff870F8BAd6c437C45eCb2964D7e8034593"
+  "provider": "https://newchain.paratii.video",
+  "registryAddress": "0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F",
+  "db.provider": "https://db.paratii.video"
 }

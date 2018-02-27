@@ -34,7 +34,7 @@ const NavLink = Button.withComponent('a')
 
 const NotFound = () => (
   <Wrapper>
-    <Title>404 - Oooooops, page not found</Title>
+    <Title>Oooooops, page not found</Title>
     <SVG viewBox="1644 3231.982 710.6 165.593">
       <defs>
         <linearGradient

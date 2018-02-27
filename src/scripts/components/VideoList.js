@@ -24,6 +24,7 @@ const Title = styled.h3`
 
 const List = styled.ul`
   display: block;
+  padding-bottom: 80px;
   width: 100%;
 `
 
@@ -39,6 +40,8 @@ class VideoList extends Component<Props, void> {
   }
 
   render () {
+    const { selectedVideo } = this.props
+
     const footer = this.props.selectedVideo ? (
       <Button onClick={() => this.onVideoListItemClicked(null)}>
         Add another video
@@ -47,13 +50,14 @@ class VideoList extends Component<Props, void> {
       ''
     )
     return (
-      <Card margin="0 25px 0 0" nopadding footer={footer}>
+      <Card {...this.props} nopadding footer={footer}>
         <Title>Video List</Title>
         <List>
           {this.props.videos.entrySeq().map(([videoId, videoInfo]) => (
             <VideoListItem
               key={videoId}
               video={videoInfo}
+              selected={selectedVideo && selectedVideo.get('id') === videoId}
               // onClick={this.onVideoListItemClicked}
             />
           ))}

@@ -4,33 +4,35 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
+import UserRecord from 'records/UserRecords'
 
-import Card from 'components/structures/Card'
+import Card from './structures/Card'
 import Button from './foundations/Button'
-import Input from './widgets/forms/TextField'
+import TextField from './widgets/forms/TextField'
 import Textarea from './widgets/forms/TextareaField'
 import RadioCheck, {
   RadioWrapper,
   RadioTitle
-} from 'components/widgets/forms/RadioCheck'
+} from './widgets/forms/RadioCheck'
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
 import { prettyBytes } from 'utils/AppUtils'
-
-const VideoFormWrapper = styled.div`
-  display: flex;
-  width: 100%;
-
-  @media (max-width: 1024px) {
-    flex-wrap: wrap;
-  }
-`
+import ModalStake from 'components/widgets/modals/ModalStake'
 
 const VideoFormHeader = styled.div`
   border-bottom: 1px solid
     ${props => props.theme.colors.VideoForm.header.border};
   margin-bottom: 40px;
   padding-bottom: 20px;
+`
+
+const VideoFormWrapper = styled.div`
+  display: flex;
+  width: 100%;
+
+  @media (max-width: 1150px) {
+    flex-wrap: wrap;
+  }
 `
 
 const VideoFormTitle = styled.h1`
@@ -50,8 +52,10 @@ const VideoFormSubTitle = styled.p`
 const Form = styled.div`
   flex: 1 1 100%;
   margin-right: 45px;
+  padding-bottom: 70px;
+  position: relative;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1150px) {
     flex: 1 1 100%;
     margin: 0 0 50px;
   }
@@ -59,10 +63,22 @@ const Form = styled.div`
 
 const VideoFormInfoBox = styled.div`
   flex: 1 1 584px;
+  padding-bottom: 70px;
+  position: relative;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1150px) {
     flex: 1 1 100%;
   }
+`
+
+const ButtonWrapper = styled.div`
+  bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  left: 0;
+  margin: 50px 0 0;
+  position: absolute;
+  width: 100%;
 `
 
 const VideoMedia = styled.div`
@@ -96,22 +112,22 @@ const VideoMediaTime = styled.div`
   }
 `
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin: 50px 0 0;
-`
-
 const VideoMediaTimeText = styled.p`
   color: ${props => props.theme.colors.VideoForm.info.time.color};
   font-size: ${props => props.theme.fonts.video.info.time};
   position: relative;
   z-index: 1;
 `
+
 type Props = {
   selectedVideo: VideoRecord,
   canSubmit: boolean,
-  saveVideoInfo: Object => Object
+  progress: Number,
+  saveVideoInfo: Object => Object,
+  showModal: (View: Object) => void,
+  closeModal: () => void,
+  user: UserRecord,
+  balance: String
 }
 
 class VideoForm extends Component<Props, Object> {
@@ -124,7 +140,10 @@ class VideoForm extends Component<Props, Object> {
     this.state = {
       id: selectedVideo.id,
       title: selectedVideo.title,
-      description: selectedVideo.description
+      description: selectedVideo.description,
+      // FIXME: we are not editing duration, so we do not need to store it in the state
+      duration: selectedVideo.duration,
+      author: selectedVideo.author
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -136,7 +155,9 @@ class VideoForm extends Component<Props, Object> {
       this.setState({
         id: selectedVideo.id,
         title: selectedVideo.title,
-        description: selectedVideo.description
+        description: selectedVideo.description,
+        duration: selectedVideo.duration,
+        author: selectedVideo.author
       })
     }
   }
@@ -152,7 +173,8 @@ class VideoForm extends Component<Props, Object> {
     const videoToSave = {
       id: this.state.id,
       title: this.state.title,
-      description: this.state.description
+      description: this.state.description,
+      author: this.state.author
     }
     this.props.saveVideoInfo(videoToSave)
   }
@@ -167,23 +189,40 @@ class VideoForm extends Component<Props, Object> {
         </Card>
       )
     }
+
     const title = video.title || video.filename
+    const duration = (video && video.get('duration')) || ''
+    let durationBox = null
+    if (duration) {
+      durationBox = (
+        <VideoMediaTime>
+          <VideoMediaTimeText>{duration}</VideoMediaTimeText>
+        </VideoMediaTime>
+      )
+    }
+
+    const fileSize = prettyBytes((video && video.get('filesize')) || 0)
+    // console.log((video && video.get('filesize')) || 0)
+    const ipfsHash = (video && video.get('ipfsHash')) || ''
+    const urlToPlay = `/play/${video.id}`
+    const urlForSharing = `https://portal.paratii.video/play/${video.id}`
+
     const thumbImages =
       video &&
       video.getIn(['transcodingStatus', 'data', 'sizes', 'screenshots'])
-    const fileSize = prettyBytes((video && video.get('filesize')) || 0)
-    const ipfsHash = (video && video.get('ipfsHash')) || ''
+
     let thumbImage = ''
     if (thumbImages) {
       thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${thumbImages.get(
         1
       )}`
     } else {
-      thumbImage = 'http://paratii.video/public/images/paratii-src.png'
+      thumbImage = 'https://paratii.video/public/images/paratii-src.png'
     }
 
-    const urlToPlay = `/play/${video.id}`
-    const urlForSharing = `https://portal.paratii.video/play/${video.id}`
+    const uploadProgress = video.uploadStatus.data.progress
+    const transcodingStatus = video.transcodingStatus.data.progress
+    const progress = Math.ceil((uploadProgress + transcodingStatus) / 2)
 
     return (
       <Card full>
@@ -195,13 +234,13 @@ class VideoForm extends Component<Props, Object> {
         </VideoFormHeader>
         <VideoFormWrapper>
           <Form>
-            <Input
+            <TextField
               id="video-id"
               type="hidden"
               value={this.state.id}
               label="Title"
             />
-            <Input
+            <TextField
               label="Title"
               id="input-video-title"
               type="text"
@@ -217,9 +256,17 @@ class VideoForm extends Component<Props, Object> {
               rows="1"
               margin="0 0 30px"
             />
+            <TextField
+              label="Video Owner"
+              id="input-video-owner"
+              type="text"
+              value={this.state.author}
+              onChange={e => this.handleInputChange('author', e)}
+              margin="0 0 30px"
+            />
             <RadioWrapper>
               <RadioTitle>What kind of content?</RadioTitle>
-              <RadioCheck name="content-type" value="free">
+              <RadioCheck name="content-type" value="free" defaultChecked>
                 Free
               </RadioCheck>
               <RadioCheck name="content-type" value="paid" nomargin disabled>
@@ -244,30 +291,15 @@ class VideoForm extends Component<Props, Object> {
               <Link to={urlToPlay}>
                 <VideoImage data-src={thumbImage} src={thumbImage} />
               </Link>
-              <VideoMediaTime>
-                <VideoMediaTimeText>28:26</VideoMediaTimeText>
-              </VideoMediaTime>
+              {durationBox}
             </VideoMedia>
-            <VideoProgress
-              progress={video.uploadStatus.data.progress + '%'}
-              marginBottom
-            >
-              Uploader: {video.uploadStatus.name}
-            </VideoProgress>
-            <VideoProgress
-              progress={video.transcodingStatus.data.progress + '%'}
-              marginBottom
-            >
-              Transcoder: {video.transcodingStatus.name}
-            </VideoProgress>
-            <VideoProgress
-              progress={video.storageStatus.data.progress + '%'}
-              marginBottom
-            >
-              Data: {video.storageStatus.name}
+            <VideoProgress progress={progress + '%'} marginBottom marginTop>
+              {video.uploadStatus.data.progress === 100
+                ? '2/2 - Transcoder: ' + video.transcodingStatus.name
+                : '1/2 - Uploader: ' + video.uploadStatus.name}
             </VideoProgress>
             <Hidden>
-              <Input
+              <TextField
                 id="video-title"
                 type="text"
                 margin="0 0 30px"
@@ -277,15 +309,36 @@ class VideoForm extends Component<Props, Object> {
                 readonly
               />
             </Hidden>
-            <Input
+            <TextField
               id="video-title"
               type="text"
-              margin="0 0 30px"
+              margin="0 0 25px"
               onChange={e => this.handleInputChange('title', e)}
               value={urlForSharing}
               label="Share this video"
               readonly
             />
+            <ButtonWrapper>
+              <Button margin="0 20px 0 0" type="button">
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                purple
+                disabled={video.uploadStatus.data.progress !== 100}
+                onClick={() => {
+                  this.props.showModal(
+                    <ModalStake
+                      videoId={this.state.id}
+                      closeModal={this.props.closeModal}
+                      user={this.props.user}
+                    />
+                  )
+                }}
+              >
+                Publish
+              </Button>
+            </ButtonWrapper>
           </VideoFormInfoBox>
         </VideoFormWrapper>
       </Card>

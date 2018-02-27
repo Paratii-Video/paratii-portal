@@ -3,7 +3,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-
+import Button from 'components/foundations/Button'
+import Title from 'components/foundations/Title'
 import VideoRecord from 'records/VideoRecords'
 import { getIsPlaying } from 'selectors/index'
 import IconButton from 'components/foundations/buttons/IconButton'
@@ -19,7 +20,9 @@ type Props = {
   isPlaying: boolean,
   onClick: (e: Object) => void,
   togglePlayPause: () => void,
-  transitionState: TransitionState
+  transitionState: TransitionState,
+  showShareModal?: boolean,
+  toggleShareModal: (e: Object) => void
 }
 
 type State = {
@@ -29,7 +32,12 @@ type State = {
   }
 }
 
-const overlayPadding: string = '48px'
+const Wrapper = styled.div`
+  height: 100%;
+  width: 100%;
+`
+
+const overlayPadding: string = '30px 38px 0'
 
 const Overlay = styled.div`
   width: 100%;
@@ -77,12 +85,13 @@ const VideoInfo = styled.div`
     ${({ theme }) => theme.animation.ease.smooth};
 `
 
-const Title = styled.div`
-  font-size: 24px;
+const PlayerTitle = Title.extend`
+  color: ${props => props.theme.colors.VideoPlayer.header.title};
   flex: 1 0 50%;
 `
 
 const ButtonGroup = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: row;
   flex: 1 0 0;
@@ -93,6 +102,21 @@ const ButtonGroup = styled.div`
 const ButtonWrapper = styled.div`
   width: 25px;
   height: 25px;
+`
+
+const ShareButton = Button.extend`
+  height: 18px;
+  position: absolute;
+  right: 25px;
+  top: 28px;
+  width: 30px;
+`
+
+const SVGButton = styled.svg`
+  fill: ${props => props.theme.colors.VideoPlayer.header.icons};
+  display: block;
+  height: 100%;
+  width: 100%;
 `
 
 const PopoverWrapper = styled.div`
@@ -155,23 +179,23 @@ class VideoOverlay extends Component<Props, State> {
   }
 
   loadEmbedPlugins () {
-    const { isEmbed } = this.props
-
-    if (isEmbed) {
-      import(/* webpackChunkName: ProfileButton */ 'components/widgets/PlayerPlugins/ProfileButton').then(
-        ProfileButtonModule => {
-          const ProfileButton: Class<
-            React.Component<any>
-          > = ((ProfileButtonModule.default: any): Class<React.Component<any>>)
-          this.setState(prevState => ({
-            buttons: {
-              ...prevState.buttons,
-              profile: ProfileButton
-            }
-          }))
-        }
-      )
-    }
+    // Disabled this as it is not working
+    // const { isEmbed } = this.props
+    // if (isEmbed) {
+    //   import(/* webpackChunkName: ProfileButton */ 'components/widgets/PlayerPlugins/ProfileButton').then(
+    //     ProfileButtonModule => {
+    //       const ProfileButton: Class<
+    //         React.Component<any>
+    //       > = ((ProfileButtonModule.default: any): Class<React.Component<any>>)
+    //       this.setState(prevState => ({
+    //         buttons: {
+    //           ...prevState.buttons,
+    //           profile: ProfileButton
+    //         }
+    //       }))
+    //     }
+    //   )
+    // }
   }
 
   getVideoTitle (): string {
@@ -199,47 +223,64 @@ class VideoOverlay extends Component<Props, State> {
   }
 
   render () {
-    const { onClick, isPlaying, togglePlayPause, transitionState } = this.props
+    const {
+      onClick,
+      toggleShareModal,
+      isPlaying,
+      togglePlayPause,
+      transitionState
+    } = this.props
     const { openPopover } = this.state
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
       .profile
     return (
-      <Overlay
-        data-test-id="video-overlay"
-        onClick={onClick}
-        transitionState={transitionState}
-      >
-        <VideoInfo transitionState={transitionState}>
-          <Title>{this.getVideoTitle()}</Title>
-          <ButtonGroup hide={!!this.state.openPopover}>
-            {ProfileButton ? (
-              <ButtonWrapper>
-                <ProfileButton
-                  onClick={this.onProfileButtonClick}
-                  onClose={this.closePopover}
-                  popoverPortal={this.popoverWrapperRef}
-                  popoverOpen={openPopover === 'profile'}
-                />
-              </ButtonWrapper>
-            ) : null}
-          </ButtonGroup>
-          <PopoverWrapper
-            open={!!openPopover}
-            innerRef={this.popoverWrapperRefCallback}
-          />
-        </VideoInfo>
-        <Controls transitionState={transitionState}>
-          <ControlButtonWrapper>
-            <IconButton
-              icon={`/assets/img/${isPlaying ? 'pause-icon' : 'play-icon'}.svg`}
-              onClick={(e: Object) => {
-                e.stopPropagation()
-                togglePlayPause()
-              }}
+      <Wrapper>
+        <ShareButton onClick={toggleShareModal}>
+          {!this.props.showShareModal && (
+            <SVGButton>
+              <use xlinkHref="#icon-player-share" />
+            </SVGButton>
+          )}
+        </ShareButton>
+        <Overlay
+          data-test-id="video-overlay"
+          onClick={onClick}
+          transitionState={transitionState}
+        >
+          <VideoInfo transitionState={transitionState}>
+            <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>
+            <ButtonGroup hide={!!this.state.openPopover}>
+              {ProfileButton ? (
+                <ButtonWrapper>
+                  <ProfileButton
+                    onClick={this.onProfileButtonClick}
+                    onClose={this.closePopover}
+                    popoverPortal={this.popoverWrapperRef}
+                    popoverOpen={openPopover === 'profile'}
+                  />
+                </ButtonWrapper>
+              ) : null}
+            </ButtonGroup>
+            <PopoverWrapper
+              open={!!openPopover}
+              innerRef={this.popoverWrapperRefCallback}
             />
-          </ControlButtonWrapper>
-        </Controls>
-      </Overlay>
+          </VideoInfo>
+          <Controls transitionState={transitionState}>
+            <ControlButtonWrapper>
+              <IconButton
+                icon={`/assets/img/${
+                  isPlaying ? 'pause-icon' : 'play-icon'
+                }.svg`}
+                onClick={(e: Object) => {
+                  e.stopPropagation()
+                  togglePlayPause()
+                }}
+              />
+            </ControlButtonWrapper>
+          </Controls>
+        </Overlay>
+      </Wrapper>
     )
   }
 }

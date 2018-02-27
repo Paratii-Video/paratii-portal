@@ -7,6 +7,7 @@ class Video extends ImmutableRecord({
   description: '',
   filename: null,
   filesize: null,
+  duration: null,
   id: '',
   ipfsData: '',
   ipfsHashOrig: '',
@@ -15,6 +16,9 @@ class Video extends ImmutableRecord({
   price: '',
   thumbnailUrl: '',
   title: '',
+  author: '',
+  free: '',
+  publish: '',
   storageStatus: new AsyncTaskStatusRecord(),
   transcodingStatus: new AsyncTaskStatusRecord(),
   uploadStatus: new AsyncTaskStatusRecord(),
@@ -24,6 +28,7 @@ class Video extends ImmutableRecord({
   description: string
   filename: string
   filesize: number
+  duration: string
   id: string
   ipfsData: string
   ipfsHashOrig: string
@@ -32,6 +37,9 @@ class Video extends ImmutableRecord({
   price: string
   thumbnailUrl: string
   title: string
+  author: string
+  free: string
+  publish: string
   storageStatus: AsyncTaskStatusRecord
   transcodingStatus: AsyncTaskStatusRecord
   uploadStatus: AsyncTaskStatusRecord

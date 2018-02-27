@@ -16,12 +16,14 @@ const Themes = {
     footer: {
       background: Colors.black,
       color: Colors.white,
+      color2: Colors.grayLight,
       logoFill: Colors.white
     },
     button: {
       white: Colors.white,
       gray: Colors.grayLight,
-      purple: Colors.purple
+      purple: Colors.purple,
+      pink: Colors.pink
     },
     Modal: {
       background: Colors.blackTransparent,
@@ -52,9 +54,9 @@ const Themes = {
     MainCard: {
       background: Colors.black,
       color: Colors.white,
-      title: {
-        color: Colors.white
-      },
+      title: Colors.white,
+      subtitle: Colors.white,
+      subtitleIcon: Colors.purple,
       footer: {
         background: Colors.blackDark,
         color: Colors.grayLight
@@ -66,7 +68,7 @@ const Themes = {
         color: Colors.purple,
         color2: Colors.grayLight,
         info: Colors.purple,
-        enter: Colors.blackLight
+        enter: Colors.blackTransparent
       },
       input: {
         background: Colors.blackDark,
@@ -74,7 +76,7 @@ const Themes = {
       }
     },
     VideoList: {
-      background: Colors.blackLight,
+      selectedBackground: Colors.blackLight,
       title: Colors.purple,
       filename: Colors.white,
       status: Colors.grayLight,
@@ -99,7 +101,14 @@ const Themes = {
           background: Colors.grayLight,
           barFrom: Colors.purpleGradientFrom,
           barTo: Colors.purpleGradientTo
-        }
+        },
+        text: Colors.grayLight
+      }
+    },
+    VideoPlayer: {
+      header: {
+        title: Colors.white,
+        icons: Colors.white
       }
     }
   }

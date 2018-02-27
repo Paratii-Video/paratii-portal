@@ -7,13 +7,11 @@ import Button from '../foundations/Button'
 import Text from '../foundations/Text'
 import Card from '../structures/Card'
 
-type Props = {
-  margin: String
-}
+type Props = {}
 
 const Icon = styled.svg`
   display: block;
-  height: 130px;
+  height: 163px;
   margin: 0 auto 45px;
   width: 100%;
 `
@@ -28,7 +26,13 @@ const Wrapper = styled.div`
 const SubmitButton = styled(Button)`
   margin: 30px 0 0;
 `
+
 const Anchor = Button.withComponent('a')
+
+const FooterWrapper = styled.div`
+  padding-bottom: 15px;
+  padding-top: 17px;
+`
 
 class RedeemVoucher extends Component<Props, Object> {
   redeemVoucher: (e: Object) => void
@@ -61,17 +65,24 @@ class RedeemVoucher extends Component<Props, Object> {
   render () {
     return (
       <Card
-        margin={this.props.margin}
+        {...this.props}
         title="Redeem your voucher"
         footer={
-          <Text small>
-            Have no voucher?{' '}
-            <Anchor href="/" purple anchor>
-              Drop us a line
-            </Anchor>{' '}
-            and we might hand out some. Remember: these are testnet tokens. No
-            real value (yet)!
-          </Text>
+          <FooterWrapper>
+            <Text small gray>
+              Have no voucher?{' '}
+              <Anchor
+                href="mailto:we@paratii.video"
+                target="_blank"
+                purple
+                anchor
+              >
+                Drop us a line
+              </Anchor>{' '}
+              and we might hand out some. Remember: these are testnet tokens. No
+              real value (yet)!
+            </Text>
+          </FooterWrapper>
         }
       >
         <Icon
@@ -92,7 +103,7 @@ class RedeemVoucher extends Component<Props, Object> {
           </defs>
           <g>
             <path
-              fill="#292e43"
+              fill="#2F3057"
               d="M-47.144 2001.697H67.209a10.923 10.923 0 0 1 10.891 10.891v96.2a10.923 10.923 0 0 1-10.891 10.891H-47.144a10.923 10.923 0 0 1-10.891-10.889v-96.2a10.923 10.923 0 0 1 10.891-10.893z"
               data-name="Path 357"
             />

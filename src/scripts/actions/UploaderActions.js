@@ -36,13 +36,18 @@ const transcodingFailure = createAction(TRANSCODING_FAILURE)
 // upload the video to the local ipfs node
 export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   const newVideoId = paratii.eth.vids.makeId()
-  dispatch(videoFetchSuccess(new VideoRecord({ id: newVideoId })))
+  dispatch(
+    videoFetchSuccess(
+      new VideoRecord({ id: newVideoId, owner: paratii.config.account.address })
+    )
+  )
   dispatch(selectUploaderVideo(newVideoId))
   dispatch(
     uploadRequested({
       id: newVideoId,
       filename: file.name,
-      filesize: file.size
+      filesize: file.size,
+      owner: paratii.config.account.address
     })
   )
   const uploader = paratii.ipfs.uploader.add(file)
@@ -50,7 +55,15 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
     console.log('[UPLOAD error]', err)
     throw err
   })
+  uploader.on('done', function (files) {
+    console.log('[UPLOAD done]', files)
+    paratii.core.vids.upsert({
+      id: newVideoId,
+      owner: paratii.config.account.address
+    })
+  })
   uploader.on('fileReady', function (file) {
+    console.log(file)
     dispatch(
       uploadLocalSuccess({ id: newVideoId, hash: file.hash, size: file.size })
     )
@@ -61,9 +74,6 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
       size: file.size
     })(dispatch)
   })
-  uploader.on('done', function (files) {
-    console.log('[UPLOAD done]', files)
-  })
 }
 
 export const transcodeVideo = (videoInfo: Object) => async (
@@ -73,11 +83,16 @@ export const transcodeVideo = (videoInfo: Object) => async (
     `Requesting to transcode video ${videoInfo.id} with hash ${videoInfo.hash}`
   )
   dispatch(transcodingRequested(videoInfo))
-  console.log(videoInfo)
   const transcoder = paratii.ipfs.uploader.transcode(videoInfo.hash, {
     author: paratii.config.account.address,
     size: videoInfo.size
   })
+
+  transcoder.on('uploader:progress', function (hash, size, percent) {
+    console.log('upload progress', percent)
+    dispatch(uploadProgress({ id: videoInfo.id, progress: percent }))
+  })
+
   transcoder.on('transcoding:error', function (err) {
     console.log('TRANSCODER ERROR', err)
     dispatch(transcodingFailure(videoInfo, err))
@@ -92,19 +107,34 @@ export const transcodeVideo = (videoInfo: Object) => async (
     dispatch(uploadProgress({ id: videoInfo.id, progress: 100 }))
     dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
   })
+
   transcoder.on('transcoding:progress', function (hash, size, percent) {
     dispatch(transcodingProgress(videoInfo, size, percent))
-    console.log('TRANSCODER PROGRES', hash, size, percent)
+    console.log('TRANSCODER PROGRESS', hash, size, percent)
   })
+
   transcoder.on('transcoding:downsample:ready', function (hash, size) {
     console.log('TRANSCODER DOWNSAMPLE READY', hash, size)
   })
-  transcoder.on('transcoding:done', function (hash, sizes) {
+
+  transcoder.once('transcoding:done', function (hash, sizes) {
     // if transcoding is done, apparently we have uploaded the file first
     dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
-    dispatch(transcodingSuccess({ id: videoInfo.id, hash: hash, sizes: sizes }))
-    // console.log('TRANSCODER DONE', hash, sizes)
-    paratii.core.vids.update(videoInfo.id, { ipfsHash: sizes.master.hash })
+    dispatch(
+      transcodingSuccess({
+        id: videoInfo.id,
+        hash: hash,
+        sizes: sizes,
+        duration: sizes.duration
+      })
+    )
+    console.log('TRANSCODER DONE', hash, sizes, videoInfo.id)
+    paratii.core.vids.upsert({
+      id: videoInfo.id,
+      ipfsHash: sizes.master.hash,
+      owner: paratii.config.account.address,
+      duration: sizes.duration
+    })
   })
 }
 
@@ -120,9 +150,8 @@ export const saveVideoInfo = (videoInfo: Object) => async (
     // dispatch(selectVideo(videoInfo.id))
   }
   dispatch(videoDataStart(videoInfo))
-
   paratii.core.vids
-    .create(videoInfo)
+    .upsert(videoInfo)
     .then(videoInfo => {
       // console.log('SAVED')
       dispatch(videoDataSaved(videoInfo))

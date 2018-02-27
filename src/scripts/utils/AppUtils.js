@@ -1,5 +1,7 @@
 /* @flow */
 
+import shortNumber from 'short-number'
+
 import devConfig from 'config/development.json'
 import testConfig from 'config/test.json'
 import prodConfig from 'config/production.json'
@@ -49,8 +51,8 @@ export const getParatiiConfig = (env: ?string = 'development'): Object => {
 }
 
 export const prettyBytes = (num: ?number): string => {
-  if (num === null || num === undefined) {
-    num = 0
+  if (num === null || num === undefined || num === 0 || isNaN(num)) {
+    return ''
   }
   const UNITS = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
   const exponent = Math.min(Math.floor(Math.log10(num) / 3), UNITS.length - 1)
@@ -84,4 +86,12 @@ export function humanReadableStatus (video: VideoRecord, type: string) {
       break
   }
   return statusMessage
+}
+
+export const formatBalance = (rawBalance: number): string => {
+  if (rawBalance < 1e19) {
+    return shortNumber(rawBalance)
+  }
+
+  return `${rawBalance.toExponential(2)}`
 }

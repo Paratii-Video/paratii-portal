@@ -12,9 +12,11 @@ export class DataStatusRecord extends ImmutableRecord({
   ipfsHashOrig: '',
   sizes: '',
   progress: 0,
-  error: ''
+  error: '',
+  author: ''
 }) {
   id: number
+  author: string
   title: string
   description: string
   owner: string

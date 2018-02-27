@@ -7,7 +7,8 @@ export const getDefaultDataStatus = () => ({
   ipfsHashOrig: '',
   sizes: '',
   progress: 0,
-  error: ''
+  error: '',
+  author: ''
 })
 
 export const getDefaultAsyncTaskStatus = () => ({
@@ -19,6 +20,10 @@ export const getDefaultVideo = () => ({
   description: '',
   filename: null,
   filesize: null,
+  duration: null,
+  author: '',
+  free: '',
+  publish: '',
   id: '',
   ipfsData: '',
   ipfsHashOrig: '',

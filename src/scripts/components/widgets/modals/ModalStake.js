@@ -1,10 +1,16 @@
+/* @flow */
+import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
-import RadioCheck from 'components/widgets/forms/RadioCheck'
+import UserRecord from 'records/UserRecords'
 
-type Props = {}
+type Props = {
+  videoId: String,
+  user: UserRecord,
+  closeModal: () => void
+}
 
 const Wrapper = styled.div`
   color: ${props => props.theme.colors.Modal.color};
@@ -35,32 +41,105 @@ const Footer = styled.div`
   width: 100%;
 `
 
-class ModalStake extends Component<Props, void> {
+class ModalStake extends Component<Props, Object> {
+  apply: (e: Object) => void
+  constructor (props: Props) {
+    super(props)
+    this.state = {
+      errorMessage: false,
+      agreedTOC: false // TODO
+    }
+    this.apply = this.apply.bind(this)
+  }
+
+  apply (event: Object) {
+    event.preventDefault()
+
+    paratii.eth.tcr
+      .checkEligiblityAndApply(
+        this.props.videoId.toString(),
+        paratii.eth.web3.utils.toWei(5 + '')
+      )
+      .then(resp => {
+        if (resp && resp === true) {
+          this.setState({
+            errorMessage: false
+          })
+          this.props.closeModal()
+          console.log(
+            `video ${this.props.videoId.toString()} successfully applied to TCR Listing`
+          )
+        } else {
+          this.setState({
+            errorMessage:
+              'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
+          })
+          console.error(
+            'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
+          )
+        }
+      })
+      .catch(e => {
+        if (e) throw e
+      })
+  }
+
   render () {
+    const balance = this.props.user.balances.PTI
+    // FIXME: format this better
+    const balanceInPTI = Number(balance) / 10 ** 18
+    const minDeposit = 5
+    const balanceIsTooLow = Number(balance) < minDeposit * 10 ** 18
     return (
       <Wrapper>
-        <Title>Stake 5 PTI</Title>
+        <Title>Stake {minDeposit} PTI</Title>
         <Highlight>
-          By publishing this video you agree to make a stake deposit of 5 PTI.
-          The tokens still belong to you, and can be retrieved, along with the
-          video, any time.
+          By publishing this video you agree to make a stake deposit of{' '}
+          {minDeposit} PTI. The tokens still belong to you, and can be
+          retrieved, along with the video, any time.
         </Highlight>
-        <MainText small>
-          For now, with no monetary value, this is mostly an experiment. Soon,
-          the community will curate all the content published. Well-received
-          videos will see their stakes increase, earning PTIs to their creators.
-          Illegal content may lose its stake. Want to know how exactly this is
-          going to play out?{' '}
-          <Anchor anchor purple href="./">
-            Learn More
-          </Anchor>
-        </MainText>
-        <RadioCheck checkbox name="nowarning" value="nowarning">
-          Don’t show this warning again
-        </RadioCheck>
-        <Footer>
-          <Button purple>Continue</Button>
-        </Footer>
+
+        {!balanceIsTooLow ? (
+          <MainText small>
+            For now, with no monetary value, this is mostly an experiment. Soon,
+            the community will curate all the content published. Well-received
+            videos will see their stakes increase, earning PTIs to their
+            creators. Illegal content may lose its stake. Want to know how
+            exactly this is going to play out?{' '}
+            <Anchor anchor purple href="./">
+              Learn More
+            </Anchor>
+          </MainText>
+        ) : (
+          ''
+        )}
+        {this.state.errorMessage && (
+          <MainText pink small>
+            {this.state.errorMessage}
+          </MainText>
+        )}
+        {balanceIsTooLow ? (
+          <MainText pink>
+            Your balance is too low: you need to stake at least {minDeposit}{' '}
+            PTI, but you only have {balanceInPTI}. Have no voucher?{' '}
+            <Anchor
+              href="mailto:we@paratii.video"
+              target="_blank"
+              purple
+              anchor
+            >
+              Drop us a line
+            </Anchor>{' '}
+            and we might hand out some. Remember: these are testnet tokens. No
+            real value (yet)!
+          </MainText>
+        ) : (
+          <Footer>
+            <Button purple onClick={this.apply}>
+              Continue
+            </Button>
+          </Footer>
+        )}
       </Wrapper>
     )
   }

@@ -14,8 +14,7 @@ const Header = styled.header`
   display: flex;
   flex: 0 0 ${props => props.theme.sizes.mainHeader.height};
   align-items: center;
-  padding-left: 80px;
-  padding-right: 80px;
+  padding: ${props => props.theme.sizes.mainHeader.padding};
 `
 
 const HeaderWrapper = styled.div`
