@@ -126,6 +126,10 @@ const Anchor = Button.withComponent('a')
 
 const AnchorLink = Anchor.extend`
   font-size: ${props => props.theme.fonts.video.share.link};
+  padding: 0 10%;
+  text-align: center;
+  width: 100%;
+  word-wrap: break-word;
 `
 
 const ShareButtons = styled.div`
