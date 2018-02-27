@@ -110,6 +110,12 @@ class TextField extends Component<Props, void> {
     }
   }
 
+  componentWillReceiveProps (nextProps: Props): void {
+    this.setState({
+      filled: nextProps.value ? nextProps.value.length > 0 : false,
+      value: nextProps.value
+    })
+  }
   render () {
     return (
       <LabelField

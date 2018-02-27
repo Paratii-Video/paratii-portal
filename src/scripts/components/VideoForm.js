@@ -198,7 +198,6 @@ class VideoForm extends Component<Props, Object> {
     }
 
     const fileSize = prettyBytes((video && video.get('filesize')) || 0)
-    // console.log((video && video.get('filesize')) || 0)
     const ipfsHash = (video && video.get('ipfsHash')) || ''
     const urlToPlay = `/play/${video.id}`
     const urlForSharing = `https://portal.paratii.video/play/${video.id}`
@@ -240,7 +239,7 @@ class VideoForm extends Component<Props, Object> {
               label="Title"
               id="input-video-title"
               type="text"
-              value={this.state.title}
+              value={title}
               onChange={e => this.handleInputChange('title', e)}
               margin="0 0 30px"
             />
