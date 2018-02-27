@@ -121,6 +121,10 @@ class VideoListItem extends Component<Props, void> {
     //   statusMessage = 'No file was uploaded (this is an error)'
     // }
 
+    const uploadProgress = video.uploadStatus.data.progress
+    const transcodingStatus = video.transcodingStatus.data.progress
+    const progress = Math.ceil((uploadProgress + transcodingStatus) / 2)
+
     return (
       <ListItem
         onClick={this.handleClick}
@@ -135,10 +139,7 @@ class VideoListItem extends Component<Props, void> {
             {linkToVideo}
           </ListItemStatus>
           <Bar>
-            <VideoProgressBar
-              progress={this.state.totalProgress + '%'}
-              nopercentual
-            />
+            <VideoProgressBar progress={progress + '%'} nopercentual />
           </Bar>
         </ListItemWrapper>
       </ListItem>
