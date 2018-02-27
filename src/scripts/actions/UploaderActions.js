@@ -134,8 +134,9 @@ export const transcodeVideo = (videoInfo: Object) => async (
 
   transcoder.on('transcoding:progress', function (hash, size, percent) {
     dispatch(transcodingProgress(videoInfo, size, percent))
-    console.log('TRANSCODER PROGRES', hash, size, percent)
+    console.log('TRANSCODER PROGRESS', hash, size, percent)
   })
+
   transcoder.on('transcoding:downsample:ready', function (hash, size) {
     console.log('TRANSCODER DOWNSAMPLE READY', hash, size)
   })

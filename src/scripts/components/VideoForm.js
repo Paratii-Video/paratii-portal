@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
+import UserRecord from 'records/UserRecords'
 
 import Card from './structures/Card'
 import Button from './foundations/Button'
@@ -27,6 +28,7 @@ const VideoFormHeader = styled.div`
 
 const VideoFormWrapper = styled.div`
   display: flex;
+  position: relative;
   width: 100%;
 
   @media (max-width: 1150px) {
@@ -52,7 +54,6 @@ const Form = styled.div`
   flex: 1 1 100%;
   margin-right: 45px;
   padding-bottom: 70px;
-  position: relative;
 
   @media (max-width: 1150px) {
     flex: 1 1 100%;
@@ -78,6 +79,7 @@ const ButtonWrapper = styled.div`
   margin: 50px 0 0;
   position: absolute;
   width: 100%;
+  z-index: 5;
 `
 
 const VideoMedia = styled.div`
@@ -124,11 +126,15 @@ type Props = {
   progress: Number,
   saveVideoInfo: Object => Object,
   showModal: (View: Object) => void,
-  closeModal: () => void
+  closeModal: () => void,
+  user: UserRecord,
+  balance: String
 }
 
 class VideoForm extends Component<Props, Object> {
-  handleSubmit: (e: Object) => void
+  handleSubmit: () => void
+  handlePublish: () => void
+  onSubmit: (e: Object) => void
   handleInputChange: (input: string, e: Object) => void
 
   constructor (props: Props) {
@@ -138,11 +144,14 @@ class VideoForm extends Component<Props, Object> {
       id: selectedVideo.id,
       title: selectedVideo.title,
       description: selectedVideo.description,
+      // FIXME: we are not editing duration, so we do not need to store it in the state
       duration: selectedVideo.duration,
       author: selectedVideo.author
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handlePublish = this.handlePublish.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   componentWillReceiveProps (nextProps: Props): void {
@@ -164,8 +173,12 @@ class VideoForm extends Component<Props, Object> {
     })
   }
 
-  handleSubmit (e: Object) {
-    e.preventDefault()
+  handlePublish () {
+    this.handleSubmit()
+    this.props.closeModal()
+  }
+
+  handleSubmit () {
     const videoToSave = {
       id: this.state.id,
       title: this.state.title,
@@ -173,6 +186,18 @@ class VideoForm extends Component<Props, Object> {
       author: this.state.author
     }
     this.props.saveVideoInfo(videoToSave)
+  }
+
+  onSubmit (e: Object) {
+    e.preventDefault()
+
+    this.props.showModal(
+      <ModalStake
+        videoId={this.state.id}
+        onSuccess={this.handlePublish}
+        user={this.props.user}
+      />
+    )
   }
 
   render () {
@@ -228,7 +253,7 @@ class VideoForm extends Component<Props, Object> {
           </VideoFormSubTitle>
         </VideoFormHeader>
         <VideoFormWrapper>
-          <Form>
+          <Form onSubmit={this.onSubmit}>
             <TextField
               id="video-id"
               type="hidden"
@@ -272,15 +297,14 @@ class VideoForm extends Component<Props, Object> {
               <Button
                 id="video-submit"
                 type="submit"
-                onClick={this.handleSubmit}
-                // disabled={!this.props.canSubmit}
+                onClick={this.onSubmit}
+                disabled={video.uploadStatus.data.progress !== 100}
                 purple
               >
-                Save data
+                Publish
               </Button>
             </ButtonWrapper>
           </Form>
-
           <VideoFormInfoBox>
             <VideoMedia>
               <Link to={urlToPlay}>
@@ -313,26 +337,6 @@ class VideoForm extends Component<Props, Object> {
               label="Share this video"
               readonly
             />
-            <ButtonWrapper>
-              <Button margin="0 20px 0 0" type="button">
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                purple
-                disabled={video.uploadStatus.data.progress !== 100}
-                onClick={() => {
-                  this.props.showModal(
-                    <ModalStake
-                      videoId={this.state.id}
-                      closeModal={this.props.closeModal}
-                    />
-                  )
-                }}
-              >
-                Publish
-              </Button>
-            </ButtonWrapper>
           </VideoFormInfoBox>
         </VideoFormWrapper>
       </Card>
