@@ -35,22 +35,43 @@ type State = {
 }
 
 const Wrapper = styled.div`
+  margin: 0 auto;
+  position: relative;
+  height: 720px;
+  width: 1280px;
+
+  @media (max-width: 1440px) {
+    height: 576px;
+    width: 1024px;
+  }
+
+  @media (max-width: 1200px) {
+    height: 432px;
+    width: 768px;
+  }
+
+  @media (max-width: 930px) {
+    height: 0;
+    margin: 0;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    width: 100%;
+  }
+`
+
+const PlayerWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 0 0 100%;
+  height: 100%;
 `
 
 const Player = styled.div`
   width: 100%;
   height: 100%;
-`
-
-const PlayerWrapper = styled.div`
-  flex: 0 0 100%;
-  width: 100%;
-  position: relative;
+  position: absolute;
+  z-index: 5;
 `
 
 const OverlayWrapper = styled.div`
@@ -59,7 +80,7 @@ const OverlayWrapper = styled.div`
   left: 0;
   width: 100%;
   height: calc(100% - 50px);
-  z-index: 5;
+  z-index: 10;
   cursor: pointer;
 `
 
@@ -77,7 +98,7 @@ const ShareOverlay = styled.div`
   transition: opacity ${props => props.theme.animation.time.repaint};
   top: 0;
   width: 100%;
-  z-index: 10;
+  z-index: 15;
 `
 
 const CloseButton = Button.extend`
@@ -309,7 +330,7 @@ class Play extends Component<Props, State> {
   }
 
   shouldShowVideoOverlay (): boolean {
-    return true // this.state.mouseInOverlay
+    return this.state.mouseInOverlay
   }
 
   portalUrl () {
@@ -358,12 +379,7 @@ class Play extends Component<Props, State> {
   render () {
     // If video not exist it is set in the component state
     if (this.state.videoNotFound === true) {
-      return (
-        <Wrapper>
-          did not find a video
-          <NotFound />
-        </Wrapper>
-      )
+      return <NotFound>Did not find a video</NotFound>
     } else {
       return (
         <Wrapper>
