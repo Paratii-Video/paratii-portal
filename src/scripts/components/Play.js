@@ -161,6 +161,17 @@ class Play extends Component<Props, State> {
     this.toggleShareModal = this.toggleShareModal.bind(this)
 
     this.props.setSelectedVideo(this.getVideoIdFromRequest())
+
+    if (this.props.video) {
+      this.props.updateVideoTime({
+        duration: 0,
+        id: this.props.video.get('id'),
+        time: 0
+      })
+      this.props.updateVideoBufferedTime({
+        time: 0
+      })
+    }
   }
 
   bindClapprEvents (): void {
@@ -292,11 +303,14 @@ class Play extends Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
+    const { video } = this.props
     if (nextProps.video) {
-      // ?? why the next lines?
       const fetchStatus = nextProps.video.getIn(['fetchStatus', 'name'])
       if (nextProps.video && fetchStatus === 'success') {
-        if (this.state.playerCreated !== nextProps.video.ipfsHash) {
+        if (
+          !video ||
+          video.get('ipfsHash') !== nextProps.video.get('ipfsHash')
+        ) {
           this.createPlayer(nextProps.video.ipfsHash)
         }
       } else if (fetchStatus === 'failed') {
