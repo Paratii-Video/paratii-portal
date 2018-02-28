@@ -47,7 +47,7 @@ class EmbedApp extends React.Component<Props, void> {
 
   render () {
     const { match } = this.props
-
+    console.log(this.props)
     return (
       <ThemeProvider theme={paratiiTheme}>
         <Wrapper>
@@ -56,7 +56,7 @@ class EmbedApp extends React.Component<Props, void> {
           <Route
             exact
             path={`${match.url}embed/:id`}
-            render={props => <PlayContainer {...props} />}
+            render={props => <PlayContainer isEmbed {...props} />}
           />
         </Wrapper>
       </ThemeProvider>
@@ -69,7 +69,7 @@ const EmbedContainer = connect(undefined, mapDispatchToProps)(EmbedApp)
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <Route path="/" component={EmbedContainer} isEmbed />
+      <Route path="/" component={EmbedContainer} />
     </BrowserRouter>
   </Provider>,
   getRoot()

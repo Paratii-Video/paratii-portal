@@ -37,17 +37,17 @@ type State = {
 const Wrapper = styled.div`
   margin: 0 auto;
   position: relative;
-  height: 720px;
-  width: 1280px;
+  height: ${props => (props.isEmbed ? '100%' : '720px')};
+  width: ${props => (props.isEmbed ? '100%' : '1280px')};
 
   @media (max-width: 1440px) {
-    height: 576px;
-    width: 1024px;
+    height: ${props => (props.isEmbed ? null : '576px')};
+    width: ${props => (props.isEmbed ? null : '1024px')};
   }
 
   @media (max-width: 1200px) {
-    height: 432px;
-    width: 768px;
+    height: ${props => (props.isEmbed ? null : '432px')};
+    width: ${props => (props.isEmbed ? null : '768px')};
   }
 
   @media (max-width: 930px) {
@@ -386,7 +386,7 @@ class Play extends Component<Props, State> {
       return <NotFound>Did not find a video</NotFound>
     } else {
       return (
-        <Wrapper>
+        <Wrapper isEmbed={this.props.isEmbed}>
           <PlayerWrapper>
             {this.shouldShowVideoOverlay() && (
               <OverlayWrapper
