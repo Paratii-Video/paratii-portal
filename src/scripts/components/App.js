@@ -81,9 +81,7 @@ class App extends Component<Props, State> {
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
-          <Modal>
-            FAke CONtent
-          </Modal>
+          <Modal />
           <MainHeader />
           <Main>
             <Switch>

@@ -15,7 +15,7 @@ import RadioCheck, {
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
 import { prettyBytes } from 'utils/AppUtils'
-import ModalStake from 'containers/ModalStakeContainer'
+// import ModalStake from 'containers/ModalStakeContainer'
 
 const VideoFormHeader = styled.div`
   border-bottom: 1px solid
@@ -168,6 +168,7 @@ class VideoForm extends Component<Props, Object> {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handlePublish = this.handlePublish.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
+    this.onPublishClick = this.onPublishClick.bind(this)
   }
 
   componentWillReceiveProps (nextProps: Props): void {
@@ -214,17 +215,22 @@ class VideoForm extends Component<Props, Object> {
     this.props.saveVideoInfo(videoToSave)
   }
 
-  onSubmit (e: Object) {
+  onPublishClick (e: Object) {
     e.preventDefault()
-
-    this.props.showModal(
-      <ModalStake
-        videoId={this.state.id}
-        onSuccess={this.handlePublish}
-        user={this.props.user}
-      />
-    )
+    this.props.openModal()
   }
+
+  // onSubmit (e: Object) {
+  //   e.preventDefault()
+  //
+  //   this.props.showModal(
+  //     <ModalStake
+  //       videoId={this.state.id}
+  //       onSuccess={this.handlePublish}
+  //       user={this.props.user}
+  //     />
+  //   )
+  // }
 
   render () {
     const video: VideoRecord = this.props.selectedVideo
@@ -284,7 +290,7 @@ class VideoForm extends Component<Props, Object> {
           <Button
             id="video-submit"
             type="submit"
-            onClick={this.props.openModal}
+            onClick={this.onPublishClick}
             disabled={!isPublishable}
             purple
           >
