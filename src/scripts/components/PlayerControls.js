@@ -175,6 +175,7 @@ class PlayerControls extends Component<Props, State> {
   render () {
     const {
       isPlaying,
+      onScrub,
       togglePlayPause,
       transitionState,
       currentTimeSeconds,
@@ -186,7 +187,11 @@ class PlayerControls extends Component<Props, State> {
       <Controls transitionState={transitionState}>
         <ProgressBar
           onClick={(e: Object) => {
-            console.log(e)
+            const { videoContainerRef } = this.props
+            if (videoContainerRef) {
+              const wrapperRect: Object = videoContainerRef.getBoundingClientRect()
+              onScrub((e.clientX - wrapperRect.x) * 100 / wrapperRect.width)
+            }
           }}
           currentTime={currentTimeSeconds}
           scrubbingPositionPercentage={scrubbingPositionPercentage}
