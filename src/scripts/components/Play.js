@@ -35,7 +35,7 @@ type State = {
 }
 
 const Wrapper = styled.div`
-  margin: 0 auto;
+  margin: ${props => (props.isEmbed ? null : '0 auto')};
   position: relative;
   height: ${props => (props.isEmbed ? '100%' : '720px')};
   width: ${props => (props.isEmbed ? '100%' : '1280px')};

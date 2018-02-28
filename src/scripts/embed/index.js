@@ -47,7 +47,7 @@ class EmbedApp extends React.Component<Props, void> {
 
   render () {
     const { match } = this.props
-    console.log(this.props)
+
     return (
       <ThemeProvider theme={paratiiTheme}>
         <Wrapper>
