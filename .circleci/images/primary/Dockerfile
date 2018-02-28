@@ -125,25 +125,3 @@ RUN export CHROMEDRIVER_RELEASE=$(curl --location --fail --retry 3 http://chrome
 ENV DISPLAY :99
 RUN printf '#!/bin/sh\nXvfb :99 -screen 0 1280x1024x24 &\nexec "$@"\n' > /tmp/entrypoint \
   && chmod +x /tmp/entrypoint
-
-# chromedriver
-#RUN wget -N http://chromedriver.storage.googleapis.com/2.27/chromedriver_linux64.zip -P ~/
-#RUN unzip ~/chromedriver_linux64.zip -d ~/
-#RUN rm ~/chromedriver_linux64.zip
-#RUN mv -f ~/chromedriver /usr/local/share/
-#RUN chmod +x /usr/local/share/chromedriver
-#RUN ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
-
-# chrome
-
-#RUN apt install chromium-browser -y
-#RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-#RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | tee /etc/apt/sources.list.d/google-chrome.list
-#RUN apt update && apt install google-chrome-stable -y
-
-# phatomjs
-#RUN cd ~
-#RUN wget https://github.com/Medium/phantomjs/archive/2.1.14.tar.gz
-#RUN mkdir /usr/local/share/phantomjs-2.1.14
-#RUN tar -czvf 2.1.14.tar.gz /usr/local/share
-#RUN ln -sf /usr/local/share/phantomjs-2.1.14/bin/phantomjs /usr/local/bin
