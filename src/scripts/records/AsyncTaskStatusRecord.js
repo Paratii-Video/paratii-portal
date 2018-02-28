@@ -31,17 +31,17 @@ export class AsyncTaskStatusRecord extends ImmutableRecord({
   name: 'idle',
   data: new DataStatusRecord()
 }) {
-  constructor (properties) {
-    console.log(properties)
-    if (!properties) {
-      properties = {}
-    }
-    super({
-      ...properties,
-      name: properties.name,
-      data: new DataStatusRecord(properties.data)
-    })
-  }
+  // constructor (properties) {
+  //   console.log(properties)
+  //   if (!properties) {
+  //     properties = {}
+  //   }
+  //   super({
+  //     ...properties,
+  //     name: properties.name,
+  //     data: new DataStatusRecord(properties.data)
+  //   })
+  // }
   name: AsyncTaskStatusName
   data: DataStatusRecord
 }

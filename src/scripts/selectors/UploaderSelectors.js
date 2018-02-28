@@ -5,7 +5,7 @@ import { createSelector } from 'reselect'
 import { getSelectedUploaderVideoId, getVideos } from 'selectors/index'
 import paratii from 'utils/ParatiiLib'
 
-import type VideoRecord from 'records/VideoRecords'
+import VideoRecord from 'records/VideoRecords'
 import type { RootState, VideoRecordMap } from 'types/ApplicationTypes'
 
 export const getUploaderVideos: (
@@ -30,7 +30,6 @@ export const getSelectedUploaderVideo: (
         return playerVideo
       }
     }
-
     return null
   }
 )
