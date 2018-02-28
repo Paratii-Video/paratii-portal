@@ -5,7 +5,7 @@ export const getDefaultDataStatus = () => ({
   owner: '',
   ipfsHash: '',
   ipfsHashOrig: '',
-  sizes: '',
+  result: '',
   progress: 0,
   error: '',
   author: ''
@@ -25,7 +25,6 @@ export const getDefaultVideo = () => ({
   free: '',
   published: null,
   id: '',
-  // ipfsData: '',
   ipfsHashOrig: '',
   ipfsHash: '',
   owner: '',

@@ -1,7 +1,7 @@
 /* @flow */
 
 import { Record as ImmutableRecord } from 'immutable'
-import type { AsyncTaskStatusName } from 'types/ApplicationTypes'
+import { type AsyncTaskStatusName } from 'types/ApplicationTypes'
 
 export class DataStatusRecord extends ImmutableRecord({
   id: '',
@@ -10,7 +10,7 @@ export class DataStatusRecord extends ImmutableRecord({
   owner: '',
   ipfsHash: '',
   ipfsHashOrig: '',
-  sizes: '',
+  result: '',
   progress: 0,
   error: '',
   author: ''
@@ -22,7 +22,7 @@ export class DataStatusRecord extends ImmutableRecord({
   owner: string
   ipfsHash: string
   ipfsHashOrig: string
-  sizes: string
+  result: Object
   progress: number
   error: string
 }
@@ -31,6 +31,17 @@ export class AsyncTaskStatusRecord extends ImmutableRecord({
   name: 'idle',
   data: new DataStatusRecord()
 }) {
+  // constructor (properties) {
+  //   console.log(properties)
+  //   if (!properties) {
+  //     properties = {}
+  //   }
+  //   super({
+  //     ...properties,
+  //     name: properties.name,
+  //     data: new DataStatusRecord(properties.data)
+  //   })
+  // }
   name: AsyncTaskStatusName
   data: DataStatusRecord
 }

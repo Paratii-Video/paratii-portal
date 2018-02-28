@@ -52,6 +52,7 @@ const Form = styled.div`
   flex: 1 1 100%;
   margin-right: 45px;
   padding-bottom: 70px;
+  position: relative;
 
   @media (max-width: 1150px) {
     flex: 1 1 100%;
@@ -68,14 +69,19 @@ const VideoFormInfoBox = styled.div`
     flex: 1 1 100%;
   }
 `
+const ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin: 50px 0 0;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: baseline;
+`
 
 const ButtonWrapper = styled.div`
-  bottom: 0;
-  display: flex;
-  justify-content: flex-end;
-  left: 0;
-  margin: 50px 0 0;
-  width: 100%;
+  margin-left: 20px;
   z-index: 5;
 `
 
@@ -85,9 +91,14 @@ const VideoMedia = styled.div`
   width: 100%;
 `
 
-const VideoImage = styled.img`
+const VideoImage = styled.div`
   display: block;
   width: 100%;
+  padding-top: 60%;
+  background-color: black;
+  background-image: url(${({ src }) => src});
+  background-size: cover;
+  background-position: center center;
 `
 
 const VideoMediaTime = styled.div`
@@ -116,8 +127,12 @@ const VideoMediaTimeText = styled.p`
   position: relative;
   z-index: 1;
 `
-const ButtonContainer = styled.div`
+const PublishLabel = styled.div`
+  color: ${props => props.theme.colors.button.gray};
+  font-size: ${props => props.theme.fonts.text.tiny};
   position: absolute;
+  bottom: 0;
+  z-index: 1;
 `
 
 type Props = {
@@ -236,7 +251,8 @@ class VideoForm extends Component<Props, Object> {
 
     const thumbImages =
       video &&
-      video.getIn(['transcodingStatus', 'data', 'sizes', 'screenshots'])
+      video.getIn(['transcodingStatus', 'data', 'result', 'screenshots'])
+    // video.transcodingStatus.data.result.screenshots
 
     let thumbImage = ''
     if (thumbImages) {
@@ -286,9 +302,7 @@ class VideoForm extends Component<Props, Object> {
       <Card full>
         <VideoFormHeader>
           <VideoFormTitle id="video-title">{title}</VideoFormTitle>
-          <VideoFormSubTitle purple>
-            {video.title ? video.filename : ''} {fileSize}
-          </VideoFormSubTitle>
+          <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>
         </VideoFormHeader>
         <VideoFormWrapper>
           <Form onSubmit={this.onSubmit}>
@@ -333,9 +347,6 @@ class VideoForm extends Component<Props, Object> {
             </RadioWrapper>
             <ButtonContainer>
               {publishButton}
-              {!isPublishable && !isPublished
-                ? 'you can publish this video as soon as it is ready'
-                : ''}
               {saveButton}
             </ButtonContainer>
           </Form>
@@ -371,6 +382,14 @@ class VideoForm extends Component<Props, Object> {
               label="Share this video"
               readonly
             />
+            {!isPublishable && !isPublished ? (
+              <PublishLabel>
+                You can publish this video as soon as it is{' '}
+                <strong>ready</strong>
+              </PublishLabel>
+            ) : (
+              ''
+            )}
           </VideoFormInfoBox>
         </VideoFormWrapper>
       </Card>

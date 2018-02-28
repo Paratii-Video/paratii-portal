@@ -160,7 +160,6 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
-    console.log(payload)
     return state
       .setIn(
         [payload.id, 'storageStatus'],
@@ -179,6 +178,7 @@ const reducer = {
       .setIn([payload.id, 'title'], payload.title)
       .setIn([payload.id, 'description'], payload.description)
       .setIn([payload.id, 'author'], payload.author)
+      .setIn([payload.id, 'published'], payload.published)
   },
   [TRANSCODING_REQUESTED]: (
     state: VideoRecordMap,
@@ -218,7 +218,7 @@ const reducer = {
     }
     // FIXME: this is probably wrong
     const ipfsHash =
-      payload.sizes && payload.sizes.master && payload.sizes.master.hash
+      payload.result && payload.result.master && payload.result.master.hash
 
     if (!ipfsHash) {
       return state
@@ -231,7 +231,7 @@ const reducer = {
           name: 'success',
           data: new DataStatusRecord({
             ipfsHash,
-            sizes: Immutable.fromJS(payload.sizes),
+            result: Immutable.fromJS(payload.result),
             progress: 100
           })
         })
