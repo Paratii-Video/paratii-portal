@@ -69,7 +69,8 @@ export type ClapprPlayer = EventEmitter & {
   isPlaying: () => boolean,
   play: () => void,
   pause: () => void,
-  remove: () => void
+  remove: () => void,
+  seek: (time: number) => void
 }
 
 // TODO move this into paratii-lib repo

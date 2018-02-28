@@ -1,30 +1,23 @@
 /* @flow */
 
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
+import PlayerControlsContainer from 'containers/PlayerControlsContainer'
 import VideoRecord from 'records/VideoRecords'
-import { getIsPlaying } from 'selectors/index'
-import IconButton from 'components/foundations/buttons/IconButton'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
-import type { Match } from 'react-router-dom'
 import type { TransitionState } from 'types/ApplicationTypes'
 
 type Props = {
   video: ?VideoRecord,
-  match: Match,
   isEmbed?: boolean,
-  isPlaying: boolean,
   onClick: (e: Object) => void,
   togglePlayPause: () => void,
-  transitionState: TransitionState,
+  transitionState: ?TransitionState,
   showShareModal?: boolean,
   toggleShareModal: (e: Object) => void,
-  playbackTimeSeconds: number,
-  bufferedTimeSeconds: number,
   onScrub: (percentage: number) => void
 }
 
@@ -32,9 +25,7 @@ type State = {
   openPopover: ?string,
   buttons: {
     profile: ?Class<React.Component<any>>
-  },
-  userIsScrubbing: boolean,
-  scrubbingPositionPercentage: number
+  }
 }
 
 const Wrapper = styled.div`
@@ -134,86 +125,6 @@ const PopoverWrapper = styled.div`
   cursor: default;
 `
 
-const CONTROLS_HEIGHT: string = '75px'
-const CONTROL_BUTTONS_HEIGHT: string = '50px'
-
-const Controls = styled.div`
-  flex: 0 0 ${CONTROLS_HEIGHT};
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
-  transform: translateY(
-    ${({ transitionState }) => {
-    switch (transitionState) {
-      case TRANSITION_STATE.ENTERING:
-      case TRANSITION_STATE.EXITED:
-        return CONTROLS_HEIGHT
-      case TRANSITION_STATE.EXITING:
-      case TRANSITION_STATE.ENTERED:
-      default:
-        return 0
-    }
-  }}
-  );
-  transition: all 250ms linear;
-`
-
-const PROGRESS_INDICATOR_DIMENSION: number = 20
-
-const ProgressIndicator = styled.div`
-  position: absolute;
-  width: ${PROGRESS_INDICATOR_DIMENSION}px;
-  height: ${PROGRESS_INDICATOR_DIMENSION}px;
-  border-radius: 50%;
-  background-color: ${({ theme }) =>
-    theme.colors.VideoPlayer.progress.scrubber};
-`
-
-const ProgressBuffer = styled.div`
-  flex-grow: 0;
-  flex-shrink: 0;
-  height: 100%;
-  background: ${({ theme }) => theme.colors.VideoPlayer.progress.base};
-`
-
-/* prettier-ignore */
-const ProgressBar = styled.div`
-  width: 100%;
-  height: 5px;
-  display: flex;
-  justify-content: flex-end;  
-  align-items: center;
-  background: linear-gradient(to right, ${({ theme }) => `${theme.colors.VideoPlayer.progress.barFrom}, ${theme.colors.VideoPlayer.progress.barTo}`});
-  ${/* sc-selector */ProgressIndicator} {
-    left: ${({ currentTime, totalDuration, scrubbingPositionPercentage }) => {
-    if (scrubbingPositionPercentage) {
-      return `calc(${scrubbingPositionPercentage}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
-    }
-    return `${!totalDuration ? 0 : Math.max(0, Math.min(100, (currentTime * 100 / totalDuration)))}%`
-  }};
-  }
-  ${/* sc-selector */ProgressBuffer} {
-    flex-basis: ${({ bufferTime, totalDuration }) => 100 - (!totalDuration ? 0 : Math.max(0, Math.min(100, bufferTime * 100 / totalDuration)))}%
-  }
-  `
-
-const ControlButtons = styled.div`
-  width: 100%;
-  flex: 1 1 ${CONTROL_BUTTONS_HEIGHT};
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  padding: 0 10px;
-  height: ${CONTROL_BUTTONS_HEIGHT};
-  `
-
-const ControlButtonWrapper = styled.div`
-  width: 25px;
-  height: 25px;
-  `
-
 class VideoOverlay extends Component<Props, State> {
   onProfileButtonClick: (e: Object) => void
   popoverWrapperRefCallback: (ref: HTMLElement) => void
@@ -227,9 +138,7 @@ class VideoOverlay extends Component<Props, State> {
       openPopover: null,
       buttons: {
         profile: null
-      },
-      userIsScrubbing: false,
-      scrubbingPositionPercentage: 0
+      }
     }
 
     this.loadEmbedPlugins()
@@ -284,44 +193,16 @@ class VideoOverlay extends Component<Props, State> {
       onClick,
       onScrub,
       toggleShareModal,
-      isPlaying,
       togglePlayPause,
-      transitionState,
-      playbackTimeSeconds,
-      bufferedTimeSeconds,
-      video
+      transitionState
     } = this.props
-    const { openPopover, scrubbingPositionPercentage } = this.state
+    const { openPopover } = this.state
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
       .profile
     return (
       <Wrapper
         innerRef={(ref: HTMLElement) => {
           this.wrapperRef = ref
-        }}
-        onMouseUp={() =>
-          this.setState((prevState: State) => {
-            if (prevState.userIsScrubbing) {
-              return {
-                userIsScrubbing: false,
-                scrubbingPositionPercentage: 0
-              }
-            }
-          })
-        }
-        onMouseMove={(e: Object) => {
-          e.persist()
-          this.setState((prevState: State) => {
-            if (prevState.userIsScrubbing && this.wrapperRef) {
-              const wrapperRect: Object = this.wrapperRef.getBoundingClientRect()
-              const newScrubbingPositionPercentage: number =
-                (e.clientX - wrapperRect.x) * 100 / wrapperRect.width
-              onScrub(newScrubbingPositionPercentage)
-              return {
-                scrubbingPositionPercentage: newScrubbingPositionPercentage
-              }
-            }
-          })
         }}
       >
         <ShareButton onClick={toggleShareModal}>
@@ -355,49 +236,16 @@ class VideoOverlay extends Component<Props, State> {
               innerRef={this.popoverWrapperRefCallback}
             />
           </VideoInfo>
-          <Controls transitionState={transitionState}>
-            <ProgressBar
-              currentTime={playbackTimeSeconds}
-              scrubbingPositionPercentage={scrubbingPositionPercentage}
-              bufferTime={bufferedTimeSeconds}
-              totalDuration={(video && video.get('duration')) || 0}
-            >
-              <ProgressBuffer
-                bufferTime={bufferedTimeSeconds}
-                totalDuration={bufferedTimeSeconds}
-              />
-              <ProgressIndicator
-                onMouseDown={() =>
-                  this.setState({
-                    userIsScrubbing: true
-                  })
-                }
-              />
-            </ProgressBar>
-            <ControlButtons>
-              <ControlButtonWrapper>
-                <IconButton
-                  icon={`/assets/img/${
-                    isPlaying ? 'pause-icon' : 'play-icon'
-                  }.svg`}
-                  onClick={(e: Object) => {
-                    e.stopPropagation()
-                    togglePlayPause()
-                  }}
-                />
-              </ControlButtonWrapper>
-            </ControlButtons>
-          </Controls>
+          <PlayerControlsContainer
+            onScrub={onScrub}
+            togglePlayPause={togglePlayPause}
+            transitionState={transitionState}
+            videoContainerRef={this.wrapperRef}
+          />
         </Overlay>
       </Wrapper>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  isPlaying: getIsPlaying(state)
-})
-
-const mapDispatchToProps = dispatch => ({})
-
-export default connect(mapStateToProps, mapDispatchToProps)(VideoOverlay)
+export default VideoOverlay

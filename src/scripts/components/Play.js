@@ -3,7 +3,6 @@
 import React, { Component } from 'react'
 import { Events } from 'clappr'
 import styled from 'styled-components'
-// import CreatePlayer from 'paratii-mediaplayer'
 import debounce from 'lodash.debounce'
 import Transition from 'react-transition-group/Transition'
 
@@ -400,8 +399,7 @@ class Play extends Component<Props, State> {
     }
   }
   render () {
-    const { currentTimeSeconds, currentBufferedTimeSeconds } = this.props
-
+    const { isEmbed, video } = this.props
     if (this.state.videoNotFound) {
       return <NotFound />
     } else {
@@ -421,12 +419,13 @@ class Play extends Component<Props, State> {
                   onMouseMove={this.onMouseMove}
                 >
                   <VideoOverlay
-                    {...this.props}
+                    onClick={this.onOverlayClick}
+                    video={video}
+                    isEmbed={isEmbed}
+                    toggleShareModal={this.toggleShareModal}
                     onScrub={this.scrubVideo}
                     transitionState={transitionState}
                     togglePlayPause={this.togglePlayPause}
-                    playbackTimeSeconds={currentTimeSeconds}
-                    bufferedTimeSeconds={currentBufferedTimeSeconds}
                   />
                 </OverlayWrapper>
               )}
