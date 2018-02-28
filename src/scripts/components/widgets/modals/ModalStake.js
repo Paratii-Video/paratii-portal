@@ -72,17 +72,22 @@ class ModalStake extends Component<Props, Object> {
             `video ${this.props.videoId.toString()} successfully applied to TCR Listing`
           )
         } else {
-          this.setState({
-            errorMessage:
-              'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
-          })
-          console.error(
+          const msg =
             'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
-          )
+          this.setState({
+            errorMessage: msg
+          })
+          console.log(msg)
         }
       })
       .catch(e => {
-        if (e) throw e
+        if (e) {
+          const msg = String(e)
+          this.setState({
+            errorMessage: msg
+          })
+          console.log(msg)
+        }
       })
   }
 

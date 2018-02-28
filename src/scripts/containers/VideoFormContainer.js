@@ -5,7 +5,6 @@ import VideoForm from 'components/VideoForm'
 import { saveVideoInfo } from 'actions/UploaderActions'
 import { getSelectedUploaderVideo } from 'selectors/UploaderSelectors'
 import { getUser } from 'selectors/index'
-// import { getFormattedPtiBalance } from 'selectors/UserSelectors'
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState) => ({
