@@ -90,7 +90,7 @@ describe('🎥 Player:', function () {
     })
     it('video not found', () => {
       browser.url(`http://localhost:8080/play/xxx`)
-      browser.waitForText('main h1', '404 - Oooooops, page not found')
+      browser.waitForText('main h1', 'Oooooops, page not found')
     })
 
     it.skip('shows the video title on the overlay', function () {

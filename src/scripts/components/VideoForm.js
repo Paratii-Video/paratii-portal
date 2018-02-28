@@ -7,7 +7,7 @@ import UserRecord from 'records/UserRecords'
 import Card from './structures/Card'
 import Button from './foundations/Button'
 import TextField from './widgets/forms/TextField'
-import Textarea from './widgets/forms/TextareaField'
+// import Textarea from './widgets/forms/TextareaField'
 import RadioCheck, {
   RadioWrapper,
   RadioTitle
@@ -229,10 +229,7 @@ class VideoForm extends Component<Props, Object> {
     const video: VideoRecord = this.props.selectedVideo
     if (!this.state.id) {
       return (
-        <Card>
-          No video selected!
-          {this.props.selectedVideo.id}
-        </Card>
+        <Card title="No video selected!">{this.props.selectedVideo.id}</Card>
       )
     }
 
@@ -255,6 +252,7 @@ class VideoForm extends Component<Props, Object> {
     const thumbImages =
       video &&
       video.getIn(['transcodingStatus', 'data', 'result', 'screenshots'])
+    // video.transcodingStatus.data.result.screenshots
 
     let thumbImage = ''
     if (thumbImages) {
@@ -269,23 +267,28 @@ class VideoForm extends Component<Props, Object> {
     const transcodingStatus = video.transcodingStatus.data.progress
     const progress = Math.ceil((uploadProgress + transcodingStatus) / 2)
 
-    const isPublished = video.published === true
+    const isPublished = video.published === true || video.published === 'true'
     const isPublishable =
       video.transcodingStatus.name === 'success' && isPublished === false
 
-    const publishButton = (
-      <ButtonWrapper>
-        <Button
-          id="video-submit"
-          type="submit"
-          onClick={this.onSubmit}
-          disabled={!isPublishable}
-          purple
-        >
-          Publish
-        </Button>
-      </ButtonWrapper>
-    )
+    let publishButton
+    if (isPublished) {
+      publishButton = ''
+    } else {
+      publishButton = (
+        <ButtonWrapper>
+          <Button
+            id="video-submit"
+            type="submit"
+            onClick={this.onSubmit}
+            disabled={!isPublishable}
+            purple
+          >
+            Publish
+          </Button>
+        </ButtonWrapper>
+      )
+    }
 
     const saveButton = (
       <ButtonWrapper>
@@ -295,7 +298,7 @@ class VideoForm extends Component<Props, Object> {
           onClick={this.handleSubmit}
           purple
         >
-          Save
+          Save Changes
         </Button>
       </ButtonWrapper>
     )
@@ -304,9 +307,7 @@ class VideoForm extends Component<Props, Object> {
       <Card full>
         <VideoFormHeader>
           <VideoFormTitle id="video-title">{title}</VideoFormTitle>
-          <VideoFormSubTitle purple>
-            {video.title ? video.filename : ''} {fileSize}
-          </VideoFormSubTitle>
+          <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>
         </VideoFormHeader>
         <VideoFormWrapper>
           <Form onSubmit={this.onSubmit}>
@@ -324,7 +325,7 @@ class VideoForm extends Component<Props, Object> {
               onChange={e => this.handleInputChange('title', e)}
               margin="0 0 30px"
             />
-            <Textarea
+            <TextField
               id="input-video-description"
               value={this.state.description}
               onChange={e => this.handleInputChange('description', e)}

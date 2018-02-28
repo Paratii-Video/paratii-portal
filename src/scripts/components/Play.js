@@ -40,15 +40,34 @@ type State = {
 }
 
 const Wrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 0 0 100%;
-  overflow: hidden;
+  margin: ${props => (props.isEmbed ? null : '0 auto')};
+  position: relative;
+  height: ${props => (props.isEmbed ? '100%' : '720px')};
+  width: ${props => (props.isEmbed ? '100%' : '1280px')};
+
+  @media (max-width: 1440px) {
+    height: ${props => (props.isEmbed ? null : '576px')};
+    width: ${props => (props.isEmbed ? null : '1024px')};
+  }
+
+  @media (max-width: 1200px) {
+    height: ${props => (props.isEmbed ? null : '432px')};
+    width: ${props => (props.isEmbed ? null : '768px')};
+  }
+
+  @media (max-width: 930px) {
+    height: 0;
+    margin: 0;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    width: 100%;
+  }
 `
 
-const Player = styled.div`
+const PlayerWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -56,11 +75,11 @@ const Player = styled.div`
   align-items: center;
 `
 
-const PlayerWrapper = styled.div`
-  flex: 0 0 100%;
+const Player = styled.div`
   width: 100%;
   height: 100%;
-  position: relative;
+  position: absolute;
+  z-index: 5;
 `
 
 const OverlayWrapper = styled.div`
@@ -68,8 +87,8 @@ const OverlayWrapper = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  z-index: 5;
+  height: calc(100% - 50px);
+  z-index: 10;
   cursor: pointer;
 `
 
@@ -87,7 +106,7 @@ const ShareOverlay = styled.div`
   transition: opacity ${props => props.theme.animation.time.repaint};
   top: 0;
   width: 100%;
-  z-index: 10;
+  z-index: 15;
 `
 
 const CloseButton = Button.extend`
@@ -115,6 +134,10 @@ const Anchor = Button.withComponent('a')
 
 const AnchorLink = Anchor.extend`
   font-size: ${props => props.theme.fonts.video.share.link};
+  padding: 0 10%;
+  text-align: center;
+  width: 100%;
+  word-wrap: break-word;
 `
 
 const ShareButtons = styled.div`
@@ -425,6 +448,7 @@ class Play extends Component<Props, State> {
                     video={video}
                     isEmbed={isEmbed}
                     toggleShareModal={this.toggleShareModal}
+                    showShareModal={this.state.showShareModal}
                     onScrub={this.scrubVideo}
                     transitionState={transitionState}
                     togglePlayPause={this.togglePlayPause}
