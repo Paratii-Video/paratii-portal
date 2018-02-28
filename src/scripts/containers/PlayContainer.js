@@ -5,11 +5,11 @@ import { bindActionCreators } from 'redux'
 
 import Play from 'components/Play'
 import {
-  togglePlayPause,
   attemptPlay,
   playerVideoSelect,
   updateVideoTime,
-  updateVideoBufferedTime
+  updateVideoBufferedTime,
+  togglePlayPause
 } from 'actions/PlayerActions'
 import { fetchVideo } from 'actions/VideoActions'
 import {
@@ -36,9 +36,9 @@ const mapStateToProps = (
 const mapDispatchToProps = dispatch => ({
   fetchVideo: bindActionCreators(fetchVideo, dispatch),
   setSelectedVideo: bindActionCreators(playerVideoSelect, dispatch),
-  togglePlayPause: bindActionCreators(togglePlayPause, dispatch),
   attemptPlay: bindActionCreators(attemptPlay, dispatch),
   updateVideoTime: bindActionCreators(updateVideoTime, dispatch),
+  togglePlayPause: bindActionCreators(togglePlayPause, dispatch),
   updateVideoBufferedTime: bindActionCreators(updateVideoBufferedTime, dispatch)
 })
 

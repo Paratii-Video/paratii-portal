@@ -14,9 +14,9 @@ type Props = {
   video: ?VideoRecord,
   isEmbed?: boolean,
   onClick: (e: Object) => void,
-  togglePlayPause: () => void,
   transitionState: ?TransitionState,
   showShareModal?: boolean,
+  togglePlayPause: () => void,
   toggleShareModal: (e: Object) => void,
   onScrub: (percentage: number) => void
 }
@@ -192,8 +192,8 @@ class VideoOverlay extends Component<Props, State> {
     const {
       onClick,
       onScrub,
-      toggleShareModal,
       togglePlayPause,
+      toggleShareModal,
       transitionState
     } = this.props
     const { openPopover } = this.state

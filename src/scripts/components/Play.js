@@ -137,7 +137,7 @@ const ShareLinkIcon = styled.img`
 const HIDE_CONTROLS_THRESHOLD: number = 2000
 
 class Play extends Component<Props, State> {
-  player: ClapprPlayer
+  player: ?ClapprPlayer
   onOverlayClick: () => void
   toggleShareModal: () => void
   lastMouseMove: number
@@ -165,14 +165,15 @@ class Play extends Component<Props, State> {
 
   bindClapprEvents (): void {
     const { attemptPlay, togglePlayPause, video } = this.props
-    if (this.player) {
-      this.player.on(Events.PLAYER_PLAY, () => {
+    const { player } = this
+    if (player) {
+      player.on(Events.PLAYER_PLAY, () => {
         togglePlayPause(true)
       })
-      this.player.on(Events.PLAYER_PAUSE, () => {
+      player.on(Events.PLAYER_PAUSE, () => {
         togglePlayPause(false)
       })
-      const playback = this.player.core.getCurrentPlayback()
+      const playback = player.core.getCurrentPlayback()
       if (playback) {
         playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
         playback.on(
@@ -197,8 +198,9 @@ class Play extends Component<Props, State> {
     }
   }
 
-  onOverlayClick (): void {
+  onOverlayClick (e: Object): void {
     if (this.player) {
+      e.stopPropagation()
       this.togglePlayPause()
     }
   }
@@ -290,7 +292,6 @@ class Play extends Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    const { isPlaying } = this.props
     if (nextProps.video) {
       // ?? why the next lines?
       const fetchStatus = nextProps.video.getIn(['fetchStatus', 'name'])
@@ -302,15 +303,6 @@ class Play extends Component<Props, State> {
         // If video not exist we set in the component state
         this.setState({ videoNotFound: true })
       }
-    }
-
-    if (
-      this.player &&
-      nextProps.isPlaying &&
-      nextProps.isPlaying !== isPlaying &&
-      nextProps.isPlaying !== this.player.isPlaying()
-    ) {
-      this.player.play()
     }
   }
 
@@ -330,18 +322,17 @@ class Play extends Component<Props, State> {
         ipfsHash: ipfsHash,
         autoPlay: true
       })
-      this.player.play()
       this.bindClapprEvents()
-      this.player.play()
     })
   }
 
   togglePlayPause = (): void => {
-    if (this.player) {
-      if (this.player.isPlaying()) {
-        this.player.pause()
+    const { player } = this
+    if (player) {
+      if (player.isPlaying()) {
+        player.pause()
       } else {
-        this.player.play()
+        player.play()
       }
     }
   }
