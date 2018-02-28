@@ -5,8 +5,15 @@ jobs:
       - image: leeaandrob/paratii-portal:0.0.5
     working_directory: ~/repo
     steps:
-      - checkout
+        - checkout
+        - restore_cache:
+            keys:
+                - v1-dependencies-{{ checksum "package-lock.json" }}
       - run: npm install
+      - save_cache:
+          paths:
+              - node_modules
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
       - run: yarn run quality
       - run: yarn run unit-test
       - run:
