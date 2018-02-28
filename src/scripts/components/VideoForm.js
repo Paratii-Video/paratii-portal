@@ -229,10 +229,7 @@ class VideoForm extends Component<Props, Object> {
     const video: VideoRecord = this.props.selectedVideo
     if (!this.state.id) {
       return (
-        <Card>
-          No video selected!
-          {this.props.selectedVideo.id}
-        </Card>
+        <Card title="No video selected!">{this.props.selectedVideo.id}</Card>
       )
     }
 
