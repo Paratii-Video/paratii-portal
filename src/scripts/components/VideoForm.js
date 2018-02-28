@@ -270,23 +270,28 @@ class VideoForm extends Component<Props, Object> {
     const transcodingStatus = video.transcodingStatus.data.progress
     const progress = Math.ceil((uploadProgress + transcodingStatus) / 2)
 
-    const isPublished = video.published === true
+    const isPublished = video.published === true || video.published === 'true'
     const isPublishable =
       video.transcodingStatus.name === 'success' && isPublished === false
 
-    const publishButton = (
-      <ButtonWrapper>
-        <Button
-          id="video-submit"
-          type="submit"
-          onClick={this.onSubmit}
-          disabled={!isPublishable}
-          purple
-        >
-          Publish
-        </Button>
-      </ButtonWrapper>
-    )
+    let publishButton
+    if (isPublished) {
+      publishButton = ''
+    } else {
+      publishButton = (
+        <ButtonWrapper>
+          <Button
+            id="video-submit"
+            type="submit"
+            onClick={this.onSubmit}
+            disabled={!isPublishable}
+            purple
+          >
+            Publish
+          </Button>
+        </ButtonWrapper>
+      )
+    }
 
     const saveButton = (
       <ButtonWrapper>
@@ -296,7 +301,7 @@ class VideoForm extends Component<Props, Object> {
           onClick={this.handleSubmit}
           purple
         >
-          Save
+          Save Changes
         </Button>
       </ButtonWrapper>
     )
