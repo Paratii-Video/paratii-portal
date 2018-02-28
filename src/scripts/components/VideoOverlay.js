@@ -35,6 +35,7 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `
 
 const overlayPadding: string = '20px 25px 0'
@@ -132,7 +133,6 @@ class VideoOverlay extends Component<Props, State> {
   onProfileButtonClick: (e: Object) => void
   popoverWrapperRefCallback: (ref: HTMLElement) => void
   popoverWrapperRef: ?HTMLElement
-  wrapperRef: ?HTMLElement
 
   constructor (props: Props) {
     super(props)
@@ -203,11 +203,7 @@ class VideoOverlay extends Component<Props, State> {
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
       .profile
     return (
-      <Wrapper
-        innerRef={(ref: HTMLElement) => {
-          this.wrapperRef = ref
-        }}
-      >
+      <Wrapper>
         <ShareButton onClick={toggleShareModal}>
           {!this.props.showShareModal && (
             <SVGButton>
@@ -244,7 +240,6 @@ class VideoOverlay extends Component<Props, State> {
           onScrub={onScrub}
           togglePlayPause={togglePlayPause}
           transitionState={transitionState}
-          videoContainerRef={this.wrapperRef}
         />
       </Wrapper>
     )

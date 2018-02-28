@@ -10,7 +10,6 @@ import type { TransitionState } from 'types/ApplicationTypes'
 
 type Props = {
   video: ?VideoRecord,
-  videoContainerRef: ?HTMLElement,
   isPlaying: boolean,
   togglePlayPause: () => void,
   transitionState: TransitionState,
@@ -105,6 +104,8 @@ const ControlButtonWrapper = styled.div`
   `
 
 class PlayerControls extends Component<Props, State> {
+  progressBarRef: ?HTMLElement
+
   constructor (props: Props) {
     super(props)
 
@@ -112,12 +113,8 @@ class PlayerControls extends Component<Props, State> {
       userIsScrubbing: false,
       scrubbingPositionPercentage: 0
     }
-  }
 
-  componentWillReceiveProps (nextProps: Props): void {
-    if (nextProps.videoContainerRef && !this.props.videoContainerRef) {
-      this.addMouseEventListeners(nextProps.videoContainerRef)
-    }
+    this.addMouseEventListeners()
   }
 
   componentWillUnmount (): void {
@@ -137,10 +134,11 @@ class PlayerControls extends Component<Props, State> {
   }
 
   onMouseMove = (e: Object): void => {
-    const { onScrub, videoContainerRef } = this.props
+    const { onScrub } = this.props
+    const { progressBarRef } = this
     this.setState((prevState: State) => {
-      if (prevState.userIsScrubbing && videoContainerRef) {
-        const wrapperRect: Object = videoContainerRef.getBoundingClientRect()
+      if (prevState.userIsScrubbing && progressBarRef) {
+        const wrapperRect: Object = progressBarRef.getBoundingClientRect()
         const newScrubbingPositionPercentage: number =
           (e.clientX - wrapperRect.x) * 100 / wrapperRect.width
         onScrub(newScrubbingPositionPercentage)
@@ -151,19 +149,14 @@ class PlayerControls extends Component<Props, State> {
     })
   }
 
-  addMouseEventListeners (videoContainerRef: HTMLElement): void {
-    if (videoContainerRef) {
-      videoContainerRef.addEventListener('mouseup', this.onMouseUp)
-      videoContainerRef.addEventListener('mousemove', this.onMouseMove)
-    }
+  addMouseEventListeners (): void {
+    window.addEventListener('mouseup', this.onMouseUp)
+    window.addEventListener('mousemove', this.onMouseMove)
   }
 
   removeMouseEventListeners (): void {
-    const { videoContainerRef } = this.props
-    if (videoContainerRef) {
-      videoContainerRef.removeEventListener('mouseup', this.onMouseUp)
-      videoContainerRef.removeEventListener('mousemove', this.onMouseMove)
-    }
+    window.removeEventListener('mouseup', this.onMouseUp)
+    window.removeEventListener('mousemove', this.onMouseMove)
   }
 
   getVideoTitle (): string {
@@ -186,10 +179,12 @@ class PlayerControls extends Component<Props, State> {
     return (
       <Controls transitionState={transitionState}>
         <ProgressBar
+          innerRef={(ref: HTMLElement) => {
+            this.progressBarRef = ref
+          }}
           onClick={(e: Object) => {
-            const { videoContainerRef } = this.props
-            if (videoContainerRef) {
-              const wrapperRect: Object = videoContainerRef.getBoundingClientRect()
+            if (this.progressBarRef) {
+              const wrapperRect: Object = this.progressBarRef.getBoundingClientRect()
               onScrub((e.clientX - wrapperRect.x) * 100 / wrapperRect.width)
             }
           }}

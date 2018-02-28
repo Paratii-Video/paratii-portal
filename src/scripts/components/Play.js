@@ -25,7 +25,7 @@ type Props = {
   updateVideoBufferedTime: ({ time: number }) => void,
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
-  video: VideoRecord,
+  video?: VideoRecord,
   isEmbed?: boolean,
   currentTimeSeconds: number,
   currentBufferedTimeSeconds: number
@@ -56,11 +56,6 @@ const Wrapper = styled.div`
   }
 
   @media (max-width: 930px) {
-    height: 0;
-    margin: 0;
-    padding-bottom: 56.25%;
-    padding-top: 30px;
-    width: 100%;
   }
 `
 
@@ -70,15 +65,14 @@ const PlayerWrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
   display: flex;
   align-items: center;
+  overflow: hidden;
 `
 
 const Player = styled.div`
   width: 100%;
   height: 100%;
-  position: absolute;
   z-index: 5;
 `
 
@@ -208,7 +202,7 @@ class Play extends Component<Props, State> {
         togglePlayPause(false)
       })
       const playback = player.core.getCurrentPlayback()
-      if (playback) {
+      if (playback && video) {
         playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
         playback.on(
           Events.PLAYBACK_TIMEUPDATE,
@@ -376,7 +370,6 @@ class Play extends Component<Props, State> {
 
   onPlayerClick = (e: Object): void => {
     clearTimeout(this.playerHideTimeout)
-    // this.togglePlayPause()
     this.showControls()
   }
 
@@ -485,9 +478,7 @@ class Play extends Component<Props, State> {
                   </ShareLink>
                 </ShareButtons>
               </ShareOverlay>
-            ) : (
-              ''
-            )}
+            ) : null}
           </PlayerWrapper>
         </Wrapper>
       )
