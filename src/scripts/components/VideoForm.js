@@ -7,7 +7,7 @@ import UserRecord from 'records/UserRecords'
 import Card from './structures/Card'
 import Button from './foundations/Button'
 import TextField from './widgets/forms/TextField'
-import Textarea from './widgets/forms/TextareaField'
+// import Textarea from './widgets/forms/TextareaField'
 import RadioCheck, {
   RadioWrapper,
   RadioTitle
@@ -325,7 +325,7 @@ class VideoForm extends Component<Props, Object> {
               onChange={e => this.handleInputChange('title', e)}
               margin="0 0 30px"
             />
-            <Textarea
+            <TextField
               id="input-video-description"
               value={this.state.description}
               onChange={e => this.handleInputChange('description', e)}
