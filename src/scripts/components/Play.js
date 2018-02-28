@@ -237,6 +237,14 @@ class Play extends Component<Props, State> {
     }, HIDE_CONTROLS_THRESHOLD)
   }
 
+  scrubVideo = (percentage: number): void => {
+    const { video } = this.props
+    const videoDuration: number = video.get('duration')
+    if (this.player && videoDuration) {
+      this.player.seek(videoDuration * percentage / 100)
+    }
+  }
+
   onMouseMove = debounce(
     (): void => {
       this.lastMouseMove = Date.now()
@@ -414,6 +422,7 @@ class Play extends Component<Props, State> {
                 >
                   <VideoOverlay
                     {...this.props}
+                    onScrub={this.scrubVideo}
                     transitionState={transitionState}
                     togglePlayPause={this.togglePlayPause}
                     playbackTimeSeconds={currentTimeSeconds}

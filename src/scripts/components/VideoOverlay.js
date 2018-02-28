@@ -24,14 +24,17 @@ type Props = {
   showShareModal?: boolean,
   toggleShareModal: (e: Object) => void,
   playbackTimeSeconds: number,
-  bufferedTimeSeconds: number
+  bufferedTimeSeconds: number,
+  onScrub: (percentage: number) => void
 }
 
 type State = {
   openPopover: ?string,
   buttons: {
     profile: ?Class<React.Component<any>>
-  }
+  },
+  userIsScrubbing: boolean,
+  scrubbingPositionPercentage: number
 }
 
 const Wrapper = styled.div`
@@ -157,10 +160,12 @@ const Controls = styled.div`
   transition: all 250ms linear;
 `
 
+const PROGRESS_INDICATOR_DIMENSION: number = 20
+
 const ProgressIndicator = styled.div`
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: ${PROGRESS_INDICATOR_DIMENSION}px;
+  height: ${PROGRESS_INDICATOR_DIMENSION}px;
   border-radius: 50%;
   background-color: ${({ theme }) =>
     theme.colors.VideoPlayer.progress.scrubber};
@@ -182,12 +187,17 @@ const ProgressBar = styled.div`
   align-items: center;
   background: linear-gradient(to right, ${({ theme }) => `${theme.colors.VideoPlayer.progress.barFrom}, ${theme.colors.VideoPlayer.progress.barTo}`});
   ${/* sc-selector */ProgressIndicator} {
-    left: ${({ currentTime, totalDuration }) => (!totalDuration ? 0 : Math.max(0, Math.min(100, currentTime * 100 / totalDuration)))}%;
+    left: ${({ currentTime, totalDuration, scrubbingPositionPercentage }) => {
+    if (scrubbingPositionPercentage) {
+      return `calc(${scrubbingPositionPercentage}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
+    }
+    return `${!totalDuration ? 0 : Math.max(0, Math.min(100, (currentTime * 100 / totalDuration)))}%`
+  }};
   }
   ${/* sc-selector */ProgressBuffer} {
     flex-basis: ${({ bufferTime, totalDuration }) => 100 - (!totalDuration ? 0 : Math.max(0, Math.min(100, bufferTime * 100 / totalDuration)))}%
   }
-`
+  `
 
 const ControlButtons = styled.div`
   width: 100%;
@@ -197,17 +207,18 @@ const ControlButtons = styled.div`
   flex-direction: row;
   padding: 0 10px;
   height: ${CONTROL_BUTTONS_HEIGHT};
-`
+  `
 
 const ControlButtonWrapper = styled.div`
   width: 25px;
   height: 25px;
-`
+  `
 
 class VideoOverlay extends Component<Props, State> {
   onProfileButtonClick: (e: Object) => void
   popoverWrapperRefCallback: (ref: HTMLElement) => void
   popoverWrapperRef: ?HTMLElement
+  wrapperRef: ?HTMLElement
 
   constructor (props: Props) {
     super(props)
@@ -216,7 +227,9 @@ class VideoOverlay extends Component<Props, State> {
       openPopover: null,
       buttons: {
         profile: null
-      }
+      },
+      userIsScrubbing: false,
+      scrubbingPositionPercentage: 0
     }
 
     this.loadEmbedPlugins()
@@ -269,6 +282,7 @@ class VideoOverlay extends Component<Props, State> {
   render () {
     const {
       onClick,
+      onScrub,
       toggleShareModal,
       isPlaying,
       togglePlayPause,
@@ -277,11 +291,39 @@ class VideoOverlay extends Component<Props, State> {
       bufferedTimeSeconds,
       video
     } = this.props
-    const { openPopover } = this.state
+    const { openPopover, scrubbingPositionPercentage } = this.state
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
       .profile
     return (
-      <Wrapper>
+      <Wrapper
+        innerRef={(ref: HTMLElement) => {
+          this.wrapperRef = ref
+        }}
+        onMouseUp={() =>
+          this.setState((prevState: State) => {
+            if (prevState.userIsScrubbing) {
+              return {
+                userIsScrubbing: false,
+                scrubbingPositionPercentage: 0
+              }
+            }
+          })
+        }
+        onMouseMove={(e: Object) => {
+          e.persist()
+          this.setState((prevState: State) => {
+            if (prevState.userIsScrubbing && this.wrapperRef) {
+              const wrapperRect: Object = this.wrapperRef.getBoundingClientRect()
+              const newScrubbingPositionPercentage: number =
+                (e.clientX - wrapperRect.x) * 100 / wrapperRect.width
+              onScrub(newScrubbingPositionPercentage)
+              return {
+                scrubbingPositionPercentage: newScrubbingPositionPercentage
+              }
+            }
+          })
+        }}
+      >
         <ShareButton onClick={toggleShareModal}>
           {!this.props.showShareModal && (
             <SVGButton>
@@ -316,6 +358,7 @@ class VideoOverlay extends Component<Props, State> {
           <Controls transitionState={transitionState}>
             <ProgressBar
               currentTime={playbackTimeSeconds}
+              scrubbingPositionPercentage={scrubbingPositionPercentage}
               bufferTime={bufferedTimeSeconds}
               totalDuration={(video && video.get('duration')) || 0}
             >
@@ -323,7 +366,13 @@ class VideoOverlay extends Component<Props, State> {
                 bufferTime={bufferedTimeSeconds}
                 totalDuration={bufferedTimeSeconds}
               />
-              <ProgressIndicator />
+              <ProgressIndicator
+                onMouseDown={() =>
+                  this.setState({
+                    userIsScrubbing: true
+                  })
+                }
+              />
             </ProgressBar>
             <ControlButtons>
               <ControlButtonWrapper>
