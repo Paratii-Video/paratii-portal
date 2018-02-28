@@ -160,7 +160,6 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
-    console.log(payload)
     return state
       .setIn(
         [payload.id, 'storageStatus'],
@@ -179,6 +178,7 @@ const reducer = {
       .setIn([payload.id, 'title'], payload.title)
       .setIn([payload.id, 'description'], payload.description)
       .setIn([payload.id, 'author'], payload.author)
+      .setIn([payload.id, 'published'], payload.published)
   },
   [TRANSCODING_REQUESTED]: (
     state: VideoRecordMap,
