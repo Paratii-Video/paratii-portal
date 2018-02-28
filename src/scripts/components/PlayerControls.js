@@ -39,7 +39,7 @@ const Controls = styled.div`
     switch (transitionState) {
       case TRANSITION_STATE.ENTERING:
       case TRANSITION_STATE.EXITED:
-        return CONTROLS_HEIGHT
+        return `calc(${CONTROLS_HEIGHT} - ${PROGRESS_INDICATOR_DIMENSION}px)`
       case TRANSITION_STATE.EXITING:
       case TRANSITION_STATE.ENTERED:
       default:
@@ -48,7 +48,7 @@ const Controls = styled.div`
   }}
   );
   transition: all 250ms linear;
-`
+  `
 
 const PROGRESS_INDICATOR_DIMENSION: number = 20
 
@@ -59,14 +59,14 @@ const ProgressIndicator = styled.div`
   border-radius: 50%;
   background-color: ${({ theme }) =>
     theme.colors.VideoPlayer.progress.scrubber};
-`
+  `
 
 const ProgressBuffer = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
   height: 100%;
   background: ${({ theme }) => theme.colors.VideoPlayer.progress.base};
-`
+  `
 
 /* prettier-ignore */
 const ProgressBar = styled.div`
