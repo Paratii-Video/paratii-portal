@@ -18,8 +18,8 @@ import {
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import { videoFetchSuccess } from 'actions/VideoActions'
-
 import type { Dispatch } from 'redux'
+import type { RootState } from 'types/ApplicationTypes'
 
 export const selectUploaderVideo = createAction(UPLOAD_VIDEO_SELECT)
 const uploadRequested = createAction(UPLOAD_REQUESTED)
@@ -33,8 +33,23 @@ const transcodingProgress = createAction(TRANSCODING_PROGRESS)
 const transcodingSuccess = createAction(TRANSCODING_SUCCESS)
 const transcodingFailure = createAction(TRANSCODING_FAILURE)
 
+function upsertVideo (videoId, dataToUpdate, state) {
+  const v = state.videos.get(videoId)
+  const updatedVideo = Object.assign({}, v.toJS(), dataToUpdate)
+  delete updatedVideo.fetchStatus
+  if (!updatedVideo.filename) {
+    updatedVideo.filename = ''
+  }
+  console.log('SAVING:')
+  console.log(updatedVideo)
+  return paratii.core.vids.upsert(updatedVideo)
+}
+
 // upload the video to the local ipfs node
-export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
+export const upload = (file: Object) => (
+  dispatch: Dispatch<*>,
+  getState: () => RootState
+) => {
   const newVideoId = paratii.eth.vids.makeId()
   dispatch(
     videoFetchSuccess(
@@ -57,10 +72,18 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
   })
   uploader.on('done', function (files) {
     console.log('[UPLOAD done]', files)
-    paratii.core.vids.upsert({
-      id: newVideoId,
-      owner: paratii.config.account.address
-    })
+    const file = files[0]
+
+    upsertVideo(
+      newVideoId,
+      {
+        owner: paratii.config.account.address,
+        ipfsHashOrig: file.hash,
+        filename: file.path,
+        filesize: file.size
+      },
+      getState()
+    )
   })
   uploader.on('fileReady', function (file) {
     console.log(file)
@@ -72,12 +95,13 @@ export const upload = (file: Object) => (dispatch: Dispatch<*>) => {
       id: newVideoId,
       hash: file.hash,
       size: file.size
-    })(dispatch)
+    })(dispatch, getState)
   })
 }
 
 export const transcodeVideo = (videoInfo: Object) => async (
-  dispatch: Dispatch<*>
+  dispatch: Dispatch<*>,
+  getState: () => RootState
 ) => {
   console.log(
     `Requesting to transcode video ${videoInfo.id} with hash ${videoInfo.hash}`
@@ -117,41 +141,49 @@ export const transcodeVideo = (videoInfo: Object) => async (
     console.log('TRANSCODER DOWNSAMPLE READY', hash, size)
   })
 
-  transcoder.once('transcoding:done', function (hash, sizes) {
+  transcoder.once('transcoding:done', function (hash, result) {
     // if transcoding is done, apparently we have uploaded the file first
     dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
     dispatch(
       transcodingSuccess({
         id: videoInfo.id,
         hash: hash,
-        sizes: sizes,
-        duration: sizes.duration
+        result: result,
+        duration: result.duration
       })
     )
-    console.log('TRANSCODER DONE', hash, sizes, videoInfo.id)
-    paratii.core.vids.upsert({
-      id: videoInfo.id,
-      ipfsHash: sizes.master.hash,
-      owner: paratii.config.account.address,
-      duration: sizes.duration
-    })
+    console.log('TRANSCODER DONE', hash, result, videoInfo.id)
+    upsertVideo(
+      videoInfo.id,
+      {
+        id: videoInfo.id,
+        ipfsHash: result.master.hash,
+        owner: paratii.config.account.address,
+        duration: result.duration
+      },
+      getState()
+    )
   })
 }
 
 export const saveVideoInfo = (videoInfo: Object) => async (
-  dispatch: Dispatch<*>
+  dispatch: Dispatch<*>,
+  getState: () => RootState
 ) => {
   // the owner is the user that is logged in
+  console.log('SAVING VIDEO DATA')
+  let videoId
   videoInfo.owner = paratii.config.account.address
-  if (!videoInfo.id) {
-    const newVideoId = paratii.eth.vids.makeId()
-    videoInfo.id = newVideoId
+  if (videoInfo.id) {
+    videoId = videoInfo.id
+  } else {
+    videoId = paratii.eth.vids.makeId()
+    videoInfo.id = videoId
     dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
     // dispatch(selectVideo(videoInfo.id))
   }
   dispatch(videoDataStart(videoInfo))
-  paratii.core.vids
-    .upsert(videoInfo)
+  upsertVideo(videoId, videoInfo, getState())
     .then(videoInfo => {
       // console.log('SAVED')
       dispatch(videoDataSaved(videoInfo))

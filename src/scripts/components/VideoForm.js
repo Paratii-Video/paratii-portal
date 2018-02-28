@@ -1,5 +1,3 @@
-/* @flow */
-
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -17,7 +15,7 @@ import RadioCheck, {
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
 import { prettyBytes } from 'utils/AppUtils'
-import ModalStake from 'components/widgets/modals/ModalStake'
+import ModalStake from 'containers/ModalStakeContainer'
 
 const VideoFormHeader = styled.div`
   border-bottom: 1px solid
@@ -28,6 +26,7 @@ const VideoFormHeader = styled.div`
 
 const VideoFormWrapper = styled.div`
   display: flex;
+  position: relative;
   width: 100%;
 
   @media (max-width: 1150px) {
@@ -70,15 +69,20 @@ const VideoFormInfoBox = styled.div`
     flex: 1 1 100%;
   }
 `
+const ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin: 50px 0 0;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: baseline;
+`
 
 const ButtonWrapper = styled.div`
-  bottom: 0;
-  display: flex;
-  justify-content: flex-end;
-  left: 0;
-  margin: 50px 0 0;
-  position: absolute;
-  width: 100%;
+  margin-left: 20px;
+  z-index: 5;
 `
 
 const VideoMedia = styled.div`
@@ -87,9 +91,14 @@ const VideoMedia = styled.div`
   width: 100%;
 `
 
-const VideoImage = styled.img`
+const VideoImage = styled.div`
   display: block;
   width: 100%;
+  padding-top: 60%;
+  background-color: black;
+  background-image: url(${({ src }) => src});
+  background-size: cover;
+  background-position: center center;
 `
 
 const VideoMediaTime = styled.div`
@@ -118,6 +127,13 @@ const VideoMediaTimeText = styled.p`
   position: relative;
   z-index: 1;
 `
+const PublishLabel = styled.div`
+  color: ${props => props.theme.colors.button.gray};
+  font-size: ${props => props.theme.fonts.text.tiny};
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+`
 
 type Props = {
   selectedVideo: VideoRecord,
@@ -131,7 +147,9 @@ type Props = {
 }
 
 class VideoForm extends Component<Props, Object> {
-  handleSubmit: (e: Object) => void
+  handleSubmit: () => void
+  handlePublish: () => void
+  onSubmit: (e: Object) => void
   handleInputChange: (input: string, e: Object) => void
 
   constructor (props: Props) {
@@ -147,6 +165,8 @@ class VideoForm extends Component<Props, Object> {
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handlePublish = this.handlePublish.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   componentWillReceiveProps (nextProps: Props): void {
@@ -156,6 +176,7 @@ class VideoForm extends Component<Props, Object> {
         id: selectedVideo.id,
         title: selectedVideo.title,
         description: selectedVideo.description,
+        // FIXME: we are not editing duration, so we do not need to store it in the state
         duration: selectedVideo.duration,
         author: selectedVideo.author
       })
@@ -168,8 +189,21 @@ class VideoForm extends Component<Props, Object> {
     })
   }
 
-  handleSubmit (e: Object) {
-    e.preventDefault()
+  handlePublish () {
+    // this function is called by VideoModal
+    this.handleSubmit()
+    const videoToSave = {
+      id: this.state.id,
+      title: this.state.title,
+      description: this.state.description,
+      author: this.state.author,
+      published: true
+    }
+    this.props.saveVideoInfo(videoToSave)
+    this.props.closeModal()
+  }
+
+  handleSubmit () {
     const videoToSave = {
       id: this.state.id,
       title: this.state.title,
@@ -177,6 +211,18 @@ class VideoForm extends Component<Props, Object> {
       author: this.state.author
     }
     this.props.saveVideoInfo(videoToSave)
+  }
+
+  onSubmit (e: Object) {
+    e.preventDefault()
+
+    this.props.showModal(
+      <ModalStake
+        videoId={this.state.id}
+        onSuccess={this.handlePublish}
+        user={this.props.user}
+      />
+    )
   }
 
   render () {
@@ -202,14 +248,13 @@ class VideoForm extends Component<Props, Object> {
     }
 
     const fileSize = prettyBytes((video && video.get('filesize')) || 0)
-    // console.log((video && video.get('filesize')) || 0)
     const ipfsHash = (video && video.get('ipfsHash')) || ''
     const urlToPlay = `/play/${video.id}`
     const urlForSharing = `https://portal.paratii.video/play/${video.id}`
 
     const thumbImages =
       video &&
-      video.getIn(['transcodingStatus', 'data', 'sizes', 'screenshots'])
+      video.getIn(['transcodingStatus', 'data', 'result', 'screenshots'])
 
     let thumbImage = ''
     if (thumbImages) {
@@ -224,6 +269,37 @@ class VideoForm extends Component<Props, Object> {
     const transcodingStatus = video.transcodingStatus.data.progress
     const progress = Math.ceil((uploadProgress + transcodingStatus) / 2)
 
+    const isPublished = video.published === true
+    const isPublishable =
+      video.transcodingStatus.name === 'success' && isPublished === false
+
+    const publishButton = (
+      <ButtonWrapper>
+        <Button
+          id="video-submit"
+          type="submit"
+          onClick={this.onSubmit}
+          disabled={!isPublishable}
+          purple
+        >
+          Publish
+        </Button>
+      </ButtonWrapper>
+    )
+
+    const saveButton = (
+      <ButtonWrapper>
+        <Button
+          id="video-submit"
+          type="submit"
+          onClick={this.handleSubmit}
+          purple
+        >
+          Save
+        </Button>
+      </ButtonWrapper>
+    )
+
     return (
       <Card full>
         <VideoFormHeader>
@@ -233,7 +309,7 @@ class VideoForm extends Component<Props, Object> {
           </VideoFormSubTitle>
         </VideoFormHeader>
         <VideoFormWrapper>
-          <Form>
+          <Form onSubmit={this.onSubmit}>
             <TextField
               id="video-id"
               type="hidden"
@@ -273,19 +349,11 @@ class VideoForm extends Component<Props, Object> {
                 Paid (not available yet)
               </RadioCheck>
             </RadioWrapper>
-            <ButtonWrapper>
-              <Button
-                id="video-submit"
-                type="submit"
-                onClick={this.handleSubmit}
-                // disabled={!this.props.canSubmit}
-                purple
-              >
-                Save data
-              </Button>
-            </ButtonWrapper>
+            <ButtonContainer>
+              {publishButton}
+              {saveButton}
+            </ButtonContainer>
           </Form>
-
           <VideoFormInfoBox>
             <VideoMedia>
               <Link to={urlToPlay}>
@@ -318,27 +386,14 @@ class VideoForm extends Component<Props, Object> {
               label="Share this video"
               readonly
             />
-            <ButtonWrapper>
-              <Button margin="0 20px 0 0" type="button">
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                purple
-                disabled={video.uploadStatus.data.progress !== 100}
-                onClick={() => {
-                  this.props.showModal(
-                    <ModalStake
-                      videoId={this.state.id}
-                      closeModal={this.props.closeModal}
-                      user={this.props.user}
-                    />
-                  )
-                }}
-              >
-                Publish
-              </Button>
-            </ButtonWrapper>
+            {!isPublishable && !isPublished ? (
+              <PublishLabel>
+                You can publish this video as soon as it is{' '}
+                <strong>ready</strong>
+              </PublishLabel>
+            ) : (
+              ''
+            )}
           </VideoFormInfoBox>
         </VideoFormWrapper>
       </Card>

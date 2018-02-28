@@ -9,7 +9,7 @@ import UserRecord from 'records/UserRecords'
 type Props = {
   videoId: String,
   user: UserRecord,
-  closeModal: () => void
+  onSuccess: () => void
 }
 
 const Wrapper = styled.div`
@@ -42,17 +42,19 @@ const Footer = styled.div`
 `
 
 class ModalStake extends Component<Props, Object> {
-  apply: (e: Object) => void
+  onSubmit: (e: Object) => void
   constructor (props: Props) {
     super(props)
     this.state = {
       errorMessage: false,
       agreedTOC: false // TODO
     }
-    this.apply = this.apply.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+    // this.handlePublish = this.handlePublish.bind(this)
+    // this.handlePublish = this.handlePublish.bind(this)
   }
 
-  apply (event: Object) {
+  onSubmit (event: Object) {
     event.preventDefault()
 
     paratii.eth.tcr
@@ -65,22 +67,27 @@ class ModalStake extends Component<Props, Object> {
           this.setState({
             errorMessage: false
           })
-          this.props.closeModal()
+          this.props.onSuccess()
           console.log(
             `video ${this.props.videoId.toString()} successfully applied to TCR Listing`
           )
         } else {
-          this.setState({
-            errorMessage:
-              'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
-          })
-          console.error(
+          const msg =
             'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
-          )
+          this.setState({
+            errorMessage: msg
+          })
+          console.log(msg)
         }
       })
       .catch(e => {
-        if (e) throw e
+        if (e) {
+          const msg = String(e)
+          this.setState({
+            errorMessage: msg
+          })
+          console.log(msg)
+        }
       })
   }
 
@@ -98,7 +105,6 @@ class ModalStake extends Component<Props, Object> {
           {minDeposit} PTI. The tokens still belong to you, and can be
           retrieved, along with the video, any time.
         </Highlight>
-
         {!balanceIsTooLow ? (
           <MainText small>
             For now, with no monetary value, this is mostly an experiment. Soon,
@@ -113,6 +119,7 @@ class ModalStake extends Component<Props, Object> {
         ) : (
           ''
         )}
+
         {this.state.errorMessage && (
           <MainText pink small>
             {this.state.errorMessage}
@@ -135,7 +142,7 @@ class ModalStake extends Component<Props, Object> {
           </MainText>
         ) : (
           <Footer>
-            <Button purple onClick={this.apply}>
+            <Button purple onClick={this.onSubmit}>
               Continue
             </Button>
           </Footer>

@@ -37,7 +37,7 @@ const Wrapper = styled.div`
   flex-direction: column;
 `
 
-const overlayPadding: string = '30px 38px 0'
+const overlayPadding: string = '20px 25px 0'
 
 const Overlay = styled.div`
   width: 100%;
