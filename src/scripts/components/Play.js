@@ -339,12 +339,12 @@ class Play extends Component<Props, State> {
 
   onPlayerClick = (e: Object): void => {
     clearTimeout(this.playerHideTimeout)
-    this.togglePlayPause()
+    // this.togglePlayPause()
     this.showControls()
   }
 
   shouldShowVideoOverlay (): boolean {
-    return true // this.state.mouseInOverlay
+    return this.state.mouseInOverlay
   }
 
   portalUrl () {
@@ -400,10 +400,7 @@ class Play extends Component<Props, State> {
             onClick={this.onPlayerClick}
             onMouseEnter={this.onMouseEnter}
           >
-            <Transition
-              in={this.state.shouldShowVideoOverlay || true}
-              timeout={0}
-            >
+            <Transition in={this.state.shouldShowVideoOverlay} timeout={0}>
               {(transitionState: ?string) => (
                 <OverlayWrapper
                   onMouseLeave={this.onMouseLeave}

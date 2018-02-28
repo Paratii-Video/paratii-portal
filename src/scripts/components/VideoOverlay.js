@@ -28,17 +28,20 @@ type State = {
   }
 }
 
+const CONTROLS_HEIGHT: string = '75px'
+
 const Wrapper = styled.div`
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 `
 
 const overlayPadding: string = '30px 38px 0'
 
 const Overlay = styled.div`
   width: 100%;
-  height: 100%;
-  flex: 0 0 100%;
+  flex: 0 0 calc(100% - ${CONTROLS_HEIGHT});
   display: flex;
   flex-direction: column;
   color: white;
@@ -236,13 +239,13 @@ class VideoOverlay extends Component<Props, State> {
               innerRef={this.popoverWrapperRefCallback}
             />
           </VideoInfo>
-          <PlayerControlsContainer
-            onScrub={onScrub}
-            togglePlayPause={togglePlayPause}
-            transitionState={transitionState}
-            videoContainerRef={this.wrapperRef}
-          />
         </Overlay>
+        <PlayerControlsContainer
+          onScrub={onScrub}
+          togglePlayPause={togglePlayPause}
+          transitionState={transitionState}
+          videoContainerRef={this.wrapperRef}
+        />
       </Wrapper>
     )
   }

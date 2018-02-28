@@ -127,6 +127,7 @@ class PlayerControls extends Component<Props, State> {
   onMouseUp = (e: Object): void => {
     this.setState((prevState: State) => {
       if (prevState.userIsScrubbing) {
+        e.stopPropagation()
         return {
           userIsScrubbing: false,
           scrubbingPositionPercentage: 0
@@ -194,11 +195,14 @@ class PlayerControls extends Component<Props, State> {
             totalDuration={currentBufferedTimeSeconds}
           />
           <ProgressIndicator
-            onMouseDown={() =>
+            onClick={(e: Object) => {
+              e.stopPropagation()
+            }}
+            onMouseDown={(e: Object) => {
               this.setState({
                 userIsScrubbing: true
               })
-            }
+            }}
           />
         </ProgressBar>
         <ControlButtons>
