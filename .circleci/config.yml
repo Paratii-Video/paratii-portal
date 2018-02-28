@@ -5,14 +5,15 @@ jobs:
       - image: leeaandrob/paratii-portal:0.0.5
     working_directory: ~/repo
     steps:
-        - checkout
-        - restore_cache:
-            keys:
-                - v1-dependencies-{{ checksum "package-lock.json" }}
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package-lock.json" }}
       - run: npm install
       - save_cache:
           paths:
-              - node_modules
+            - node_modules
+          # key: v1-dependencies-{{ checksum "yarn.lock" }}
           key: v1-dependencies-{{ checksum "package-lock.json" }}
       - run: yarn run quality
       - run: yarn run unit-test
@@ -27,11 +28,6 @@ jobs:
           background: true
       - run: node src/scripts/waitForServer.js
       - run: yarn run chimp-test
-      - run:
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              yarn run build
-            fi
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
