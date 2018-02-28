@@ -267,7 +267,7 @@ class VideoForm extends Component<Props, Object> {
     const transcodingStatus = video.transcodingStatus.data.progress
     const progress = Math.ceil((uploadProgress + transcodingStatus) / 2)
 
-    const isPublished = video.published === true
+    const isPublished = video.published === true || video.published === 'true'
     const isPublishable =
       video.transcodingStatus.name === 'success' && isPublished === false
 
