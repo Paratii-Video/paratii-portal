@@ -185,6 +185,9 @@ class PlayerControls extends Component<Props, State> {
     return (
       <Controls transitionState={transitionState}>
         <ProgressBar
+          onClick={(e: Object) => {
+            console.log(e)
+          }}
           currentTime={currentTimeSeconds}
           scrubbingPositionPercentage={scrubbingPositionPercentage}
           bufferTime={currentBufferedTimeSeconds}
@@ -195,10 +198,7 @@ class PlayerControls extends Component<Props, State> {
             totalDuration={currentBufferedTimeSeconds}
           />
           <ProgressIndicator
-            onClick={(e: Object) => {
-              e.stopPropagation()
-            }}
-            onMouseDown={(e: Object) => {
+            onMouseDown={() => {
               this.setState({
                 userIsScrubbing: true
               })
@@ -209,10 +209,7 @@ class PlayerControls extends Component<Props, State> {
           <ControlButtonWrapper>
             <IconButton
               icon={`/assets/img/${isPlaying ? 'pause-icon' : 'play-icon'}.svg`}
-              onClick={(e: Object) => {
-                e.stopPropagation()
-                togglePlayPause()
-              }}
+              onClick={togglePlayPause}
             />
           </ControlButtonWrapper>
         </ControlButtons>
