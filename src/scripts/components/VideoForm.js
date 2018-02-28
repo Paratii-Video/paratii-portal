@@ -142,6 +142,7 @@ type Props = {
   saveVideoInfo: Object => Object,
   showModal: (View: Object) => void,
   closeModal: () => void,
+  openModal: () => void,
   user: UserRecord,
   balance: String
 }
@@ -283,7 +284,7 @@ class VideoForm extends Component<Props, Object> {
           <Button
             id="video-submit"
             type="submit"
-            onClick={this.onSubmit}
+            onClick={this.props.openModal}
             disabled={!isPublishable}
             purple
           >

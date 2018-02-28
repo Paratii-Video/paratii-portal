@@ -31,7 +31,6 @@ const List = styled.ul`
 class VideoList extends Component<Props, void> {
   constructor (props) {
     super(props)
-    // props.setSelectedVideo(null)
     this.onVideoListItemClicked = this.onVideoListItemClicked.bind(this)
   }
 
@@ -58,7 +57,6 @@ class VideoList extends Component<Props, void> {
               key={videoId}
               video={videoInfo}
               selected={selectedVideo && selectedVideo.get('id') === videoId}
-              // onClick={this.onVideoListItemClicked}
             />
           ))}
         </List>

@@ -3,9 +3,7 @@ import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 
 type Props = {
-  children: any,
-  closeModal: Object,
-  show: Boolean
+  showModal: boolean
 }
 
 const Wrapper = styled.div`
@@ -72,16 +70,16 @@ const Content = styled.div`
 class Modal extends Component<Props, void> {
   render () {
     return (
-      <Wrapper show={this.props.show}>
-        <Container show={this.props.show}>
-          <CloseButton onClick={this.props.closeModal}>
-            <SVG>
-              <use xlinkHref="#icon-close" />
-            </SVG>
-          </CloseButton>
-          <Content>{this.props.children}</Content>
+      <Wrapper show={this.props.showModal}>
+        <Container show={this.props.showModal}>
+          // <CloseButton onClick={this.props.closeModal}>
+          //   <SVG>
+          //     <use xlinkHref="#icon-close" />
+          //   </SVG>
+          // </CloseButton>
+          // <Content>{this.props.children}</Content>
         </Container>
-        <Background show={this.props.show} />
+        <Background show={this.props.showModal} />
       </Wrapper>
     )
   }
