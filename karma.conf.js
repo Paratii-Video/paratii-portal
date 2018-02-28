@@ -26,6 +26,9 @@ module.exports = function (config) {
       }
     },
     singleRun: true,
-    concurrency: Infinity
+    concurrency: Infinity,
+    mochaReporter: {
+      showDiff: true
+    }
   })
 }

@@ -20,6 +20,7 @@ import {
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import {
+  ResultStatusRecord,
   AsyncTaskStatusRecord,
   DataStatusRecord
 } from 'records/AsyncTaskStatusRecord'
@@ -231,7 +232,8 @@ const reducer = {
           name: 'success',
           data: new DataStatusRecord({
             ipfsHash,
-            result: Immutable.fromJS(payload.result),
+            result: new ResultStatusRecord(payload.result),
+            // result: Immutable.fromJS(payload.result),
             progress: 100
           })
         })

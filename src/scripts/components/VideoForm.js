@@ -227,6 +227,8 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     const video: VideoRecord = this.props.selectedVideo
+    // console.log(video.getIn(['transcodingStatus', 'data', 'result']))
+    // console.log(video.getIn(['transcodingStatus', 'data', 'result', 'screenshots']))
     if (!this.state.id) {
       return (
         <Card>
@@ -255,13 +257,11 @@ class VideoForm extends Component<Props, Object> {
     const thumbImages =
       video &&
       video.getIn(['transcodingStatus', 'data', 'result', 'screenshots'])
-    // video.transcodingStatus.data.result.screenshots
 
     let thumbImage = ''
     if (thumbImages) {
-      thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${thumbImages.get(
-        1
-      )}`
+      const firstThumb = thumbImages[0]
+      thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${firstThumb}`
     } else {
       thumbImage = 'https://paratii.video/public/images/paratii-src.png'
     }
