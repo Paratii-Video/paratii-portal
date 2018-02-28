@@ -1198,7 +1198,7 @@ describe('Video Reducer', () => {
         type: TRANSCODING_SUCCESS,
         payload: {
           id: '888',
-          sizes: {
+          result: {
             foo: {
               hash: 'q82gh20'
             }
@@ -1254,7 +1254,7 @@ describe('Video Reducer', () => {
         payload: {
           id: '888',
           duration: '1:00',
-          sizes: {
+          result: {
             master: {
               hash: 'q82gh20'
             }
@@ -1281,7 +1281,7 @@ describe('Video Reducer', () => {
               ...getDefaultDataStatus(),
               ipfsHash: 'q82gh20',
               progress: 100,
-              sizes: {
+              result: {
                 master: {
                   hash: 'q82gh20'
                 }

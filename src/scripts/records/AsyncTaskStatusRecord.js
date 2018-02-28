@@ -1,7 +1,7 @@
 /* @flow */
 
 import { Record as ImmutableRecord } from 'immutable'
-import type { AsyncTaskStatusName } from 'types/ApplicationTypes'
+import { AsyncTaskStatusName } from 'types/ApplicationTypes'
 
 export class DataStatusRecord extends ImmutableRecord({
   id: '',
@@ -31,6 +31,17 @@ export class AsyncTaskStatusRecord extends ImmutableRecord({
   name: 'idle',
   data: new DataStatusRecord()
 }) {
+  constructor (properties) {
+    console.log(properties)
+    if (!properties) {
+      properties = {}
+    }
+    super({
+      ...properties,
+      name: properties.name,
+      data: new DataStatusRecord(properties.data)
+    })
+  }
   name: AsyncTaskStatusName
   data: DataStatusRecord
 }

@@ -255,6 +255,7 @@ class VideoForm extends Component<Props, Object> {
     const thumbImages =
       video &&
       video.getIn(['transcodingStatus', 'data', 'result', 'screenshots'])
+    // video.transcodingStatus.data.result.screenshots
 
     let thumbImage = ''
     if (thumbImages) {
@@ -304,9 +305,7 @@ class VideoForm extends Component<Props, Object> {
       <Card full>
         <VideoFormHeader>
           <VideoFormTitle id="video-title">{title}</VideoFormTitle>
-          <VideoFormSubTitle purple>
-            {video.title ? video.filename : ''} {fileSize}
-          </VideoFormSubTitle>
+          <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>
         </VideoFormHeader>
         <VideoFormWrapper>
           <Form onSubmit={this.onSubmit}>
