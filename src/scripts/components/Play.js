@@ -319,15 +319,19 @@ class Play extends Component<Props, State> {
     if (!video.ipfsHash) {
       throw new Error("Can't create player without ipfsHash")
     }
+    let poster = ''
+    if (video && video.thumbnails.length === 4) {
+      poster = video.thumbnails[0]
+    }
     import('paratii-mediaplayer').then(CreatePlayer => {
       this.player = CreatePlayer({
         selector: '#player',
         source: `https://gateway.paratii.video/ipfs/${
           video.ipfsHash
         }/master.m3u8`,
-        poster: `https://gateway.paratii.video/ipfs/${video.ipfsHash}/${
-          video.thumbnails[0]
-        }`,
+        poster: `https://gateway.paratii.video/ipfs/${
+          video.ipfsHash
+        }/${poster}`,
         mimeType: 'application/x-mpegURL',
         ipfsHash: video.ipfsHash,
         autoPlay: true
