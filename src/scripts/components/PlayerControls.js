@@ -265,7 +265,7 @@ class PlayerControls extends Component<Props, State> {
                 onClick={togglePlayPause}
               />
             </ControlButtonWrapper>
-            <Time>{`${formattedCurrentTime}/${formattedDuration}`}</Time>
+            <Time>{`${formattedCurrentTime} / ${formattedDuration}`}</Time>
           </LeftButtons>
           <RightButtons>
             <ControlButtonWrapper>
