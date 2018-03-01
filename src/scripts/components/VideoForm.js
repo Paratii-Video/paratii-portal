@@ -254,9 +254,7 @@ class VideoForm extends Component<Props, Object> {
     const urlToPlay = `/play/${video.id}`
     const urlForSharing = `https://portal.paratii.video/play/${video.id}`
 
-    const thumbImages =
-      video &&
-      video.getIn(['transcodingStatus', 'data', 'result', 'screenshots'])
+    const thumbImages = video && video.getIn(['thumbnails'])
 
     let thumbImage = ''
     if (thumbImages) {
