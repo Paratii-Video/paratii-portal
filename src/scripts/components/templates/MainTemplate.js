@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
-import styled, { injectGlobal } from 'styled-components'
+import styled from 'styled-components'
 import MainSvg from '../foundations/svgs/MainSvg'
 
 type Props = {
   children: Object
 }
 
-injectGlobal`
-  html {
-    font-size: 16px;
-  }
+// injectGlobal`
+//   html {
+//     font-size: 16px;
+//   }
 
-  body {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
-  }
-`
+//   body {
+//     font-family: 'Roboto', sans-serif;
+//     font-size: 1rem;
+//   }
+// `
 
 const Wrapper = styled.div`
   background-color: ${props => props.theme.colors.body.background};
