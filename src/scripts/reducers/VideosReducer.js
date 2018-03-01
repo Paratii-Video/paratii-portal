@@ -267,7 +267,9 @@ const reducer = {
       new VideoRecord({
         fetchStatus: new AsyncTaskStatusRecord({
           name: 'failed',
-          data: new DataStatusRecord({ error: payload.error.message })
+          data: new DataStatusRecord({
+            error: (payload.error && payload.error.message) || ''
+          })
         })
       })
     )
