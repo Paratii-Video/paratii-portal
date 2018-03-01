@@ -325,7 +325,7 @@ class VideoForm extends Component<Props, Object> {
             />
             <TextField
               id="input-video-description"
-              value={video.description}
+              value={this.state.description}
               onChange={e => this.handleInputChange('description', e)}
               label="Description"
               rows="1"
