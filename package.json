@@ -27,7 +27,7 @@
     "prettify": "prettier-standard src/**/*.js test/**/*.js",
     "quality": "yarn run lint:scripts && yarn run lint:styles && yarn run flow",
     "server": "NODE_ENV=production-notugly node src/server/index.js",
-    "server:dev": "NODE_ENV=development yarn run setup-dev-env && NODE_ENV=development nodemon src/server/index.js --watch node_modules src/server/index.js",
+    "server:dev": "NODE_ENV=development yarn run setup-dev-env && NODE_ENV=development nodemon src/server/index.js --watch node_modules src/server/**/*.js",
     "unit-test": "NODE_ENV=test karma start karma.conf.js",
     "unit-test:dev": "yarn run unit-test -- --single-run false"
   },
