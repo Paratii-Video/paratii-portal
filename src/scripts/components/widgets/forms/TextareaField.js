@@ -10,34 +10,6 @@ import {
   StylePlaceholder
 } from 'components/widgets/forms/TextField'
 
-const LabelField = styled.label`
-  margin: ${props => props.margin};
-  opacity: ${props => (props.disabled ? 0.5 : 1)};
-  display: ${props => (props.type === 'hidden' ? 'none' : 'block')};
-  position: relative;
-  width: 100%;
-`
-
-const FakePlaceholder = styled.span`
-  ${StyleFieldText} ${StylePlaceholder} .filled &, ${Textarea}:focus + & {
-    ${StyleInputFilled};
-  }
-`
-
-const TextField = styled(Textarea)`
-  height: ${props => props.height + 'px'};
-  padding-bottom: ${props => (props.height > 50 ? '10px' : '0px')};
-`
-
-const HelperLabel = styled.span`
-  color: ${props => props.theme.colors.TextField.placeholder};
-  display: block;
-  font-size: 12px;
-  padding: 8px 1px 0 0;
-  opacity: 0.7;
-  white-space: nowrap;
-`
-
 type Props = {
   className: String,
   error: Boolean,
@@ -54,6 +26,33 @@ type Props = {
   cols: String,
   rows: String
 }
+
+const LabelField = styled.label`
+  margin: ${props => props.margin};
+  opacity: ${props => (props.disabled ? 0.5 : 1)};
+  display: ${props => (props.type === 'hidden' ? 'none' : 'block')};
+  position: relative;
+  width: 100%;
+`
+
+const FakePlaceholder = styled.span`
+  ${StyleFieldText} ${StylePlaceholder} .filled &, ${Textarea}:focus + & {
+    ${StyleInputFilled};
+  }
+`
+
+const TextField = styled(Textarea)`
+  padding-bottom: ${props => (props.height > 44 ? '10px' : '0px')};
+`
+
+const HelperLabel = styled.span`
+  color: ${props => props.theme.colors.TextField.placeholder};
+  display: block;
+  font-size: 12px;
+  padding: 8px 1px 0 0;
+  opacity: 0.7;
+  white-space: nowrap;
+`
 
 class TextareaField extends Component<Props, void> {
   constructor (props) {
@@ -72,18 +71,14 @@ class TextareaField extends Component<Props, void> {
     this.handleFocus = this.handleFocus.bind(this)
   }
 
-  handleHeight (target) {
-    const value = target.value
-    const chars = value.length
-    let height = target.scrollHeight
-
-    if (chars < 1) {
-      height = 44
-    }
+  handleHeight (e) {
+    let h = e.target.scrollHeight
+    e.target.style.height = '44px'
+    h = e.target.scrollHeight
+    e.target.style.height = h + 'px'
 
     this.setState({
-      textareaHeight: height,
-      filled: chars > 0
+      textareaHeight: h
     })
   }
 
@@ -98,17 +93,18 @@ class TextareaField extends Component<Props, void> {
       value: e.target.value
     })
     this.handleFilled(e)
-    this.handleHeight(e.target)
+    this.handleHeight(e)
     this.props.onChange(e)
   }
 
   handleKeyUp (e) {
     this.handleFilled(e)
-    this.handleHeight(e.target)
+    this.handleHeight(e)
   }
 
   handleFocus (e) {
-    this.handleHeight(e.target)
+    this.handleFilled(e)
+    this.handleHeight(e)
     if (this.props.readonly) {
       e.target.select()
     }
@@ -142,6 +138,7 @@ class TextareaField extends Component<Props, void> {
           id={this.props.id}
           name={this.props.name}
           value={this.state.value}
+          innerRef={ref => (this.textField = ref)}
         />
         {this.props.label && (
           <FakePlaceholder filled={this.state.filled}>

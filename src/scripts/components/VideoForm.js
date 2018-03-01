@@ -6,6 +6,7 @@ import UserRecord from 'records/UserRecords'
 
 import Card from './structures/Card'
 import Button from './foundations/Button'
+import Text from './foundations/Text'
 import TextField from './widgets/forms/TextField'
 import Textarea from './widgets/forms/TextareaField'
 import RadioCheck, {
@@ -50,7 +51,9 @@ const VideoFormSubTitle = styled.p`
 const Form = styled.div`
   flex: 1 1 100%;
   margin-right: 45px;
+  opacity: ${props => (props.disabled ? '0.5' : null)};
   padding-bottom: 70px;
+  pointer-events: ${props => (props.disabled ? 'none' : null)};
   position: relative;
 
   @media (max-width: 1150px) {
@@ -286,6 +289,7 @@ class VideoForm extends Component<Props, Object> {
           type="submit"
           onClick={this.onSaveData}
           purple
+          disabled={this.props.selectedVideo.storageStatus.name === 'running'}
         >
           Save Changes
         </Button>
@@ -299,7 +303,10 @@ class VideoForm extends Component<Props, Object> {
           <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>
         </VideoFormHeader>
         <VideoFormWrapper>
-          <Form onSubmit={this.onPublishVideo}>
+          <Form
+            onSubmit={this.onPublishVideo}
+            disabled={this.props.selectedVideo.storageStatus.name === 'running'}
+          >
             <TextField
               id="video-id"
               type="hidden"
@@ -339,6 +346,9 @@ class VideoForm extends Component<Props, Object> {
                 Paid (not available yet)
               </RadioCheck>
             </RadioWrapper>
+            <Text purple small>
+              {this.props.selectedVideo.storageStatus.name}
+            </Text>
             <ButtonContainer>
               {publishButton}
               {saveButton}
