@@ -8,13 +8,13 @@ export class ResultStatusRecord extends ImmutableRecord({
   duration: '',
   screenshots: []
 }) {
-  constructor (properties) {
-    super({
-      root: properties ? properties.root : '',
-      duration: properties ? properties.duration : '',
-      screenshots: properties ? properties.screenshots : []
-    })
-  }
+  // constructor (properties) {
+  //   super({
+  //     root: properties ? properties.root : '',
+  //     duration: properties ? properties.duration : '',
+  //     screenshots: properties ? properties.screenshots : []
+  //   })
+  // }
   root: string
   duration: string
   screenshots: Array
@@ -32,14 +32,14 @@ export class DataStatusRecord extends ImmutableRecord({
   error: '',
   author: ''
 }) {
-  constructor (properties) {
-    super({
-      ...properties,
-      result: properties
-        ? new ResultStatusRecord(properties.result)
-        : new ResultStatusRecord()
-    })
-  }
+  // constructor (properties) {
+  //   super({
+  //     ...properties,
+  //     result: properties
+  //       ? new ResultStatusRecord(properties.result)
+  //       : new ResultStatusRecord()
+  //   })
+  // }
   id: number
   author: string
   title: string
@@ -56,14 +56,14 @@ export class AsyncTaskStatusRecord extends ImmutableRecord({
   name: 'idle',
   data: new DataStatusRecord()
 }) {
-  constructor (properties) {
-    super({
-      name: properties ? properties.name : 'idle',
-      data: properties
-        ? new DataStatusRecord(properties.data)
-        : new DataStatusRecord()
-    })
-  }
+  // constructor (properties) {
+  //   super({
+  //     name: properties ? properties.name : 'idle',
+  //     data: properties
+  //       ? new DataStatusRecord(properties.data)
+  //       : new DataStatusRecord()
+  //   })
+  // }
   name: AsyncTaskStatusName
   data: DataStatusRecord
 }

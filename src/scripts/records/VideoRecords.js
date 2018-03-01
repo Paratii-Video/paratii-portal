@@ -23,17 +23,17 @@ class Video extends ImmutableRecord({
   uploadStatus: new AsyncTaskStatusRecord(),
   fetchStatus: new AsyncTaskStatusRecord()
 }) {
-  constructor (properties = {}) {
-    super({
-      ...properties,
-      storageStatus: new AsyncTaskStatusRecord(properties.storageStatus),
-      transcodingStatus: new AsyncTaskStatusRecord(
-        properties.transcodingStatus
-      ),
-      uploadStatus: new AsyncTaskStatusRecord(properties.uploadStatus),
-      fetchStatus: new AsyncTaskStatusRecord(properties.fetchStatus)
-    })
-  }
+  // constructor (properties = {}) {
+  //   super({
+  //     ...properties,
+  //     storageStatus: new AsyncTaskStatusRecord(properties.storageStatus),
+  //     transcodingStatus: new AsyncTaskStatusRecord(
+  //       properties.transcodingStatus
+  //     ),
+  //     uploadStatus: new AsyncTaskStatusRecord(properties.uploadStatus),
+  //     fetchStatus: new AsyncTaskStatusRecord(properties.fetchStatus)
+  //   })
+  // }
   description: string
   filename: string
   filesize: string
@@ -43,7 +43,7 @@ class Video extends ImmutableRecord({
   ipfsHash: string
   owner: string
   price: string
-  thumbnails: [string]
+  thumbnails: []
   title: string
   author: string
   free: string

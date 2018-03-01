@@ -224,7 +224,6 @@ const reducer = {
     if (!ipfsHash) {
       return state
     }
-    console.log(payload.result.screenshots)
     return state
       .setIn([payload.id, 'ipfsHash'], ipfsHash)
       .setIn(
@@ -240,7 +239,7 @@ const reducer = {
         })
       )
       .setIn([payload.id, 'duration'], payload.duration)
-      .setIn([payload.id, 'thumbnails'], payload.result.screenshots)
+      .setIn([payload.id, 'thumbnails'], payload.result.screenshots || [])
   },
   [TRANSCODING_FAILURE]: (
     state: VideoRecordMap,
@@ -294,6 +293,8 @@ const reducer = {
         (mergingVideos: Object, { _id, ...videoProps }: Object): Object => {
           mergingVideos[_id] = new VideoRecord({
             ...videoProps,
+            thumbnails:
+              videoProps.transcodingStatus.data.result.screenshots || [],
             id: _id
           })
           return mergingVideos

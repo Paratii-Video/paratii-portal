@@ -1286,9 +1286,7 @@ describe('Video Reducer', () => {
               ipfsHash: 'q82gh20',
               progress: 100,
               result: {
-                master: {
-                  hash: 'q82gh20'
-                }
+                ...getDefaultResultStatus()
               }
             }
           }
