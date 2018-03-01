@@ -9,7 +9,8 @@ import {
   PLAYER_ATTEMPT_PLAY,
   PLAYER_VIDEO_SELECT,
   UPDATE_VIDEO_TIME,
-  UPDATE_VIDEO_BUFFERED_TIME
+  UPDATE_VIDEO_BUFFERED_TIME,
+  PLAYER_UPDATE_VOLUME
 } from 'constants/ActionConstants'
 
 import type { Action } from 'types/ApplicationTypes'
@@ -34,7 +35,11 @@ const reducer = {
     state: PlayerRecord,
     action: Action<{ time: number }>
   ): PlayerRecord =>
-    state.set('currentBufferedTimeSeconds', action.payload.time)
+    state.set('currentBufferedTimeSeconds', action.payload.time),
+  [PLAYER_UPDATE_VOLUME]: (
+    state: PlayerRecord,
+    action: Action<number>
+  ): PlayerRecord => state.set('currentVolume', action.payload)
 }
 
 export default handleActions(reducer, new PlayerRecord())

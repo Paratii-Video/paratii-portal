@@ -13,6 +13,8 @@ export const _getPlayerCurrentTimeSeconds = (state: Player): number =>
   state.get('currentTimeSeconds')
 export const _getPlayerCurrentBufferedTimeSeconds = (state: Player): number =>
   state.get('currentBufferedTimeSeconds')
+export const _getPlayerCurrentVolume = (state: Player): number =>
+  state.get('currentVolume')
 
 class Player extends ImmutableRecord({
   isPlaying: false,
@@ -20,7 +22,8 @@ class Player extends ImmutableRecord({
   isFullscreen: false,
   selectedVideoId: '',
   currentTimeSeconds: 0,
-  currentBufferedTimeSeconds: 0
+  currentBufferedTimeSeconds: 0,
+  currentVolume: 0
 }) {
   isPlaying: boolean
   isAttemptingPlay: boolean
@@ -28,6 +31,7 @@ class Player extends ImmutableRecord({
   selectedVideoId: ?string
   currentTimeSeconds: number
   currentBufferedTimeSeconds: number
+  currentVolume: number
 }
 
 export default Player

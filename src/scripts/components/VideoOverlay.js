@@ -19,7 +19,8 @@ type Props = {
   togglePlayPause: () => void,
   toggleShareModal: (e: Object) => void,
   toggleFullscreen: (goToFullscreen: boolean) => void,
-  onScrub: (percentage: number) => void
+  onScrub: (percentage: number) => void,
+  onVolumeChange: (percentage: number) => void
 }
 
 type State = {
@@ -196,6 +197,7 @@ class VideoOverlay extends Component<Props, State> {
     const {
       onClick,
       onScrub,
+      onVolumeChange,
       togglePlayPause,
       toggleShareModal,
       toggleFullscreen,
@@ -240,6 +242,7 @@ class VideoOverlay extends Component<Props, State> {
         </Overlay>
         <PlayerControlsContainer
           onScrub={onScrub}
+          onVolumeChange={onVolumeChange}
           togglePlayPause={togglePlayPause}
           toggleFullscreen={toggleFullscreen}
           transitionState={transitionState}

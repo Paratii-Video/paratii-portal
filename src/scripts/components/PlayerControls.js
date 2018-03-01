@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
+import VolumeBar from 'components/widgets/VolumeBar'
 import IconButton from 'components/foundations/buttons/IconButton'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
@@ -16,6 +17,8 @@ type Props = {
   transitionState: TransitionState,
   currentTimeSeconds: number,
   currentBufferedTimeSeconds: number,
+  currentVolume: number,
+  onVolumeChange: (percentage: number) => void,
   onScrub: (percentage: number) => void,
   toggleFullscreen: (goToFullscreen: boolean) => void
 }
@@ -27,6 +30,7 @@ type State = {
 
 const CONTROLS_HEIGHT: string = '75px'
 const CONTROL_BUTTONS_HEIGHT: string = '50px'
+const CONTROLS_SPACING: string = '20px'
 
 const Controls = styled.div`
   flex: 0 0 ${CONTROLS_HEIGHT};
@@ -80,9 +84,9 @@ const ProgressBar = styled.div`
   ${/* sc-selector */ProgressIndicator} {
     left: ${({ currentTime, totalDuration, scrubbingPositionPercentage }) => {
     if (scrubbingPositionPercentage) {
-      return `calc(${scrubbingPositionPercentage}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
+      return `calc(${Math.max(0, Math.min(scrubbingPositionPercentage, 100))}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
     }
-    return `${!totalDuration ? 0 : Math.max(0, Math.min(100, (currentTime * 100 / totalDuration)))}%`
+    return `calc(${!totalDuration ? 0 : Math.max(0, Math.min(100, (currentTime * 100 / totalDuration)))}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
   }};
   }
   ${/* sc-selector */ProgressBuffer} {
@@ -110,6 +114,12 @@ const RightButtons = styled.div`
   flex: 1 1 0;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  `
+
+const VolumeBarWrapper = styled.div`
+  width: 200px;
+  margin-right: ${CONTROLS_SPACING};
   `
 
 const ControlButtonWrapper = styled.div`
@@ -184,6 +194,8 @@ class PlayerControls extends Component<Props, State> {
       isPlaying,
       isFullscreen,
       onScrub,
+      onVolumeChange,
+      currentVolume,
       togglePlayPause,
       toggleFullscreen,
       transitionState,
@@ -233,6 +245,12 @@ class PlayerControls extends Component<Props, State> {
             </ControlButtonWrapper>
           </LeftButtons>
           <RightButtons>
+            <VolumeBarWrapper>
+              <VolumeBar
+                onVolumeChange={onVolumeChange}
+                currentVolume={currentVolume}
+              />
+            </VolumeBarWrapper>
             <ControlButtonWrapper>
               <IconButton
                 icon={`/assets/img/${

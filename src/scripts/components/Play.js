@@ -25,6 +25,7 @@ type Props = {
   togglePlayPause: (play: ?boolean) => void,
   updateVideoTime: ({ duration: number, time: number, id: string }) => void,
   updateVideoBufferedTime: ({ time: number }) => void,
+  updateVolume: (percentage: number) => void,
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
   video?: VideoRecord,
@@ -45,19 +46,14 @@ const Wrapper = styled.div`
   margin: ${props => (props.isEmbed ? null : '0 auto')};
   position: relative;
   height: ${props => (props.isEmbed ? '100%' : '720px')};
-  width: ${props => (props.isEmbed ? '100%' : '1280px')};
+  width: 100%;
 
   @media (max-width: 1440px) {
     height: ${props => (props.isEmbed ? null : '576px')};
-    width: ${props => (props.isEmbed ? null : '1024px')};
   }
 
   @media (max-width: 1200px) {
     height: ${props => (props.isEmbed ? null : '432px')};
-    width: ${props => (props.isEmbed ? null : '768px')};
-  }
-
-  @media (max-width: 930px) {
   }
 `
 
@@ -195,14 +191,17 @@ class Play extends Component<Props, State> {
   }
 
   bindClapprEvents (): void {
-    const { attemptPlay, togglePlayPause, video } = this.props
+    const { attemptPlay, togglePlayPause, updateVolume, video } = this.props
     const { player } = this
     if (player) {
-      player.on(Events.PLAYER_PLAY, () => {
+      player.on(Events.PLAYER_PLAY, (): void => {
         togglePlayPause(true)
       })
-      player.on(Events.PLAYER_PAUSE, () => {
+      player.on(Events.PLAYER_PAUSE, (): void => {
         togglePlayPause(false)
+      })
+      player.on(Events.PLAYER_VOLUMEUPDATE, (volume: number): void => {
+        updateVolume(volume)
       })
       const playback = player.core.getCurrentPlayback()
       if (playback && video) {
@@ -274,6 +273,14 @@ class Play extends Component<Props, State> {
     const videoDuration: number = video.get('duration')
     if (this.player && videoDuration) {
       this.player.seek(videoDuration * percentage / 100)
+    }
+  }
+
+  changeVolume = (percentage: number): void => {
+    const { player } = this
+
+    if (player) {
+      player.setVolume(percentage)
     }
   }
 
@@ -474,6 +481,7 @@ class Play extends Component<Props, State> {
                     toggleShareModal={this.toggleShareModal}
                     showShareModal={this.state.showShareModal}
                     onScrub={this.scrubVideo}
+                    onVolumeChange={this.changeVolume}
                     transitionState={transitionState}
                     togglePlayPause={this.togglePlayPause}
                     toggleFullscreen={(goToFullscreen: boolean): void => {

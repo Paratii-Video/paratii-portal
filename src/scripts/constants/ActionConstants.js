@@ -49,6 +49,7 @@ export const UPDATE_VIDEO_TIME = createActionConstant('UPDATE_VIDEO_TIME')
 export const UPDATE_VIDEO_BUFFERED_TIME = createActionConstant(
   'UPDATE_VIDEO_BUFFERED_TIME'
 )
+export const PLAYER_UPDATE_VOLUME = createActionConstant('PLAYER_UPDATE_VOLUME')
 
 /* Transcoding actions */
 export const TRANSCODING_REQUESTED = createActionConstant(

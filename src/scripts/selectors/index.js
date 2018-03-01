@@ -13,7 +13,8 @@ import {
   _getIsFullscreen,
   _getPlayerVideoId,
   _getPlayerCurrentTimeSeconds,
-  _getPlayerCurrentBufferedTimeSeconds
+  _getPlayerCurrentBufferedTimeSeconds,
+  _getPlayerCurrentVolume
 } from 'records/PlayerRecords'
 import { _getSelectedUploaderVideoId } from 'records/UploaderRecords'
 
@@ -51,6 +52,8 @@ export const getPlayerCurrentTimeSeconds = (state: RootState): number =>
   _getPlayerCurrentTimeSeconds(state.player)
 export const getPlayerCurrentBufferedTimeSeconds = (state: RootState): number =>
   _getPlayerCurrentBufferedTimeSeconds(state.player)
+export const getPlayerCurrentVolume = (state: RootState): number =>
+  _getPlayerCurrentVolume(state.player)
 
 /* Videos */
 export const getVideos = (state: RootState): VideoRecordMap => {
