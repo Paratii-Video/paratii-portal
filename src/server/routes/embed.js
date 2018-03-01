@@ -12,22 +12,22 @@ module.exports = async (req: $Request, res: $Response) => {
   // $FlowFixMe
   const route = req.route.path
 
-  if (process.env.NODE_ENV === 'development' && route === '/play/:id') {
-    // FIXME: this a way just for passing test
-    // this can be removed once we have paratii-db running on circleci
-    res.send(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-
-        </head>
-        <body>
-          <div id="root"></div>
-          <script type="text/javascript" src="/bundle.js"></script>
-        </body>
-      </html>
-    `)
-  }
+  // if (process.env.NODE_ENV === 'development' && route === '/play/:id') {
+  //   // FIXME: this a way just for passing test
+  //   // this can be removed once we have paratii-db running on circleci
+  //   res.send(`
+  //     <!DOCTYPE html>
+  //     <html>
+  //       <head>
+  //
+  //       </head>
+  //       <body>
+  //         <div id="root"></div>
+  //         <script type="text/javascript" src="/bundle.js"></script>
+  //       </body>
+  //     </html>
+  //   `)
+  // }
   const { id } = req.params
   const video = await paratii.core.vids.get(id)
   // TODO: reaise a 404 at this point
@@ -38,7 +38,11 @@ module.exports = async (req: $Request, res: $Response) => {
 
   console.log(video)
   // TODO: we need a way to get the ipfs hash of a thumbnail. These should be saved inparatii-db
-  const thumbnailUrl = 'https://paratii.video/public/images/paratii-src.png'
+  const ipfsHash = video.ipfsHash
+  const thumbName = video.transcodingStatus.data.result.screenshots[0]
+  const thumbnailUrl =
+    'https://gateway.paratii.video/ipfs/' + ipfsHash + '/' + thumbName
+
   const url = `https://portal.paratii.video/play/${id}`
   const embedUrl = `https://portal.paratii.video/embed/${id}`
   const height = `1080`
