@@ -10,6 +10,7 @@ import UserRecord, {
 import {
   _getIsPlaying,
   _getIsAttemptingPlay,
+  _getIsFullscreen,
   _getPlayerVideoId,
   _getPlayerCurrentTimeSeconds,
   _getPlayerCurrentBufferedTimeSeconds
@@ -42,6 +43,8 @@ export const getIsPlaying = (state: RootState): boolean =>
   _getIsPlaying(state.player)
 export const getIsAttemptingPlay = (state: RootState): boolean =>
   _getIsAttemptingPlay(state.player)
+export const getIsFullscreen = (state: RootState): boolean =>
+  _getIsFullscreen(state.player)
 export const getPlayerVideoId = (state: RootState): string =>
   _getPlayerVideoId(state.player)
 export const getPlayerCurrentTimeSeconds = (state: RootState): number =>

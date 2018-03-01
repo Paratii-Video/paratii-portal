@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import Play from 'components/Play'
 import {
   attemptPlay,
+  setFullscreen,
   playerVideoSelect,
   updateVideoTime,
   updateVideoBufferedTime,
@@ -36,6 +37,7 @@ const mapStateToProps = (
 const mapDispatchToProps = dispatch => ({
   fetchVideo: bindActionCreators(fetchVideo, dispatch),
   setSelectedVideo: bindActionCreators(playerVideoSelect, dispatch),
+  setFullscreen: bindActionCreators(setFullscreen, dispatch),
   attemptPlay: bindActionCreators(attemptPlay, dispatch),
   updateVideoTime: bindActionCreators(updateVideoTime, dispatch),
   togglePlayPause: bindActionCreators(togglePlayPause, dispatch),

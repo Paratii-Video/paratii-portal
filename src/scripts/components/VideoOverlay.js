@@ -18,6 +18,7 @@ type Props = {
   showShareModal?: boolean,
   togglePlayPause: () => void,
   toggleShareModal: (e: Object) => void,
+  toggleFullscreen: (goToFullscreen: boolean) => void,
   onScrub: (percentage: number) => void
 }
 
@@ -197,6 +198,7 @@ class VideoOverlay extends Component<Props, State> {
       onScrub,
       togglePlayPause,
       toggleShareModal,
+      toggleFullscreen,
       transitionState
     } = this.props
     const { openPopover } = this.state
@@ -239,6 +241,7 @@ class VideoOverlay extends Component<Props, State> {
         <PlayerControlsContainer
           onScrub={onScrub}
           togglePlayPause={togglePlayPause}
+          toggleFullscreen={toggleFullscreen}
           transitionState={transitionState}
         />
       </Wrapper>

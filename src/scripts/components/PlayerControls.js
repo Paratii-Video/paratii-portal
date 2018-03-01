@@ -11,11 +11,13 @@ import type { TransitionState } from 'types/ApplicationTypes'
 type Props = {
   video: ?VideoRecord,
   isPlaying: boolean,
+  isFullscreen: boolean,
   togglePlayPause: () => void,
   transitionState: TransitionState,
   currentTimeSeconds: number,
   currentBufferedTimeSeconds: number,
-  onScrub: (percentage: number) => void
+  onScrub: (percentage: number) => void,
+  toggleFullscreen: (goToFullscreen: boolean) => void
 }
 
 type State = {
@@ -98,6 +100,18 @@ const ControlButtons = styled.div`
   height: ${CONTROL_BUTTONS_HEIGHT};
   `
 
+const LeftButtons = styled.div`
+  flex: 1 1 0;
+  display: flex;
+  justify-content: flex-start;
+  `
+
+const RightButtons = styled.div`
+  flex: 1 1 0;
+  display: flex;
+  justify-content: flex-end;
+  `
+
 const ControlButtonWrapper = styled.div`
   width: 25px;
   height: 25px;
@@ -168,8 +182,10 @@ class PlayerControls extends Component<Props, State> {
   render () {
     const {
       isPlaying,
+      isFullscreen,
       onScrub,
       togglePlayPause,
+      toggleFullscreen,
       transitionState,
       currentTimeSeconds,
       currentBufferedTimeSeconds,
@@ -206,12 +222,28 @@ class PlayerControls extends Component<Props, State> {
           />
         </ProgressBar>
         <ControlButtons>
-          <ControlButtonWrapper>
-            <IconButton
-              icon={`/assets/img/${isPlaying ? 'pause-icon' : 'play-icon'}.svg`}
-              onClick={togglePlayPause}
-            />
-          </ControlButtonWrapper>
+          <LeftButtons>
+            <ControlButtonWrapper>
+              <IconButton
+                icon={`/assets/img/${
+                  isPlaying ? 'pause-icon' : 'play-icon'
+                }.svg`}
+                onClick={togglePlayPause}
+              />
+            </ControlButtonWrapper>
+          </LeftButtons>
+          <RightButtons>
+            <ControlButtonWrapper>
+              <IconButton
+                icon={`/assets/img/${
+                  isFullscreen ? 'normalscreen-icon.svg' : 'fullscreen-icon.svg'
+                  }`}
+                onClick={() => {
+                  toggleFullscreen(!isFullscreen)
+                }}
+              />
+            </ControlButtonWrapper>
+          </RightButtons>
         </ControlButtons>
       </Controls>
     )

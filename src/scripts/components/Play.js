@@ -11,6 +11,7 @@ import VideoOverlay from 'components/VideoOverlay'
 import Button from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
 import NotFound from './pages/NotFound'
+import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
 
 import type { ClapprPlayer } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
@@ -18,6 +19,7 @@ import type { Match } from 'react-router-dom'
 type Props = {
   match: Match,
   setSelectedVideo: (id: string) => void,
+  setFullscreen: (isFullscreen: boolean) => void,
   fetchVideo: (id: string) => void,
   isPlaying: boolean,
   togglePlayPause: (play: ?boolean) => void,
@@ -81,7 +83,7 @@ const OverlayWrapper = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: calc(100% - 50px);
+  height: 100%;
   z-index: 10;
   cursor: pointer;
 `
@@ -159,6 +161,7 @@ class Play extends Component<Props, State> {
   toggleShareModal: () => void
   lastMouseMove: number
   playerHideTimeout: number
+  wrapperRef: ?HTMLElement
 
   constructor (props: Props) {
     super(props)
@@ -306,6 +309,16 @@ class Play extends Component<Props, State> {
     return params.id || ''
   }
 
+  setFullscreen = (): void => {
+    const { setFullscreen } = this.props
+    setFullscreen(
+      !!document.fullscreenElement ||
+        !!document.webkitFullscreenElement ||
+        !!document.mozFullScreenElement ||
+        !!document.msFullscreenElement
+    )
+  }
+
   componentDidMount (): void {
     const videoId = this.getVideoIdFromRequest()
     if (videoId) {
@@ -317,6 +330,18 @@ class Play extends Component<Props, State> {
     } else {
       this.setState({ videoNotFound: true })
     }
+
+    document.addEventListener('fullscreenchange', this.setFullscreen)
+    document.addEventListener('mozfullscreenchange', this.setFullscreen)
+    document.addEventListener('webkitfullscreenchange', this.setFullscreen)
+    document.addEventListener('MSFullscreenChange', this.setFullscreen)
+  }
+
+  componentWillUnmount (): void {
+    document.removeEventListener('fullscreenchange', this.setFullscreen)
+    document.removeEventListener('mozfullscreenchange', this.setFullscreen)
+    document.removeEventListener('webkitfullscreenchange', this.setFullscreen)
+    document.removeEventListener('MSFullscreenChange', this.setFullscreen)
   }
 
   componentWillReceiveProps (nextProps: Props): void {
@@ -429,8 +454,14 @@ class Play extends Component<Props, State> {
           <PlayerWrapper
             onClick={this.onPlayerClick}
             onMouseEnter={this.onMouseEnter}
+            innerRef={(ref: HTMLElement) => {
+              this.wrapperRef = ref
+            }}
           >
-            <Transition in={this.state.shouldShowVideoOverlay} timeout={0}>
+            <Transition
+              in={this.state.shouldShowVideoOverlay || true}
+              timeout={0}
+            >
               {(transitionState: ?string) => (
                 <OverlayWrapper
                   onMouseLeave={this.onMouseLeave}
@@ -445,6 +476,13 @@ class Play extends Component<Props, State> {
                     onScrub={this.scrubVideo}
                     transitionState={transitionState}
                     togglePlayPause={this.togglePlayPause}
+                    toggleFullscreen={(goToFullscreen: boolean): void => {
+                      if (goToFullscreen && this.wrapperRef) {
+                        requestFullscreen(this.wrapperRef)
+                      } else {
+                        requestCancelFullscreen()
+                      }
+                    }}
                   />
                 </OverlayWrapper>
               )}
