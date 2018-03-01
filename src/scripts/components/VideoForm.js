@@ -7,7 +7,7 @@ import UserRecord from 'records/UserRecords'
 import Card from './structures/Card'
 import Button from './foundations/Button'
 import TextField from './widgets/forms/TextField'
-// import Textarea from './widgets/forms/TextareaField'
+import Textarea from './widgets/forms/TextareaField'
 import RadioCheck, {
   RadioWrapper,
   RadioTitle
@@ -15,7 +15,6 @@ import RadioCheck, {
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
 import { prettyBytes } from 'utils/AppUtils'
-import ModalStake from 'containers/ModalStakeContainer'
 
 const VideoFormHeader = styled.div`
   border-bottom: 1px solid
@@ -147,10 +146,11 @@ type Props = {
 }
 
 class VideoForm extends Component<Props, Object> {
-  handleSubmit: () => void
-  handlePublish: () => void
-  onSubmit: (e: Object) => void
   handleInputChange: (input: string, e: Object) => void
+  onPublishVideo: (e: Object) => void
+  onSaveData: (e: Object) => void
+  publishVideo: (publish: boolean) => void
+  saveData: (publish: boolean) => void
 
   constructor (props: Props) {
     super(props)
@@ -163,10 +163,43 @@ class VideoForm extends Component<Props, Object> {
       duration: selectedVideo.duration,
       author: selectedVideo.author
     }
+
     this.handleInputChange = this.handleInputChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handlePublish = this.handlePublish.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
+    this.onPublishVideo = this.onPublishVideo.bind(this)
+    this.onSaveData = this.onSaveData.bind(this)
+    this.publishVideo = this.publishVideo.bind(this)
+    this.saveData = this.saveData.bind(this)
+  }
+
+  handleInputChange (input: string, e: Object) {
+    this.setState({
+      [input]: e.target.value
+    })
+  }
+
+  onPublishVideo (e: Object) {
+    e.preventDefault()
+    this.publishVideo(true)
+  }
+
+  onSaveData (e: Object) {
+    e.preventDefault()
+    this.saveData(false)
+  }
+
+  publishVideo (publish: false) {
+    this.saveData(publish)
+  }
+
+  saveData (publish: false) {
+    const videoToSave = {
+      id: this.state.id,
+      title: this.state.title,
+      description: this.state.description,
+      author: this.state.author,
+      published: publish
+    }
+    this.props.saveVideoInfo(videoToSave)
   }
 
   componentWillReceiveProps (nextProps: Props): void {
@@ -181,48 +214,6 @@ class VideoForm extends Component<Props, Object> {
         author: selectedVideo.author
       })
     }
-  }
-
-  handleInputChange (input: string, e: Object) {
-    this.setState({
-      [input]: e.target.value
-    })
-  }
-
-  handlePublish () {
-    // this function is called by VideoModal
-    this.handleSubmit()
-    const videoToSave = {
-      id: this.state.id,
-      title: this.state.title,
-      description: this.state.description,
-      author: this.state.author,
-      published: true
-    }
-    this.props.saveVideoInfo(videoToSave)
-    this.props.closeModal()
-  }
-
-  handleSubmit () {
-    const videoToSave = {
-      id: this.state.id,
-      title: this.state.title,
-      description: this.state.description,
-      author: this.state.author
-    }
-    this.props.saveVideoInfo(videoToSave)
-  }
-
-  onSubmit (e: Object) {
-    e.preventDefault()
-
-    this.props.showModal(
-      <ModalStake
-        videoId={this.state.id}
-        onSuccess={this.handlePublish}
-        user={this.props.user}
-      />
-    )
   }
 
   render () {
@@ -278,7 +269,7 @@ class VideoForm extends Component<Props, Object> {
           <Button
             id="video-submit"
             type="submit"
-            onClick={this.onSubmit}
+            onClick={this.onPublishVideo}
             disabled={!isPublishable}
             purple
           >
@@ -293,7 +284,7 @@ class VideoForm extends Component<Props, Object> {
         <Button
           id="video-submit"
           type="submit"
-          onClick={this.handleSubmit}
+          onClick={this.onSaveData}
           purple
         >
           Save Changes
@@ -308,7 +299,7 @@ class VideoForm extends Component<Props, Object> {
           <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>
         </VideoFormHeader>
         <VideoFormWrapper>
-          <Form onSubmit={this.onSubmit}>
+          <Form onSubmit={this.onPublishVideo}>
             <TextField
               id="video-id"
               type="hidden"
@@ -323,9 +314,9 @@ class VideoForm extends Component<Props, Object> {
               onChange={e => this.handleInputChange('title', e)}
               margin="0 0 30px"
             />
-            <TextField
+            <Textarea
               id="input-video-description"
-              value={video.description}
+              value={this.state.description}
               onChange={e => this.handleInputChange('description', e)}
               label="Description"
               rows="1"

@@ -10,23 +10,6 @@ import {
   StylePlaceholder
 } from 'components/widgets/forms/TextField'
 
-type Props = {
-  className: String,
-  error: Boolean,
-  label: String,
-  helper: String,
-  margin: String,
-  disabled: Boolean,
-  readonly: Boolean,
-  value: String,
-  id: 'String',
-  name: 'String',
-  type: 'String',
-  onChange: (e: Object) => void,
-  cols: String,
-  rows: String
-}
-
 const LabelField = styled.label`
   margin: ${props => props.margin};
   opacity: ${props => (props.disabled ? 0.5 : 1)};
@@ -54,6 +37,23 @@ const HelperLabel = styled.span`
   opacity: 0.7;
   white-space: nowrap;
 `
+
+type Props = {
+  className: String,
+  error: Boolean,
+  label: String,
+  helper: String,
+  margin: String,
+  disabled: Boolean,
+  readonly: Boolean,
+  value: String,
+  id: 'String',
+  name: 'String',
+  type: 'String',
+  onChange: (e: Object) => void,
+  cols: String,
+  rows: String
+}
 
 class TextareaField extends Component<Props, void> {
   constructor (props) {
@@ -112,6 +112,13 @@ class TextareaField extends Component<Props, void> {
     if (this.props.readonly) {
       e.target.select()
     }
+  }
+
+  componentWillReceiveProps (nextProps: Props): void {
+    this.setState({
+      filled: nextProps.value ? nextProps.value.length > 0 : false,
+      value: nextProps.value
+    })
   }
 
   render () {
