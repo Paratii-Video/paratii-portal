@@ -49,7 +49,7 @@ module.exports = async (req: $Request, res: $Response) => {
   const width = `1920`
   // this needs to be the has of a video - just as the thumbnail, we need to save these data from paratii-db
   // FIXME: this must be ipfsHashOrig
-  const ipfsSource = `https://gateway.paratii.video/ipfs/QmSs64S5J8C9H6ZFYR44YGEB6pLq2SRLYe3MZdUoyNX7EH`
+  const ipfsSource = `https://gateway.paratii.video/ipfs/` + video.ipfsHashOrig
   let script = ''
 
   switch (route) {
