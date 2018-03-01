@@ -17,7 +17,7 @@ export class ResultStatusRecord extends ImmutableRecord({
   // }
   root: string
   duration: string
-  screenshots: Array
+  screenshots: [string]
 }
 
 export class DataStatusRecord extends ImmutableRecord({
