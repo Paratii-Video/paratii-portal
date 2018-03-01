@@ -21,6 +21,7 @@ import {
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import {
+  ResultStatusRecord,
   AsyncTaskStatusRecord,
   DataStatusRecord
 } from 'records/AsyncTaskStatusRecord'
@@ -224,17 +225,21 @@ const reducer = {
     if (!ipfsHash) {
       return state
     }
-    return state.setIn([payload.id, 'ipfsHash'], ipfsHash).setIn(
-      [payload.id, 'transcodingStatus'],
-      new AsyncTaskStatusRecord({
-        name: 'success',
-        data: new DataStatusRecord({
-          ipfsHash,
-          result: Immutable.fromJS(payload.result),
-          progress: 100
+    return state
+      .setIn([payload.id, 'ipfsHash'], ipfsHash)
+      .setIn(
+        [payload.id, 'transcodingStatus'],
+        new AsyncTaskStatusRecord({
+          name: 'success',
+          data: new DataStatusRecord({
+            ipfsHash,
+            result: new ResultStatusRecord(payload.result),
+            // result: Immutable.fromJS(payload.result),
+            progress: 100
+          })
         })
-      })
-    )
+      )
+      .setIn([payload.id, 'thumbnails'], payload.result.screenshots || [])
   },
   [TRANSCODING_FAILURE]: (
     state: VideoRecordMap,
@@ -274,10 +279,16 @@ const reducer = {
     if (!payload || !payload.get('id')) {
       return state
     }
-    return state.set(
-      payload.id,
-      payload.set('fetchStatus', new AsyncTaskStatusRecord({ name: 'success' }))
+    payload = payload.set(
+      'fetchStatus',
+      new AsyncTaskStatusRecord({ name: 'success' })
     )
+    payload = payload.set(
+      'thumbnails',
+      payload.transcodingStatus.data.result.screenshots
+    )
+
+    return state.set(payload.id, payload)
   },
   [VIDEOS_FETCH_SUCCESS]: (
     state: VideoRecordMap,
@@ -288,6 +299,8 @@ const reducer = {
         (mergingVideos: Object, { _id, ...videoProps }: Object): Object => {
           mergingVideos[_id] = new VideoRecord({
             ...videoProps,
+            thumbnails:
+              videoProps.transcodingStatus.data.result.screenshots || [],
             id: _id
           })
           return mergingVideos

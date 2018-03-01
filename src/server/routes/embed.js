@@ -14,6 +14,7 @@ module.exports = async (req: $Request, res: $Response) => {
 
   if (process.env.NODE_ENV === 'development' && route === '/play/:id') {
     // FIXME: this a way just for passing test
+    // this can be removed once we have paratii-db running on circleci
     res.send(`
       <!DOCTYPE html>
       <html>
@@ -82,10 +83,36 @@ module.exports = async (req: $Request, res: $Response) => {
         <meta property="og:title" content="${video.title}" />
         <meta property="og:image" content="${thumbnailUrl}" />
         <meta property="og:description" content="${video.description}" />
+        <style>
+          html {
+            font-size: 16px;
+          }
 
+          body {
+            background: #2E3133;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+          }
+
+          .main-loader {
+            background: #2E3133 url('/assets/img/paratii-loader.gif') no-repeat 50%;
+            background-size: cover;
+            height: 50px;
+            left: 50%;
+            position: fixed;
+            top: 50%;
+            transform: translate3d(-50%, -50%, 0);
+            width: 50px;
+          }
+        </style>
       </head>
       <body>
-        <div id="root"></div>
+        <noscript>
+          You need to enable JavaScript to run this app.
+        </noscript>
+        <div id="root">
+          <span class="main-loader"></span>
+        </div>
         ${script}
       </body>
     </html>

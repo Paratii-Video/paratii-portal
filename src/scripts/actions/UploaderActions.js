@@ -180,7 +180,6 @@ export const saveVideoInfo = (videoInfo: Object) => async (
     videoId = paratii.eth.vids.makeId()
     videoInfo.id = videoId
     dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
-    // dispatch(selectVideo(videoInfo.id))
   }
   dispatch(videoDataStart(videoInfo))
   upsertVideo(videoId, videoInfo, getState())

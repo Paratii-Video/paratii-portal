@@ -25,6 +25,7 @@ import {
   DataStatusRecord
 } from 'records/AsyncTaskStatusRecord'
 import {
+  getDefaultResultStatus,
   getDefaultVideo,
   getDefaultAsyncTaskStatus,
   getDefaultDataStatus
@@ -998,7 +999,10 @@ describe('Video Reducer', () => {
             ...getDefaultAsyncTaskStatus(),
             name: 'requested',
             data: {
-              ...getDefaultDataStatus()
+              ...getDefaultDataStatus(),
+              result: {
+                ...getDefaultResultStatus()
+              }
             }
           }
         }
@@ -1282,9 +1286,7 @@ describe('Video Reducer', () => {
               ipfsHash: 'q82gh20',
               progress: 100,
               result: {
-                master: {
-                  hash: 'q82gh20'
-                }
+                ...getDefaultResultStatus()
               }
             }
           }
@@ -1626,7 +1628,10 @@ describe('Video Reducer', () => {
             name: 'failed',
             data: {
               ...getDefaultDataStatus(),
-              error: 'bazbar'
+              error: 'bazbar',
+              result: {
+                ...getDefaultResultStatus()
+              }
             }
           }
         }

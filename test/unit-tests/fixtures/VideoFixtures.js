@@ -1,3 +1,9 @@
+export const getDefaultResultStatus = () => ({
+  root: '',
+  duration: '',
+  screenshots: []
+})
+
 export const getDefaultDataStatus = () => ({
   id: '',
   title: '',
@@ -5,7 +11,7 @@ export const getDefaultDataStatus = () => ({
   owner: '',
   ipfsHash: '',
   ipfsHashOrig: '',
-  result: '',
+  result: getDefaultResultStatus(),
   progress: 0,
   error: '',
   author: ''

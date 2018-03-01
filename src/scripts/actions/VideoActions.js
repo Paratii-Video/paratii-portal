@@ -18,15 +18,14 @@ export const videoFetchError = createAction(VIDEOFETCH_ERROR)
 export const videoFetchSuccess = createAction(VIDEOFETCH_SUCCESS)
 export const videosFetchSuccess = createAction(VIDEOS_FETCH_SUCCESS)
 
+// fetch the video data from paratii-db and save it in the redux state
 export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
   let videoInfo
   try {
-    // if (process.env.NODE_ENV === 'development') {
-    //   // FIXME: this is a workaround for getting the tests to run in circle
-    //   videoInfo = await paratii.eth.vids.get(id)
-    // } else {
     videoInfo = await paratii.core.vids.get(id)
-    // }
+
+    console.log('videoInfo')
+    console.log(videoInfo)
 
     if (videoInfo) {
       videoInfo.id = videoInfo._id
@@ -37,7 +36,7 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
       dispatch(playerVideoSelect(videoInfo.id))
     }
   } catch (error) {
-    dispatch(videoFetchError({ id: id, error: error }))
+    dispatch(videoFetchError(new VideoRecord({ id: id, error: error })))
   }
   return videoInfo
 }

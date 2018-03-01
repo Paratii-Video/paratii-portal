@@ -3,6 +3,23 @@
 import { Record as ImmutableRecord } from 'immutable'
 import { type AsyncTaskStatusName } from 'types/ApplicationTypes'
 
+export class ResultStatusRecord extends ImmutableRecord({
+  root: '',
+  duration: '',
+  screenshots: []
+}) {
+  // constructor (properties) {
+  //   super({
+  //     root: properties ? properties.root : '',
+  //     duration: properties ? properties.duration : '',
+  //     screenshots: properties ? properties.screenshots : []
+  //   })
+  // }
+  root: string
+  duration: string
+  screenshots: [string]
+}
+
 export class DataStatusRecord extends ImmutableRecord({
   id: '',
   title: '',
@@ -10,11 +27,19 @@ export class DataStatusRecord extends ImmutableRecord({
   owner: '',
   ipfsHash: '',
   ipfsHashOrig: '',
-  result: '',
+  result: new ResultStatusRecord(),
   progress: 0,
   error: '',
   author: ''
 }) {
+  // constructor (properties) {
+  //   super({
+  //     ...properties,
+  //     result: properties
+  //       ? new ResultStatusRecord(properties.result)
+  //       : new ResultStatusRecord()
+  //   })
+  // }
   id: number
   author: string
   title: string
@@ -22,7 +47,7 @@ export class DataStatusRecord extends ImmutableRecord({
   owner: string
   ipfsHash: string
   ipfsHashOrig: string
-  result: Object
+  result: ResultStatusRecord
   progress: number
   error: string
 }
@@ -32,14 +57,11 @@ export class AsyncTaskStatusRecord extends ImmutableRecord({
   data: new DataStatusRecord()
 }) {
   // constructor (properties) {
-  //   console.log(properties)
-  //   if (!properties) {
-  //     properties = {}
-  //   }
   //   super({
-  //     ...properties,
-  //     name: properties.name,
-  //     data: new DataStatusRecord(properties.data)
+  //     name: properties ? properties.name : 'idle',
+  //     data: properties
+  //       ? new DataStatusRecord(properties.data)
+  //       : new DataStatusRecord()
   //   })
   // }
   name: AsyncTaskStatusName

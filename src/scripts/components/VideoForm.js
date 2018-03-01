@@ -227,6 +227,8 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     const video: VideoRecord = this.props.selectedVideo
+    // console.log(video.getIn(['transcodingStatus', 'data', 'result']))
+    // console.log(video.getIn(['transcodingStatus', 'data', 'result', 'screenshots']))
     if (!this.state.id) {
       return (
         <Card title="No video selected!">{this.props.selectedVideo.id}</Card>
@@ -249,16 +251,12 @@ class VideoForm extends Component<Props, Object> {
     const urlToPlay = `/play/${video.id}`
     const urlForSharing = `https://portal.paratii.video/play/${video.id}`
 
-    const thumbImages =
-      video &&
-      video.getIn(['transcodingStatus', 'data', 'result', 'screenshots'])
-    // video.transcodingStatus.data.result.screenshots
+    const thumbImages = video && video.getIn(['thumbnails'])
 
     let thumbImage = ''
     if (thumbImages) {
-      thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${thumbImages.get(
-        1
-      )}`
+      const firstThumb = thumbImages[0]
+      thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${firstThumb}`
     } else {
       thumbImage = 'https://paratii.video/public/images/paratii-src.png'
     }
@@ -327,7 +325,7 @@ class VideoForm extends Component<Props, Object> {
             />
             <TextField
               id="input-video-description"
-              value={this.state.description}
+              value={video.description}
               onChange={e => this.handleInputChange('description', e)}
               label="Description"
               rows="1"
