@@ -295,7 +295,7 @@ const reducer = {
   },
   [VIDEOS_FETCH_SUCCESS]: (
     state: VideoRecordMap,
-    { payload }: Action<Array<Object>>
+    { payload }: Action<Array<VideoRecord>>
   ): VideoRecordMap =>
     state.merge(
       payload.reduce(
@@ -303,8 +303,8 @@ const reducer = {
           mergingVideos[_id] = new VideoRecord({
             ...videoProps,
             thumbnails:
-              (payload.transcodingStatus &&
-                payload.transcodingStatus.data.result &&
+              (videoProps.transcodingStatus &&
+                videoProps.transcodingStatus.data.result &&
                 videoProps.transcodingStatus.data.result.screenshots) ||
               [],
             id: _id
