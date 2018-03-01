@@ -285,7 +285,9 @@ const reducer = {
     )
     payload = payload.set(
       'thumbnails',
-      payload.transcodingStatus.data.result.screenshots
+      (payload.transcodingStatus &&
+        payload.transcodingStatus.data.result.screenshots) ||
+        []
     )
 
     return state.set(payload.id, payload)
@@ -300,7 +302,9 @@ const reducer = {
           mergingVideos[_id] = new VideoRecord({
             ...videoProps,
             thumbnails:
-              videoProps.transcodingStatus.data.result.screenshots || [],
+              (videoProps.transcodingStatus &&
+                videoProps.transcodingStatus.data.result.screenshots) ||
+              [],
             id: _id
           })
           return mergingVideos
