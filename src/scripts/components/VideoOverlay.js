@@ -210,13 +210,6 @@ class VideoOverlay extends Component<Props, State> {
       .profile
     return (
       <Wrapper>
-        <ShareButton onClick={toggleShareModal}>
-          {!this.props.showShareModal && (
-            <SVGButton>
-              <use xlinkHref="#icon-player-share" />
-            </SVGButton>
-          )}
-        </ShareButton>
         <Overlay
           data-test-id="video-overlay"
           onClick={onClick}
@@ -235,6 +228,20 @@ class VideoOverlay extends Component<Props, State> {
                   />
                 </ButtonWrapper>
               ) : null}
+              <ButtonWrapper>
+                <ShareButton
+                  onClick={(e: Object) => {
+                    e.stopPropagation()
+                    toggleShareModal()
+                  }}
+                >
+                  {!this.props.showShareModal && (
+                    <SVGButton>
+                      <use xlinkHref="#icon-player-share" />
+                    </SVGButton>
+                  )}
+                </ShareButton>
+              </ButtonWrapper>
             </ButtonGroup>
             <PopoverWrapper
               open={!!openPopover}
