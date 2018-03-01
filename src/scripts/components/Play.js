@@ -35,22 +35,43 @@ type State = {
 }
 
 const Wrapper = styled.div`
+  margin: ${props => (props.isEmbed ? null : '0 auto')};
+  position: relative;
+  height: ${props => (props.isEmbed ? '100%' : '720px')};
+  width: ${props => (props.isEmbed ? '100%' : '1280px')};
+
+  @media (max-width: 1440px) {
+    height: ${props => (props.isEmbed ? null : '576px')};
+    width: ${props => (props.isEmbed ? null : '1024px')};
+  }
+
+  @media (max-width: 1200px) {
+    height: ${props => (props.isEmbed ? null : '432px')};
+    width: ${props => (props.isEmbed ? null : '768px')};
+  }
+
+  @media (max-width: 930px) {
+    height: ${props => (props.isEmbed ? '100%' : '0')};
+    margin: 0;
+    padding-bottom: ${props => (props.isEmbed ? null : '56.25%')};
+    padding-top: ${props => (props.isEmbed ? null : '30px')};
+    width: 100%;
+  }
+`
+
+const PlayerWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 0 0 100%;
+  height: 100%;
 `
 
 const Player = styled.div`
   width: 100%;
   height: 100%;
-`
-
-const PlayerWrapper = styled.div`
-  flex: 0 0 100%;
-  width: 100%;
-  position: relative;
+  position: absolute;
+  z-index: 5;
 `
 
 const OverlayWrapper = styled.div`
@@ -59,7 +80,7 @@ const OverlayWrapper = styled.div`
   left: 0;
   width: 100%;
   height: calc(100% - 50px);
-  z-index: 5;
+  z-index: 10;
   cursor: pointer;
 `
 
@@ -77,7 +98,7 @@ const ShareOverlay = styled.div`
   transition: opacity ${props => props.theme.animation.time.repaint};
   top: 0;
   width: 100%;
-  z-index: 10;
+  z-index: 15;
 `
 
 const CloseButton = Button.extend`
@@ -105,6 +126,10 @@ const Anchor = Button.withComponent('a')
 
 const AnchorLink = Anchor.extend`
   font-size: ${props => props.theme.fonts.video.share.link};
+  padding: 0 10%;
+  text-align: center;
+  width: 100%;
+  word-wrap: break-word;
 `
 
 const ShareButtons = styled.div`
@@ -252,7 +277,7 @@ class Play extends Component<Props, State> {
     const videoId = this.getVideoIdFromRequest()
     if (videoId) {
       if (this.props.video && this.props.video.ipfsHash) {
-        this.createPlayer(this.props.video.ipfsHash)
+        this.createPlayer(this.props.video)
       } else {
         this.props.fetchVideo(videoId)
       }
@@ -268,7 +293,7 @@ class Play extends Component<Props, State> {
       const fetchStatus = nextProps.video.getIn(['fetchStatus', 'name'])
       if (nextProps.video && fetchStatus === 'success') {
         if (this.state.playerCreated !== nextProps.video.ipfsHash) {
-          this.createPlayer(nextProps.video.ipfsHash)
+          this.createPlayer(nextProps.video)
         }
       } else if (fetchStatus === 'failed') {
         // If video not exist we set in the component state
@@ -286,20 +311,29 @@ class Play extends Component<Props, State> {
     }
   }
 
-  createPlayer (ipfsHash: string): void {
-    this.setState({ playerCreated: ipfsHash })
+  createPlayer (video: VideoRecord): void {
+    this.setState({ playerCreated: video.ipfsHash })
     if (this.player && this.player.remove) {
       this.player.remove()
     }
-    if (!ipfsHash) {
+    if (!video.ipfsHash) {
       throw new Error("Can't create player without ipfsHash")
+    }
+    let poster = ''
+    if (video && video.thumbnails.length === 4) {
+      poster = video.thumbnails[0]
     }
     import('paratii-mediaplayer').then(CreatePlayer => {
       this.player = CreatePlayer({
         selector: '#player',
-        source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
-        mimeType: 'video/mp4',
-        ipfsHash: ipfsHash,
+        source: `https://gateway.paratii.video/ipfs/${
+          video.ipfsHash
+        }/master.m3u8`,
+        poster: `https://gateway.paratii.video/ipfs/${
+          video.ipfsHash
+        }/${poster}`,
+        mimeType: 'application/x-mpegURL',
+        ipfsHash: video.ipfsHash,
         autoPlay: true
       })
       this.player.play()
@@ -309,7 +343,7 @@ class Play extends Component<Props, State> {
   }
 
   shouldShowVideoOverlay (): boolean {
-    return true // this.state.mouseInOverlay
+    return this.state.mouseInOverlay
   }
 
   portalUrl () {
@@ -358,15 +392,10 @@ class Play extends Component<Props, State> {
   render () {
     // If video not exist it is set in the component state
     if (this.state.videoNotFound === true) {
-      return (
-        <Wrapper>
-          did not find a video
-          <NotFound />
-        </Wrapper>
-      )
+      return <NotFound>Did not find a video</NotFound>
     } else {
       return (
-        <Wrapper>
+        <Wrapper isEmbed={this.props.isEmbed}>
           <PlayerWrapper>
             {this.shouldShowVideoOverlay() && (
               <OverlayWrapper
@@ -401,13 +430,13 @@ class Play extends Component<Props, State> {
                 </AnchorLink>
                 <ShareButtons>
                   <ShareLink href={this.telegram()} target="_blank" anchor>
-                    <ShareLinkIcon src="/assets/assets/svg/icons-share-telegram.svg" />
+                    <ShareLinkIcon src="/assets/svg/icons-share-telegram.svg" />
                   </ShareLink>
                   <ShareLink href={this.twitter()} target="_blank" anchor>
-                    <ShareLinkIcon src="/assets/assets/svg/icons-share-twitter.svg" />
+                    <ShareLinkIcon src="/assets/svg/icons-share-twitter.svg" />
                   </ShareLink>
                   <ShareLink href={this.whatsapp()} target="_blank" anchor>
-                    <ShareLinkIcon src="/assets/assets/svg/icons-share-whatsapp.svg" />
+                    <ShareLinkIcon src="/assets/svg/icons-share-whatsapp.svg" />
                   </ShareLink>
                 </ShareButtons>
               </ShareOverlay>

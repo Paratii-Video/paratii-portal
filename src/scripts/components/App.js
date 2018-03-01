@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import styled, { ThemeProvider } from 'styled-components'
+import { ThemeProvider } from 'styled-components'
 
 import SignupContainer from 'containers/SignupContainer'
 import LoginContainer from 'containers/LoginContainer'
@@ -35,15 +35,6 @@ type State = {
   modalContent: any,
   showModal: boolean
 }
-
-const PortalPlayWrapper = styled.div`
-  flex: 1 0 100%;
-  display: flex;
-  max-height: 500px;
-  max-width: 825px;
-  width: 100%;
-  margin: 0 auto;
-`
 
 class App extends Component<Props, State> {
   showModal: () => void
@@ -106,11 +97,7 @@ class App extends Component<Props, State> {
               <Route path={`${match.url}wallet`} component={WalletContainer} />
               <Route
                 path={`${match.url}play/:id`}
-                render={props => (
-                  <PortalPlayWrapper>
-                    <PlayContainer {...props} />
-                  </PortalPlayWrapper>
-                )}
+                render={props => <PlayContainer {...props} />}
               />
               <Route component={NotFound} />
             </Switch>

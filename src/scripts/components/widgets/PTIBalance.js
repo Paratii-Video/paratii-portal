@@ -22,7 +22,9 @@ const NumberWrapper = styled.span`
   display: flex;
 `
 
-const REFRESH_BALANCES_INTERVAL_MS: number = 5000
+// FIXME: the whole polling logic should be moved to its own dedicated place a
+// instead of being connected to  a particular component
+const REFRESH_BALANCES_INTERVAL_MS: number = 2000
 
 class PTIBalance extends React.Component<Props, void> {
   intervalId: ?number

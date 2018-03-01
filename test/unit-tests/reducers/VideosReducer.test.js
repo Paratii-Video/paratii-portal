@@ -17,7 +17,7 @@ import {
   TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE,
   VIDEOFETCH_ERROR,
-  VIDEOFETCH_SUCCESS
+  VIDEO_FETCH_SUCCESS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import {
@@ -25,6 +25,7 @@ import {
   DataStatusRecord
 } from 'records/AsyncTaskStatusRecord'
 import {
+  getDefaultResultStatus,
   getDefaultVideo,
   getDefaultAsyncTaskStatus,
   getDefaultDataStatus
@@ -998,7 +999,10 @@ describe('Video Reducer', () => {
             ...getDefaultAsyncTaskStatus(),
             name: 'requested',
             data: {
-              ...getDefaultDataStatus()
+              ...getDefaultDataStatus(),
+              result: {
+                ...getDefaultResultStatus()
+              }
             }
           }
         }
@@ -1282,9 +1286,7 @@ describe('Video Reducer', () => {
               ipfsHash: 'q82gh20',
               progress: 100,
               result: {
-                master: {
-                  hash: 'q82gh20'
-                }
+                ...getDefaultResultStatus()
               }
             }
           }
@@ -1407,7 +1409,7 @@ describe('Video Reducer', () => {
       })
     })
   })
-  describe('VIDEOFETCH_SUCCESS', () => {
+  describe('VIDEO_FETCH_SUCCESS', () => {
     it('should add a new video to an empty store', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
@@ -1417,7 +1419,7 @@ describe('Video Reducer', () => {
         ipfsHash: 'q999'
       })
       store.dispatch({
-        type: VIDEOFETCH_SUCCESS,
+        type: VIDEO_FETCH_SUCCESS,
         payload: newVideo
       })
       expect(store.getState().toJS()).to.deep.equal({
@@ -1437,7 +1439,7 @@ describe('Video Reducer', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
       store.dispatch({
-        type: VIDEOFETCH_SUCCESS
+        type: VIDEO_FETCH_SUCCESS
       })
       expect(store.getState().toJS()).to.deep.equal({})
     })
@@ -1450,7 +1452,7 @@ describe('Video Reducer', () => {
         ipfsHash: 'q999'
       })
       store.dispatch({
-        type: VIDEOFETCH_SUCCESS,
+        type: VIDEO_FETCH_SUCCESS,
         payload: newVideo
       })
       expect(store.getState().toJS()).to.deep.equal({})
@@ -1497,7 +1499,7 @@ describe('Video Reducer', () => {
         }
       })
       store.dispatch({
-        type: VIDEOFETCH_SUCCESS,
+        type: VIDEO_FETCH_SUCCESS,
         payload: newVideo
       })
       expect(store.getState().toJS()).to.deep.equal({
@@ -1626,7 +1628,10 @@ describe('Video Reducer', () => {
             name: 'failed',
             data: {
               ...getDefaultDataStatus(),
-              error: 'bazbar'
+              error: 'bazbar',
+              result: {
+                ...getDefaultResultStatus()
+              }
             }
           }
         }

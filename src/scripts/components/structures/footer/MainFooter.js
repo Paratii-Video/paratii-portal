@@ -44,7 +44,7 @@ class MainFooter extends Component<Props, void> {
           </Anchor>
         </FooterOpenSourceText>
         <FooterOpenSourceText2>
-          This is a beta tool! We &hearts; to get feedback on Telegram{' '}
+          v0.0.1: This is a beta tool! We &hearts; to get feedback on Telegram{' '}
           <Anchor
             anchor
             href="https://t.me/paratiivideo"

@@ -23,12 +23,13 @@ class Video extends ImmutableRecord({
   uploadStatus: new AsyncTaskStatusRecord(),
   fetchStatus: new AsyncTaskStatusRecord()
 }) {
-  // constructor (properties) {
-  //   console.log(properties)
+  // constructor (properties = {}) {
   //   super({
   //     ...properties,
   //     storageStatus: new AsyncTaskStatusRecord(properties.storageStatus),
-  //     transcodingStatus: new AsyncTaskStatusRecord(properties.transcodingStatus),
+  //     transcodingStatus: new AsyncTaskStatusRecord(
+  //       properties.transcodingStatus
+  //     ),
   //     uploadStatus: new AsyncTaskStatusRecord(properties.uploadStatus),
   //     fetchStatus: new AsyncTaskStatusRecord(properties.fetchStatus)
   //   })

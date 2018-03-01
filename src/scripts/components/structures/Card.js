@@ -38,7 +38,11 @@ export const CardWrapper = styled.div`
   width: ${props => (props.full ? '64%' : '33%')};
 
   @media (max-width: 1280px) {
-    margin: 0 0 40px;
+    margin-bottom: 40px;
+    margin-left: ${props =>
+    props.full || props.fullAtFirstBreak ? '0px' : null};
+    margin-right: ${props =>
+    props.full || props.fullAtFirstBreak ? '0px' : null};
     min-width: ${props => (!props.full ? '295px' : null)};
     min-width: ${props => (props.withFull ? 'initial' : null)};
     width: ${props => (props.fullAtFirstBreak ? '100%' : null)};
@@ -46,7 +50,7 @@ export const CardWrapper = styled.div`
     !props.fullAtFirstBreak && !props.full && !props.withFull ? '48%' : null};
   }
 
-  @media (max-width: 995px) {
+  @media (max-width: 1007px) {
     flex: 1 1 100%;
     max-width: initial;
     margin: 0 0 25px;
