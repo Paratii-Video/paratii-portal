@@ -224,20 +224,17 @@ const reducer = {
     if (!ipfsHash) {
       return state
     }
-    return state
-      .setIn([payload.id, 'ipfsHash'], ipfsHash)
-      .setIn(
-        [payload.id, 'transcodingStatus'],
-        new AsyncTaskStatusRecord({
-          name: 'success',
-          data: new DataStatusRecord({
-            ipfsHash,
-            result: Immutable.fromJS(payload.result),
-            progress: 100
-          })
+    return state.setIn([payload.id, 'ipfsHash'], ipfsHash).setIn(
+      [payload.id, 'transcodingStatus'],
+      new AsyncTaskStatusRecord({
+        name: 'success',
+        data: new DataStatusRecord({
+          ipfsHash,
+          result: Immutable.fromJS(payload.result),
+          progress: 100
         })
-      )
-      .setIn([payload.id, 'duration'], payload.duration)
+      })
+    )
   },
   [TRANSCODING_FAILURE]: (
     state: VideoRecordMap,

@@ -10,7 +10,11 @@ import {
   getPlayerCurrentBufferedTimeSeconds,
   getPlayerCurrentVolume
 } from 'selectors/index'
-import { getPlayingVideo } from 'selectors/PlayerSelectors'
+import {
+  getPlayingVideo,
+  getFormattedCurrentTime,
+  getFormattedDuration
+} from 'selectors/PlayerSelectors'
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState): Object => ({
@@ -19,7 +23,9 @@ const mapStateToProps = (state: RootState): Object => ({
   isFullscreen: getIsFullscreen(state),
   currentTimeSeconds: getPlayerCurrentTimeSeconds(state),
   currentBufferedTimeSeconds: getPlayerCurrentBufferedTimeSeconds(state),
-  currentVolume: getPlayerCurrentVolume(state)
+  currentVolume: getPlayerCurrentVolume(state),
+  formattedCurrentTime: getFormattedCurrentTime(state),
+  formattedDuration: getFormattedDuration(state)
 })
 
 export default connect(mapStateToProps)(PlayerControls)

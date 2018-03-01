@@ -115,6 +115,10 @@ const Themes = {
         barTo: Colors.purpleGradientTo,
         scrubber: Colors.white,
         base: Colors.grayLight
+      },
+      controls: {
+        background: Colors.black,
+        time: Colors.white
       }
     }
   }

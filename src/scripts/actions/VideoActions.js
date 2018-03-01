@@ -32,7 +32,8 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
       videoInfo.id = videoInfo._id
     }
     if (videoInfo && videoInfo.id) {
-      dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
+      const { duration, ...videoInfoToSave } = videoInfo
+      dispatch(videoFetchSuccess(new VideoRecord(videoInfoToSave)))
       dispatch(playerVideoSelect(videoInfo.id))
     }
   } catch (error) {

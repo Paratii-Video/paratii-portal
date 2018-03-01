@@ -21,7 +21,9 @@ type Props = {
   onVolumeChange: (percentage: number) => void,
   onToggleMute: (mute: boolean) => void,
   onScrub: (percentage: number) => void,
-  toggleFullscreen: (goToFullscreen: boolean) => void
+  toggleFullscreen: (goToFullscreen: boolean) => void,
+  formattedCurrentTime: string,
+  formattedDuration: string
 }
 
 type State = {
@@ -39,7 +41,7 @@ const Controls = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: center;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  background: ${({ theme }) => theme.colors.VideoPlayer.controls.background};
   transform: translateY(
     ${({ transitionState }) => {
     switch (transitionState) {
@@ -109,6 +111,7 @@ const LeftButtons = styled.div`
   flex: 1 1 0;
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   `
 
 const RightButtons = styled.div`
@@ -116,6 +119,11 @@ const RightButtons = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  `
+
+const Time = styled.div`
+  color: ${({ theme }) => theme.colors.VideoPlayer.controls.time};
+  margin-right: ${CONTROLS_SPACING};
   `
 
 const VolumeBarWrapper = styled.div`
@@ -213,6 +221,8 @@ class PlayerControls extends Component<Props, State> {
       transitionState,
       currentTimeSeconds,
       currentBufferedTimeSeconds,
+      formattedCurrentTime,
+      formattedDuration,
       video
     } = this.props
     const { scrubbingPositionPercentage } = this.state
@@ -255,6 +265,7 @@ class PlayerControls extends Component<Props, State> {
                 onClick={togglePlayPause}
               />
             </ControlButtonWrapper>
+            <Time>{`${formattedCurrentTime}/${formattedDuration}`}</Time>
           </LeftButtons>
           <RightButtons>
             <ControlButtonWrapper>

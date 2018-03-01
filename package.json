@@ -130,6 +130,7 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "clappr": "0.2.78",
+    "hh-mm-ss": "^1.2.0",
     "hlsjs-ipfs-loader": "github:ya7ya/hlsjs-ipfs-loader#bd890b9e78f2c273fcb1dc4e1d43ad0afc69558c",
     "immutable": "^3.8.2",
     "ipfs": "github:ya7ya/js-ipfs#paratii/v0.27.6",
