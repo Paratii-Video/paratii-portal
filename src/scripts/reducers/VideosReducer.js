@@ -279,10 +279,16 @@ const reducer = {
     if (!payload || !payload.get('id')) {
       return state
     }
-    return state.set(
-      payload.id,
-      payload.set('fetchStatus', new AsyncTaskStatusRecord({ name: 'success' }))
+    payload = payload.set(
+      'fetchStatus',
+      new AsyncTaskStatusRecord({ name: 'success' })
     )
+    payload = payload.set(
+      'thumbnails',
+      payload.transcodingStatus.data.result.screenshots
+    )
+
+    return state.set(payload.id, payload)
   },
   [VIDEOS_FETCH_SUCCESS]: (
     state: VideoRecordMap,
