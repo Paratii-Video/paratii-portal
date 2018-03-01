@@ -85,7 +85,7 @@ const ProgressBar = styled.div`
   justify-content: flex-end;  
   align-items: center;
   background: linear-gradient(to right, ${({ theme }) => `${theme.colors.VideoPlayer.progress.barFrom}, ${theme.colors.VideoPlayer.progress.barTo}`});
-  ${/* sc-selector */ProgressIndicator} {
+  ${/* sc-custom */ProgressIndicator} {
     left: ${({ currentTime, totalDuration, scrubbingPositionPercentage }) => {
     if (scrubbingPositionPercentage) {
       return `calc(${Math.max(0, Math.min(scrubbingPositionPercentage, 100))}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
@@ -93,7 +93,7 @@ const ProgressBar = styled.div`
     return `calc(${!totalDuration ? 0 : Math.max(0, Math.min(100, (currentTime * 100 / totalDuration)))}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
   }};
   }
-  ${/* sc-selector */ProgressBuffer} {
+  ${/* sc-custom */ProgressBuffer} {
     flex-basis: ${({ bufferTime, totalDuration }) => 100 - (!totalDuration ? 0 : Math.max(0, Math.min(100, bufferTime * 100 / totalDuration)))}%
   }
   `
