@@ -31,7 +31,7 @@ const Wrapper = CardContainer.extend`
 
   @media (max-width: 1280px) {
     justify-content: ${props => (props.padding ? 'space-between' : 'center')};
-    padding: ${props => (props.padding ? '0 2%' : '0')};
+    padding: ${props => (props.padding ? '0 5%' : '0')};
   }
 `
 
