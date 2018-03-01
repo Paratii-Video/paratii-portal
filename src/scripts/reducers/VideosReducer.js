@@ -286,6 +286,7 @@ const reducer = {
     payload = payload.set(
       'thumbnails',
       (payload.transcodingStatus &&
+        payload.transcodingStatus.data.result &&
         payload.transcodingStatus.data.result.screenshots) ||
         []
     )
@@ -302,7 +303,8 @@ const reducer = {
           mergingVideos[_id] = new VideoRecord({
             ...videoProps,
             thumbnails:
-              (videoProps.transcodingStatus &&
+              (payload.transcodingStatus &&
+                payload.transcodingStatus.data.result &&
                 videoProps.transcodingStatus.data.result.screenshots) ||
               [],
             id: _id
