@@ -17,7 +17,7 @@ import {
   TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE,
   VIDEOFETCH_ERROR,
-  VIDEOFETCH_SUCCESS
+  VIDEO_FETCH_SUCCESS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import {
@@ -1409,7 +1409,7 @@ describe('Video Reducer', () => {
       })
     })
   })
-  describe('VIDEOFETCH_SUCCESS', () => {
+  describe('VIDEO_FETCH_SUCCESS', () => {
     it('should add a new video to an empty store', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
@@ -1419,7 +1419,7 @@ describe('Video Reducer', () => {
         ipfsHash: 'q999'
       })
       store.dispatch({
-        type: VIDEOFETCH_SUCCESS,
+        type: VIDEO_FETCH_SUCCESS,
         payload: newVideo
       })
       expect(store.getState().toJS()).to.deep.equal({
@@ -1439,7 +1439,7 @@ describe('Video Reducer', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
       store.dispatch({
-        type: VIDEOFETCH_SUCCESS
+        type: VIDEO_FETCH_SUCCESS
       })
       expect(store.getState().toJS()).to.deep.equal({})
     })
@@ -1452,7 +1452,7 @@ describe('Video Reducer', () => {
         ipfsHash: 'q999'
       })
       store.dispatch({
-        type: VIDEOFETCH_SUCCESS,
+        type: VIDEO_FETCH_SUCCESS,
         payload: newVideo
       })
       expect(store.getState().toJS()).to.deep.equal({})
@@ -1499,7 +1499,7 @@ describe('Video Reducer', () => {
         }
       })
       store.dispatch({
-        type: VIDEOFETCH_SUCCESS,
+        type: VIDEO_FETCH_SUCCESS,
         payload: newVideo
       })
       expect(store.getState().toJS()).to.deep.equal({
