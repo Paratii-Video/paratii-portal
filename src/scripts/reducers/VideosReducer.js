@@ -320,12 +320,12 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<Array<VideoRecord>>
   ): VideoRecordMap =>
-    // the payload contains a list of videos from the database
-    // that need to be converted into immutable objects
     state.merge(
       payload.reduce(
         (mergingVideos: Object, { _id, ...videoProps }: Object): Object => {
           videoProps.id = _id
+          // the payload contains a list of videos from the database
+          // that need to be converted into immutable objects
           // FIXME:  also do this for the VIDEO_FETCH_SUCCESS above
           mergingVideos[_id] = castRecordFromDbAsImmutable(videoProps)
           return mergingVideos
