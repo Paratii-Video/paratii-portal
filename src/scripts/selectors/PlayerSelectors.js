@@ -49,13 +49,9 @@ export const getFormattedDuration: (
     const rawDuration: number =
       (playingVideo && playingVideo.get('duration')) || 0
     const roundedDuration: number = Math.floor(rawDuration)
-    return (
-      (playingVideo &&
-        TimeFormat.fromS(
-          roundedDuration,
-          roundedDuration >= 3600 ? 'hh:mm:ss' : 'mm:ss'
-        )) ||
-      ''
+    return TimeFormat.fromS(
+      roundedDuration,
+      roundedDuration >= 3600 ? 'hh:mm:ss' : 'mm:ss'
     )
   }
 )

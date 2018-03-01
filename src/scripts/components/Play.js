@@ -483,7 +483,10 @@ class Play extends Component<Props, State> {
               this.wrapperRef = ref
             }}
           >
-            <Transition in={this.state.shouldShowVideoOverlay} timeout={0}>
+            <Transition
+              in={this.state.shouldShowVideoOverlay || true}
+              timeout={0}
+            >
               {(transitionState: ?string) => (
                 <OverlayWrapper
                   onMouseLeave={this.onMouseLeave}
@@ -536,21 +539,21 @@ class Play extends Component<Props, State> {
                     target="_blank"
                     anchor
                   >
-                    <ShareLinkIcon src="/assets/assets/svg/icons-share-telegram.svg" />
+                    <ShareLinkIcon src="/assets/svg/icons-share-telegram.svg" />
                   </ShareLink>
                   <ShareLink
                     href={this.getTwitterHref()}
                     target="_blank"
                     anchor
                   >
-                    <ShareLinkIcon src="/assets/assets/svg/icons-share-twitter.svg" />
+                    <ShareLinkIcon src="/assets/svg/icons-share-twitter.svg" />
                   </ShareLink>
                   <ShareLink
                     href={this.getWhatsAppMobileHref()}
                     target="_blank"
                     anchor
                   >
-                    <ShareLinkIcon src="/assets/assets/svg/icons-share-whatsapp.svg" />
+                    <ShareLinkIcon src="/assets/svg/icons-share-whatsapp.svg" />
                   </ShareLink>
                 </ShareButtons>
               </ShareOverlay>

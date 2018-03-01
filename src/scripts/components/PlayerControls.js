@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
 import VolumeBar from 'components/widgets/VolumeBar'
 import IconButton from 'components/foundations/buttons/IconButton'
+import Colors from 'components/foundations/base/Colors'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
 import type { TransitionState } from 'types/ApplicationTypes'
@@ -107,14 +108,14 @@ const ControlButtons = styled.div`
   height: ${CONTROL_BUTTONS_HEIGHT};
   `
 
-const LeftButtons = styled.div`
+const LeftControls = styled.div`
   flex: 1 1 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   `
 
-const RightButtons = styled.div`
+const RightControls = styled.div`
   flex: 1 1 0;
   display: flex;
   justify-content: flex-end;
@@ -256,9 +257,10 @@ class PlayerControls extends Component<Props, State> {
           />
         </ProgressBar>
         <ControlButtons>
-          <LeftButtons>
+          <LeftControls>
             <ControlButtonWrapper>
               <IconButton
+                color={Colors.purple}
                 icon={`/assets/img/${
                   isPlaying ? 'pause-icon' : 'play-icon'
                 }.svg`}
@@ -266,8 +268,8 @@ class PlayerControls extends Component<Props, State> {
               />
             </ControlButtonWrapper>
             <Time>{`${formattedCurrentTime} / ${formattedDuration}`}</Time>
-          </LeftButtons>
-          <RightButtons>
+          </LeftControls>
+          <RightControls>
             <ControlButtonWrapper>
               <IconButton
                 icon={`/assets/img/${
@@ -294,7 +296,7 @@ class PlayerControls extends Component<Props, State> {
                 }}
               />
             </ControlButtonWrapper>
-          </RightButtons>
+          </RightControls>
         </ControlButtons>
       </Controls>
     )
