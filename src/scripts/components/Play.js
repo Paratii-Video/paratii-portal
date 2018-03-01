@@ -477,10 +477,7 @@ class Play extends Component<Props, State> {
               this.wrapperRef = ref
             }}
           >
-            <Transition
-              in={this.state.shouldShowVideoOverlay || true}
-              timeout={0}
-            >
+            <Transition in={this.state.shouldShowVideoOverlay} timeout={0}>
               {(transitionState: ?string) => (
                 <OverlayWrapper
                   onMouseLeave={this.onMouseLeave}
