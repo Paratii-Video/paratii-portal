@@ -45,10 +45,10 @@ First of all, you need to install `paratii-db` on your system.
 You will need 4 different consoles, and you need to start the processes in the exact order given here:
 
 
-    1. yarn run parity
-    1. yarn run build:dev
-    1. yarn run server:dev
-    1. In the directory where you installed paratii-db, run `yarn run dev`
+1. `yarn run parity`
+2. `yarn run build:dev`
+3. `yarn run server:dev`
+4. In the directory where you installed paratii-db, run `yarn run dev`
 
 When all these process are are running, y
 the application should be available on `http://localhost:8080/`
