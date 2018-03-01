@@ -36,7 +36,7 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
       dispatch(playerVideoSelect(videoInfo.id))
     }
   } catch (error) {
-    dispatch(videoFetchError({ id: id, error: error }))
+    dispatch(videoFetchError(new VideoRecord({ id: id, error: error })))
   }
   return videoInfo
 }

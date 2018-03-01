@@ -224,6 +224,7 @@ const reducer = {
     if (!ipfsHash) {
       return state
     }
+    console.log(payload.result.screenshots)
     return state
       .setIn([payload.id, 'ipfsHash'], ipfsHash)
       .setIn(
@@ -239,6 +240,7 @@ const reducer = {
         })
       )
       .setIn([payload.id, 'duration'], payload.duration)
+      .setIn([payload.id, 'thumbnails'], payload.result.screenshots)
   },
   [TRANSCODING_FAILURE]: (
     state: VideoRecordMap,

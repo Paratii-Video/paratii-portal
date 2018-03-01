@@ -330,7 +330,7 @@ class VideoForm extends Component<Props, Object> {
             />
             <Textarea
               id="input-video-description"
-              value={this.state.description}
+              value={video.description}
               onChange={e => this.handleInputChange('description', e)}
               label="Description"
               rows="1"

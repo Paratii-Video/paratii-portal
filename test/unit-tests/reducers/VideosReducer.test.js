@@ -25,6 +25,7 @@ import {
   DataStatusRecord
 } from 'records/AsyncTaskStatusRecord'
 import {
+  getDefaultResultStatus,
   getDefaultVideo,
   getDefaultAsyncTaskStatus,
   getDefaultDataStatus
@@ -998,7 +999,10 @@ describe('Video Reducer', () => {
             ...getDefaultAsyncTaskStatus(),
             name: 'requested',
             data: {
-              ...getDefaultDataStatus()
+              ...getDefaultDataStatus(),
+              result: {
+                ...getDefaultResultStatus()
+              }
             }
           }
         }
@@ -1626,7 +1630,10 @@ describe('Video Reducer', () => {
             name: 'failed',
             data: {
               ...getDefaultDataStatus(),
-              error: 'bazbar'
+              error: 'bazbar',
+              result: {
+                ...getDefaultResultStatus()
+              }
             }
           }
         }
