@@ -232,7 +232,7 @@ class VideoOverlay extends Component<Props, State> {
                 <ShareButton
                   onClick={(e: Object) => {
                     e.stopPropagation()
-                    toggleShareModal()
+                    toggleShareModal(e)
                   }}
                 >
                   {!this.props.showShareModal && (

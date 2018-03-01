@@ -47,7 +47,7 @@ export type ParatiiLibConfig = {
 }
 
 type EventEmitter = {
-  on: (eventType: string, callback: (e: Object) => void) => void
+  on: (eventType: string, callback: (any) => void) => void
 }
 
 // TODO move this into paratii-mediaplayer repo
@@ -69,6 +69,9 @@ export type ClapprPlayer = EventEmitter & {
   isPlaying: () => boolean,
   play: () => void,
   pause: () => void,
+  mute: () => void,
+  unmute: () => void,
+  setVolume: (percentage: number) => void,
   remove: () => void,
   seek: (time: number) => void
 }

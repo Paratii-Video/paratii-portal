@@ -270,9 +270,11 @@ class Play extends Component<Props, State> {
 
   scrubVideo = (percentage: number): void => {
     const { video } = this.props
-    const videoDuration: number = video.get('duration')
-    if (this.player && videoDuration) {
-      this.player.seek(videoDuration * percentage / 100)
+    if (video) {
+      const videoDuration: number = video.get('duration')
+      if (this.player && videoDuration) {
+        this.player.seek(videoDuration * percentage / 100)
+      }
     }
   }
 
@@ -334,6 +336,7 @@ class Play extends Component<Props, State> {
       !!document.fullscreenElement ||
         !!document.webkitFullscreenElement ||
         !!document.mozFullScreenElement ||
+        // $FlowFixMe
         !!document.msFullscreenElement
     )
   }
@@ -365,13 +368,11 @@ class Play extends Component<Props, State> {
 
   componentWillReceiveProps (nextProps: Props): void {
     const { video } = this.props
-    if (nextProps.video) {
-      const fetchStatus = nextProps.video.getIn(['fetchStatus', 'name'])
+    const { video: nextVideo } = nextProps
+    if (nextVideo) {
+      const fetchStatus = nextVideo.getIn(['fetchStatus', 'name'])
       if (nextProps.video && fetchStatus === 'success') {
-        if (
-          !video ||
-          video.get('ipfsHash') !== nextProps.video.get('ipfsHash')
-        ) {
+        if (!video || video.get('ipfsHash') !== nextVideo.get('ipfsHash')) {
           this.createPlayer(nextProps.video.ipfsHash)
         }
       } else if (fetchStatus === 'failed') {
@@ -421,45 +422,50 @@ class Play extends Component<Props, State> {
     return this.state.mouseInOverlay
   }
 
-  portalUrl () {
-    // FIXME: do not hardcode this heres
+  getPortalUrl () {
+    // FIXME: do not hardcode this here
     return 'https://portal.paratii.video'
   }
-  facebook () {
-    if (this.props.video) {
+  getFacebookHref () {
+    const { video } = this.props
+    if (video) {
       var baseurl = 'https://www.facebook.com/sharer/sharer.php?u='
-      return baseurl + this.portalUrl() + '/play/' + this.props.video.id
+      return baseurl + this.getPortalUrl() + '/play/' + video.id
     }
   }
-  twitter () {
-    if (this.props.video) {
-      var baseurl = 'https://twitter.com/intent/tweet'
-      var url = '?url=' + this.portalUrl() + '/play/' + this.props.video.id
-      var text = '&text=🎬 Worth a watch: ' + this.props.video.title
+  getTwitterHref () {
+    const { video } = this.props
+    if (video) {
+      const baseurl = 'https://twitter.com/intent/tweet'
+      const url = '?url=' + this.getPortalUrl() + '/play/' + video.id
+      const text = '&text=🎬 Worth a watch: ' + video.title
       return baseurl + url + text
     }
   }
-  whatsapp () {
-    if (this.props.video) {
-      var baseurl = 'whatsapp://send?text='
-      var url = this.portalUrl() + '/play/' + this.props.video.id
-      var text = '🎬 Worth a watch: ' + this.props.video.title + ' '
+  getWhatsAppMobileHref () {
+    const { video } = this.props
+    if (video) {
+      const baseurl = 'whatsapp://send?text='
+      const url = this.getPortalUrl() + '/play/' + video.id
+      const text = '🎬 Worth a watch: ' + video.title + ' '
       return baseurl + text + url
     }
   }
-  whatsappDesktop () {
-    if (this.props.video) {
-      var baseurl = 'https://web.whatsapp.com/send?text='
-      var url = this.portalUrl() + '/play/' + this.props.video.id
-      var text = '🎬 Worth a watch: ' + this.props.video.title + ' '
+  getWhatsAppDesktopHref () {
+    const { video } = this.props
+    if (video) {
+      const baseurl = 'https://web.whatsapp.com/send?text='
+      const url = this.getPortalUrl() + '/play/' + video.id
+      const text = '🎬 Worth a watch: ' + video.title + ' '
       return baseurl + text + url
     }
   }
-  telegram () {
-    if (this.props.video) {
-      var baseurl = 'https://t.me/share/url'
-      var url = '?url=' + this.portalUrl() + '/play/' + this.props.video.id
-      var text = '&text=🎬 Worth a watch: ' + this.props.video.title
+  getTelegramHref () {
+    const { video } = this.props
+    if (video) {
+      const baseurl = 'https://t.me/share/url'
+      const url = '?url=' + this.getPortalUrl() + '/play/' + video.id
+      const text = '&text=🎬 Worth a watch: ' + video.title
       return baseurl + url + text
     }
   }
@@ -515,21 +521,35 @@ class Play extends Component<Props, State> {
                 </CloseButton>
                 <ShareTitle small />
                 <AnchorLink
-                  href={this.portalUrl() + '/play/' + this.props.video.id}
+                  href={
+                    this.getPortalUrl() + '/play/' + ((video && video.id) || '')
+                  }
                   target="_blank"
                   anchor
                   white
                 >
-                  {this.portalUrl() + '/play/' + this.props.video.id}
+                  {this.getPortalUrl() + '/play/' + ((video && video.id) || '')}
                 </AnchorLink>
                 <ShareButtons>
-                  <ShareLink href={this.telegram()} target="_blank" anchor>
+                  <ShareLink
+                    href={this.getTelegramHref()}
+                    target="_blank"
+                    anchor
+                  >
                     <ShareLinkIcon src="/assets/assets/svg/icons-share-telegram.svg" />
                   </ShareLink>
-                  <ShareLink href={this.twitter()} target="_blank" anchor>
+                  <ShareLink
+                    href={this.getTwitterHref()}
+                    target="_blank"
+                    anchor
+                  >
                     <ShareLinkIcon src="/assets/assets/svg/icons-share-twitter.svg" />
                   </ShareLink>
-                  <ShareLink href={this.whatsapp()} target="_blank" anchor>
+                  <ShareLink
+                    href={this.getWhatsAppMobileHref()}
+                    target="_blank"
+                    anchor
+                  >
                     <ShareLinkIcon src="/assets/assets/svg/icons-share-whatsapp.svg" />
                   </ShareLink>
                 </ShareButtons>
