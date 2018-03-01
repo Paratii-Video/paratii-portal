@@ -284,6 +284,18 @@ class Play extends Component<Props, State> {
     }
   }
 
+  toggleMute = (mute: boolean): void => {
+    const { player } = this
+
+    if (player) {
+      if (mute) {
+        player.mute()
+      } else {
+        player.unmute()
+      }
+    }
+  }
+
   onMouseMove = debounce(
     (): void => {
       this.lastMouseMove = Date.now()
@@ -482,6 +494,7 @@ class Play extends Component<Props, State> {
                     showShareModal={this.state.showShareModal}
                     onScrub={this.scrubVideo}
                     onVolumeChange={this.changeVolume}
+                    onToggleMute={this.toggleMute}
                     transitionState={transitionState}
                     togglePlayPause={this.togglePlayPause}
                     toggleFullscreen={(goToFullscreen: boolean): void => {

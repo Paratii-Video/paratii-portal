@@ -19,6 +19,7 @@ type Props = {
   currentBufferedTimeSeconds: number,
   currentVolume: number,
   onVolumeChange: (percentage: number) => void,
+  onToggleMute: (mute: boolean) => void,
   onScrub: (percentage: number) => void,
   toggleFullscreen: (goToFullscreen: boolean) => void
 }
@@ -119,12 +120,16 @@ const RightButtons = styled.div`
 
 const VolumeBarWrapper = styled.div`
   width: 200px;
+  margin-left: calc(-${CONTROLS_SPACING} / 2);
   margin-right: ${CONTROLS_SPACING};
   `
 
 const ControlButtonWrapper = styled.div`
   width: 25px;
   height: 25px;
+  &:not(:last-child) {
+    margin-right: ${CONTROLS_SPACING};
+  }
   `
 
 class PlayerControls extends Component<Props, State> {
@@ -189,12 +194,19 @@ class PlayerControls extends Component<Props, State> {
     return (video && video.get('title')) || 'Video Title'
   }
 
+  isMuted (): boolean {
+    const { currentVolume } = this.props
+
+    return currentVolume === 0
+  }
+
   render () {
     const {
       isPlaying,
       isFullscreen,
       onScrub,
       onVolumeChange,
+      onToggleMute,
       currentVolume,
       togglePlayPause,
       toggleFullscreen,
@@ -245,6 +257,16 @@ class PlayerControls extends Component<Props, State> {
             </ControlButtonWrapper>
           </LeftButtons>
           <RightButtons>
+            <ControlButtonWrapper>
+              <IconButton
+                icon={`/assets/img/${
+                  currentVolume === 0 ? 'mute-icon' : 'volume-icon'
+                }.svg`}
+                onClick={() => {
+                  onToggleMute(!this.isMuted())
+                }}
+              />
+            </ControlButtonWrapper>
             <VolumeBarWrapper>
               <VolumeBar
                 onVolumeChange={onVolumeChange}
