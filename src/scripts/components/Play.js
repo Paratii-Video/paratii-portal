@@ -51,10 +51,10 @@ const Wrapper = styled.div`
   }
 
   @media (max-width: 930px) {
-    height: 0;
+    height: ${props => (props.isEmbed ? '100%' : '0')};
     margin: 0;
-    padding-bottom: 56.25%;
-    padding-top: 30px;
+    padding-bottom: ${props => (props.isEmbed ? null : '56.25%')};
+    padding-top: ${props => (props.isEmbed ? null : '30px')};
     width: 100%;
   }
 `
