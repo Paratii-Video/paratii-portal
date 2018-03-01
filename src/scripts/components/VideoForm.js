@@ -7,7 +7,7 @@ import UserRecord from 'records/UserRecords'
 import Card from './structures/Card'
 import Button from './foundations/Button'
 import TextField from './widgets/forms/TextField'
-import Textarea from './widgets/forms/TextareaField'
+// import Textarea from './widgets/forms/TextareaField'
 import RadioCheck, {
   RadioWrapper,
   RadioTitle
@@ -231,10 +231,7 @@ class VideoForm extends Component<Props, Object> {
     // console.log(video.getIn(['transcodingStatus', 'data', 'result', 'screenshots']))
     if (!this.state.id) {
       return (
-        <Card>
-          No video selected!
-          {this.props.selectedVideo.id}
-        </Card>
+        <Card title="No video selected!">{this.props.selectedVideo.id}</Card>
       )
     }
 
@@ -326,7 +323,7 @@ class VideoForm extends Component<Props, Object> {
               onChange={e => this.handleInputChange('title', e)}
               margin="0 0 30px"
             />
-            <Textarea
+            <TextField
               id="input-video-description"
               value={video.description}
               onChange={e => this.handleInputChange('description', e)}

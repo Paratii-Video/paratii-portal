@@ -43,7 +43,7 @@ const Typography = {
     },
     share: {
       title: '1.5rem',
-      link: '1.5rem'
+      link: '1.3rem'
     }
   },
   radio: {
