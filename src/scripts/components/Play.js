@@ -328,7 +328,7 @@ class Play extends Component<Props, State> {
         poster: `https://gateway.paratii.video/ipfs/${video.ipfsHash}/${
           video.thumbnails[0]
         }`,
-        mimeType: 'video/mp4',
+        mimeType: 'application/x-mpegURL',
         ipfsHash: video.ipfsHash,
         autoPlay: true
       })
