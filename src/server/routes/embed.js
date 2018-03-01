@@ -77,8 +77,6 @@ module.exports = async (req: $Request, res: $Response) => {
         <meta property="twitter:image" content="${thumbnailUrl}" />
         <meta property="twitter:player:stream" content="${ipfsSource}" />
         <meta property="twitter:player" content="${embedUrl}" />
-        <meta property="og:video:url" content="${ipfsSource}" />
-        <meta property="og:video:secure_url" content="${ipfsSource}" />
         <meta property="og:video:type" content="video/mp4">
         <meta property="og:video:width" content="${width}" />
         <meta property="og:video:height" content="${height}" />
@@ -87,6 +85,10 @@ module.exports = async (req: $Request, res: $Response) => {
         <meta property="og:title" content="${video.title}" />
         <meta property="og:image" content="${thumbnailUrl}" />
         <meta property="og:description" content="${video.description}" />
+
+        <meta property="og:video:url" content="${embedUrl}">
+        <meta property="og:video:secure_url" content="${embedUrl}">
+        <meta property="og:video:type" content="text/html">
         <style>
           html {
             font-size: 16px;
