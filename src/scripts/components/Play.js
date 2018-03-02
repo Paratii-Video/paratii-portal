@@ -213,7 +213,7 @@ class Play extends Component<Props, State> {
       player.on(Events.PLAYER_VOLUMEUPDATE, (volume: number): void => {
         updateVolume(volume)
       })
-      const playback = player.core.getCurrentPlayback()
+      const playback = player.core && player.core.getCurrentPlayback()
       if (playback && video) {
         playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
         playback.on(

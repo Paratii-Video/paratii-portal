@@ -56,7 +56,7 @@ type ClapprCore = EventEmitter & {}
 type ClapprContainer = EventEmitter & {}
 
 export type ClapprPlayer = EventEmitter & {
-  core: {
+  core?: {
     getCurrentPlayback: () => ClapprCore,
     getCurrentContainer: () => ClapprContainer,
     mediaControl: {

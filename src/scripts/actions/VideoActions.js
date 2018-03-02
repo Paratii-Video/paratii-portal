@@ -26,9 +26,6 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
   try {
     videoInfo = await paratii.core.vids.get(id)
 
-    console.log('videoInfo')
-    console.log(videoInfo)
-
     if (videoInfo) {
       videoInfo.id = videoInfo._id
     }
@@ -48,28 +45,26 @@ export const fetchOwnedVideos = () => async (
   dispatch: Dispatch<*>,
   getState: () => RootState
 ) => {
-  console.log('FETCH OWNED VIDEOS')
   const address: string = paratii.config.account.address
   const ownedVideos: Array<Object> = await paratii.core.vids.search({
     owner: address
   })
   const filteredOwnedVideos = []
   for (let i = 0; i < ownedVideos.length; i++) {
-    const video = ownedVideos[i]
+    const { duration, ...videoInfoToSave } = ownedVideos[i]
     // only show videos that have been uploaded
-    // FIXME: use status codes or constants, not strings like 'uploaded to remote'
+    // FIXME: use status codes or constants, not strings like 'uploaded' to 'remote'
     if (
-      video.transcodingStatus &&
-      video.uploadStatus.name === 'uploaded to remote'
+      videoInfoToSave.transcodingStatus &&
+      videoInfoToSave.uploadStatus.name === 'uploaded to remote'
     ) {
-      filteredOwnedVideos.push(video)
+      filteredOwnedVideos.push(videoInfoToSave)
 
-      if (video.transcodingStatus.name !== 'success') {
-        console.log('Restarting to transcode' + video._id)
+      if (videoInfoToSave.transcodingStatus.name !== 'success') {
         transcodeVideo({
-          id: video._id,
-          hash: video.ipfsHashOrig,
-          size: video.filesize
+          id: videoInfoToSave._id,
+          hash: videoInfoToSave.ipfsHashOrig,
+          size: videoInfoToSave.filesize
         })(dispatch, getState)
       }
     }
