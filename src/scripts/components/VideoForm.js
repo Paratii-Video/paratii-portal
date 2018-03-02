@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
 
+import ModalStake from 'containers/ModalStakeContainer'
 import Card from './structures/Card'
 import Button from './foundations/Button'
-import Text from './foundations/Text'
 import TextField from './widgets/forms/TextField'
 import Textarea from './widgets/forms/TextareaField'
 import RadioCheck, {
@@ -169,6 +169,7 @@ class VideoForm extends Component<Props, Object> {
 
     this.handleInputChange = this.handleInputChange.bind(this)
     this.onPublishVideo = this.onPublishVideo.bind(this)
+    this.onPublishSubmit = this.onPublishSubmit.bind(this)
     this.onSaveData = this.onSaveData.bind(this)
     this.publishVideo = this.publishVideo.bind(this)
     this.saveData = this.saveData.bind(this)
@@ -183,6 +184,18 @@ class VideoForm extends Component<Props, Object> {
   onPublishVideo (e: Object) {
     e.preventDefault()
     this.publishVideo(true)
+  }
+
+  onPublishSubmit (e: Object) {
+    e.preventDefault()
+
+    this.props.showModal(
+      <ModalStake
+        videoId={this.state.id}
+        onSuccess={this.handlePublish}
+        user={this.props.user}
+      />
+    )
   }
 
   onSaveData (e: Object) {
@@ -272,7 +285,7 @@ class VideoForm extends Component<Props, Object> {
           <Button
             id="video-submit"
             type="submit"
-            onClick={this.onPublishVideo}
+            onClick={this.onPublishSubmit}
             disabled={!isPublishable}
             purple
           >
@@ -370,9 +383,6 @@ class VideoForm extends Component<Props, Object> {
                 Paid (not available yet)
               </RadioCheck>
             </RadioWrapper>
-            <Text purple small>
-              {this.props.selectedVideo.storageStatus.name}
-            </Text>
             <ButtonContainer>
               {publishButton}
               {saveButton}
