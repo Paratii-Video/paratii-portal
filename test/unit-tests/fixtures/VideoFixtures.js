@@ -26,7 +26,7 @@ export const getDefaultVideo = () => ({
   description: '',
   filename: null,
   filesize: null,
-  duration: null,
+  duration: 0,
   author: '',
   free: '',
   published: null,
