@@ -7,7 +7,7 @@ import Button from 'components/foundations/Button'
 import UserRecord from 'records/UserRecords'
 
 type Props = {
-  videoId: String,
+  videoId: Object,
   user: UserRecord,
   onSuccess: () => void
 }
@@ -59,7 +59,7 @@ class ModalStake extends Component<Props, Object> {
 
     paratii.eth.tcr
       .checkEligiblityAndApply(
-        this.props.videoId.toString(),
+        this.props.videoId.id.toString(),
         paratii.eth.web3.utils.toWei(5 + '')
       )
       .then(resp => {
@@ -69,7 +69,7 @@ class ModalStake extends Component<Props, Object> {
           })
           this.props.onSuccess()
           console.log(
-            `video ${this.props.videoId.toString()} successfully applied to TCR Listing`
+            `video ${this.props.videoId.id.toString()} successfully applied to TCR Listing`
           )
         } else {
           const msg =

@@ -17,6 +17,18 @@ import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
 import { prettyBytes } from 'utils/AppUtils'
 
+type Props = {
+  selectedVideo: VideoRecord,
+  canSubmit: boolean,
+  progress: Number,
+  saveVideoInfo: Object => Object,
+  showModal: (View: Object) => void,
+  closeModal: () => void,
+  openModal: () => void,
+  user: UserRecord,
+  balance: String
+}
+
 const VideoFormHeader = styled.div`
   border-bottom: 1px solid
     ${props => props.theme.colors.VideoForm.header.border};
@@ -137,18 +149,6 @@ const PublishLabel = styled.div`
   z-index: 1;
 `
 
-type Props = {
-  selectedVideo: VideoRecord,
-  canSubmit: boolean,
-  progress: Number,
-  saveVideoInfo: Object => Object,
-  showModal: (View: Object) => void,
-  closeModal: () => void,
-  openModal: () => void,
-  user: UserRecord,
-  balance: String
-}
-
 class VideoForm extends Component<Props, Object> {
   handleInputChange: (input: string, e: Object) => void
   onPublishVideo: (e: Object) => void
@@ -192,7 +192,8 @@ class VideoForm extends Component<Props, Object> {
   }
 
   publishVideo (publish: false) {
-    this.saveData(publish)
+    this.props.openModal('ModalStake')
+    // this.saveData(publish)
   }
 
   saveData (publish: false) {
@@ -219,18 +220,6 @@ class VideoForm extends Component<Props, Object> {
       })
     }
   }
-
-  // onSubmit (e: Object) {
-  //   e.preventDefault()
-  //
-  //   this.props.showModal(
-  //     <ModalStake
-  //       videoId={this.state.id}
-  //       onSuccess={this.handlePublish}
-  //       user={this.props.user}
-  //     />
-  //   )
-  // }
 
   render () {
     const video: VideoRecord = this.props.selectedVideo
@@ -318,7 +307,7 @@ class VideoForm extends Component<Props, Object> {
         <VideoFormWrapper>
           <Form
             onSubmit={this.onPublishVideo}
-            disabled={this.props.selectedVideo.storageStatus.name === 'running'}
+            // disabled={this.props.selectedVideo.storageStatus.name === 'running'}
           >
             <TextField
               id="video-id"

@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 
+import ModalStake from 'containers/ModalStakeContainer' // need to receive any content
+
 type Props = {
+  modalContent: string,
   showModal: boolean,
   closeModal: () => null
 }
@@ -79,9 +82,11 @@ class Modal extends Component<Props, void> {
               <use xlinkHref="#icon-close" />
             </SVG>
           </CloseButton>
-          <Content />
+          <Content>
+            {this.props.modalContent === 'ModalStake' && <ModalStake />}
+          </Content>
         </Container>
-        <Background show={this.props.showModal} />
+        <Background show={isVisible} />
       </Wrapper>
     )
   }

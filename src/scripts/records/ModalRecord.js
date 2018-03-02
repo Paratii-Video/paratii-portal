@@ -3,7 +3,7 @@
 import { Record as ImmutableRecord } from 'immutable'
 
 class ModalRecord extends ImmutableRecord({
-  modalContent: 'something',
+  modalContent: '',
   showModal: false
 }) {
   modalContent: string

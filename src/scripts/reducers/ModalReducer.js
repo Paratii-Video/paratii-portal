@@ -6,11 +6,15 @@ import { OPEN_MODAL, CLOSE_MODAL } from 'constants/ActionConstants'
 import type { Action } from 'types/ApplicationTypes'
 
 const reducer = {
-  [OPEN_MODAL]: (state: ModalRecord, action: Action<boolean>) => {
+  [OPEN_MODAL]: (state: ModalRecord, action: Action<string>) => {
     // content
     // type?
     // buttons?
-    return state.set('showModal', true)
+    console.log(action)
+    return state.merge({
+      modalContent: action.payload,
+      showModal: true
+    })
   },
   [CLOSE_MODAL]: (state: ModalRecord, action: Action<boolean>) => {
     return state.set('showModal', false)
