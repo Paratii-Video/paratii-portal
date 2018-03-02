@@ -16,7 +16,7 @@ jobs:
           # key: v1-dependencies-{{ checksum "yarn.lock" }}
           key: v1-dependencies-{{ checksum "package-lock.json" }}
       - run: yarn run quality
-      - run: yarn run unit-test
+      - run: yarn run unit-test-circle
       - run:
           command: yarn run parity
           background: true
