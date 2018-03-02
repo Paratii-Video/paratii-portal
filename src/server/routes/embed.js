@@ -1,49 +1,125 @@
 /* @flow */
 
 import type { $Request, $Response } from 'express'
+import { Paratii } from 'paratii-lib/dist/paratii'
+import { getParatiiConfig } from 'utils/AppUtils'
 
-module.exports = (req: $Request, res: $Response) => {
+const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
+
+const paratii = new Paratii(paratiiConfig)
+
+module.exports = async (req: $Request, res: $Response) => {
+  // $FlowFixMe
+  const route = req.route.path
+
+  if (process.env.NODE_ENV === 'development' && route === '/play/:id') {
+    // FIXME: this a way just for passing test
+    // this can be removed once we have paratii-db running on circleci
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+
+        </head>
+        <body>
+          <div id="root"></div>
+          <script type="text/javascript" src="/bundle.js"></script>
+        </body>
+      </html>
+    `)
+  }
   const { id } = req.params
-  const title = 'Great title'
-  const description = 'Cool video, please watch it.'
+  const video = await paratii.core.vids.get(id)
+  // TODO: reaise a 404 at this point
+
+  if (!video) {
+    throw new Error(`No video was found with this id: ${id}`)
+  }
+
+  console.log(video)
+  // TODO: we need a way to get the ipfs hash of a thumbnail. These should be saved inparatii-db
+  const ipfsHash = video.ipfsHash
+  const thumbName = video.transcodingStatus.data.result.screenshots[0]
   const thumbnailUrl =
-    'http://paratii.video/imagens/cropped-logo_colorido_horizontal.png'
+    'https://gateway.paratii.video/ipfs/' + ipfsHash + '/' + thumbName
+
   const url = `https://portal.paratii.video/play/${id}`
   const embedUrl = `https://portal.paratii.video/embed/${id}`
   const height = `1080`
   const width = `1920`
-  const ipfSource = `https://gateway.paratii.video/ipfs/QmSs64S5J8C9H6ZFYR44YGEB6pLq2SRLYe3MZdUoyNX7EH`
+  // this needs to be the has of a video - just as the thumbnail, we need to save these data from paratii-db
+  // FIXME: this must be ipfsHashOrig
+  const ipfsSource = `https://gateway.paratii.video/ipfs/` + video.ipfsHashOrig
+  let script = ''
+
+  switch (route) {
+    case '/embed/:id':
+      script = '<script type="text/javascript" src="/embed/bundle.js"></script>'
+      break
+    case '/play/:id':
+      script = '<script type="text/javascript" src="/bundle.js"></script>'
+      break
+  }
 
   res.send(`
     <!DOCTYPE html>
     <html>
       <head>
-        <title>${title}</title>
+        <title>${video.title}</title>
         <link rel="stylesheet" type="text/css" href="/embed/index.css">
-
+        <meta name="description" content="${video.description}" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta property="twitter:card" content="player" />
-        <meta property="twitter:title" content="${title}" />
+        <meta property="twitter:title" content="${video.title}" />
         <meta property="twitter:site" content="${url}">
         <meta property="twitter:player:width" content="490" />
         <meta property="twitter:player:height" content="280" />
         <meta property="twitter:image" content="${thumbnailUrl}" />
-        <meta property="twitter:player:stream" content="${ipfSource}" />
+        <meta property="twitter:player:stream" content="${ipfsSource}" />
         <meta property="twitter:player" content="${embedUrl}" />
-        <meta property="og:video:url" content="${ipfSource}" />
-        <meta property="og:video:secure_url" content="${ipfSource}" />
-        <meta property="og:video:type" content="video/mp4">
+        <meta property="og:video:url" content="${embedUrl}">
+        <meta property="og:video:secure_url" content="${embedUrl}">
+        <meta property="og:video:type" content="text/html">
         <meta property="og:video:width" content="${width}" />
         <meta property="og:video:height" content="${height}" />
         <meta property="og:type" content="video.other" />
-        <meta property="og:url" content="${url}" />
-        <meta property="og:title" content="${title}" />
+        <meta property="og:url" content="${embedUrl}" />
+        <meta property="og:title" content="${video.title}" />
         <meta property="og:image" content="${thumbnailUrl}" />
-        <meta property="og:description" content="${description}" />
+        <meta property="og:description" content="${video.description}" />
+
+
+        <style>
+          html {
+            font-size: 16px;
+          }
+
+          body {
+            background: #2E3133;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+          }
+
+          .main-loader {
+            background: #2E3133 url('/assets/img/paratii-loader.gif') no-repeat 50%;
+            background-size: cover;
+            height: 50px;
+            left: 50%;
+            position: fixed;
+            top: 50%;
+            transform: translate3d(-50%, -50%, 0);
+            width: 50px;
+          }
+        </style>
       </head>
       <body>
-        <div id="root"></div>
-        <script type="text/javascript" src="/embed/bundle.js"></script>
+        <noscript>
+          You need to enable JavaScript to run this app.
+        </noscript>
+        <div id="root">
+          <span class="main-loader"></span>
+        </div>
+        ${script}
       </body>
     </html>
   `)

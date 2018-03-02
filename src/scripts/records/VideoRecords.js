@@ -7,36 +7,51 @@ class Video extends ImmutableRecord({
   description: '',
   filename: null,
   filesize: null,
+  duration: null,
   id: '',
-  ipfsData: '',
   ipfsHashOrig: '',
   ipfsHash: '',
   owner: '',
   price: '',
-  thumbnailUrl: '',
+  thumbnails: [],
   title: '',
+  author: '',
+  free: '',
+  published: null,
   storageStatus: new AsyncTaskStatusRecord(),
   transcodingStatus: new AsyncTaskStatusRecord(),
   uploadStatus: new AsyncTaskStatusRecord(),
-  fetchStatus: new AsyncTaskStatusRecord(),
-  url: ''
+  fetchStatus: new AsyncTaskStatusRecord()
 }) {
+  // constructor (properties = {}) {
+  //   super({
+  //     ...properties,
+  //     storageStatus: new AsyncTaskStatusRecord(properties.storageStatus),
+  //     transcodingStatus: new AsyncTaskStatusRecord(
+  //       properties.transcodingStatus
+  //     ),
+  //     uploadStatus: new AsyncTaskStatusRecord(properties.uploadStatus),
+  //     fetchStatus: new AsyncTaskStatusRecord(properties.fetchStatus)
+  //   })
+  // }
   description: string
   filename: string
-  filesize: number
+  filesize: string
+  duration: string
   id: string
-  ipfsData: string
   ipfsHashOrig: string
   ipfsHash: string
   owner: string
   price: string
-  thumbnailUrl: string
+  thumbnails: [string]
   title: string
+  author: string
+  free: string
+  published: boolean
   storageStatus: AsyncTaskStatusRecord
   transcodingStatus: AsyncTaskStatusRecord
   uploadStatus: AsyncTaskStatusRecord
   fetchStatus: AsyncTaskStatusRecord
-  url: string
 }
 
 export default Video

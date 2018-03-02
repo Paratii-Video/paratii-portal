@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import Card from 'components/structures/Card'
+import Text from 'components/foundations/Text'
+import paratii from 'utils/ParatiiLib'
 
 type Props = {
   user: Object
@@ -7,12 +9,15 @@ type Props = {
 
 class Wallet extends Component<Props> {
   render () {
-    const balance = this.props.user.balances.ETH
+    const balance = this.props.user.balances.PTI
     return (
       <Card title="Wallet">
-        <p>
-          You have <b>{balance}</b> PTI
-        </p>
+        <Text>
+          Your address is <b>{paratii.config.account.address}</b>
+        </Text>
+        <Text>
+          You have <b>{paratii.eth.web3.utils.fromWei(balance)}</b> PTI
+        </Text>
       </Card>
     )
   }

@@ -3,11 +3,22 @@
 import { createSelector } from 'reselect'
 
 import { getSelectedUploaderVideoId, getVideos } from 'selectors/index'
+import paratii from 'utils/ParatiiLib'
 
-import type VideoRecord from 'records/VideoRecords'
+import VideoRecord from 'records/VideoRecords'
 import type { RootState, VideoRecordMap } from 'types/ApplicationTypes'
 
-/* Upload */
+export const getUploaderVideos: (
+  state: RootState
+) => VideoRecordMap = createSelector(
+  [getVideos],
+  (videos: VideoRecordMap): VideoRecordMap =>
+    videos.filter(
+      (video: VideoRecord): boolean =>
+        video.get('owner') === paratii.config.account.address
+    )
+)
+
 export const getSelectedUploaderVideo: (
   state: RootState
 ) => ?VideoRecord = createSelector(
@@ -19,17 +30,30 @@ export const getSelectedUploaderVideo: (
         return playerVideo
       }
     }
-
     return null
   }
 )
 
-export const getUploadProgress = createSelector(
-  [getSelectedUploaderVideo],
-  upload => {
-    return (upload && upload.getIn(['uploadStatus', 'data', 'progress'])) || 0
-  }
-)
+// export const getUploadProgress = createSelector(
+//   [getSelectedUploaderVideo],
+//   upload => {
+//     return (upload && parseInt(upload.getIn(['uploadStatus', 'data', 'progress']))) || 0
+//   }
+// )
+//
+// export const getTranscodingProgress = createSelector(
+//   [getSelectedUploaderVideo],
+//   upload => {
+//     return (upload && parseInt(upload.getIn(['transcodingStatus', 'data', 'progress']))) || 0
+//   }
+// )
+//
+// export const getTotalProgress = createSelector(
+//   [getSelectedUploaderVideo],
+//   upload => {
+//     return ((getUploadProgress() + getTranscodingProgress()) / 2) || 0
+//   }
+// )
 
 export const getIsUploading = createSelector(
   [getSelectedUploaderVideo],

@@ -1,3 +1,9 @@
+export const getDefaultResultStatus = () => ({
+  root: '',
+  duration: '',
+  screenshots: []
+})
+
 export const getDefaultDataStatus = () => ({
   id: '',
   title: '',
@@ -5,9 +11,10 @@ export const getDefaultDataStatus = () => ({
   owner: '',
   ipfsHash: '',
   ipfsHashOrig: '',
-  sizes: '',
+  result: getDefaultResultStatus(),
   progress: 0,
-  error: ''
+  error: '',
+  author: ''
 })
 
 export const getDefaultAsyncTaskStatus = () => ({
@@ -19,17 +26,19 @@ export const getDefaultVideo = () => ({
   description: '',
   filename: null,
   filesize: null,
+  duration: null,
+  author: '',
+  free: '',
+  published: null,
   id: '',
-  ipfsData: '',
   ipfsHashOrig: '',
   ipfsHash: '',
   owner: '',
   price: '',
-  thumbnailUrl: '',
+  thumbnails: [],
   title: '',
   storageStatus: getDefaultAsyncTaskStatus(),
   transcodingStatus: getDefaultAsyncTaskStatus(),
   uploadStatus: getDefaultAsyncTaskStatus(),
-  fetchStatus: getDefaultAsyncTaskStatus(),
-  url: ''
+  fetchStatus: getDefaultAsyncTaskStatus()
 })

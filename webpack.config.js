@@ -25,7 +25,7 @@ const definedVariables = {
   "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
 }
 
-const registryConfigPath = `./config/registry.json`
+const registryConfigPath = `/tmp/registry.json`
 
 if ((dev || test) && fs.existsSync(registryConfigPath)) {
   const registryConfig = require(registryConfigPath)
@@ -75,10 +75,10 @@ const config = {
     aliasFields: ["browser"]
   },
   node: {
-    net: 'empty',
-    tls: 'empty',
-    dns: 'empty'
-  },
+      net: 'empty',
+      tls: 'empty',
+      dns: 'empty'
+    },
   module: {
     loaders: [
       {

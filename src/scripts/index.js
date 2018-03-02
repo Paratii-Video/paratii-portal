@@ -10,7 +10,7 @@ import { getRoot } from 'utils/AppUtils'
 import createStore from 'scripts/createStore'
 import 'styles/app.scss'
 
-const store = createStore()
+export const store = createStore()
 
 ReactDOM.render(
   <Provider store={store}>

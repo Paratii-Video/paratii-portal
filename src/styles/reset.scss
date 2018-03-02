@@ -73,27 +73,6 @@ svg:not( :root ) {
   overflow: hidden;
 }
 
-figure {
-  margin: 0;
-}
-
-form {
-  margin: 0
-}
-
-fieldset {
-  border: 0;
-  margin: 0;
-  padding: 0;
-}
-
-legend {
-  border: 0;
-  *margin-left: -7px;
-  padding: 0;
-  white-space: normal;
-}
-
 input[type="search"] {
   -webkit-appearance: textfield;
   -moz-box-sizing: content-box;

@@ -51,8 +51,8 @@ export const getParatiiConfig = (env: ?string = 'development'): Object => {
 }
 
 export const prettyBytes = (num: ?number): string => {
-  if (num === null || num === undefined) {
-    num = 0
+  if (num === null || num === undefined || num === 0 || isNaN(num)) {
+    return ''
   }
   const UNITS = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
   const exponent = Math.min(Math.floor(Math.log10(num) / 3), UNITS.length - 1)

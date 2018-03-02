@@ -42,9 +42,7 @@ const FakePlaceholder = styled.span`
 `
 
 const TextField = styled(Textarea)`
-  height: ${props => props.height + 'px'};
-  margin-top: 20px;
-  padding-bottom: ${props => (props.height > 50 ? '20px' : '0px')};
+  padding-bottom: ${props => (props.height > 44 ? '10px' : '0px')};
 `
 
 const HelperLabel = styled.span`
@@ -53,7 +51,6 @@ const HelperLabel = styled.span`
   font-size: 12px;
   padding: 8px 1px 0 0;
   opacity: 0.7;
-  text-align: right;
   white-space: nowrap;
 `
 
@@ -62,38 +59,62 @@ class TextareaField extends Component<Props, void> {
     super(props)
 
     this.state = {
-      filled: false,
       textareaHeight: 44,
-      value: ''
+      filled: this.props.value ? this.props.value.length > 0 : false,
+      value: this.props.value
     }
 
+    this.handleHeight = this.handleHeight.bind(this)
+    this.handleFilled = this.handleFilled.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
-    this.handleHeight = this.handleHeight.bind(this)
+    this.handleFocus = this.handleFocus.bind(this)
   }
 
-  handleHeight (target) {
-    const value = target.value
-    const chars = value.length
-    let height = target.scrollHeight
-
-    if (chars < 1) {
-      height = 44
-    }
+  handleHeight (e) {
+    let h = e.target.scrollHeight
+    e.target.style.height = '44px'
+    h = e.target.scrollHeight
+    e.target.style.height = h + 'px'
 
     this.setState({
-      textareaHeight: height,
-      filled: chars > 0
+      textareaHeight: h
+    })
+  }
+
+  handleFilled (e) {
+    this.setState({
+      filled: e.target.value.length > 0
     })
   }
 
   handleChange (e) {
-    this.handleHeight(e.target)
+    this.setState({
+      value: e.target.value
+    })
+    this.handleFilled(e)
+    this.handleHeight(e)
     this.props.onChange(e)
   }
 
   handleKeyUp (e) {
-    this.handleHeight(e.target)
+    this.handleFilled(e)
+    this.handleHeight(e)
+  }
+
+  handleFocus (e) {
+    this.handleFilled(e)
+    this.handleHeight(e)
+    if (this.props.readonly) {
+      e.target.select()
+    }
+  }
+
+  componentWillReceiveProps (nextProps: Props): void {
+    this.setState({
+      filled: nextProps.value ? nextProps.value.length > 0 : false,
+      value: nextProps.value
+    })
   }
 
   render () {
@@ -107,17 +128,17 @@ class TextareaField extends Component<Props, void> {
         <TextField
           onChange={this.handleChange}
           onKeyUp={this.handleKeyUp}
-          error={this.props.error}
-          type={this.props.type}
-          disabled={this.props.disabled}
-          readonly={this.props.readonly}
-          value={this.props.value}
-          id={this.props.id}
-          name={this.props.name}
+          onFocus={this.handleFocus}
           cols={this.props.cols}
           rows={this.props.rows}
-          filled={this.state.filled}
           height={this.state.textareaHeight}
+          error={this.props.error}
+          disabled={this.props.disabled}
+          readonly={this.props.readonly}
+          id={this.props.id}
+          name={this.props.name}
+          value={this.state.value}
+          innerRef={ref => (this.textField = ref)}
         />
         {this.props.label && (
           <FakePlaceholder filled={this.state.filled}>

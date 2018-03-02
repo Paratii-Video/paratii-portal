@@ -1,7 +1,17 @@
 /* @flow */
 
 import { Record as ImmutableRecord } from 'immutable'
-import type { AsyncTaskStatusName } from 'types/ApplicationTypes'
+import { type AsyncTaskStatusName } from 'types/ApplicationTypes'
+
+export class ResultStatusRecord extends ImmutableRecord({
+  root: '',
+  duration: '',
+  screenshots: []
+}) {
+  root: string
+  duration: string
+  screenshots: [string]
+}
 
 export class DataStatusRecord extends ImmutableRecord({
   id: '',
@@ -10,17 +20,19 @@ export class DataStatusRecord extends ImmutableRecord({
   owner: '',
   ipfsHash: '',
   ipfsHashOrig: '',
-  sizes: '',
+  result: new ResultStatusRecord(),
   progress: 0,
-  error: ''
+  error: '',
+  author: ''
 }) {
   id: number
+  author: string
   title: string
   description: string
   owner: string
   ipfsHash: string
   ipfsHashOrig: string
-  sizes: string
+  result: ResultStatusRecord
   progress: number
   error: string
 }

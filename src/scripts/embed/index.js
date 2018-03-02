@@ -8,6 +8,7 @@ import styled, { ThemeProvider } from 'styled-components'
 
 import { getRoot } from 'utils/AppUtils'
 import PlayContainer from 'containers/PlayContainer'
+import MainSvg from 'components/foundations/svgs/MainSvg'
 import createStore from 'scripts/createStore'
 import { paratiiTheme } from 'constants/ApplicationConstants'
 
@@ -50,10 +51,12 @@ class EmbedApp extends React.Component<Props, void> {
     return (
       <ThemeProvider theme={paratiiTheme}>
         <Wrapper>
+          <MainSvg />
+
           <Route
             exact
             path={`${match.url}embed/:id`}
-            render={props => <PlayContainer {...props} isEmbed />}
+            render={props => <PlayContainer isEmbed {...props} />}
           />
         </Wrapper>
       </ThemeProvider>

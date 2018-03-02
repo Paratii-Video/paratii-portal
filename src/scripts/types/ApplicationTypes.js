@@ -81,7 +81,9 @@ export type ParatiiLib = {
     vids: {
       get: (id: string) => ?Object,
       create: Object => Object,
-      update: (id: string, Object) => Object
+      upsert: Object => Object,
+      update: (id: string, Object) => Object,
+      search: Object => Array<Object>
     }
   },
   eth: {
@@ -104,15 +106,21 @@ export type ParatiiLib = {
     balanceOf: (address: string, token: ?string) => Promise<Object>,
     web3: {
       utils: {
-        fromWei: (value: number | string, toUnit: ?string) => string
+        fromWei: (value: number | string, toUnit: ?string) => string,
+        toWei: (value: string, toUnit: ?string) => number
       }
+    },
+    tcr: {
+      apply: (string, number) => Promise<Object>,
+      checkEligiblityAndApply: (string, number) => Promise<Object>
     }
   },
   ipfs: {
     uploader: {
       add: Object => Object,
       transcode: (string, Object) => Object
-    }
+    },
+    getIPFSInstance: () => Promise<Object>
   }
 }
 
