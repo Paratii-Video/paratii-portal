@@ -274,24 +274,25 @@ class VideoForm extends Component<Props, Object> {
     const isPublishable =
       video.transcodingStatus.name === 'success' && isPublished === false
 
-    let publishButton
-    if (isPublished) {
-      publishButton = ''
-    } else {
-      publishButton = (
-        <ButtonWrapper>
-          <Button
-            id="video-submit"
-            type="submit"
-            onClick={this.onPublishSubmit}
-            disabled={!isPublishable}
-            purple
-          >
-            Publish
-          </Button>
-        </ButtonWrapper>
-      )
-    }
+    const publishButton = ''
+    // temporarily removed the publish button until the modal is working
+    // if (isPublished) {
+    //   publishButton = ''
+    // } else {
+    //   publishButton = (
+    //     <ButtonWrapper>
+    //       <Button
+    //         id="video-submit"
+    //         type="submit"
+    //         onClick={this.onPublishSubmit}
+    //         disabled={!isPublishable}
+    //         purple
+    //       >
+    //         Publish
+    //       </Button>
+    //     </ButtonWrapper>
+    //   )
+    // }
 
     const saveButton = (
       <ButtonWrapper>
