@@ -90,8 +90,6 @@ const reducer = {
     if (!payload || !state.get(payload.id)) {
       throw Error(`Unknown id: ${(payload && payload.id) || 'undefined'}`)
     }
-    console.log(state)
-    console.log(payload.id)
     return state.setIn(
       [payload.id, 'uploadStatus', 'data', 'progress'],
       payload.progress
@@ -224,16 +222,16 @@ const reducer = {
   },
   [TRANSCODING_PROGRESS]: (
     state: VideoRecordMap,
-    { payload }: Action<VideoRecord>
+    { payload }: Action<{ id: string, progress: number }> = {}
   ): VideoRecordMap => {
+    console.log('TRANSCODING_PROGRESS reducer')
+    console.log(payload)
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
     return state.setIn(
-      [payload.id, 'transcodingStatus'],
-      new AsyncTaskStatusRecord({
-        name: 'progress'
-      })
+      [payload.id, 'transcodingStatus', 'data', 'progress'],
+      payload.progress
     )
   },
   [TRANSCODING_SUCCESS]: (

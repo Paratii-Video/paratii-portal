@@ -257,7 +257,7 @@ class VideoForm extends Component<Props, Object> {
 
     const uploadProgress = video.uploadStatus.data.progress
     const transcodingStatus = video.transcodingStatus.data.progress
-    const progress = Math.ceil((uploadProgress + transcodingStatus) / 2)
+    const progress = Math.floor((uploadProgress + transcodingStatus) / 2)
 
     const isPublished = video.published === true || video.published === 'true'
     const isPublishable =
@@ -295,6 +295,30 @@ class VideoForm extends Component<Props, Object> {
         </Button>
       </ButtonWrapper>
     )
+
+    const transcoderMessages = {
+      idle: 'Waiting',
+      requested: 'Transcoding...',
+      failed: 'Transcoder exited with an error :-('
+    }
+    const uploaderMessages = {
+      idle: 'Waiting',
+      requested: 'Starting upload',
+      'uploaded to local node': 'Uploading...',
+      'uploaded to remote': 'Still uploading',
+      success: 'Uploading done, now waiting for transcoder...'
+    }
+    let statusMessage
+    if (video.uploadStatus.data.progress === 100) {
+      statusMessage =
+        '2/2 - ' +
+        (transcoderMessages[video.transcodingStatus.name] ||
+          video.transcodingStatus.name)
+    } else {
+      statusMessage =
+        '1/2 - ' +
+        (uploaderMessages[video.uploadStatus.name] || video.uploadStatus.name)
+    }
 
     return (
       <Card full>
@@ -362,9 +386,7 @@ class VideoForm extends Component<Props, Object> {
               {durationBox}
             </VideoMedia>
             <VideoProgress progress={progress + '%'} marginBottom marginTop>
-              {video.uploadStatus.data.progress === 100
-                ? '2/2 - Transcoder: ' + video.transcodingStatus.name
-                : '1/2 - Uploader: ' + video.uploadStatus.name}
+              {statusMessage}
             </VideoProgress>
             <Hidden>
               <TextField
