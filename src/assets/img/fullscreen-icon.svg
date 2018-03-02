@@ -1,14 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
-    <title>fullscreen-icon</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="player_v01" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="mvp-paused-signup" transform="translate(-656.000000, -375.000000)" fill="#FFFFFF">
-            <g id="player-control" transform="translate(88.000000, 321.000000)">
-                <path d="M570,63 L568,63 L568,68 L573,68 L573,66 L570,66 L570,63 L570,63 Z M568,59 L570,59 L570,56 L573,56 L573,54 L568,54 L568,59 L568,59 Z M580,66 L577,66 L577,68 L582,68 L582,63 L580,63 L580,66 L580,66 Z M577,54 L577,56 L580,56 L580,59 L582,59 L582,54 L577,54 L577,54 Z" id="fullscreen-icon"></path>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="7446.843 2998 20.157 20"><defs><style>.a{fill:#fff;}</style></defs><g transform="translate(7446.843 2998)"><path class="a" d="M1.265,8.519A1.231,1.231,0,0,1,0,7.315V3.426A3.438,3.438,0,0,1,3.344,0H6.96A1.308,1.308,0,0,1,8.225,1.3,1.176,1.176,0,0,1,6.96,2.5H3.344a.865.865,0,0,0-.9.926V7.315A1.211,1.211,0,0,1,1.265,8.519Z"/><path class="a" d="M20.131,8.426a1.308,1.308,0,0,1-1.265-1.3v-3.7a.865.865,0,0,0-.9-.926h-3.8A1.308,1.308,0,0,1,12.9,1.2,1.253,1.253,0,0,1,14.256,0h3.8A3.438,3.438,0,0,1,21.4,3.426v3.7A1.374,1.374,0,0,1,20.131,8.426Z" transform="translate(-1.24)"/><path class="a" d="M17.981,20.9H14.365a1.3,1.3,0,0,1,0-2.593h3.616a.865.865,0,0,0,.9-.926V13.5a1.309,1.309,0,0,1,1.265-1.3,1.251,1.251,0,0,1,1.265,1.3v3.889A3.535,3.535,0,0,1,17.981,20.9Z" transform="translate(-1.259 -0.904)"/><path class="a" d="M7.141,20.926h-3.8A3.438,3.438,0,0,1,0,17.5V13.8a1.309,1.309,0,0,1,1.265-1.3,1.251,1.251,0,0,1,1.265,1.3v3.7a.865.865,0,0,0,.9.926h3.8a1.308,1.308,0,0,1,1.265,1.3A1.542,1.542,0,0,1,7.141,20.926Z" transform="translate(0 -0.926)"/></g></svg>
