@@ -74,6 +74,13 @@ const Content = styled.div`
 class Modal extends Component<Props, void> {
   render () {
     const isVisible = this.props.showModal
+    document.onkeydown = event => {
+      console.log()
+      if (event.keyCode === 27) {
+        this.props.closeModal()
+      }
+    }
+
     return (
       <Wrapper show={isVisible}>
         <Container show={isVisible}>
@@ -86,7 +93,7 @@ class Modal extends Component<Props, void> {
             {this.props.modalContent === 'ModalStake' && <ModalStake />}
           </Content>
         </Container>
-        <Background show={isVisible} />
+        <Background show={isVisible} onClick={this.props.closeModal} />
       </Wrapper>
     )
   }
