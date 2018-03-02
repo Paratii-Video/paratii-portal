@@ -15,7 +15,7 @@ import {
   TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE,
   VIDEOFETCH_ERROR,
-  VIDEOFETCH_SUCCESS,
+  VIDEO_FETCH_SUCCESS,
   VIDEOS_FETCH_SUCCESS,
   UPDATE_VIDEO_TIME
 } from 'constants/ActionConstants'
@@ -27,6 +27,28 @@ import {
 } from 'records/AsyncTaskStatusRecord'
 import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 
+const castRecordFromDbAsImmutable = function (videoProps) {
+  return new VideoRecord({
+    ...videoProps,
+    thumbnails:
+      (videoProps.transcodingStatus &&
+        videoProps.transcodingStatus.data.result &&
+        videoProps.transcodingStatus.data.result.screenshots) ||
+      [],
+    uploadStatus: new AsyncTaskStatusRecord({
+      ...videoProps.uploadStatus,
+      data: new DataStatusRecord(videoProps.uploadStatus.data)
+    }),
+    transcodingStatus: new AsyncTaskStatusRecord({
+      ...videoProps.transcodingStatus,
+      data: new DataStatusRecord(videoProps.transcodingStatus.data)
+    }),
+    storageStatus: new AsyncTaskStatusRecord({
+      ...videoProps.storageStatus,
+      data: new DataStatusRecord(videoProps.storageStatus.data)
+    })
+  })
+}
 const reducer = {
   [UPLOAD_REQUESTED]: (
     state: VideoRecordMap,
@@ -67,6 +89,8 @@ const reducer = {
     if (!payload || !state.get(payload.id)) {
       throw Error(`Unknown id: ${(payload && payload.id) || 'undefined'}`)
     }
+    console.log(state)
+    console.log(payload.id)
     return state.setIn(
       [payload.id, 'uploadStatus', 'data', 'progress'],
       payload.progress
@@ -218,7 +242,6 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
-    // FIXME: this is probably wrong
     const ipfsHash =
       payload.result && payload.result.master && payload.result.master.hash
 
@@ -274,7 +297,7 @@ const reducer = {
       })
     )
   },
-  [VIDEOFETCH_SUCCESS]: (
+  [VIDEO_FETCH_SUCCESS]: (
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
@@ -287,24 +310,26 @@ const reducer = {
     )
     payload = payload.set(
       'thumbnails',
-      payload.transcodingStatus.data.result.screenshots
+      (payload.transcodingStatus &&
+        payload.transcodingStatus.data.result &&
+        payload.transcodingStatus.data.result.screenshots) ||
+        []
     )
 
     return state.set(payload.id, payload)
   },
   [VIDEOS_FETCH_SUCCESS]: (
     state: VideoRecordMap,
-    { payload }: Action<Array<Object>>
+    { payload }: Action<Array<VideoRecord>>
   ): VideoRecordMap =>
+    // the payload contains a list of videos from the database
+    // that need to be converted into immutable objects
     state.merge(
       payload.reduce(
         (mergingVideos: Object, { _id, ...videoProps }: Object): Object => {
-          mergingVideos[_id] = new VideoRecord({
-            ...videoProps,
-            thumbnails:
-              videoProps.transcodingStatus.data.result.screenshots || [],
-            id: _id
-          })
+          videoProps.id = _id
+          // FIXME:  also do this for the VIDEO_FETCH_SUCCESS above
+          mergingVideos[_id] = castRecordFromDbAsImmutable(videoProps)
           return mergingVideos
         },
         {}

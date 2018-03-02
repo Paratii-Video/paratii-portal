@@ -54,6 +54,15 @@ const Wrapper = styled.div`
 
   @media (max-width: 1200px) {
     height: ${props => (props.isEmbed ? null : '432px')};
+    width: ${props => (props.isEmbed ? null : '768px')};
+  }
+
+  @media (max-width: 930px) {
+    height: ${props => (props.isEmbed ? '100%' : '0')};
+    margin: 0;
+    padding-bottom: ${props => (props.isEmbed ? null : '56.25%')};
+    padding-top: ${props => (props.isEmbed ? null : '30px')};
+    width: 100%;
   }
 `
 
@@ -345,7 +354,7 @@ class Play extends Component<Props, State> {
     const videoId = this.getVideoIdFromRequest()
     if (videoId) {
       if (this.props.video && this.props.video.ipfsHash) {
-        this.createPlayer(this.props.video.ipfsHash)
+        this.createPlayer(this.props.video)
       } else {
         this.props.fetchVideo(videoId)
       }
@@ -373,7 +382,7 @@ class Play extends Component<Props, State> {
       const fetchStatus = nextVideo.getIn(['fetchStatus', 'name'])
       if (nextProps.video && fetchStatus === 'success') {
         if (!video || video.get('ipfsHash') !== nextVideo.get('ipfsHash')) {
-          this.createPlayer(nextProps.video.ipfsHash)
+          this.createPlayer(nextProps.video)
         }
       } else if (fetchStatus === 'failed') {
         // If video not exist we set in the component state
@@ -382,20 +391,29 @@ class Play extends Component<Props, State> {
     }
   }
 
-  createPlayer (ipfsHash: string): void {
-    this.setState({ playerCreated: ipfsHash })
+  createPlayer (video: VideoRecord): void {
+    this.setState({ playerCreated: video.ipfsHash })
     if (this.player && this.player.remove) {
       this.player.remove()
     }
-    if (!ipfsHash) {
+    if (!video.ipfsHash) {
       throw new Error("Can't create player without ipfsHash")
+    }
+    let poster = ''
+    if (video && video.thumbnails.length === 4) {
+      poster = video.thumbnails[0]
     }
     import('paratii-mediaplayer').then(CreatePlayer => {
       this.player = CreatePlayer({
         selector: '#player',
-        source: `https://gateway.paratii.video/ipfs/${ipfsHash}/master.m3u8`,
-        mimeType: 'video/mp4',
-        ipfsHash: ipfsHash,
+        source: `https://gateway.paratii.video/ipfs/${
+          video.ipfsHash
+        }/master.m3u8`,
+        poster: `https://gateway.paratii.video/ipfs/${
+          video.ipfsHash
+        }/${poster}`,
+        mimeType: 'application/x-mpegURL',
+        ipfsHash: video.ipfsHash,
         autoPlay: true
       })
       this.bindClapprEvents()

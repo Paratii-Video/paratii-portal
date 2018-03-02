@@ -38,14 +38,18 @@ module.exports = async (req: $Request, res: $Response) => {
 
   console.log(video)
   // TODO: we need a way to get the ipfs hash of a thumbnail. These should be saved inparatii-db
-  const thumbnailUrl = 'https://paratii.video/public/images/paratii-src.png'
+  const ipfsHash = video.ipfsHash
+  const thumbName = video.transcodingStatus.data.result.screenshots[0]
+  const thumbnailUrl =
+    'https://gateway.paratii.video/ipfs/' + ipfsHash + '/' + thumbName
+
   const url = `https://portal.paratii.video/play/${id}`
   const embedUrl = `https://portal.paratii.video/embed/${id}`
   const height = `1080`
   const width = `1920`
   // this needs to be the has of a video - just as the thumbnail, we need to save these data from paratii-db
   // FIXME: this must be ipfsHashOrig
-  const ipfsSource = `https://gateway.paratii.video/ipfs/QmSs64S5J8C9H6ZFYR44YGEB6pLq2SRLYe3MZdUoyNX7EH`
+  const ipfsSource = `https://gateway.paratii.video/ipfs/` + video.ipfsHashOrig
   let script = ''
 
   switch (route) {
@@ -73,9 +77,9 @@ module.exports = async (req: $Request, res: $Response) => {
         <meta property="twitter:image" content="${thumbnailUrl}" />
         <meta property="twitter:player:stream" content="${ipfsSource}" />
         <meta property="twitter:player" content="${embedUrl}" />
-        <meta property="og:video:url" content="${ipfsSource}" />
-        <meta property="og:video:secure_url" content="${ipfsSource}" />
-        <meta property="og:video:type" content="video/mp4">
+        <meta property="og:video:url" content="${embedUrl}">
+        <meta property="og:video:secure_url" content="${embedUrl}">
+        <meta property="og:video:type" content="text/html">
         <meta property="og:video:width" content="${width}" />
         <meta property="og:video:height" content="${height}" />
         <meta property="og:type" content="video.other" />
@@ -83,6 +87,8 @@ module.exports = async (req: $Request, res: $Response) => {
         <meta property="og:title" content="${video.title}" />
         <meta property="og:image" content="${thumbnailUrl}" />
         <meta property="og:description" content="${video.description}" />
+
+
         <style>
           html {
             font-size: 16px;

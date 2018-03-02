@@ -42,8 +42,7 @@ const FakePlaceholder = styled.span`
 `
 
 const TextField = styled(Textarea)`
-  height: ${props => props.height + 'px'};
-  padding-bottom: ${props => (props.height > 50 ? '10px' : '0px')};
+  padding-bottom: ${props => (props.height > 44 ? '10px' : '0px')};
 `
 
 const HelperLabel = styled.span`
@@ -72,18 +71,14 @@ class TextareaField extends Component<Props, void> {
     this.handleFocus = this.handleFocus.bind(this)
   }
 
-  handleHeight (target) {
-    const value = target.value
-    const chars = value.length
-    let height = target.scrollHeight
-
-    if (chars < 1) {
-      height = 44
-    }
+  handleHeight (e) {
+    let h = e.target.scrollHeight
+    e.target.style.height = '44px'
+    h = e.target.scrollHeight
+    e.target.style.height = h + 'px'
 
     this.setState({
-      textareaHeight: height,
-      filled: chars > 0
+      textareaHeight: h
     })
   }
 
@@ -98,20 +93,28 @@ class TextareaField extends Component<Props, void> {
       value: e.target.value
     })
     this.handleFilled(e)
-    this.handleHeight(e.target)
+    this.handleHeight(e)
     this.props.onChange(e)
   }
 
   handleKeyUp (e) {
     this.handleFilled(e)
-    this.handleHeight(e.target)
+    this.handleHeight(e)
   }
 
   handleFocus (e) {
-    this.handleHeight(e.target)
+    this.handleFilled(e)
+    this.handleHeight(e)
     if (this.props.readonly) {
       e.target.select()
     }
+  }
+
+  componentWillReceiveProps (nextProps: Props): void {
+    this.setState({
+      filled: nextProps.value ? nextProps.value.length > 0 : false,
+      value: nextProps.value
+    })
   }
 
   render () {
@@ -135,6 +138,7 @@ class TextareaField extends Component<Props, void> {
           id={this.props.id}
           name={this.props.name}
           value={this.state.value}
+          innerRef={ref => (this.textField = ref)}
         />
         {this.props.label && (
           <FakePlaceholder filled={this.state.filled}>
