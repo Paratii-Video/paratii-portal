@@ -167,7 +167,7 @@ class VideoForm extends Component<Props, Object> {
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handlePublish = this.handlePublish.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
+    // this.onSubmit = this.onSubmit.bind(this)
     this.onPublishClick = this.onPublishClick.bind(this)
   }
 
