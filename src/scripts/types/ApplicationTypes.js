@@ -72,7 +72,7 @@ export type ClapprPlayer = EventEmitter & {
   mute: () => void,
   unmute: () => void,
   setVolume: (percentage: number) => void,
-  remove: () => void,
+  destroy: () => void,
   seek: (time: number) => void
 }
 

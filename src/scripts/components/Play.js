@@ -38,8 +38,7 @@ type State = {
   mouseInOverlay: boolean,
   shouldShowVideoOverlay: boolean,
   videoNotFound: boolean,
-  showShareModal: boolean,
-  playerCreated: string
+  showShareModal: boolean
 }
 
 const Wrapper = styled.div`
@@ -176,8 +175,7 @@ class Play extends Component<Props, State> {
       mouseInOverlay: false,
       shouldShowVideoOverlay: false,
       videoNotFound: false,
-      showShareModal: false,
-      playerCreated: ''
+      showShareModal: false
     }
 
     this.lastMouseMove = 0
@@ -374,6 +372,12 @@ class Play extends Component<Props, State> {
     document.removeEventListener('mozfullscreenchange', this.setFullscreen)
     document.removeEventListener('webkitfullscreenchange', this.setFullscreen)
     document.removeEventListener('MSFullscreenChange', this.setFullscreen)
+
+    if (this.player) {
+      this.player.destroy()
+    }
+
+    this.props.setSelectedVideo('')
   }
 
   componentWillReceiveProps (nextProps: Props): void {
@@ -392,10 +396,9 @@ class Play extends Component<Props, State> {
     }
   }
 
-  createPlayer (video: VideoRecord): void {
-    this.setState({ playerCreated: video.ipfsHash })
-    if (this.player && this.player.remove) {
-      this.player.remove()
+  createPlayer = (video: VideoRecord): void => {
+    if (this.player && this.player.destroy) {
+      this.player.destroy()
     }
     if (!video.ipfsHash) {
       throw new Error("Can't create player without ipfsHash")

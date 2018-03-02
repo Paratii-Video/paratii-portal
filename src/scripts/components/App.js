@@ -98,10 +98,7 @@ class App extends Component<Props, State> {
               <Route path={`${match.url}voucher`} component={Voucher} />
               <Route path={`${match.url}debug`} component={DebugContainer} />
               <Route path={`${match.url}wallet`} component={WalletContainer} />
-              <Route
-                path={`${match.url}play/:id`}
-                render={props => <PlayContainer {...props} />}
-              />
+              <Route path={`${match.url}play/:id`} component={PlayContainer} />
               <Route component={NotFound} />
             </Switch>
           </Main>
