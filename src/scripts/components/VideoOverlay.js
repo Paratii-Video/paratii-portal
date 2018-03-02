@@ -173,7 +173,7 @@ class VideoOverlay extends Component<Props, State> {
   getVideoTitle (): string {
     const { video } = this.props
 
-    return (video && video.get('title')) || 'Video Title'
+    return (video && (video.get('title') || video.get('filename'))) || ''
   }
 
   onProfileButtonClick = (e: Object): void => {
