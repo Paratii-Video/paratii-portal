@@ -26,9 +26,6 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
   try {
     videoInfo = await paratii.core.vids.get(id)
 
-    console.log('videoInfo')
-    console.log(videoInfo)
-
     if (videoInfo) {
       videoInfo.id = videoInfo._id
     }
