@@ -263,7 +263,9 @@ class VideoForm extends Component<Props, Object> {
     let thumbImage = 'https://paratii.video/public/images/paratii-src.png'
     if (thumbImages && ipfsHash) {
       const firstThumb = thumbImages[0]
-      thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${firstThumb}`
+      if (firstThumb !== undefined) {
+        thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${firstThumb}`
+      }
     }
 
     const uploadProgress = video.uploadStatus.data.progress
