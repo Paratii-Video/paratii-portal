@@ -42,10 +42,12 @@ const castRecordFromDbAsImmutable = function (videoProps) {
       ...videoProps.transcodingStatus,
       data: new DataStatusRecord(videoProps.transcodingStatus.data)
     }),
-    storageStatus: new AsyncTaskStatusRecord({
-      ...videoProps.storageStatus,
-      data: new DataStatusRecord(videoProps.storageStatus.data)
-    })
+    // we reset the storage status from the db, because it will be outdated in any case
+    storageStatus: new AsyncTaskStatusRecord()
+    // storageStatus: new AsyncTaskStatusRecord({
+    //   ...videoProps.storageStatus,
+    //   data: new DataStatusRecord(videoProps.storageStatus.data)
+    // })
   })
 }
 const reducer = {
