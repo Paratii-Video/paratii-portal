@@ -13,17 +13,18 @@ module.exports = function (config) {
     webpackMiddleware: {
       stats: 'errors-only'
     },
-    // reporters configuration
-    reporters: ['mocha'],
-    // reporter options
-    mochaReporter: {
-      showDiff: true
-    },
+    reporters: ['progress'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
-    browsers: ['Chrome'],
+    autoWatch: false,
+    browsers: ['ChromeHeadlessNoSandbox'],
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      }
+    },
     singleRun: true,
     concurrency: Infinity
   })
