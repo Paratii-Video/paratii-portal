@@ -42,7 +42,10 @@ function upsertVideo (videoId, dataToUpdate, state) {
   }
   console.log('SAVING:')
   console.log(updatedVideo)
-  return paratii.core.vids.upsert(updatedVideo)
+  return paratii.core.vids.upsert(updatedVideo).catch(error => {
+    console.log(error)
+    throw error
+  })
 }
 
 // upload the video to the local ipfs node and dispatch the transcoding process
