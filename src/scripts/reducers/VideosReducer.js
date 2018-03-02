@@ -229,10 +229,12 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
-    return state.setIn(
-      [payload.id, 'transcodingStatus', 'data', 'progress'],
-      payload.progress
-    )
+    return state
+      .setIn(
+        [payload.id, 'transcodingStatus', 'data', 'progress'],
+        payload.progress
+      )
+      .setIn([payload.id, 'transcodingStatus', 'name'], 'running')
   },
   [TRANSCODING_SUCCESS]: (
     state: VideoRecordMap,
