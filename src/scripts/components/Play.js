@@ -46,10 +46,11 @@ const Wrapper = styled.div`
   margin: ${props => (props.isEmbed ? null : '0 auto')};
   position: relative;
   height: ${props => (props.isEmbed ? '100%' : '720px')};
-  width: 100%;
+  width: ${props => (props.isEmbed ? '100%' : '1280px')};
 
   @media (max-width: 1440px) {
     height: ${props => (props.isEmbed ? null : '576px')};
+    width: ${props => (props.isEmbed ? null : '1024px')};
   }
 
   @media (max-width: 1200px) {
