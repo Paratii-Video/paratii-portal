@@ -88,6 +88,13 @@ export const upload = (file: Object) => (
       getState()
     )
   })
+
+  uploader.on('progress', percent => {
+    // console.log('chunked ', percent)
+    console.log('upload progress', percent)
+    dispatch(uploadProgress({ id: newVideoId, progress: percent }))
+  })
+
   uploader.on('fileReady', function (file) {
     console.log(file)
     dispatch(

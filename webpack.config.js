@@ -77,7 +77,8 @@ const config = {
   node: {
       net: 'empty',
       tls: 'empty',
-      dns: 'empty'
+      dns: 'empty',
+      fs: 'empty'
     },
   module: {
     loaders: [
