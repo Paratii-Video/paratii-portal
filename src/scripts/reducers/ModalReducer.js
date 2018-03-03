@@ -17,7 +17,10 @@ const reducer = {
     })
   },
   [CLOSE_MODAL]: (state: ModalRecord, action: Action<boolean>) => {
-    return state.set('showModal', false)
+    return state.merge({
+      modalCallback: () => null,
+      showModal: false
+    })
   }
 }
 
