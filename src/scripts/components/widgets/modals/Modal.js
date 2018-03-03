@@ -75,7 +75,6 @@ class Modal extends Component<Props, void> {
   render () {
     const isVisible = this.props.showModal
     document.onkeydown = event => {
-      console.log()
       if (event.keyCode === 27) {
         this.props.closeModal()
       }

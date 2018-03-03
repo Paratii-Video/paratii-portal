@@ -7,6 +7,7 @@ import type { RootState } from 'types/ApplicationTypes'
 import ModalStake from 'components/widgets/modals/ModalStake'
 
 const mapStateToProps = (state: RootState) => ({
+  modalCallback: state.modal.modalCallback,
   videoId: getSelectedUploaderVideo(state),
   user: getUser(state)
 })

@@ -9,6 +9,7 @@ import UserRecord from 'records/UserRecords'
 type Props = {
   videoId: Object,
   user: UserRecord,
+  modalCallback: () => void,
   onSuccess: () => void
 }
 
@@ -67,6 +68,7 @@ class ModalStake extends Component<Props, Object> {
           this.setState({
             errorMessage: false
           })
+          this.props.modalCallback()
           this.props.onSuccess()
           console.log(
             `video ${this.props.videoId.id.toString()} successfully applied to TCR Listing`
