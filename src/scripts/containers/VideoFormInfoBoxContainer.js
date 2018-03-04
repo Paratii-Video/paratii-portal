@@ -7,13 +7,17 @@ import {
   transcodeVideo,
   uploadAndTranscode
 } from 'actions/UploaderActions'
-import { getSelectedUploaderVideo } from 'selectors/UploaderSelectors'
+import {
+  getSelectedUploaderVideo,
+  getTotalProgress
+} from 'selectors/UploaderSelectors'
 import { getUser } from 'selectors/index'
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState) => ({
   selectedVideo: getSelectedUploaderVideo(state),
-  user: getUser(state)
+  user: getUser(state),
+  getTotalProgress: getTotalProgress(state)
 })
 
 const mapDispatchToProps = dispatch => ({
