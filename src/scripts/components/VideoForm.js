@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
@@ -12,21 +11,8 @@ import RadioCheck, {
   RadioWrapper,
   RadioTitle
 } from './widgets/forms/RadioCheck'
-import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
-import Hidden from 'components/foundations/Hidden'
+import VideoFormInfoBox from 'containers/VideoFormInfoBoxContainer'
 import { prettyBytes } from 'utils/AppUtils'
-
-type Props = {
-  selectedVideo: VideoRecord,
-  canSubmit: boolean,
-  progress: Number,
-  saveVideoInfo: Object => Object,
-  showModal: (View: Object) => void,
-  closeModal: () => void,
-  openModal: () => void,
-  user: UserRecord,
-  balance: String
-}
 
 const VideoFormHeader = styled.div`
   border-bottom: 1px solid
@@ -73,15 +59,6 @@ const Form = styled.div`
   }
 `
 
-const VideoFormInfoBox = styled.div`
-  flex: 1 1 584px;
-  padding-bottom: 70px;
-  position: relative;
-
-  @media (max-width: 1150px) {
-    flex: 1 1 100%;
-  }
-`
 const ButtonContainer = styled.div`
   position: absolute;
   bottom: 0;
@@ -98,55 +75,19 @@ const ButtonWrapper = styled.div`
   z-index: 5;
 `
 
-const VideoMedia = styled.div`
-  margin-bottom: 15px;
-  position: relative;
-  width: 100%;
-`
-
-const VideoImage = styled.div`
-  display: block;
-  width: 100%;
-  padding-top: 60%;
-  background-color: black;
-  background-image: url(${({ src }) => src});
-  background-size: cover;
-  background-position: center center;
-`
-
-const VideoMediaTime = styled.div`
-  bottom: 10px;
-  padding: 10px;
-  position: absolute;
-  right: 10px;
-
-  &::before {
-    background-color: ${props =>
-    props.theme.colors.VideoForm.info.time.background};
-    border-radius: 2px;
-    content: '';
-    height: 100%;
-    left: 0;
-    opacity: 0.8;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-`
-
-const VideoMediaTimeText = styled.p`
-  color: ${props => props.theme.colors.VideoForm.info.time.color};
-  font-size: ${props => props.theme.fonts.video.info.time};
-  position: relative;
-  z-index: 1;
-`
-const PublishLabel = styled.div`
-  color: ${props => props.theme.colors.button.gray};
-  font-size: ${props => props.theme.fonts.text.tiny};
-  position: absolute;
-  bottom: 0;
-  z-index: 1;
-`
+type Props = {
+  selectedVideo: VideoRecord,
+  canSubmit: boolean,
+  progress: Number,
+  saveVideoInfo: Object => Object,
+  transcodeVideo: Object => Object,
+  uploadAndTranscode: Object => Object,
+  showModal: (View: Object) => void,
+  closeModal: () => void,
+  openModal: () => void,
+  user: UserRecord,
+  balance: String
+}
 
 class VideoForm extends Component<Props, Object> {
   handleInputChange: (input: string, e: Object) => void
@@ -172,6 +113,7 @@ class VideoForm extends Component<Props, Object> {
     this.onSaveData = this.onSaveData.bind(this)
     this.publishVideo = this.publishVideo.bind(this)
     this.saveData = this.saveData.bind(this)
+    this.onFileChosen = this.onFileChosen.bind(this)
   }
 
   handleInputChange (input: string, e: Object) {
@@ -183,6 +125,23 @@ class VideoForm extends Component<Props, Object> {
   onPublishVideo (e: Object) {
     e.preventDefault()
     this.publishVideo(true)
+  }
+
+  // onPublishSubmit (e: Object) {
+  //   e.preventDefault()
+  //
+  //   this.props.showModal(
+  //     <ModalStake
+  //       videoId={this.state.id}
+  //       onSuccess={this.handlePublish}
+  //       user={this.props.user}
+  //     />
+  //   )
+  // }
+
+  onFileChosen (e) {
+    const file = e.target.files[0]
+    this.props.uploadAndTranscode(file, this.props.selectedVideo.id)
   }
 
   onSaveData (e: Object) {
@@ -226,8 +185,7 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     const video: VideoRecord = this.props.selectedVideo
-    // console.log(video.getIn(['transcodingStatus', 'data', 'result']))
-    // console.log(video.getIn(['transcodingStatus', 'data', 'result', 'screenshots']))
+
     if (!this.state.id) {
       return (
         <Card title="No video selected!">{this.props.selectedVideo.id}</Card>
@@ -235,35 +193,8 @@ class VideoForm extends Component<Props, Object> {
     }
 
     const title = video.title || video.filename
-    const duration = (video && video.get('duration')) || ''
-    let durationBox = null
-    if (duration) {
-      durationBox = (
-        <VideoMediaTime>
-          <VideoMediaTimeText>{duration}</VideoMediaTimeText>
-        </VideoMediaTime>
-      )
-    }
 
     const fileSize = prettyBytes((video && video.get('filesize')) || 0)
-    const ipfsHash = (video && video.get('ipfsHash')) || ''
-    const urlToPlay = `/play/${video.id}`
-    const urlForSharing = `https://portal.paratii.video/play/${video.id}`
-
-    const thumbImages = video && video.getIn(['thumbnails'])
-
-    let thumbImage = 'https://paratii.video/public/images/paratii-src.png'
-    if (thumbImages && ipfsHash) {
-      const firstThumb = thumbImages[0]
-      if (firstThumb !== undefined) {
-        thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${firstThumb}`
-      }
-    }
-
-    const uploadProgress = video.uploadStatus.data.progress
-    const transcodingStatus = video.transcodingStatus.data.progress
-    const progress = Math.floor((uploadProgress + transcodingStatus) / 2)
-
     const isPublished = video.published === true || video.published === 'true'
     const isPublishable =
       video.transcodingStatus.name === 'success' && isPublished === false
@@ -301,28 +232,17 @@ class VideoForm extends Component<Props, Object> {
       </ButtonWrapper>
     )
 
-    const transcoderMessages = {
-      idle: 'Waiting',
-      requested: 'Transcoding...',
-      failed: 'Transcoder exited with an error :-('
-    }
-    const uploaderMessages = {
-      idle: 'Waiting',
-      requested: 'Starting upload',
-      'uploaded to local node': 'Uploading...',
-      'uploaded to remote': 'Still uploading',
-      success: 'Uploading done, now waiting for transcoder...'
-    }
-    let statusMessage
-    if (video.uploadStatus.data.progress === 100) {
-      statusMessage =
-        '2/2 - ' +
-        (transcoderMessages[video.transcodingStatus.name] ||
-          video.transcodingStatus.name)
+    // The restart button is just for convenicene, for testing
+    let restartButton
+    if (process.env.NODE_ENV === 'development') {
+      restartButton = (
+        <div>
+          Use this for testing (this will not be visible in production)
+          <input type="file" onChange={this.onFileChosen} />
+        </div>
+      )
     } else {
-      statusMessage =
-        '1/2 - ' +
-        (uploaderMessages[video.uploadStatus.name] || video.uploadStatus.name)
+      restartButton = ''
     }
 
     return (
@@ -378,47 +298,10 @@ class VideoForm extends Component<Props, Object> {
             <ButtonContainer>
               {publishButton}
               {saveButton}
+              {restartButton}
             </ButtonContainer>
           </Form>
-          <VideoFormInfoBox>
-            <VideoMedia>
-              <Link to={urlToPlay}>
-                <VideoImage data-src={thumbImage} src={thumbImage} />
-              </Link>
-              {durationBox}
-            </VideoMedia>
-            <VideoProgress progress={progress + '%'} marginBottom marginTop>
-              {statusMessage}
-            </VideoProgress>
-            <Hidden>
-              <TextField
-                id="video-title"
-                type="text"
-                margin="0 0 30px"
-                onChange={e => this.handleInputChange('title', e)}
-                value="<iframe width=560 height=315 src=https://"
-                label="Embed Code"
-                readonly
-              />
-            </Hidden>
-            <TextField
-              id="video-title"
-              type="text"
-              margin="0 0 25px"
-              onChange={e => this.handleInputChange('title', e)}
-              value={urlForSharing}
-              label="Share this video"
-              readonly
-            />
-            {!isPublishable && !isPublished ? (
-              <PublishLabel>
-                You can publish this video as soon as it is{' '}
-                <strong>ready</strong>
-              </PublishLabel>
-            ) : (
-              ''
-            )}
-          </VideoFormInfoBox>
+          <VideoFormInfoBox />
         </VideoFormWrapper>
       </Card>
     )

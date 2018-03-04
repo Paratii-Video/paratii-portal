@@ -49,20 +49,23 @@ function upsertVideo (videoId, dataToUpdate, state) {
 }
 
 // upload the video to the local ipfs node and dispatch the transcoding process
-export const upload = (file: Object) => (
+export const uploadAndTranscode = (file: Object, videoId: string) => (
   dispatch: Dispatch<*>,
   getState: () => RootState
 ) => {
-  const newVideoId = paratii.eth.vids.makeId()
+  console.log('STARTING FILE UPLOAD')
+  if (!videoId) {
+    videoId = paratii.eth.vids.makeId()
+  }
   dispatch(
     videoFetchSuccess(
-      new VideoRecord({ id: newVideoId, owner: paratii.config.account.address })
+      new VideoRecord({ id: videoId, owner: paratii.config.account.address })
     )
   )
-  dispatch(selectUploaderVideo(newVideoId))
+  dispatch(selectUploaderVideo(videoId))
   dispatch(
     uploadRequested({
-      id: newVideoId,
+      id: videoId,
       filename: file.name,
       filesize: file.size,
       owner: paratii.config.account.address
@@ -78,7 +81,7 @@ export const upload = (file: Object) => (
     const file = files[0]
 
     upsertVideo(
-      newVideoId,
+      videoId,
       {
         owner: paratii.config.account.address,
         ipfsHashOrig: file.hash,
@@ -88,14 +91,19 @@ export const upload = (file: Object) => (
       getState()
     )
   })
+
+  uploader.on('progress', percent => {
+    console.log('upload progress', percent)
+    dispatch(uploadProgress({ id: videoId, progress: percent }))
+  })
+
   uploader.on('fileReady', function (file) {
-    console.log(file)
     dispatch(
-      uploadLocalSuccess({ id: newVideoId, hash: file.hash, size: file.size })
+      uploadLocalSuccess({ id: videoId, hash: file.hash, size: file.size })
     )
     // now we can start the transcoding
     transcodeVideo({
-      id: newVideoId,
+      id: videoId,
       hash: file.hash,
       size: file.size
     })(dispatch, getState)
