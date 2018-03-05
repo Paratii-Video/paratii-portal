@@ -12,6 +12,7 @@ import type { TransitionState } from 'types/ApplicationTypes'
 
 type Props = {
   video: ?VideoRecord,
+  videoDurationSeconds: number,
   isPlaying: boolean,
   isFullscreen: boolean,
   togglePlayPause: () => void,
@@ -224,7 +225,7 @@ class PlayerControls extends Component<Props, State> {
       currentBufferedTimeSeconds,
       formattedCurrentTime,
       formattedDuration,
-      video
+      videoDurationSeconds
     } = this.props
     const { scrubbingPositionPercentage } = this.state
     return (
@@ -242,7 +243,7 @@ class PlayerControls extends Component<Props, State> {
           currentTime={currentTimeSeconds}
           scrubbingPositionPercentage={scrubbingPositionPercentage}
           bufferTime={currentBufferedTimeSeconds}
-          totalDuration={(video && video.get('duration')) || 0}
+          totalDuration={videoDurationSeconds}
         >
           <ProgressBuffer
             bufferTime={currentBufferedTimeSeconds}

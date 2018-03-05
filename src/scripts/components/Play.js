@@ -29,6 +29,7 @@ type Props = {
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
   video?: VideoRecord,
+  videoDurationSeconds: number,
   isEmbed?: boolean,
   currentTimeSeconds: number,
   currentBufferedTimeSeconds: number
@@ -275,11 +276,10 @@ class Play extends Component<Props, State> {
   }
 
   scrubVideo = (percentage: number): void => {
-    const { video } = this.props
+    const { videoDurationSeconds, video } = this.props
     if (video) {
-      const videoDuration: number = video.get('duration')
-      if (this.player && videoDuration) {
-        this.player.seek(videoDuration * percentage / 100)
+      if (this.player) {
+        this.player.seek(videoDurationSeconds * percentage / 100)
       }
     }
   }

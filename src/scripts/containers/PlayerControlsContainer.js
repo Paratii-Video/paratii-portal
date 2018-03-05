@@ -13,12 +13,14 @@ import {
 import {
   getPlayingVideo,
   getFormattedCurrentTime,
-  getFormattedDuration
+  getFormattedDuration,
+  getDurationSeconds
 } from 'selectors/PlayerSelectors'
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState): Object => ({
   video: getPlayingVideo(state),
+  videoDurationSeconds: getDurationSeconds(state),
   isPlaying: getIsPlaying(state),
   isFullscreen: getIsFullscreen(state),
   currentTimeSeconds: getPlayerCurrentTimeSeconds(state),

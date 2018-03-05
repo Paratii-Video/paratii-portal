@@ -46,5 +46,24 @@ export const getFormattedDuration: (
 ) => string = createSelector(
   [getPlayingVideo],
   (playingVideo: ?VideoRecord): string =>
-    (playingVideo && playingVideo.get('duration')) || '00:00'
+    TimeFormat.fromS(
+      TimeFormat.toS(
+        (playingVideo && playingVideo.get('duration')) || '00:00:00.00',
+        'hh:mm:ss.sss'
+      ),
+      'hh:mm:ss'
+    )
+)
+
+export const getDurationSeconds: (state: RootState) => string = createSelector(
+  [getPlayingVideo],
+  (playingVideo: ?VideoRecord): number => {
+    const duration: ?string = playingVideo && playingVideo.get('duration')
+
+    if (!duration) {
+      return 0
+    }
+
+    return TimeFormat.toS(duration)
+  }
 )

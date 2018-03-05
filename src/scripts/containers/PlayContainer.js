@@ -21,7 +21,7 @@ import {
   getPlayerCurrentBufferedTimeSeconds,
   getPlayerCurrentVolume
 } from 'selectors/index'
-import { getPlayingVideo } from 'selectors/PlayerSelectors'
+import { getPlayingVideo, getDurationSeconds } from 'selectors/PlayerSelectors'
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (
@@ -29,6 +29,7 @@ const mapStateToProps = (
   ownProps: { isEmbed?: boolean }
 ) => ({
   video: getPlayingVideo(state),
+  videoDurationSeconds: getDurationSeconds(state),
   isPlaying: getIsPlaying(state),
   isAttemptingPlay: getIsAttemptingPlay(state),
   isEmbed: ownProps.isEmbed,
