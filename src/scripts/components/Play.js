@@ -23,7 +23,7 @@ type Props = {
   fetchVideo: (id: string) => void,
   isPlaying: boolean,
   togglePlayPause: (play: ?boolean) => void,
-  updateVideoTime: ({ duration: number, time: number, id: string }) => void,
+  updateVideoTime: ({ time: number, id: string }) => void,
   updateVideoBufferedTime: ({ time: number }) => void,
   updateVolume: (percentage: number) => void,
   isAttemptingPlay: boolean,
@@ -188,7 +188,6 @@ class Play extends Component<Props, State> {
 
     if (this.props.video) {
       this.props.updateVideoTime({
-        duration: 0,
         id: this.props.video.get('id'),
         time: 0
       })
@@ -218,7 +217,6 @@ class Play extends Component<Props, State> {
           Events.PLAYBACK_TIMEUPDATE,
           ({ current, total }: { current: number, total: number }): void => {
             this.props.updateVideoTime({
-              duration: total,
               id: video.get('id'),
               time: current
             })
@@ -386,7 +384,11 @@ class Play extends Component<Props, State> {
     if (nextVideo) {
       const fetchStatus = nextVideo.getIn(['fetchStatus', 'name'])
       if (nextProps.video && fetchStatus === 'success') {
-        if (!video || video.get('ipfsHash') !== nextVideo.get('ipfsHash')) {
+        if (
+          !video ||
+          !this.player ||
+          video.get('ipfsHash') !== nextVideo.get('ipfsHash')
+        ) {
           this.createPlayer(nextProps.video)
         }
       } else if (fetchStatus === 'failed') {
@@ -404,8 +406,8 @@ class Play extends Component<Props, State> {
       throw new Error("Can't create player without ipfsHash")
     }
     let poster = ''
-    if (video && video.thumbnails.length === 4) {
-      poster = video.thumbnails[0]
+    if (video && video.thumbnails.size === 4) {
+      poster = video.thumbnails.get(0)
     }
     import('paratii-mediaplayer').then(CreatePlayer => {
       this.player = CreatePlayer({

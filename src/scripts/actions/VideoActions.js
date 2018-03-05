@@ -30,8 +30,7 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
       videoInfo.id = videoInfo._id
     }
     if (videoInfo && videoInfo.id) {
-      const { duration, ...videoInfoToSave } = videoInfo
-      dispatch(videoFetchSuccess(new VideoRecord(videoInfoToSave)))
+      dispatch(videoFetchSuccess(videoInfo))
       dispatch(playerVideoSelect(videoInfo.id))
     }
   } catch (error) {
@@ -51,20 +50,20 @@ export const fetchOwnedVideos = () => async (
   })
   const filteredOwnedVideos = []
   for (let i = 0; i < ownedVideos.length; i++) {
-    const { duration, ...videoInfoToSave } = ownedVideos[i]
+    const video = ownedVideos[i]
     // only show videos that have been uploaded
     // FIXME: use status codes or constants, not strings like 'uploaded' to 'remote'
     if (
-      videoInfoToSave.transcodingStatus &&
-      videoInfoToSave.uploadStatus.name === 'uploaded to remote'
+      video.transcodingStatus &&
+      video.uploadStatus.name === 'uploaded to remote'
     ) {
-      filteredOwnedVideos.push(videoInfoToSave)
+      filteredOwnedVideos.push(video)
 
-      if (videoInfoToSave.transcodingStatus.name !== 'success') {
+      if (video.transcodingStatus.name !== 'success') {
         transcodeVideo({
-          id: videoInfoToSave._id,
-          hash: videoInfoToSave.ipfsHashOrig,
-          size: videoInfoToSave.filesize
+          id: video._id,
+          hash: video.ipfsHashOrig,
+          size: video.filesize
         })(dispatch, getState)
       }
     }

@@ -1,19 +1,19 @@
 /* @flow */
 
-import { Record as ImmutableRecord } from 'immutable'
+import { List as ImmutableList, Record as ImmutableRecord } from 'immutable'
 import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
 
 class Video extends ImmutableRecord({
   description: '',
   filename: null,
   filesize: null,
-  duration: 0,
+  duration: '',
   id: '',
   ipfsHashOrig: '',
   ipfsHash: '',
   owner: '',
   price: '',
-  thumbnails: [],
+  thumbnails: ImmutableList(),
   title: '',
   author: '',
   free: '',
@@ -23,27 +23,16 @@ class Video extends ImmutableRecord({
   uploadStatus: new AsyncTaskStatusRecord(),
   fetchStatus: new AsyncTaskStatusRecord()
 }) {
-  // constructor (properties = {}) {
-  //   super({
-  //     ...properties,
-  //     storageStatus: new AsyncTaskStatusRecord(properties.storageStatus),
-  //     transcodingStatus: new AsyncTaskStatusRecord(
-  //       properties.transcodingStatus
-  //     ),
-  //     uploadStatus: new AsyncTaskStatusRecord(properties.uploadStatus),
-  //     fetchStatus: new AsyncTaskStatusRecord(properties.fetchStatus)
-  //   })
-  // }
   description: string
   filename: string
   filesize: ?number
-  duration: number
+  duration: string
   id: string
   ipfsHashOrig: string
   ipfsHash: string
   owner: string
   price: string
-  thumbnails: [string]
+  thumbnails: ImmutableList<string>
   title: string
   author: string
   free: string
@@ -52,6 +41,24 @@ class Video extends ImmutableRecord({
   transcodingStatus: AsyncTaskStatusRecord
   uploadStatus: AsyncTaskStatusRecord
   fetchStatus: AsyncTaskStatusRecord
+
+  constructor ({
+    thumbnails,
+    storageStatus,
+    transcodingStatus,
+    uploadStatus,
+    fetchStatus,
+    ...rest
+  }: Object = {}) {
+    super({
+      ...rest,
+      thumbnails: ImmutableList(thumbnails),
+      storageStatus: new AsyncTaskStatusRecord(storageStatus),
+      transcodingStatus: new AsyncTaskStatusRecord(transcodingStatus),
+      uploadStatus: new AsyncTaskStatusRecord(uploadStatus),
+      fetchStatus: new AsyncTaskStatusRecord(fetchStatus)
+    })
+  }
 }
 
 export default Video

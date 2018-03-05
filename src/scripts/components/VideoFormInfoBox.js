@@ -1,4 +1,7 @@
+/* @flow */
+
 import React, { Component } from 'react'
+import { List as ImmutableList } from 'immutable'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
@@ -96,11 +99,12 @@ class InfoBox extends Component<Props, Object> {
     const urlToPlay = `/play/${video.id}`
     const urlForSharing = `https://portal.paratii.video/play/${video.id}`
 
-    const thumbImages = video && video.getIn(['thumbnails'])
+    const thumbImages: ImmutableList<string> =
+      (video && video.getIn(['thumbnails'])) || ImmutableList()
 
     let thumbImage = 'https://paratii.video/public/images/paratii-src.png'
     if (thumbImages && ipfsHash) {
-      const firstThumb = thumbImages[0]
+      const firstThumb = thumbImages.get(0)
       if (firstThumb !== undefined) {
         thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${firstThumb}`
       }
@@ -134,12 +138,13 @@ class InfoBox extends Component<Props, Object> {
     if (video.uploadStatus.data.progress === 100) {
       statusMessage =
         '2/2 - ' +
-        (transcoderMessages[video.transcodingStatus.name] ||
+        (transcoderMessages[video.transcodingStatus.get('name')] ||
           video.transcodingStatus.name)
     } else {
       statusMessage =
         '1/2 - ' +
-        (uploaderMessages[video.uploadStatus.name] || video.uploadStatus.name)
+        (uploaderMessages[video.getIn(['uploadStatus', 'name'])] ||
+          video.getIn(['uploadStatus', 'name']))
     }
 
     return (

@@ -16,8 +16,7 @@ import {
   TRANSCODING_FAILURE,
   VIDEOFETCH_ERROR,
   VIDEO_FETCH_SUCCESS,
-  VIDEOS_FETCH_SUCCESS,
-  UPDATE_VIDEO_TIME
+  VIDEOS_FETCH_SUCCESS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import {
@@ -27,30 +26,6 @@ import {
 } from 'records/AsyncTaskStatusRecord'
 import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 
-const castRecordFromDbAsImmutable = function (videoProps) {
-  return new VideoRecord({
-    ...videoProps,
-    thumbnails:
-      (videoProps.transcodingStatus &&
-        videoProps.transcodingStatus.data.result &&
-        videoProps.transcodingStatus.data.result.screenshots) ||
-      [],
-    uploadStatus: new AsyncTaskStatusRecord({
-      ...videoProps.uploadStatus,
-      data: new DataStatusRecord(videoProps.uploadStatus.data)
-    }),
-    transcodingStatus: new AsyncTaskStatusRecord({
-      ...videoProps.transcodingStatus,
-      data: new DataStatusRecord(videoProps.transcodingStatus.data)
-    }),
-    // we reset the storage status from the db, because it will be outdated in any case
-    storageStatus: new AsyncTaskStatusRecord()
-    // storageStatus: new AsyncTaskStatusRecord({
-    //   ...videoProps.storageStatus,
-    //   data: new DataStatusRecord(videoProps.storageStatus.data)
-    // })
-  })
-}
 const reducer = {
   [UPLOAD_REQUESTED]: (
     state: VideoRecordMap,
@@ -264,7 +239,10 @@ const reducer = {
           })
         })
       )
-      .setIn([payload.id, 'thumbnails'], payload.result.screenshots || [])
+      .setIn(
+        [payload.id, 'thumbnails'],
+        Immutable.List(payload.result.screenshots || [])
+      )
   },
   [TRANSCODING_FAILURE]: (
     state: VideoRecordMap,
@@ -303,22 +281,20 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    if (!payload || !payload.get('id')) {
+    if (!payload || !payload.id) {
       return state
     }
-    payload = payload.set(
-      'fetchStatus',
-      new AsyncTaskStatusRecord({ name: 'success' })
-    )
-    payload = payload.set(
-      'thumbnails',
-      (payload.transcodingStatus &&
-        payload.transcodingStatus.data.result &&
-        payload.transcodingStatus.data.result.screenshots) ||
-        []
-    )
+    const fetchedVideo = new VideoRecord(payload).merge({
+      fetchStatus: new AsyncTaskStatusRecord({ name: 'success' }),
+      thumbnails: Immutable.List(
+        (payload.transcodingStatus &&
+          payload.transcodingStatus.data.result &&
+          payload.transcodingStatus.data.result.screenshots) ||
+          []
+      )
+    })
 
-    return state.set(payload.id, payload)
+    return state.set(payload.id, fetchedVideo)
   },
   [VIDEOS_FETCH_SUCCESS]: (
     state: VideoRecordMap,
@@ -328,26 +304,12 @@ const reducer = {
       payload.reduce(
         (mergingVideos: Object, { _id, ...videoProps }: Object): Object => {
           videoProps.id = _id
-          // the payload contains a list of videos from the database
-          // that need to be converted into immutable objects
-          // FIXME:  also do this for the VIDEO_FETCH_SUCCESS above
-          mergingVideos[_id] = castRecordFromDbAsImmutable(videoProps)
+          mergingVideos[_id] = new VideoRecord(videoProps)
           return mergingVideos
         },
         {}
       )
-    ),
-  [UPDATE_VIDEO_TIME]: (
-    state: VideoRecordMap,
-    { payload: { id, duration } }: Action<{ id: string, duration: number }>
-  ): VideoRecordMap => {
-    const video: ?VideoRecord = state.get(id)
-    if (video) {
-      return state.set(id, video.set('duration', duration))
-    }
-
-    return state
-  }
+    )
 }
 
 export default handleActions(reducer, Immutable.Map({}))
