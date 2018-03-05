@@ -37,7 +37,7 @@ class MainNavigation extends Component<Props, void> {
       <Nav>
         <NavList>
           <NavItem>
-            <NavLink to="/voucher">Redeem your Voucher</NavLink>
+            <NavLink to="/voucher">Get PTIs</NavLink>
           </NavItem>
           <Hidden>
             <NavItem>
@@ -45,7 +45,7 @@ class MainNavigation extends Component<Props, void> {
             </NavItem>
           </Hidden>
           <NavItem>
-            <NavLink to="/upload">Upload video</NavLink>
+            <NavLink to="/upload">Upload</NavLink>
           </NavItem>
           <NavItem>
             <Anchor href="http://paratii.video/" target="_blank">

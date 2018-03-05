@@ -42,7 +42,7 @@ const FakePlaceholder = styled.span`
 `
 
 const TextField = styled(Textarea)`
-  padding-bottom: ${props => (props.height > 44 ? '10px' : '0px')};
+  padding-bottom: 10px;
 `
 
 const HelperLabel = styled.span`
@@ -59,7 +59,6 @@ class TextareaField extends Component<Props, void> {
     super(props)
 
     this.state = {
-      textareaHeight: 44,
       filled: this.props.value ? this.props.value.length > 0 : false,
       value: this.props.value
     }
@@ -71,15 +70,11 @@ class TextareaField extends Component<Props, void> {
     this.handleFocus = this.handleFocus.bind(this)
   }
 
-  handleHeight (e) {
-    let h = e.target.scrollHeight
-    e.target.style.height = '44px'
-    h = e.target.scrollHeight
-    e.target.style.height = h + 'px'
-
-    this.setState({
-      textareaHeight: h
-    })
+  handleHeight () {
+    let h = this.textField.scrollHeight
+    this.textField.style.height = '44px'
+    h = this.textField.scrollHeight
+    this.textField.style.height = h + 'px'
   }
 
   handleFilled (e) {
@@ -93,18 +88,18 @@ class TextareaField extends Component<Props, void> {
       value: e.target.value
     })
     this.handleFilled(e)
-    this.handleHeight(e)
+    this.handleHeight()
     this.props.onChange(e)
   }
 
   handleKeyUp (e) {
     this.handleFilled(e)
-    this.handleHeight(e)
+    this.handleHeight()
   }
 
   handleFocus (e) {
     this.handleFilled(e)
-    this.handleHeight(e)
+    this.handleHeight()
     if (this.props.readonly) {
       e.target.select()
     }
@@ -115,6 +110,10 @@ class TextareaField extends Component<Props, void> {
       filled: nextProps.value ? nextProps.value.length > 0 : false,
       value: nextProps.value
     })
+  }
+
+  componentDidUpdate (): void {
+    this.handleHeight()
   }
 
   render () {
@@ -131,7 +130,6 @@ class TextareaField extends Component<Props, void> {
           onFocus={this.handleFocus}
           cols={this.props.cols}
           rows={this.props.rows}
-          height={this.state.textareaHeight}
           error={this.props.error}
           disabled={this.props.disabled}
           readonly={this.props.readonly}
