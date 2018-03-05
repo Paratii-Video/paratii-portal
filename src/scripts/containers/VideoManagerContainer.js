@@ -15,7 +15,7 @@ import type { RootState } from 'types/ApplicationTypes'
 import RedeemVoucher from 'components/widgets/RedeemVoucher'
 import VideoList from 'containers/VideoListContainer'
 import VideoForm from 'containers/VideoFormContainer'
-import UploadFile from 'containers/UploadFileContainer'
+import UploadFile from 'containers/FileUploaderContainer'
 
 type Props = {
   videos: Map<string, VideoRecord>,

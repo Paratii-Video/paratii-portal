@@ -113,7 +113,7 @@ class VideoListItem extends Component<Props, void> {
     if (video.storageStatus.name !== 'success' && title === null) {
       statusMessage = 'Please provide a title and description'
     } else if (video.transcodingStatus.name === 'success') {
-      statusMessage = 'Your video is now ready to play'
+      statusMessage = 'Your video is ready to play'
     } else if (video.transcodingStatus.name === 'failed') {
       statusMessage = 'Your video could not be transcoded'
     }

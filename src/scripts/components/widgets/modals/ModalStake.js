@@ -6,12 +6,6 @@ import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import UserRecord from 'records/UserRecords'
 
-type Props = {
-  videoId: String,
-  user: UserRecord,
-  onSuccess: () => void
-}
-
 const Wrapper = styled.div`
   color: ${props => props.theme.colors.Modal.color};
   width: 100%;
@@ -40,6 +34,12 @@ const Footer = styled.div`
   margin-top: 50px;
   width: 100%;
 `
+
+type Props = {
+  videoId: String,
+  user: UserRecord,
+  onSuccess: () => void
+}
 
 class ModalStake extends Component<Props, Object> {
   onSubmit: (e: Object) => void

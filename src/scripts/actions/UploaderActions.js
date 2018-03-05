@@ -42,30 +42,41 @@ function upsertVideo (videoId, dataToUpdate, state) {
   }
   console.log('SAVING:')
   console.log(updatedVideo)
-  return paratii.core.vids.upsert(updatedVideo)
+  return paratii.core.vids.upsert(updatedVideo).catch(error => {
+    console.log(error)
+    throw error
+  })
 }
 
 // upload the video to the local ipfs node and dispatch the transcoding process
-export const upload = (file: Object) => (
+export const uploadAndTranscode = (file: Object, videoId: string) => (
   dispatch: Dispatch<*>,
   getState: () => RootState
 ) => {
-  const newVideoId = paratii.eth.vids.makeId()
+  console.log('STARTING FILE UPLOAD')
+
+  // create a new Id if none was given
+  if (!videoId) {
+    videoId = paratii.eth.vids.makeId()
+  }
   dispatch(
     videoFetchSuccess(
-      new VideoRecord({ id: newVideoId, owner: paratii.config.account.address })
+      new VideoRecord({ id: videoId, owner: paratii.config.account.address })
     )
   )
-  dispatch(selectUploaderVideo(newVideoId))
+  dispatch(selectUploaderVideo(videoId))
   dispatch(
     uploadRequested({
-      id: newVideoId,
+      id: videoId,
       filename: file.name,
       filesize: file.size,
       owner: paratii.config.account.address
     })
   )
+  // this will upload the file to the local IPFS node and report on progress
+  // this wll ALSO start the XHR upload
   const uploader = paratii.ipfs.uploader.add(file)
+
   uploader.on('error', function (err) {
     console.log('[UPLOAD error]', err)
     throw err
@@ -75,7 +86,7 @@ export const upload = (file: Object) => (
     const file = files[0]
 
     upsertVideo(
-      newVideoId,
+      videoId,
       {
         owner: paratii.config.account.address,
         ipfsHashOrig: file.hash,
@@ -85,14 +96,19 @@ export const upload = (file: Object) => (
       getState()
     )
   })
+
+  uploader.on('progress', percent => {
+    console.log('upload progress', percent)
+    dispatch(uploadProgress({ id: videoId, progress: percent }))
+  })
+
   uploader.on('fileReady', function (file) {
-    console.log(file)
     dispatch(
-      uploadLocalSuccess({ id: newVideoId, hash: file.hash, size: file.size })
+      uploadLocalSuccess({ id: videoId, hash: file.hash, size: file.size })
     )
     // now we can start the transcoding
     transcodeVideo({
-      id: newVideoId,
+      id: videoId,
       hash: file.hash,
       size: file.size
     })(dispatch, getState)
@@ -138,8 +154,9 @@ export const transcodeVideo = (videoInfo: Object) => async (
     })
 
     transcoder.on('transcoding:progress', function (hash, size, percent) {
-      dispatch(transcodingProgress(videoInfo, size, percent))
-      console.log('TRANSCODER PROGRESS', hash, size, percent)
+      console.log('TRANSCODER PROGRESS', percent)
+      percent = parseFloat(percent)
+      dispatch(transcodingProgress({ id: videoInfo.id, progress: percent }))
     })
 
     transcoder.on('transcoding:downsample:ready', function (hash, size) {

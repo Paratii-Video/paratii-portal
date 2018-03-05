@@ -34,26 +34,46 @@ export const getSelectedUploaderVideo: (
   }
 )
 
-// export const getUploadProgress = createSelector(
+// export const getUploadProgress: (
+//   state: RootState
+// ) => ?Number = createSelector(
 //   [getSelectedUploaderVideo],
-//   upload => {
-//     return (upload && parseInt(upload.getIn(['uploadStatus', 'data', 'progress']))) || 0
+//   video => {
+//     return (
+//       (video &&
+//         parseInt(video.getIn(['uploadStatus', 'data', 'progress']))) ||
+//       0
+//     )
 //   }
 // )
 //
-// export const getTranscodingProgress = createSelector(
+// export const getTranscodingProgress: (
+//   state: RootState
+// ) => ?Number = createSelector(
 //   [getSelectedUploaderVideo],
-//   upload => {
-//     return (upload && parseInt(upload.getIn(['transcodingStatus', 'data', 'progress']))) || 0
+//   video => {
+//     return (
+//       (video &&
+//         parseInt(video.getIn(['transcodingStatus', 'data', 'progress']))) ||
+//       0
+//     )
 //   }
 // )
 //
-// export const getTotalProgress = createSelector(
-//   [getSelectedUploaderVideo],
-//   upload => {
-//     return ((getUploadProgress() + getTranscodingProgress()) / 2) || 0
-//   }
-// )
+export const getTotalProgress: (state: RootState) => ?Number = createSelector(
+  [getSelectedUploaderVideo],
+  video => {
+    if (!video) {
+      return 0
+    }
+    // const uploadProgress = parseInt(video.uploadStatus.data.progress)
+    const uploadProgress = 0
+    // const transcodingProgress = parseInt(video.transcoderStatus.data.progress)
+    const transcodingProgress =
+      parseInt(video.getIn(['transcodingStatus', 'data', 'progress'])) || 0
+    return Math.floor((uploadProgress + transcodingProgress) / 2) || 0
+  }
+)
 
 export const getIsUploading = createSelector(
   [getSelectedUploaderVideo],

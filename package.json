@@ -28,6 +28,7 @@
     "quality": "yarn run lint:scripts && yarn run lint:styles && yarn run flow",
     "server": "NODE_ENV=production-notugly node src/server/index.js",
     "server:dev": "NODE_ENV=development yarn run setup-dev-env && NODE_ENV=development nodemon src/server/index.js --watch node_modules src/server/**/*.js",
+    "unit-test-circle": "NODE_ENV=test karma start karma.circle.conf.js",
     "unit-test": "NODE_ENV=test karma start karma.conf.js",
     "unit-test:dev": "yarn run unit-test -- --single-run false"
   },
@@ -138,8 +139,8 @@
     "ipfs-bitswap": "^0.19.0",
     "js-cookie": "^2.2.0",
     "lodash.debounce": "^4.0.8",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#5836442de2a6ac38670e26083201b3448608c295",
     "paratii-mediaplayer": "^3.0.2",
+    "paratii-lib": "github:Paratii-Video/paratii-lib#2dd13d4859a89d1c962cefecb18ace717b6addc9",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
     "react-blockies": "^1.2.2",

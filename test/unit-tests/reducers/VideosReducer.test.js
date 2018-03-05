@@ -1092,7 +1092,8 @@ describe('Video Reducer', () => {
       store.dispatch({
         type: TRANSCODING_PROGRESS,
         payload: {
-          id: '888'
+          id: '888',
+          progress: '12'
         }
       })
       expect(store.getState().toJS()).to.deep.equal({
@@ -1108,9 +1109,10 @@ describe('Video Reducer', () => {
           },
           transcodingStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'progress',
+            name: 'running',
             data: {
-              ...getDefaultDataStatus()
+              ...getDefaultDataStatus(),
+              progress: '12'
             }
           }
         }

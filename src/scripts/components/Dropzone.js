@@ -3,15 +3,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-// import {
-//   supportMultiple,
-//   fileAccepted,
-//   allFilesAccepted,
-//   fileMatchSize,
-//   onDocumentDragOver,
-//   getDataTransferItems
-// } from './utils'
-// import styles from './utils/styles'
 
 const DropzoneWrapper = styled.div`
   cursor: pointer;

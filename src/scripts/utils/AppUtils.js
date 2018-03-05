@@ -69,7 +69,7 @@ export function humanReadableStatus (video: VideoRecord, type: string) {
       if (video.storageStatus.name !== 'success') {
         statusMessage = 'Please provide a title and description'
       } else if (video.transcodingStatus.name === 'success') {
-        statusMessage = 'Your video is now ready to play'
+        statusMessage = 'Your video is ready to play'
       } else if (video.transcodingStatus.name === 'failed') {
         statusMessage = 'Your video could not be transcoded'
       } else if (!video.filename) {
