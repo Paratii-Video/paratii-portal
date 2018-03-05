@@ -127,18 +127,6 @@ class VideoForm extends Component<Props, Object> {
     this.publishVideo(true)
   }
 
-  // onPublishSubmit (e: Object) {
-  //   e.preventDefault()
-  //
-  //   this.props.showModal(
-  //     <ModalStake
-  //       videoId={this.state.id}
-  //       onSuccess={this.handlePublish}
-  //       user={this.props.user}
-  //     />
-  //   )
-  // }
-
   onFileChosen (e) {
     const file = e.target.files[0]
     this.props.uploadAndTranscode(file, this.props.selectedVideo.id)
