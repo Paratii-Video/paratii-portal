@@ -132,7 +132,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.1",
-    "clappr": "0.2.78",
+    "clappr": "^0.2.85",
     "hh-mm-ss": "^1.2.0",
     "hlsjs-ipfs-loader": "github:ya7ya/hlsjs-ipfs-loader#bd890b9e78f2c273fcb1dc4e1d43ad0afc69558c",
     "immutable": "^3.8.2",
@@ -140,8 +140,8 @@
     "ipfs-bitswap": "^0.19.0",
     "js-cookie": "^2.2.0",
     "lodash.debounce": "^4.0.8",
-    "paratii-mediaplayer": "^3.0.2",
     "paratii-lib": "github:Paratii-Video/paratii-lib#ccc1527c390fc087bdc7893b7ae711f937b52378",
+    "paratii-mediaplayer": "^3.0.2",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
     "react-blockies": "^1.2.2",
