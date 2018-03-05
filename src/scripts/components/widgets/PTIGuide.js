@@ -141,7 +141,7 @@ class PTIGuide extends Component<Props, void> {
               </Icon>
               <Content>
                 <ContentTitle big purple>
-                  Discover how to use your PTIs
+                  Discover how to use your PTI
                 </ContentTitle>
               </Content>
             </Item>
@@ -153,7 +153,7 @@ class PTIGuide extends Component<Props, void> {
                 <TextStrong>
                   PTI is the native token of the Paratii open system. We call it
                   a &ldquo;system&rdquo; because the network executes operations
-                  with PTIs although nobody &ldquo;owns&rdquo; the machinery who
+                  with PTI although nobody &ldquo;owns&rdquo; the machinery who
                   does the job.
                 </TextStrong>
                 <Text gray small>
@@ -162,7 +162,7 @@ class PTIGuide extends Component<Props, void> {
                   registered user on Paratii earns some tokens to experiment
                   with. They show up on the top right of this page (click that
                   icon!) or in our embedded player, when one is watching through
-                  other sites. Let’s see what you can do with PTIs?
+                  other sites. Let’s see what you can do with PTI?
                 </Text>
               </Content>
             </Item>
@@ -202,7 +202,7 @@ class PTIGuide extends Component<Props, void> {
                 <Text gray small>
                   Any user can then go in favour or disfavour that video’s
                   presence on the system. Videos collectively rejected lose
-                  their stakes - forfeited PTIs go to voters in the challenge
+                  their stakes - forfeited PTI go to voters in the challenge
                   (people who flagged or disapproved) and to all people actively
                   staking tokens in the system, at the moment. That means that
                   keeping a well curated record of videos - one that keeps
@@ -217,16 +217,16 @@ class PTIGuide extends Component<Props, void> {
               </Header>
               <Content>
                 <TextStrong>
-                  Soon, PTIs will also be usable for facilitating micro
-                  payments. Creators will have monetisation options to directly
-                  receive value from their audiences and/or advertisers.
+                  Soon, PTI will also be usable for facilitating micro payments.
+                  Creators will have monetisation options to directly receive
+                  value from their audiences and/or advertisers.
                 </TextStrong>
                 <Text gray small>
-                  Most important for now is that you understand PTIs as an entry
+                  Most important for now is that you understand PTI as an entry
                   ticket to take part in an economy that belongs to you as much
                   as you are willing to belong to it. Tokens displayed here are
                   in a test environment still, and have no monetary value. If
-                  you&apos;re willing to claim some extra test PTIs, ask
+                  you&apos;re willing to claim some extra test PTI, ask
                   questions, or make suggestions about the token&apos;s feature
                   set itself, don&apos;t hesitate to{' '}
                   <Anchor

@@ -140,7 +140,7 @@
     "js-cookie": "^2.2.0",
     "lodash.debounce": "^4.0.8",
     "paratii-mediaplayer": "^3.0.2",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#2dd13d4859a89d1c962cefecb18ace717b6addc9",
+    "paratii-lib": "github:Paratii-Video/paratii-lib#ccc1527c390fc087bdc7893b7ae711f937b52378",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
     "react-blockies": "^1.2.2",
