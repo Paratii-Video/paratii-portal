@@ -125,3 +125,13 @@ RUN export CHROMEDRIVER_RELEASE=$(curl --location --fail --retry 3 http://chrome
 ENV DISPLAY :99
 RUN printf '#!/bin/sh\nXvfb :99 -screen 0 1280x1024x24 &\nexec "$@"\n' > /tmp/entrypoint \
   && chmod +x /tmp/entrypoint
+
+# install paratii-db
+RUN mkdir /root/.ssh/
+ADD id_rsa /root/.ssh/id_rsa
+RUN touch /root/.ssh/known_hosts
+RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
+
+WORKDIR /paratii-db
+RUN git clone git@github.com:Paratii-Video/paratii-db.git
+RUN cd paratii-db && npm install
