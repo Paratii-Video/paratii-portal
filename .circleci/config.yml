@@ -28,8 +28,12 @@ jobs:
           command: yarn run server:dev
           background: true
       - run:
-          command: cd / && cd paratii-db && cd paratii-db && npm run dev
+          command: cd / && cd paratii-db && cd paratii-db
+      - run:
+          command: npm run dev
           background: true
+      - run:
+          command: cd ~ && cd repo
       - run: node src/scripts/waitForServer.js
       - run: yarn run chimp-test
       - deploy:
