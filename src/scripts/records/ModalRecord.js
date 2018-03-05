@@ -8,7 +8,7 @@ class ModalRecord extends ImmutableRecord({
   showModal: false
 }) {
   modalContent: string
-  modalCallback: () => null
+  modalCallback: () => any
   showModal: boolean
 }
 
