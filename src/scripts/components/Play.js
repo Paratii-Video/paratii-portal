@@ -499,7 +499,7 @@ class Play extends Component<Props, State> {
       return <NotFound />
     } else {
       return (
-        <Wrapper>
+        <Wrapper isEmbed={isEmbed}>
           <PlayerWrapper
             onClick={this.onPlayerClick}
             onMouseEnter={this.onMouseEnter}
