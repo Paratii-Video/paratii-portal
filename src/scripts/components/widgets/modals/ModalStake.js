@@ -9,8 +9,10 @@ import UserRecord from 'records/UserRecords'
 type Props = {
   videoId: Object,
   user: UserRecord,
-  modalCallback: () => void,
-  onSuccess: () => void
+  modalProps: Object,
+  closeModal: () => void,
+  saveVideoInfo: Object => Object,
+  selectedVideo: Object => Object
 }
 
 const Wrapper = styled.div`
@@ -46,9 +48,16 @@ class ModalStake extends Component<Props, Object> {
   onSubmit: (e: Object) => void
   constructor (props: Props) {
     super(props)
+    const selectedVideo = this.props.selectedVideo
     this.state = {
+      id: selectedVideo.id,
+      title: selectedVideo.title,
+      description: selectedVideo.description,
+      // FIXME: we are not editing duration, so we do not need to store it in the state
+      duration: selectedVideo.duration,
+      author: selectedVideo.author,
       errorMessage: false,
-      agreedTOC: false // TODO
+      agreedTOC: false // TODO,
     }
     this.onSubmit = this.onSubmit.bind(this)
   }
@@ -66,8 +75,15 @@ class ModalStake extends Component<Props, Object> {
           this.setState({
             errorMessage: false
           })
-          this.props.modalCallback()
-          this.props.onSuccess()
+          const videoToSave = {
+            id: this.state.id,
+            title: this.state.title,
+            description: this.state.description,
+            author: this.state.author,
+            published: true
+          }
+          this.props.saveVideoInfo(videoToSave)
+          this.props.closeModal()
           console.log(
             `video ${this.props.videoId.id.toString()} successfully applied to TCR Listing`
           )

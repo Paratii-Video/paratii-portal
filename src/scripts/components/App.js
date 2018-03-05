@@ -31,40 +31,11 @@ type Props = {
   setSelectedVideo: (id: string) => void
 }
 
-type State = {
-  modalContent: any,
-  showModal: boolean
-}
-
-class App extends Component<Props, State> {
-  showModal: () => void
-  closeModal: () => void
-
+class App extends Component<Props, void> {
   constructor (props: Props) {
     super(props)
 
     this.props.initializeApp()
-
-    this.state = {
-      modalContent: false,
-      showModal: false
-    }
-
-    this.showModal = this.showModal.bind(this)
-    this.closeModal = this.closeModal.bind(this)
-  }
-
-  showModal (content: Object): void {
-    this.setState({
-      modalContent: content,
-      showModal: true
-    })
-  }
-
-  closeModal (): void {
-    this.setState({
-      showModal: false
-    })
   }
 
   render () {
@@ -83,15 +54,7 @@ class App extends Component<Props, State> {
                 path={`${match.url}profile`}
                 component={ProfileContainer}
               />
-              <Route
-                path={`${match.url}upload`}
-                render={props => (
-                  <VideoManager
-                    showModal={this.showModal}
-                    closeModal={this.closeModal}
-                  />
-                )}
-              />
+              <Route path={`${match.url}upload`} component={VideoManager} />
               <Route path={`${match.url}voucher`} component={Voucher} />
               <Route path={`${match.url}debug`} component={DebugContainer} />
               <Route path={`${match.url}wallet`} component={WalletContainer} />

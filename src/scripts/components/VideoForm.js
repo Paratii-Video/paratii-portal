@@ -138,12 +138,7 @@ class VideoForm extends Component<Props, Object> {
   }
 
   publishVideo (publish: false) {
-    this.props.openModal({
-      modal: 'ModalStake',
-      callback: () => {
-        this.saveData(true)
-      }
-    })
+    this.props.openModal('ModalStake')
   }
 
   saveData (publish: false) {
