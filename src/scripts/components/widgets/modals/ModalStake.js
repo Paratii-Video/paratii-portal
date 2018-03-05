@@ -51,8 +51,6 @@ class ModalStake extends Component<Props, Object> {
       agreedTOC: false // TODO
     }
     this.onSubmit = this.onSubmit.bind(this)
-    // this.handlePublish = this.handlePublish.bind(this)
-    // this.handlePublish = this.handlePublish.bind(this)
   }
 
   onSubmit (event: Object) {

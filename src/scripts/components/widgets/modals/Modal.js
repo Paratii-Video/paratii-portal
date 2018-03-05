@@ -72,6 +72,13 @@ const Content = styled.div`
 `
 
 class Modal extends Component<Props, void> {
+  renderModal () {
+    const { modalContent } = this.props
+    switch (modalContent) {
+      case 'ModalStake':
+        return <ModalStake />
+    }
+  }
   render () {
     const isVisible = this.props.showModal
     document.onkeydown = event => {
@@ -88,9 +95,7 @@ class Modal extends Component<Props, void> {
               <use xlinkHref="#icon-close" />
             </SVG>
           </CloseButton>
-          <Content>
-            {this.props.modalContent === 'ModalStake' && <ModalStake />}
-          </Content>
+          <Content>{this.renderModal()}</Content>
         </Container>
         <Background show={isVisible} onClick={this.props.closeModal} />
       </Wrapper>
