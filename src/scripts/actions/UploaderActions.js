@@ -21,6 +21,8 @@ import { videoFetchSuccess } from 'actions/VideoActions'
 import type { Dispatch } from 'redux'
 import type { RootState } from 'types/ApplicationTypes'
 
+import * as Notifications from 'react-notification-system-redux'
+
 export const selectUploaderVideo = createAction(UPLOAD_VIDEO_SELECT)
 const uploadRequested = createAction(UPLOAD_REQUESTED)
 const uploadProgress = createAction(UPLOAD_PROGRESS)
@@ -194,6 +196,9 @@ export const saveVideoInfo = (videoInfo: Object) => async (
 ) => {
   // the owner is the user that is logged in
   console.log('SAVING VIDEO DATA')
+
+  dispatch(Notifications.success({ message: 'Saving..' }))
+
   let videoId
   videoInfo.owner = paratii.config.account.address
   if (videoInfo.id) {
@@ -208,6 +213,7 @@ export const saveVideoInfo = (videoInfo: Object) => async (
     .then(videoInfo => {
       // console.log('SAVED')
       dispatch(videoDataSaved(videoInfo))
+      dispatch(Notifications.success({ message: 'Video Saved!!' }))
     })
     .catch(error => {
       // console.log(error)

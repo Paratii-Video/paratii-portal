@@ -4,13 +4,23 @@ import React, { Component } from 'react'
 import Notifications from 'react-notification-system-redux'
 
 type Props = {
-  store: Object,
   notifications: Array
 }
 
-class Notification extends Component<Props, Object> {
+class Notification extends Component<Props, Array> {
+  constructor (props: Props) {
+    super(props)
+    console.log(this.props)
+  }
+
+  componentWillReceiveProps (nextProps: Props): void {
+    console.log(nextProps)
+  }
+
   render () {
     const { notifications } = this.props
+    console.log('NOTY!')
+    console.log(notifications)
 
     // Optional styling
     const style = {
@@ -23,7 +33,7 @@ class Notification extends Component<Props, Object> {
 
         success: {
           // Applied only to the success notification item
-          color: 'red'
+          // color: 'red'
         }
       }
     }
@@ -33,10 +43,3 @@ class Notification extends Component<Props, Object> {
 }
 
 export default Notification
-// DemoComponent.contextTypes = {
-//   store: PropTypes.object
-// };
-//
-// DemoComponent.propTypes = {
-//   notifications: PropTypes.array
-// };

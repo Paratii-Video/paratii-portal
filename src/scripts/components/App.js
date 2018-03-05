@@ -12,6 +12,8 @@ import VideoManager from 'containers/VideoManagerContainer'
 import DebugContainer from 'containers/DebugContainer'
 import WalletContainer from 'containers/WalletContainer'
 
+import Notifications from 'containers/NotificationContainer'
+
 import type { Match } from 'react-router-dom'
 
 import MainTemplate from './templates/MainTemplate'
@@ -76,6 +78,7 @@ class App extends Component<Props, State> {
           <Modal show={this.state.showModal} closeModal={this.closeModal}>
             {HTMLModal}
           </Modal>
+          <Notifications />
           <MainHeader />
           <Main>
             <Switch>
