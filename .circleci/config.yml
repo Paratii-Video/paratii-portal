@@ -4,7 +4,6 @@ jobs:
     docker:
       - image: leeaandrob/paratii-portal:0.0.6
       - image: circleci/mongo:latest
-    working_directory: ~/repo
     steps:
       - checkout
       - restore_cache:
@@ -28,8 +27,9 @@ jobs:
           command: yarn run server:dev
           background: true
       - run:
+          command: mv /paratii-db . 
+      - run:
           command: cd paratii-db && npm run dev
-          working_directory: paratii-db
           background: true
       - run: node src/scripts/waitForServer.js
       - run: yarn run chimp-test
