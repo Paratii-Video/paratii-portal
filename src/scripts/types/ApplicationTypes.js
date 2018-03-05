@@ -6,6 +6,7 @@ import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
 import PlayerRecord from 'records/PlayerRecords'
 import UploaderRecord from 'records/UploaderRecords'
+import NotificationRecord from 'records/NotificationRecord'
 import { REQUEST_STATUS } from 'constants/ApplicationConstants'
 
 export type Location = {
@@ -32,7 +33,8 @@ export type RootState = {
   uploader: UploaderRecord,
   user: UserRecord,
   videos: VideoRecordMap,
-  player: PlayerRecord
+  player: PlayerRecord,
+  notifications: NotificationRecord
 }
 
 type _ThunkAction<R> = (dispatch: Dispatch, getState?: () => RootState) => R

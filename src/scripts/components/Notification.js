@@ -1,23 +1,14 @@
+/* @flow */
+
 import React, { Component } from 'react'
-// import { Link } from 'react-router-dom'
-// import styled from 'styled-components'
 import Notifications from 'react-notification-system-redux'
 import Colors from 'components/foundations/base/Colors'
 
 type Props = {
-  notifications: Array
+  notifications: Array<Object>
 }
 
-class Notification extends Component<Props, Array> {
-  constructor (props: Props) {
-    super(props)
-    console.log(this.props)
-  }
-
-  componentWillReceiveProps (nextProps: Props): void {
-    console.log(nextProps)
-  }
-
+class Notification extends Component<Props, Array<Object>> {
   render () {
     const { notifications } = this.props
 
