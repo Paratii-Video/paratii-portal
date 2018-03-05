@@ -125,12 +125,9 @@ class ModalStake extends Component<Props, Object> {
           <MainText small>
             For now, with no monetary value, this is mostly an experiment. Soon,
             the community will curate all the content published. Well-received
-            videos will see their stakes increase, earning PTIs to their
+            videos will see their stakes increase, earning PTI for their
             creators. Illegal content may lose its stake. Want to know how
-            exactly this is going to play out?{' '}
-            <Anchor anchor purple href="./">
-              Learn More
-            </Anchor>
+            exactly this is going to play out? Stay alert!
           </MainText>
         ) : (
           ''
