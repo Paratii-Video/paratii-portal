@@ -178,28 +178,24 @@ class VideoForm extends Component<Props, Object> {
     const title = video.title || video.filename
 
     const fileSize = prettyBytes((video && video.get('filesize')) || 0)
+
     const isPublished = video.published === true || video.published === 'true'
     const isPublishable =
       video.transcodingStatus.name === 'success' && isPublished === false
 
-    let publishButton
-    if (isPublished) {
-      publishButton = ''
-    } else {
-      publishButton = (
-        <ButtonWrapper>
-          <Button
-            id="video-submit"
-            type="submit"
-            onClick={this.onPublishVideo}
-            disabled={!isPublishable}
-            purple
-          >
-            Publish
-          </Button>
-        </ButtonWrapper>
-      )
-    }
+    const publishButton = (
+      <ButtonWrapper>
+        <Button
+          id="video-submit"
+          type="submit"
+          onClick={this.onPublishVideo}
+          disabled={!isPublishable}
+          purple
+        >
+          Publish
+        </Button>
+      </ButtonWrapper>
+    )
 
     const saveButton = (
       <ButtonWrapper>

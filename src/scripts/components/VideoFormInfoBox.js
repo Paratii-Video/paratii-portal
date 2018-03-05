@@ -68,7 +68,8 @@ const PublishLabel = styled.div`
 
 type Props = {
   selectedVideo: VideoRecord,
-  progress: Number
+  progress: Number,
+  getTotalProgress: () => Number
 }
 
 class InfoBox extends Component<Props, Object> {
@@ -105,6 +106,8 @@ class InfoBox extends Component<Props, Object> {
       }
     }
 
+    // FIXME: use the selector for the status
+    // const progress = this.props.getTotalProgress()
     const uploadProgress = video.uploadStatus.data.progress
     const transcodingStatus = video.transcodingStatus.data.progress
     const progress = Math.floor((uploadProgress + transcodingStatus) / 2)

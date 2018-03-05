@@ -73,10 +73,10 @@ const reducer = {
         filename: payload.filename,
         filesize: payload.filesize,
         uploadStatus: videoRecord.get('uploadStatus').merge({
-          name: 'running',
-          data: videoRecord.getIn(['uploadStatus', 'data']).merge({
-            progress: 0
-          })
+          name: 'running'
+          // data: videoRecord.getIn(['uploadStatus', 'data']).merge({
+          //   progress: 0
+          // })
         }),
         author: payload.author,
         owner: payload.owner

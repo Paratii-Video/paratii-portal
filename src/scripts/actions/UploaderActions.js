@@ -54,6 +54,7 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
   getState: () => RootState
 ) => {
   console.log('STARTING FILE UPLOAD')
+  // create a new Id if none was given
   if (!videoId) {
     videoId = paratii.eth.vids.makeId()
   }
@@ -71,7 +72,10 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
       owner: paratii.config.account.address
     })
   )
+  // this will upload the file to the local IPFS node and report on progress
+  // this wll ALSO start the XHR upload
   const uploader = paratii.ipfs.uploader.add(file)
+
   uploader.on('error', function (err) {
     console.log('[UPLOAD error]', err)
     throw err
