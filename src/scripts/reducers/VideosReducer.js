@@ -7,6 +7,7 @@ import {
   UPLOAD_PROGRESS,
   UPLOAD_REMOTE_SUCCESS,
   UPLOAD_LOCAL_SUCCESS,
+  UPDATE_VIDEO_TIME,
   UPDATE_VIDEO_INFO,
   VIDEO_DATA_START,
   VIDEO_DATA_SAVED,
@@ -279,7 +280,7 @@ const reducer = {
   },
   [VIDEO_FETCH_SUCCESS]: (
     state: VideoRecordMap,
-    { payload }: Action<VideoRecord>
+    { payload }: Action<Object>
   ): VideoRecordMap => {
     if (!payload || !payload.id) {
       return state
@@ -298,7 +299,7 @@ const reducer = {
   },
   [VIDEOS_FETCH_SUCCESS]: (
     state: VideoRecordMap,
-    { payload }: Action<Array<VideoRecord>>
+    { payload }: Action<Array<Object>>
   ): VideoRecordMap =>
     state.merge(
       payload.reduce(
@@ -309,7 +310,23 @@ const reducer = {
         },
         {}
       )
-    )
+    ),
+  [UPDATE_VIDEO_TIME]: (
+    state: VideoRecordMap,
+    { payload }: Action<{ id: string, duration: string }>
+  ): VideoRecordMap => {
+    if (!payload || !payload.id || !payload.duration) {
+      return state
+    }
+
+    const video: ?VideoRecord = state.get(payload.id)
+
+    if (!video) {
+      return state
+    }
+
+    return state.set(payload.id, video.set('duration', payload.duration))
+  }
 }
 
 export default handleActions(reducer, Immutable.Map({}))

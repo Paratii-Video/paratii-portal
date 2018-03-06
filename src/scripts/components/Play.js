@@ -5,6 +5,7 @@ import { Events } from 'clappr'
 import styled from 'styled-components'
 import debounce from 'lodash.debounce'
 import Transition from 'react-transition-group/Transition'
+import TimeFormat from 'hh-mm-ss'
 
 import VideoRecord from 'records/VideoRecords'
 import VideoOverlay from 'components/VideoOverlay'
@@ -216,10 +217,18 @@ class Play extends Component<Props, State> {
         playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
         playback.on(
           Events.PLAYBACK_TIMEUPDATE,
-          ({ current, total }: { current: number, total: number }): void => {
+          ({
+            current,
+            total
+          }: {
+            total: number,
+            current: number,
+            total: number
+          }): void => {
             this.props.updateVideoTime({
               id: video.get('id'),
-              time: current
+              time: current,
+              duration: TimeFormat.fromS(total, 'hh:mm:ss.sss')
             })
           }
         )
