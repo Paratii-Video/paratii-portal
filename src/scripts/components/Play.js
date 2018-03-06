@@ -356,6 +356,41 @@ class Play extends Component<Props, State> {
     )
   }
 
+  addFullScreenEventListeners () {
+    document.addEventListener('fullscreenchange', this.setFullscreen)
+    document.addEventListener('mozfullscreenchange', this.setFullscreen)
+    document.addEventListener('webkitfullscreenchange', this.setFullscreen)
+    document.addEventListener('MSFullscreenChange', this.setFullscreen)
+  }
+
+  removeFullScreenEventListeners () {
+    document.removeEventListener('fullscreenchange', this.setFullscreen)
+    document.removeEventListener('mozfullscreenchange', this.setFullscreen)
+    document.removeEventListener('webkitfullscreenchange', this.setFullscreen)
+    document.removeEventListener('MSFullscreenChange', this.setFullscreen)
+  }
+
+  handleKeyDown = (e: Object): void => {
+    const activeElement: ?HTMLElement = document.activeElement
+
+    if (activeElement && activeElement.nodeName === 'INPUT') {
+      return
+    }
+
+    // Space key
+    if (e.keyCode === 32) {
+      this.togglePlayPause()
+    }
+  }
+
+  addKeyDownEventListeners () {
+    window.addEventListener('keydown', this.handleKeyDown)
+  }
+
+  removeKeyDownEventListeners () {
+    window.removeEventListener('keydown', this.handleKeyDown)
+  }
+
   componentDidMount (): void {
     const videoId = this.getVideoIdFromRequest()
     if (videoId) {
@@ -368,17 +403,13 @@ class Play extends Component<Props, State> {
       this.setState({ videoNotFound: true })
     }
 
-    document.addEventListener('fullscreenchange', this.setFullscreen)
-    document.addEventListener('mozfullscreenchange', this.setFullscreen)
-    document.addEventListener('webkitfullscreenchange', this.setFullscreen)
-    document.addEventListener('MSFullscreenChange', this.setFullscreen)
+    this.addFullScreenEventListeners()
+    this.addKeyDownEventListeners()
   }
 
   componentWillUnmount (): void {
-    document.removeEventListener('fullscreenchange', this.setFullscreen)
-    document.removeEventListener('mozfullscreenchange', this.setFullscreen)
-    document.removeEventListener('webkitfullscreenchange', this.setFullscreen)
-    document.removeEventListener('MSFullscreenChange', this.setFullscreen)
+    this.removeFullScreenEventListeners()
+    this.removeKeyDownEventListeners()
 
     if (this.player) {
       this.player.destroy()
