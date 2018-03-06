@@ -118,7 +118,7 @@ class RedeemVoucher extends Component<Props, Object> {
         <Wrapper>
           <TextField
             onChange={this.handleChange}
-            label="Enter code here to receive test PTIs"
+            label="Enter code here to receive test PTI"
           />
           <SubmitButton onClick={this.redeemVoucher}> Submit</SubmitButton>
         </Wrapper>

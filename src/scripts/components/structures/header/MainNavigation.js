@@ -37,7 +37,7 @@ class MainNavigation extends Component<Props, void> {
       <Nav>
         <NavList>
           <NavItem>
-            <NavLink to="/voucher">Get PTIs</NavLink>
+            <NavLink to="/voucher">Get PTI</NavLink>
           </NavItem>
           <Hidden>
             <NavItem>
