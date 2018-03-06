@@ -45,14 +45,19 @@ export const getFormattedDuration: (
   state: RootState
 ) => string = createSelector(
   [getPlayingVideo],
-  (playingVideo: ?VideoRecord): string =>
-    TimeFormat.fromS(
+  (playingVideo: ?VideoRecord): string => {
+    const roundedTime: number = Math.floor(
       TimeFormat.toS(
         (playingVideo && playingVideo.get('duration')) || '00:00:00.00',
         'hh:mm:ss.sss'
-      ),
-      'hh:mm:ss'
+      )
     )
+
+    return TimeFormat.fromS(
+      roundedTime,
+      roundedTime >= 3600 ? 'hh:mm:ss' : 'mm:ss'
+    )
+  }
 )
 
 export const getDurationSeconds: (state: RootState) => string = createSelector(
