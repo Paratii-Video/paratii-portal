@@ -141,11 +141,11 @@ class InfoBox extends Component<Props, Object> {
           {durationBox}
         </VideoMedia>
         <VideoProgress progress={progress + '%'} marginBottom marginTop>
-          <VideoProgressTitle progress={uploadProgress + '%'} marginRight>
+          <VideoProgressTitle success={progress >= 50} marginRight>
             {uploaderMessages[video.uploadStatus.name] ||
               video.uploadStatus.name}
           </VideoProgressTitle>
-          <VideoProgressTitle progress={transcodingStatus + '%'}>
+          <VideoProgressTitle success={progress === 100}>
             {transcoderMessages[video.transcodingStatus.name] ||
               video.transcodingStatus.name}
           </VideoProgressTitle>

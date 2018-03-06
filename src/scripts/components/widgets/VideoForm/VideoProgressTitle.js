@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 type Props = {
   marginRight: boolean,
-  progress: String,
+  success: boolean,
   children: Object
 }
 
@@ -41,12 +41,9 @@ const SVG = styled.svg`
 class VideoProgressTitle extends Component<Props, void> {
   render () {
     return (
-      <Title
-        marginRight={this.props.marginRight}
-        success={this.props.progress === '100%'}
-      >
+      <Title marginRight={this.props.marginRight} success={this.props.success}>
         {this.props.children}
-        <Icon show={this.props.progress === '100%'}>
+        <Icon show={this.props.success}>
           <SVG>
             <use xlinkHref="#icon-check" />
           </SVG>
