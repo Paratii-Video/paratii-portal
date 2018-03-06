@@ -163,9 +163,9 @@ class InfoBox extends Component<Props, Object> {
             id="video-title"
             type="text"
             margin="0 0 30px"
-            onChange={e => this.handleInputChange('title', e)}
             value="<iframe width=560 height=315 src=https://"
             label="Embed Code"
+            onChange={() => null}
             readonly
           />
         </Hidden>
@@ -173,9 +173,9 @@ class InfoBox extends Component<Props, Object> {
           id="video-title"
           type="text"
           margin="0 0 25px"
-          onChange={e => this.handleInputChange('title', e)}
           value={urlForSharing}
           label="Share this video"
+          onChange={() => null}
           readonly
         />
         {!isPublishable && !isPublished ? (
