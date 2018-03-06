@@ -20,11 +20,7 @@ import {
   VIDEOS_FETCH_SUCCESS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
-import {
-  ResultStatusRecord,
-  AsyncTaskStatusRecord,
-  DataStatusRecord
-} from 'records/AsyncTaskStatusRecord'
+import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
 import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 
 const reducer = {
@@ -144,13 +140,13 @@ const reducer = {
       [payload.id, 'storageStatus'],
       new AsyncTaskStatusRecord({
         name: 'running',
-        data: new DataStatusRecord({
+        data: {
           id: payload.id,
           title: payload.title,
           description: payload.description,
           author: payload.author,
           owner: payload.owner
-        })
+        }
       })
     )
     return state
@@ -167,14 +163,14 @@ const reducer = {
         [payload.id, 'storageStatus'],
         new AsyncTaskStatusRecord({
           name: 'success',
-          data: new DataStatusRecord({
+          data: {
             id: payload.id,
             title: payload.title,
             description: payload.description,
             author: payload.author,
             owner: payload.owner,
             progress: 100
-          })
+          }
         })
       )
       .setIn([payload.id, 'title'], payload.title)
@@ -193,7 +189,7 @@ const reducer = {
       [payload.id, 'transcodingStatus'],
       new AsyncTaskStatusRecord({
         name: 'requested',
-        data: new DataStatusRecord({})
+        data: {}
       })
     )
   },
@@ -232,12 +228,12 @@ const reducer = {
         [payload.id, 'transcodingStatus'],
         new AsyncTaskStatusRecord({
           name: 'success',
-          data: new DataStatusRecord({
+          data: {
             ipfsHash,
-            result: new ResultStatusRecord(payload.result),
+            result: payload.result,
             // result: Immutable.fromJS(payload.result),
             progress: 100
-          })
+          }
         })
       )
       .setIn(
@@ -269,12 +265,12 @@ const reducer = {
     return state.set(
       payload.id,
       new VideoRecord({
-        fetchStatus: new AsyncTaskStatusRecord({
+        fetchStatus: {
           name: 'failed',
-          data: new DataStatusRecord({
+          data: {
             error: (payload.error && payload.error.message) || ''
-          })
-        })
+          }
+        }
       })
     )
   },

@@ -21,10 +21,6 @@ import {
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import {
-  AsyncTaskStatusRecord,
-  DataStatusRecord
-} from 'records/AsyncTaskStatusRecord'
-import {
   getDefaultResultStatus,
   getDefaultVideo,
   getDefaultAsyncTaskStatus,
@@ -144,7 +140,7 @@ describe('Video Reducer', () => {
         }
       })
     })
-    it('should add update an existing video in the store', () => {
+    it('should update an existing video in the store', () => {
       const store = createStore(
         reducer,
         Immutable.Map({
@@ -159,12 +155,12 @@ describe('Video Reducer', () => {
             filesize: '11111',
             owner: '1234567789',
             author: 'gino pino',
-            uploadStatus: new AsyncTaskStatusRecord({
+            uploadStatus: {
               name: 'running',
-              data: new DataStatusRecord({
+              data: {
                 title: 'foo'
-              })
-            })
+              }
+            }
           })
         })
       )
@@ -282,13 +278,13 @@ describe('Video Reducer', () => {
           '123': new VideoRecord({}),
           '888': new VideoRecord({
             title: 'foobar',
-            uploadStatus: new AsyncTaskStatusRecord({
+            uploadStatus: {
               name: 'running',
-              data: new DataStatusRecord({
+              data: {
                 title: 'foo',
                 progress: 44
-              })
-            })
+              }
+            }
           }),
           '999': new VideoRecord({})
         })
@@ -386,13 +382,13 @@ describe('Video Reducer', () => {
           '123': new VideoRecord({}),
           '888': new VideoRecord({
             title: 'foobar',
-            uploadStatus: new AsyncTaskStatusRecord({
+            uploadStatus: {
               name: 'running',
-              data: new DataStatusRecord({
+              data: {
                 title: 'foo',
                 progress: 44
-              })
-            })
+              }
+            }
           }),
           '999': new VideoRecord({})
         })
@@ -492,13 +488,13 @@ describe('Video Reducer', () => {
           '123': new VideoRecord({}),
           '888': new VideoRecord({
             title: 'foobar',
-            uploadStatus: new AsyncTaskStatusRecord({
+            uploadStatus: {
               name: 'uploaded to local node',
-              data: new DataStatusRecord({
+              data: {
                 title: 'foo',
                 progress: 44
-              })
-            })
+              }
+            }
           }),
           '999': new VideoRecord({})
         })
@@ -608,9 +604,9 @@ describe('Video Reducer', () => {
           '888': new VideoRecord({
             title: 'foobar',
             description: 'great video',
-            uploadStatus: new AsyncTaskStatusRecord({
+            uploadStatus: {
               name: 'uploaded to remote'
-            })
+            }
           }),
           '999': new VideoRecord({})
         })
@@ -713,9 +709,9 @@ describe('Video Reducer', () => {
             description: 'great video',
             owner: '1234567789',
             author: 'me',
-            uploadStatus: new AsyncTaskStatusRecord({
+            uploadStatus: {
               name: 'uploaded to remote'
-            })
+            }
           }),
           '999': new VideoRecord({})
         })
@@ -837,9 +833,9 @@ describe('Video Reducer', () => {
             description: 'great video',
             owner: '1234567789',
             author: 'gino pino',
-            uploadStatus: new AsyncTaskStatusRecord({
+            uploadStatus: {
               name: 'uploaded to remote'
-            })
+            }
           }),
           '999': new VideoRecord({})
         })
@@ -959,9 +955,9 @@ describe('Video Reducer', () => {
           '888': new VideoRecord({
             title: 'foobar',
             description: 'great video',
-            uploadStatus: new AsyncTaskStatusRecord({
+            uploadStatus: {
               name: 'uploaded to remote'
-            })
+            }
           })
         })
       )
@@ -1070,9 +1066,9 @@ describe('Video Reducer', () => {
           '888': new VideoRecord({
             title: 'foobar',
             description: 'great video',
-            uploadStatus: new AsyncTaskStatusRecord({
+            uploadStatus: {
               name: 'uploaded to remote'
-            })
+            }
           })
         })
       )
@@ -1181,9 +1177,9 @@ describe('Video Reducer', () => {
           '888': new VideoRecord({
             title: 'foobar',
             description: 'great video',
-            uploadStatus: new AsyncTaskStatusRecord({
+            uploadStatus: {
               name: 'uploaded to remote'
-            })
+            }
           })
         })
       )
@@ -1235,9 +1231,9 @@ describe('Video Reducer', () => {
             title: 'foobar',
             description: 'great video',
             duration: 111,
-            uploadStatus: new AsyncTaskStatusRecord({
+            uploadStatus: {
               name: 'uploaded to remote'
-            })
+            }
           })
         })
       )
@@ -1357,12 +1353,12 @@ describe('Video Reducer', () => {
             title: 'foobar',
             ipfsHash: 'q82gh20',
             description: 'great video',
-            uploadStatus: new AsyncTaskStatusRecord({
+            uploadStatus: {
               name: 'uploaded to remote'
-            }),
-            transcodingStatus: new AsyncTaskStatusRecord({
+            },
+            transcodingStatus: {
               name: 'running'
-            })
+            }
           })
         })
       )
@@ -1414,11 +1410,11 @@ describe('Video Reducer', () => {
     it('should add a new video to an empty store', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
-      const newVideo = new VideoRecord({
+      const newVideo = {
         id: '222',
         title: 'foobar',
         ipfsHash: 'q999'
-      })
+      }
       store.dispatch({
         type: VIDEO_FETCH_SUCCESS,
         payload: newVideo
@@ -1459,11 +1455,11 @@ describe('Video Reducer', () => {
       expect(store.getState().toJS()).to.deep.equal({})
     })
     it('should add a new video to a store with other videos', () => {
-      const newVideo = new VideoRecord({
+      const newVideo = {
         id: '222',
         title: 'foobar',
         ipfsHash: 'q999'
-      })
+      }
       const store = createStore(
         reducer,
         Immutable.Map({
@@ -1472,12 +1468,12 @@ describe('Video Reducer', () => {
           }),
           '444': new VideoRecord({
             title: 'foo',
-            transcodingStatus: new AsyncTaskStatusRecord({
+            transcodingStatus: {
               name: 'running',
-              data: new DataStatusRecord({
+              data: {
                 progress: 0
-              })
-            })
+              }
+            }
           })
         })
       )
