@@ -6,6 +6,7 @@ import Card from './structures/Card'
 import TextField from './widgets/forms/TextField'
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
+import VideoProgressTitle from 'components/widgets/VideoForm/VideoProgressTitle'
 
 const VideoFormInfoBox = styled.div`
   flex: 1 1 584px;
@@ -114,7 +115,7 @@ class InfoBox extends Component<Props, Object> {
 
     const isPublished = video.published === true || video.published === 'true'
     const isPublishable =
-      video.transcodingStatus.name === 'success' && isPublished === false
+      video.transcodingStatus.name === 'Transcoded' && isPublished === false
 
     const transcoderMessages = {
       idle: 'Waiting',
@@ -130,17 +131,6 @@ class InfoBox extends Component<Props, Object> {
       'uploaded to remote': 'Still uploading',
       success: 'Uploading done, now waiting for transcoder...'
     }
-    let statusMessage
-    if (video.uploadStatus.data.progress === 100) {
-      statusMessage =
-        '2/2 - ' +
-        (transcoderMessages[video.transcodingStatus.name] ||
-          video.transcodingStatus.name)
-    } else {
-      statusMessage =
-        '1/2 - ' +
-        (uploaderMessages[video.uploadStatus.name] || video.uploadStatus.name)
-    }
 
     return (
       <VideoFormInfoBox>
@@ -151,7 +141,14 @@ class InfoBox extends Component<Props, Object> {
           {durationBox}
         </VideoMedia>
         <VideoProgress progress={progress + '%'} marginBottom marginTop>
-          {statusMessage}
+          <VideoProgressTitle progress={uploadProgress + '%'} marginRight>
+            {uploaderMessages[video.uploadStatus.name] ||
+              video.uploadStatus.name}
+          </VideoProgressTitle>
+          <VideoProgressTitle progress={transcodingStatus + '%'}>
+            {transcoderMessages[video.transcodingStatus.name] ||
+              video.transcodingStatus.name}
+          </VideoProgressTitle>
         </VideoProgress>
         <Hidden>
           <TextField
