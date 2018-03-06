@@ -17,7 +17,7 @@ const VideoProgressWrapper = styled.div`
 
 const VideoProgressTitleWrapper = styled.div`
   display: flex;
-  flex-wrapper: wrap;
+  flex-wrap: wrap;
 `
 
 class VideoProgress extends Component<Props, void> {
