@@ -32,7 +32,7 @@ type Props = {
   initializeApp: () => void,
   match: Match,
   setSelectedVideo: (id: string) => void,
-  videos: Map<string, VideoRecord> // maps video ids to upload records
+  videos: Map<string, VideoRecord>
 }
 
 type State = {
