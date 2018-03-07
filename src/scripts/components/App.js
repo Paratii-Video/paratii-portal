@@ -51,7 +51,7 @@ class App extends Component<Props, State> {
     this.props.initializeApp()
 
     this.state = {
-      isBusy: this.props.videos.size > 0 || false,
+      isBusy: this.props.videos ? this.props.videos.size > 0 : false,
       modalContent: false,
       showModal: false
     }
