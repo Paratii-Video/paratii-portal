@@ -126,14 +126,16 @@ class InfoBox extends Component<Props, Object> {
       requested: 'Waiting for transcoding to start...',
       running: 'Transcoding...',
       failed: 'Transcoder exited with an error :-(',
-      success: 'Ready to Publish'
+      success: 'Ready to Publish',
+      error: 'Error'
     }
     const uploaderMessages = {
       idle: 'Waiting',
       requested: 'Uploading...',
       running: 'Uploading...',
       'uploaded to local node': 'Uploading...',
-      success: 'Uploaded'
+      success: 'Uploaded',
+      error: 'Error'
     }
 
     let videoProgressBox = null
