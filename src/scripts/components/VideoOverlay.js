@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
+import TruncatedText from 'components/foundations/TruncatedText'
 import PlayerControlsContainer from 'containers/PlayerControlsContainer'
 import VideoRecord from 'records/VideoRecords'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
@@ -90,7 +91,8 @@ const VideoInfo = styled.div`
 
 const PlayerTitle = Title.extend`
   color: ${props => props.theme.colors.VideoPlayer.header.title};
-  flex: 1 0 50%;
+  flex: 0 0 75%;
+  max-width: 75%;
 `
 
 const ButtonGroup = styled.div`
@@ -216,7 +218,9 @@ class VideoOverlay extends Component<Props, State> {
           transitionState={transitionState}
         >
           <VideoInfo transitionState={transitionState}>
-            <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>
+            <PlayerTitle small>
+              <TruncatedText>{this.getVideoTitle()}</TruncatedText>
+            </PlayerTitle>
             <ButtonGroup hide={!!this.state.openPopover}>
               {ProfileButton ? (
                 <ButtonWrapper>
