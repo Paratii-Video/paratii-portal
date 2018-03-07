@@ -45,7 +45,7 @@ module.exports = async (req: $Request, res: $Response) => {
         meta = openGraphHead(meta, video)
         meta = twitterCardHead(meta, video)
       } else {
-        res.send(404)
+        meta = notFoundVideo(meta)
       }
 
       break
@@ -64,7 +64,10 @@ module.exports = async (req: $Request, res: $Response) => {
   console.log(script)
   res.send(index)
 }
-
+function notFoundVideo (meta) {
+  meta += `<title>Video not found</title>`
+  return meta
+}
 function openGraphHead (meta, video) {
   const ipfsHash = video.ipfsHash
   const thumbName = video.transcodingStatus.data.result.screenshots[0]
