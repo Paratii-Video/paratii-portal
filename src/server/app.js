@@ -1,5 +1,4 @@
 const express = require('express')
-// const path = require('path')
 const devMiddleware = require('webpack-dev-middleware')
 const hotMiddleware = require('webpack-hot-middleware')
 const webpack = require('webpack')

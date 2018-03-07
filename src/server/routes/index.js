@@ -50,18 +50,13 @@ module.exports = async (req: $Request, res: $Response) => {
 
       break
     default:
-      console.log('default')
       meta = basicHead(meta)
       script = '<script type="text/javascript" src="/bundle.js"></script>'
       break
   }
 
-  // console.log(index)
-
   index = index.replace('{{meta}}', meta)
   index = index.replace('{{script}}', script)
-  console.log(meta)
-  console.log(script)
   res.send(index)
 }
 function notFoundVideo (meta) {
@@ -115,6 +110,9 @@ function twitterCardHead (meta, video) {
 
 function basicHead (meta) {
   meta += '<title>Paratii</title>'
+  meta += '<meta charset="utf-8">'
+  meta +=
+    '<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">'
   meta +=
     '<meta name="description" content="Paratii project is developing a video player upon p2p streaming and decentralized service providers to put revenue 100% in control of producers.">'
   return meta
