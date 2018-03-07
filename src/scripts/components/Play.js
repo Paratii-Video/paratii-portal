@@ -70,7 +70,7 @@ const VideoWrapper = styled.div`
 
   @media (max-width: 930px) {
     height: ${props => (props.isEmbed ? '100%' : '0')};
-    margin: 0 0 25px;
+    margin: ${props => (props.isEmbed ? null : '0 0 25px')};
     padding-bottom: ${props => (props.isEmbed ? null : '56.25%')};
     padding-top: ${props => (props.isEmbed ? null : '30px')};
   }
@@ -186,7 +186,8 @@ class Play extends Component<Props, State> {
       mouseInOverlay: false,
       videoNotFound: false,
       showShareModal: false,
-      playerCreated: ''
+      playerCreated: '',
+      isEmbed: this.props.isEmbed || false
     }
 
     this.lastMouseMove = 0
@@ -416,8 +417,8 @@ class Play extends Component<Props, State> {
       return <NotFound>Did not find a video</NotFound>
     } else {
       return (
-        <Wrapper>
-          <VideoWrapper isEmbed={this.props.isEmbed}>
+        <Wrapper isEmbed={this.state.isEmbed}>
+          <VideoWrapper isEmbed={this.state.isEmbed}>
             <PlayerWrapper>
               {this.shouldShowVideoOverlay() && (
                 <OverlayWrapper
@@ -467,11 +468,8 @@ class Play extends Component<Props, State> {
               )}
             </PlayerWrapper>
           </VideoWrapper>
-          {this.props.video && (
-            <DescriptionWrapper full>
-              <Title>{this.props.video.title}</Title>
-            </DescriptionWrapper>
-          )}
+          {this.props.video &&
+            !this.props.isEmbed && <DescriptionWrapper full />}
         </Wrapper>
       )
     }
