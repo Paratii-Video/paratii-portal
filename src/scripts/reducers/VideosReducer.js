@@ -102,10 +102,7 @@ const reducer = {
     return state.withMutations(
       (mutableState: VideoRecordMap): VideoRecordMap => {
         mutableState.setIn([payload.id, 'ipfsHashOrig'], ipfsHashOrig)
-        mutableState.setIn(
-          [payload.id, 'uploadStatus', 'name'],
-          'uploaded to remote'
-        )
+        mutableState.setIn([payload.id, 'uploadStatus', 'name'], 'success')
         mutableState.setIn(
           [payload.id, 'uploadStatus', 'data', 'ipfsHashOrig'],
           ipfsHashOrig

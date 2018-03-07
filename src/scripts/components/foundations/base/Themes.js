@@ -95,7 +95,8 @@ const Themes = {
           color: Colors.white
         },
         progress: {
-          color: Colors.purple,
+          success: Colors.purple,
+          color: Colors.grayLight,
           icon: Colors.black,
           iconBg: Colors.purple,
           background: Colors.grayLight,

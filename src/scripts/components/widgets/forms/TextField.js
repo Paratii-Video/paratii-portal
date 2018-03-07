@@ -86,9 +86,13 @@ class TextField extends Component<Props, void> {
   }
 
   handleFilled (e) {
-    this.setState({
-      filled: e.target.value.length > 0
-    })
+    const isfilled = e.target.value.length > 0
+
+    if (isfilled !== this.state.filled) {
+      this.setState({
+        filled: isfilled
+      })
+    }
   }
 
   handleChange (e) {
@@ -135,7 +139,8 @@ class TextField extends Component<Props, void> {
           readonly={this.props.readonly}
           id={this.props.id}
           name={this.props.name}
-          value={this.state.value}
+          value={this.props.value}
+          innerRef={ref => (this.FormField = ref)}
         />
         {this.props.label && (
           <Placeholder
