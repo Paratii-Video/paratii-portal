@@ -535,7 +535,7 @@ describe('Video Reducer', () => {
           ipfsHashOrig: 'Qjow875hgaahaw',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote',
+            name: 'success',
             data: {
               ...getDefaultDataStatus(),
               title: 'foo',
@@ -609,7 +609,7 @@ describe('Video Reducer', () => {
             title: 'foobar',
             description: 'great video',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to remote'
+              name: 'success'
             })
           }),
           '999': new VideoRecord({})
@@ -623,7 +623,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           }
         },
         '999': getDefaultVideo()
@@ -644,7 +644,7 @@ describe('Video Reducer', () => {
           description: 'even better description',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           }
         },
         '999': getDefaultVideo()
@@ -714,7 +714,7 @@ describe('Video Reducer', () => {
             owner: '1234567789',
             author: 'me',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to remote'
+              name: 'success'
             })
           }),
           '999': new VideoRecord({})
@@ -730,7 +730,7 @@ describe('Video Reducer', () => {
           author: 'me',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           }
         },
         '999': getDefaultVideo()
@@ -755,7 +755,7 @@ describe('Video Reducer', () => {
           author: 'me',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           },
           storageStatus: {
             ...getDefaultAsyncTaskStatus(),
@@ -838,7 +838,7 @@ describe('Video Reducer', () => {
             owner: '1234567789',
             author: 'gino pino',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to remote'
+              name: 'success'
             })
           }),
           '999': new VideoRecord({})
@@ -854,7 +854,7 @@ describe('Video Reducer', () => {
           author: 'gino pino',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           }
         },
         '999': getDefaultVideo()
@@ -879,7 +879,7 @@ describe('Video Reducer', () => {
       //     author: 'me',
       //     uploadStatus: {
       //       ...getDefaultAsyncTaskStatus(),
-      //       name: 'uploaded to remote'
+      //       name: 'success'
       //     },
       //     storageStatus: {
       //       ...getDefaultAsyncTaskStatus(),
@@ -960,7 +960,7 @@ describe('Video Reducer', () => {
             title: 'foobar',
             description: 'great video',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to remote'
+              name: 'success'
             })
           })
         })
@@ -974,7 +974,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           }
         }
       })
@@ -993,7 +993,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           },
           transcodingStatus: {
             ...getDefaultAsyncTaskStatus(),
@@ -1071,7 +1071,7 @@ describe('Video Reducer', () => {
             title: 'foobar',
             description: 'great video',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to remote'
+              name: 'success'
             })
           })
         })
@@ -1085,7 +1085,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           }
         }
       })
@@ -1105,7 +1105,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           },
           transcodingStatus: {
             ...getDefaultAsyncTaskStatus(),
@@ -1182,7 +1182,7 @@ describe('Video Reducer', () => {
             title: 'foobar',
             description: 'great video',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to remote'
+              name: 'success'
             })
           })
         })
@@ -1196,7 +1196,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           }
         }
       })
@@ -1220,7 +1220,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           }
         }
       })
@@ -1236,7 +1236,7 @@ describe('Video Reducer', () => {
             description: 'great video',
             duration: '',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to remote'
+              name: 'success'
             })
           })
         })
@@ -1251,7 +1251,7 @@ describe('Video Reducer', () => {
           duration: '',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           }
         }
       })
@@ -1278,7 +1278,7 @@ describe('Video Reducer', () => {
           ipfsHash: 'q82gh20',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           },
           transcodingStatus: {
             ...getDefaultAsyncTaskStatus(),
@@ -1359,7 +1359,7 @@ describe('Video Reducer', () => {
             ipfsHash: 'q82gh20',
             description: 'great video',
             uploadStatus: new AsyncTaskStatusRecord({
-              name: 'uploaded to remote'
+              name: 'success'
             }),
             transcodingStatus: new AsyncTaskStatusRecord({
               name: 'running'
@@ -1377,7 +1377,7 @@ describe('Video Reducer', () => {
           description: 'great video',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           },
           transcodingStatus: {
             ...getDefaultAsyncTaskStatus(),
@@ -1401,7 +1401,7 @@ describe('Video Reducer', () => {
           ipfsHash: 'q82gh20',
           uploadStatus: {
             ...getDefaultAsyncTaskStatus(),
-            name: 'uploaded to remote'
+            name: 'success'
           },
           transcodingStatus: {
             ...getDefaultAsyncTaskStatus(),

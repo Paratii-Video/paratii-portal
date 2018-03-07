@@ -115,31 +115,35 @@ class InfoBox extends Component<Props, Object> {
 
     const isPublished = video.published === true || video.published === 'true'
     const isPublishable =
-      video.transcodingStatus.name === 'Transcoded' && isPublished === false
+      video.transcodingStatus.name === 'success' && isPublished === false
 
     const transcoderMessages = {
       idle: 'Waiting',
       requested: 'Waiting for transcoding to start...',
       running: 'Transcoding...',
-      failed: 'Transcoder exited with an error :-('
+      failed: 'Transcoder exited with an error :-(',
+      success: 'Ready to Publish'
     }
     const uploaderMessages = {
-      idle: 'Waiting for upload',
-      requested: 'Starting upload',
+      idle: 'Waiting',
+      requested: 'Uploading...',
       running: 'Uploading...',
       'uploaded to local node': 'Uploading...',
-      'uploaded to remote': 'Still uploading',
-      success: 'Uploading done, now waiting for transcoder...'
+      success: 'Uploaded'
     }
 
-    return (
-      <VideoFormInfoBox>
-        <VideoMedia>
-          <Link to={urlToPlay}>
-            <VideoImage data-src={thumbImage} src={thumbImage} />
-          </Link>
-          {durationBox}
-        </VideoMedia>
+    let videoProgressBox = null
+    if (isPublishable) {
+      videoProgressBox = (
+        <VideoProgress progress={progress + '%'} marginBottom marginTop>
+          <VideoProgressTitle success={progress === 100}>
+            {transcoderMessages[video.transcodingStatus.name] ||
+              video.transcodingStatus.name}
+          </VideoProgressTitle>
+        </VideoProgress>
+      )
+    } else {
+      videoProgressBox = (
         <VideoProgress progress={progress + '%'} marginBottom marginTop>
           <VideoProgressTitle success={progress >= 50} marginRight>
             {uploaderMessages[video.uploadStatus.name] ||
@@ -150,6 +154,18 @@ class InfoBox extends Component<Props, Object> {
               video.transcodingStatus.name}
           </VideoProgressTitle>
         </VideoProgress>
+      )
+    }
+
+    return (
+      <VideoFormInfoBox>
+        <VideoMedia>
+          <Link to={urlToPlay}>
+            <VideoImage data-src={thumbImage} src={thumbImage} />
+          </Link>
+          {durationBox}
+        </VideoMedia>
+        {videoProgressBox}
         <Hidden>
           <TextField
             id="video-title"
