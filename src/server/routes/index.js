@@ -114,7 +114,7 @@ function twitterCardHead (meta, video) {
 }
 
 function basicHead (meta) {
-  meta += '<title>Paratii Portal</title>'
+  meta += '<title>Paratii</title>'
   meta +=
     '<meta name="description" content="Paratii project is developing a video player upon p2p streaming and decentralized service providers to put revenue 100% in control of producers.">'
   return meta
