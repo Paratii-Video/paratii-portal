@@ -68,7 +68,6 @@ module.exports = async (req: $Request, res: $Response) => {
         <title>${video.title}</title>
         <link rel="stylesheet" type="text/css" href="/embed/index.css">
         <meta name="description" content="${video.description}" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta property="twitter:card" content="player" />
         <meta property="twitter:title" content="${video.title}" />
         <meta property="twitter:site" content="${url}">
