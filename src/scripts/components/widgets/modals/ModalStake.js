@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import UserRecord from 'records/UserRecords'
+import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
 type Props = {
   videoId: Object,
@@ -14,11 +15,6 @@ type Props = {
   saveVideoInfo: Object => Object,
   selectedVideo: Object => Object
 }
-
-const Wrapper = styled.div`
-  color: ${props => props.theme.colors.Modal.color};
-  width: 100%;
-`
 
 const Title = styled.h2`
   color: ${props => props.theme.colors.Modal.title};
@@ -114,53 +110,55 @@ class ModalStake extends Component<Props, Object> {
     const minDeposit = 5
     const balanceIsTooLow = Number(balance) < minDeposit * 10 ** 18
     return (
-      <Wrapper>
-        <Title>Stake {minDeposit} PTI</Title>
-        <Highlight>
-          By publishing this video you agree to make a stake deposit of{' '}
-          {minDeposit} PTI. The tokens still belong to you, and can be
-          retrieved, along with the video, any time.
-        </Highlight>
-        {!balanceIsTooLow ? (
-          <MainText small>
-            For now, with no monetary value, this is mostly an experiment. Soon,
-            the community will curate all the content published. Well-received
-            videos will see their stakes increase, earning PTI for their
-            creators. Illegal content may lose its stake. Want to know how
-            exactly this is going to play out? Stay alert!
-          </MainText>
-        ) : (
-          ''
-        )}
+      <ModalContentWrapper>
+        <ModalScrollContent>
+          <Title>Stake {minDeposit} PTI</Title>
+          <Highlight>
+            By publishing this video you agree to make a stake deposit of{' '}
+            {minDeposit} PTI. The tokens still belong to you, and can be
+            retrieved, along with the video, any time.
+          </Highlight>
+          {!balanceIsTooLow ? (
+            <MainText small gray>
+              For now, with no monetary value, this is mostly an experiment.
+              Soon, the community will curate all the content published.
+              Well-received videos will see their stakes increase, earning PTI
+              for their creators. Illegal content may lose its stake. Want to
+              know how exactly this is going to play out? Stay alert!
+            </MainText>
+          ) : (
+            ''
+          )}
 
-        {this.state.errorMessage && (
-          <MainText pink small>
-            {this.state.errorMessage}
-          </MainText>
-        )}
-        {balanceIsTooLow ? (
-          <MainText pink>
-            Your balance is too low: you need to stake at least {minDeposit}{' '}
-            PTI, but you only have {balanceInPTI}. Have no voucher?{' '}
-            <Anchor
-              href="mailto:we@paratii.video"
-              target="_blank"
-              purple
-              anchor
-            >
-              Drop us a line
-            </Anchor>{' '}
-            and we might hand out some. Remember: these are testnet tokens. No
-            real value (yet)!
-          </MainText>
-        ) : (
-          <Footer>
-            <Button purple onClick={this.onSubmit}>
-              Continue
-            </Button>
-          </Footer>
-        )}
-      </Wrapper>
+          {this.state.errorMessage && (
+            <MainText pink small>
+              {this.state.errorMessage}
+            </MainText>
+          )}
+          {balanceIsTooLow ? (
+            <MainText pink>
+              Your balance is too low: you need to stake at least {minDeposit}{' '}
+              PTI, but you only have {balanceInPTI}. Have no voucher?{' '}
+              <Anchor
+                href="mailto:we@paratii.video"
+                target="_blank"
+                purple
+                anchor
+              >
+                Drop us a line
+              </Anchor>{' '}
+              and we might hand out some. Remember: these are testnet tokens. No
+              real value (yet)!
+            </MainText>
+          ) : (
+            <Footer>
+              <Button purple onClick={this.onSubmit}>
+                Continue
+              </Button>
+            </Footer>
+          )}
+        </ModalScrollContent>
+      </ModalContentWrapper>
     )
   }
 }

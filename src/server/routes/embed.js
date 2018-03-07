@@ -91,7 +91,7 @@ module.exports = async (req: $Request, res: $Response) => {
 
         <style>
           html {
-            font-size: 16px;
+            font-size: 14px;
           }
 
           body {

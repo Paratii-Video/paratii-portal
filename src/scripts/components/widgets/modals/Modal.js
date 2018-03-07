@@ -28,7 +28,7 @@ const Background = styled.span`
   content: '';
   height: 100%;
   left: 0;
-  opacity: ${props => (props.show ? '1' : '0')};
+  opacity: ${props => (props.show ? '0.9' : '0')};
   position: absolute;
   top: 0;
   transition: opacity ${props => props.theme.animation.time.repaint};
@@ -38,7 +38,9 @@ const Background = styled.span`
 
 const Container = styled.div`
   background: ${props => props.theme.colors.Modal.content};
+  border-radius: 4px;
   position: relative;
+  margin: 0 40px;
   opacity: ${props => (props.show ? '1' : '0')};
   transform: translate3d(0, ${props => (props.show ? '' : '100px')}, 0);
   transition: transform ${props => (props.show ? '0.8s' : '0.6s')}
@@ -47,6 +49,18 @@ const Container = styled.div`
       ${props => (props.show ? '0.1s' : '')};
   width: 490px;
   z-index: 2;
+
+  @media (max-width: 767px) {
+    height: calc(100vh - 20px);
+    margin: 0 10px;
+    width: 100vw;
+  }
+
+  @media (max-height: 767px) {
+    height: calc(100vh - 20px);
+    margin: 0 10px;
+    width: 100vw;
+  }
 `
 
 const CloseButton = styled(Button)`
@@ -67,8 +81,29 @@ const SVG = styled.svg`
 
 const Content = styled.div`
   height: 100%;
-  padding: 40px 46px;
+  padding: 44px 48px;
   width: 100%;
+`
+
+export const ModalContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+`
+
+export const ModalScrollContent = styled.div`
+  flex: 1 1 100%;
+
+  @media (max-width: 767px) {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  @media (max-height: 767px) {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
 `
 
 class Modal extends Component<Props, void> {
