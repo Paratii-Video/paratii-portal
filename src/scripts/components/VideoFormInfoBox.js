@@ -112,7 +112,7 @@ class InfoBox extends Component<Props, Object> {
     const uploadProgress = video.uploadStatus.data.progress
     const transcodingStatus = video.transcodingStatus.data.progress
     const progress = Math.floor((uploadProgress + transcodingStatus) / 2)
-
+    const isUploaded = video.uploadStatus.name === 'success'
     const isPublished = video.published === true || video.published === 'true'
     const isPublishable =
       video.transcodingStatus.name === 'success' && isPublished === false
@@ -136,25 +136,36 @@ class InfoBox extends Component<Props, Object> {
     if (isPublishable) {
       videoProgressBox = (
         <VideoProgress progress={progress + '%'} marginBottom marginTop>
-          <VideoProgressTitle success={progress === 100}>
+          <VideoProgressTitle success={isPublishable}>
             {transcoderMessages[video.transcodingStatus.name] ||
               video.transcodingStatus.name}
           </VideoProgressTitle>
         </VideoProgress>
       )
     } else {
-      videoProgressBox = (
-        <VideoProgress progress={progress + '%'} marginBottom marginTop>
-          <VideoProgressTitle success={progress >= 50} marginRight>
-            {uploaderMessages[video.uploadStatus.name] ||
-              video.uploadStatus.name}
-          </VideoProgressTitle>
-          <VideoProgressTitle success={progress === 100}>
-            {transcoderMessages[video.transcodingStatus.name] ||
-              video.transcodingStatus.name}
-          </VideoProgressTitle>
-        </VideoProgress>
-      )
+      if (isUploaded) {
+        videoProgressBox = (
+          <VideoProgress progress={progress + '%'} marginBottom marginTop>
+            <VideoProgressTitle success={isUploaded} marginRight>
+              {uploaderMessages[video.uploadStatus.name] ||
+                video.uploadStatus.name}
+            </VideoProgressTitle>
+            <VideoProgressTitle success={isPublishable}>
+              {transcoderMessages[video.transcodingStatus.name] ||
+                video.transcodingStatus.name}
+            </VideoProgressTitle>
+          </VideoProgress>
+        )
+      } else {
+        videoProgressBox = (
+          <VideoProgress progress={progress + '%'} marginBottom marginTop>
+            <VideoProgressTitle success={isUploaded} marginRight>
+              {uploaderMessages[video.uploadStatus.name] ||
+                video.uploadStatus.name}
+            </VideoProgressTitle>
+          </VideoProgress>
+        )
+      }
     }
 
     return (
