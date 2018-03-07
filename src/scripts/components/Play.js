@@ -10,6 +10,7 @@ import VideoRecord from 'records/VideoRecords'
 import VideoOverlay from 'components/VideoOverlay'
 import Button from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
+import Card from 'components/structures/Card'
 import NotFound from './pages/NotFound'
 
 import type { ClapprPlayer } from 'types/ApplicationTypes'
@@ -35,27 +36,43 @@ type State = {
 }
 
 const Wrapper = styled.div`
-  margin: ${props => (props.isEmbed ? null : '0 auto')};
-  position: relative;
-  height: ${props => (props.isEmbed ? '100%' : '720px')};
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
   width: ${props => (props.isEmbed ? '100%' : '1280px')};
 
   @media (max-width: 1440px) {
-    height: ${props => (props.isEmbed ? null : '576px')};
     width: ${props => (props.isEmbed ? null : '1024px')};
   }
 
   @media (max-width: 1200px) {
-    height: ${props => (props.isEmbed ? null : '432px')};
     width: ${props => (props.isEmbed ? null : '768px')};
   }
 
   @media (max-width: 930px) {
+    width: 100%;
+  }
+`
+
+const VideoWrapper = styled.div`
+  margin: ${props => (props.isEmbed ? null : '0 auto 25px')};
+  position: relative;
+  height: ${props => (props.isEmbed ? '100%' : '720px')};
+  width: 100%;
+
+  @media (max-width: 1440px) {
+    height: ${props => (props.isEmbed ? null : '576px')};
+  }
+
+  @media (max-width: 1200px) {
+    height: ${props => (props.isEmbed ? null : '432px')};
+  }
+
+  @media (max-width: 930px) {
     height: ${props => (props.isEmbed ? '100%' : '0')};
-    margin: 0;
+    margin: 0 0 25px;
     padding-bottom: ${props => (props.isEmbed ? null : '56.25%')};
     padding-top: ${props => (props.isEmbed ? null : '30px')};
-    width: 100%;
   }
 `
 
@@ -146,6 +163,10 @@ const ShareLink = Anchor.extend`
 const ShareLinkIcon = styled.img`
   display: block;
   height: 100%;
+  width: 100%;
+`
+
+const DescriptionWrapper = styled(Card)`
   width: 100%;
 `
 
@@ -395,55 +416,62 @@ class Play extends Component<Props, State> {
       return <NotFound>Did not find a video</NotFound>
     } else {
       return (
-        <Wrapper isEmbed={this.props.isEmbed}>
-          <PlayerWrapper>
-            {this.shouldShowVideoOverlay() && (
-              <OverlayWrapper
-                onMouseMove={this.onMouseMove}
-                onMouseEnter={this.onOverlayMouseEnter}
-                onMouseLeave={this.onOverlayMouseLeave}
-              >
-                <VideoOverlay
-                  {...this.props}
-                  onClick={this.onOverlayClick}
-                  toggleShareModal={this.toggleShareModal}
-                  showShareModal={this.state.showShareModal}
-                />
-              </OverlayWrapper>
-            )}
-            <Player id="player" />
-            {this.props.video ? (
-              <ShareOverlay show={this.state.showShareModal}>
-                <CloseButton onClick={this.toggleShareModal}>
-                  <SVGButton>
-                    <use xlinkHref="#icon-close" />
-                  </SVGButton>
-                </CloseButton>
-                <ShareTitle small />
-                <AnchorLink
-                  href={this.portalUrl() + '/play/' + this.props.video.id}
-                  target="_blank"
-                  anchor
-                  white
+        <Wrapper>
+          <VideoWrapper isEmbed={this.props.isEmbed}>
+            <PlayerWrapper>
+              {this.shouldShowVideoOverlay() && (
+                <OverlayWrapper
+                  onMouseMove={this.onMouseMove}
+                  onMouseEnter={this.onOverlayMouseEnter}
+                  onMouseLeave={this.onOverlayMouseLeave}
                 >
-                  {this.portalUrl() + '/play/' + this.props.video.id}
-                </AnchorLink>
-                <ShareButtons>
-                  <ShareLink href={this.telegram()} target="_blank" anchor>
-                    <ShareLinkIcon src="/assets/svg/icons-share-telegram.svg" />
-                  </ShareLink>
-                  <ShareLink href={this.twitter()} target="_blank" anchor>
-                    <ShareLinkIcon src="/assets/svg/icons-share-twitter.svg" />
-                  </ShareLink>
-                  <ShareLink href={this.whatsapp()} target="_blank" anchor>
-                    <ShareLinkIcon src="/assets/svg/icons-share-whatsapp.svg" />
-                  </ShareLink>
-                </ShareButtons>
-              </ShareOverlay>
-            ) : (
-              ''
-            )}
-          </PlayerWrapper>
+                  <VideoOverlay
+                    {...this.props}
+                    onClick={this.onOverlayClick}
+                    toggleShareModal={this.toggleShareModal}
+                    showShareModal={this.state.showShareModal}
+                  />
+                </OverlayWrapper>
+              )}
+              <Player id="player" />
+              {this.props.video ? (
+                <ShareOverlay show={this.state.showShareModal}>
+                  <CloseButton onClick={this.toggleShareModal}>
+                    <SVGButton>
+                      <use xlinkHref="#icon-close" />
+                    </SVGButton>
+                  </CloseButton>
+                  <ShareTitle small />
+                  <AnchorLink
+                    href={this.portalUrl() + '/play/' + this.props.video.id}
+                    target="_blank"
+                    anchor
+                    white
+                  >
+                    {this.portalUrl() + '/play/' + this.props.video.id}
+                  </AnchorLink>
+                  <ShareButtons>
+                    <ShareLink href={this.telegram()} target="_blank" anchor>
+                      <ShareLinkIcon src="/assets/svg/icons-share-telegram.svg" />
+                    </ShareLink>
+                    <ShareLink href={this.twitter()} target="_blank" anchor>
+                      <ShareLinkIcon src="/assets/svg/icons-share-twitter.svg" />
+                    </ShareLink>
+                    <ShareLink href={this.whatsapp()} target="_blank" anchor>
+                      <ShareLinkIcon src="/assets/svg/icons-share-whatsapp.svg" />
+                    </ShareLink>
+                  </ShareButtons>
+                </ShareOverlay>
+              ) : (
+                ''
+              )}
+            </PlayerWrapper>
+          </VideoWrapper>
+          {this.props.video && (
+            <DescriptionWrapper full>
+              <Title>{this.props.video.title}</Title>
+            </DescriptionWrapper>
+          )}
         </Wrapper>
       )
     }
