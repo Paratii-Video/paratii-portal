@@ -25,7 +25,7 @@ import NotFound from './pages/NotFound'
 
 import { paratiiTheme } from 'constants/ApplicationConstants'
 
-import type { VideoRecord } from 'records/VideoRecords'
+import type VideoRecord from 'records/VideoRecords'
 import type { Map } from 'immutable'
 
 type Props = {
@@ -37,7 +37,8 @@ type Props = {
 
 type State = {
   modalContent: any,
-  showModal: boolean
+  showModal: boolean,
+  isBusy: boolean
 }
 
 class App extends Component<Props, State> {
