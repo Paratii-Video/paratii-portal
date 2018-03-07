@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
+import TruncatedText from 'components/foundations/TruncatedText'
 import PlayerControlsContainer from 'containers/PlayerControlsContainer'
 import VideoRecord from 'records/VideoRecords'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
@@ -90,7 +91,8 @@ const VideoInfo = styled.div`
 
 const PlayerTitle = Title.extend`
   color: ${props => props.theme.colors.VideoPlayer.header.title};
-  flex: 1 0 50%;
+  flex: 0 0 75%;
+  max-width: 75%;
 `
 
 const ButtonGroup = styled.div`
@@ -173,7 +175,14 @@ class VideoOverlay extends Component<Props, State> {
   getVideoTitle (): string {
     const { video } = this.props
 
-    return (video && (video.get('title') || video.get('filename'))) || ''
+    const longSentence =
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+
+    return (
+      longSentence ||
+      (video && (video.get('title') || video.get('filename'))) ||
+      ''
+    )
   }
 
   onProfileButtonClick = (e: Object): void => {
@@ -216,7 +225,9 @@ class VideoOverlay extends Component<Props, State> {
           transitionState={transitionState}
         >
           <VideoInfo transitionState={transitionState}>
-            <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>
+            <PlayerTitle small>
+              <TruncatedText>{this.getVideoTitle()}</TruncatedText>
+            </PlayerTitle>
             <ButtonGroup hide={!!this.state.openPopover}>
               {ProfileButton ? (
                 <ButtonWrapper>
