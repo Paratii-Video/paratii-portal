@@ -25,10 +25,14 @@ import NotFound from './pages/NotFound'
 
 import { paratiiTheme } from 'constants/ApplicationConstants'
 
+import type { VideoRecord } from 'records/VideoRecords'
+import type { Map } from 'immutable'
+
 type Props = {
   initializeApp: () => void,
   match: Match,
-  setSelectedVideo: (id: string) => void
+  setSelectedVideo: (id: string) => void,
+  videos: Map<string, VideoRecord> // maps video ids to upload records
 }
 
 type State = {
@@ -46,6 +50,7 @@ class App extends Component<Props, State> {
     this.props.initializeApp()
 
     this.state = {
+      isBusy: this.props.videos.size > 0 || false,
       modalContent: false,
       showModal: false
     }
@@ -67,9 +72,28 @@ class App extends Component<Props, State> {
     })
   }
 
+  componentDidUpdate () {
+    const onUnload = !this.state.isBusy
+      ? undefined
+      : e => {
+        return true
+      }
+    window.onbeforeunload = onUnload
+  }
+
+  componentWillReceiveProps (nextProps: Props): void {
+    if (nextProps.videos) {
+      this.setState({
+        isBusy: nextProps.videos.size > 0
+      })
+    }
+  }
+
   render () {
     const { match } = this.props
     const HTMLModal = this.state.modalContent
+
+    console.log('is Busy:', this.state.isBusy)
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
@@ -77,6 +101,8 @@ class App extends Component<Props, State> {
             {HTMLModal}
           </Modal>
           <MainHeader />
+
+          {console.log(this.props.videos.size)}
           <Main>
             <Switch>
               <Route exact path="/" component={Home} />
