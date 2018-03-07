@@ -28,13 +28,14 @@ export type Action<T> = {
 }
 
 export type VideoRecordMap = Immutable.Map<string, VideoRecord>
+export type NotificationsArray = Array<NotificationRecord>
 
 export type RootState = {
   uploader: UploaderRecord,
   user: UserRecord,
   videos: VideoRecordMap,
   player: PlayerRecord,
-  notifications: NotificationRecord
+  notifications: NotificationsArray
 }
 
 type _ThunkAction<R> = (dispatch: Dispatch, getState?: () => RootState) => R

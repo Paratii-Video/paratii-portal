@@ -9,7 +9,7 @@ class Notification extends ImmutableRecord({
   autoDismiss: 0,
   action: {
     label: '',
-    callback: null
+    onPerformAction: null
   }
 }) {
   title: string
@@ -18,7 +18,7 @@ class Notification extends ImmutableRecord({
   autoDismiss: number
   action: {
     label: '',
-    callback: () => void
+    onPerformAction: () => void
   }
 }
 
