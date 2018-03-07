@@ -41,7 +41,9 @@ class RedeemVoucher extends Component<Props, Object> {
   constructor (props: Props) {
     super(props)
     this.state = {
-      voucher: ''
+      error: '',
+      voucher: '',
+      disableInput: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.redeemVoucher = this.redeemVoucher.bind(this)
@@ -53,13 +55,25 @@ class RedeemVoucher extends Component<Props, Object> {
 
   redeemVoucher (event: Object) {
     event.preventDefault()
+    this.setState({ disableInput: true, error: '' })
     const voucherCode = this.state.voucher
-    console.log(voucherCode)
-
-    console.log(paratii.eth.vouchers)
-    paratii.eth.vouchers.redeem(voucherCode).then(resp => {
-      console.log(resp)
-    })
+    paratii.eth.vouchers
+      .redeem(voucherCode)
+      .then(resp => {
+        this.setState({
+          disableInput: false,
+          voucher: ''
+        })
+      })
+      .catch(e => {
+        if (e) {
+          this.setState({
+            disableInput: false,
+            error: String(e),
+            voucher: voucherCode
+          })
+        }
+      })
   }
 
   render () {
@@ -117,11 +131,25 @@ class RedeemVoucher extends Component<Props, Object> {
         </Icon>
         <Wrapper>
           <TextField
+            error={this.state.error.length > 0}
             onChange={this.handleChange}
-            label="Enter code here to receive test PTIs"
+            label="Enter code here to receive test PTI"
+            disabled={this.state.disableInput}
+            value={this.state.voucher}
           />
-          <SubmitButton onClick={this.redeemVoucher}> Submit</SubmitButton>
+          <SubmitButton
+            onClick={this.redeemVoucher}
+            disabled={this.state.disableInput}
+          >
+            {' '}
+            Submit
+          </SubmitButton>
         </Wrapper>
+        {this.state.error && (
+          <Text pink small>
+            {this.state.error}
+          </Text>
+        )}
       </Card>
     )
   }
