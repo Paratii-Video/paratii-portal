@@ -92,8 +92,6 @@ class App extends Component<Props, State> {
   render () {
     const { match } = this.props
     const HTMLModal = this.state.modalContent
-
-    console.log('is Busy:', this.state.isBusy)
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
@@ -101,8 +99,6 @@ class App extends Component<Props, State> {
             {HTMLModal}
           </Modal>
           <MainHeader />
-
-          {console.log(this.props.videos.size)}
           <Main>
             <Switch>
               <Route exact path="/" component={Home} />
