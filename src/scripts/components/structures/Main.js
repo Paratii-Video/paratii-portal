@@ -7,12 +7,12 @@ type Props = {
 
 const MainWrapper = styled.main`
   background-color: ${props => props.theme.colors.body.background};
+  margin-top: ${props => props.theme.sizes.mainHeader.height};
   flex: 1 1 100%;
   padding: 80px;
   display: flex;
   flex-direction: column;
   min-height: 500px;
-  margin-top: ${props => props.theme.sizes.mainHeader.height};
 
   @media (max-width: 930px) {
     padding: 40px;
