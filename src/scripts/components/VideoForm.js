@@ -228,16 +228,16 @@ class VideoForm extends Component<Props, Object> {
 
     // The restart button is just for convenicene, for testing
     let restartButton
-    if (process.env.NODE_ENV === 'development') {
-      restartButton = (
-        <div>
-          Use this for testing (this will not be visible in production)
-          <input type="file" onChange={this.onFileChosen} />
-        </div>
-      )
-    } else {
-      restartButton = ''
-    }
+    // if (process.env.NODE_ENV === 'development') {
+    //   restartButton = (
+    //     <div>
+    //       Use this for testing (this will not be visible in production)
+    //       <input type="file" onChange={this.onFileChosen} />
+    //     </div>
+    //   )
+    // } else {
+    //   restartButton = ''
+    // }
 
     return (
       <Card full id="video-form">

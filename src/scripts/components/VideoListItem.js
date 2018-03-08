@@ -107,9 +107,10 @@ class VideoListItem extends Component<Props, void> {
   }
 
   handleClick () {
-    document
-      .getElementById('root')
-      .scrollTo(0, document.querySelector('#video-form').offsetTop - 20)
+    const form = document.getElementById('video-form')
+    if (form) {
+      document.getElementById('root').scrollTo(0, form.offsetTop - 20)
+    }
     this.props.setSelectedVideo(this.props.video.id)
   }
 
@@ -139,7 +140,7 @@ class VideoListItem extends Component<Props, void> {
     }
 
     if (!video || !video.id) {
-      return <ListItem>Something when wrong - no video known</ListItem>
+      return <ListItem>Something went wrong - no video known</ListItem>
     }
     if (
       video.storageStatus.name === 'success' &&
