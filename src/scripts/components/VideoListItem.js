@@ -108,8 +108,9 @@ class VideoListItem extends Component<Props, void> {
 
   handleClick () {
     const form = document.getElementById('video-form')
-    const offsetTop = form.offsetTop - 20
     if (form) {
+      const offsetTop = form.offsetTop - 20
+
       if (offsetTop > window.innerHeight / 2) {
         document.getElementById('root').scrollTo(0, offsetTop)
       }
