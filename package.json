@@ -132,7 +132,6 @@
   },
   "dependencies": {
     "bluebird": "^3.5.1",
-    "clappr": "0.2.78",
     "clappr": "^0.2.85",
     "hh-mm-ss": "^1.2.0",
     "express-handlebars": "^3.0.0",
