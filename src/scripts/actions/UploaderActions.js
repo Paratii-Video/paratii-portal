@@ -204,7 +204,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
       // if transcoding is done, apparently we have uploaded the file first
       dispatch(
         Notifications.success({
-          title: 'Transcoder doned',
+          title: 'Transcoder done',
           message: 'You video is ready to be published'
         })
       )
