@@ -325,7 +325,7 @@ export default handleActions(reducer, Immutable.Map({}))
 
 // This is a functino to fix a legacy bug in which the thumbnails where not
 // saved in  the "thumbnails" property, as they should
-const fixOldVideoThumbnails = function (video, payload) {
+const fixOldVideoThumbnails = (video: VideoRecord, payload): VideoRecord => {
   if (video.get('thumbnails').size === 0) {
     return video.set(
       'thumbnails',
@@ -336,5 +336,7 @@ const fixOldVideoThumbnails = function (video, payload) {
           []
       )
     )
+  } else {
+    return video
   }
 }
