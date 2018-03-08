@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-import Button from 'components/foundations/Button'
 import type { VideoRecord } from 'records/VideoRecords'
 import VideoProgressBar from 'components/widgets/VideoForm/VideoProgressBar'
 
@@ -62,8 +60,6 @@ const Bar = styled.div`
   width: 100%;
 `
 
-const NavLink = Button.withComponent(Link)
-
 class VideoListItem extends Component<Props, void> {
   constructor (props) {
     super(props)
@@ -102,10 +98,6 @@ class VideoListItem extends Component<Props, void> {
       video.transcodingStatus.name === 'success'
     ) {
       isReady = true
-    }
-    if (isReady) {
-      const link = `/play/${video.id}`
-      linkToVideo = <NavLink to={link}>Play video</NavLink>
     }
 
     let statusMessage = ''

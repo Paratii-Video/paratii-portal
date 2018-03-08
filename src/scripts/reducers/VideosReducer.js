@@ -271,6 +271,7 @@ const reducer = {
       })
     )
   },
+  // VIDEO_FETCH_SUCCESS is called when fetching a single video from the db
   [VIDEO_FETCH_SUCCESS]: (
     state: VideoRecordMap,
     { payload }: Action<Object>
@@ -278,27 +279,25 @@ const reducer = {
     if (!payload || !payload.id) {
       return state
     }
-    const fetchedVideo = new VideoRecord(payload).merge({
-      fetchStatus: new AsyncTaskStatusRecord({ name: 'success' }),
-      thumbnails: Immutable.List(
-        (payload.transcodingStatus &&
-          payload.transcodingStatus.data.result &&
-          payload.transcodingStatus.data.result.screenshots) ||
-          []
-      )
+    let fetchedVideo = new VideoRecord(payload).merge({
+      fetchStatus: new AsyncTaskStatusRecord({ name: 'success' })
     })
 
+    fetchedVideo = fixOldVideoThumbnails(fetchedVideo, payload)
     return state.set(payload.id, fetchedVideo)
   },
+  // VIDEOS_FETCH_SUCCESS is called when fetching a list of videos from the db
   [VIDEOS_FETCH_SUCCESS]: (
     state: VideoRecordMap,
     { payload }: Action<Array<Object>>
   ): VideoRecordMap =>
     state.merge(
       payload.reduce(
-        (mergingVideos: Object, { _id, ...videoProps }: Object): Object => {
-          videoProps.id = _id
-          mergingVideos[_id] = new VideoRecord(videoProps)
+        (mergingVideos: Object, { _id, ...videoPayload }: Object): Object => {
+          videoPayload.id = _id
+          let fetchedVideo = new VideoRecord(videoPayload)
+          fetchedVideo = fixOldVideoThumbnails(fetchedVideo, videoPayload)
+          mergingVideos[_id] = fetchedVideo
           return mergingVideos
         },
         {}
@@ -323,3 +322,19 @@ const reducer = {
 }
 
 export default handleActions(reducer, Immutable.Map({}))
+
+// This is a functino to fix a legacy bug in which the thumbnails where not
+// saved in  the "thumbnails" property, as they should
+const fixOldVideoThumbnails = function (video, payload) {
+  if (video.get('thumbnails').size === 0) {
+    return video.set(
+      'thumbnails',
+      Immutable.List(
+        (payload.transcodingStatus &&
+          payload.transcodingStatus.data.result &&
+          payload.transcodingStatus.data.result.screenshots) ||
+          []
+      )
+    )
+  }
+}
