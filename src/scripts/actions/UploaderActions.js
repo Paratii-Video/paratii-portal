@@ -84,7 +84,13 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
 
   uploader.on('error', function (error) {
     console.log('[UPLOAD error]', error)
-    dispatch(Notifications.error({ title: 'Upload Error', message: error }))
+    dispatch(
+      Notifications.error({
+        title: 'Upload Error',
+        message: error,
+        autoDismiss: 0
+      })
+    )
     throw error
   })
   uploader.on('done', function (files) {
@@ -156,7 +162,11 @@ export const transcodeVideo = (videoInfo: Object) => async (
     transcoder.on('transcoding:error', function (error) {
       console.log('TRANSCODER ERROR', error)
       dispatch(
-        Notifications.error({ title: 'Transcoder Error', message: error })
+        Notifications.error({
+          title: 'Transcoder Error',
+          message: error,
+          autoDismiss: 0
+        })
       )
       dispatch(transcodingFailure(videoInfo, error))
     })
@@ -230,10 +240,8 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   console.log('SAVING VIDEO DATA')
 
   dispatch(
-    Notifications.success({
-      title: 'Save',
-      message: 'We are saving you data',
-      autoDismiss: 0
+    Notifications.warning({
+      title: 'We are saving you data'
     })
   )
 
@@ -253,14 +261,20 @@ export const saveVideoInfo = (videoInfo: Object) => async (
       dispatch(videoDataSaved(videoInfo))
       dispatch(
         Notifications.success({
-          title: 'Nice',
+          title: 'Saved',
           message: 'Video data has been saved!!'
         })
       )
     })
     .catch(error => {
       // console.log(error)
-      dispatch(Notifications.error({ title: 'Saving Error', message: error }))
+      dispatch(
+        Notifications.error({
+          title: 'Saving Error',
+          message: error,
+          autoDismiss: 0
+        })
+      )
       throw error
     })
 }

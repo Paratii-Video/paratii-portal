@@ -6,7 +6,7 @@ class Notification extends ImmutableRecord({
   title: '',
   message: '',
   position: 'tr',
-  autoDismiss: 0,
+  autoDismiss: 5,
   action: {
     label: '',
     onPerformAction: null

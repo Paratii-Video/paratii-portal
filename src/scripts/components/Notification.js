@@ -20,61 +20,59 @@ class Notification extends Component<Props, Array<Object>> {
       Containers: {
         // Top right notification
         tr: {
-          top: '96px',
-          left: '24px'
+          top: '86px',
+          right: '24px'
         }
       },
       NotificationItem: {
-        // Override the notification item
         DefaultStyle: {
-          // Applied to every notification, regardless of the notification level
-          margin: '10px 5px 2px 1px',
+          margin: '15px 5px 2px 1px',
           padding: '16px 50px 16px 24px',
-          borderRadius: '4px'
-        },
-        success: {
-          // Applied only to the success notification item
+          borderRadius: '4px',
+          borderTop: 'none',
           backgroundColor: Colors.blackLight,
           color: Colors.white,
-          borderTopColor: Colors.white,
           WebkitBoxShadow:
             '0 0 1px rgba(' + shadowColor + ',' + shadowOpacity + ')',
           MozBoxShadow:
             '0 0 1px rgba(' + shadowColor + ',' + shadowOpacity + ')',
           boxShadow:
             '0 3px 10px rgba(' + shadowColor + ',' + shadowOpacity + ')'
-        },
-        error: {
-          backgroundColor: Colors.blackLight,
-          color: Colors.white,
-          borderTopColor: Colors.white,
-          WebkitBoxShadow:
-            '0 0 1px rgba(' + shadowColor + ',' + shadowOpacity + ')',
-          MozBoxShadow:
-            '0 0 1px rgba(' + shadowColor + ',' + shadowOpacity + ')',
-          boxShadow: '0 0 1px rgba(' + shadowColor + ',' + shadowOpacity + ')'
         }
       },
       Dismiss: {
         DefaultStyle: {
           fontFamily: 'Roboto',
-          fontSize: '24px'
-        },
-        success: {
-          color: Colors.grayLight,
-          backgroundColor: 'transparent'
-        },
-        error: {
+          fontSize: '24px',
+          top: '14px',
+          right: '14px',
+          fontWeight: 'normal',
           color: Colors.grayLight,
           backgroundColor: 'transparent'
         }
       },
       Title: {
+        DefaultStyle: {
+          paddingLeft: '25px',
+          margin: 0,
+          backgroundPosition: 'left center',
+          backgroundSize: '15px',
+          backgroundRepeat: 'no-repeat',
+          color: Colors.white
+        },
         success: {
-          color: Colors.purple
+          backgroundImage: 'url("assets/svg/icon-alert-positive.svg")'
         },
         error: {
-          color: Colors.pink
+          backgroundImage: 'url("assets/svg/icon-alert-problem.svg")'
+        },
+        warning: {
+          backgroundImage: 'url("assets/svg/icon-alert-warning.svg")'
+        }
+      },
+      MessageWrapper: {
+        DefaultStyle: {
+          margin: '10px 0 0 0'
         }
       }
     }
