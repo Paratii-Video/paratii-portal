@@ -12,7 +12,7 @@ RUN apt-get update \
   && apt-get install -y \
     git mercurial xvfb \
     locales sudo openssh-client ca-certificates tar gzip parallel \
-    net-tools netcat unzip zip bzip2 gnupg curl wget
+    net-tools netcat unzip zip bzip2 gnupg curl wget build-essential curl wget
 
 # nodejs
 RUN apt autoremove -y nodejs
@@ -24,3 +24,8 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt update
 RUN apt install yarn
+
+# paratii-portal
+WORKDIR /paratii-portal
+COPY . .
+RUN npm install && yarn run build
