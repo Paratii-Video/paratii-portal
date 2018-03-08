@@ -33,7 +33,7 @@ jobs:
           command: cd db && npm run dev
           background: true
       - run: node src/scripts/waitForServer.js
-      - run: yarn run chimp-test
+      - run: yarn run chimp-circleci-test
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
