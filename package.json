@@ -10,7 +10,7 @@
     "build:dev": "yarn run clean && yarn run prep && NODE_ENV=development webpack --watch --colors --progress",
     "clean": "rm -rf build/",
     "chimp-test": "chimp chimp.config.js",
-    "chimp-circleci-test": "chimp chimp.circleci.config.js",
+    "chimp-circleci-test": "chimp .circleci/chimp.circleci.config.js",
     "chimp-test:watch": "yarn run chimp-test --watch",
     "chimp-test:concurrently": "concurrently --kill-others --success first \"NODE_ENV=test yarn run dev\" \"yarn run chimp-test\"",
     "chimp-test:concurrently:watch": "concurrently --kill-others --success all \"NODE_ENV=test yarn run dev\" \"yarn run chimp-test --watch\"",

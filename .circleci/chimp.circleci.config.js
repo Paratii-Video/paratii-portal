@@ -1,8 +1,4 @@
-module.exports = {
-  path: './test/functional-tests',
-  watchSource: './src',
-  mocha: true,
-  chai: true,
+const config = Object.assign({}, require('../chimp.config.js'), {
   webdriverio: {
     waitforTimeout: 70000,
     desiredCapabilities: {
@@ -12,4 +8,6 @@ module.exports = {
       isHeadless: true
     }
   }
-}
+})
+
+module.exports = config
