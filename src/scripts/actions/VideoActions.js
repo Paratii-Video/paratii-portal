@@ -30,7 +30,7 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
       videoInfo.id = videoInfo._id
     }
     if (videoInfo && videoInfo.id) {
-      dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
+      dispatch(videoFetchSuccess(videoInfo))
       dispatch(playerVideoSelect(videoInfo.id))
     }
   } catch (error) {
@@ -44,7 +44,6 @@ export const fetchOwnedVideos = () => async (
   dispatch: Dispatch<*>,
   getState: () => RootState
 ) => {
-  console.log('FETCH OWNED VIDEOS')
   const address: string = paratii.config.account.address
   const ownedVideos: Array<Object> = await paratii.core.vids.search({
     owner: address
@@ -53,15 +52,15 @@ export const fetchOwnedVideos = () => async (
   for (let i = 0; i < ownedVideos.length; i++) {
     const video = ownedVideos[i]
     // only show videos that have been uploaded
-    // FIXME: use status codes or constants, not strings like 'uploaded to remote'
+    // FIXME: use status codes or constants, not strings like 'success'
     if (
       video.transcodingStatus &&
-      video.uploadStatus.name === 'uploaded to remote'
+      (video.uploadStatus.name === 'success' ||
+        video.uploadStatus.name === 'uploaded to remote')
     ) {
       filteredOwnedVideos.push(video)
 
       if (video.transcodingStatus.name !== 'success') {
-        console.log('Restarting to transcode' + video._id)
         transcodeVideo({
           id: video._id,
           hash: video.ipfsHashOrig,

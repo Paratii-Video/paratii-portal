@@ -60,9 +60,7 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
     videoId = paratii.eth.vids.makeId()
   }
   dispatch(
-    videoFetchSuccess(
-      new VideoRecord({ id: videoId, owner: paratii.config.account.address })
-    )
+    videoFetchSuccess({ id: videoId, owner: paratii.config.account.address })
   )
   dispatch(selectUploaderVideo(videoId))
   dispatch(
@@ -180,7 +178,8 @@ export const transcodeVideo = (videoInfo: Object) => async (
         {
           ipfsHash: result.master.hash,
           owner: paratii.config.account.address,
-          duration: result.duration
+          duration: result.duration,
+          thumbnails: result.screenshots
         },
         getState()
       )

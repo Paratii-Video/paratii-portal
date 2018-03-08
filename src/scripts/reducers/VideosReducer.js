@@ -7,6 +7,7 @@ import {
   UPLOAD_PROGRESS,
   UPLOAD_REMOTE_SUCCESS,
   UPLOAD_LOCAL_SUCCESS,
+  UPDATE_VIDEO_TIME,
   UPDATE_VIDEO_INFO,
   VIDEO_DATA_START,
   VIDEO_DATA_SAVED,
@@ -19,37 +20,9 @@ import {
   VIDEOS_FETCH_SUCCESS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
-import {
-  ResultStatusRecord,
-  AsyncTaskStatusRecord,
-  DataStatusRecord
-} from 'records/AsyncTaskStatusRecord'
+import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
 import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 
-const castRecordFromDbAsImmutable = function (videoProps) {
-  return new VideoRecord({
-    ...videoProps,
-    thumbnails:
-      (videoProps.transcodingStatus &&
-        videoProps.transcodingStatus.data.result &&
-        videoProps.transcodingStatus.data.result.screenshots) ||
-      [],
-    uploadStatus: new AsyncTaskStatusRecord({
-      ...videoProps.uploadStatus,
-      data: new DataStatusRecord(videoProps.uploadStatus.data)
-    }),
-    transcodingStatus: new AsyncTaskStatusRecord({
-      ...videoProps.transcodingStatus,
-      data: new DataStatusRecord(videoProps.transcodingStatus.data)
-    }),
-    // we reset the storage status from the db, because it will be outdated in any case
-    storageStatus: new AsyncTaskStatusRecord()
-    // storageStatus: new AsyncTaskStatusRecord({
-    //   ...videoProps.storageStatus,
-    //   data: new DataStatusRecord(videoProps.storageStatus.data)
-    // })
-  })
-}
 const reducer = {
   [UPLOAD_REQUESTED]: (
     state: VideoRecordMap,
@@ -129,10 +102,7 @@ const reducer = {
     return state.withMutations(
       (mutableState: VideoRecordMap): VideoRecordMap => {
         mutableState.setIn([payload.id, 'ipfsHashOrig'], ipfsHashOrig)
-        mutableState.setIn(
-          [payload.id, 'uploadStatus', 'name'],
-          'uploaded to remote'
-        )
+        mutableState.setIn([payload.id, 'uploadStatus', 'name'], 'success')
         mutableState.setIn(
           [payload.id, 'uploadStatus', 'data', 'ipfsHashOrig'],
           ipfsHashOrig
@@ -167,13 +137,13 @@ const reducer = {
       [payload.id, 'storageStatus'],
       new AsyncTaskStatusRecord({
         name: 'running',
-        data: new DataStatusRecord({
+        data: {
           id: payload.id,
           title: payload.title,
           description: payload.description,
           author: payload.author,
           owner: payload.owner
-        })
+        }
       })
     )
     return state
@@ -190,14 +160,14 @@ const reducer = {
         [payload.id, 'storageStatus'],
         new AsyncTaskStatusRecord({
           name: 'success',
-          data: new DataStatusRecord({
+          data: {
             id: payload.id,
             title: payload.title,
             description: payload.description,
             author: payload.author,
             owner: payload.owner,
             progress: 100
-          })
+          }
         })
       )
       .setIn([payload.id, 'title'], payload.title)
@@ -216,7 +186,7 @@ const reducer = {
       [payload.id, 'transcodingStatus'],
       new AsyncTaskStatusRecord({
         name: 'requested',
-        data: new DataStatusRecord({})
+        data: {}
       })
     )
   },
@@ -255,16 +225,18 @@ const reducer = {
         [payload.id, 'transcodingStatus'],
         new AsyncTaskStatusRecord({
           name: 'success',
-          data: new DataStatusRecord({
+          data: {
             ipfsHash,
-            result: new ResultStatusRecord(payload.result),
+            result: payload.result,
             // result: Immutable.fromJS(payload.result),
             progress: 100
-          })
+          }
         })
       )
-      .setIn([payload.id, 'duration'], payload.duration)
-      .setIn([payload.id, 'thumbnails'], payload.result.screenshots || [])
+      .setIn(
+        [payload.id, 'thumbnails'],
+        Immutable.List(payload.result.screenshots || [])
+      )
   },
   [TRANSCODING_FAILURE]: (
     state: VideoRecordMap,
@@ -290,51 +262,85 @@ const reducer = {
     return state.set(
       payload.id,
       new VideoRecord({
-        fetchStatus: new AsyncTaskStatusRecord({
+        fetchStatus: {
           name: 'failed',
-          data: new DataStatusRecord({ error: payload.error.message })
-        })
+          data: {
+            error: (payload.error && payload.error.message) || ''
+          }
+        }
       })
     )
   },
+  // VIDEO_FETCH_SUCCESS is called when fetching a single video from the db
   [VIDEO_FETCH_SUCCESS]: (
     state: VideoRecordMap,
-    { payload }: Action<VideoRecord>
+    { payload }: Action<Object>
   ): VideoRecordMap => {
-    if (!payload || !payload.get('id')) {
+    if (!payload || !payload.id) {
       return state
     }
-    payload = payload.set(
-      'fetchStatus',
-      new AsyncTaskStatusRecord({ name: 'success' })
-    )
-    payload = payload.set(
-      'thumbnails',
-      (payload.transcodingStatus &&
-        payload.transcodingStatus.data.result &&
-        payload.transcodingStatus.data.result.screenshots) ||
-        []
-    )
+    let fetchedVideo = new VideoRecord(payload).merge({
+      fetchStatus: new AsyncTaskStatusRecord({ name: 'success' })
+    })
 
-    return state.set(payload.id, payload)
+    fetchedVideo = fixFetchedVideo(fetchedVideo, payload)
+    return state.set(payload.id, fetchedVideo)
   },
+  // VIDEOS_FETCH_SUCCESS is called when fetching a list of videos from the db
   [VIDEOS_FETCH_SUCCESS]: (
     state: VideoRecordMap,
-    { payload }: Action<Array<VideoRecord>>
+    { payload }: Action<Array<Object>>
   ): VideoRecordMap =>
     state.merge(
       payload.reduce(
-        (mergingVideos: Object, { _id, ...videoProps }: Object): Object => {
-          videoProps.id = _id
-          // the payload contains a list of videos from the database
-          // that need to be converted into immutable objects
-          // FIXME:  also do this for the VIDEO_FETCH_SUCCESS above
-          mergingVideos[_id] = castRecordFromDbAsImmutable(videoProps)
+        (mergingVideos: Object, { _id, ...videoPayload }: Object): Object => {
+          videoPayload.id = _id
+          let fetchedVideo = new VideoRecord(videoPayload)
+          fetchedVideo = fixFetchedVideo(fetchedVideo, videoPayload)
+          mergingVideos[_id] = fetchedVideo
           return mergingVideos
         },
         {}
       )
-    )
+    ),
+  [UPDATE_VIDEO_TIME]: (
+    state: VideoRecordMap,
+    { payload }: Action<{ id: string, duration: string }>
+  ): VideoRecordMap => {
+    if (!payload || !payload.id || !payload.duration) {
+      return state
+    }
+
+    const video: ?VideoRecord = state.get(payload.id)
+
+    if (!video) {
+      return state
+    }
+
+    return state.set(payload.id, video.set('duration', payload.duration))
+  }
 }
 
 export default handleActions(reducer, Immutable.Map({}))
+
+// This is a functino to fix a legacy bug in which the thumbnails where not
+// saved in  the "thumbnails" property, as they should
+const fixFetchedVideo = (video: VideoRecord, payload): VideoRecord => {
+  if (video.get('thumbnails').size === 0) {
+    // fix  video.thumbnails
+    video = video.set(
+      'thumbnails',
+      Immutable.List(
+        (payload.transcodingStatus &&
+          payload.transcodingStatus.data.result &&
+          payload.transcodingStatus.data.result.screenshots) ||
+          []
+      )
+    )
+    // fix storageStatus
+    video = video.set('storageStatus', new AsyncTaskStatusRecord())
+    return video
+  } else {
+    return video
+  }
+}

@@ -1,4 +1,7 @@
+/* @flow */
+
 import React, { Component } from 'react'
+import { List as ImmutableList } from 'immutable'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
@@ -97,11 +100,12 @@ class InfoBox extends Component<Props, Object> {
     const urlToPlay = `/play/${video.id}`
     const urlForSharing = `https://portal.paratii.video/play/${video.id}`
 
-    const thumbImages = video && video.getIn(['thumbnails'])
+    const thumbImages: ImmutableList<string> =
+      (video && video.getIn(['thumbnails'])) || ImmutableList()
 
     let thumbImage = 'https://paratii.video/public/images/paratii-src.png'
     if (thumbImages && ipfsHash) {
-      const firstThumb = thumbImages[0]
+      const firstThumb = thumbImages.get(0)
       if (firstThumb !== undefined) {
         thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${firstThumb}`
       }
@@ -112,24 +116,62 @@ class InfoBox extends Component<Props, Object> {
     const uploadProgress = video.uploadStatus.data.progress
     const transcodingStatus = video.transcodingStatus.data.progress
     const progress = Math.floor((uploadProgress + transcodingStatus) / 2)
-
+    const isUploaded = video.uploadStatus.name === 'success'
     const isPublished = video.published === true || video.published === 'true'
     const isPublishable =
-      video.transcodingStatus.name === 'Transcoded' && isPublished === false
+      video.transcodingStatus.name === 'success' && isPublished === false
 
     const transcoderMessages = {
       idle: 'Waiting',
       requested: 'Waiting for transcoding to start...',
       running: 'Transcoding...',
-      failed: 'Transcoder exited with an error :-('
+      failed: 'Transcoder exited with an error :-(',
+      success: 'Ready to Publish',
+      error: 'Error'
     }
     const uploaderMessages = {
-      idle: 'Waiting for upload',
-      requested: 'Starting upload',
+      idle: 'Waiting',
+      requested: 'Uploading...',
       running: 'Uploading...',
       'uploaded to local node': 'Uploading...',
-      'uploaded to remote': 'Still uploading',
-      success: 'Uploading done, now waiting for transcoder...'
+      success: 'Uploaded',
+      error: 'Error'
+    }
+
+    let videoProgressBox = null
+    if (isPublishable) {
+      videoProgressBox = (
+        <VideoProgress progress={progress + '%'} marginBottom marginTop>
+          <VideoProgressTitle success={isPublishable}>
+            {transcoderMessages[video.transcodingStatus.name] ||
+              video.transcodingStatus.name}
+          </VideoProgressTitle>
+        </VideoProgress>
+      )
+    } else {
+      if (isUploaded) {
+        videoProgressBox = (
+          <VideoProgress progress={progress + '%'} marginBottom marginTop>
+            <VideoProgressTitle success={isUploaded} marginRight>
+              {uploaderMessages[video.uploadStatus.name] ||
+                video.uploadStatus.name}
+            </VideoProgressTitle>
+            <VideoProgressTitle success={isPublishable}>
+              {transcoderMessages[video.transcodingStatus.name] ||
+                video.transcodingStatus.name}
+            </VideoProgressTitle>
+          </VideoProgress>
+        )
+      } else {
+        videoProgressBox = (
+          <VideoProgress progress={progress + '%'} marginBottom marginTop>
+            <VideoProgressTitle success={isUploaded} marginRight>
+              {uploaderMessages[video.uploadStatus.name] ||
+                video.uploadStatus.name}
+            </VideoProgressTitle>
+          </VideoProgress>
+        )
+      }
     }
 
     return (
@@ -140,24 +182,15 @@ class InfoBox extends Component<Props, Object> {
           </Link>
           {durationBox}
         </VideoMedia>
-        <VideoProgress progress={progress + '%'} marginBottom marginTop>
-          <VideoProgressTitle success={progress >= 50} marginRight>
-            {uploaderMessages[video.uploadStatus.name] ||
-              video.uploadStatus.name}
-          </VideoProgressTitle>
-          <VideoProgressTitle success={progress === 100}>
-            {transcoderMessages[video.transcodingStatus.name] ||
-              video.transcodingStatus.name}
-          </VideoProgressTitle>
-        </VideoProgress>
+        {videoProgressBox}
         <Hidden>
           <TextField
             id="video-title"
             type="text"
             margin="0 0 30px"
-            onChange={e => this.handleInputChange('title', e)}
             value="<iframe width=560 height=315 src=https://"
             label="Embed Code"
+            onChange={() => null}
             readonly
           />
         </Hidden>
@@ -165,9 +198,9 @@ class InfoBox extends Component<Props, Object> {
           id="video-title"
           type="text"
           margin="0 0 25px"
-          onChange={e => this.handleInputChange('title', e)}
           value={urlForSharing}
           label="Share this video"
+          onChange={() => null}
           readonly
         />
         {!isPublishable && !isPublished ? (
