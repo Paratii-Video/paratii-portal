@@ -87,6 +87,7 @@ const VideoWrapper = styled.div`
 `
 
 const PlayerWrapper = styled.div`
+  background-color: ${props => props.theme.colors.VideoPlayer.background};
   position: absolute;
   top: 0;
   left: 0;
@@ -650,7 +651,7 @@ class Play extends Component<Props, State> {
               ) : null}
             </PlayerWrapper>
           </VideoWrapper>
-          {this.video.description && !isEmbed && <DescriptionWrapper />}
+          {!isEmbed && <DescriptionWrapper />}
         </Wrapper>
       )
     }

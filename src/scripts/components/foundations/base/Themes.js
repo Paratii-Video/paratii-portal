@@ -107,6 +107,7 @@ const Themes = {
       }
     },
     VideoPlayer: {
+      background: Colors.black,
       header: {
         title: Colors.white,
         icons: Colors.white
