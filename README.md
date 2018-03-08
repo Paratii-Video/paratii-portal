@@ -127,3 +127,21 @@ If you get the following error:
 Rebuilding `node-sass` may help:
 
     yarn rebild node-sass
+
+If npm install doesn't work, maybe it's because you have a node version > 9.0.0
+To fix it downgrade node to version 8.9.0:
+
+   $ sudo npm cache clean -f
+   $ sudo npm install -g n
+   $ sudo n 8.9.0
+
+Then run npm install again.
+
+If you get the following error:
+
+   [1] [nodemon] Internal watch failed: watch .../paratii-portal/node_modules ENOSPC
+
+Run the following code to install nodemon globally and fix the port issue
+
+    $ npm install -g nodemon
+    $ echo fs.inotify.max_user_watches=582222 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
