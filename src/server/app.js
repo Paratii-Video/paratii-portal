@@ -57,6 +57,7 @@ app.get('/embed/:id', async function (req, res, next) {
   let meta = ''
 
   if (video !== null) {
+    meta = '<link rel="stylesheet" type="text/css" href="/embed/index.css">'
     meta = routeHelper.openGraphHead(meta, video)
     meta = routeHelper.twitterCardHead(meta, video)
   } else {
