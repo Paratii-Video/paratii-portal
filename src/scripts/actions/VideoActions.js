@@ -15,6 +15,8 @@ import { transcodeVideo } from 'actions/UploaderActions'
 import VideoRecord from 'records/VideoRecords'
 import type { RootState } from 'types/ApplicationTypes'
 
+import Notifications from 'react-notification-system-redux'
+
 export const videoFetchError = createAction(VIDEOFETCH_ERROR)
 export const videoFetchSuccess = createAction(VIDEO_FETCH_SUCCESS)
 export const videosFetchSuccess = createAction(VIDEOS_FETCH_SUCCESS)
@@ -60,7 +62,17 @@ export const fetchOwnedVideos = () => async (
     ) {
       filteredOwnedVideos.push(video)
 
-      if (video.transcodingStatus.name !== 'success') {
+      if (
+        video.transcodingStatus.name !== 'success' ||
+        video.transcodingStatus.data.progress !== 100
+      ) {
+        console.log('Restarting to transcode' + video._id)
+        dispatch(
+          Notifications.success({
+            title: 'Transcoding',
+            message: 'We are transcoding video ' + video._id
+          })
+        )
         transcodeVideo({
           id: video._id,
           hash: video.ipfsHashOrig,
