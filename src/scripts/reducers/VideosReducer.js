@@ -283,7 +283,7 @@ const reducer = {
       fetchStatus: new AsyncTaskStatusRecord({ name: 'success' })
     })
 
-    fetchedVideo = fixOldVideoThumbnails(fetchedVideo, payload)
+    fetchedVideo = fixFetchedVideo(fetchedVideo, payload)
     return state.set(payload.id, fetchedVideo)
   },
   // VIDEOS_FETCH_SUCCESS is called when fetching a list of videos from the db
@@ -296,7 +296,7 @@ const reducer = {
         (mergingVideos: Object, { _id, ...videoPayload }: Object): Object => {
           videoPayload.id = _id
           let fetchedVideo = new VideoRecord(videoPayload)
-          fetchedVideo = fixOldVideoThumbnails(fetchedVideo, videoPayload)
+          fetchedVideo = fixFetchedVideo(fetchedVideo, videoPayload)
           mergingVideos[_id] = fetchedVideo
           return mergingVideos
         },
@@ -325,9 +325,10 @@ export default handleActions(reducer, Immutable.Map({}))
 
 // This is a functino to fix a legacy bug in which the thumbnails where not
 // saved in  the "thumbnails" property, as they should
-const fixOldVideoThumbnails = (video: VideoRecord, payload): VideoRecord => {
+const fixFetchedVideo = (video: VideoRecord, payload): VideoRecord => {
   if (video.get('thumbnails').size === 0) {
-    return video.set(
+    // fix  video.thumbnails
+    video = video.set(
       'thumbnails',
       Immutable.List(
         (payload.transcodingStatus &&
@@ -336,6 +337,9 @@ const fixOldVideoThumbnails = (video: VideoRecord, payload): VideoRecord => {
           []
       )
     )
+    // fix storageStatus
+    video = video.set('storageStatus', new AsyncTaskStatusRecord())
+    return video
   } else {
     return video
   }
