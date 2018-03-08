@@ -107,14 +107,7 @@ class VideoListItem extends Component<Props, void> {
   }
 
   handleClick () {
-    const form = document.getElementById('video-form')
-    if (form) {
-      const offsetTop = form.offsetTop - 20
-
-      if (offsetTop > window.innerHeight / 2) {
-        document.getElementById('root').scrollTo(0, offsetTop)
-      }
-    }
+    console.log(this.props)
     this.props.setSelectedVideo(this.props.video.id)
   }
 

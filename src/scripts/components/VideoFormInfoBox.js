@@ -66,7 +66,6 @@ const VideoMediaOverlay = styled.div`
       opacity: 0.7;
     }
   }
-
 `
 
 const VideoMediaIcon = styled.svg`

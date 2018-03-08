@@ -86,7 +86,8 @@ type Props = {
   showModal: (View: Object) => void,
   closeModal: () => void,
   user: UserRecord,
-  balance: String
+  balance: String,
+  innerRef: Object
 }
 
 class VideoForm extends Component<Props, Object> {
@@ -240,7 +241,7 @@ class VideoForm extends Component<Props, Object> {
     // }
 
     return (
-      <Card full id="video-form">
+      <Card full innerRef={this.props.innerRef}>
         <VideoFormHeader>
           <VideoFormTitle id="video-title">{title}</VideoFormTitle>
           <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>

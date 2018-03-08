@@ -14,7 +14,8 @@ type Props = {
   marginLeft: Boolean,
   marginRight: Boolean,
   nopadding: String,
-  withFull: Boolean
+  withFull: Boolean,
+  innerRef: Object
 }
 
 export const CardContainer = styled.div`
@@ -107,6 +108,7 @@ class Card extends Component<Props, void> {
         marginLeft={this.props.marginLeft}
         marginRight={this.props.marginRight}
         className={this.props.className}
+        innerRef={this.props.innerRef}
       >
         <Main nopadding={this.props.nopadding}>
           {this.props.title && (
