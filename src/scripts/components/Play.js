@@ -25,10 +25,11 @@ type Props = {
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
   video: VideoRecord,
-  isEmbed?: boolean
+  isEmbed: boolean
 }
 
 type State = {
+  isEmbed: boolean,
   mouseInOverlay: boolean,
   videoNotFound: boolean,
   showShareModal: boolean,
