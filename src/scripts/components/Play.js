@@ -565,7 +565,7 @@ class Play extends Component<Props, State> {
     } else {
       return (
         <Wrapper isEmbed={isEmbed}>
-          <VideoWrapper>
+          <VideoWrapper isEmbed={isEmbed}>
             <PlayerWrapper
               onClick={this.onPlayerClick}
               onMouseEnter={this.onMouseEnter}
