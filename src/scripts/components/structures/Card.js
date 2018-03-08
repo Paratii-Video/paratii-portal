@@ -5,6 +5,7 @@ import styled from 'styled-components'
 type Props = {
   className: String,
   children: Object,
+  id: String,
   title: String,
   footer: Object,
   full: Boolean,
@@ -99,6 +100,7 @@ class Card extends Component<Props, void> {
   render () {
     return (
       <CardWrapper
+        id={this.props.id}
         full={this.props.full}
         fullAtFirstBreak={this.props.fullAtFirstBreak}
         withFull={this.props.withFull}

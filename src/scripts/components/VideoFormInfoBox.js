@@ -28,7 +28,7 @@ const VideoImage = styled.div`
   width: 100%;
   padding-top: 60%;
   background-color: black;
-  background-image: url(${({ src }) => src});
+  background-image: url(${({ source }) => source});
   background-size: cover;
   background-position: center center;
 `
@@ -136,7 +136,7 @@ class InfoBox extends Component<Props, Object> {
       <VideoFormInfoBox>
         <VideoMedia>
           <Link to={urlToPlay}>
-            <VideoImage data-src={thumbImage} src={thumbImage} />
+            <VideoImage source={thumbImage} />
           </Link>
           {durationBox}
         </VideoMedia>

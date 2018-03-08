@@ -240,7 +240,7 @@ class VideoForm extends Component<Props, Object> {
     }
 
     return (
-      <Card full>
+      <Card full id="video-form">
         <VideoFormHeader>
           <VideoFormTitle id="video-title">{title}</VideoFormTitle>
           <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>
