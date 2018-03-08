@@ -213,7 +213,8 @@ export const transcodeVideo = (videoInfo: Object) => async (
         {
           ipfsHash: result.master.hash,
           owner: paratii.config.account.address,
-          duration: result.duration
+          duration: result.duration,
+          thumbnails: result.screenshots
         },
         getState()
       )
