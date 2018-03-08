@@ -19,15 +19,27 @@ export const getUploaderVideos: (
     )
 )
 
+export const getUploaderBusyVideos: (
+  state: RootState
+) => VideoRecordMap = createSelector(
+  [getVideos],
+  (videos: VideoRecordMap): VideoRecordMap =>
+    videos.filter(
+      (video: VideoRecord): boolean =>
+        video.get('owner') === paratii.config.account.address &&
+        video.getIn(['uploadStatus', 'name']) === 'running'
+    )
+)
+
 export const getSelectedUploaderVideo: (
   state: RootState
 ) => ?VideoRecord = createSelector(
   [getVideos, getSelectedUploaderVideoId],
   (videos: VideoRecordMap, selectedVideoId: string) => {
     if (selectedVideoId) {
-      const playerVideo: ?VideoRecord = videos.get(selectedVideoId)
-      if (playerVideo) {
-        return playerVideo
+      const uploaderVideo: ?VideoRecord = videos.get(selectedVideoId)
+      if (uploaderVideo) {
+        return uploaderVideo
       }
     }
     return null
