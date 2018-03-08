@@ -1,10 +1,10 @@
 const Sizes = {
   mainHeader: {
-    height: '96px',
+    height: '72px',
     padding: '0 80px'
   },
   mainFooter: {
-    height: '96px',
+    height: '72px',
     padding: '42px 80px'
   },
   mainHeaderLogo: {

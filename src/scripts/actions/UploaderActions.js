@@ -229,7 +229,11 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   console.log('SAVING VIDEO DATA')
 
   dispatch(
-    Notifications.success({ title: 'Save', message: 'We are saving you data' })
+    Notifications.success({
+      title: 'Save',
+      message: 'We are saving you data',
+      autoDismiss: 0
+    })
   )
 
   let videoId
@@ -244,7 +248,7 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   dispatch(videoDataStart(videoInfo))
   upsertVideo(videoId, videoInfo, getState())
     .then(videoInfo => {
-      // console.log('SAVED')
+      console.log('SAVED')
       dispatch(videoDataSaved(videoInfo))
       dispatch(
         Notifications.success({

@@ -14,45 +14,59 @@ class Notification extends Component<Props, Array<Object>> {
 
     // here the reference for Style the component
     // https://github.com/igorprado/react-notification-system/blob/master/src/styles.js
-    const shadowOpacity = '0.8'
+    const shadowOpacity = '0.16'
+    const shadowColor = '0, 0, 0'
     const style = {
+      Containers: {
+        // Top right notification
+        tr: {
+          top: '96px',
+          left: '24px'
+        }
+      },
       NotificationItem: {
         // Override the notification item
         DefaultStyle: {
           // Applied to every notification, regardless of the notification level
-          margin: '10px 5px 2px 1px'
+          margin: '10px 5px 2px 1px',
+          padding: '16px 50px 16px 24px',
+          borderRadius: '4px'
         },
-
         success: {
           // Applied only to the success notification item
-          backgroundColor: Colors.grayDark,
+          backgroundColor: Colors.blackLight,
           color: Colors.white,
-          borderTopColor: Colors.purple,
+          borderTopColor: Colors.white,
           WebkitBoxShadow:
-            '0 0 1px rgba(' + Colors.purple + ',' + shadowOpacity + ')',
+            '0 0 1px rgba(' + shadowColor + ',' + shadowOpacity + ')',
           MozBoxShadow:
-            '0 0 1px rgba(' + Colors.purple + ',' + shadowOpacity + ')',
-          boxShadow: '0 0 1px rgba(' + Colors.purple + ',' + shadowOpacity + ')'
+            '0 0 1px rgba(' + shadowColor + ',' + shadowOpacity + ')',
+          boxShadow:
+            '0 3px 10px rgba(' + shadowColor + ',' + shadowOpacity + ')'
         },
         error: {
-          backgroundColor: Colors.grayDark,
+          backgroundColor: Colors.blackLight,
           color: Colors.white,
-          borderTopColor: Colors.pink,
+          borderTopColor: Colors.white,
           WebkitBoxShadow:
-            '0 0 1px rgba(' + Colors.pink + ',' + shadowOpacity + ')',
+            '0 0 1px rgba(' + shadowColor + ',' + shadowOpacity + ')',
           MozBoxShadow:
-            '0 0 1px rgba(' + Colors.pink + ',' + shadowOpacity + ')',
-          boxShadow: '0 0 1px rgba(' + Colors.pink + ',' + shadowOpacity + ')'
+            '0 0 1px rgba(' + shadowColor + ',' + shadowOpacity + ')',
+          boxShadow: '0 0 1px rgba(' + shadowColor + ',' + shadowOpacity + ')'
         }
       },
       Dismiss: {
+        DefaultStyle: {
+          fontFamily: 'Roboto',
+          fontSize: '24px'
+        },
         success: {
-          color: Colors.white,
-          backgroundColor: Colors.purple
+          color: Colors.grayLight,
+          backgroundColor: 'transparent'
         },
         error: {
-          color: Colors.white,
-          backgroundColor: Colors.pink
+          color: Colors.grayLight,
+          backgroundColor: 'transparent'
         }
       },
       Title: {

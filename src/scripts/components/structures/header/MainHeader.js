@@ -15,6 +15,10 @@ const Header = styled.header`
   flex: 0 0 ${props => props.theme.sizes.mainHeader.height};
   align-items: center;
   padding: ${props => props.theme.sizes.mainHeader.padding};
+  position: fixed;
+  width: 100%;
+  height: ${props => props.theme.sizes.mainHeader.height};
+  z-index: 10000;
 `
 
 const HeaderWrapper = styled.div`
