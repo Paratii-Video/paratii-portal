@@ -1,10 +1,22 @@
 version: '3'
 services:
   portal:
+    container_name: paratii-portal
     build: .
     image: paratii-portal
     volumes:
         - "./src:/paratii-portal/src"
     ports:
-     - "8080:8080"
+        - "8080:8080"
     command: yarn run dev
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    volumes:
+        - ./data:/data/db
+    ports:
+        - "27017:27017"
+  db:
+    container_name: paratii-db
+    image: paratii-portal
+    command: npm run dev
