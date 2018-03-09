@@ -243,7 +243,7 @@ export const saveVideoInfo = (videoInfo: Object) => async (
 
   dispatch(
     Notifications.warning({
-      title: 'We are saving you data'
+      title: 'We are saving your data'
     })
   )
 
