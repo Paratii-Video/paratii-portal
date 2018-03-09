@@ -5,23 +5,13 @@ import { bindActionCreators } from 'redux'
 
 import Play from 'components/Play'
 import {
-  attemptPlay,
-  setFullscreen,
-  playerVideoSelect,
-  updateVideoTime,
-  updateVideoBufferedTime,
   togglePlayPause,
-  updateVolume
+  attemptPlay,
+  playerVideoSelect
 } from 'actions/PlayerActions'
 import { fetchVideo } from 'actions/VideoActions'
-import {
-  getIsPlaying,
-  getIsAttemptingPlay,
-  getPlayerCurrentTimeSeconds,
-  getPlayerCurrentBufferedTimeSeconds,
-  getPlayerCurrentVolume
-} from 'selectors/index'
-import { getPlayingVideo, getDurationSeconds } from 'selectors/PlayerSelectors'
+import { getIsPlaying, getIsAttemptingPlay } from 'selectors/index'
+import { getPlayingVideo } from 'selectors/PlayerSelectors'
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (
@@ -29,27 +19,16 @@ const mapStateToProps = (
   ownProps: { isEmbed?: boolean }
 ) => ({
   video: getPlayingVideo(state),
-  videoDurationSeconds: getDurationSeconds(state),
   isPlaying: getIsPlaying(state),
   isAttemptingPlay: getIsAttemptingPlay(state),
-  isEmbed: ownProps.isEmbed,
-  currentTimeSeconds: getPlayerCurrentTimeSeconds(state),
-  currentBufferedTimeSeconds: getPlayerCurrentBufferedTimeSeconds(state),
-  currentVolume: getPlayerCurrentVolume(state)
+  isEmbed: ownProps.isEmbed
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchVideo: bindActionCreators(fetchVideo, dispatch),
   setSelectedVideo: bindActionCreators(playerVideoSelect, dispatch),
-  setFullscreen: bindActionCreators(setFullscreen, dispatch),
-  attemptPlay: bindActionCreators(attemptPlay, dispatch),
-  updateVideoTime: bindActionCreators(updateVideoTime, dispatch),
   togglePlayPause: bindActionCreators(togglePlayPause, dispatch),
-  updateVideoBufferedTime: bindActionCreators(
-    updateVideoBufferedTime,
-    dispatch
-  ),
-  updateVolume: bindActionCreators(updateVolume, dispatch)
+  attemptPlay: bindActionCreators(attemptPlay, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play)
