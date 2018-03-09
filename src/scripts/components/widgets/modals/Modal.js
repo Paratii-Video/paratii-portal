@@ -55,12 +55,6 @@ const Container = styled.div`
     margin: 0 10px;
     width: 100vw;
   }
-
-  @media (max-height: 767px) {
-    height: calc(100vh - 20px);
-    margin: 0 10px;
-    width: 100vw;
-  }
 `
 
 const CloseButton = styled(Button)`
@@ -99,14 +93,17 @@ export const ModalScrollContent = styled.div`
     overflow-x: hidden;
     overflow-y: scroll;
   }
-
-  @media (max-height: 767px) {
-    overflow-x: hidden;
-    overflow-y: scroll;
-  }
 `
 
 class Modal extends Component<Props, void> {
+  componentDidMount () {
+    document.on('keydown', event => {
+      if (event.keyCode === 27) {
+        this.props.closeModal()
+      }
+    })
+  }
+
   renderModal () {
     const { modalContent } = this.props
     switch (modalContent) {
@@ -114,13 +111,9 @@ class Modal extends Component<Props, void> {
         return <ModalStake />
     }
   }
+
   render () {
     const isVisible = this.props.showModal
-    document.onkeydown = event => {
-      if (event.keyCode === 27) {
-        this.props.closeModal()
-      }
-    }
 
     return (
       <Wrapper show={isVisible}>
