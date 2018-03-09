@@ -7,10 +7,11 @@ type Props = {
 
 const MainWrapper = styled.main`
   background-color: ${props => props.theme.colors.body.background};
-  flex: 1 1 100%;
-  padding: 40px 80px;
   display: flex;
+  flex: 1 1 100%;
   flex-direction: column;
+  justify-content: center;
+  padding: 40px 80px;
   min-height: 500px;
 
   @media (max-width: 1024px) {
