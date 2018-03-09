@@ -95,28 +95,3 @@ export const formatBalance = (rawBalance: number): string => {
 
   return `${rawBalance.toExponential(2)}`
 }
-
-export const requestCancelFullscreen = (): void => {
-  if (document.exitFullscreen) {
-    // $FlowFixMe
-    document.exitFullscreen()
-  } else if (document.mozCancelFullScreen) {
-    // $FlowFixMe
-    document.mozCancelFullScreen()
-  } else if (document.webkitExitFullscreen) {
-    // $FlowFixMe
-    document.webkitExitFullscreen()
-  }
-}
-
-export const requestFullscreen = (element: HTMLElement): void => {
-  if (element.requestFullscreen) {
-    element.requestFullscreen()
-  } else if (element.mozRequestFullScreen) {
-    // $FlowFixMe
-    element.mozRequestFullScreen()
-  } else if (element.webkitRequestFullscreen) {
-    // $FlowFixMe
-    element.webkitRequestFullscreen()
-  }
-}

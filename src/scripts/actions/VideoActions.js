@@ -30,7 +30,7 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
       videoInfo.id = videoInfo._id
     }
     if (videoInfo && videoInfo.id) {
-      dispatch(videoFetchSuccess(videoInfo))
+      dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
       dispatch(playerVideoSelect(videoInfo.id))
     }
   } catch (error) {
@@ -44,6 +44,7 @@ export const fetchOwnedVideos = () => async (
   dispatch: Dispatch<*>,
   getState: () => RootState
 ) => {
+  console.log('FETCH OWNED VIDEOS')
   const address: string = paratii.config.account.address
   const ownedVideos: Array<Object> = await paratii.core.vids.search({
     owner: address
@@ -61,6 +62,7 @@ export const fetchOwnedVideos = () => async (
       filteredOwnedVideos.push(video)
 
       if (video.transcodingStatus.name !== 'success') {
+        console.log('Restarting to transcode' + video._id)
         transcodeVideo({
           id: video._id,
           hash: video.ipfsHashOrig,

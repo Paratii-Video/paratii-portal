@@ -28,11 +28,9 @@ if (process.env.NODE_ENV === 'production-notugly') {
   )
 }
 
-const staticHandler = express.static(path.resolve(__dirname, '../../', 'build'))
-
-app.use(staticHandler)
-app.use('/embed', staticHandler)
+app.use(express.static(path.resolve(__dirname, '../../', 'build')))
 app.get('/embed/:id', videoRoute)
+app.get('/play/:id', videoRoute)
 app.get('/oembed', oembedRoute)
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../', 'build', 'index.html'))

@@ -22,12 +22,3 @@ export const REQUEST_STATUS = {
   SUCCEEDED: createRequestStatus('SUCCEEDED'),
   FAILED: createRequestStatus('FAILED')
 }
-
-export const TRANSITION_STATE = {
-  ENTERING: 'entering',
-  ENTERED: 'entered',
-  EXITING: 'exiting',
-  EXITED: 'exited',
-  APPEARING: 'appearing',
-  APPEARED: 'appeared'
-}

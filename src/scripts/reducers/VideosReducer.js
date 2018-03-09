@@ -7,7 +7,6 @@ import {
   UPLOAD_PROGRESS,
   UPLOAD_REMOTE_SUCCESS,
   UPLOAD_LOCAL_SUCCESS,
-  UPDATE_VIDEO_TIME,
   UPDATE_VIDEO_INFO,
   VIDEO_DATA_START,
   VIDEO_DATA_SAVED,
@@ -20,7 +19,11 @@ import {
   VIDEOS_FETCH_SUCCESS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
-import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
+import {
+  ResultStatusRecord,
+  AsyncTaskStatusRecord,
+  DataStatusRecord
+} from 'records/AsyncTaskStatusRecord'
 import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 
 const reducer = {
@@ -137,13 +140,13 @@ const reducer = {
       [payload.id, 'storageStatus'],
       new AsyncTaskStatusRecord({
         name: 'running',
-        data: {
+        data: new DataStatusRecord({
           id: payload.id,
           title: payload.title,
           description: payload.description,
           author: payload.author,
           owner: payload.owner
-        }
+        })
       })
     )
     return state
@@ -160,14 +163,14 @@ const reducer = {
         [payload.id, 'storageStatus'],
         new AsyncTaskStatusRecord({
           name: 'success',
-          data: {
+          data: new DataStatusRecord({
             id: payload.id,
             title: payload.title,
             description: payload.description,
             author: payload.author,
             owner: payload.owner,
             progress: 100
-          }
+          })
         })
       )
       .setIn([payload.id, 'title'], payload.title)
@@ -186,7 +189,7 @@ const reducer = {
       [payload.id, 'transcodingStatus'],
       new AsyncTaskStatusRecord({
         name: 'requested',
-        data: {}
+        data: new DataStatusRecord({})
       })
     )
   },
@@ -225,18 +228,16 @@ const reducer = {
         [payload.id, 'transcodingStatus'],
         new AsyncTaskStatusRecord({
           name: 'success',
-          data: {
+          data: new DataStatusRecord({
             ipfsHash,
-            result: payload.result,
+            result: new ResultStatusRecord(payload.result),
             // result: Immutable.fromJS(payload.result),
             progress: 100
-          }
+          })
         })
       )
-      .setIn(
-        [payload.id, 'thumbnails'],
-        Immutable.List(payload.result.screenshots || [])
-      )
+      .setIn([payload.id, 'duration'], payload.duration)
+      .setIn([payload.id, 'thumbnails'], payload.result.screenshots || [])
   },
   [TRANSCODING_FAILURE]: (
     state: VideoRecordMap,
@@ -262,21 +263,19 @@ const reducer = {
     return state.set(
       payload.id,
       new VideoRecord({
-        fetchStatus: {
+        fetchStatus: new AsyncTaskStatusRecord({
           name: 'failed',
-          data: {
-            error: (payload.error && payload.error.message) || ''
-          }
-        }
+          data: new DataStatusRecord({ error: payload.error.message })
+        })
       })
     )
   },
   // VIDEO_FETCH_SUCCESS is called when fetching a single video from the db
   [VIDEO_FETCH_SUCCESS]: (
     state: VideoRecordMap,
-    { payload }: Action<Object>
+    { payload }: Action<VideoRecord>
   ): VideoRecordMap => {
-    if (!payload || !payload.id) {
+    if (!payload || !payload.get('id')) {
       return state
     }
     let fetchedVideo = new VideoRecord(payload).merge({
@@ -289,7 +288,7 @@ const reducer = {
   // VIDEOS_FETCH_SUCCESS is called when fetching a list of videos from the db
   [VIDEOS_FETCH_SUCCESS]: (
     state: VideoRecordMap,
-    { payload }: Action<Array<Object>>
+    { payload }: Action<Array<VideoRecord>>
   ): VideoRecordMap =>
     state.merge(
       payload.reduce(
@@ -302,23 +301,7 @@ const reducer = {
         },
         {}
       )
-    ),
-  [UPDATE_VIDEO_TIME]: (
-    state: VideoRecordMap,
-    { payload }: Action<{ id: string, duration: string }>
-  ): VideoRecordMap => {
-    if (!payload || !payload.id || !payload.duration) {
-      return state
-    }
-
-    const video: ?VideoRecord = state.get(payload.id)
-
-    if (!video) {
-      return state
-    }
-
-    return state.set(payload.id, video.set('duration', payload.duration))
-  }
+    )
 }
 
 export default handleActions(reducer, Immutable.Map({}))

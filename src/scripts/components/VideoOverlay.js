@@ -4,25 +4,17 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
-import TruncatedText from 'components/foundations/TruncatedText'
-import PlayerControlsContainer from 'containers/PlayerControlsContainer'
 import VideoRecord from 'records/VideoRecords'
-import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
-import type { TransitionState } from 'types/ApplicationTypes'
+import type { Match } from 'react-router-dom'
 
 type Props = {
   video: ?VideoRecord,
+  match: Match,
   isEmbed?: boolean,
-  onClick: (e: Object) => void,
-  transitionState: ?TransitionState,
   showShareModal?: boolean,
-  togglePlayPause: () => void,
-  toggleShareModal: (e: Object) => void,
-  toggleFullscreen: (goToFullscreen: boolean) => void,
-  onScrub: (percentage: number) => void,
-  onVolumeChange: (percentage: number) => void,
-  onToggleMute: (mute: boolean) => void
+  onClick: (e: Object) => void,
+  toggleShareModal: (e: Object) => void
 }
 
 type State = {
@@ -32,67 +24,32 @@ type State = {
   }
 }
 
-const CONTROLS_HEIGHT: string = '75px'
-
 const Wrapper = styled.div`
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
 `
 
 const overlayPadding: string = '20px 25px 0'
 
 const Overlay = styled.div`
   width: 100%;
-  flex: 0 0 calc(100% - ${CONTROLS_HEIGHT});
+  height: 100%;
+  flex: 0 0 100%;
   display: flex;
   flex-direction: column;
   color: white;
-  box-sizing: border-box;
-  opacity: ${({ transitionState }) => {
-    switch (transitionState) {
-      case TRANSITION_STATE.ENTERING:
-      case TRANSITION_STATE.EXITED:
-        return '0'
-      case TRANSITION_STATE.EXITING:
-      case TRANSITION_STATE.ENTERED:
-      default:
-        return '1.0'
-    }
-  }};
-  transition: all ${({ theme }) => theme.animation.time.repaint}
-    ${({ theme }) => theme.animation.ease.smooth};
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  padding: ${overlayPadding};
 `
 
-const VideoInfo = styled.div`
+const TopBar = styled.div`
   display: flex;
   flex-direction: row;
-  flex: 1 0 0;
-  padding: ${overlayPadding};
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
-  transform: translateY(
-    ${({ transitionState }) => {
-    switch (transitionState) {
-      case TRANSITION_STATE.ENTERING:
-      case TRANSITION_STATE.EXITED:
-        return '-75px'
-      case TRANSITION_STATE.EXITING:
-      case TRANSITION_STATE.ENTERED:
-      default:
-        return 0
-    }
-  }}
-  );
-  transition: all ${({ theme }) => theme.animation.time.repaint}
-    ${({ theme }) => theme.animation.ease.smooth};
 `
 
 const PlayerTitle = Title.extend`
   color: ${props => props.theme.colors.VideoPlayer.header.title};
-  flex: 0 0 75%;
-  max-width: 75%;
+  flex: 1 0 50%;
 `
 
 const ButtonGroup = styled.div`
@@ -175,7 +132,7 @@ class VideoOverlay extends Component<Props, State> {
   getVideoTitle (): string {
     const { video } = this.props
 
-    return (video && (video.get('title') || video.get('filename'))) || ''
+    return (video && video.get('title')) || 'Video Title'
   }
 
   onProfileButtonClick = (e: Object): void => {
@@ -197,31 +154,23 @@ class VideoOverlay extends Component<Props, State> {
   }
 
   render () {
-    const {
-      onClick,
-      onScrub,
-      onVolumeChange,
-      onToggleMute,
-      togglePlayPause,
-      toggleShareModal,
-      toggleFullscreen,
-      transitionState
-    } = this.props
+    const { onClick, toggleShareModal } = this.props
     const { openPopover } = this.state
     const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
       .profile
     return (
       <Wrapper>
-        <Overlay
-          data-test-id="video-overlay"
-          onClick={onClick}
-          transitionState={transitionState}
-        >
-          <VideoInfo transitionState={transitionState}>
-            <PlayerTitle small>
-              <TruncatedText>{this.getVideoTitle()}</TruncatedText>
-            </PlayerTitle>
-            <ButtonGroup hide={!!this.state.openPopover}>
+        <ShareButton onClick={toggleShareModal}>
+          {!this.props.showShareModal && (
+            <SVGButton>
+              <use xlinkHref="#icon-player-share" />
+            </SVGButton>
+          )}
+        </ShareButton>
+        <Overlay data-test-id="video-overlay" onClick={onClick}>
+          <TopBar>
+            <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>
+            <ButtonGroup>
               {ProfileButton ? (
                 <ButtonWrapper>
                   <ProfileButton
@@ -232,35 +181,13 @@ class VideoOverlay extends Component<Props, State> {
                   />
                 </ButtonWrapper>
               ) : null}
-              <ButtonWrapper>
-                <ShareButton
-                  onClick={(e: Object) => {
-                    e.stopPropagation()
-                    toggleShareModal(e)
-                  }}
-                >
-                  {!this.props.showShareModal && (
-                    <SVGButton>
-                      <use xlinkHref="#icon-player-share" />
-                    </SVGButton>
-                  )}
-                </ShareButton>
-              </ButtonWrapper>
             </ButtonGroup>
             <PopoverWrapper
               open={!!openPopover}
               innerRef={this.popoverWrapperRefCallback}
             />
-          </VideoInfo>
+          </TopBar>
         </Overlay>
-        <PlayerControlsContainer
-          onScrub={onScrub}
-          onVolumeChange={onVolumeChange}
-          onToggleMute={onToggleMute}
-          togglePlayPause={togglePlayPause}
-          toggleFullscreen={toggleFullscreen}
-          transitionState={transitionState}
-        />
       </Wrapper>
     )
   }

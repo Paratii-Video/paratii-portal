@@ -1,23 +1,16 @@
 /* @flow */
 
-import { List as ImmutableList, Record as ImmutableRecord } from 'immutable'
-import type { AsyncTaskStatusName } from 'types/ApplicationTypes'
+import { Record as ImmutableRecord } from 'immutable'
+import { type AsyncTaskStatusName } from 'types/ApplicationTypes'
 
 export class ResultStatusRecord extends ImmutableRecord({
   root: '',
   duration: '',
-  screenshots: ImmutableList()
+  screenshots: []
 }) {
   root: string
   duration: string
-  screenshots: ImmutableList<string>
-
-  constructor ({ screenshots, ...rest }: Object = {}) {
-    super({
-      ...rest,
-      screenshots: ImmutableList(screenshots)
-    })
-  }
+  screenshots: [string]
 }
 
 export class DataStatusRecord extends ImmutableRecord({
@@ -42,13 +35,6 @@ export class DataStatusRecord extends ImmutableRecord({
   result: ResultStatusRecord
   progress: number
   error: string
-
-  constructor ({ result, ...rest }: Object = {}) {
-    super({
-      ...rest,
-      result: new ResultStatusRecord(result)
-    })
-  }
 }
 
 export class AsyncTaskStatusRecord extends ImmutableRecord({
@@ -57,11 +43,4 @@ export class AsyncTaskStatusRecord extends ImmutableRecord({
 }) {
   name: AsyncTaskStatusName
   data: DataStatusRecord
-
-  constructor ({ data, ...rest }: Object = {}) {
-    super({
-      ...rest,
-      data: new DataStatusRecord(data)
-    })
-  }
 }
