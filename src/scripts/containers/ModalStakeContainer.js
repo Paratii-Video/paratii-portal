@@ -9,7 +9,6 @@ import ModalStake from 'components/widgets/modals/ModalStake'
 
 const mapStateToProps = (state: RootState) => ({
   selectedVideo: getSelectedUploaderVideo(state),
-  videoId: getSelectedUploaderVideo(state),
   user: getUser(state)
 })
 

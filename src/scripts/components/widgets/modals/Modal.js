@@ -97,7 +97,7 @@ export const ModalScrollContent = styled.div`
 
 class Modal extends Component<Props, void> {
   componentDidMount () {
-    document.on('keydown', event => {
+    document.addEventListener('keydown', event => {
       if (event.keyCode === 27) {
         this.props.closeModal()
       }

@@ -8,7 +8,6 @@ import UserRecord from 'records/UserRecords'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
 type Props = {
-  videoId: Object,
   user: UserRecord,
   modalProps: Object,
   closeModal: () => void,
@@ -60,10 +59,11 @@ class ModalStake extends Component<Props, Object> {
 
   onSubmit (event: Object) {
     event.preventDefault()
+    console.log(this.state.id, this.props.selectedVideo)
 
     paratii.eth.tcr
       .checkEligiblityAndApply(
-        this.props.videoId.id.toString(),
+        this.state.id,
         paratii.eth.web3.utils.toWei(5 + '')
       )
       .then(resp => {
@@ -81,7 +81,7 @@ class ModalStake extends Component<Props, Object> {
           this.props.saveVideoInfo(videoToSave)
           this.props.closeModal()
           console.log(
-            `video ${this.props.videoId.id.toString()} successfully applied to TCR Listing`
+            `video ${this.state.id} successfully applied to TCR Listing`
           )
         } else {
           const msg =
@@ -101,6 +101,19 @@ class ModalStake extends Component<Props, Object> {
           console.log(msg)
         }
       })
+  }
+
+  componentWillReceiveProps (nextProps: Props): void {
+    const selectedVideo = nextProps.selectedVideo
+    this.setState({
+      id: selectedVideo.id,
+      title: selectedVideo.title,
+      description: selectedVideo.description,
+      duration: selectedVideo.duration,
+      author: selectedVideo.author,
+      errorMessage: false,
+      agreedTOC: false // TODO,
+    })
   }
 
   render () {
