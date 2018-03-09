@@ -59,8 +59,6 @@ class ModalStake extends Component<Props, Object> {
 
   onSubmit (event: Object) {
     event.preventDefault()
-    console.log(this.state.id, this.props.selectedVideo)
-
     paratii.eth.tcr
       .checkEligiblityAndApply(
         this.state.id,
