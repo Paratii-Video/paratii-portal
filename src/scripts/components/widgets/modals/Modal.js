@@ -96,20 +96,26 @@ export const ModalScrollContent = styled.div`
 `
 
 class Modal extends Component<Props, void> {
-  componentDidMount () {
-    document.addEventListener('keydown', event => {
-      if (event.keyCode === 27) {
-        this.props.closeModal()
-      }
-    })
-  }
-
   renderModal () {
     const { modalContent } = this.props
     switch (modalContent) {
       case 'ModalStake':
         return <ModalStake />
     }
+  }
+
+  handleKeydown (event) {
+    if (event.keyCode === 27) {
+      this.props.closeModal()
+    }
+  }
+
+  componentDidMount () {
+    document.addEventListener('keydown', this.onKeydown)
+  }
+
+  componentDidUnmount () {
+    document.removeEventListener('keydown', this.onKeydown)
   }
 
   render () {
