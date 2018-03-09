@@ -33,10 +33,7 @@ app.engine(
   '.hbs',
   exphbs({
     extname: '.hbs',
-    partialsDir: [
-      //  path to your partials
-      path.join(__dirname, '/views/partials')
-    ]
+    partialsDir: [path.join(__dirname, '/views/partials')]
   })
 )
 app.set('view engine', '.hbs')
