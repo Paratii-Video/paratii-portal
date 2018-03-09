@@ -51,7 +51,7 @@ class VideoList extends Component<Props, void> {
       ''
     )
     return (
-      <Card {...this.props} nopadding footer={footer}>
+      <Card {...this.props} nopadding nobackground footer={footer}>
         <Title>Video List</Title>
         <List>
           {this.props.videos.entrySeq().map(([videoId, videoInfo]) => (

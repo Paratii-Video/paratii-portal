@@ -14,6 +14,7 @@ type Props = {
   marginLeft: Boolean,
   marginRight: Boolean,
   nopadding: String,
+  nobackground: Boolean,
   withFull: Boolean,
   innerRef: Object
 }
@@ -62,7 +63,8 @@ export const CardWrapper = styled.div`
 
 const Main = styled.div`
   background: ${props => props.theme.colors.MainCard.background}
-    url('assets/svg/card-bg.svg') no-repeat 50% 0;
+    ${props => (props.nobackground ? null : "url('assets/svg/card-bg.svg')")}
+    no-repeat 50% 0;
   background-size: cover;
   color: ${props => props.theme.colors.MainCard.color};
   display: flex;
@@ -110,7 +112,10 @@ class Card extends Component<Props, void> {
         className={this.props.className}
         innerRef={this.props.innerRef}
       >
-        <Main nopadding={this.props.nopadding}>
+        <Main
+          nopadding={this.props.nopadding}
+          nobackground={this.props.nobackground}
+        >
           {this.props.title && (
             <Header>
               <CardTitle>{this.props.title}</CardTitle>
