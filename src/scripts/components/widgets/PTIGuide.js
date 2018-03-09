@@ -46,7 +46,7 @@ const TitleIcon = styled.svg`
 `
 
 const Icon = styled.div`
-  height: 155px;
+  height: 130px;
   margin: 35px 0 20px;
   width: 100%;
 `
