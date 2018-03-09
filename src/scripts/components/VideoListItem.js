@@ -14,7 +14,8 @@ const ListItem = styled.li`
   display: flex;
   flex-direction: column;
   padding: 0 50px;
-  transition: opacity ${props => props.theme.animation.time.repaint};
+  transition: opacity ${props => props.theme.animation.time.repaint},
+    background 0.25s;
   background-color: ${props =>
     (props.selected && props.theme.colors.VideoList.selectedBackground) || ''};
 
@@ -41,7 +42,7 @@ const VideoImage = styled.div`
   height: 72px;
   width: 40%;
 
-  @media (max-width: 1007px) {
+  @media (max-width: 1024px) {
     width: 20%;
   }
 
