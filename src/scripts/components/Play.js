@@ -17,6 +17,7 @@ import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
 
 import type { ClapprPlayer } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
+import mux from 'mux-embed'
 
 type Props = {
   match: Match,
@@ -488,6 +489,25 @@ class Play extends Component<Props, State> {
         autoPlay: true
       })
       this.bindClapprEvents()
+
+      // initialize mux here
+      // Note to frontend ppl. if there is a better locations for this
+      // feel free to change it.
+      mux.monitor('#player video', {
+        debug: true,
+        data: {
+          property_key: 'le7n9kbqk3qugqbo03pinsatl', // required (DEV KEY)
+
+          // Metadata
+          player_name: 'Paratii Player', // ex: 'My Main Player'
+          player_init_time: new Date(),
+
+          video_id: video.id,
+          video_title: video.title,
+          video_duration: video.duration,
+          video_variant_id: video.ipfsHash
+        }
+      })
     })
   }
 

@@ -2,7 +2,8 @@ version: 2
 jobs:
   build:
     docker:
-      - image: leeaandrob/paratii-portal:0.0.5
+      - image: leeaandrob/paratii-portal:0.0.6
+      - image: circleci/mongo:latest
     working_directory: ~/repo
     steps:
       - checkout
@@ -16,7 +17,7 @@ jobs:
           # key: v1-dependencies-{{ checksum "yarn.lock" }}
           key: v1-dependencies-{{ checksum "package-lock.json" }}
       - run: yarn run quality
-      - run: yarn run unit-test-circle
+      - run: yarn run unit-test-circleci
       - run:
           command: yarn run parity
           background: true
@@ -26,8 +27,13 @@ jobs:
       - run:
           command: yarn run server:dev
           background: true
+      - run:
+          command: mv /paratii-db/paratii-db db
+      - run:
+          command: cd db && npm run dev
+          background: true
       - run: node src/scripts/waitForServer.js
-      - run: yarn run chimp-test
+      - run: yarn run chimp-circleci-test
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then

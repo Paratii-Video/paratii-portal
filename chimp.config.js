@@ -4,12 +4,6 @@ module.exports = {
   mocha: true,
   chai: true,
   webdriverio: {
-    waitforTimeout: 70000,
-    desiredCapabilities: {
-      chromeOptions: {
-        args: ['headless', 'disable-gpu']
-      },
-      isHeadless: true
-    }
+    waitforTimeout: 20000
   }
 }

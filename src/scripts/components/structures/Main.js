@@ -11,8 +11,9 @@ const MainWrapper = styled.main`
   flex: 1 1 100%;
   flex-direction: column;
   justify-content: center;
-  padding: 40px 80px;
+  margin-top: ${props => props.theme.sizes.mainHeader.height};
   min-height: 500px;
+  padding: 40px 80px;
 
   @media (max-width: 1024px) {
     padding: 40px;
