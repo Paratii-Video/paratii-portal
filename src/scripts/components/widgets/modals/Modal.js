@@ -114,13 +114,12 @@ class Modal extends Component<Props, void> {
     document.addEventListener('keydown', this.onKeydown)
   }
 
-  componentDidUnmount () {
+  componentWillUnmount () {
     document.removeEventListener('keydown', this.onKeydown)
   }
 
   render () {
     const isVisible = this.props.showModal
-
     return (
       <Wrapper show={isVisible}>
         <Container show={isVisible}>
