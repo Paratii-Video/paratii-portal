@@ -178,7 +178,11 @@ RUN printf '#!/bin/sh\nXvfb :99 -screen 0 1280x1024x24 &\nexec "$@"\n' > /tmp/en
 
 # paratii-portal
 WORKDIR /paratii-portal
-COPY . /paratii-portal
+ADD . /paratii-portal
 RUN mkdir node_modules
 COPY --from=portal-modules /paratii-portal/node_modules /paratii-portal/node_modules
 RUN yarn run build
+
+# paratii-db
+WORKDIR /paratii-db
+COPY --from=db /paratii-db /paratii-db
