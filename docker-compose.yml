@@ -2,21 +2,26 @@ version: '3'
 services:
   portal:
     container_name: paratii-portal
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: paratii-portal
     volumes:
         - "./src:/paratii-portal/src"
     ports:
         - "8080:8080"
-    command: yarn run dev
+    command: >
+        bash -c "cd /paratii-portal && yarn run dev && cd /paratii-db && npm run dev"
+  db:
+    container_name: paratii-db
+    build:
+      context: .
+      dockerfile: Dockerfile-db
+    image: paratii-portal
+    command: >
+        bash -c "sleep 30 && npm run dev"
   mongo:
     container_name: mongo
     image: mongo:latest
-    volumes:
-        - ./data:/data/db
     ports:
         - "27017:27017"
-  db:
-    container_name: paratii-db
-    image: paratii-portal
-    command: npm run dev

@@ -24,32 +24,6 @@ WORKDIR /paratii-portal
 ADD package.json /paratii-portal/package.json
 RUN npm install
 
-FROM ubuntu:16.04 as db
-
-# Set timezone to UTC by default
-RUN ln -sf /usr/share/zoneinfo/Etc/UTC /etc/localtime
-
-# Use unicode
-RUN locale-gen C.UTF-8 || true
-ENV LANG=C.UTF-8
-
-RUN apt-get update \
-  && mkdir -p /usr/share/man/man1 \
-  && apt-get install -y \
-    git mercurial xvfb \
-    locales sudo openssh-client ca-certificates tar gzip parallel \
-    net-tools netcat unzip zip bzip2 gnupg curl wget build-essential curl wget
-
-# nodejs
-RUN apt autoremove -y nodejs
-RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
-RUN apt install nodejs -y
-
-# paratii-db
-WORKDIR /paratii-db
-RUN wget https://raw.githubusercontent.com/Paratii-Video/paratii-db/master/package.json
-RUN npm install --silent
-
 FROM ubuntu:16.04
 
 WORKDIR /build
@@ -181,8 +155,3 @@ WORKDIR /paratii-portal
 ADD . /paratii-portal
 RUN mkdir node_modules
 COPY --from=portal-modules /paratii-portal/node_modules /paratii-portal/node_modules
-RUN yarn run build
-
-# paratii-db
-WORKDIR /paratii-db
-COPY --from=db /paratii-db /paratii-db
