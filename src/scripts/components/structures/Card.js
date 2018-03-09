@@ -53,7 +53,7 @@ export const CardWrapper = styled.div`
     !props.fullAtFirstBreak && !props.full && !props.withFull ? '48%' : null};
   }
 
-  @media (max-width: 1007px) {
+  @media (max-width: 1024px) {
     flex: 1 1 100%;
     max-width: initial;
     margin: 0 0 25px;
