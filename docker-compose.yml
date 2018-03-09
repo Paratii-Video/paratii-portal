@@ -2,6 +2,9 @@ version: '3'
 services:
   portal:
     build: .
+    image: paratii-portal
+    volumes:
+        - "./src:/paratii-portal/src"
     ports:
      - "8080:8080"
     command: yarn run dev
