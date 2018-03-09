@@ -55,13 +55,12 @@ const VideoMediaOverlay = styled.div`
     props.theme.colors.VideoForm.info.imageBackground};
     content: '';
     height: 100%;
-    left; 0;
+    left: 0;
     opacity: 0.5;
     position: absolute;
     transition: opacity ${props => props.theme.animation.time.repaint};
     top: 0;
     width: 100%;
-
     ${VideoMediaLink}:hover & {
       opacity: 0.7;
     }
@@ -74,8 +73,7 @@ const VideoMediaIcon = styled.svg`
   transition: transform 0.3s ${props => props.theme.animation.ease.smooth};
   width: 20%;
   z-index: 10;
-
-  ${VideoMediaLink}: hover & {
+  ${VideoMediaLink}:hover & {
     transform: scale(0.9);
   }
 `
