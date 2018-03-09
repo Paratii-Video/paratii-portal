@@ -12,7 +12,7 @@ import {
 } from 'selectors/UploaderSelectors'
 import type { RootState } from 'types/ApplicationTypes'
 
-import RedeemVoucher from 'components/widgets/RedeemVoucher'
+import RedeemVoucher from 'containers/RedeemVoucherContainer'
 import VideoList from 'containers/VideoListContainer'
 import VideoForm from 'containers/VideoFormContainer'
 import UploadFile from 'containers/FileUploaderContainer'

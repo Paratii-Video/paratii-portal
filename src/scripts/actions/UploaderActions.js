@@ -59,7 +59,7 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
   dispatch(
     Notifications.success({
       title: 'Be Patient!',
-      message: 'We are working on your file'
+      message: 'We are working on your file.'
     })
   )
   // create a new Id if none was given
@@ -87,14 +87,13 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
     dispatch(
       Notifications.error({
         title: 'Upload Error',
-        message: error,
+        message: 'Something went wrong with your file. May you retry?',
         autoDismiss: 0
       })
     )
     throw error
   })
   uploader.on('done', function (files) {
-    console.log('[UPLOAD done (local upload)]', files)
     dispatch(
       Notifications.success({
         title: 'Local upload',
@@ -164,7 +163,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
       dispatch(
         Notifications.error({
           title: 'Transcoder Error',
-          message: error,
+          message: 'The machines are not cooperating. Can you refresh?',
           autoDismiss: 0
         })
       )
@@ -176,7 +175,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
       dispatch(
         Notifications.success({
           title: 'Transcoding',
-          message: 'The transcoder has started'
+          message: 'The transcoding has started.'
         })
       )
     })
@@ -205,7 +204,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
       dispatch(
         Notifications.success({
           title: 'Transcoder done',
-          message: 'You video is ready to be published'
+          message: 'You video is ready to be published!'
         })
       )
       dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
@@ -237,11 +236,9 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   getState: () => RootState
 ) => {
   // the owner is the user that is logged in
-  console.log('SAVING VIDEO DATA')
-
   dispatch(
     Notifications.warning({
-      title: 'We are saving you data'
+      title: 'We are saving you data.'
     })
   )
 
@@ -257,21 +254,19 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   dispatch(videoDataStart(videoInfo))
   upsertVideo(videoId, videoInfo, getState())
     .then(videoInfo => {
-      console.log('SAVED')
       dispatch(videoDataSaved(videoInfo))
       dispatch(
         Notifications.success({
           title: 'Saved',
-          message: 'Video data has been saved!!'
+          message: 'Data saved!!'
         })
       )
     })
     .catch(error => {
-      // console.log(error)
       dispatch(
         Notifications.error({
           title: 'Saving Error',
-          message: error,
+          message: error.message,
           autoDismiss: 0
         })
       )
