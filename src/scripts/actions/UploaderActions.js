@@ -67,7 +67,9 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
     videoId = paratii.eth.vids.makeId()
   }
   dispatch(
-    videoFetchSuccess({ id: videoId, owner: paratii.config.account.address })
+    videoFetchSuccess(
+      new VideoRecord({ id: videoId, owner: paratii.config.account.address })
+    )
   )
   dispatch(selectUploaderVideo(videoId))
   dispatch(

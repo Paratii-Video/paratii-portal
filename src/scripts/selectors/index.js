@@ -10,11 +10,7 @@ import UserRecord, {
 import {
   _getIsPlaying,
   _getIsAttemptingPlay,
-  _getIsFullscreen,
-  _getPlayerVideoId,
-  _getPlayerCurrentTimeSeconds,
-  _getPlayerCurrentBufferedTimeSeconds,
-  _getPlayerCurrentVolume
+  _getPlayerVideoId
 } from 'records/PlayerRecords'
 import { _getSelectedUploaderVideoId } from 'records/UploaderRecords'
 
@@ -44,16 +40,8 @@ export const getIsPlaying = (state: RootState): boolean =>
   _getIsPlaying(state.player)
 export const getIsAttemptingPlay = (state: RootState): boolean =>
   _getIsAttemptingPlay(state.player)
-export const getIsFullscreen = (state: RootState): boolean =>
-  _getIsFullscreen(state.player)
 export const getPlayerVideoId = (state: RootState): string =>
   _getPlayerVideoId(state.player)
-export const getPlayerCurrentTimeSeconds = (state: RootState): number =>
-  _getPlayerCurrentTimeSeconds(state.player)
-export const getPlayerCurrentBufferedTimeSeconds = (state: RootState): number =>
-  _getPlayerCurrentBufferedTimeSeconds(state.player)
-export const getPlayerCurrentVolume = (state: RootState): number =>
-  _getPlayerCurrentVolume(state.player)
 
 /* Videos */
 export const getVideos = (state: RootState): VideoRecordMap => {
