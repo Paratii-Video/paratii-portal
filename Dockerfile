@@ -19,15 +19,9 @@ RUN apt autoremove -y nodejs
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
 RUN apt install nodejs -y
 
-# yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt update
-RUN apt install yarn
-
 # paratii-portal
 WORKDIR /paratii-portal
-COPY . .
+ADD package.json /paratii-portal/package.json
 RUN npm install
 
 FROM ubuntu:16.04 as db
@@ -51,14 +45,12 @@ RUN apt autoremove -y nodejs
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
 RUN apt install nodejs -y
 
-# paratii-portal
+# paratii-db
 WORKDIR /paratii-db
-RUN git clone https://github.com/Paratii-Video/paratii-db.git .
-RUN npm install
+RUN wget https://raw.githubusercontent.com/Paratii-Video/paratii-db/master/package.json
+RUN npm install --silent
 
 FROM ubuntu:16.04
-
-MAINTAINER Leandro Barbosa <leandrobar93@gmail.com>
 
 WORKDIR /build
 
@@ -186,6 +178,7 @@ RUN printf '#!/bin/sh\nXvfb :99 -screen 0 1280x1024x24 &\nexec "$@"\n' > /tmp/en
 
 # paratii-portal
 WORKDIR /paratii-portal
-COPY . .
-COPY --from=portal-modules /paratii-portal/node_modules /paratii-portal
+COPY . /paratii-portal
+RUN mkdir node_modules
+COPY --from=portal-modules /paratii-portal/node_modules /paratii-portal/node_modules
 RUN yarn run build
