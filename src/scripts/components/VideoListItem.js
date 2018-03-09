@@ -107,7 +107,6 @@ class VideoListItem extends Component<Props, void> {
   }
 
   handleClick () {
-    console.log(this.props)
     this.props.setSelectedVideo(this.props.video.id)
   }
 
