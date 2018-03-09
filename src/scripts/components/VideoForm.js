@@ -180,8 +180,6 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     const video: VideoRecord = this.props.selectedVideo
-    // console.log(video.getIn(['transcodingStatus', 'data', 'result']))
-    // console.log(video.getIn(['transcodingStatus', 'data', 'result', 'screenshots']))
     if (!this.state.id) {
       return (
         <Card title="No video selected!">{this.props.selectedVideo.id}</Card>
@@ -192,25 +190,28 @@ class VideoForm extends Component<Props, Object> {
 
     const fileSize = prettyBytes((video && video.get('filesize')) || 0)
 
-    // const isPublished = video.published === true || video.published === 'true'
-    // const isPublishable =
-    //   video.transcodingStatus.name === 'success' && isPublished === false
-    //
-    const publishButton = ''
-    //   publishButton = (
-    //     <ButtonWrapper>
-    //       <Button
-    //         id="video-submit"
-    //         type="submit"
-    //         onClick={this.onPublishSubmit}
-    //         disabled={!isPublishable}
-    //         purple
-    //       >
-    //         Publish
-    //       </Button>
-    //     </ButtonWrapper>
-    //   )
-    // }
+    const isPublished = video.published === true || video.published === 'true'
+    const isPublishable =
+      video.transcodingStatus.name === 'success' && isPublished === false
+
+    let publishButton = ''
+    console.log('sPublishable: ', isPublishable)
+    console.log('isPublished: ', isPublished)
+    if (isPublishable && !isPublished) {
+      publishButton = (
+        <ButtonWrapper>
+          <Button
+            id="video-submit"
+            type="submit"
+            onClick={this.onPublishSubmit}
+            disabled={!isPublishable}
+            purple
+          >
+            Publish
+          </Button>
+        </ButtonWrapper>
+      )
+    }
 
     const saveButton = (
       <ButtonWrapper>
