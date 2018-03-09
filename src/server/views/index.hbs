@@ -2,7 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    {{{meta}}}
+    <title>{{title}}</title>
+    {{#if player}}
+      {{#if video}}
+        {{> metas }}
+      {{else}}
+        {{> notfoundmetas }}
+      {{/if}}
+    {{/if}}
+
 
     <link rel="shortcut icon" href="/img/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
@@ -39,6 +47,10 @@
     <div id="root">
       <span class="main-loader"></span>
     </div>
-    {{{script}}}
+    {{#if embed}}
+      <script type="text/javascript" src="/embed/bundle.js"></script>
+    {{else}}
+      <script type="text/javascript" src="/bundle.js"></script>
+    {{/if}}
   </body>
 </html>
