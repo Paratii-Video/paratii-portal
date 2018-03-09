@@ -15,6 +15,8 @@ import { transcodeVideo } from 'actions/UploaderActions'
 import VideoRecord from 'records/VideoRecords'
 import type { RootState } from 'types/ApplicationTypes'
 
+import Notifications from 'react-notification-system-redux'
+
 export const videoFetchError = createAction(VIDEOFETCH_ERROR)
 export const videoFetchSuccess = createAction(VIDEO_FETCH_SUCCESS)
 export const videosFetchSuccess = createAction(VIDEOS_FETCH_SUCCESS)
@@ -30,7 +32,7 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
       videoInfo.id = videoInfo._id
     }
     if (videoInfo && videoInfo.id) {
-      dispatch(videoFetchSuccess(videoInfo))
+      dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
       dispatch(playerVideoSelect(videoInfo.id))
     }
   } catch (error) {
@@ -44,6 +46,7 @@ export const fetchOwnedVideos = () => async (
   dispatch: Dispatch<*>,
   getState: () => RootState
 ) => {
+  console.log('FETCH OWNED VIDEOS')
   const address: string = paratii.config.account.address
   const ownedVideos: Array<Object> = await paratii.core.vids.search({
     owner: address
@@ -59,8 +62,17 @@ export const fetchOwnedVideos = () => async (
         video.uploadStatus.name === 'uploaded to remote')
     ) {
       filteredOwnedVideos.push(video)
-
-      if (video.transcodingStatus.name !== 'success') {
+      if (
+        video.transcodingStatus.name !== 'success' ||
+        video.transcodingStatus.data.progress !== 100
+      ) {
+        console.log('Restarting to transcode' + video._id)
+        dispatch(
+          Notifications.success({
+            title: 'Transcoding',
+            message: 'We are transcoding video ' + video._id
+          })
+        )
         transcodeVideo({
           id: video._id,
           hash: video.ipfsHashOrig,

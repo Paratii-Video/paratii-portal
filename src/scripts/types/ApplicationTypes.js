@@ -6,9 +6,10 @@ import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
 import PlayerRecord from 'records/PlayerRecords'
 import UploaderRecord from 'records/UploaderRecords'
+import NotificationRecord from 'records/NotificationRecord'
 import {
-  REQUEST_STATUS,
-  TRANSITION_STATE
+  REQUEST_STATUS
+  // TRANSITION_STATE
 } from 'constants/ApplicationConstants'
 
 export type Location = {
@@ -30,12 +31,14 @@ export type Action<T> = {
 }
 
 export type VideoRecordMap = Immutable.Map<string, VideoRecord>
+export type NotificationsArray = Array<NotificationRecord>
 
 export type RootState = {
   uploader: UploaderRecord,
   user: UserRecord,
   videos: VideoRecordMap,
-  player: PlayerRecord
+  player: PlayerRecord,
+  notifications: NotificationsArray
 }
 
 type _ThunkAction<R> = (dispatch: Dispatch, getState?: () => RootState) => R
@@ -47,7 +50,7 @@ export type ParatiiLibConfig = {
 }
 
 type EventEmitter = {
-  on: (eventType: string, callback: (any) => void) => void
+  on: (eventType: string, callback: (e: Object) => void) => void
 }
 
 // TODO move this into paratii-mediaplayer repo
@@ -56,7 +59,7 @@ type ClapprCore = EventEmitter & {}
 type ClapprContainer = EventEmitter & {}
 
 export type ClapprPlayer = EventEmitter & {
-  core?: {
+  core: {
     getCurrentPlayback: () => ClapprCore,
     getCurrentContainer: () => ClapprContainer,
     mediaControl: {
@@ -69,11 +72,7 @@ export type ClapprPlayer = EventEmitter & {
   isPlaying: () => boolean,
   play: () => void,
   pause: () => void,
-  mute: () => void,
-  unmute: () => void,
-  setVolume: (percentage: number) => void,
-  destroy: () => void,
-  seek: (time: number) => void
+  remove: () => void
 }
 
 // TODO move this into paratii-lib repo
@@ -300,5 +299,3 @@ export type Theme = Object & {
 }
 
 export type RequestStatus = $Values<typeof REQUEST_STATUS>
-
-export type TransitionState = $Values<typeof TRANSITION_STATE>

@@ -12,6 +12,8 @@ import VideoManager from 'containers/VideoManagerContainer'
 import DebugContainer from 'containers/DebugContainer'
 import WalletContainer from 'containers/WalletContainer'
 
+import Notifications from 'containers/NotificationContainer'
+
 import type { Match } from 'react-router-dom'
 
 import MainTemplate from './templates/MainTemplate'
@@ -99,6 +101,7 @@ class App extends Component<Props, State> {
           <Modal show={this.state.showModal} closeModal={this.closeModal}>
             {HTMLModal}
           </Modal>
+          <Notifications />
           <MainHeader />
           <Main>
             <Switch>
@@ -121,7 +124,10 @@ class App extends Component<Props, State> {
               <Route path={`${match.url}voucher`} component={Voucher} />
               <Route path={`${match.url}debug`} component={DebugContainer} />
               <Route path={`${match.url}wallet`} component={WalletContainer} />
-              <Route path={`${match.url}play/:id`} component={PlayContainer} />
+              <Route
+                path={`${match.url}play/:id`}
+                render={props => <PlayContainer {...props} />}
+              />
               <Route component={NotFound} />
             </Switch>
           </Main>

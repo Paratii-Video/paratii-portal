@@ -37,9 +37,9 @@ export const getSelectedUploaderVideo: (
   [getVideos, getSelectedUploaderVideoId],
   (videos: VideoRecordMap, selectedVideoId: string) => {
     if (selectedVideoId) {
-      const uploaderVideo: ?VideoRecord = videos.get(selectedVideoId)
-      if (uploaderVideo) {
-        return uploaderVideo
+      const playerVideo: ?VideoRecord = videos.get(selectedVideoId)
+      if (playerVideo) {
+        return playerVideo
       }
     }
     return null
