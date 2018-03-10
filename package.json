@@ -24,7 +24,7 @@
     "lint:styles": "stylelint 'src/**/*.js'",
     "parity": "parity --config parity-config.toml",
     "precommit": "lint-staged",
-    "prep": "mkdir build/ && mkdir build/embed && cp src/index.html build/ && mkdir build/assets/ && cp -r src/assets/* build/assets/",
+    "prep": "mkdir build/ && mkdir build/embed && cp -R src/server/views/ build/ && mkdir build/assets/ && cp -r src/assets/* build/assets/",
     "prettify": "prettier-standard src/**/*.js test/**/*.js",
     "quality": "yarn run lint:scripts && yarn run lint:styles && yarn run flow",
     "server": "NODE_ENV=production-notugly node src/server/index.js",
