@@ -91,7 +91,7 @@ class VideoListItem extends Component<Props, void> {
 
     const title = video.title || video.filename
     if (!video || !video.id) {
-      return <ListItem>Something when wrong - no video known</ListItem>
+      return <ListItem>Something went wrong - no video known</ListItem>
     }
     if (
       video.storageStatus.name === 'success' &&

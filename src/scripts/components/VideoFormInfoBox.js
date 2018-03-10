@@ -1,4 +1,7 @@
+/* @flow */
+
 import React, { Component } from 'react'
+import { List as ImmutableList } from 'immutable'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
@@ -97,7 +100,8 @@ class InfoBox extends Component<Props, Object> {
     const urlToPlay = `/play/${video.id}`
     const urlForSharing = `https://portal.paratii.video/play/${video.id}`
 
-    const thumbImages = video && video.getIn(['thumbnails'])
+    const thumbImages: ImmutableList<string> =
+      (video && video.getIn(['thumbnails'])) || ImmutableList()
 
     let thumbImage = 'https://paratii.video/public/images/paratii-src.png'
     if (thumbImages && ipfsHash) {
@@ -122,14 +126,16 @@ class InfoBox extends Component<Props, Object> {
       requested: 'Waiting for transcoding to start...',
       running: 'Transcoding...',
       failed: 'Transcoder exited with an error :-(',
-      success: 'Ready to Publish'
+      success: 'Ready to Publish',
+      error: 'Error'
     }
     const uploaderMessages = {
       idle: 'Waiting',
       requested: 'Uploading...',
       running: 'Uploading...',
       'uploaded to local node': 'Uploading...',
-      success: 'Uploaded'
+      success: 'Uploaded',
+      error: 'Error'
     }
 
     let videoProgressBox = null
@@ -182,9 +188,9 @@ class InfoBox extends Component<Props, Object> {
             id="video-title"
             type="text"
             margin="0 0 30px"
-            onChange={e => this.handleInputChange('title', e)}
             value="<iframe width=560 height=315 src=https://"
             label="Embed Code"
+            onChange={() => null}
             readonly
           />
         </Hidden>
@@ -192,9 +198,9 @@ class InfoBox extends Component<Props, Object> {
           id="video-title"
           type="text"
           margin="0 0 25px"
-          onChange={e => this.handleInputChange('title', e)}
           value={urlForSharing}
           label="Share this video"
+          onChange={() => null}
           readonly
         />
         {!isPublishable && !isPublished ? (
