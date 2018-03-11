@@ -18,7 +18,6 @@ import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
 import type { ClapprPlayer } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
 import mux from 'mux-embed'
-import { playbackLevelSet } from '../actions/PlayerActions'
 
 type Props = {
   match: Match,
@@ -31,6 +30,7 @@ type Props = {
   updateVideoBufferedTime: ({ time: number }) => void,
   updateVolume: (percentage: number) => void,
   playbackLevelsLoaded: (levels: Array<Object>) => void,
+  playbackLevelSet: (levelId: number) => void,
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
   video?: VideoRecord,
@@ -210,6 +210,7 @@ class Play extends Component<Props, State> {
     const {
       attemptPlay,
       playbackLevelsLoaded,
+      playbackLevelSet,
       togglePlayPause,
       updateVolume,
       video
@@ -228,10 +229,7 @@ class Play extends Component<Props, State> {
       // $FlowFixMe
       const playback = player.core && player.core.getCurrentPlayback()
       if (playback && video) {
-        playback.on(Events.PLAYBACK_PLAY_INTENT, () => {
-          console.log(playback)
-          attemptPlay()
-        })
+        playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
         playback.on(
           Events.PLAYBACK_TIMEUPDATE,
           ({
