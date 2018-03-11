@@ -12,7 +12,8 @@ import {
   UPDATE_VIDEO_TIME,
   UPDATE_VIDEO_BUFFERED_TIME,
   PLAYER_UPDATE_VOLUME,
-  PLAYBACK_LEVELS_LOADED
+  PLAYBACK_LEVELS_LOADED,
+  PLAYBACK_LEVEL_SET
 } from 'constants/ActionConstants'
 
 import type { Action } from 'types/ApplicationTypes'
@@ -48,8 +49,16 @@ const reducer = {
   ): PlayerRecord =>
     state.set(
       'playbackLevels',
-      ImmutableList(action.payload.map(PlaybackLevel))
-    )
+      ImmutableList(
+        action.payload.map(
+          (level: Object): PlaybackLevel => new PlaybackLevel(level)
+        )
+      )
+    ),
+  [PLAYBACK_LEVEL_SET]: (
+    state: PlayerRecord,
+    action: Action<number>
+  ): PlayerRecord => state.set('currentPlaybackLevelId', action.payload)
 }
 
 export default handleActions(reducer, new PlayerRecord())

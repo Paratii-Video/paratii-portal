@@ -13,7 +13,8 @@ import {
 } from 'selectors/index'
 
 import type { RootState, VideoRecordMap } from 'types/ApplicationTypes'
-import type VideoRecord, { PlaybackLevel } from 'records/VideoRecords'
+import type VideoRecord from 'records/VideoRecords'
+import { PlaybackLevel } from 'records/PlayerRecords'
 
 export const getPlayingVideo: (
   state: RootState
@@ -87,4 +88,12 @@ export const getCurrentPlaybackLevel: (
     levels.find(
       (level: PlaybackLevel): boolean => level.get('id') === currentLevelId
     )
+)
+
+export const getPlaybackLevelsSorted: (
+  state: RootState
+) => ImmutableList<PlaybackLevel> = createSelector(
+  [getPlaybackLevels],
+  (levels: ImmutableList<PlaybackLevel>): ImmutableList<PlaybackLevel> =>
+    levels.reverse()
 )

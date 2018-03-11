@@ -53,6 +53,7 @@ export const PLAYER_UPDATE_VOLUME = createActionConstant('PLAYER_UPDATE_VOLUME')
 export const PLAYBACK_LEVELS_LOADED = createActionConstant(
   'PLAYBACK_LEVELS_LOADED'
 )
+export const PLAYBACK_LEVEL_SET = createActionConstant('PLAYBACK_LEVEL_SET')
 
 /* Transcoding actions */
 export const TRANSCODING_REQUESTED = createActionConstant(

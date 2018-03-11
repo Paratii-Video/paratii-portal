@@ -120,6 +120,10 @@ const Themes = {
       controls: {
         background: Colors.black,
         time: Colors.white
+      },
+      levels: {
+        text: Colors.white,
+        check: Colors.purple
       }
     }
   }

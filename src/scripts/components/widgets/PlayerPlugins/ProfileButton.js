@@ -89,7 +89,7 @@ const ProfileButton = (props: Props) => {
       />
       {popoverOpen
         ? ReactDOM.createPortal(
-          <Popover>
+          <Popover open>
             <ContentWrapper>
               <TopBar>
                 <Header>Paratii Wallet</Header>

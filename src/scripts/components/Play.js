@@ -7,6 +7,7 @@ import debounce from 'lodash.debounce'
 import Transition from 'react-transition-group/Transition'
 import TimeFormat from 'hh-mm-ss'
 
+import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
 import VideoOverlay from 'components/VideoOverlay'
 import Button from 'components/foundations/Button'
@@ -17,6 +18,7 @@ import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
 import type { ClapprPlayer } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
 import mux from 'mux-embed'
+import { playbackLevelSet } from '../actions/PlayerActions'
 
 type Props = {
   match: Match,
@@ -28,14 +30,15 @@ type Props = {
   updateVideoTime: ({ time: number, id: string }) => void,
   updateVideoBufferedTime: ({ time: number }) => void,
   updateVolume: (percentage: number) => void,
-  playbackLevelsLoaded: (levels: Array) => void,
+  playbackLevelsLoaded: (levels: Array<Object>) => void,
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
   video?: VideoRecord,
   videoDurationSeconds: number,
   isEmbed?: boolean,
   currentTimeSeconds: number,
-  currentBufferedTimeSeconds: number
+  currentBufferedTimeSeconds: number,
+  currentPlaybackLevel: ?PlaybackLevel
 }
 
 type State = {
@@ -171,6 +174,7 @@ class Play extends Component<Props, State> {
   lastMouseMove: number
   playerHideTimeout: number
   wrapperRef: ?HTMLElement
+  stagedPlaybackLevel: number
 
   constructor (props: Props) {
     super(props)
@@ -184,6 +188,7 @@ class Play extends Component<Props, State> {
 
     this.lastMouseMove = 0
     this.playerHideTimeout = 0
+    this.stagedPlaybackLevel = -1
 
     this.onOverlayClick = this.onOverlayClick.bind(this)
     this.toggleShareModal = this.toggleShareModal.bind(this)
@@ -220,9 +225,13 @@ class Play extends Component<Props, State> {
       player.on(Events.PLAYER_VOLUMEUPDATE, (volume: number): void => {
         updateVolume(volume)
       })
+      // $FlowFixMe
       const playback = player.core && player.core.getCurrentPlayback()
       if (playback && video) {
-        playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
+        playback.on(Events.PLAYBACK_PLAY_INTENT, () => {
+          console.log(playback)
+          attemptPlay()
+        })
         playback.on(
           Events.PLAYBACK_TIMEUPDATE,
           ({
@@ -256,11 +265,17 @@ class Play extends Component<Props, State> {
             }))
           )
         })
-        playback.on(Events.PLAYBACK_LEVEL_SWITCH_START, () => {
-          console.log('started: ', arguments)
-        })
         playback.on(Events.PLAYBACK_LEVEL_SWITCH_END, () => {
-          console.log(arguments)
+          if (this.stagedPlaybackLevel === -1) {
+            const startLevel = playback._hls && playback._hls.startLevel
+
+            if (typeof startLevel === 'number' && startLevel >= 0) {
+              playbackLevelSet(startLevel)
+            }
+          } else {
+            playbackLevelSet(this.stagedPlaybackLevel)
+          }
+          this.stagedPlaybackLevel = -1
         })
       }
     }
@@ -331,6 +346,21 @@ class Play extends Component<Props, State> {
         player.mute()
       } else {
         player.unmute()
+      }
+    }
+  }
+
+  changePlaybackLevel = (levelId: number): void => {
+    const { player } = this
+
+    this.stagedPlaybackLevel = levelId
+
+    if (player) {
+      // $FlowFixMe
+      const playback = player.core && player.core.getCurrentPlayback()
+
+      if (playback) {
+        playback.currentLevel = levelId
       }
     }
   }
@@ -484,6 +514,7 @@ class Play extends Component<Props, State> {
         ipfsHash: video.ipfsHash,
         autoPlay: true
       })
+
       this.bindClapprEvents()
 
       // initialize mux here
@@ -588,7 +619,10 @@ class Play extends Component<Props, State> {
               this.wrapperRef = ref
             }}
           >
-            <Transition in={this.state.shouldShowVideoOverlay} timeout={0}>
+            <Transition
+              in={true || this.state.shouldShowVideoOverlay}
+              timeout={0}
+            >
               {(transitionState: ?string) => (
                 <OverlayWrapper
                   onMouseLeave={this.onMouseLeave}
@@ -603,6 +637,7 @@ class Play extends Component<Props, State> {
                     onScrub={this.scrubVideo}
                     onVolumeChange={this.changeVolume}
                     onToggleMute={this.toggleMute}
+                    onPlaybackLevelChange={this.changePlaybackLevel}
                     transitionState={transitionState}
                     togglePlayPause={this.togglePlayPause}
                     toggleFullscreen={(goToFullscreen: boolean): void => {

@@ -234,7 +234,9 @@ class PlayerControls extends Component<Props, State> {
       formattedCurrentTime,
       formattedDuration,
       videoDurationSeconds,
-      popoverPortal
+      playbackLevels,
+      onPlaybackLevelChange,
+      currentPlaybackLevel
     } = this.props
     const { scrubbingPositionPercentage } = this.state
     return (
@@ -281,7 +283,11 @@ class PlayerControls extends Component<Props, State> {
           </LeftControls>
           <RightControls>
             <ControlButtonWrapper>
-              <PlaybackLevels popoverPortal={popoverPortal} />
+              <PlaybackLevels
+                currentPlaybackLevel={currentPlaybackLevel}
+                playbackLevels={playbackLevels}
+                onPlaybackLevelChange={onPlaybackLevelChange}
+              />
             </ControlButtonWrapper>
             <ControlButtonWrapper>
               <IconButton
