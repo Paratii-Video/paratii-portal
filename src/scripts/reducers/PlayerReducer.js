@@ -1,8 +1,9 @@
 /* @flow */
 
 import { handleActions } from 'redux-actions'
+import { List as ImmutableList } from 'immutable'
 
-import PlayerRecord from 'records/PlayerRecords'
+import PlayerRecord, { PlaybackLevel } from 'records/PlayerRecords'
 import {
   PLAYER_TOGGLE_PLAYPAUSE,
   PLAYER_SET_FULLSCREEN,
@@ -10,7 +11,8 @@ import {
   PLAYER_VIDEO_SELECT,
   UPDATE_VIDEO_TIME,
   UPDATE_VIDEO_BUFFERED_TIME,
-  PLAYER_UPDATE_VOLUME
+  PLAYER_UPDATE_VOLUME,
+  PLAYBACK_LEVELS_LOADED
 } from 'constants/ActionConstants'
 
 import type { Action } from 'types/ApplicationTypes'
@@ -39,7 +41,15 @@ const reducer = {
   [PLAYER_UPDATE_VOLUME]: (
     state: PlayerRecord,
     action: Action<number>
-  ): PlayerRecord => state.set('currentVolume', action.payload)
+  ): PlayerRecord => state.set('currentVolume', action.payload),
+  [PLAYBACK_LEVELS_LOADED]: (
+    state: PlayerRecord,
+    action: Action<Array<Object>>
+  ): PlayerRecord =>
+    state.set(
+      'playbackLevels',
+      ImmutableList(action.payload.map(PlaybackLevel))
+    )
 }
 
 export default handleActions(reducer, new PlayerRecord())

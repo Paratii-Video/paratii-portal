@@ -2,15 +2,18 @@
 
 import { createSelector } from 'reselect'
 import TimeFormat from 'hh-mm-ss'
+import { List as ImmutableList } from 'immutable'
 
 import {
   getVideos,
   getPlayerVideoId,
-  getPlayerCurrentTimeSeconds
+  getPlayerCurrentTimeSeconds,
+  getPlaybackLevels,
+  getCurrentPlaybackLevelId
 } from 'selectors/index'
 
 import type { RootState, VideoRecordMap } from 'types/ApplicationTypes'
-import type VideoRecord from 'records/VideoRecords'
+import type VideoRecord, { PlaybackLevel } from 'records/VideoRecords'
 
 export const getPlayingVideo: (
   state: RootState
@@ -71,4 +74,17 @@ export const getDurationSeconds: (state: RootState) => string = createSelector(
 
     return TimeFormat.toS(duration)
   }
+)
+
+export const getCurrentPlaybackLevel: (
+  state: RootState
+) => ?PlaybackLevel = createSelector(
+  [getPlaybackLevels, getCurrentPlaybackLevelId],
+  (
+    levels: ImmutableList<PlaybackLevel>,
+    currentLevelId: number
+  ): ?PlaybackLevel =>
+    levels.find(
+      (level: PlaybackLevel): boolean => level.get('id') === currentLevelId
+    )
 )

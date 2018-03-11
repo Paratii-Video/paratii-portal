@@ -28,6 +28,7 @@ type Props = {
   updateVideoTime: ({ time: number, id: string }) => void,
   updateVideoBufferedTime: ({ time: number }) => void,
   updateVolume: (percentage: number) => void,
+  playbackLevelsLoaded: (levels: Array) => void,
   isAttemptingPlay: boolean,
   attemptPlay: () => void,
   video?: VideoRecord,
@@ -201,7 +202,13 @@ class Play extends Component<Props, State> {
   }
 
   bindClapprEvents (): void {
-    const { attemptPlay, togglePlayPause, updateVolume, video } = this.props
+    const {
+      attemptPlay,
+      playbackLevelsLoaded,
+      togglePlayPause,
+      updateVolume,
+      video
+    } = this.props
     const { player } = this
     if (player) {
       player.on(Events.PLAYER_PLAY, (): void => {
@@ -241,6 +248,20 @@ class Play extends Component<Props, State> {
             })
           }
         )
+        playback.on(Events.PLAYBACK_LEVELS_AVAILABLE, (levels = []): void => {
+          playbackLevelsLoaded(
+            levels.map((level: Object = {}): Object => ({
+              id: level.id,
+              label: level.label
+            }))
+          )
+        })
+        playback.on(Events.PLAYBACK_LEVEL_SWITCH_START, () => {
+          console.log('started: ', arguments)
+        })
+        playback.on(Events.PLAYBACK_LEVEL_SWITCH_END, () => {
+          console.log(arguments)
+        })
       }
     }
   }

@@ -22,7 +22,8 @@ type Props = {
   toggleFullscreen: (goToFullscreen: boolean) => void,
   onScrub: (percentage: number) => void,
   onVolumeChange: (percentage: number) => void,
-  onToggleMute: (mute: boolean) => void
+  onToggleMute: (mute: boolean) => void,
+  onPlaybackLevelChange: (levelId: number) => void
 }
 
 type State = {
@@ -202,6 +203,7 @@ class VideoOverlay extends Component<Props, State> {
       onScrub,
       onVolumeChange,
       onToggleMute,
+      onPlaybackLevelChange,
       togglePlayPause,
       toggleShareModal,
       toggleFullscreen,
@@ -247,16 +249,15 @@ class VideoOverlay extends Component<Props, State> {
                 </ShareButton>
               </ButtonWrapper>
             </ButtonGroup>
-            <PopoverWrapper
-              open={!!openPopover}
-              innerRef={this.popoverWrapperRefCallback}
-            />
+            <PopoverWrapper open innerRef={this.popoverWrapperRefCallback} />
           </VideoInfo>
         </Overlay>
         <PlayerControlsContainer
           onScrub={onScrub}
           onVolumeChange={onVolumeChange}
           onToggleMute={onToggleMute}
+          onPlaybackLevelChange={onPlaybackLevelChange}
+          popoverPortal={this.popoverWrapperRef}
           togglePlayPause={togglePlayPause}
           toggleFullscreen={toggleFullscreen}
           transitionState={transitionState}

@@ -11,7 +11,8 @@ import {
   updateVideoTime,
   updateVideoBufferedTime,
   togglePlayPause,
-  updateVolume
+  updateVolume,
+  playbackLevelsLoaded
 } from 'actions/PlayerActions'
 import { fetchVideo } from 'actions/VideoActions'
 import {
@@ -49,7 +50,8 @@ const mapDispatchToProps = dispatch => ({
     updateVideoBufferedTime,
     dispatch
   ),
-  updateVolume: bindActionCreators(updateVolume, dispatch)
+  updateVolume: bindActionCreators(updateVolume, dispatch),
+  playbackLevelsLoaded: bindActionCreators(playbackLevelsLoaded, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play)

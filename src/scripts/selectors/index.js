@@ -1,5 +1,7 @@
 /* @flow */
 
+import { List as ImmutableList } from 'immutable'
+
 import UserRecord, {
   Balances,
   _getWalletKey,
@@ -14,7 +16,10 @@ import {
   _getPlayerVideoId,
   _getPlayerCurrentTimeSeconds,
   _getPlayerCurrentBufferedTimeSeconds,
-  _getPlayerCurrentVolume
+  _getPlayerCurrentVolume,
+  _getPlaybackLevels,
+  _getCurrentPlaybackLevelId,
+  PlaybackLevel
 } from 'records/PlayerRecords'
 import { _getSelectedUploaderVideoId } from 'records/UploaderRecords'
 
@@ -54,6 +59,11 @@ export const getPlayerCurrentBufferedTimeSeconds = (state: RootState): number =>
   _getPlayerCurrentBufferedTimeSeconds(state.player)
 export const getPlayerCurrentVolume = (state: RootState): number =>
   _getPlayerCurrentVolume(state.player)
+export const getPlaybackLevels = (
+  state: RootState
+): ImmutableList<PlaybackLevel> => _getPlaybackLevels(state.player)
+export const getCurrentPlaybackLevelId = (state: RootState): number =>
+  _getCurrentPlaybackLevelId(state.player)
 
 /* Videos */
 export const getVideos = (state: RootState): VideoRecordMap => {

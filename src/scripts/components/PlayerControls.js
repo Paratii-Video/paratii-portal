@@ -2,8 +2,12 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { List as ImmutableList } from 'immutable'
+
+import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
 import VolumeBar from 'components/widgets/VolumeBar'
+import PlaybackLevels from 'components/widgets/PlaybackLevels'
 import IconButton from 'components/foundations/buttons/IconButton'
 import Colors from 'components/foundations/base/Colors'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
@@ -25,7 +29,11 @@ type Props = {
   onScrub: (percentage: number) => void,
   toggleFullscreen: (goToFullscreen: boolean) => void,
   formattedCurrentTime: string,
-  formattedDuration: string
+  formattedDuration: string,
+  playbackLevels: ImmutableList<PlaybackLevel>,
+  currentPlaybackLevel: ?PlaybackLevel,
+  onPlaybackLevelChange: (levelId: number) => void,
+  popoverPortal: ?HTMLElement
 }
 
 type State = {
@@ -225,7 +233,8 @@ class PlayerControls extends Component<Props, State> {
       currentBufferedTimeSeconds,
       formattedCurrentTime,
       formattedDuration,
-      videoDurationSeconds
+      videoDurationSeconds,
+      popoverPortal
     } = this.props
     const { scrubbingPositionPercentage } = this.state
     return (
@@ -271,6 +280,9 @@ class PlayerControls extends Component<Props, State> {
             <Time>{`${formattedCurrentTime} / ${formattedDuration}`}</Time>
           </LeftControls>
           <RightControls>
+            <ControlButtonWrapper>
+              <PlaybackLevels popoverPortal={popoverPortal} />
+            </ControlButtonWrapper>
             <ControlButtonWrapper>
               <IconButton
                 icon={`/assets/img/${
