@@ -16,7 +16,7 @@ const Button = styled.button`
   mask-position: center center;
   mask-size: contain;
   mask-repeat: no-repeat;
-  background-color: ${props => props.theme.colors.button.white};
+  background-color: ${({ theme, color }) => color || theme.colors.button.white};
 `
 
 const IconButton = ({ onClick, ...rest }: Props) => (

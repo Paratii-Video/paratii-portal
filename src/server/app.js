@@ -7,7 +7,6 @@ const webpackConfig = require('../../webpack.config.js')
 const path = require('path')
 const routeHelper = require('./routes/')
 const oembedRoute = require('./routes/oembed')
-
 const app = express()
 
 if (process.env.NODE_ENV === 'development') {
@@ -36,15 +35,13 @@ app.engine(
     partialsDir: [path.join(__dirname, '/views/partials')]
   })
 )
+
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, '/views'))
 app.use(express.static(path.resolve(__dirname, '../../', 'build')))
-
 app.get('/embed/:id', routeHelper.player)
 app.get('/play/:id', routeHelper.player)
-
 app.get('*', routeHelper.default)
-
 app.get('/oembed', oembedRoute)
 
 module.exports = app
