@@ -19,11 +19,11 @@ exports.player = async function player (req, res, next) {
   const { id } = req.params
   const path = req.route.path
   const video = await paratii.core.vids.get(id)
-  const meta = ''
 
   res.render('index', {
     player: true,
     video: video,
+    embed: path === '/embed/:id',
     helpers: {
       title: function () {
         if (video !== null) {
@@ -53,19 +53,6 @@ exports.player = async function player (req, res, next) {
       },
       embedUrl: function () {
         return 'https://portal.paratii.video/embed/' + video._id
-      },
-      meta: function () {
-        return meta
-      },
-      embed: function () {
-        return path === '/embed/:id'
-      },
-      script: function () {
-        if (path === '/embed/:id') {
-          return '<script type="text/javascript" src="/embed/bundle.js"></script>'
-        } else if (path === '/video/:id') {
-          return '<script type="text/javascript" src="/bundle.js"></script>'
-        }
       }
     }
   })
