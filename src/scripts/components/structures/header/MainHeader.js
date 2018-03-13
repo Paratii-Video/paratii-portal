@@ -19,6 +19,9 @@ const Header = styled.header`
   width: 100%;
   height: ${props => props.theme.sizes.mainHeader.height};
   z-index: 10000;
+  transition: box-shadow 0.3s;
+  box-shadow: ${({ displayShadow }) =>
+    displayShadow ? '0 3px 5px rgba(0,0,0,0.16)' : ''};
 `
 
 const HeaderWrapper = styled.div`
@@ -58,9 +61,64 @@ const ProfileAvatarLink = styled(Link)`
 `
 
 class MainHeader extends Component<Props, void> {
+  constructor (props) {
+    super(props)
+    this.state = {
+      displayShadow: false
+    }
+  }
+
+  componentDidMount () {
+    this.bindScroll()
+  }
+
+  componentWillUnmount () {
+    this.unbindScroll()
+  }
+
+  bindScroll = () => {
+    console.log('bind')
+    // Use passive event listener if available
+    let supportsPassive = false
+    try {
+      const opts = Object.defineProperty({}, 'passive', {
+        get: () => {
+          supportsPassive = true
+        }
+      })
+      window.addEventListener('test', null, opts)
+    } catch (e) {} // eslint-disable-line no-empty
+
+    window.addEventListener(
+      'scroll',
+      this.handleScroll,
+      supportsPassive ? { passive: true } : false
+    )
+  }
+
+  unbindScroll = () => {
+    window.removeEventListener('scroll', this.handleScroll)
+  }
+
+  handleScroll = () => {
+    console.log('handle')
+    // Ugly cross-browser compatibility
+    const top =
+      document.documentElement.scrollTop ||
+      document.body.parentNode.scrollTop ||
+      document.body.scrollTop
+
+    // Test < 1 since Safari's rebound effect scrolls past the top
+    if (top < 1) {
+      this.setState({ displayShadow: false })
+    } else if (this.state.displayShadow === false) {
+      this.setState({ displayShadow: true })
+    }
+  }
+
   render () {
     return (
-      <Header>
+      <Header displayShadow={this.state.displayShadow}>
         {this.props.children}
         <HeaderWrapper>
           <MainHeaderLogo />
