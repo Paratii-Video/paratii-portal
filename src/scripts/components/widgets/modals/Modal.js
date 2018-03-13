@@ -43,10 +43,11 @@ const Container = styled.div`
   margin: 0 40px;
   opacity: ${props => (props.show ? '1' : '0')};
   transform: translate3d(0, ${props => (props.show ? '' : '100px')}, 0);
-  transition: transform ${props => (props.show ? '0.8s' : '0.6s')}
-      ${props => props.theme.animation.ease.smooth},
-    opacity ${props => (props.show ? '0.3s' : '0.2s')} linear
-      ${props => (props.show ? '0.1s' : '')};
+  transition: transform ${props => (props.show ? '0.7s' : '0.5s')}
+      ${props => props.theme.animation.ease.smooth}
+      ${props => (props.show ? '0.2s' : null)},
+    opacity ${props => (props.show ? '0.25s' : '0.2s')} linear
+      ${props => (props.show ? '0.3s' : null)};
   width: 490px;
   z-index: 2;
 
