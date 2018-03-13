@@ -20,7 +20,7 @@ import type { RootState } from 'types/ApplicationTypes'
 const mapStateToProps = (state: RootState) => ({
   selectedVideo: getSelectedUploaderVideo(state),
   user: getUser(state),
-  getTotalProgress: getTotalProgress(state),
+  totalProgress: getTotalProgress(state),
   isUploaded: isUploaded(state),
   isPublished: isPublished(state),
   isPublishable: isPublishable(state)

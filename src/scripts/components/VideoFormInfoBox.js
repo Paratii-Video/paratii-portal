@@ -73,10 +73,10 @@ const PublishLabel = styled.div`
 type Props = {
   selectedVideo: VideoRecord,
   progress: Number,
-  getTotalProgress: () => Number,
-  isUploaded: () => Boolean,
-  isPublished: () => Boolean,
-  isPublishable: () => Boolean
+  totalProgress: Number,
+  isUploaded: Boolean,
+  isPublished: Boolean,
+  isPublishable: Boolean
 }
 
 class InfoBox extends Component<Props, Object> {
@@ -114,17 +114,10 @@ class InfoBox extends Component<Props, Object> {
       }
     }
 
-    // FIXME: use the selector for the status
-    const progress = String(this.props.getTotalProgress)
+    const progress = String(this.props.totalProgress)
     const isUploaded = this.props.isUploaded
     const isPublished = this.props.isPublished
     const isPublishable = this.props.isPublishable
-
-    console.log(isPublishable)
-    // const isUploaded = video.uploadStatus.name === 'success'
-    // const isPublished = video.published === true || video.published === 'true'
-    // const isPublishable =
-    //   video.transcodingStatus.name === 'success' && isPublished === false
 
     const transcoderMessages = {
       idle: 'Waiting',
