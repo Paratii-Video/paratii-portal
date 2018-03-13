@@ -8,7 +8,7 @@ import Text from '../foundations/Text'
 import Card from '../structures/Card'
 
 type Props = {
-  notification: Object => void
+  notification: (Object, string) => void
 }
 
 const Icon = styled.svg`
@@ -63,7 +63,7 @@ class RedeemVoucher extends Component<Props, Object> {
     paratii.eth.vouchers
       .redeem(voucherCode)
       .then(resp => {
-        const amount = resp
+        const amount = String(resp)
         this.props.notification(
           { title: 'Success', message: `You have earned ${amount} PTI.` },
           'success'
