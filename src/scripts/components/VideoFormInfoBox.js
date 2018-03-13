@@ -134,9 +134,10 @@ class InfoBox extends Component<Props, Object> {
     const duration = (video && video.get('duration')) || ''
     let durationBox = null
     if (duration) {
+      const durationNoMillis = duration.substring(0, duration.indexOf('.'))
       durationBox = (
         <VideoMediaTime>
-          <VideoMediaTimeText>{duration}</VideoMediaTimeText>
+          <VideoMediaTimeText>{durationNoMillis}</VideoMediaTimeText>
         </VideoMediaTime>
       )
     }
