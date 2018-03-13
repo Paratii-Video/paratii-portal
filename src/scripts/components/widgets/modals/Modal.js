@@ -111,11 +111,11 @@ class Modal extends Component<Props, void> {
   }
 
   componentDidMount () {
-    document.addEventListener('keydown', this.onKeydown)
+    document.addEventListener('keydown', this.handleKeydown.bind(this))
   }
 
   componentWillUnmount () {
-    document.removeEventListener('keydown', this.onKeydown)
+    document.removeEventListener('keydown', this.handleKeydown.bind(this))
   }
 
   render () {
