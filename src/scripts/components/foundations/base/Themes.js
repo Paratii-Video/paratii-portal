@@ -33,6 +33,10 @@ const Themes = {
       hightlight: Colors.white,
       color: Colors.grayLight
     },
+    SlideModal: {
+      background: Colors.blackLight,
+      text: Colors.white
+    },
     popover: {
       border: Colors.gray,
       background: Colors.blackTransparent,
@@ -122,8 +126,7 @@ const Themes = {
         time: Colors.white
       },
       levels: {
-        text: Colors.white,
-        check: Colors.purple
+        selected: Colors.purple
       }
     }
   }

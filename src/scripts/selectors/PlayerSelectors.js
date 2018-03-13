@@ -95,5 +95,8 @@ export const getPlaybackLevelsSorted: (
 ) => ImmutableList<PlaybackLevel> = createSelector(
   [getPlaybackLevels],
   (levels: ImmutableList<PlaybackLevel>): ImmutableList<PlaybackLevel> =>
-    levels.reverse()
+    levels.sort(
+      (level1: PlaybackLevel, level2: PlaybackLevel): number =>
+        level1.get('id') - level2.get('id')
+    )
 )

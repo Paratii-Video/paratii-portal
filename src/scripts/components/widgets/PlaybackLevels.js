@@ -7,25 +7,62 @@ import { List as ImmutableList } from 'immutable'
 import { PlaybackLevel } from 'records/PlayerRecords'
 import SlideModal from 'components/foundations/SlideModal'
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 65px;
+`
+
+const TopBar = styled.div`
+  flex: 0 0 33%;
+  display: flex;
+`
+
+const Title = styled.div`
+  display: block;
+  font-size: 14px;
+`
+
 const LevelsList = styled.ul`
-  height: 75px;
+  flex: 1 1 0;
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+  justify-content: flex-start;
   overflow-y: scroll;
 `
 
-const Level = styled.li`
-  display: inline;
-  font-size: 14px;
-  color: ${({ theme, selected }) => theme.colors.VideoPlayer.levels.text};
-  cursor: pointer;
+const LevelLabel = styled.span`
+  opacity: ${({ totalLevels, index }) =>
+    index * (1.0 - 0.5) / (totalLevels - 1) + 0.5};
+`
 
-  &:not(:last-child) {
-    margin-bottom: 5px;
+const Level = styled.li`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 10%;
+  opacity: ${({ totalLevels, index }) =>
+    (index + 1) / totalLevels * (1.0 - 0.4) + 0.4};
+
+  @media (max-width: 1200px) {
+    &:first-child {
+      margin-left: 0;
+    }
   }
 
   &::after {
-    margin-left: 5px;
-    content: ${({ selected }) => (selected ? '"✔"' : '')};
-    color: ${({ theme }) => theme.colors.VideoPlayer.levels.check};
+    display: block;
+    margin-top: 5px;
+    content: '';
+    background-color: ${({ theme, selected }) =>
+    selected ? theme.colors.VideoPlayer.levels.selected : 'transparent'};
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    justify-self: center;
   }
 `
 
@@ -33,7 +70,8 @@ type Props = {
   playbackLevels: ImmutableList<PlaybackLevel>,
   currentPlaybackLevel: ?PlaybackLevel,
   onPlaybackLevelChange: (id: number) => void,
-  open: boolean
+  open: boolean,
+  onClose: () => void
 }
 
 class PlaybackLevels extends React.Component<Props> {
@@ -42,26 +80,34 @@ class PlaybackLevels extends React.Component<Props> {
       currentPlaybackLevel,
       onPlaybackLevelChange,
       playbackLevels,
-      open
+      open,
+      onClose
     } = this.props
     return (
-      <SlideModal open={open}>
-        <LevelsList>
-          {playbackLevels.map((level: PlaybackLevel) => (
-            <Level
-              key={level.get('id')}
-              onClick={() => {
-                onPlaybackLevelChange(level.get('id'))
-              }}
-              selected={
-                level.get('id') ===
-                (currentPlaybackLevel && currentPlaybackLevel.get('id'))
-              }
-            >
-              {level.get('label')}
-            </Level>
-          ))}
-        </LevelsList>
+      <SlideModal open={open} onClose={onClose}>
+        <Wrapper>
+          <TopBar>
+            <Title>Video Quality</Title>
+          </TopBar>
+          <LevelsList>
+            {playbackLevels.map((level: PlaybackLevel, index: number) => (
+              <Level
+                key={level.get('id')}
+                onClick={() => {
+                  onPlaybackLevelChange(level.get('id'))
+                }}
+                selected={
+                  level.get('id') ===
+                  (currentPlaybackLevel && currentPlaybackLevel.get('id'))
+                }
+              >
+                <LevelLabel index={index} totalLevels={playbackLevels.size}>
+                  {level.get('label')}
+                </LevelLabel>
+              </Level>
+            ))}
+          </LevelsList>
+        </Wrapper>
       </SlideModal>
     )
   }

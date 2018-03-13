@@ -175,6 +175,7 @@ class PlayerControls extends Component<Props, State> {
 
   componentWillUnmount (): void {
     this.removeMouseEventListeners()
+    this.setActivePlugin()
   }
 
   onMouseUp = (e: Object): void => {
@@ -230,7 +231,9 @@ class PlayerControls extends Component<Props, State> {
   setActivePlugin = (nextPlugin: PlayerPlugin): void => {
     const { activePlugin, setActivePlugin } = this.props
 
-    setActivePlugin(nextPlugin === activePlugin ? null : nextPlugin)
+    setActivePlugin(
+      !nextPlugin || nextPlugin === activePlugin ? null : nextPlugin
+    )
   }
 
   renderPlugins () {
@@ -248,6 +251,7 @@ class PlayerControls extends Component<Props, State> {
           currentPlaybackLevel={currentPlaybackLevel}
           playbackLevels={playbackLevels}
           onPlaybackLevelChange={onPlaybackLevelChange}
+          onClose={() => this.setActivePlugin()}
         />
       </Fragment>
     )
@@ -268,9 +272,11 @@ class PlayerControls extends Component<Props, State> {
       currentBufferedTimeSeconds,
       formattedCurrentTime,
       formattedDuration,
-      videoDurationSeconds
+      videoDurationSeconds,
+      playbackLevels
     } = this.props
     const { scrubbingPositionPercentage } = this.state
+
     return (
       <Wrapper>
         {this.renderPlugins()}
@@ -318,6 +324,7 @@ class PlayerControls extends Component<Props, State> {
             <RightControls>
               <ControlButtonWrapper>
                 <IconButton
+                  disabled={!playbackLevels.size}
                   icon="/assets/img/quality.svg"
                   onClick={() => {
                     this.setActivePlugin(PLAYER_PLUGIN.PLAYBACK_LEVELS)

@@ -6,7 +6,7 @@ const Colors: Object = {
   gray: '#c7c7c7',
   grayMedium: '#404447',
   grayDark: '#2E3133',
-  blackLight: '#262C30',
+  blackLight: '#282e33',
   black: '#21262A',
   blackTransparent: 'rgba(27, 31, 36, 0.5)',
   blackDark: '#1B1F24',
