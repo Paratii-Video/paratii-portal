@@ -1,31 +1,23 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
-import NavLink from 'components/foundations/buttons/NavLink'
 import type { VideoRecord } from 'records/VideoRecords'
 import VideoProgressBar from 'components/widgets/VideoForm/VideoProgressBar'
 
 type Props = {
   video: VideoRecord,
-  onClick: (id: string) => void
+  selected?: boolean,
+  setSelectedVideo: (id: string) => void
 }
-
-const Label = styled.div`
-  color: white;
-  font-weight: bold;
-  margin-bottom: 10px;
-`
 
 const ListItem = styled.li`
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  padding: 20px 50px 0;
-  transition: opacity ${props => props.theme.animation.time.repaint};
-
-  &:nth-child(odd) {
-    background-color: ${props => props.theme.colors.VideoList.background};
-  }
+  padding: 0 50px;
+  transition: opacity ${props => props.theme.animation.time.repaint},
+    background 0.25s;
+  background-color: ${props =>
+    (props.selected && props.theme.colors.VideoList.selectedBackground) || ''};
 
   &:hover {
     opacity: ${props => props.theme.animation.opacity.hover};
@@ -35,22 +27,57 @@ const ListItem = styled.li`
 const ListItemWrapper = styled.div`
   position: relative;
   width: 100%;
+`
 
-  &::after {
-    content: '';
-    display: block;
-    height 20px;
-    width: 100%;
+const ListItemContent = styled.div`
+  display: flex;
+  padding: 10px 0;
+`
+
+const VideoImage = styled.div`
+  background-color: black;
+  background-image: url(${({ source }) => source});
+  background-size: cover;
+  background-position: center center;
+  height: 72px;
+  width: 40%;
+
+  @media (max-width: 1024px) {
+    width: 20%;
+  }
+
+  @media (max-width: 767px) {
+    width: 40%;
   }
 `
 
-const ListItemFileName = styled.h4`
+const ListItemInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 25px;
+  width: 60%;
+
+  @media (max-width: 1007px) {
+    width: 80%;
+  }
+
+  @media (max-width: 767px) {
+    width: 60%;
+  }
+`
+
+const ListItemHeader = styled.h4`
   color: ${props => props.theme.colors.VideoList.filename};
   font-size: ${props => props.theme.fonts.video.list.filename};
   margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
 `
 
-const ListItemStatus = styled.p`
+const ListItemStatus = styled.div`
   color: ${props =>
     props.done
       ? props.theme.colors.VideoList.done
@@ -69,7 +96,7 @@ const Bar = styled.div`
   width: 100%;
 `
 
-class UploadListItem extends Component<Props, void> {
+class VideoListItem extends Component<Props, void> {
   constructor (props) {
     super(props)
     this.state = {
@@ -81,77 +108,77 @@ class UploadListItem extends Component<Props, void> {
   }
 
   handleClick () {
-    this.props.onClick(this.props.video.id)
+    this.props.setSelectedVideo(this.props.video.id)
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    const video = nextProps.video
-
-    if (video.getIn(['uploadStatus', 'name']) === 'running') {
-      const progress = video.getIn(['uploadStatus', 'data', 'progress'])
-      this.setState({ uploadProgress: progress })
-    } else if (
-      video.getIn(['uploadStatus', 'name']) === 'uploaded to transcoder node'
-    ) {
-      this.setState({ uploadProgress: 100 })
-    }
-
-    if (video.getIn(['transcodingStatus', 'name']) === 'progress') {
-      const progress = video.getIn(['transcodingStatus', 'data', 'progress'])
-      this.setState({ transcodingProgress: progress })
-    } else if (video.getIn(['transcodingStatus', 'name']) === 'success') {
-      this.setState({ transcodingProgress: 100 })
-    }
-
-    this.setState({
+    this.setState((prevState, nextProps) => ({
       totalProgress: Math.round(
-        (this.state.uploadProgress + this.state.transcodingProgress) / 2
+        (prevState.uploadProgress + prevState.transcodingProgress) / 2
       )
-    })
+    }))
   }
 
   render () {
-    const item = this.props.video
-    // let progress
-    // if (item.getIn(['uploadStatus', 'name']) === 'running') {
-    //   const progress = item.getIn(['uploadStatus', 'data', 'progress'])
-    //   this.setState({ uploadProgress: progress })
-    //   console.log(this.state)
-    // }
+    const { video, selected } = this.props
 
-    let linkToVideo = ''
-    // TODO; find out why getIn(['blockchainStatus', 'name']) is undefined
-    if (
-      item.getIn(['transcodingStatus', 'name']) === 'success' &&
-      item.getIn(['blockchainStatus']).name === 'success'
-    ) {
-      const link = `/play/${item.id}`
-      linkToVideo = (
-        <Label>
-          <h3>Link</h3>
-          <NavLink to={link}>Play video</NavLink>
-        </Label>
-      )
+    let isReady = false
+
+    const title = video.title || video.filename
+    const ipfsHash = (video && video.get('ipfsHash')) || ''
+    const thumbImages = video && video.getIn(['thumbnails'])
+
+    let thumbImage = 'https://paratii.video/public/images/paratii-src.png'
+    if (thumbImages && ipfsHash) {
+      const firstThumb = thumbImages[0]
+      if (firstThumb !== undefined) {
+        thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${firstThumb}`
+      }
     }
 
-    return (
-      <ListItem onClick={this.handleClick} id="video-list-item-{item.id}">
-        <ListItemWrapper>
-          <ListItemFileName>{item.filename}</ListItemFileName>
-          <ListItemStatus done={this.state.uploadProgress === 100}>
-            {item.uploadStatus.name} - ({this.state.uploadProgress}%)
-          </ListItemStatus>
-          <ListItemStatus>{item.blockchainStatus.name}</ListItemStatus>
-          <ListItemStatus>
-            {item.getIn(['transcodingStatus', 'name'])}
-          </ListItemStatus>
-          <ListItemStatus>{linkToVideo}</ListItemStatus>
+    if (!video || !video.id) {
+      return <ListItem>Something went wrong - no video known</ListItem>
+    }
+    if (
+      video.storageStatus.name === 'success' &&
+      video.transcodingStatus.name === 'success'
+    ) {
+      isReady = true
+    }
 
+    let statusMessage = ''
+
+    if (video.storageStatus.name !== 'success' && title === null) {
+      statusMessage = 'Please provide a title and description'
+    } else if (video.transcodingStatus.name === 'success') {
+      statusMessage = 'Your video is ready to play'
+    } else if (video.transcodingStatus.name === 'failed') {
+      statusMessage = 'Your video could not be transcoded'
+    }
+    // } else if (!video.filename) {
+    //   statusMessage = 'No file was uploaded (this is an error)'
+    // }
+
+    const uploadProgress = video.uploadStatus.data.progress
+    const transcodingStatus = video.transcodingStatus.data.progress
+    const progress = Math.ceil((uploadProgress + transcodingStatus) / 2)
+
+    return (
+      <ListItem
+        onClick={this.handleClick}
+        id={`video-list-item-${video.get('id')}`}
+        selected={selected}
+      >
+        <ListItemWrapper>
+          <ListItemContent>
+            <VideoImage source={thumbImage} />
+            <ListItemInfo>
+              <ListItemHeader>{title}</ListItemHeader>
+              <ListItemStatus done={isReady}>{statusMessage}</ListItemStatus>
+            </ListItemInfo>
+          </ListItemContent>
           <Bar>
-            <VideoProgressBar
-              progress={this.state.totalProgress + '%'}
-              nopercentual
-            />
+            <VideoProgressBar progress={progress + '%'} nopercentual small />
           </Bar>
         </ListItemWrapper>
       </ListItem>
@@ -159,4 +186,4 @@ class UploadListItem extends Component<Props, void> {
   }
 }
 
-export default UploadListItem
+export default VideoListItem

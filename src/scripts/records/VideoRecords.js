@@ -1,40 +1,64 @@
 /* @flow */
 
-import { Record as ImmutableRecord } from 'immutable'
-import AsyncTaskStatusRecord from './AsyncTaskStatusRecord'
+import { List as ImmutableList, Record as ImmutableRecord } from 'immutable'
+import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
 
 class Video extends ImmutableRecord({
   description: '',
   filename: null,
+  filesize: null,
+  duration: '',
   id: '',
-  ipfsData: '',
   ipfsHashOrig: '',
   ipfsHash: '',
   owner: '',
   price: '',
-  thumbnailUrl: '',
+  thumbnails: ImmutableList(),
   title: '',
-  blockchainStatus: new AsyncTaskStatusRecord(),
+  author: '',
+  free: '',
+  published: null,
+  storageStatus: new AsyncTaskStatusRecord(),
   transcodingStatus: new AsyncTaskStatusRecord(),
   uploadStatus: new AsyncTaskStatusRecord(),
-  fecthStatus: new AsyncTaskStatusRecord(),
-  url: ''
+  fetchStatus: new AsyncTaskStatusRecord()
 }) {
   description: string
   filename: string
+  filesize: ?number
+  duration: string
   id: string
-  ipfsData: string
   ipfsHashOrig: string
   ipfsHash: string
   owner: string
   price: string
-  thumbnailUrl: string
+  thumbnails: ImmutableList<string>
   title: string
-  blockchainStatus: AsyncTaskStatusRecord
+  author: string
+  free: string
+  published: boolean
+  storageStatus: AsyncTaskStatusRecord
   transcodingStatus: AsyncTaskStatusRecord
   uploadStatus: AsyncTaskStatusRecord
-  fecthStatus: AsyncTaskStatusRecord
-  url: string
+  fetchStatus: AsyncTaskStatusRecord
+
+  constructor ({
+    thumbnails,
+    storageStatus,
+    transcodingStatus,
+    uploadStatus,
+    fetchStatus,
+    ...rest
+  }: Object = {}) {
+    super({
+      ...rest,
+      thumbnails: ImmutableList(thumbnails),
+      storageStatus: new AsyncTaskStatusRecord(storageStatus),
+      transcodingStatus: new AsyncTaskStatusRecord(transcodingStatus),
+      uploadStatus: new AsyncTaskStatusRecord(uploadStatus),
+      fetchStatus: new AsyncTaskStatusRecord(fetchStatus)
+    })
+  }
 }
 
 export default Video

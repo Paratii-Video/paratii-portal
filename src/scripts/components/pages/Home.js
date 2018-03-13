@@ -1,22 +1,13 @@
 import React, { Component } from 'react'
-import Anchor from '../foundations/buttons/Anchor'
-import Button from '../foundations/buttons/Button'
-import NavLink from '../foundations/buttons/NavLink'
+import { CardContainer } from '../structures/Card'
+import PTIGuide from '../widgets/PTIGuide'
 
-type Props = {}
-
-class Home extends Component<Props, void> {
+class Home extends Component {
   render () {
     return (
-      <div>
-        <Anchor purple underline>
-          Paratii
-        </Anchor>
-        <Button purple>Paratii</Button>
-        <NavLink purple="true" to="/">
-          Paratii
-        </NavLink>
-      </div>
+      <CardContainer>
+        <PTIGuide />
+      </CardContainer>
     )
   }
 }

@@ -1,6 +1,7 @@
 const Typography = {
   family: 'Roboto',
   base: '16px',
+  lineHeight: '24px',
   weight: {
     light: 300,
     regular: 400,
@@ -8,15 +9,22 @@ const Typography = {
   },
   anchor: '0.75rem',
   button: '0.8rem',
+  footer: {
+    text: '0.7rem'
+  },
   form: {
     input: '0.8rem',
     helper: '0.7rem'
   },
   card: {
     title: '1.5rem',
+    subtitle: '1rem',
     strong: '1rem',
     text: '0.8rem',
     index: '0.7rem'
+  },
+  modal: {
+    title: '2rem'
   },
   video: {
     form: {
@@ -32,6 +40,10 @@ const Typography = {
       title: '1.5rem',
       filename: '1rem',
       status: '0.8rem'
+    },
+    share: {
+      title: '1.5rem',
+      link: '1.3rem'
     }
   },
   radio: {
@@ -39,17 +51,25 @@ const Typography = {
     label: '0.8rem'
   },
   title: {
-    big: '32px',
-    main: '28px',
-    small: '24px'
+    big: '2rem',
+    main: '1.75rem',
+    small: '1.5rem',
+    bigLineHeight: '1.7',
+    mainLineHeight: '1.6',
+    smallLineHeight: '1.6'
   },
   text: {
     big: '1.1rem',
     main: '1rem',
-    small: '0.8rem'
+    small: '0.9rem',
+    tiny: '0.7rem',
+    bigLineHeight: '1.5',
+    mainLineHeight: '1.75',
+    smallLineHeight: '1.88',
+    tinyLineHeight: '1.7'
   },
   popover: {
-    title: '18px'
+    title: '1.12rem'
   }
 }
 

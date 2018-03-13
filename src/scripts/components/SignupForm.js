@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import SignForm from 'components/foundations/forms/SignForm'
-import Button from 'components/foundations/buttons/Button'
+import Button from 'components/foundations/Button'
 import TextField from 'components/widgets/forms/TextField'
 
 type Props = {

@@ -1,4 +1,4 @@
-<img src="https://github.com/Paratii-Video/paratiisite/blob/master/rebrand/src/svgs/paratii-logo.svg" width="200"> 
+<img src="https://github.com/Paratii-Video/paratiisite/blob/master/public/svgs/paratii-logo.svg" width="200">
 
 # paratii-portal
 A modular web-interface for uploading content into the peer-to-peer network behind Paratii, and to browse or organize it. It's purpose is to **1)** help populate Paratii's registries with real world data and files from creators; **2)** expose widgets and forms of interaction with the paratii-library that other developers can leverage, or platform owners can implement; **3)** battletest distributed curation concepts, whenever mature for account management. First iteration will randomize account info. and focus on the experience of uploading videos.
@@ -7,7 +7,8 @@ A modular web-interface for uploading content into the peer-to-peer network behi
 
 * nodejs >= 8.9.0
 * yarn
-* libssl1.1 (for parity >= 1.8.7)
+* libssl1.1 (required by parity >= 1.8.7)
+* parity >= 1.9
 * Install [parity](https://github.com/paritytech/parity) (ethereum client):
    * `bash <(curl https://get.parity.io -Lk)`
 
@@ -24,7 +25,7 @@ If you are on a Mac, you may need to set the path to parity:
     $ cd paratii-portal
     $ yarn install
 
-### Workaround for web3 bug
+### Workaround for web3 bug [perhaps not needed anymore]
 
 Currently, instead of using `yarn` to install dependencies the following steps must be taken:
 
@@ -36,11 +37,23 @@ To run unit tests:
 
     $ yarn run unit-test
 
-End-to-end tests that can be run by starting up the application in one window:
 
-    $ yarn run dev
+End-to-end tests that can be run by starting up the application in one window. The procedure at the moment is rather complex, but we are working on simplifying the dev environment.
 
-And running the tests in another window:
+First of all, you need to install `paratii-db` on your system.
+
+You will need 4 different consoles, and you need to start the processes in the exact order given here:
+
+
+1. `yarn run parity`
+2. `yarn run build:dev`
+3. `yarn run server:dev`
+4. In the directory where you installed paratii-db, run `yarn run dev`
+
+When all these process are are running, y
+the application should be available on `http://localhost:8080/`
+
+Open yet another console to run the tests:
 
     $ yarn run chimp-test
 
@@ -114,3 +127,31 @@ If you get the following error:
 Rebuilding `node-sass` may help:
 
     yarn rebild node-sass
+___
+If npm install doesn't work, maybe it's because you have a node version > 9.0.0  
+To fix it downgrade node to version 8.9.0:
+
+  ```
+   $ sudo npm cache clean -f
+   $ sudo npm install -g n
+   $ sudo n 8.9.0
+   ```
+   or if you are using nvm:
+   ```
+    $ nvm install 8.9.0
+    $ nvm alias default 8.9.0
+    ```
+This commands will set the default version that you will use to the 8.9.0
+
+Then run npm install again.
+___
+If you get the following error:
+
+  ```
+  $ [nodemon] Internal watch failed: watch .../paratii-portal/node_modules ENOSPC
+  ```
+Run the following code to fix the port issue:
+
+    $ echo fs.inotify.max_user_watches=582222 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+Explanation [here](https://stackoverflow.com/questions/34662574/node-js-getting-error-nodemon-internal-watch-failed-watch-enospc)

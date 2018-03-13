@@ -5,7 +5,12 @@ import Immutable from 'immutable'
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
 import PlayerRecord from 'records/PlayerRecords'
-import { REQUEST_STATUS } from 'constants/ApplicationConstants'
+import UploaderRecord from 'records/UploaderRecords'
+import NotificationRecord from 'records/NotificationRecord'
+import {
+  REQUEST_STATUS,
+  TRANSITION_STATE
+} from 'constants/ApplicationConstants'
 
 export type Location = {
   pathname: string,
@@ -26,12 +31,14 @@ export type Action<T> = {
 }
 
 export type VideoRecordMap = Immutable.Map<string, VideoRecord>
+export type NotificationsArray = Array<NotificationRecord>
 
 export type RootState = {
-  selectedVideo: ?string,
+  uploader: UploaderRecord,
   user: UserRecord,
   videos: VideoRecordMap,
-  player: PlayerRecord
+  player: PlayerRecord,
+  notifications: NotificationsArray
 }
 
 type _ThunkAction<R> = (dispatch: Dispatch, getState?: () => RootState) => R
@@ -43,7 +50,7 @@ export type ParatiiLibConfig = {
 }
 
 type EventEmitter = {
-  on: (eventType: string, callback: (e: Object) => void) => void
+  on: (eventType: string, callback: (any) => void) => void
 }
 
 // TODO move this into paratii-mediaplayer repo
@@ -52,7 +59,7 @@ type ClapprCore = EventEmitter & {}
 type ClapprContainer = EventEmitter & {}
 
 export type ClapprPlayer = EventEmitter & {
-  core: {
+  core?: {
     getCurrentPlayback: () => ClapprCore,
     getCurrentContainer: () => ClapprContainer,
     mediaControl: {
@@ -64,7 +71,12 @@ export type ClapprPlayer = EventEmitter & {
   },
   isPlaying: () => boolean,
   play: () => void,
-  pause: () => void
+  pause: () => void,
+  mute: () => void,
+  unmute: () => void,
+  setVolume: (percentage: number) => void,
+  destroy: () => void,
+  seek: (time: number) => void
 }
 
 // TODO move this into paratii-lib repo
@@ -79,7 +91,9 @@ export type ParatiiLib = {
     vids: {
       get: (id: string) => ?Object,
       create: Object => Object,
-      update: (id: string, Object) => Object
+      upsert: Object => Object,
+      update: (id: string, Object) => Object,
+      search: Object => Array<Object>
     }
   },
   eth: {
@@ -95,19 +109,28 @@ export type ParatiiLib = {
       get: (id: string) => ?Object,
       makeId: () => string
     },
+    vouchers: {
+      redeem: (value: string) => Promise<Object>
+    },
     setAccount: (string, string) => ?Object,
     balanceOf: (address: string, token: ?string) => Promise<Object>,
     web3: {
       utils: {
-        fromWei: (value: number | string, toUnit: ?string) => string
+        fromWei: (value: number | string, toUnit: ?string) => string,
+        toWei: (value: string, toUnit: ?string) => number
       }
+    },
+    tcr: {
+      apply: (string, number) => Promise<Object>,
+      checkEligiblityAndApply: (string, number) => Promise<Object>
     }
   },
   ipfs: {
     uploader: {
       add: Object => Object,
       transcode: (string, Object) => Object
-    }
+    },
+    getIPFSInstance: () => Promise<Object>
   }
 }
 
@@ -280,3 +303,5 @@ export type Theme = Object & {
 }
 
 export type RequestStatus = $Values<typeof REQUEST_STATUS>
+
+export type TransitionState = $Values<typeof TRANSITION_STATE>

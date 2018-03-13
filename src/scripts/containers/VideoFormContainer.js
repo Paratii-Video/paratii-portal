@@ -2,17 +2,17 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import VideoForm from 'components/VideoForm'
-import { saveVideoInfo } from 'actions/UploadActions'
-import { getVideo } from 'selectors/index'
-
+import { saveVideoInfo, uploadAndTranscode } from 'actions/UploaderActions'
+import { getSelectedUploaderVideo } from 'selectors/UploaderSelectors'
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState) => ({
-  selectedVideo: getVideo(state)
+  selectedVideo: getSelectedUploaderVideo(state)
 })
 
 const mapDispatchToProps = dispatch => ({
-  saveVideoInfo: bindActionCreators(saveVideoInfo, dispatch)
+  saveVideoInfo: bindActionCreators(saveVideoInfo, dispatch),
+  uploadAndTranscode: bindActionCreators(uploadAndTranscode, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoForm)

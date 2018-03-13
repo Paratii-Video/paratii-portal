@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
-import Button from '../foundations/buttons/Button'
 import TextField from '../widgets/forms/TextField'
-import Card from 'components/structures/Card'
+import Card, { CardTitle } from 'components/structures/Card'
 
 type Props = {
   onFileChosen: (file: Object) => void,
@@ -16,34 +15,42 @@ const StyleInput = css`
   width: 100%;
 `
 
+const Title = CardTitle.extend`
+  padding: 40px 42px;
+`
+
 const InputFile = styled.input`
   ${StyleInput} cursor: pointer;
   left: 0;
   opacity: 0;
   position: absolute;
   top: 0;
-  z-index: 2;
+  z-index: 3;
 `
 
 const UploadCover = styled.div`
-  ${StyleInput} align-items: center;
-  background-color: ${props =>
-    props.theme.colors.FilesUploader.drag.background};
+  ${StyleInput} background: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  padding-bottom: 80px;
   position: relative;
-  transition: background ${props => props.theme.animation.time.repaint};
+  transition: background ${props => props.theme.animation.time.repaint} 0.2s;
   z-index: 1;
 
   .dragenter & {
     background-color: ${props => props.theme.colors.FilesUploader.drag.enter};
+    transition-delay: 0.16s;
   }
 `
 
 const UploadCoverIcon = styled.div`
-  height: 130px;
-  margin: 0 0 20px 36px;
+  margin: 30px 0 20px;
+  width: 100%;
+`
+
+const Icon = styled.div`
+  height: 110px;
+  margin: 0 auto;
   transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
   width: 190px;
 
@@ -62,13 +69,6 @@ const UploadCoverTextBig = styled.span`
   display: block;
   font-size: ${props => props.theme.fonts.text.big};
   margin-bottom: 15px;
-`
-
-const UploadCoverInfo = styled.p`
-  color: ${props => props.theme.colors.FilesUploader.drag.color2};
-  font-size: ${props => props.theme.fonts.text.small};
-  margin: 20px 0 0;
-  text-align: center;
 `
 
 const FooterWrapper = styled.div`
@@ -122,8 +122,8 @@ class FilesUploader extends Component<Props, void> {
   render () {
     return (
       <Card
+        {...this.props}
         nopadding
-        margin={this.props.margin}
         className={this.state.dragClass}
         footer={
           <FooterWrapper>
@@ -133,14 +133,6 @@ class FilesUploader extends Component<Props, void> {
               error={this.state.inputTextError}
               disabled
             />
-            <Button
-              id="upload-submit"
-              onClick={this.props.onUploadRequested}
-              purple
-              disabled
-            >
-              Upload
-            </Button>
           </FooterWrapper>
         }
       >
@@ -157,14 +149,16 @@ class FilesUploader extends Component<Props, void> {
         />
 
         <UploadCover>
+          <Title>Upload video</Title>
           <UploadCoverIcon>
-            <FilesUploaderSvg />
+            <Icon>
+              <FilesUploaderSvg />
+            </Icon>
           </UploadCoverIcon>
           <UploadCoverText>
             <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
             choose a file
           </UploadCoverText>
-          <UploadCoverInfo>{this.state.fileName}</UploadCoverInfo>
         </UploadCover>
       </Card>
     )

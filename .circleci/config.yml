@@ -2,22 +2,14 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9.1-browsers
+      - image: leeaandrob/paratii-portal:0.0.6
+      - image: circleci/mongo:latest
     working_directory: ~/repo
     steps:
       - checkout
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package-lock.json" }}
-          # - v1-dependencies-
-      # - run: bash <(curl https://get.parity.io -Lk)
-      - run: wget -q http://d1h4xl4cr1h0mo.cloudfront.net/v1.8.6/x86_64-unknown-debian-gnu/parity_1.8.6_amd64.deb
-      - run: sudo dpkg -i parity_1.8.6_amd64.deb
-
-      # the next lines are a workaround around a web3 bug tracked here https://github.com/ethereum/web3.js/issues/1234
-      # as soon as this bug is fixed, we should go back to yarn install, which is faster
-      # when movign back to yarn, also the v1-dependencies key should be set back to `yarn-lock`
-      # - run: yarn install --pure-lockfile
       - run: npm install
       - save_cache:
           paths:
@@ -25,7 +17,7 @@ jobs:
           # key: v1-dependencies-{{ checksum "yarn.lock" }}
           key: v1-dependencies-{{ checksum "package-lock.json" }}
       - run: yarn run quality
-      - run: yarn run unit-test
+      - run: yarn run unit-test-circleci
       - run:
           command: yarn run parity
           background: true
@@ -35,7 +27,13 @@ jobs:
       - run:
           command: yarn run server:dev
           background: true
-      - run: yarn run chimp-test
+      - run:
+          command: mv /paratii-db/paratii-db db
+      - run:
+          command: cd db && npm run dev
+          background: true
+      - run: node src/scripts/waitForServer.js
+      - run: yarn run chimp-circleci-test
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then

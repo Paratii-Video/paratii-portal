@@ -84,7 +84,7 @@ export const setupKeystore = () => async (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {
-  paratii.eth.wallet.clear()
+  // paratii.eth.wallet.clear()
   const walletKey: string = getWalletKey(getState())
   const mnemonicKey: string = getMnemonicKey(getState())
   const walletString: string = localStorage.getItem(walletKey) || ''
@@ -97,11 +97,8 @@ export const setupKeystore = () => async (
         JSON.parse(walletString),
         DEFAULT_PASSWORD
       )
-      paratii.eth.setAccount(
-        paratii.config.account.address,
-        paratii.config.account.privateKey
-      )
     } catch (err) {
+      // wallet is not valid, we will create a new wallet
       walletIsValid = false
     }
   }

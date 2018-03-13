@@ -15,13 +15,23 @@ const Themes = {
     },
     footer: {
       background: Colors.black,
-      color: Colors.grayLight,
+      color: Colors.white,
+      color2: Colors.grayLight,
       logoFill: Colors.white
     },
     button: {
       white: Colors.white,
       gray: Colors.grayLight,
-      purple: Colors.purple
+      purple: Colors.purple,
+      pink: Colors.pink
+    },
+    Modal: {
+      background: Colors.blackTransparent,
+      content: Colors.blackDark,
+      close: Colors.white,
+      title: Colors.purple,
+      hightlight: Colors.white,
+      color: Colors.grayLight
     },
     popover: {
       border: Colors.gray,
@@ -44,9 +54,9 @@ const Themes = {
     MainCard: {
       background: Colors.black,
       color: Colors.white,
-      title: {
-        color: Colors.white
-      },
+      title: Colors.white,
+      subtitle: Colors.white,
+      subtitleIcon: Colors.purple,
       footer: {
         background: Colors.blackDark,
         color: Colors.grayLight
@@ -58,7 +68,7 @@ const Themes = {
         color: Colors.purple,
         color2: Colors.grayLight,
         info: Colors.purple,
-        enter: Colors.blackLight
+        enter: Colors.blackTransparent
       },
       input: {
         background: Colors.blackDark,
@@ -66,7 +76,7 @@ const Themes = {
       }
     },
     VideoList: {
-      background: Colors.blackLight,
+      selectedBackground: Colors.blackLight,
       title: Colors.purple,
       filename: Colors.white,
       status: Colors.grayLight,
@@ -80,18 +90,39 @@ const Themes = {
         subtitle2: Colors.purple
       },
       info: {
+        imageBackground: Colors.blackDark,
+        icon: Colors.white,
         time: {
           background: Colors.black,
           color: Colors.white
         },
         progress: {
-          color: Colors.purple,
+          success: Colors.purple,
+          color: Colors.grayLight,
           icon: Colors.black,
           iconBg: Colors.purple,
           background: Colors.grayLight,
           barFrom: Colors.purpleGradientFrom,
           barTo: Colors.purpleGradientTo
-        }
+        },
+        text: Colors.grayLight
+      }
+    },
+    VideoPlayer: {
+      background: Colors.black,
+      header: {
+        title: Colors.white,
+        icons: Colors.white
+      },
+      progress: {
+        barFrom: Colors.purpleGradientFrom,
+        barTo: Colors.purpleGradientTo,
+        scrubber: Colors.white,
+        base: Colors.grayLight
+      },
+      controls: {
+        background: Colors.black,
+        time: Colors.white
       }
     }
   }

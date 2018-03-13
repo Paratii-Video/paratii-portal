@@ -9,7 +9,8 @@ type Props = {
   value: String,
   children: Object,
   disabled: Boolean,
-  checked: Boolean,
+  defaultChecked: Boolean,
+  checkbox: Boolean,
   nomargin: Boolean,
   onChange: (e: Object) => void
 }
@@ -29,10 +30,11 @@ const RadioInput = styled.label`
   cursor: ${props => (props.disabled ? 'initial' : 'pointer')};
   display: inline-flex;
   font-size: ${props => props.theme.fonts.form.input};
-  margin-right: ${props => (props.nomargin ? '' : '20px')};
+  margin: 0 ${props => (props.nomargin ? '0' : '20px')} 20px 0;
   opacity: ${props => (props.disabled ? '0.2' : '')};
   pointer-events: ${props => (props.disabled ? 'none' : '')};
   position: relative;
+  user-select: none;
 
   input {
     opacity: 0;
@@ -71,6 +73,7 @@ const RadioInputIcon = styled.svg`
 const RadioInputLabel = styled.span`
   color: ${props => props.theme.colors.Radio.label};
   font-size: ${props => props.theme.fonts.radio.label};
+  user-select: none;
   white-space: nowrap;
 `
 
@@ -79,11 +82,11 @@ class RadioCheck extends Component<Props, void> {
     return (
       <RadioInput disabled={this.props.disabled} nomargin={this.props.nomargin}>
         <input
-          type="radio"
+          type={this.props.checkbox ? 'checkbox' : 'radio'}
           name={this.props.name}
           value={this.props.value}
-          checked={this.props.checked}
           disabled={this.props.disabled}
+          defaultChecked={this.props.defaultChecked}
         />
         <RadioInputBox>
           <RadioInputIcon>

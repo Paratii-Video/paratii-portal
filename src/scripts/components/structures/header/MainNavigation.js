@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import NavLink from 'components/foundations/buttons/NavLink'
+
+import Button from 'components/foundations/Button'
+import Hidden from 'components/foundations/Hidden'
+import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 
 type Props = {}
 
@@ -10,11 +14,22 @@ const Nav = styled.nav`
 
 const NavList = styled.ul`
   display: flex;
+  align-items: center;
 `
 
 const NavItem = styled.li`
   padding-left: 45px;
 `
+
+const StyleNavLink = Button.extend`
+  font-size: 14px;
+  font-weight: ${props => props.theme.fonts.weight.regular};
+  text-transform: initial;
+`
+
+const NavLink = StyleNavLink.withComponent(Link)
+
+const Anchor = StyleNavLink.withComponent('a')
 
 class MainNavigation extends Component<Props, void> {
   render () {
@@ -22,10 +37,23 @@ class MainNavigation extends Component<Props, void> {
       <Nav>
         <NavList>
           <NavItem>
-            <NavLink to="/upload">Upload video</NavLink>
+            <NavLink to="/voucher">Get PTI</NavLink>
+          </NavItem>
+          <Hidden>
+            <NavItem>
+              <NavLink to="/my-videos">My videos</NavLink>
+            </NavItem>
+          </Hidden>
+          <NavItem>
+            <NavLink to="/upload">Upload</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink to="/about">About Paratii</NavLink>
+            <Anchor href="http://paratii.video/" target="_blank">
+              About Paratii
+            </Anchor>
+          </NavItem>
+          <NavItem data-test-id="nav-pti-balance">
+            <PTIBalanceContainer />
           </NavItem>
         </NavList>
       </Nav>

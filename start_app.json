@@ -1,0 +1,12 @@
+{
+    "apps": [
+        {
+            "name": "portal",
+            "script": "node",
+            "args" : "src/server/index.js",
+            "env_production" : {
+                "NODE_ENV": "production"
+            }
+        }
+    ]
+}
