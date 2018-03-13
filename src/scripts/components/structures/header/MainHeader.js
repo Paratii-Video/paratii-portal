@@ -101,7 +101,6 @@ class MainHeader extends Component<Props, void> {
   }
 
   handleScroll = () => {
-    console.log('handle')
     // Ugly cross-browser compatibility
     const top =
       document.documentElement.scrollTop ||
