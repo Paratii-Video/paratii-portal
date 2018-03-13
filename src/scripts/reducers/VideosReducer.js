@@ -326,8 +326,21 @@ export default handleActions(reducer, Immutable.Map({}))
 // This is a functino to fix a legacy bug in which the thumbnails where not
 // saved in  the "thumbnails" property, as they should
 const fixFetchedVideo = (video: VideoRecord, payload): VideoRecord => {
-  if (video.get('thumbnails').size === 0) {
+  console.log(video.id)
+  console.log(video.get('thumbnails'))
+  console.log('size:')
+  console.log(video.get('thumbnails').size)
+  console.log(
+    payload.transcodingStatus &&
+      payload.transcodingStatus.data.result &&
+      payload.transcodingStatus.data.result.screenshots
+  )
+  if (
+    video.get('thumbnails').size === 0 ||
+    video.get('thumbnails').size === undefined
+  ) {
     // fix  video.thumbnails
+    console.log('fixing')
     video = video.set(
       'thumbnails',
       Immutable.List(
@@ -338,9 +351,7 @@ const fixFetchedVideo = (video: VideoRecord, payload): VideoRecord => {
       )
     )
     // fix storageStatus
-    video = video.set('storageStatus', new AsyncTaskStatusRecord())
-    return video
-  } else {
-    return video
   }
+  video = video.set('storageStatus', new AsyncTaskStatusRecord())
+  return video
 }

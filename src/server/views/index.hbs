@@ -2,9 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Paratii</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Paratii project is developing a video player upon p2p streaming and decentralized service providers to put revenue 100% in control of producers.">
+    <title>{{title}}</title>
+    {{#if player}}
+      {{#if video}}
+        {{> metas }}
+      {{else}}
+        {{> notfoundmetas }}
+      {{/if}}
+    {{/if}}
+
+
     <link rel="shortcut icon" href="/img/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
     <link rel="icon" href="http://paratii.video/public/images/paratii-icon-192x192.png">
@@ -21,6 +28,10 @@
     <div id="root">
       <span class="main-loader"></span>
     </div>
-    <script type="text/javascript" src="/bundle.js"></script>
+    {{#if embed}}
+      <script type="text/javascript" src="/embed/bundle.js"></script>
+    {{else}}
+      <script type="text/javascript" src="/bundle.js"></script>
+    {{/if}}
   </body>
 </html>

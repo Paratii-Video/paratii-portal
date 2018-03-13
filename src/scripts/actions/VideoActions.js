@@ -61,7 +61,6 @@ export const fetchOwnedVideos = () => async (
         video.uploadStatus.name === 'uploaded to remote')
     ) {
       filteredOwnedVideos.push(video)
-
       if (
         video.transcodingStatus.name !== 'success' ||
         video.transcodingStatus.data.progress !== 100

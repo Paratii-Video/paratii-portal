@@ -1,12 +1,12 @@
 const express = require('express')
-const path = require('path')
+const exphbs = require('express-handlebars')
 const devMiddleware = require('webpack-dev-middleware')
 const hotMiddleware = require('webpack-hot-middleware')
 const webpack = require('webpack')
 const webpackConfig = require('../../webpack.config.js')
-const videoRoute = require('./routes/embed')
+const path = require('path')
+const routeHelper = require('./routes/')
 const oembedRoute = require('./routes/oembed')
-
 const app = express()
 
 if (process.env.NODE_ENV === 'development') {
@@ -28,14 +28,20 @@ if (process.env.NODE_ENV === 'production-notugly') {
   )
 }
 
-const staticHandler = express.static(path.resolve(__dirname, '../../', 'build'))
+app.engine(
+  '.hbs',
+  exphbs({
+    extname: '.hbs',
+    partialsDir: [path.join(__dirname, '/views/partials')]
+  })
+)
 
-app.use(staticHandler)
-app.use('/embed', staticHandler)
-app.get('/embed/:id', videoRoute)
+app.set('view engine', '.hbs')
+app.set('views', path.join(__dirname, '/views'))
+app.use(express.static(path.resolve(__dirname, '../../', 'build')))
+app.get('/embed/:id', routeHelper.player)
+app.get('/play/:id', routeHelper.player)
+app.get('*', routeHelper.default)
 app.get('/oembed', oembedRoute)
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../', 'build', 'index.html'))
-})
 
 module.exports = app
