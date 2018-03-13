@@ -8,6 +8,10 @@ import UserRecord from 'records/UserRecords'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
 type Props = {
+  id: string,
+  title: string,
+  description: string,
+  author: string,
   user: UserRecord,
   modalProps: Object,
   closeModal: () => void,
@@ -43,14 +47,7 @@ class ModalStake extends Component<Props, Object> {
   onSubmit: (e: Object) => void
   constructor (props: Props) {
     super(props)
-    const selectedVideo = this.props.selectedVideo
     this.state = {
-      id: selectedVideo.id,
-      title: selectedVideo.title,
-      description: selectedVideo.description,
-      // FIXME: we are not editing duration, so we do not need to store it in the state
-      duration: selectedVideo.duration,
-      author: selectedVideo.author,
       errorMessage: false,
       agreedTOC: false // TODO,
     }
@@ -61,7 +58,7 @@ class ModalStake extends Component<Props, Object> {
     event.preventDefault()
     paratii.eth.tcr
       .checkEligiblityAndApply(
-        this.state.id,
+        this.props.id,
         paratii.eth.web3.utils.toWei(5 + '')
       )
       .then(resp => {
@@ -70,16 +67,16 @@ class ModalStake extends Component<Props, Object> {
             errorMessage: false
           })
           const videoToSave = {
-            id: this.state.id,
-            title: this.state.title,
-            description: this.state.description,
-            author: this.state.author,
+            id: this.props.id,
+            title: this.props.title,
+            description: this.props.description,
+            author: this.props.author,
             published: true
           }
           this.props.saveVideoInfo(videoToSave)
           this.props.closeModal()
           console.log(
-            `video ${this.state.id} successfully applied to TCR Listing`
+            `video ${this.props.id} successfully applied to TCR Listing`
           )
         } else {
           const msg =
@@ -102,13 +99,7 @@ class ModalStake extends Component<Props, Object> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    const selectedVideo = nextProps.selectedVideo
     this.setState({
-      id: selectedVideo.id,
-      title: selectedVideo.title,
-      description: selectedVideo.description,
-      duration: selectedVideo.duration,
-      author: selectedVideo.author,
       errorMessage: false,
       agreedTOC: false // TODO,
     })
