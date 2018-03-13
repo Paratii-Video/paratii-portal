@@ -206,7 +206,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
       dispatch(
         Notifications.success({
           title: 'Transcoder done',
-          message: 'You video is ready to be published!'
+          message: 'Your video is ready to be published!'
         })
       )
       dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
@@ -240,7 +240,7 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   // the owner is the user that is logged in
   dispatch(
     Notifications.warning({
-      title: 'We are saving you data.'
+      title: 'We are saving your data.'
     })
   )
 
