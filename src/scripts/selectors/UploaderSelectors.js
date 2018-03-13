@@ -45,7 +45,6 @@ export const getSelectedUploaderVideo: (
     return null
   }
 )
-
 // export const getUploadProgress: (
 //   state: RootState
 // ) => ?Number = createSelector(
