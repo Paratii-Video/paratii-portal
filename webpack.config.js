@@ -123,7 +123,8 @@ const config = {
           mangle: {
             reserved:
             ['DAGNode', 'DAGLink','Name', 'Tsize', 'Hash', 'Block', '_idB58String',
-            'Multiaddr', 'WebSockets']
+            'Multiaddr', 'WebSockets'],
+            safari10: true
             // NOTE I'm still working on this. keep this commented out for now.
             // ['_links', 'links', '_data', 'data', 'mutlihash', '_multihash',
             //   'serialized', '_serialized', 'size', '_size',
