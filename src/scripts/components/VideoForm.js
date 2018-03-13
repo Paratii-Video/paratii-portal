@@ -195,8 +195,6 @@ class VideoForm extends Component<Props, Object> {
       video.transcodingStatus.name === 'success' && isPublished === false
 
     let publishButton = ''
-    console.log('sPublishable: ', isPublishable)
-    console.log('isPublished: ', isPublished)
     if (isPublishable && !isPublished) {
       publishButton = (
         <ButtonWrapper>
