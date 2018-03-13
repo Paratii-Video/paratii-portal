@@ -136,6 +136,13 @@ To fix it downgrade node to version 8.9.0:
    $ sudo npm install -g n
    $ sudo n 8.9.0
    ```
+   or if you are using nvm:
+   ```
+    $ nvm install 8.9.0
+    $ nvm alias default 8.9.0
+    ```
+This commands will set the default version that you will use to the 8.9.0
+
 Then run npm install again.
 ___
 If you get the following error:
