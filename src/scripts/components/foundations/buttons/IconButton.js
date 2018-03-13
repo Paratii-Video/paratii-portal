@@ -19,8 +19,8 @@ const Button = styled.button`
   background-color: ${({ theme, color }) => color || theme.colors.button.white};
 `
 
-const IconButton = ({ onClick, ...rest }: Props) => (
-  <Button {...rest} onClick={onClick} />
+const IconButton = ({ onClick, icon, ...rest }: Props) => (
+  <Button {...rest} icon={icon} onClick={onClick} />
 )
 
 export default IconButton

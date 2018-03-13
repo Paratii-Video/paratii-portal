@@ -1,6 +1,7 @@
 /* @flow */
 
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import PlayerControls from 'components/PlayerControls'
 import {
@@ -8,7 +9,8 @@ import {
   getIsFullscreen,
   getPlayerCurrentTimeSeconds,
   getPlayerCurrentBufferedTimeSeconds,
-  getPlayerCurrentVolume
+  getPlayerCurrentVolume,
+  getActivePlugin
 } from 'selectors/index'
 import {
   getPlayingVideo,
@@ -18,7 +20,10 @@ import {
   getCurrentPlaybackLevel,
   getPlaybackLevelsSorted
 } from 'selectors/PlayerSelectors'
+import { playerSetActivePlugin } from 'actions/PlayerActions'
+
 import type { RootState } from 'types/ApplicationTypes'
+import type { Dispatch } from 'redux'
 
 const mapStateToProps = (state: RootState): Object => ({
   video: getPlayingVideo(state),
@@ -31,7 +36,12 @@ const mapStateToProps = (state: RootState): Object => ({
   formattedCurrentTime: getFormattedCurrentTime(state),
   formattedDuration: getFormattedDuration(state),
   playbackLevels: getPlaybackLevelsSorted(state),
-  currentPlaybackLevel: getCurrentPlaybackLevel(state)
+  currentPlaybackLevel: getCurrentPlaybackLevel(state),
+  activePlugin: getActivePlugin(state)
 })
 
-export default connect(mapStateToProps)(PlayerControls)
+const mapDispatchToProps = (dispatch: Dispatch<*>): Object => ({
+  setActivePlugin: bindActionCreators(playerSetActivePlugin, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlayerControls)

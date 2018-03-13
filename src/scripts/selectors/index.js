@@ -19,6 +19,7 @@ import {
   _getPlayerCurrentVolume,
   _getPlaybackLevels,
   _getCurrentPlaybackLevelId,
+  _getActivePlugin,
   PlaybackLevel
 } from 'records/PlayerRecords'
 import { _getSelectedUploaderVideoId } from 'records/UploaderRecords'
@@ -26,7 +27,8 @@ import { _getSelectedUploaderVideoId } from 'records/UploaderRecords'
 import type {
   RootState,
   RequestStatus,
-  VideoRecordMap
+  VideoRecordMap,
+  PlayerPlugin
 } from 'types/ApplicationTypes'
 
 /* Users */
@@ -64,6 +66,8 @@ export const getPlaybackLevels = (
 ): ImmutableList<PlaybackLevel> => _getPlaybackLevels(state.player)
 export const getCurrentPlaybackLevelId = (state: RootState): number =>
   _getCurrentPlaybackLevelId(state.player)
+export const getActivePlugin = (state: RootState): ?PlayerPlugin =>
+  _getActivePlugin(state.player)
 
 /* Videos */
 export const getVideos = (state: RootState): VideoRecordMap => {

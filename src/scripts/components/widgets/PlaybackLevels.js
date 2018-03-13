@@ -1,30 +1,19 @@
 /* @flow */
 
-import React, { Fragment } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { List as ImmutableList } from 'immutable'
-import Transition from 'react-transition-group/Transition'
 
 import { PlaybackLevel } from 'records/PlayerRecords'
-import IconButton from 'components/foundations/buttons/IconButton'
-import Popover from 'components/foundations/Popover'
-
-const PopoverWrapper = styled.div`
-  position: absolute;
-  top: -75px;
-  transition: all 250ms ${({ theme }) => theme.animation.ease.smooth};
-  width: 150px;
-  height: 100px;
-  cursor: default;
-`
+import SlideModal from 'components/foundations/SlideModal'
 
 const LevelsList = styled.ul`
-  height: 100%;
+  height: 75px;
   overflow-y: scroll;
 `
 
 const Level = styled.li`
-  display: block;
+  display: inline;
   font-size: 14px;
   color: ${({ theme, selected }) => theme.colors.VideoPlayer.levels.text};
   cursor: pointer;
@@ -43,61 +32,37 @@ const Level = styled.li`
 type Props = {
   playbackLevels: ImmutableList<PlaybackLevel>,
   currentPlaybackLevel: ?PlaybackLevel,
-  onPlaybackLevelChange: (id: number) => void
-}
-
-type State = {
+  onPlaybackLevelChange: (id: number) => void,
   open: boolean
 }
 
-class PlaybackLevels extends React.Component<Props, State> {
-  constructor (props: Props) {
-    super(props)
-
-    this.state = {
-      open: false
-    }
-  }
-
-  onClick = (e: Object): void => {
-    this.setState((prevState: State): Object => ({
-      open: !prevState.open
-    }))
-  }
-
+class PlaybackLevels extends React.Component<Props> {
   render () {
     const {
       currentPlaybackLevel,
       onPlaybackLevelChange,
-      playbackLevels
+      playbackLevels,
+      open
     } = this.props
-    const { open } = this.state
     return (
-      <Fragment>
-        <IconButton icon="/assets/img/prof.svg" onClick={this.onClick} />
-        <Transition in={open}>
-          <PopoverWrapper>
-            <Popover open={open}>
-              <LevelsList>
-                {playbackLevels.map((level: PlaybackLevel) => (
-                  <Level
-                    key={level.get('id')}
-                    onClick={() => {
-                      onPlaybackLevelChange(level.get('id'))
-                    }}
-                    selected={
-                      level.get('id') ===
-                      (currentPlaybackLevel && currentPlaybackLevel.get('id'))
-                    }
-                  >
-                    {level.get('label')}
-                  </Level>
-                ))}
-              </LevelsList>
-            </Popover>
-          </PopoverWrapper>
-        </Transition>
-      </Fragment>
+      <SlideModal open={open}>
+        <LevelsList>
+          {playbackLevels.map((level: PlaybackLevel) => (
+            <Level
+              key={level.get('id')}
+              onClick={() => {
+                onPlaybackLevelChange(level.get('id'))
+              }}
+              selected={
+                level.get('id') ===
+                (currentPlaybackLevel && currentPlaybackLevel.get('id'))
+              }
+            >
+              {level.get('label')}
+            </Level>
+          ))}
+        </LevelsList>
+      </SlideModal>
     )
   }
 }

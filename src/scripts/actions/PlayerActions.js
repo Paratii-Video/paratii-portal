@@ -11,7 +11,8 @@ import {
   UPDATE_VIDEO_BUFFERED_TIME,
   PLAYER_UPDATE_VOLUME,
   PLAYBACK_LEVELS_LOADED,
-  PLAYBACK_LEVEL_SET
+  PLAYBACK_LEVEL_SET,
+  PLAYER_SET_ACTIVE_PLUGIN
 } from 'constants/ActionConstants'
 
 export const togglePlayPause = createAction(PLAYER_TOGGLE_PLAYPAUSE)
@@ -23,3 +24,4 @@ export const updateVideoBufferedTime = createAction(UPDATE_VIDEO_BUFFERED_TIME)
 export const updateVolume = createAction(PLAYER_UPDATE_VOLUME)
 export const playbackLevelsLoaded = createAction(PLAYBACK_LEVELS_LOADED)
 export const playbackLevelSet = createAction(PLAYBACK_LEVEL_SET)
+export const playerSetActivePlugin = createAction(PLAYER_SET_ACTIVE_PLUGIN)

@@ -13,10 +13,11 @@ import {
   UPDATE_VIDEO_BUFFERED_TIME,
   PLAYER_UPDATE_VOLUME,
   PLAYBACK_LEVELS_LOADED,
-  PLAYBACK_LEVEL_SET
+  PLAYBACK_LEVEL_SET,
+  PLAYER_SET_ACTIVE_PLUGIN
 } from 'constants/ActionConstants'
 
-import type { Action } from 'types/ApplicationTypes'
+import type { Action, PlayerPlugin } from 'types/ApplicationTypes'
 
 const reducer = {
   [PLAYER_TOGGLE_PLAYPAUSE]: (state: PlayerRecord, action: Action<boolean>) =>
@@ -58,7 +59,11 @@ const reducer = {
   [PLAYBACK_LEVEL_SET]: (
     state: PlayerRecord,
     action: Action<number>
-  ): PlayerRecord => state.set('currentPlaybackLevelId', action.payload)
+  ): PlayerRecord => state.set('currentPlaybackLevelId', action.payload),
+  [PLAYER_SET_ACTIVE_PLUGIN]: (
+    state: PlayerRecord,
+    action: Action<?PlayerPlugin>
+  ): PlayerRecord => state.set('activePlugin', action.payload)
 }
 
 export default handleActions(reducer, new PlayerRecord())

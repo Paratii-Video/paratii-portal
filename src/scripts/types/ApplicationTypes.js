@@ -11,6 +11,7 @@ import {
   REQUEST_STATUS,
   TRANSITION_STATE
 } from 'constants/ApplicationConstants'
+import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 
 export type Location = {
   pathname: string,
@@ -312,3 +313,5 @@ export type Theme = Object & {
 export type RequestStatus = $Values<typeof REQUEST_STATUS>
 
 export type TransitionState = $Values<typeof TRANSITION_STATE>
+
+export type PlayerPlugin = $Values<typeof PLAYER_PLUGIN>

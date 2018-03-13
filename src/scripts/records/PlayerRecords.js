@@ -2,6 +2,8 @@
 
 import { List as ImmutableList, Record as ImmutableRecord } from 'immutable'
 
+import { PlayerPlugin } from 'types/ApplicationTypes'
+
 export class PlaybackLevel extends ImmutableRecord({
   id: 0,
   bitrate: 0,
@@ -23,7 +25,8 @@ class Player extends ImmutableRecord({
   currentBufferedTimeSeconds: 0,
   currentVolume: 0,
   playbackLevels: ImmutableList(),
-  currentPlaybackLevelId: -1
+  currentPlaybackLevelId: -1,
+  activePlugin: null
 }) {
   isPlaying: boolean
   isAttemptingPlay: boolean
@@ -34,6 +37,7 @@ class Player extends ImmutableRecord({
   currentVolume: number
   availablePlaybackLevels: ImmutableList<PlaybackLevel>
   currentPlaybackLevelId: number
+  activePlugin: ?PlayerPlugin
 }
 
 export const _getIsPlaying = (state: Player): boolean => state.get('isPlaying')
@@ -54,5 +58,7 @@ export const _getPlaybackLevels = (
 ): ImmutableList<PlaybackLevel> => state.get('playbackLevels')
 export const _getCurrentPlaybackLevelId = (state: Player): number =>
   state.get('currentPlaybackLevelId')
+export const _getActivePlugin = (state: Player): ?PlayerPlugin =>
+  state.get('activePlugin')
 
 export default Player
