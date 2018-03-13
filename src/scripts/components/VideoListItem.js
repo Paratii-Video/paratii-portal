@@ -39,8 +39,8 @@ const VideoImage = styled.div`
   background-image: url(${({ source }) => source});
   background-size: cover;
   background-position: center center;
-  height: 72px;
-  width: 40%;
+  height: 60px;
+  width: 30%;
 
   @media (max-width: 1024px) {
     width: 20%;
