@@ -77,7 +77,6 @@ class MainHeader extends Component<Props, void> {
   }
 
   bindScroll = () => {
-    console.log('bind')
     // Use passive event listener if available
     let supportsPassive = false
     try {
