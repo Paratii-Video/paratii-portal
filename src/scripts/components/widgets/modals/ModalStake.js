@@ -56,9 +56,10 @@ class ModalStake extends Component<Props, Object> {
 
   onSubmit (event: Object) {
     event.preventDefault()
+    console.log(this.props)
     paratii.eth.tcr
       .checkEligiblityAndApply(
-        this.props.id,
+        this.props.selectedVideo.id,
         paratii.eth.web3.utils.toWei(5 + '')
       )
       .then(resp => {
@@ -67,16 +68,18 @@ class ModalStake extends Component<Props, Object> {
             errorMessage: false
           })
           const videoToSave = {
-            id: this.props.id,
-            title: this.props.title,
-            description: this.props.description,
-            author: this.props.author,
+            id: this.props.selectedVideo.id,
+            title: this.props.selectedVideo.title,
+            description: this.props.selectedVideo.description,
+            author: this.props.selectedVideo.author,
             published: true
           }
           this.props.saveVideoInfo(videoToSave)
           this.props.closeModal()
           console.log(
-            `video ${this.props.id} successfully applied to TCR Listing`
+            `video ${
+              this.props.selectedVideo.id
+            } successfully applied to TCR Listing`
           )
         } else {
           const msg =
