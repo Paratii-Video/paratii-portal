@@ -87,6 +87,10 @@ class MainSvg extends Component<Props, void> {
             data-name="Path 283"
           />
         </symbol>
+
+        <symbol id="icon-player-play" viewBox="806.2 245.408 11.213 18.518">
+          <path d="M816.9 256.067l-8.8 7.6a1.1 1.1 0 0 1-1.8-.9c0-3.4-.1-12.8-.1-16.2a1.1 1.1 0 0 1 1.8-.9l8.8 7.6a2.026 2.026 0 0 1 .1 2.8z" />
+        </symbol>
       </svg>
     )
   }

@@ -90,6 +90,8 @@ const Themes = {
         subtitle2: Colors.purple
       },
       info: {
+        imageBackground: Colors.blackDark,
+        icon: Colors.white,
         time: {
           background: Colors.black,
           color: Colors.white
@@ -107,6 +109,7 @@ const Themes = {
       }
     },
     VideoPlayer: {
+      background: Colors.black,
       header: {
         title: Colors.white,
         icons: Colors.white

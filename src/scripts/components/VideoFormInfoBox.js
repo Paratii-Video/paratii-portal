@@ -26,14 +26,56 @@ const VideoMedia = styled.div`
   width: 100%;
 `
 
-const VideoImage = styled.div`
+const VideoMediaLink = styled(Link)`
   display: block;
-  width: 100%;
-  padding-top: 60%;
+`
+
+const VideoImage = styled.div`
   background-color: black;
-  background-image: url(${({ src }) => src});
+  background-image: url(${({ source }) => source});
   background-size: cover;
   background-position: center center;
+  display: block;
+  padding-top: 60%;
+  width: 100%;
+`
+
+const VideoMediaOverlay = styled.div`
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  &::before {
+    background-color: ${props =>
+    props.theme.colors.VideoForm.info.imageBackground};
+    content: '';
+    height: 100%;
+    left: 0;
+    opacity: 0.5;
+    position: absolute;
+    transition: opacity ${props => props.theme.animation.time.repaint};
+    top: 0;
+    width: 100%;
+    ${VideoMediaLink}:hover & {
+      opacity: 0.7;
+    }
+  }
+`
+
+const VideoMediaIcon = styled.svg`
+  fill: ${props => props.theme.colors.VideoForm.info.icon};
+  height: 20%;
+  transition: transform 0.3s ${props => props.theme.animation.ease.smooth};
+  width: 20%;
+  z-index: 10;
+  ${VideoMediaLink}:hover & {
+    transform: scale(0.9);
+  }
 `
 
 const VideoMediaTime = styled.div`
@@ -41,6 +83,7 @@ const VideoMediaTime = styled.div`
   padding: 10px;
   position: absolute;
   right: 10px;
+  z-index: 15;
 
   &::before {
     background-color: ${props =>
@@ -177,10 +220,15 @@ class InfoBox extends Component<Props, Object> {
     return (
       <VideoFormInfoBox>
         <VideoMedia>
-          <Link to={urlToPlay}>
-            <VideoImage data-src={thumbImage} src={thumbImage} />
-          </Link>
-          {durationBox}
+          <VideoMediaLink to={urlToPlay}>
+            <VideoMediaOverlay>
+              <VideoMediaIcon>
+                <use xlinkHref="#icon-player-play" />
+              </VideoMediaIcon>
+              {durationBox}
+            </VideoMediaOverlay>
+            <VideoImage source={thumbImage} />
+          </VideoMediaLink>
         </VideoMedia>
         {videoProgressBox}
         <Hidden>
