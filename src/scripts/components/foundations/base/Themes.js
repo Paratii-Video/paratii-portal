@@ -26,9 +26,9 @@ const Themes = {
       pink: Colors.pink
     },
     Modal: {
-      background: Colors.blackTransparent,
+      background: Colors.blackLight,
       content: Colors.blackDark,
-      close: Colors.white,
+      close: Colors.grayLight,
       title: Colors.purple,
       hightlight: Colors.white,
       color: Colors.grayLight
