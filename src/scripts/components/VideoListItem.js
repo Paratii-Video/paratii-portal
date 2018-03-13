@@ -130,7 +130,7 @@ class VideoListItem extends Component<Props, void> {
 
     let thumbImage = 'https://paratii.video/public/images/paratii-src.png'
     if (thumbImages && ipfsHash) {
-      const firstThumb = thumbImages[0]
+      const firstThumb = thumbImages.get(0)
       if (firstThumb !== undefined) {
         thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${firstThumb}`
       }
