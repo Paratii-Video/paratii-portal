@@ -42,9 +42,20 @@ class VideoManagerContainer extends Component<Props, void> {
 
     return (
       <Wrapper padding={!showForm}>
-        {showList ? <VideoList withFull={showForm} marginRight /> : ''}
+        {showList ? (
+          <VideoList
+            videoFormRef={this.videoFormRef}
+            withFull={showForm}
+            marginRight
+          />
+        ) : (
+          ''
+        )}
         {showForm ? (
           <VideoForm
+            innerRef={(ref: HTMLElement) => {
+              this.videoFormRef = ref
+            }}
             showModal={this.props.showModal}
             closeModal={this.props.closeModal}
           />

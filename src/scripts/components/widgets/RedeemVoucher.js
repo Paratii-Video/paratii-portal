@@ -13,7 +13,7 @@ type Props = {
 
 const Icon = styled.svg`
   display: block;
-  height: 163px;
+  height: 140px;
   margin: 0 auto 45px;
   width: 100%;
 `

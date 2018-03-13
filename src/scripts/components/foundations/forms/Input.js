@@ -11,7 +11,7 @@ export const StyleFieldText = css`
   background-color: transparent;
   font-family: ${props => props.theme.fonts.family}, sans-serif;
   font-size: ${props => props.theme.fonts.form.input};
-  font-weight: ${props => props.theme.fonts.weight.light};
+  font-weight: ${props => props.theme.fonts.weight.regular};
   width: 100%;
 `
 
