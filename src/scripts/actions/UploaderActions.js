@@ -21,6 +21,8 @@ import { videoFetchSuccess } from 'actions/VideoActions'
 import type { Dispatch } from 'redux'
 import type { RootState } from 'types/ApplicationTypes'
 
+import Notifications from 'react-notification-system-redux'
+
 export const selectUploaderVideo = createAction(UPLOAD_VIDEO_SELECT)
 const uploadRequested = createAction(UPLOAD_REQUESTED)
 const uploadProgress = createAction(UPLOAD_PROGRESS)
@@ -54,14 +56,18 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
   getState: () => RootState
 ) => {
   console.log('STARTING FILE UPLOAD')
+  dispatch(
+    Notifications.success({
+      title: 'Be Patient!',
+      message: 'We are working on your file'
+    })
+  )
   // create a new Id if none was given
   if (!videoId) {
     videoId = paratii.eth.vids.makeId()
   }
   dispatch(
-    videoFetchSuccess(
-      new VideoRecord({ id: videoId, owner: paratii.config.account.address })
-    )
+    videoFetchSuccess({ id: videoId, owner: paratii.config.account.address })
   )
   dispatch(selectUploaderVideo(videoId))
   dispatch(
@@ -76,12 +82,25 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
   // this wll ALSO start the XHR upload
   const uploader = paratii.ipfs.uploader.add(file)
 
-  uploader.on('error', function (err) {
-    console.log('[UPLOAD error]', err)
-    throw err
+  uploader.on('error', function (error) {
+    console.log('[UPLOAD error]', error)
+    dispatch(
+      Notifications.error({
+        title: 'Upload Error',
+        message: error,
+        autoDismiss: 0
+      })
+    )
+    throw error
   })
   uploader.on('done', function (files) {
     console.log('[UPLOAD done (local upload)]', files)
+    dispatch(
+      Notifications.success({
+        title: 'Local upload',
+        message: 'The local upload has been done'
+      })
+    )
     const file = files[0]
 
     upsertVideo(
@@ -102,6 +121,12 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
   })
 
   uploader.on('fileReady', function (file) {
+    dispatch(
+      Notifications.success({
+        title: 'File uploaded',
+        message: 'Now we need to transcode your pixels'
+      })
+    )
     dispatch(
       uploadLocalSuccess({ id: videoId, hash: file.hash, size: file.size })
     )
@@ -134,13 +159,26 @@ export const transcodeVideo = (videoInfo: Object) => async (
       dispatch(uploadProgress({ id: videoInfo.id, progress: percent }))
     })
 
-    transcoder.on('transcoding:error', function (err) {
-      console.log('TRANSCODER ERROR', err)
-      dispatch(transcodingFailure(videoInfo, err))
+    transcoder.on('transcoding:error', function (error) {
+      console.log('TRANSCODER ERROR', error)
+      dispatch(
+        Notifications.error({
+          title: 'Transcoder Error',
+          message: error,
+          autoDismiss: 0
+        })
+      )
+      dispatch(transcodingFailure(videoInfo, error))
     })
 
     transcoder.on('transcoding:started', function (hash, author) {
       console.log('TRANSCODER STARTED', hash, author)
+      dispatch(
+        Notifications.success({
+          title: 'Transcoding',
+          message: 'The transcoder has started'
+        })
+      )
     })
 
     transcoder.once('transcoding:progress', function (hash, size, percent) {
@@ -164,6 +202,12 @@ export const transcodeVideo = (videoInfo: Object) => async (
 
     transcoder.once('transcoding:done', function (hash, result) {
       // if transcoding is done, apparently we have uploaded the file first
+      dispatch(
+        Notifications.success({
+          title: 'Transcoder done',
+          message: 'You video is ready to be published'
+        })
+      )
       dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
       dispatch(
         transcodingSuccess({
@@ -179,7 +223,8 @@ export const transcodeVideo = (videoInfo: Object) => async (
         {
           ipfsHash: result.master.hash,
           owner: paratii.config.account.address,
-          duration: result.duration
+          duration: result.duration,
+          thumbnails: result.screenshots
         },
         getState()
       )
@@ -193,6 +238,13 @@ export const saveVideoInfo = (videoInfo: Object) => async (
 ) => {
   // the owner is the user that is logged in
   console.log('SAVING VIDEO DATA')
+
+  dispatch(
+    Notifications.warning({
+      title: 'We are saving your data'
+    })
+  )
+
   let videoId
   videoInfo.owner = paratii.config.account.address
   if (videoInfo.id) {
@@ -205,11 +257,24 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   dispatch(videoDataStart(videoInfo))
   upsertVideo(videoId, videoInfo, getState())
     .then(videoInfo => {
-      // console.log('SAVED')
+      console.log('SAVED')
       dispatch(videoDataSaved(videoInfo))
+      dispatch(
+        Notifications.success({
+          title: 'Saved',
+          message: 'Video data has been saved!!'
+        })
+      )
     })
     .catch(error => {
       // console.log(error)
+      dispatch(
+        Notifications.error({
+          title: 'Saving Error',
+          message: error,
+          autoDismiss: 0
+        })
+      )
       throw error
     })
 }

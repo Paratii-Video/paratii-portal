@@ -41,7 +41,15 @@ export const VIDEO_DATA_SAVED = createActionConstant('VIDEO_DATA_SAVED')
 export const PLAYER_TOGGLE_PLAYPAUSE = createActionConstant(
   'PLAYER_TOGGLE_PLAYPAUSE'
 )
+export const PLAYER_SET_FULLSCREEN = createActionConstant(
+  'PLAYER_SET_FULLSCREEN'
+)
 export const PLAYER_ATTEMPT_PLAY = createActionConstant('PLAYER_ATTEMPT_PLAY')
+export const UPDATE_VIDEO_TIME = createActionConstant('UPDATE_VIDEO_TIME')
+export const UPDATE_VIDEO_BUFFERED_TIME = createActionConstant(
+  'UPDATE_VIDEO_BUFFERED_TIME'
+)
+export const PLAYER_UPDATE_VOLUME = createActionConstant('PLAYER_UPDATE_VOLUME')
 
 /* Transcoding actions */
 export const TRANSCODING_REQUESTED = createActionConstant(

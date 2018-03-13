@@ -12,6 +12,8 @@ import VideoManager from 'containers/VideoManagerContainer'
 import DebugContainer from 'containers/DebugContainer'
 import WalletContainer from 'containers/WalletContainer'
 
+import Notifications from 'containers/NotificationContainer'
+
 import type { Match } from 'react-router-dom'
 
 import MainTemplate from './templates/MainTemplate'
@@ -25,17 +27,45 @@ import NotFound from './pages/NotFound'
 
 import { paratiiTheme } from 'constants/ApplicationConstants'
 
+import type VideoRecord from 'records/VideoRecords'
+import type { Map } from 'immutable'
+
 type Props = {
   initializeApp: () => void,
   match: Match,
-  setSelectedVideo: (id: string) => void
+  setSelectedVideo: (id: string) => void,
+  videos: Map<string, VideoRecord>
 }
 
-class App extends Component<Props, void> {
+type State = {
+  isBusy: boolean
+}
+
+class App extends Component<Props, State> {
   constructor (props: Props) {
     super(props)
 
     this.props.initializeApp()
+    this.state = {
+      isBusy: this.props.videos ? this.props.videos.size > 0 : false
+    }
+  }
+
+  componentDidUpdate () {
+    const onUnload = !this.state.isBusy
+      ? undefined
+      : e => {
+        return true
+      }
+    window.onbeforeunload = onUnload
+  }
+
+  componentWillReceiveProps (nextProps: Props): void {
+    if (nextProps.videos) {
+      this.setState({
+        isBusy: nextProps.videos.size > 0
+      })
+    }
   }
 
   render () {
@@ -44,6 +74,8 @@ class App extends Component<Props, void> {
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
           <Modal />
+          <Notifications />
+
           <MainHeader />
           <Main>
             <Switch>
@@ -58,10 +90,7 @@ class App extends Component<Props, void> {
               <Route path={`${match.url}voucher`} component={Voucher} />
               <Route path={`${match.url}debug`} component={DebugContainer} />
               <Route path={`${match.url}wallet`} component={WalletContainer} />
-              <Route
-                path={`${match.url}play/:id`}
-                render={props => <PlayContainer {...props} />}
-              />
+              <Route path={`${match.url}play/:id`} component={PlayContainer} />
               <Route component={NotFound} />
             </Switch>
           </Main>

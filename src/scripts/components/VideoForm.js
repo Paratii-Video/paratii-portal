@@ -86,7 +86,8 @@ type Props = {
   closeModal: () => void,
   openModal: () => void,
   user: UserRecord,
-  balance: String
+  balance: String,
+  innerRef: Object
 }
 
 class VideoForm extends Component<Props, Object> {
@@ -213,19 +214,19 @@ class VideoForm extends Component<Props, Object> {
 
     // The restart button is just for convenicene, for testing
     let restartButton
-    if (process.env.NODE_ENV === 'development') {
-      restartButton = (
-        <div>
-          Use this for testing (this will not be visible in production)
-          <input type="file" onChange={this.onFileChosen} />
-        </div>
-      )
-    } else {
-      restartButton = ''
-    }
+    // if (process.env.NODE_ENV === 'development') {
+    //   restartButton = (
+    //     <div>
+    //       Use this for testing (this will not be visible in production)
+    //       <input type="file" onChange={this.onFileChosen} />
+    //     </div>
+    //   )
+    // } else {
+    //   restartButton = ''
+    // }
 
     return (
-      <Card full>
+      <Card full innerRef={this.props.innerRef} nobackground>
         <VideoFormHeader>
           <VideoFormTitle id="video-title">{title}</VideoFormTitle>
           <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>
