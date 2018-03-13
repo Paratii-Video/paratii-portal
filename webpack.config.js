@@ -102,16 +102,7 @@ const config = {
       {
         test: /\.scss$/,
         include: stylesDir,
-        exclude: stylesDir + "/embed/index.scss",
         use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"]
-      },
-      {
-        test: /\.scss$/,
-        include: stylesDir + "/embed/index.scss",
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
       }
     ]
   },
