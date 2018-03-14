@@ -65,6 +65,35 @@ type Props = {
 }
 
 class PlaybackLevels extends React.Component<Props> {
+  getSelectedLevelIndex (): number {
+    const { currentPlaybackLevel, playbackLevels } = this.props
+    if (!currentPlaybackLevel) {
+      return -1
+    }
+
+    return playbackLevels.findIndex(
+      (level: PlaybackLevel): boolean =>
+        level.get('id') === currentPlaybackLevel.get('id')
+    )
+  }
+
+  getLevelsListOffsetPercentage (): number {
+    const { currentPlaybackLevel, playbackLevels } = this.props
+    let offsetXPercentage: number = 0
+    const selectedIndex: number = this.getSelectedLevelIndex()
+    const numLevels: number = playbackLevels.size
+
+    if (currentPlaybackLevel) {
+      if (selectedIndex >= 0) {
+        const currentLevelFactor =
+          selectedIndex + (numLevels % 2 !== 0 ? 0.5 : 0.35)
+        offsetXPercentage = 50 - currentLevelFactor / numLevels * 100
+      }
+    }
+
+    return offsetXPercentage
+  }
+
   render () {
     const {
       currentPlaybackLevel,
@@ -73,22 +102,9 @@ class PlaybackLevels extends React.Component<Props> {
       open,
       onClose
     } = this.props
-    let offsetXPercentage: number = 0
-    let selectedIndex: number = 0
+    const offsetXPercentage: number = this.getLevelsListOffsetPercentage()
+    const selectedIndex: number = this.getSelectedLevelIndex()
     const numLevels: number = playbackLevels.size
-
-    if (currentPlaybackLevel) {
-      selectedIndex = playbackLevels.findIndex(
-        (level: PlaybackLevel): boolean =>
-          level.get('id') === currentPlaybackLevel.get('id')
-      )
-
-      if (selectedIndex >= 0) {
-        const currentLevelFactor =
-          selectedIndex + (numLevels % 2 !== 0 ? 0.5 : 0.35)
-        offsetXPercentage = 50 - currentLevelFactor / numLevels * 100
-      }
-    }
 
     return (
       <SlideModal open={open} onClose={onClose}>
