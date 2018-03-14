@@ -257,7 +257,6 @@ class PlayerControls extends Component<Props, State> {
             innerRef={(ref: HTMLElement) => {
               this.progressBarRef = ref
             }}
-            scrubbingPositionPercentage={scrubbingPositionPercentage}
             bufferTime={currentBufferedTimeSeconds}
             totalDuration={videoDurationSeconds}
           >
