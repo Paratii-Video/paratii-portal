@@ -303,13 +303,12 @@ class Play extends Component<Props, State> {
         })
         playback.on(Events.PLAYBACK_LEVEL_SWITCH_START, () => {
           playbackLevelSet(this.stagedPlaybackLevel)
-          this.wasPlaying = (this.player && this.player.isPlaying()) || false
         })
         playback.on(Events.PLAYBACK_LEVEL_SWITCH_END, () => {
-          if (this.wasPlaying && this.player) {
+          const { isPlaying } = this.props
+          if (isPlaying && this.player) {
             this.player.play()
           }
-          this.wasPlaying = false
         })
       }
     }

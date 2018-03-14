@@ -131,7 +131,7 @@ class PlaybackLevels extends React.Component<Props> {
               </Level>
             ))}
           </LevelsList>
-          <SelectedIndicator innerRef={this.selectedIndicatorRefCallback} />
+          <SelectedIndicator />
         </Wrapper>
       </SlideModal>
     )

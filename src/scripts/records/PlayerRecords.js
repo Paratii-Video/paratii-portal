@@ -2,7 +2,7 @@
 
 import { List as ImmutableList, Record as ImmutableRecord } from 'immutable'
 
-import { PlayerPlugin } from 'types/ApplicationTypes'
+import type { PlayerPlugin } from 'types/ApplicationTypes'
 
 export class PlaybackLevel extends ImmutableRecord({
   id: 0,
