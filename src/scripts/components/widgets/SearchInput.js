@@ -28,7 +28,7 @@ const SearchInputButton = styled(Button)`
 `
 
 const SearchInputSVG = styled.svg`
-  fill: ${props => props.theme.colors.header.iconsFill};
+  fill: ${props => props.theme.colors.header.icon};
   height: 100%;
   width: 100%;
 `

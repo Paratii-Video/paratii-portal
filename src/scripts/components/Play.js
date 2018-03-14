@@ -11,6 +11,7 @@ import VideoRecord from 'records/VideoRecords'
 import VideoOverlay from 'components/VideoOverlay'
 import Button from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
+import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
 import NotFound from './pages/NotFound'
 import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
@@ -180,9 +181,29 @@ const ShareLinkIcon = styled.img`
   width: 100%;
 `
 
-const DescriptionWrapper = styled(Card)`
+const PlayVideoInfo = styled(Card)`
   width: 100%;
 `
+
+const PlayVideoInfoButtons = styled.div`
+  display: flex;
+  margin: 15px 0 15px;
+`
+
+const ButtonIcon = styled(Button)`
+  display: flex;
+  margin-right: 10px;
+`
+
+const SVG = styled.svg`
+  display: block;
+  fill: ${props => props.theme.colors.VideoDescription.icon};
+  height: 20px;
+  margin-right: 10px;
+  width: 20px;
+`
+
+const PlayVideoInfoHighlight = Text.withComponent('span')
 
 const HIDE_CONTROLS_THRESHOLD: number = 2000
 
@@ -676,7 +697,54 @@ class Play extends Component<Props, State> {
               ) : null}
             </PlayerWrapper>
           </VideoWrapper>
-          {!isEmbed && <DescriptionWrapper />}
+          {!isEmbed && (
+            <PlayVideoInfo>
+              <Title small>Christmas Trees - Documentary</Title>
+              <Text>By Susan Medelin</Text>
+              <PlayVideoInfoButtons>
+                <ButtonIcon>
+                  <SVG>
+                    <use xlinkHref="#icon-play-view" />
+                  </SVG>
+                  <Text small gray>
+                    0
+                  </Text>
+                </ButtonIcon>
+                <ButtonIcon>
+                  <SVG>
+                    <use xlinkHref="#icon-play-like" />
+                  </SVG>
+                  <Text small gray>
+                    0
+                  </Text>
+                </ButtonIcon>
+                <ButtonIcon>
+                  <SVG>
+                    <use xlinkHref="#icon-play-dislike" />
+                  </SVG>
+                  <Text small gray>
+                    0
+                  </Text>
+                </ButtonIcon>
+              </PlayVideoInfoButtons>
+              <Text gray>
+                Price{' '}
+                <PlayVideoInfoHighlight purple>Free</PlayVideoInfoHighlight>
+              </Text>
+              <Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et
+                risus egestas, facilisis justo nec, aliquam enim. Sed lobortis
+                mi sodales massa euismod sodales. Praesent lacinia ac nulla eu
+                mollis. Praesent vitae consequat massa. Morbi sed massa vitae
+                ligula tincidunt rutrum. Sed congue neque id mauris gravida
+                aliquam. Praesent ultrices accumsan eros, Lorem ipsum dolor sit
+                amet, consectetur adipiscing elit. Sed et risus egestas,
+                facilisis justo nec, aliquam enim. Sed lobortis mi sodales massa
+                euismod sodales. Praesent lacinia ac nulla eu mollis. Praesent
+                vitae consequat massa. Morbi sed massa vitae
+              </Text>
+            </PlayVideoInfo>
+          )}
         </Wrapper>
       )
     }

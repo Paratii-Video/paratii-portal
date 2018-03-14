@@ -10,8 +10,8 @@ const Themes = {
     },
     header: {
       background: Colors.blackLight,
-      iconsFill: Colors.grayLight,
-      logoFill: Colors.white
+      icon: Colors.grayLight,
+      logo: Colors.white
     },
     footer: {
       background: Colors.black,
@@ -124,6 +124,9 @@ const Themes = {
         background: Colors.black,
         time: Colors.white
       }
+    },
+    VideoDescription: {
+      icon: Colors.grayLight
     }
   }
 }
