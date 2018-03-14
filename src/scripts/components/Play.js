@@ -475,40 +475,42 @@ class Play extends Component<Props, State> {
     if (video && video.thumbnails.size === 4) {
       poster = video.thumbnails.get(0)
     }
-    import('paratii-mediaplayer').then(CreatePlayer => {
-      this.player = CreatePlayer({
-        selector: '#player',
-        source: `https://gateway.paratii.video/ipfs/${
-          video.ipfsHash
-        }/master.m3u8`,
-        poster: `https://gateway.paratii.video/ipfs/${
-          video.ipfsHash
-        }/${poster}`,
-        mimeType: 'application/x-mpegURL',
-        ipfsHash: video.ipfsHash,
-        autoPlay: true
-      })
-      this.bindClapprEvents()
+    import(/* webpackChunkName: `mediaplayer` */ 'paratii-mediaplayer').then(
+      CreatePlayer => {
+        this.player = CreatePlayer({
+          selector: '#player',
+          source: `https://gateway.paratii.video/ipfs/${
+            video.ipfsHash
+          }/master.m3u8`,
+          poster: `https://gateway.paratii.video/ipfs/${
+            video.ipfsHash
+          }/${poster}`,
+          mimeType: 'application/x-mpegURL',
+          ipfsHash: video.ipfsHash,
+          autoPlay: true
+        })
+        this.bindClapprEvents()
 
-      // initialize mux here
-      // Note to frontend ppl. if there is a better locations for this
-      // feel free to change it.
-      mux.monitor('#player video', {
-        debug: true,
-        data: {
-          property_key: 'le7n9kbqk3qugqbo03pinsatl', // required (DEV KEY)
+        // initialize mux here
+        // Note to frontend ppl. if there is a better locations for this
+        // feel free to change it.
+        mux.monitor('#player video', {
+          debug: true,
+          data: {
+            property_key: 'le7n9kbqk3qugqbo03pinsatl', // required (DEV KEY)
 
-          // Metadata
-          player_name: 'Paratii Player', // ex: 'My Main Player'
-          player_init_time: new Date(),
+            // Metadata
+            player_name: 'Paratii Player', // ex: 'My Main Player'
+            player_init_time: new Date(),
 
-          video_id: video.id,
-          video_title: video.title,
-          video_duration: video.duration,
-          video_variant_id: video.ipfsHash
-        }
-      })
-    })
+            video_id: video.id,
+            video_title: video.title,
+            video_duration: video.duration,
+            video_variant_id: video.ipfsHash
+          }
+        })
+      }
+    )
   }
 
   togglePlayPause = (): void => {

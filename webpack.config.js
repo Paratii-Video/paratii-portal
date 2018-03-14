@@ -133,7 +133,20 @@ const config = {
           compress: false
         }
       })
-    : new webpack.HotModuleReplacementPlugin()
+    : new webpack.HotModuleReplacementPlugin(),
+    // NOTE this still causes an issue when IPFS is starting.
+    // I'm debugging this :( :x
+    // prod
+    // ? new UglifyJsPlugin({
+    //     exclude: [/ipfs/i],
+    //     sourceMap: false, // this is an effor to save some memory
+    //     uglifyOptions: {
+    //       ecma: 6,
+    //       mangle: true,
+    //       compress: true
+    //     }
+    //   })
+    // : new webpack.HotModuleReplacementPlugin()
   ]
 };
 
