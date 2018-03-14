@@ -181,11 +181,11 @@ const ShareLinkIcon = styled.img`
   width: 100%;
 `
 
-const PlayVideoInfo = styled(Card)`
+const PlayInfo = styled(Card)`
   width: 100%;
 `
 
-const PlayVideoInfoButtons = styled.div`
+const PlayInfoButtons = styled.div`
   display: flex;
   margin: 15px 0 15px;
 `
@@ -203,7 +203,7 @@ const SVG = styled.svg`
   width: 20px;
 `
 
-const PlayVideoInfoHighlight = Text.withComponent('span')
+const PlayInfoHighlight = Text.withComponent('span')
 
 const HIDE_CONTROLS_THRESHOLD: number = 2000
 
@@ -698,10 +698,10 @@ class Play extends Component<Props, State> {
             </PlayerWrapper>
           </VideoWrapper>
           {!isEmbed && (
-            <PlayVideoInfo>
-              <Title small>Christmas Trees - Documentary</Title>
-              <Text>By Susan Medelin</Text>
-              <PlayVideoInfoButtons>
+            <PlayInfo>
+              {video.title && <Title small>{video.title}</Title>}
+              {video.owner && <Text>By {video.owner}</Text>}
+              <PlayInfoButtons>
                 <ButtonIcon>
                   <SVG>
                     <use xlinkHref="#icon-play-view" />
@@ -726,24 +726,12 @@ class Play extends Component<Props, State> {
                     0
                   </Text>
                 </ButtonIcon>
-              </PlayVideoInfoButtons>
+              </PlayInfoButtons>
               <Text gray>
-                Price{' '}
-                <PlayVideoInfoHighlight purple>Free</PlayVideoInfoHighlight>
+                Price <PlayInfoHighlight purple>Free</PlayInfoHighlight>
               </Text>
-              <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et
-                risus egestas, facilisis justo nec, aliquam enim. Sed lobortis
-                mi sodales massa euismod sodales. Praesent lacinia ac nulla eu
-                mollis. Praesent vitae consequat massa. Morbi sed massa vitae
-                ligula tincidunt rutrum. Sed congue neque id mauris gravida
-                aliquam. Praesent ultrices accumsan eros, Lorem ipsum dolor sit
-                amet, consectetur adipiscing elit. Sed et risus egestas,
-                facilisis justo nec, aliquam enim. Sed lobortis mi sodales massa
-                euismod sodales. Praesent lacinia ac nulla eu mollis. Praesent
-                vitae consequat massa. Morbi sed massa vitae
-              </Text>
-            </PlayVideoInfo>
+              {video.description && <Text>{video.description}</Text>}
+            </PlayInfo>
           )}
         </Wrapper>
       )
