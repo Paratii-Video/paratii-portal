@@ -34,7 +34,6 @@ type Props = {
   playbackLevels: ImmutableList<PlaybackLevel>,
   currentPlaybackLevel: ?PlaybackLevel,
   onPlaybackLevelChange: (levelId: number) => void,
-  popoverPortal: ?HTMLElement,
   activePlugin: ?PlayerPlugin,
   setActivePlugin: (nextPlugin: ?PlayerPlugin) => void
 }

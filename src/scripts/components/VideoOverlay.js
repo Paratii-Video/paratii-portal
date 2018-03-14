@@ -257,7 +257,6 @@ class VideoOverlay extends Component<Props, State> {
           onVolumeChange={onVolumeChange}
           onToggleMute={onToggleMute}
           onPlaybackLevelChange={onPlaybackLevelChange}
-          popoverPortal={this.popoverWrapperRef}
           togglePlayPause={togglePlayPause}
           toggleFullscreen={toggleFullscreen}
           transitionState={transitionState}
