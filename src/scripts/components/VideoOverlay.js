@@ -249,7 +249,10 @@ class VideoOverlay extends Component<Props, State> {
                 </ShareButton>
               </ButtonWrapper>
             </ButtonGroup>
-            <PopoverWrapper open innerRef={this.popoverWrapperRefCallback} />
+            <PopoverWrapper
+              open={!!openPopover}
+              innerRef={this.popoverWrapperRefCallback}
+            />
           </VideoInfo>
         </Overlay>
         <PlayerControlsContainer
