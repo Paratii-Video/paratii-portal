@@ -16,7 +16,8 @@ type Props = {
   modalProps: Object,
   closeModal: () => void,
   saveVideoInfo: Object => Object,
-  selectedVideo: Object => Object
+  selectedVideo: Object => Object,
+  notification: (Object, string) => void
 }
 
 const Title = styled.h2`
@@ -45,6 +46,7 @@ const Footer = styled.div`
 
 class ModalStake extends Component<Props, Object> {
   onSubmit: (e: Object) => void
+
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -56,12 +58,13 @@ class ModalStake extends Component<Props, Object> {
 
   onSubmit (event: Object) {
     event.preventDefault()
-    console.log(this.props)
+    this.props.notification({ title: 'Processing...' }, 'warning')
+    // FIXME we need to manage this globally and not hardcoded
+    const stakeAmount = 5
+    const stakeAmountWei = paratii.eth.web3.utils.toWei(stakeAmount + '')
+    const videoIdStaked = this.props.selectedVideo.id
     paratii.eth.tcr
-      .checkEligiblityAndApply(
-        this.props.selectedVideo.id,
-        paratii.eth.web3.utils.toWei(5 + '')
-      )
+      .checkEligiblityAndApply(videoIdStaked, stakeAmountWei)
       .then(resp => {
         if (resp && resp === true) {
           this.setState({
@@ -77,9 +80,14 @@ class ModalStake extends Component<Props, Object> {
           this.props.saveVideoInfo(videoToSave)
           this.props.closeModal()
           console.log(
-            `video ${
-              this.props.selectedVideo.id
-            } successfully applied to TCR Listing`
+            `video ${videoIdStaked} successfully applied to TCR Listing`
+          )
+          this.props.notification(
+            {
+              title: 'Stake well-done',
+              message: `You have staked ${stakeAmount}PTI.`
+            },
+            'success'
           )
         } else {
           const msg =

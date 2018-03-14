@@ -85,6 +85,15 @@ const ProgressBuffer = styled.div`
   background: ${({ theme }) => theme.colors.VideoPlayer.progress.base};
   `
 
+const ProgressBarWrapper = styled.div`
+  position: absolute;
+  top: -10px;
+  height: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  `
+
 /* prettier-ignore */
 const ProgressBar = styled.div`
   width: 100%;
@@ -136,6 +145,7 @@ const Time = styled.div`
   `
 
 const VolumeBarWrapper = styled.div`
+  position: relative;
   width: 200px;
   margin-left: calc(-${CONTROLS_SPACING} / 2);
   margin-right: ${CONTROLS_SPACING};
@@ -237,33 +247,36 @@ class PlayerControls extends Component<Props, State> {
     const { scrubbingPositionPercentage } = this.state
     return (
       <Controls transitionState={transitionState}>
-        <ProgressBar
-          innerRef={(ref: HTMLElement) => {
-            this.progressBarRef = ref
-          }}
+        <ProgressBarWrapper
           onClick={(e: Object) => {
             if (this.progressBarRef) {
               const wrapperRect: Object = this.progressBarRef.getBoundingClientRect()
               onScrub((e.clientX - wrapperRect.x) * 100 / wrapperRect.width)
             }
           }}
-          currentTime={currentTimeSeconds}
-          scrubbingPositionPercentage={scrubbingPositionPercentage}
-          bufferTime={currentBufferedTimeSeconds}
-          totalDuration={videoDurationSeconds}
         >
-          <ProgressBuffer
-            bufferTime={currentBufferedTimeSeconds}
-            totalDuration={currentBufferedTimeSeconds}
-          />
-          <ProgressIndicator
-            onMouseDown={() => {
-              this.setState({
-                userIsScrubbing: true
-              })
+          <ProgressBar
+            innerRef={(ref: HTMLElement) => {
+              this.progressBarRef = ref
             }}
-          />
-        </ProgressBar>
+            currentTime={currentTimeSeconds}
+            scrubbingPositionPercentage={scrubbingPositionPercentage}
+            bufferTime={currentBufferedTimeSeconds}
+            totalDuration={videoDurationSeconds}
+          >
+            <ProgressBuffer
+              bufferTime={currentBufferedTimeSeconds}
+              totalDuration={currentBufferedTimeSeconds}
+            />
+            <ProgressIndicator
+              onMouseDown={() => {
+                this.setState({
+                  userIsScrubbing: true
+                })
+              }}
+            />
+          </ProgressBar>
+        </ProgressBarWrapper>
         <ControlButtons>
           <LeftControls>
             <ControlButtonWrapper>
