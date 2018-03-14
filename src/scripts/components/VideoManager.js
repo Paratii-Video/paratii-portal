@@ -34,7 +34,10 @@ const Wrapper = CardContainer.extend`
 class VideoManager extends Component<Props, void> {
   constructor (props: Props) {
     super(props)
-    this.props.setSelectedVideo(this.props.match.params.id)
+    if (this.props.match.params.id) {
+      this.props.setSelectedVideo(this.props.match.params.id)
+      console.log(this.props.match.params.id)
+    }
   }
 
   render () {
