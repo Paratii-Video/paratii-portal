@@ -9,7 +9,7 @@ const Themes = {
       color: Colors.grayLight
     },
     header: {
-      background: Colors.black,
+      background: Colors.blackLight,
       iconsFill: Colors.grayLight,
       logoFill: Colors.white
     },
