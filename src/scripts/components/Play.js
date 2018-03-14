@@ -15,9 +15,11 @@ import Title from 'components/foundations/Title'
 import NotFound from './pages/NotFound'
 import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
 
-import type { ClapprPlayer } from 'types/ApplicationTypes'
+import type { ClapprPlayer, PlayerPlugin } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
 import mux from 'mux-embed'
+
+const PLAYER_ID = 'player'
 
 type Props = {
   match: Match,
@@ -38,7 +40,9 @@ type Props = {
   isEmbed?: boolean,
   currentTimeSeconds: number,
   currentBufferedTimeSeconds: number,
-  currentPlaybackLevel: ?PlaybackLevel
+  currentPlaybackLevel: ?PlaybackLevel,
+  playerReset: () => void,
+  activePlugin: ?PlayerPlugin
 }
 
 type State = {
@@ -203,6 +207,14 @@ class Play extends Component<Props, State> {
       this.props.updateVideoBufferedTime({
         time: 0
       })
+    }
+
+    const playerNode = document.querySelector(`#${PLAYER_ID}`)
+    if (playerNode) {
+      const parentNode: ?Node = playerNode.parentNode
+      if (parentNode) {
+        parentNode.removeChild(playerNode)
+      }
     }
   }
 
@@ -428,6 +440,7 @@ class Play extends Component<Props, State> {
 
     // Space key
     if (e.keyCode === 32) {
+      e.preventDefault()
       this.togglePlayPause()
     }
   }
@@ -457,6 +470,7 @@ class Play extends Component<Props, State> {
   }
 
   componentWillUnmount (): void {
+    const { playerReset } = this.props
     this.removeFullScreenEventListeners()
     this.removeKeyDownEventListeners()
 
@@ -464,7 +478,7 @@ class Play extends Component<Props, State> {
       this.player.destroy()
     }
 
-    this.props.setSelectedVideo('')
+    playerReset()
   }
 
   componentWillReceiveProps (nextProps: Props): void {
@@ -603,7 +617,7 @@ class Play extends Component<Props, State> {
     }
   }
   render () {
-    const { isEmbed, video } = this.props
+    const { activePlugin, isEmbed, video } = this.props
     if (this.state.videoNotFound) {
       return <NotFound />
     } else {
@@ -617,7 +631,7 @@ class Play extends Component<Props, State> {
             }}
           >
             <Transition
-              in={true || this.state.shouldShowVideoOverlay}
+              in={this.state.shouldShowVideoOverlay || activePlugin}
               timeout={0}
             >
               {(transitionState: ?string) => (
@@ -648,7 +662,7 @@ class Play extends Component<Props, State> {
                 </OverlayWrapper>
               )}
             </Transition>
-            <Player id="player" />
+            <Player id={PLAYER_ID} />
             {this.props.video ? (
               <ShareOverlay show={this.state.showShareModal}>
                 <CloseButton onClick={this.toggleShareModal}>
