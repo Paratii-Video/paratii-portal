@@ -25,16 +25,16 @@ const Title = styled.div`
 
 const LevelsList = styled.ul`
   flex: 1 1 0;
+  width: 50%;
+  min-width: 500px;
+  margin: auto;
   display: flex;
   margin-top: 10px;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-around;
   overflow-y: scroll;
-  transform: translateX(${({ offsetX }) => offsetX}px);
-`
-
-const LevelLabel = styled.span`
-  opacity: ${({ totalLevels, index }) => index * (1.0 - 0.5) / (totalLevels - 1) + 0.5};
+  transform: translateX(${({ offsetXPercentage }) => offsetXPercentage}%);
+  transition: 250ms all ${({ theme }) => theme.animation.ease.smooth};
 `
 
 const Level = styled.li`
@@ -43,14 +43,8 @@ const Level = styled.li`
   align-items: center;
   font-size: 14px;
   cursor: pointer;
-  margin-left: 10%;
-  opacity: ${({ totalLevels, index }) => (index + 1) / totalLevels * (1.0 - 0.4) + 0.4};
-
-  @media (max-width: 1200px) {
-    &:first-child {
-      margin-left: 0;
-    }
-  }
+  opacity: ${({ index, numLevels, selectedIndex }) =>
+    1 - Math.abs((selectedIndex - index) / numLevels)};
 `
 
 const SelectedIndicator = styled.div`
@@ -67,114 +61,57 @@ type Props = {
   currentPlaybackLevel: ?PlaybackLevel,
   onPlaybackLevelChange: (id: number) => void,
   open: boolean,
-  onClose: () => void,
+  onClose: () => void
 }
 
-type State = {
-  offsetX: number,
-  selectedLevelRef: ?HTMLElement,
-  selectedIndicatorRef: ?HTMLElement,
-}
-
-class PlaybackLevels extends React.Component<Props, State> {
-  levelRefs: { [key: number]: HTMLElement } = {}
-  currentLevelsOffset: number = 0
-
-  constructor (props: Props) {
-    super(props)
-
-    this.state = {
-      offsetX: 0,
-      selectedLevelRef: null,
-      selectedIndicatorRef: null
-    }
-  }
-
-  componentDidMount () {
-    const { currentPlaybackLevel } = this.props
+class PlaybackLevels extends React.Component<Props> {
+  render () {
+    const {
+      currentPlaybackLevel,
+      playbackLevels,
+      onPlaybackLevelChange,
+      open,
+      onClose
+    } = this.props
+    let offsetXPercentage: number = 0
+    let selectedIndex: number = 0
+    const numLevels: number = playbackLevels.size
 
     if (currentPlaybackLevel) {
-      this.setState({
-        selectedLevelRef: this.levelRefs[currentPlaybackLevel.get('id')]
-      })
-    }
-  }
+      selectedIndex = playbackLevels.findIndex(
+        (level: PlaybackLevel): boolean =>
+          level.get('id') === currentPlaybackLevel.get('id')
+      )
 
-  componentWillReceiveProps (nextProps: Props) {
-    const { currentPlaybackLevel, playbackLevels } = this.props
-    const nextPlaybackLevel: ?PlaybackLevel = nextProps.currentPlaybackLevel
-    if (nextPlaybackLevel && nextPlaybackLevel !== currentPlaybackLevel) {
-      this.setState((prevState: State) => {
-        const nextLevelRef: ?HTMLElement = this.levelRefs[
-          nextPlaybackLevel.get('id')
-        ]
-
-        if (nextLevelRef) {
-          const refRect: Object = nextLevelRef.getBoundingClientRect()
-          const wrapperRect: Object = this.wrapperRef.getBoundingClientRect()
-          return {
-            offsetX: wrapperRect.width / 2 -
-              wrapperRect.width / playbackLevels.size
-          }
-        }
-      })
-    }
-  }
-
-  selectedIndicatorRefCallback = (ref: HTMLElement) => {
-    this.setState((prevState: State) => {
-      if (prevState.selectedIndicatorRef) {
-        return null
+      if (selectedIndex >= 0) {
+        const currentLevelFactor =
+          selectedIndex + (numLevels % 2 !== 0 ? 0.5 : 0.35)
+        offsetXPercentage = 50 - currentLevelFactor / numLevels * 100
       }
-      return { selectedIndicatorRef: ref }
-    })
-  }
-
-  levelRefCallback = (id: number, ref: HTMLElement) => {
-    this.levelRefs[id] = this.levelRefs[id] || ref
-  }
-
-  onPlaybackLevelChange = (id: number) => {
-    const { onPlaybackLevelChange } = this.props
-    this.setState({
-      selectedLevelRef: this.levelRefs[id]
-    })
-
-    onPlaybackLevelChange(id)
-  }
-
-  render () {
-    const { currentPlaybackLevel, playbackLevels, open, onClose } = this.props
-    const { offsetX } = this.state
+    }
 
     return (
-      <SlideModal open={open || true} onClose={onClose}>
-        <Wrapper
-          innerRef={ref => {
-            this.wrapperRef = ref
-          }}
-        >
+      <SlideModal open={open} onClose={onClose}>
+        <Wrapper>
           <TopBar>
             <Title>Video Quality</Title>
           </TopBar>
-          <LevelsList offsetX={offsetX}>
+          <LevelsList offsetXPercentage={offsetXPercentage}>
             {playbackLevels.map((level: PlaybackLevel, index: number) => (
               <Level
-                innerRef={(ref: HTMLElement) => {
-                  this.levelRefCallback(level.get('id'), ref)
-                }}
+                numLevels={numLevels}
+                selectedIndex={selectedIndex}
+                index={index}
                 key={level.get('id')}
                 onClick={() => {
-                  this.onPlaybackLevelChange(level.get('id'))
+                  onPlaybackLevelChange(level.get('id'))
                 }}
                 selected={
                   level.get('id') ===
-                    (currentPlaybackLevel && currentPlaybackLevel.get('id'))
+                  (currentPlaybackLevel && currentPlaybackLevel.get('id'))
                 }
               >
-                <LevelLabel index={index} totalLevels={playbackLevels.size}>
-                  {level.get('label')}
-                </LevelLabel>
+                {level.get('label')}
               </Level>
             ))}
           </LevelsList>
