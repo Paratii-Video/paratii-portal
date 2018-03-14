@@ -6,13 +6,9 @@ import { PlayerPlugin } from 'types/ApplicationTypes'
 
 export class PlaybackLevel extends ImmutableRecord({
   id: 0,
-  bitrate: 0,
-  url: '',
   label: ''
 }) {
   id: number
-  bitrate: number
-  url: string
   label: string
 }
 

@@ -77,26 +77,33 @@ export const getDurationSeconds: (state: RootState) => string = createSelector(
   }
 )
 
+export const getPlaybackLevelsSorted: (
+  state: RootState
+) => ImmutableList<PlaybackLevel> = createSelector(
+  [getPlaybackLevels],
+  (levels: ImmutableList<PlaybackLevel>): ImmutableList<PlaybackLevel> =>
+    levels
+      .sort(
+        (level1: PlaybackLevel, level2: PlaybackLevel): number =>
+          level1.get('id') - level2.get('id')
+      )
+      .push(
+        new PlaybackLevel({
+          id: -1,
+          label: 'Automatic'
+        })
+      )
+)
+
 export const getCurrentPlaybackLevel: (
   state: RootState
 ) => ?PlaybackLevel = createSelector(
-  [getPlaybackLevels, getCurrentPlaybackLevelId],
+  [getPlaybackLevelsSorted, getCurrentPlaybackLevelId],
   (
     levels: ImmutableList<PlaybackLevel>,
     currentLevelId: number
   ): ?PlaybackLevel =>
     levels.find(
       (level: PlaybackLevel): boolean => level.get('id') === currentLevelId
-    )
-)
-
-export const getPlaybackLevelsSorted: (
-  state: RootState
-) => ImmutableList<PlaybackLevel> = createSelector(
-  [getPlaybackLevels],
-  (levels: ImmutableList<PlaybackLevel>): ImmutableList<PlaybackLevel> =>
-    levels.sort(
-      (level1: PlaybackLevel, level2: PlaybackLevel): number =>
-        level1.get('id') - level2.get('id')
     )
 )

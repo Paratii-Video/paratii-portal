@@ -226,9 +226,14 @@ class Play extends Component<Props, State> {
       player.on(Events.PLAYER_VOLUMEUPDATE, (volume: number): void => {
         updateVolume(volume)
       })
+
       // $FlowFixMe
       const playback = player.core && player.core.getCurrentPlayback()
       if (playback && video) {
+        player.on(Events.PLAYER_READY, () => {
+          console.log(playback)
+        })
+
         playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
         playback.on(
           Events.PLAYBACK_TIMEUPDATE,
@@ -263,17 +268,15 @@ class Play extends Component<Props, State> {
             }))
           )
         })
+        playback.on(Events.PLAYBACK_LEVEL_SWITCH_START, () => {
+          playbackLevelSet(this.stagedPlaybackLevel)
+          this.wasPlaying = (this.player && this.player.isPlaying()) || false
+        })
         playback.on(Events.PLAYBACK_LEVEL_SWITCH_END, () => {
-          if (this.stagedPlaybackLevel === -1) {
-            const startLevel = playback._hls && playback._hls.startLevel
-
-            if (typeof startLevel === 'number' && startLevel >= 0) {
-              playbackLevelSet(startLevel)
-            }
-          } else {
-            playbackLevelSet(this.stagedPlaybackLevel)
+          if (this.wasPlaying && this.player) {
+            this.player.play()
           }
-          this.stagedPlaybackLevel = -1
+          this.wasPlaying = false
         })
       }
     }

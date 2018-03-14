@@ -26,7 +26,7 @@ const Title = styled.div`
 const LevelsList = styled.ul`
   flex: 1 1 0;
   width: 50%;
-  min-width: 500px;
+  min-width: 550px;
   margin: auto;
   display: flex;
   margin-top: 10px;
