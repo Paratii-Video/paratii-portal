@@ -631,7 +631,7 @@ class Play extends Component<Props, State> {
             }}
           >
             <Transition
-              in={this.state.shouldShowVideoOverlay || activePlugin}
+              in={this.state.shouldShowVideoOverlay || !!activePlugin}
               timeout={0}
             >
               {(transitionState: ?string) => (
