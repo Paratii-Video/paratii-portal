@@ -62,8 +62,22 @@ const Controls = styled.div`
 
 const PROGRESS_INDICATOR_DIMENSION: number = 20
 
-const ProgressIndicator = styled.div`
+const ProgressIndicator = styled.div.attrs({
+  style: ({ currentTime, totalDuration, scrubbingPositionPercentage }) => ({
+    left: scrubbingPositionPercentage
+      ? `calc(${Math.max(
+        0,
+        Math.min(scrubbingPositionPercentage, 100)
+      )}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
+      : `calc(${
+        !totalDuration
+          ? 0
+          : Math.max(0, Math.min(100, currentTime * 100 / totalDuration))
+      }% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
+  })
+})`
   position: absolute;
+  top: -8px;
   width: ${PROGRESS_INDICATOR_DIMENSION}px;
   height: ${PROGRESS_INDICATOR_DIMENSION}px;
   border-radius: 50%;
@@ -86,14 +100,6 @@ const ProgressBar = styled.div`
   justify-content: flex-end;  
   align-items: center;
   background: linear-gradient(to right, ${({ theme }) => `${theme.colors.VideoPlayer.progress.barFrom}, ${theme.colors.VideoPlayer.progress.barTo}`});
-  ${/* sc-custom */ProgressIndicator} {
-    left: ${({ currentTime, totalDuration, scrubbingPositionPercentage }) => {
-    if (scrubbingPositionPercentage) {
-      return `calc(${Math.max(0, Math.min(scrubbingPositionPercentage, 100))}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
-    }
-    return `calc(${!totalDuration ? 0 : Math.max(0, Math.min(100, (currentTime * 100 / totalDuration)))}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
-  }};
-  }
   ${/* sc-custom */ProgressBuffer} {
     flex-basis: ${({ bufferTime, totalDuration }) => 100 - (!totalDuration ? 0 : Math.max(0, Math.min(100, bufferTime * 100 / totalDuration)))}%
   }
@@ -250,6 +256,8 @@ class PlayerControls extends Component<Props, State> {
             totalDuration={currentBufferedTimeSeconds}
           />
           <ProgressIndicator
+            currentTime={currentTimeSeconds}
+            totalDuration={videoDurationSeconds}
             onMouseDown={() => {
               this.setState({
                 userIsScrubbing: true
