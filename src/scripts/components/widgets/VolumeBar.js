@@ -15,7 +15,19 @@ type State = {
 
 const VOLUME_INDICATOR_DIMENSION: number = 20
 
-const VolumeIndicator = styled.div`
+const VolumeIndicator = styled.div.attrs({
+  style: ({ currentVolume, draggingVolumePercentage }) => ({
+    left: draggingVolumePercentage
+      ? `calc(${Math.max(
+        0,
+        Math.min(100, draggingVolumePercentage)
+      )}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
+      : `calc(${Math.max(
+        0,
+        Math.min(100, currentVolume)
+      )}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
+  })
+})`
   position: absolute;
   width: ${VOLUME_INDICATOR_DIMENSION}px;
   height: ${VOLUME_INDICATOR_DIMENSION}px;
@@ -33,13 +45,6 @@ const VolumeBar = styled.div`
   justify-content: flex-end;  
   align-items: center;
   background: linear-gradient(to right, ${({ theme }) => `${theme.colors.VideoPlayer.progress.barFrom}, ${theme.colors.VideoPlayer.progress.barTo}`});
-  ${/* sc-selector */VolumeIndicator} {
-    left: ${({ currentVolume, draggingVolumePercentage }) => {
-    if (draggingVolumePercentage) {
-      return `calc(${Math.max(0, Math.min(100, draggingVolumePercentage))}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
-    }
-    return `calc(${Math.max(0, Math.min(100, currentVolume))}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
-  }};
   }
   `
 
@@ -115,10 +120,10 @@ class PlayerControls extends Component<Props, State> {
             )
           }
         }}
-        currentVolume={currentVolume}
-        draggingVolumePercentage={draggingVolumePercentage}
       >
         <VolumeIndicator
+          currentVolume={currentVolume}
+          draggingVolumePercentage={draggingVolumePercentage}
           onMouseDown={() => {
             this.setState({
               userIsDragging: true
