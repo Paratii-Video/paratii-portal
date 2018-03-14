@@ -6,14 +6,16 @@ type Props = {}
 
 const Footer = styled.footer`
   align-items: center;
-  background-color: ${props =>
-    props.theme ? props.theme.colors.footer.background : 'black'};
+  background-color: ${props => props.theme.colors.footer.background};
   display: flex;
+  flex: 0 0 ${props => props.theme.sizes.mainFooter.height};
   justify-content: space-between;
   padding: ${props => props.theme.sizes.mainFooter.padding};
 
   @media (max-width: 900px) {
     flex-direction: column;
+    padding: 55px 40px 50px;
+    flex: initial;
   }
 `
 

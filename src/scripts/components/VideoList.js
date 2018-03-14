@@ -11,7 +11,8 @@ import Button from 'components/foundations/Button'
 type Props = {
   videos: Map<string, VideoRecord>, // maps video ids to upload records
   selectedVideo: VideoRecord,
-  setSelectedVideo: Object => void
+  setSelectedVideo: Object => void,
+  videoFormRef: Object
 }
 
 const Title = styled.h3`
@@ -31,7 +32,6 @@ const List = styled.ul`
 class VideoList extends Component<Props, void> {
   constructor (props) {
     super(props)
-    // props.setSelectedVideo(null)
     this.onVideoListItemClicked = this.onVideoListItemClicked.bind(this)
   }
 
@@ -50,17 +50,19 @@ class VideoList extends Component<Props, void> {
       ''
     )
     return (
-      <Card {...this.props} nopadding footer={footer}>
+      <Card {...this.props} nopadding nobackground footer={footer}>
         <Title>Video List</Title>
         <List>
-          {this.props.videos.entrySeq().map(([videoId, videoInfo]) => (
-            <VideoListItem
-              key={videoId}
-              video={videoInfo}
-              selected={selectedVideo && selectedVideo.get('id') === videoId}
-              // onClick={this.onVideoListItemClicked}
-            />
-          ))}
+          {this.props.videos
+            .entrySeq()
+            .map(([videoId, videoInfo]) => (
+              <VideoListItem
+                videoFormRef={this.props.videoFormRef}
+                key={videoId}
+                video={videoInfo}
+                selected={selectedVideo && selectedVideo.get('id') === videoId}
+              />
+            ))}
         </List>
       </Card>
     )

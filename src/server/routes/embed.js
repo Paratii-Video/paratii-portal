@@ -94,26 +94,7 @@ module.exports = async (req: $Request, res: $Response) => {
 
 
         <style>
-          html {
-            font-size: 16px;
-          }
-
-          body {
-            background: #2E3133;
-            font-family: 'Roboto', sans-serif;
-            font-size: 1rem;
-          }
-
-          .main-loader {
-            background: #2E3133 url('/assets/img/paratii-loader.gif') no-repeat 50%;
-            background-size: cover;
-            height: 50px;
-            left: 50%;
-            position: fixed;
-            top: 50%;
-            transform: translate3d(-50%, -50%, 0);
-            width: 50px;
-          }
+  
         </style>
       </head>
       <body>

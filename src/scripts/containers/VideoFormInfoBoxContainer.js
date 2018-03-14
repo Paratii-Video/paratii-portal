@@ -7,6 +7,7 @@ import {
   transcodeVideo,
   uploadAndTranscode
 } from 'actions/UploaderActions'
+
 import {
   getSelectedUploaderVideo,
   getTotalProgress

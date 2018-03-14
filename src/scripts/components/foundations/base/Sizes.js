@@ -5,7 +5,7 @@ const Sizes = {
   },
   mainFooter: {
     height: '72px',
-    padding: '42px 80px'
+    padding: '0 80px'
   },
   mainHeaderLogo: {
     height: '29px',

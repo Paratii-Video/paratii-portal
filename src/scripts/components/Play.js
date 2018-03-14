@@ -12,6 +12,7 @@ import VideoRecord from 'records/VideoRecords'
 import VideoOverlay from 'components/VideoOverlay'
 import Button from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
+import Card from 'components/structures/Card'
 import NotFound from './pages/NotFound'
 import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
 
@@ -46,6 +47,7 @@ type Props = {
 }
 
 type State = {
+  isEmbed: boolean,
   mouseInOverlay: boolean,
   shouldShowVideoOverlay: boolean,
   videoNotFound: boolean,
@@ -53,31 +55,48 @@ type State = {
 }
 
 const Wrapper = styled.div`
-  margin: ${props => (props.isEmbed ? null : '0 auto')};
-  position: relative;
-  height: ${props => (props.isEmbed ? '100%' : '720px')};
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
   width: ${props => (props.isEmbed ? '100%' : '1280px')};
 
   @media (max-width: 1440px) {
-    height: ${props => (props.isEmbed ? null : '576px')};
     width: ${props => (props.isEmbed ? null : '1024px')};
   }
 
   @media (max-width: 1200px) {
-    height: ${props => (props.isEmbed ? null : '432px')};
     width: ${props => (props.isEmbed ? null : '768px')};
   }
 
   @media (max-width: 930px) {
-    height: ${props => (props.isEmbed ? '100%' : '0')};
-    margin: 0;
-    padding-bottom: ${props => (props.isEmbed ? null : '56.25%')};
-    padding-top: ${props => (props.isEmbed ? null : '30px')};
     width: 100%;
   }
 `
 
+const VideoWrapper = styled.div`
+  margin: ${props => (props.isEmbed ? null : '0 auto 25px')};
+  position: relative;
+  height: ${props => (props.isEmbed ? '100%' : '720px')};
+  width: 100%;
+
+  @media (max-width: 1440px) {
+    height: ${props => (props.isEmbed ? null : '576px')};
+  }
+
+  @media (max-width: 1200px) {
+    height: ${props => (props.isEmbed ? null : '432px')};
+  }
+
+  @media (max-width: 930px) {
+    height: ${props => (props.isEmbed ? '100%' : '0')};
+    margin: ${props => (props.isEmbed ? null : '0 0 25px')};
+    padding-bottom: ${props => (props.isEmbed ? null : '56.25%')};
+    padding-top: ${props => (props.isEmbed ? null : '30px')};
+  }
+`
+
 const PlayerWrapper = styled.div`
+  background-color: ${props => props.theme.colors.VideoPlayer.background};
   position: absolute;
   top: 0;
   left: 0;
@@ -169,6 +188,10 @@ const ShareLinkIcon = styled.img`
   width: 100%;
 `
 
+const DescriptionWrapper = styled(Card)`
+  width: 100%;
+`
+
 const HIDE_CONTROLS_THRESHOLD: number = 2000
 
 class Play extends Component<Props, State> {
@@ -187,6 +210,8 @@ class Play extends Component<Props, State> {
       mouseInOverlay: false,
       shouldShowVideoOverlay: false,
       videoNotFound: false,
+      playerCreated: '',
+      isEmbed: this.props.isEmbed || false,
       showShareModal: false
     }
 
@@ -514,7 +539,7 @@ class Play extends Component<Props, State> {
     }
     import('paratii-mediaplayer').then(CreatePlayer => {
       this.player = CreatePlayer({
-        selector: '#player',
+        selector: `#${PLAYER_ID}`,
         source: `https://gateway.paratii.video/ipfs/${
           video.ipfsHash
         }/master.m3u8`,
@@ -623,90 +648,97 @@ class Play extends Component<Props, State> {
     } else {
       return (
         <Wrapper isEmbed={isEmbed}>
-          <PlayerWrapper
-            onClick={this.onPlayerClick}
-            onMouseEnter={this.onMouseEnter}
-            innerRef={(ref: HTMLElement) => {
-              this.wrapperRef = ref
-            }}
-          >
-            <Transition
-              in={this.state.shouldShowVideoOverlay || !!activePlugin}
-              timeout={0}
+          <VideoWrapper isEmbed={isEmbed}>
+            <PlayerWrapper
+              onClick={this.onPlayerClick}
+              onMouseEnter={this.onMouseEnter}
+              innerRef={(ref: HTMLElement) => {
+                this.wrapperRef = ref
+              }}
             >
-              {(transitionState: ?string) => (
-                <OverlayWrapper
-                  onMouseLeave={this.onMouseLeave}
-                  onMouseMove={this.onMouseMove}
-                >
-                  <VideoOverlay
-                    onClick={this.onOverlayClick}
-                    video={video}
-                    isEmbed={isEmbed}
-                    toggleShareModal={this.toggleShareModal}
-                    showShareModal={this.state.showShareModal}
-                    onScrub={this.scrubVideo}
-                    onVolumeChange={this.changeVolume}
-                    onToggleMute={this.toggleMute}
-                    onPlaybackLevelChange={this.changePlaybackLevel}
-                    transitionState={transitionState}
-                    togglePlayPause={this.togglePlayPause}
-                    toggleFullscreen={(goToFullscreen: boolean): void => {
-                      if (goToFullscreen && this.wrapperRef) {
-                        requestFullscreen(this.wrapperRef)
-                      } else {
-                        requestCancelFullscreen()
-                      }
-                    }}
-                  />
-                </OverlayWrapper>
-              )}
-            </Transition>
-            <Player id={PLAYER_ID} />
-            {this.props.video ? (
-              <ShareOverlay show={this.state.showShareModal}>
-                <CloseButton onClick={this.toggleShareModal}>
-                  <SVGButton>
-                    <use xlinkHref="#icon-close" />
-                  </SVGButton>
-                </CloseButton>
-                <ShareTitle small />
-                <AnchorLink
-                  href={
-                    this.getPortalUrl() + '/play/' + ((video && video.id) || '')
-                  }
-                  target="_blank"
-                  anchor
-                  white
-                >
-                  {this.getPortalUrl() + '/play/' + ((video && video.id) || '')}
-                </AnchorLink>
-                <ShareButtons>
-                  <ShareLink
-                    href={this.getTelegramHref()}
+              <Transition
+                in={this.state.shouldShowVideoOverlay || !!activePlugin}
+                timeout={0}
+              >
+                {(transitionState: ?string) => (
+                  <OverlayWrapper
+                    onMouseLeave={this.onMouseLeave}
+                    onMouseMove={this.onMouseMove}
+                  >
+                    <VideoOverlay
+                      onClick={this.onOverlayClick}
+                      video={video}
+                      isEmbed={isEmbed}
+                      toggleShareModal={this.toggleShareModal}
+                      showShareModal={this.state.showShareModal}
+                      onScrub={this.scrubVideo}
+                      onVolumeChange={this.changeVolume}
+                      onToggleMute={this.toggleMute}
+                      onPlaybackLevelChange={this.changePlaybackLevel}
+                      transitionState={transitionState}
+                      togglePlayPause={this.togglePlayPause}
+                      toggleFullscreen={(goToFullscreen: boolean): void => {
+                        if (goToFullscreen && this.wrapperRef) {
+                          requestFullscreen(this.wrapperRef)
+                        } else {
+                          requestCancelFullscreen()
+                        }
+                      }}
+                    />
+                  </OverlayWrapper>
+                )}
+              </Transition>
+              <Player id={PLAYER_ID} />
+              {this.props.video ? (
+                <ShareOverlay show={this.state.showShareModal}>
+                  <CloseButton onClick={this.toggleShareModal}>
+                    <SVGButton>
+                      <use xlinkHref="#icon-close" />
+                    </SVGButton>
+                  </CloseButton>
+                  <ShareTitle small />
+                  <AnchorLink
+                    href={
+                      this.getPortalUrl() +
+                      '/play/' +
+                      ((video && video.id) || '')
+                    }
                     target="_blank"
                     anchor
+                    white
                   >
-                    <ShareLinkIcon src="/assets/svg/icons-share-telegram.svg" />
-                  </ShareLink>
-                  <ShareLink
-                    href={this.getTwitterHref()}
-                    target="_blank"
-                    anchor
-                  >
-                    <ShareLinkIcon src="/assets/svg/icons-share-twitter.svg" />
-                  </ShareLink>
-                  <ShareLink
-                    href={this.getWhatsAppMobileHref()}
-                    target="_blank"
-                    anchor
-                  >
-                    <ShareLinkIcon src="/assets/svg/icons-share-whatsapp.svg" />
-                  </ShareLink>
-                </ShareButtons>
-              </ShareOverlay>
-            ) : null}
-          </PlayerWrapper>
+                    {this.getPortalUrl() +
+                      '/play/' +
+                      ((video && video.id) || '')}
+                  </AnchorLink>
+                  <ShareButtons>
+                    <ShareLink
+                      href={this.getTelegramHref()}
+                      target="_blank"
+                      anchor
+                    >
+                      <ShareLinkIcon src="/assets/svg/icons-share-telegram.svg" />
+                    </ShareLink>
+                    <ShareLink
+                      href={this.getTwitterHref()}
+                      target="_blank"
+                      anchor
+                    >
+                      <ShareLinkIcon src="/assets/svg/icons-share-twitter.svg" />
+                    </ShareLink>
+                    <ShareLink
+                      href={this.getWhatsAppMobileHref()}
+                      target="_blank"
+                      anchor
+                    >
+                      <ShareLinkIcon src="/assets/svg/icons-share-whatsapp.svg" />
+                    </ShareLink>
+                  </ShareButtons>
+                </ShareOverlay>
+              ) : null}
+            </PlayerWrapper>
+          </VideoWrapper>
+          {!isEmbed && <DescriptionWrapper />}
         </Wrapper>
       )
     }
