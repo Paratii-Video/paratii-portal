@@ -230,10 +230,6 @@ class Play extends Component<Props, State> {
       // $FlowFixMe
       const playback = player.core && player.core.getCurrentPlayback()
       if (playback && video) {
-        player.on(Events.PLAYER_READY, () => {
-          console.log(playback)
-        })
-
         playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
         playback.on(
           Events.PLAYBACK_TIMEUPDATE,
