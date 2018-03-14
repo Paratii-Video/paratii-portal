@@ -2,6 +2,7 @@ const webpack = require("webpack");
 const fs = require('fs');
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require("path");
 
 const srcDir = path.resolve(__dirname, "src");
@@ -149,5 +150,9 @@ const config = {
     // : new webpack.HotModuleReplacementPlugin()
   ]
 };
+
+if (process.env.ANALYZE) {
+  config.plugins.push(new BundleAnalyzerPlugin())
+}
 
 module.exports = config;

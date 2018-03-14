@@ -1,4 +1,5 @@
 const express = require('express')
+const compression = require('compression')
 const exphbs = require('express-handlebars')
 const devMiddleware = require('webpack-dev-middleware')
 const hotMiddleware = require('webpack-hot-middleware')
@@ -36,6 +37,7 @@ app.engine(
   })
 )
 
+app.use(compression())
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, '/views'))
 app.use(express.static(path.resolve(__dirname, '../../', 'build')))
