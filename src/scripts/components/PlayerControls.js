@@ -77,7 +77,6 @@ const ProgressIndicator = styled.div.attrs({
   })
 })`
   position: absolute;
-  /* top: -8px; */
   width: ${PROGRESS_INDICATOR_DIMENSION}px;
   height: ${PROGRESS_INDICATOR_DIMENSION}px;
   border-radius: 50%;
