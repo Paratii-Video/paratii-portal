@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import type { VideoRecord } from 'records/VideoRecords'
+import { Link } from 'react-router-dom'
 import VideoProgressBar from 'components/widgets/VideoForm/VideoProgressBar'
 
 type Props = {
@@ -22,6 +23,10 @@ const ListItem = styled.li`
   &:hover {
     opacity: ${props => props.theme.animation.opacity.hover};
   }
+`
+
+const ListItemLink = styled(Link)`
+  display: block;
 `
 
 const ListItemWrapper = styled.div`
@@ -146,6 +151,7 @@ class VideoListItem extends Component<Props, void> {
     const uploadProgress = video.uploadStatus.data.progress
     const transcodingStatus = video.transcodingStatus.data.progress
     const progress = Math.ceil((uploadProgress + transcodingStatus) / 2)
+    const uploaderVideoUrl = `/upload/${this.props.video.id}`
 
     return (
       <ListItem
@@ -153,18 +159,20 @@ class VideoListItem extends Component<Props, void> {
         id={`video-list-item-${video.get('id')}`}
         selected={selected}
       >
-        <ListItemWrapper>
-          <ListItemContent>
-            <VideoImage source={thumbImage} />
-            <ListItemInfo>
-              <ListItemHeader>{title}</ListItemHeader>
-              <ListItemStatus done={isReady}>{statusMessage}</ListItemStatus>
-            </ListItemInfo>
-          </ListItemContent>
-          <Bar>
-            <VideoProgressBar progress={progress + '%'} nopercentual small />
-          </Bar>
-        </ListItemWrapper>
+        <ListItemLink to={uploaderVideoUrl}>
+          <ListItemWrapper>
+            <ListItemContent>
+              <VideoImage source={thumbImage} />
+              <ListItemInfo>
+                <ListItemHeader>{title}</ListItemHeader>
+                <ListItemStatus done={isReady}>{statusMessage}</ListItemStatus>
+              </ListItemInfo>
+            </ListItemContent>
+            <Bar>
+              <VideoProgressBar progress={progress + '%'} nopercentual small />
+            </Bar>
+          </ListItemWrapper>
+        </ListItemLink>
       </ListItem>
     )
   }
