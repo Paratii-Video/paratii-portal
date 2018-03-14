@@ -41,7 +41,7 @@ exports.player = async function player (req, res, next) {
       thumbnailUrl: function () {
         const ipfsHash = video.ipfsHash
         let thumbName = ''
-        if (video.thumbnails && video.thumbnails.lenght > 0) {
+        if (video.thumbnails && video.thumbnails.length > 0) {
           thumbName = video.thumbnails[0]
         }
         return (
