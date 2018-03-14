@@ -8,6 +8,13 @@ import IconButton from 'components/foundations/buttons/IconButton'
 import Colors from 'components/foundations/base/Colors'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
+import playIcon from 'assets/img/play-icon.svg'
+import pauseIcon from 'assets/img/pause-icon.svg'
+import volumeIcon from 'assets/img/volume-icon.svg'
+import muteIcon from 'assets/img/mute-icon.svg'
+import normalscreenIcon from 'assets/img/normalscreen-icon.svg'
+import fullscreenIcon from 'assets/img/fullscreen-icon.svg'
+
 import type { TransitionState } from 'types/ApplicationTypes'
 
 type Props = {
@@ -275,9 +282,7 @@ class PlayerControls extends Component<Props, State> {
             <ControlButtonWrapper>
               <IconButton
                 color={Colors.purple}
-                icon={`/assets/img/${
-                  isPlaying ? 'pause-icon' : 'play-icon'
-                }.svg`}
+                icon={isPlaying ? pauseIcon : playIcon}
                 onClick={togglePlayPause}
               />
             </ControlButtonWrapper>
@@ -286,9 +291,7 @@ class PlayerControls extends Component<Props, State> {
           <RightControls>
             <ControlButtonWrapper>
               <IconButton
-                icon={`/assets/img/${
-                  currentVolume === 0 ? 'mute-icon' : 'volume-icon'
-                }.svg`}
+                icon={currentVolume === 0 ? muteIcon : volumeIcon}
                 onClick={() => {
                   onToggleMute(!this.isMuted())
                 }}
@@ -302,9 +305,7 @@ class PlayerControls extends Component<Props, State> {
             </VolumeBarWrapper>
             <ControlButtonWrapper>
               <IconButton
-                icon={`/assets/img/${
-                  isFullscreen ? 'normalscreen-icon.svg' : 'fullscreen-icon.svg'
-                  }`}
+                icon={isFullscreen ? normalscreenIcon : fullscreenIcon}
                 onClick={() => {
                   toggleFullscreen(!isFullscreen)
                 }}
