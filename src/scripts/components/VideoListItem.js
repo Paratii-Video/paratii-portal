@@ -99,24 +99,11 @@ const Bar = styled.div`
 class VideoListItem extends Component<Props, void> {
   constructor (props) {
     super(props)
-    this.state = {
-      uploadProgress: 0,
-      transcodingProgress: 0,
-      totalProgress: 0
-    }
     this.handleClick = this.handleClick.bind(this)
   }
 
   handleClick () {
     this.props.setSelectedVideo(this.props.video.id)
-  }
-
-  componentWillReceiveProps (nextProps: Props): void {
-    this.setState((prevState, nextProps) => ({
-      totalProgress: Math.round(
-        (prevState.uploadProgress + prevState.transcodingProgress) / 2
-      )
-    }))
   }
 
   render () {
@@ -139,6 +126,7 @@ class VideoListItem extends Component<Props, void> {
     if (!video || !video.id) {
       return <ListItem>Something went wrong - no video known</ListItem>
     }
+
     if (
       video.storageStatus.name === 'success' &&
       video.transcodingStatus.name === 'success'
@@ -147,7 +135,6 @@ class VideoListItem extends Component<Props, void> {
     }
 
     let statusMessage = ''
-
     if (video.storageStatus.name !== 'success' && title === null) {
       statusMessage = 'Please provide a title and description'
     } else if (video.transcodingStatus.name === 'success') {
@@ -155,9 +142,6 @@ class VideoListItem extends Component<Props, void> {
     } else if (video.transcodingStatus.name === 'failed') {
       statusMessage = 'Your video could not be transcoded'
     }
-    // } else if (!video.filename) {
-    //   statusMessage = 'No file was uploaded (this is an error)'
-    // }
 
     const uploadProgress = video.uploadStatus.data.progress
     const transcodingStatus = video.transcodingStatus.data.progress

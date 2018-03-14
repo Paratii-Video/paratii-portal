@@ -465,6 +465,7 @@ class Play extends Component<Props, State> {
   }
 
   createPlayer = (video: VideoRecord): void => {
+    const { updateVolume } = this.props
     if (this.player && this.player.destroy) {
       this.player.destroy()
     }
@@ -475,6 +476,7 @@ class Play extends Component<Props, State> {
     if (video && video.thumbnails.size === 4) {
       poster = video.thumbnails.get(0)
     }
+
     import(/* webpackChunkName: `mediaplayer` */ 'paratii-mediaplayer').then(
       CreatePlayer => {
         this.player = CreatePlayer({
