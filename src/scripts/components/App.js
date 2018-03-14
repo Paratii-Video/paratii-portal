@@ -86,6 +86,7 @@ class App extends Component<Props, State> {
                 path={`${match.url}profile`}
                 component={ProfileContainer}
               />
+              <Route path={`${match.url}upload/:id`} component={VideoManager} />
               <Route path={`${match.url}upload`} component={VideoManager} />
               <Route path={`${match.url}voucher`} component={Voucher} />
               <Route path={`${match.url}debug`} component={DebugContainer} />
