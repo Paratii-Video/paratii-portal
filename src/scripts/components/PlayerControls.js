@@ -246,7 +246,6 @@ class PlayerControls extends Component<Props, State> {
               onScrub((e.clientX - wrapperRect.x) * 100 / wrapperRect.width)
             }
           }}
-          currentTime={currentTimeSeconds}
           scrubbingPositionPercentage={scrubbingPositionPercentage}
           bufferTime={currentBufferedTimeSeconds}
           totalDuration={videoDurationSeconds}
