@@ -70,14 +70,14 @@ class ModalStake extends Component<Props, Object> {
           this.setState({
             errorMessage: false
           })
-          // const videoToSave = {
-          //   id: this.props.selectedVideo.id,
-          //   title: this.props.selectedVideo.title,
-          //   description: this.props.selectedVideo.description,
-          //   author: this.props.selectedVideo.author,
-          //   published: true
-          // }
-          // this.props.saveVideoInfo(videoToSave)
+          const videoToSave = {
+            id: this.props.selectedVideo.id,
+            title: this.props.selectedVideo.title,
+            description: this.props.selectedVideo.description,
+            author: this.props.selectedVideo.author,
+            published: true
+          }
+          this.props.saveVideoInfo(videoToSave)
           this.props.closeModal()
           console.log(
             `video ${videoIdStaked} successfully applied to TCR Listing`
