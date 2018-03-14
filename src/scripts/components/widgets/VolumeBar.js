@@ -36,15 +36,23 @@ const VolumeIndicator = styled.div.attrs({
     theme.colors.VideoPlayer.progress.scrubber};
 `
 
+const VolumeBarBuffer = styled.div`
+  height: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+`
+
 /* prettier-ignore */
 const VolumeBar = styled.div`
-  width: 100;
   height: 5px;
+  width: 100%;
   position: relative;
   display: flex;
   justify-content: flex-end;  
   align-items: center;
   background: linear-gradient(to right, ${({ theme }) => `${theme.colors.VideoPlayer.progress.barFrom}, ${theme.colors.VideoPlayer.progress.barTo}`});
+  }
   `
 
 class PlayerControls extends Component<Props, State> {
@@ -107,10 +115,7 @@ class PlayerControls extends Component<Props, State> {
     const { onVolumeChange, currentVolume } = this.props
     const { draggingVolumePercentage } = this.state
     return (
-      <VolumeBar
-        innerRef={(ref: HTMLElement) => {
-          this.volumeBarRef = ref
-        }}
+      <VolumeBarBuffer
         onClick={(e: Object) => {
           if (this.volumeBarRef) {
             const wrapperRect: Object = this.volumeBarRef.getBoundingClientRect()
@@ -120,16 +125,22 @@ class PlayerControls extends Component<Props, State> {
           }
         }}
       >
-        <VolumeIndicator
-          currentVolume={currentVolume}
-          draggingVolumePercentage={draggingVolumePercentage}
-          onMouseDown={() => {
-            this.setState({
-              userIsDragging: true
-            })
+        <VolumeBar
+          innerRef={(ref: HTMLElement) => {
+            this.volumeBarRef = ref
           }}
-        />
-      </VolumeBar>
+        >
+          <VolumeIndicator
+            currentVolume={currentVolume}
+            draggingVolumePercentage={draggingVolumePercentage}
+            onMouseDown={() => {
+              this.setState({
+                userIsDragging: true
+              })
+            }}
+          />
+        </VolumeBar>
+      </VolumeBarBuffer>
     )
   }
 }

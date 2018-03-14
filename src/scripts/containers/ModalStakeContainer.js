@@ -6,6 +6,7 @@ import { saveVideoInfo, uploadAndTranscode } from 'actions/UploaderActions'
 import { getUser } from 'selectors/index'
 import type { RootState } from 'types/ApplicationTypes'
 import ModalStake from 'components/widgets/modals/ModalStake'
+import { show } from 'react-notification-system-redux'
 
 const mapStateToProps = (state: RootState) => ({
   selectedVideo: getSelectedUploaderVideo(state),
@@ -15,7 +16,8 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = dispatch => ({
   saveVideoInfo: bindActionCreators(saveVideoInfo, dispatch),
   uploadAndTranscode: bindActionCreators(uploadAndTranscode, dispatch),
-  closeModal: bindActionCreators(closeModal, dispatch)
+  closeModal: bindActionCreators(closeModal, dispatch),
+  notification: bindActionCreators(show, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalStake)

@@ -2,6 +2,7 @@ const webpack = require("webpack");
 const fs = require('fs');
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require("path");
 
 const srcDir = path.resolve(__dirname, "src");
@@ -133,8 +134,25 @@ const config = {
           compress: false
         }
       })
-    : new webpack.HotModuleReplacementPlugin()
+    : new webpack.HotModuleReplacementPlugin(),
+    // NOTE this still causes an issue when IPFS is starting.
+    // I'm debugging this :( :x
+    // prod
+    // ? new UglifyJsPlugin({
+    //     exclude: [/ipfs/i],
+    //     sourceMap: false, // this is an effor to save some memory
+    //     uglifyOptions: {
+    //       ecma: 6,
+    //       mangle: true,
+    //       compress: true
+    //     }
+    //   })
+    // : new webpack.HotModuleReplacementPlugin()
   ]
 };
+
+if (process.env.ANALYZE) {
+  config.plugins.push(new BundleAnalyzerPlugin())
+}
 
 module.exports = config;

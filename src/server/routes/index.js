@@ -40,7 +40,10 @@ exports.player = async function player (req, res, next) {
       },
       thumbnailUrl: function () {
         const ipfsHash = video.ipfsHash
-        const thumbName = video.transcodingStatus.data.result.screenshots[0]
+        let thumbName = ''
+        if (video.thumbnails && video.thumbnails.length > 0) {
+          thumbName = video.thumbnails[0]
+        }
         return (
           'https://gateway.paratii.video/ipfs/' + ipfsHash + '/' + thumbName
         )
