@@ -45,7 +45,6 @@ const VolumeBar = styled.div`
   justify-content: flex-end;  
   align-items: center;
   background: linear-gradient(to right, ${({ theme }) => `${theme.colors.VideoPlayer.progress.barFrom}, ${theme.colors.VideoPlayer.progress.barTo}`});
-  }
   `
 
 class PlayerControls extends Component<Props, State> {
