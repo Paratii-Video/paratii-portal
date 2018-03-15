@@ -17,6 +17,7 @@
     "chimp-test:concurrently": "concurrently --kill-others --success first \"NODE_ENV=test yarn run dev\" \"yarn run chimp-test\"",
     "chimp-test:concurrently:watch": "concurrently --kill-others --success all \"NODE_ENV=test yarn run dev\" \"yarn run chimp-test --watch\"",
     "setup-dev-env": "node src/scripts/setupDevEnv.js",
+    "setup-circleci-env": "NODE_ENV=circleci node src/scripts/setupDevEnv.js",
     "diagnose": "node src/scripts/diagnose.js",
     "dev": "concurrently \"yarn run build:dev\" \"yarn run server:dev\" \"yarn run parity\"",
     "flow": "flow",
