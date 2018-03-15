@@ -1,10 +1,6 @@
 /* @flow */
 
 import shortNumber from 'short-number'
-
-import devConfig from 'config/development.json'
-import testConfig from 'config/test.json'
-import prodConfig from 'config/production.json'
 import VideoRecord from 'records/VideoRecords'
 
 export const getRoot = (): Element => {
@@ -24,14 +20,17 @@ export const getParatiiConfig = (env: ?string = 'development'): Object => {
 
   switch (env) {
     case 'production':
-      config = prodConfig
+      config = require('config/production.json')
       break
     case 'test':
-      config = testConfig
+      config = require('config/test.json')
+      break
+    case 'staging':
+      config = require('config/staging.json')
       break
     case 'development':
     default:
-      config = devConfig
+      config = require('config/development.json')
       break
   }
 
