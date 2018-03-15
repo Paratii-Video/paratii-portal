@@ -48,5 +48,6 @@ export default styled.p`
     }
   }};
   overflow-wrap: break-word;
+  white-space: pre-wrap;
   word-wrap: break-word;
 `
