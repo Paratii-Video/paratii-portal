@@ -8,6 +8,7 @@ services:
     image: paratii-portal
     volumes:
         - "./src:/paratii-portal/src"
+        - "./config:/paratii-portal/config"
         - /tmp:/tmp
     ports:
         - "8080:8080"
@@ -19,14 +20,14 @@ services:
       yarn run server:dev
     links:
         - parity
-        - db 
+        - db
   db:
     container_name: paratii-db
     build:
       context: .
       dockerfile: .docker/Dockerfile-db
     ports:
-        - "3000:3000"
+        - "3000:13000"
     command: >
         bash -c "sleep 15 && cd /paratii-db && yarn run dev"
     volumes:
@@ -41,7 +42,7 @@ services:
       dockerfile: .docker/Dockerfile-parity
     ports:
         - "8180:8180"
-        - "8545:8545"
+        - "8545:18545"
         - "8546:8546"
         - "30303:30303"
         - "30303:30303/udp"
