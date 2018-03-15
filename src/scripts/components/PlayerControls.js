@@ -13,6 +13,14 @@ import Colors from 'components/foundations/base/Colors'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 
+import playIcon from 'assets/img/play-icon.svg'
+import pauseIcon from 'assets/img/pause-icon.svg'
+import volumeIcon from 'assets/img/volume-icon.svg'
+import muteIcon from 'assets/img/mute-icon.svg'
+import normalscreenIcon from 'assets/img/normalscreen-icon.svg'
+import fullscreenIcon from 'assets/img/fullscreen-icon.svg'
+import qualityIcon from 'assets/img/quality-icon.svg'
+
 import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
 
 type Props = {
@@ -57,7 +65,7 @@ const Controls = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 100%
   align-items: center;
   background: ${({ theme }) => theme.colors.VideoPlayer.controls.background};
   transform: translateY(
@@ -78,7 +86,20 @@ const Controls = styled.div`
 
 const PROGRESS_INDICATOR_DIMENSION: number = 20
 
-const ProgressIndicator = styled.div`
+const ProgressIndicator = styled.div.attrs({
+  style: ({ currentTime, totalDuration, scrubbingPositionPercentage }) => ({
+    left: scrubbingPositionPercentage
+      ? `calc(${Math.max(
+        0,
+        Math.min(scrubbingPositionPercentage, 100)
+      )}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
+      : `calc(${
+        !totalDuration
+          ? 0
+          : Math.max(0, Math.min(100, currentTime * 100 / totalDuration))
+      }% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
+  })
+})`
   position: absolute;
   width: ${PROGRESS_INDICATOR_DIMENSION}px;
   height: ${PROGRESS_INDICATOR_DIMENSION}px;
@@ -94,6 +115,15 @@ const ProgressBuffer = styled.div`
   background: ${({ theme }) => theme.colors.VideoPlayer.progress.base};
   `
 
+const ProgressBarWrapper = styled.div`
+  position: absolute;
+  top: -10px;
+  height: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  `
+
 /* prettier-ignore */
 const ProgressBar = styled.div`
   width: 100%;
@@ -102,14 +132,6 @@ const ProgressBar = styled.div`
   justify-content: flex-end;  
   align-items: center;
   background: linear-gradient(to right, ${({ theme }) => `${theme.colors.VideoPlayer.progress.barFrom}, ${theme.colors.VideoPlayer.progress.barTo}`});
-  ${/* sc-custom */ProgressIndicator} {
-    left: ${({ currentTime, totalDuration, scrubbingPositionPercentage }) => {
-    if (scrubbingPositionPercentage) {
-      return `calc(${Math.max(0, Math.min(scrubbingPositionPercentage, 100))}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
-    }
-    return `calc(${!totalDuration ? 0 : Math.max(0, Math.min(100, (currentTime * 100 / totalDuration)))}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
-  }};
-  }
   ${/* sc-custom */ProgressBuffer} {
     flex-basis: ${({ bufferTime, totalDuration }) => 100 - (!totalDuration ? 0 : Math.max(0, Math.min(100, bufferTime * 100 / totalDuration)))}%
   }
@@ -145,6 +167,7 @@ const Time = styled.div`
   `
 
 const VolumeBarWrapper = styled.div`
+  position: relative;
   width: 200px;
   margin-left: calc(-${CONTROLS_SPACING} / 2);
   margin-right: ${CONTROLS_SPACING};
@@ -174,7 +197,6 @@ class PlayerControls extends Component<Props, State> {
 
   componentWillUnmount (): void {
     this.removeMouseEventListeners()
-    this.setActivePlugin()
   }
 
   onMouseUp = (e: Object): void => {
@@ -280,41 +302,43 @@ class PlayerControls extends Component<Props, State> {
       <Wrapper>
         {this.renderPlugins()}
         <Controls transitionState={transitionState}>
-          <ProgressBar
-            innerRef={(ref: HTMLElement) => {
-              this.progressBarRef = ref
-            }}
+          <ProgressBarWrapper
             onClick={(e: Object) => {
               if (this.progressBarRef) {
                 const wrapperRect: Object = this.progressBarRef.getBoundingClientRect()
                 onScrub((e.clientX - wrapperRect.x) * 100 / wrapperRect.width)
               }
             }}
-            currentTime={currentTimeSeconds}
-            scrubbingPositionPercentage={scrubbingPositionPercentage}
-            bufferTime={currentBufferedTimeSeconds}
-            totalDuration={videoDurationSeconds}
           >
-            <ProgressBuffer
-              bufferTime={currentBufferedTimeSeconds}
-              totalDuration={currentBufferedTimeSeconds}
-            />
-            <ProgressIndicator
-              onMouseDown={() => {
-                this.setState({
-                  userIsScrubbing: true
-                })
+            <ProgressBar
+              innerRef={(ref: HTMLElement) => {
+                this.progressBarRef = ref
               }}
-            />
-          </ProgressBar>
+              bufferTime={currentBufferedTimeSeconds}
+              totalDuration={videoDurationSeconds}
+            >
+              <ProgressBuffer
+                bufferTime={currentBufferedTimeSeconds}
+                totalDuration={currentBufferedTimeSeconds}
+              />
+              <ProgressIndicator
+                currentTime={currentTimeSeconds}
+                onMouseDown={() => {
+                  this.setState({
+                    userIsScrubbing: true
+                  })
+                }}
+                scrubbingPositionPercentage={scrubbingPositionPercentage}
+                totalDuration={videoDurationSeconds}
+              />
+            </ProgressBar>
+          </ProgressBarWrapper>
           <ControlButtons>
             <LeftControls>
               <ControlButtonWrapper>
                 <IconButton
                   color={Colors.purple}
-                  icon={`/assets/img/${
-                    isPlaying ? 'pause-icon' : 'play-icon'
-                  }.svg`}
+                  icon={isPlaying ? pauseIcon : playIcon}
                   onClick={togglePlayPause}
                 />
               </ControlButtonWrapper>
@@ -324,7 +348,7 @@ class PlayerControls extends Component<Props, State> {
               <ControlButtonWrapper>
                 <IconButton
                   disabled={!playbackLevels.size}
-                  icon="/assets/img/quality.svg"
+                  icon={qualityIcon}
                   onClick={() => {
                     this.setActivePlugin(PLAYER_PLUGIN.PLAYBACK_LEVELS)
                   }}
@@ -332,9 +356,7 @@ class PlayerControls extends Component<Props, State> {
               </ControlButtonWrapper>
               <ControlButtonWrapper>
                 <IconButton
-                  icon={`/assets/img/${
-                    currentVolume === 0 ? 'mute-icon' : 'volume-icon'
-                  }.svg`}
+                  icon={currentVolume === 0 ? muteIcon : volumeIcon}
                   onClick={() => {
                     onToggleMute(!this.isMuted())
                   }}
@@ -348,11 +370,7 @@ class PlayerControls extends Component<Props, State> {
               </VolumeBarWrapper>
               <ControlButtonWrapper>
                 <IconButton
-                  icon={`/assets/img/${
-                    isFullscreen
-                      ? 'normalscreen-icon.svg'
-                      : 'fullscreen-icon.svg'
-                    }`}
+                  icon={isFullscreen ? normalscreenIcon : fullscreenIcon}
                   onClick={() => {
                     toggleFullscreen(!isFullscreen)
                   }}

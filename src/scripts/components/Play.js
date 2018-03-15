@@ -526,6 +526,7 @@ class Play extends Component<Props, State> {
   }
 
   createPlayer = (video: VideoRecord): void => {
+    const { updateVolume } = this.props
     if (this.player && this.player.destroy) {
       this.player.destroy()
     }
@@ -551,6 +552,10 @@ class Play extends Component<Props, State> {
       })
 
       this.bindClapprEvents()
+
+      if (this.player) {
+        updateVolume(this.player.getVolume())
+      }
 
       // initialize mux here
       // Note to frontend ppl. if there is a better locations for this

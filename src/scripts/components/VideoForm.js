@@ -1,3 +1,4 @@
+import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
@@ -85,6 +86,7 @@ type Props = {
   showModal: (View: Object) => void,
   closeModal: () => void,
   openModal: () => void,
+  notification: (Object, string) => void,
   user: UserRecord,
   balance: String,
   innerRef: Object
@@ -125,7 +127,25 @@ class VideoForm extends Component<Props, Object> {
 
   onPublishVideo (e: Object) {
     e.preventDefault()
-    this.publishVideo(true)
+    const balance = Number(this.props.user.balances.PTI) // paratii.eth.web3.utils.fromWei(balance)
+    console.log(balance)
+    // FIXME we need to manage this globally and not hardcoded
+    const stakeAmount = 5
+    const stakeAmountWei = Number(
+      paratii.eth.web3.utils.toWei(stakeAmount + '')
+    )
+    console.log(stakeAmountWei)
+    if (balance < stakeAmountWei) {
+      this.props.notification(
+        {
+          title: 'Not enough tokens',
+          message: `You need at least ${stakeAmount}PTIs to make a stake.`
+        },
+        'error'
+      )
+    } else {
+      this.publishVideo(true)
+    }
   }
 
   onFileChosen (e) {
@@ -169,7 +189,6 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     const video: VideoRecord = this.props.selectedVideo
-
     if (!this.state.id) {
       return (
         <Card title="No video selected!">{this.props.selectedVideo.id}</Card>
@@ -184,19 +203,22 @@ class VideoForm extends Component<Props, Object> {
     const isPublishable =
       video.transcodingStatus.name === 'success' && isPublished === false
 
-    const publishButton = (
-      <ButtonWrapper>
-        <Button
-          id="video-submit"
-          type="submit"
-          onClick={this.onPublishVideo}
-          disabled={!isPublishable}
-          purple
-        >
-          Publish
-        </Button>
-      </ButtonWrapper>
-    )
+    let publishButton = ''
+    if (isPublishable && !isPublished) {
+      publishButton = (
+        <ButtonWrapper>
+          <Button
+            id="video-submit"
+            type="submit"
+            onClick={this.onPublishVideo}
+            disabled={!isPublishable}
+            purple
+          >
+            Publish
+          </Button>
+        </ButtonWrapper>
+      )
+    }
 
     const saveButton = (
       <ButtonWrapper>

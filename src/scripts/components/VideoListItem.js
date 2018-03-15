@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import type { VideoRecord } from 'records/VideoRecords'
+import { Link } from 'react-router-dom'
 import VideoProgressBar from 'components/widgets/VideoForm/VideoProgressBar'
 
 type Props = {
@@ -22,6 +23,10 @@ const ListItem = styled.li`
   &:hover {
     opacity: ${props => props.theme.animation.opacity.hover};
   }
+`
+
+const ListItemLink = styled(Link)`
+  display: block;
 `
 
 const ListItemWrapper = styled.div`
@@ -99,24 +104,11 @@ const Bar = styled.div`
 class VideoListItem extends Component<Props, void> {
   constructor (props) {
     super(props)
-    this.state = {
-      uploadProgress: 0,
-      transcodingProgress: 0,
-      totalProgress: 0
-    }
     this.handleClick = this.handleClick.bind(this)
   }
 
   handleClick () {
     this.props.setSelectedVideo(this.props.video.id)
-  }
-
-  componentWillReceiveProps (nextProps: Props): void {
-    this.setState((prevState, nextProps) => ({
-      totalProgress: Math.round(
-        (prevState.uploadProgress + prevState.transcodingProgress) / 2
-      )
-    }))
   }
 
   render () {
@@ -139,6 +131,7 @@ class VideoListItem extends Component<Props, void> {
     if (!video || !video.id) {
       return <ListItem>Something went wrong - no video known</ListItem>
     }
+
     if (
       video.storageStatus.name === 'success' &&
       video.transcodingStatus.name === 'success'
@@ -147,7 +140,6 @@ class VideoListItem extends Component<Props, void> {
     }
 
     let statusMessage = ''
-
     if (video.storageStatus.name !== 'success' && title === null) {
       statusMessage = 'Please provide a title and description'
     } else if (video.transcodingStatus.name === 'success') {
@@ -155,13 +147,11 @@ class VideoListItem extends Component<Props, void> {
     } else if (video.transcodingStatus.name === 'failed') {
       statusMessage = 'Your video could not be transcoded'
     }
-    // } else if (!video.filename) {
-    //   statusMessage = 'No file was uploaded (this is an error)'
-    // }
 
     const uploadProgress = video.uploadStatus.data.progress
     const transcodingStatus = video.transcodingStatus.data.progress
     const progress = Math.ceil((uploadProgress + transcodingStatus) / 2)
+    const uploaderVideoUrl = `/upload/${this.props.video.id}`
 
     return (
       <ListItem
@@ -169,18 +159,20 @@ class VideoListItem extends Component<Props, void> {
         id={`video-list-item-${video.get('id')}`}
         selected={selected}
       >
-        <ListItemWrapper>
-          <ListItemContent>
-            <VideoImage source={thumbImage} />
-            <ListItemInfo>
-              <ListItemHeader>{title}</ListItemHeader>
-              <ListItemStatus done={isReady}>{statusMessage}</ListItemStatus>
-            </ListItemInfo>
-          </ListItemContent>
-          <Bar>
-            <VideoProgressBar progress={progress + '%'} nopercentual small />
-          </Bar>
-        </ListItemWrapper>
+        <ListItemLink to={uploaderVideoUrl}>
+          <ListItemWrapper>
+            <ListItemContent>
+              <VideoImage source={thumbImage} />
+              <ListItemInfo>
+                <ListItemHeader>{title}</ListItemHeader>
+                <ListItemStatus done={isReady}>{statusMessage}</ListItemStatus>
+              </ListItemInfo>
+            </ListItemContent>
+            <Bar>
+              <VideoProgressBar progress={progress + '%'} nopercentual small />
+            </Bar>
+          </ListItemWrapper>
+        </ListItemLink>
       </ListItem>
     )
   }
