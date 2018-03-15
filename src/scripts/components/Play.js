@@ -606,6 +606,7 @@ class Play extends Component<Props, State> {
   }
   render () {
     const { isEmbed, video } = this.props
+
     if (this.state.videoNotFound) {
       return <NotFound />
     } else {
@@ -697,42 +698,46 @@ class Play extends Component<Props, State> {
               ) : null}
             </PlayerWrapper>
           </VideoWrapper>
-          {!isEmbed && (
-            <PlayInfo>
-              {video.title && <Title small>{video.title}</Title>}
-              {video.owner && <Text>By {video.owner}</Text>}
-              <PlayInfoButtons>
-                <ButtonIcon>
-                  <SVG>
-                    <use xlinkHref="#icon-play-view" />
-                  </SVG>
-                  <Text small gray>
-                    0
-                  </Text>
-                </ButtonIcon>
-                <ButtonIcon>
-                  <SVG>
-                    <use xlinkHref="#icon-play-like" />
-                  </SVG>
-                  <Text small gray>
-                    0
-                  </Text>
-                </ButtonIcon>
-                <ButtonIcon>
-                  <SVG>
-                    <use xlinkHref="#icon-play-dislike" />
-                  </SVG>
-                  <Text small gray>
-                    0
-                  </Text>
-                </ButtonIcon>
-              </PlayInfoButtons>
-              <Text gray>
-                Price <PlayInfoHighlight purple>Free</PlayInfoHighlight>
-              </Text>
-              {video.description && <Text>{video.description}</Text>}
-            </PlayInfo>
-          )}
+          {!isEmbed &&
+            video && (
+              <PlayInfo>
+                {video.title && <Title small>{video.title}</Title>}
+                {video.author && <Text>By {video.author}</Text>}
+                <PlayInfoButtons>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-view" />
+                    </SVG>
+                    <Text small gray>
+                      0
+                    </Text>
+                  </ButtonIcon>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-like" />
+                    </SVG>
+                    <Text small gray>
+                      0
+                    </Text>
+                  </ButtonIcon>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-dislike" />
+                    </SVG>
+                    <Text small gray>
+                      0
+                    </Text>
+                  </ButtonIcon>
+                </PlayInfoButtons>
+                <Text gray>
+                  Price{' '}
+                  <PlayInfoHighlight purple>
+                    {video.free ? 'Free' : 'Paid'}
+                  </PlayInfoHighlight>
+                </Text>
+                {video.description && <Text>{video.description}</Text>}
+              </PlayInfo>
+            )}
         </Wrapper>
       )
     }
