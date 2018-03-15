@@ -5,4 +5,3 @@ docker-compose.yml
 node_modules
 build
 .*MD
-package-lock.json
