@@ -101,6 +101,15 @@ const config = {
         ]
       },
       {
+        test: /\.(svg)$/,
+        include: assetsDir,
+        use: [
+          {
+            loader: 'svg-url-loader'
+          }
+        ]
+      },
+      {
         test: /\.scss$/,
         include: stylesDir,
         use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"]
