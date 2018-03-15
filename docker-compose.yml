@@ -4,22 +4,51 @@ services:
     container_name: paratii-portal
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: .docker/Dockerfile
     image: paratii-portal
     volumes:
         - "./src:/paratii-portal/src"
+        - /tmp:/tmp
     ports:
         - "8080:8080"
-    command: >
-        bash -c "cd /paratii-portal && yarn run dev && cd /paratii-db && npm run dev"
+    command:
+      sleep 15 && cd /paratii-portal && yarn run setup-dev-env
+    command:
+      yarn run build:dev
+    command:
+      yarn run server:dev
+    links:
+        - parity
+        - db 
   db:
     container_name: paratii-db
     build:
       context: .
-      dockerfile: Dockerfile-db
-    image: paratii-portal
+      dockerfile: .docker/Dockerfile-db
+    ports:
+        - "3000:3000"
     command: >
-        bash -c "sleep 30 && npm run dev"
+        bash -c "sleep 15 && cd /paratii-db && yarn run dev"
+    volumes:
+        - /tmp:/tmp
+    links:
+        - mongo
+        - parity
+  parity:
+    container_name: paratii-parity
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile-parity
+    ports:
+        - "8180:8180"
+        - "8545:8545"
+        - "8546:8546"
+        - "30303:30303"
+        - "30303:30303/udp"
+    command: >
+        bash -c "parity -c parity-config.toml --log-file logs/parity.log --gasprice 0"
+    volumes:
+        - /tmp:/tmp
   mongo:
     container_name: mongo
     image: mongo:latest
