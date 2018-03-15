@@ -7,11 +7,13 @@ import Button from '../foundations/Button'
 import Text from '../foundations/Text'
 import Card from '../structures/Card'
 
-type Props = {}
+type Props = {
+  notification: (Object, string) => void
+}
 
 const Icon = styled.svg`
   display: block;
-  height: 163px;
+  height: 140px;
   margin: 0 auto 45px;
   width: 100%;
 `
@@ -56,20 +58,30 @@ class RedeemVoucher extends Component<Props, Object> {
   redeemVoucher (event: Object) {
     event.preventDefault()
     this.setState({ disableInput: true, error: '' })
+    this.props.notification({ title: 'Reading' }, 'warning')
     const voucherCode = this.state.voucher
     paratii.eth.vouchers
       .redeem(voucherCode)
       .then(resp => {
+        const amount = String(resp)
+        this.props.notification(
+          { title: 'Success', message: `You have earned ${amount} PTI.` },
+          'success'
+        )
         this.setState({
           disableInput: false,
           voucher: ''
         })
       })
-      .catch(e => {
-        if (e) {
+      .catch(error => {
+        if (error) {
+          this.props.notification(
+            { title: 'Oh, no!', message: error.message, autoDismiss: 10 },
+            'error'
+          )
           this.setState({
             disableInput: false,
-            error: String(e),
+            error: error.message,
             voucher: voucherCode
           })
         }

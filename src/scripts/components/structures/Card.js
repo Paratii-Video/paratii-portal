@@ -5,6 +5,7 @@ import styled from 'styled-components'
 type Props = {
   className: String,
   children: Object,
+  id: String,
   title: String,
   footer: Object,
   full: Boolean,
@@ -13,7 +14,9 @@ type Props = {
   marginLeft: Boolean,
   marginRight: Boolean,
   nopadding: String,
-  withFull: Boolean
+  nobackground: Boolean,
+  withFull: Boolean,
+  innerRef: Object
 }
 
 export const CardContainer = styled.div`
@@ -50,7 +53,7 @@ export const CardWrapper = styled.div`
     !props.fullAtFirstBreak && !props.full && !props.withFull ? '48%' : null};
   }
 
-  @media (max-width: 1007px) {
+  @media (max-width: 1024px) {
     flex: 1 1 100%;
     max-width: initial;
     margin: 0 0 25px;
@@ -60,7 +63,8 @@ export const CardWrapper = styled.div`
 
 const Main = styled.div`
   background: ${props => props.theme.colors.MainCard.background}
-    url('assets/svg/card-bg.svg') no-repeat 50% 0;
+    ${props => (props.nobackground ? null : "url('assets/svg/card-bg.svg')")}
+    no-repeat 50% 0;
   background-size: cover;
   color: ${props => props.theme.colors.MainCard.color};
   display: flex;
@@ -99,14 +103,19 @@ class Card extends Component<Props, void> {
   render () {
     return (
       <CardWrapper
+        id={this.props.id}
         full={this.props.full}
         fullAtFirstBreak={this.props.fullAtFirstBreak}
         withFull={this.props.withFull}
         marginLeft={this.props.marginLeft}
         marginRight={this.props.marginRight}
         className={this.props.className}
+        innerRef={this.props.innerRef}
       >
-        <Main nopadding={this.props.nopadding}>
+        <Main
+          nopadding={this.props.nopadding}
+          nobackground={this.props.nobackground}
+        >
           {this.props.title && (
             <Header>
               <CardTitle>{this.props.title}</CardTitle>

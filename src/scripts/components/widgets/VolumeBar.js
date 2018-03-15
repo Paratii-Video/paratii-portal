@@ -15,7 +15,19 @@ type State = {
 
 const VOLUME_INDICATOR_DIMENSION: number = 20
 
-const VolumeIndicator = styled.div`
+const VolumeIndicator = styled.div.attrs({
+  style: ({ currentVolume, draggingVolumePercentage }) => ({
+    left: draggingVolumePercentage
+      ? `calc(${Math.max(
+        0,
+        Math.min(100, draggingVolumePercentage)
+      )}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
+      : `calc(${Math.max(
+        0,
+        Math.min(100, currentVolume)
+      )}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
+  })
+})`
   position: absolute;
   width: ${VOLUME_INDICATOR_DIMENSION}px;
   height: ${VOLUME_INDICATOR_DIMENSION}px;
@@ -24,23 +36,22 @@ const VolumeIndicator = styled.div`
     theme.colors.VideoPlayer.progress.scrubber};
 `
 
+const VolumeBarBuffer = styled.div`
+  height: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+`
+
 /* prettier-ignore */
 const VolumeBar = styled.div`
-  width: 100;
   height: 5px;
+  width: 100%;
   position: relative;
   display: flex;
   justify-content: flex-end;  
   align-items: center;
   background: linear-gradient(to right, ${({ theme }) => `${theme.colors.VideoPlayer.progress.barFrom}, ${theme.colors.VideoPlayer.progress.barTo}`});
-  ${/* sc-selector */VolumeIndicator} {
-    left: ${({ currentVolume, draggingVolumePercentage }) => {
-    if (draggingVolumePercentage) {
-      return `calc(${Math.max(0, Math.min(100, draggingVolumePercentage))}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
-    }
-    return `calc(${Math.max(0, Math.min(100, currentVolume))}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
-  }};
-  }
   `
 
 class PlayerControls extends Component<Props, State> {
@@ -103,10 +114,7 @@ class PlayerControls extends Component<Props, State> {
     const { onVolumeChange, currentVolume } = this.props
     const { draggingVolumePercentage } = this.state
     return (
-      <VolumeBar
-        innerRef={(ref: HTMLElement) => {
-          this.volumeBarRef = ref
-        }}
+      <VolumeBarBuffer
         onClick={(e: Object) => {
           if (this.volumeBarRef) {
             const wrapperRect: Object = this.volumeBarRef.getBoundingClientRect()
@@ -115,17 +123,23 @@ class PlayerControls extends Component<Props, State> {
             )
           }
         }}
-        currentVolume={currentVolume}
-        draggingVolumePercentage={draggingVolumePercentage}
       >
-        <VolumeIndicator
-          onMouseDown={() => {
-            this.setState({
-              userIsDragging: true
-            })
+        <VolumeBar
+          innerRef={(ref: HTMLElement) => {
+            this.volumeBarRef = ref
           }}
-        />
-      </VolumeBar>
+        >
+          <VolumeIndicator
+            currentVolume={currentVolume}
+            draggingVolumePercentage={draggingVolumePercentage}
+            onMouseDown={() => {
+              this.setState({
+                userIsDragging: true
+              })
+            }}
+          />
+        </VolumeBar>
+      </VolumeBarBuffer>
     )
   }
 }

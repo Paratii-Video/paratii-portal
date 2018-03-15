@@ -4,6 +4,7 @@ import styled from 'styled-components'
 type Props = {
   progress: String,
   nopercentual: String,
+  small: boolean,
   end: ?boolean
 }
 
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
 const BarWrapper = styled.div`
   background-color: ${props =>
     props.theme.colors.VideoForm.info.progress.background};
-  height: 2px;
+  height: ${props => (props.small ? '1px' : '2px')};
   position: relative;
   width: 100%;
 `
@@ -45,7 +46,7 @@ class VideoProgressBar extends Component<Props, void> {
   render () {
     return (
       <Wrapper>
-        <BarWrapper>
+        <BarWrapper small={this.props.small}>
           <Bar progress={this.props.progress}>
             {!this.props.nopercentual && (
               <Precentual end={this.props.progress === '100%' ? 1 : 0}>

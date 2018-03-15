@@ -195,7 +195,6 @@ const reducer = {
     { payload }: Action<{ id: string, progress: number }> = {}
   ): VideoRecordMap => {
     console.log('TRANSCODING_PROGRESS reducer')
-    console.log(payload)
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
@@ -326,21 +325,20 @@ export default handleActions(reducer, Immutable.Map({}))
 // This is a functino to fix a legacy bug in which the thumbnails where not
 // saved in  the "thumbnails" property, as they should
 const fixFetchedVideo = (video: VideoRecord, payload): VideoRecord => {
-  console.log(video.id)
-  console.log(video.get('thumbnails'))
-  console.log('size:')
-  console.log(video.get('thumbnails').size)
-  console.log(
-    payload.transcodingStatus &&
-      payload.transcodingStatus.data.result &&
-      payload.transcodingStatus.data.result.screenshots
-  )
+  // console.log(video.id)
+  // console.log(video.get('thumbnails'))
+  // console.log('size:')
+  // console.log(video.get('thumbnails').size)
+  // console.log(
+  //   payload.transcodingStatus &&
+  //     payload.transcodingStatus.data.result &&
+  //     payload.transcodingStatus.data.result.screenshots
+  // )
   if (
     video.get('thumbnails').size === 0 ||
     video.get('thumbnails').size === undefined
   ) {
     // fix  video.thumbnails
-    console.log('fixing')
     video = video.set(
       'thumbnails',
       Immutable.List(

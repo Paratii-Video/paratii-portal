@@ -17,7 +17,7 @@ import Notifications from 'containers/NotificationContainer'
 import type { Match } from 'react-router-dom'
 
 import MainTemplate from './templates/MainTemplate'
-import Modal from './widgets/modals/Modal'
+import Modal from 'containers/ModalContainer'
 import MainHeader from './structures/header/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/footer/MainFooter'
@@ -38,41 +38,17 @@ type Props = {
 }
 
 type State = {
-  modalContent: any,
-  showModal: boolean,
   isBusy: boolean
 }
 
 class App extends Component<Props, State> {
-  showModal: () => void
-  closeModal: () => void
-
   constructor (props: Props) {
     super(props)
 
     this.props.initializeApp()
-
     this.state = {
-      isBusy: this.props.videos ? this.props.videos.size > 0 : false,
-      modalContent: false,
-      showModal: false
+      isBusy: this.props.videos ? this.props.videos.size > 0 : false
     }
-
-    this.showModal = this.showModal.bind(this)
-    this.closeModal = this.closeModal.bind(this)
-  }
-
-  showModal (content: Object): void {
-    this.setState({
-      modalContent: content,
-      showModal: true
-    })
-  }
-
-  closeModal (): void {
-    this.setState({
-      showModal: false
-    })
   }
 
   componentDidUpdate () {
@@ -94,14 +70,12 @@ class App extends Component<Props, State> {
 
   render () {
     const { match } = this.props
-    const HTMLModal = this.state.modalContent
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
-          <Modal show={this.state.showModal} closeModal={this.closeModal}>
-            {HTMLModal}
-          </Modal>
+          <Modal />
           <Notifications />
+
           <MainHeader />
           <Main>
             <Switch>
@@ -112,15 +86,8 @@ class App extends Component<Props, State> {
                 path={`${match.url}profile`}
                 component={ProfileContainer}
               />
-              <Route
-                path={`${match.url}upload`}
-                render={props => (
-                  <VideoManager
-                    showModal={this.showModal}
-                    closeModal={this.closeModal}
-                  />
-                )}
-              />
+              <Route path={`${match.url}upload/:id`} component={VideoManager} />
+              <Route path={`${match.url}upload`} component={VideoManager} />
               <Route path={`${match.url}voucher`} component={Voucher} />
               <Route path={`${match.url}debug`} component={DebugContainer} />
               <Route path={`${match.url}wallet`} component={WalletContainer} />

@@ -9,7 +9,7 @@ const Themes = {
       color: Colors.grayLight
     },
     header: {
-      background: Colors.black,
+      background: Colors.blackLight,
       iconsFill: Colors.grayLight,
       logoFill: Colors.white
     },
@@ -26,9 +26,9 @@ const Themes = {
       pink: Colors.pink
     },
     Modal: {
-      background: Colors.blackTransparent,
+      background: Colors.blackLight,
       content: Colors.blackDark,
-      close: Colors.white,
+      close: Colors.grayLight,
       title: Colors.purple,
       hightlight: Colors.white,
       color: Colors.grayLight
@@ -90,6 +90,8 @@ const Themes = {
         subtitle2: Colors.purple
       },
       info: {
+        imageBackground: Colors.blackDark,
+        icon: Colors.white,
         time: {
           background: Colors.black,
           color: Colors.white
@@ -107,6 +109,7 @@ const Themes = {
       }
     },
     VideoPlayer: {
+      background: Colors.black,
       header: {
         title: Colors.white,
         icons: Colors.white

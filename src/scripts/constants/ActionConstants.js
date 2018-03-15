@@ -58,3 +58,6 @@ export const TRANSCODING_REQUESTED = createActionConstant(
 export const TRANSCODING_PROGRESS = createActionConstant('TRANSCODING_PROGRESS')
 export const TRANSCODING_SUCCESS = createActionConstant('TRANSCODING_SUCCESS')
 export const TRANSCODING_FAILURE = createActionConstant('TRANSCODING_FAILURE')
+
+export const OPEN_MODAL = createActionConstant('OPEN_MODAL')
+export const CLOSE_MODAL = createActionConstant('CLOSE_MODAL')

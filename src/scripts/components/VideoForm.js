@@ -1,9 +1,9 @@
+import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
 
-import ModalStake from 'containers/ModalStakeContainer'
 import Card from './structures/Card'
 import Button from './foundations/Button'
 import TextField from './widgets/forms/TextField'
@@ -85,8 +85,11 @@ type Props = {
   uploadAndTranscode: Object => Object,
   showModal: (View: Object) => void,
   closeModal: () => void,
+  openModal: () => void,
+  notification: (Object, string) => void,
   user: UserRecord,
-  balance: String
+  balance: String,
+  innerRef: Object
 }
 
 class VideoForm extends Component<Props, Object> {
@@ -110,7 +113,6 @@ class VideoForm extends Component<Props, Object> {
 
     this.handleInputChange = this.handleInputChange.bind(this)
     this.onPublishVideo = this.onPublishVideo.bind(this)
-    this.onPublishSubmit = this.onPublishSubmit.bind(this)
     this.onSaveData = this.onSaveData.bind(this)
     this.publishVideo = this.publishVideo.bind(this)
     this.saveData = this.saveData.bind(this)
@@ -125,32 +127,39 @@ class VideoForm extends Component<Props, Object> {
 
   onPublishVideo (e: Object) {
     e.preventDefault()
-    this.publishVideo(true)
-  }
-
-  onPublishSubmit (e: Object) {
-    e.preventDefault()
-
-    this.props.showModal(
-      <ModalStake
-        videoId={this.state.id}
-        onSuccess={this.handlePublish}
-        user={this.props.user}
-      />
+    const balance = Number(this.props.user.balances.PTI) // paratii.eth.web3.utils.fromWei(balance)
+    console.log(balance)
+    // FIXME we need to manage this globally and not hardcoded
+    const stakeAmount = 5
+    const stakeAmountWei = Number(
+      paratii.eth.web3.utils.toWei(stakeAmount + '')
     )
+    console.log(stakeAmountWei)
+    if (balance < stakeAmountWei) {
+      this.props.notification(
+        {
+          title: 'Not enough tokens',
+          message: `You need at least ${stakeAmount}PTIs to make a stake.`
+        },
+        'error'
+      )
+    } else {
+      this.publishVideo(true)
+    }
   }
 
   onFileChosen (e) {
     const file = e.target.files[0]
     this.props.uploadAndTranscode(file, this.props.selectedVideo.id)
   }
+
   onSaveData (e: Object) {
     e.preventDefault()
     this.saveData(false)
   }
 
   publishVideo (publish: false) {
-    this.saveData(publish)
+    this.props.openModal('ModalStake')
   }
 
   saveData (publish: false) {
@@ -180,8 +189,6 @@ class VideoForm extends Component<Props, Object> {
 
   render () {
     const video: VideoRecord = this.props.selectedVideo
-    // console.log(video.getIn(['transcodingStatus', 'data', 'result']))
-    // console.log(video.getIn(['transcodingStatus', 'data', 'result', 'screenshots']))
     if (!this.state.id) {
       return (
         <Card title="No video selected!">{this.props.selectedVideo.id}</Card>
@@ -192,25 +199,26 @@ class VideoForm extends Component<Props, Object> {
 
     const fileSize = prettyBytes((video && video.get('filesize')) || 0)
 
-    // const isPublished = video.published === true || video.published === 'true'
-    // const isPublishable =
-    //   video.transcodingStatus.name === 'success' && isPublished === false
-    //
-    const publishButton = ''
-    //   publishButton = (
-    //     <ButtonWrapper>
-    //       <Button
-    //         id="video-submit"
-    //         type="submit"
-    //         onClick={this.onPublishSubmit}
-    //         disabled={!isPublishable}
-    //         purple
-    //       >
-    //         Publish
-    //       </Button>
-    //     </ButtonWrapper>
-    //   )
-    // }
+    const isPublished = video.published === true || video.published === 'true'
+    const isPublishable =
+      video.transcodingStatus.name === 'success' && isPublished === false
+
+    let publishButton = ''
+    if (isPublishable && !isPublished) {
+      publishButton = (
+        <ButtonWrapper>
+          <Button
+            id="video-submit"
+            type="submit"
+            onClick={this.onPublishVideo}
+            disabled={!isPublishable}
+            purple
+          >
+            Publish
+          </Button>
+        </ButtonWrapper>
+      )
+    }
 
     const saveButton = (
       <ButtonWrapper>
@@ -240,7 +248,7 @@ class VideoForm extends Component<Props, Object> {
     // }
 
     return (
-      <Card full>
+      <Card full innerRef={this.props.innerRef} nobackground>
         <VideoFormHeader>
           <VideoFormTitle id="video-title">{title}</VideoFormTitle>
           <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>
@@ -248,7 +256,7 @@ class VideoForm extends Component<Props, Object> {
         <VideoFormWrapper>
           <Form
             onSubmit={this.onPublishVideo}
-            disabled={this.props.selectedVideo.storageStatus.name === 'running'}
+            // disabled={this.props.selectedVideo.storageStatus.name === 'running'}
           >
             <TextField
               id="video-id"

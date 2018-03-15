@@ -45,7 +45,6 @@ export const getSelectedUploaderVideo: (
     return null
   }
 )
-
 // export const getUploadProgress: (
 //   state: RootState
 // ) => ?Number = createSelector(
@@ -78,13 +77,30 @@ export const getTotalProgress: (state: RootState) => ?Number = createSelector(
     if (!video) {
       return 0
     }
-    // const uploadProgress = parseInt(video.uploadStatus.data.progress)
-    const uploadProgress = 0
-    // const transcodingProgress = parseInt(video.transcoderStatus.data.progress)
+    const uploadProgress =
+      parseInt(video.getIn(['uploadStatus', 'data', 'progress'])) || 0
     const transcodingProgress =
       parseInt(video.getIn(['transcodingStatus', 'data', 'progress'])) || 0
     return Math.floor((uploadProgress + transcodingProgress) / 2) || 0
   }
+)
+
+export const isUploaded = createSelector(
+  [getSelectedUploaderVideo],
+  upload => upload && upload.getIn(['uploadStatus', 'name']) === 'success'
+)
+
+export const isPublished = createSelector(
+  [getSelectedUploaderVideo],
+  upload => upload && (upload.published === true || upload.published === 'true')
+)
+
+export const isPublishable = createSelector(
+  [getSelectedUploaderVideo],
+  upload =>
+    upload &&
+    upload.getIn(['transcodingStatus', 'name']) === 'success' &&
+    upload.isPublished !== true
 )
 
 export const getIsUploading = createSelector(

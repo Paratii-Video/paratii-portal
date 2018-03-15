@@ -49,7 +49,7 @@ const UploadCoverIcon = styled.div`
 `
 
 const Icon = styled.div`
-  height: 126px;
+  height: 110px;
   margin: 0 auto;
   transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
   width: 190px;
