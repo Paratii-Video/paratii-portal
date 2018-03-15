@@ -123,7 +123,7 @@ const ShareOverlay = styled.div`
   height: 100%;
   justify-content: center;
   left: 0;
-  opacity: ${props => (props.show ? 1 : 0)};
+  opacity: ${props => (props.show ? 0.9 : 0)};
   position: absolute;
   pointer-events: ${props => (!props.show ? 'none' : null)};
   transition: opacity ${props => props.theme.animation.time.repaint};
