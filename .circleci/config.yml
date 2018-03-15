@@ -20,7 +20,7 @@ jobs:
       - run:
           command: yarn run parity
           background: true
-      - run: yarn run setup-dev-env
+      - run: yarn run setup-circleci-env
       - run:
           command: yarn run build:dev
           background: true
