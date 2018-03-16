@@ -18,8 +18,9 @@ const functionalTestsDir = testDir + "/functional-tests";
 
 const dev = process.env.NODE_ENV === "development";
 const test = process.env.NODE_ENV === "test";
-const prod = process.env.NODE_ENV === "production";
-const prodUnbuilt = process.env.NODE_ENV === "production-notugly";
+const prod = (process.env.NODE_ENV === "production" || process.env.NODE_ENV === 'staging')
+
+
 
 const definedVariables = {
   "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
@@ -35,7 +36,7 @@ if ((dev || test) && fs.existsSync(registryConfigPath)) {
 
 const config = {
   entry: {
-    bundle: (prod || prodUnbuilt)
+    bundle: (prod)
       ? [scriptsDir + "/index.js"]
 
       : [
@@ -97,6 +98,15 @@ const config = {
             options: {
               outputPath: "assets/"
             }
+          }
+        ]
+      },
+      {
+        test: /\.(svg)$/,
+        include: assetsDir,
+        use: [
+          {
+            loader: 'svg-url-loader'
           }
         ]
       },
