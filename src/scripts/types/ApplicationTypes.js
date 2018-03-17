@@ -238,8 +238,7 @@ type Colors = {
     gray: string,
     purple: string
   },
-  popover: {
-    border: string,
+  Popover: {
     background: string,
     color: string
   },
