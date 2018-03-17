@@ -33,10 +33,6 @@ const Themes = {
       hightlight: Colors.white,
       color: Colors.grayLight
     },
-    SlideModal: {
-      background: Colors.blackLightTransparent,
-      text: Colors.white
-    },
     Popover: {
       background: Colors.blackLightTransparent,
       color: Colors.white
