@@ -58,15 +58,20 @@ const Level = styled.li`
   font-size: 14px;
   cursor: pointer;
   margin-top: 5px;
-  background-color: ${({ theme, index, selectedIndex }) =>
-    index === selectedIndex
-      ? theme.colors.VideoPlayer.levels.selectedBackground
-      : ''};
+  background-color: ${({ theme, selected }) =>
+    selected ? theme.colors.VideoPlayer.levels.selectedBackground : ''};
   padding: 0 ${PADDING};
   text-align: right;
 
   &:last-child {
     margin-bottom: 5px;
+  }
+
+  &::before {
+    content: '•';
+    font-size: 20px;
+    margin-right: 7px;
+    display: ${({ selected }) => (selected ? 'inline-block' : 'none')};
   }
 `
 
@@ -109,13 +114,7 @@ class PlaybackLevels extends React.Component<Props> {
   }
 
   render () {
-    const {
-      currentPlaybackLevel,
-      playbackLevels,
-      onPlaybackLevelChange,
-      open,
-      onClose
-    } = this.props
+    const { playbackLevels, onPlaybackLevelChange, open, onClose } = this.props
     const offsetXPercentage: number = this.getLevelsListOffsetPercentage()
     const selectedIndex: number = this.getSelectedLevelIndex()
     const numLevels: number = playbackLevels.size
@@ -133,16 +132,11 @@ class PlaybackLevels extends React.Component<Props> {
             {playbackLevels.map((level: PlaybackLevel, index: number) => (
               <Level
                 numLevels={numLevels}
-                selectedIndex={selectedIndex}
-                index={index}
+                selected={selectedIndex === index}
                 key={level.get('id')}
                 onClick={() => {
                   onPlaybackLevelChange(level.get('id'))
                 }}
-                selected={
-                  level.get('id') ===
-                  (currentPlaybackLevel && currentPlaybackLevel.get('id'))
-                }
               >
                 {level.get('label')}
               </Level>
