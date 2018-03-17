@@ -43,7 +43,7 @@ const CloseButton = styled.div`
 
 const LevelsList = styled.ul`
   flex: 1 1 0;
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: right;
   display: flex;
   overflow-y: scroll;
@@ -65,7 +65,7 @@ const Level = styled.li`
   padding: 0 ${PADDING};
   text-align: right;
 
-  &:first-child {
+  &:last-child {
     margin-bottom: 5px;
   }
 `

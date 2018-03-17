@@ -85,9 +85,9 @@ export const getPlaybackLevelsSorted: (
     levels
       .sort(
         (level1: PlaybackLevel, level2: PlaybackLevel): number =>
-          level1.get('id') - level2.get('id')
+          level2.get('id') - level1.get('id')
       )
-      .push(
+      .unshift(
         new PlaybackLevel({
           id: -1,
           label: 'Automatic'

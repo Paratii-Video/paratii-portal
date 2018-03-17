@@ -280,6 +280,7 @@ class PlayerControls extends Component<Props, State> {
 
   render () {
     const {
+      activePlugin,
       isPlaying,
       isFullscreen,
       onScrub,
@@ -347,6 +348,11 @@ class PlayerControls extends Component<Props, State> {
             <RightControls>
               <ControlButtonWrapper>
                 <IconButton
+                  color={
+                    activePlugin === PLAYER_PLUGIN.PLAYBACK_LEVELS
+                      ? Colors.purple
+                      : undefined
+                  }
                   disabled={!playbackLevels.size}
                   icon={qualityIcon}
                   onClick={() => {
