@@ -4,6 +4,10 @@ import React from 'react'
 import styled from 'styled-components'
 import Transition from 'react-transition-group/Transition'
 
+import { TRANSITION_STATE } from 'constants/ApplicationConstants'
+
+import type { TransitionState } from 'types/ApplicationTypes'
+
 type Props = {
   top: number | string,
   left: number | string,
@@ -26,6 +30,30 @@ const Wrapper = styled.div`
   left: ${({ left }) => left};
   right: ${({ right }) => right};
   margin: 20px;
+  overflow: hidden;
+  opacity: ${({ transitionState }) => {
+    switch (transitionState) {
+      case TRANSITION_STATE.ENTERING:
+      case TRANSITION_STATE.EXITING:
+        return 0
+      case TRANSITION_STATE.ENTERED:
+      default:
+        return 1
+    }
+  }};
+  transform: translateY(
+    ${({ transitionState }) => {
+    switch (transitionState) {
+      case TRANSITION_STATE.ENTERED:
+        return 0
+      case TRANSITION_STATE.ENTERING:
+      case TRANSITION_STATE.EXITING:
+      default:
+        return '50%'
+    }
+  }}
+  );
+  transition: all 250ms ${({ theme }) => theme.animation.ease.smooth};
 `
 
 class Popover extends React.Component<Props, void> {
@@ -39,16 +67,19 @@ class Popover extends React.Component<Props, void> {
   render () {
     const { open, top, left, bottom, right } = this.props
     return (
-      <Transition in={open} timeout={0}>
-        <Wrapper
-          onClick={(e: Object) => e.stopPropagation()}
-          top={top}
-          left={left}
-          bottom={bottom}
-          right={right}
-        >
-          {this.props.children}
-        </Wrapper>
+      <Transition in={open} timeout={50} unmountOnExit>
+        {(transitionState: TransitionState) => (
+          <Wrapper
+            onClick={(e: Object) => e.stopPropagation()}
+            transitionState={transitionState}
+            top={top}
+            left={left}
+            bottom={bottom}
+            right={right}
+          >
+            {this.props.children}
+          </Wrapper>
+        )}
       </Transition>
     )
   }

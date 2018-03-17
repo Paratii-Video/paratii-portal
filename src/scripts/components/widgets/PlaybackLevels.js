@@ -4,9 +4,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { List as ImmutableList } from 'immutable'
 
-import { PlaybackLevel } from 'records/PlayerRecords'
 import Popover from 'components/foundations/Popover'
+import IconButton from 'components/foundations/buttons/IconButton'
 import { CONTROLS_HEIGHT } from 'constants/UIConstants'
+import { PlaybackLevel } from 'records/PlayerRecords'
 
 const PADDING: string = '20px'
 
@@ -21,8 +22,10 @@ const Wrapper = styled.div`
 const TopBar = styled.div`
   flex: 0 0 20%;
   display: flex;
+  align-items: center;
   border-bottom: 0.5px solid
     ${({ theme }) => theme.colors.VideoPlayer.levels.border};
+  padding: 10px ${PADDING};
 `
 
 const Title = styled.div`
@@ -30,7 +33,12 @@ const Title = styled.div`
   flex: 1 1 0;
   align-items: center;
   font-size: 14px;
-  padding: 10px ${PADDING};
+`
+
+const CloseButton = styled.div`
+  display: flex;
+  height: 12px;
+  width: 12px;
 `
 
 const LevelsList = styled.ul`
@@ -113,15 +121,13 @@ class PlaybackLevels extends React.Component<Props> {
     const numLevels: number = playbackLevels.size
 
     return (
-      <Popover
-        open={open}
-        onClose={onClose}
-        bottom={`${CONTROLS_HEIGHT}`}
-        right={0}
-      >
+      <Popover open={open} bottom={`${CONTROLS_HEIGHT}`} right={0}>
         <Wrapper>
           <TopBar>
             <Title>Video Quality</Title>
+            <CloseButton>
+              <IconButton icon="/assets/img/close-icon.svg" onClick={onClose} />
+            </CloseButton>
           </TopBar>
           <LevelsList offsetXPercentage={offsetXPercentage}>
             {playbackLevels.map((level: PlaybackLevel, index: number) => (

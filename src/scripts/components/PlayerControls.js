@@ -268,7 +268,7 @@ class PlayerControls extends Component<Props, State> {
     return (
       <Fragment>
         <PlaybackLevels
-          open={true || activePlugin === PLAYER_PLUGIN.PLAYBACK_LEVELS}
+          open={activePlugin === PLAYER_PLUGIN.PLAYBACK_LEVELS}
           currentPlaybackLevel={currentPlaybackLevel}
           playbackLevels={playbackLevels}
           onPlaybackLevelChange={onPlaybackLevelChange}
