@@ -5,55 +5,55 @@ import styled from 'styled-components'
 import { List as ImmutableList } from 'immutable'
 
 import { PlaybackLevel } from 'records/PlayerRecords'
-import SlideModal from 'components/foundations/SlideModal'
+import Popover from 'components/foundations/Popover'
+import { CONTROLS_HEIGHT } from 'constants/UIConstants'
+
+const PADDING: string = '20px'
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 65px;
+  height: 200px;
+  width: 160px;
 `
 
 const TopBar = styled.div`
-  flex: 0 0 33%;
+  flex: 0 0 20%;
   display: flex;
 `
 
 const Title = styled.div`
-  display: block;
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
   font-size: 14px;
+  padding: 10px ${PADDING};
+  border-bottom: 1px solid
+    ${({ theme }) => theme.colors.VideoPlayer.levels.color};
 `
 
 const LevelsList = styled.ul`
   flex: 1 1 0;
-  width: 50%;
-  min-width: 550px;
-  margin: auto;
+  flex-direction: column-reverse;
+  align-items: right;
   display: flex;
-  margin-top: 10px;
-  align-items: center;
-  justify-content: space-around;
   overflow-y: scroll;
-  transform: translateX(${({ offsetXPercentage }) => offsetXPercentage}%);
-  transition: 250ms all ${({ theme }) => theme.animation.ease.smooth};
 `
 
 const Level = styled.li`
   display: flex;
-  flex-direction: column;
+  flex: 0 0 30px;
   align-items: center;
+  width: 100%;
   font-size: 14px;
   cursor: pointer;
-  opacity: ${({ index, numLevels, selectedIndex }) =>
-    1 - Math.abs((selectedIndex - index) / numLevels)};
-`
-
-const SelectedIndicator = styled.div`
-  margin: auto;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
   margin-top: 5px;
-  background-color: ${({ theme }) => theme.colors.VideoPlayer.levels.selected};
+  background-color: ${({ theme, index, selectedIndex }) =>
+    index === selectedIndex
+      ? theme.colors.VideoPlayer.levels.selectedBackground
+      : ''};
+  padding: 0 ${PADDING};
+  text-align: right;
 `
 
 type Props = {
@@ -107,7 +107,12 @@ class PlaybackLevels extends React.Component<Props> {
     const numLevels: number = playbackLevels.size
 
     return (
-      <SlideModal open={open} onClose={onClose}>
+      <Popover
+        open={open}
+        onClose={onClose}
+        bottom={`${CONTROLS_HEIGHT}`}
+        right={0}
+      >
         <Wrapper>
           <TopBar>
             <Title>Video Quality</Title>
@@ -131,9 +136,8 @@ class PlaybackLevels extends React.Component<Props> {
               </Level>
             ))}
           </LevelsList>
-          <SelectedIndicator />
         </Wrapper>
-      </SlideModal>
+      </Popover>
     )
   }
 }

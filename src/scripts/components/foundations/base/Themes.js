@@ -37,9 +37,8 @@ const Themes = {
       background: Colors.blackLightTransparent,
       text: Colors.white
     },
-    popover: {
-      border: Colors.gray,
-      background: Colors.blackTransparent,
+    Popover: {
+      background: Colors.blackLightTransparent,
       color: Colors.white
     },
     TextField: {
@@ -129,7 +128,8 @@ const Themes = {
         time: Colors.white
       },
       levels: {
-        selected: Colors.purple
+        color: Colors.white,
+        selectedBackground: Colors.blackDarkTransparent
       }
     }
   }

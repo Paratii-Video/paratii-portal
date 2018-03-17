@@ -12,6 +12,7 @@ import IconButton from 'components/foundations/buttons/IconButton'
 import Colors from 'components/foundations/base/Colors'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
+import { CONTROLS_HEIGHT } from 'constants/UIConstants'
 
 import playIcon from 'assets/img/play-icon.svg'
 import pauseIcon from 'assets/img/pause-icon.svg'
@@ -51,7 +52,6 @@ type State = {
   scrubbingPositionPercentage: number
 }
 
-const CONTROLS_HEIGHT: string = '75px'
 const CONTROL_BUTTONS_HEIGHT: string = '50px'
 const CONTROLS_SPACING: string = '20px'
 
@@ -268,7 +268,7 @@ class PlayerControls extends Component<Props, State> {
     return (
       <Fragment>
         <PlaybackLevels
-          open={activePlugin === PLAYER_PLUGIN.PLAYBACK_LEVELS}
+          open={true || activePlugin === PLAYER_PLUGIN.PLAYBACK_LEVELS}
           currentPlaybackLevel={currentPlaybackLevel}
           playbackLevels={playbackLevels}
           onPlaybackLevelChange={onPlaybackLevelChange}
