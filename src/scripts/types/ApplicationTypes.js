@@ -225,8 +225,8 @@ type Colors = {
   },
   header: {
     background: string,
-    iconsFill: string,
-    logoFill: string
+    icon: string,
+    logo: string
   },
   footer: {
     background: string,

@@ -12,6 +12,7 @@ import VideoRecord from 'records/VideoRecords'
 import VideoOverlay from 'components/VideoOverlay'
 import Button from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
+import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
 import NotFound from './pages/NotFound'
 import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
@@ -131,7 +132,7 @@ const ShareOverlay = styled.div`
   height: 100%;
   justify-content: center;
   left: 0;
-  opacity: ${props => (props.show ? 1 : 0)};
+  opacity: ${props => (props.show ? 0.9 : 0)};
   position: absolute;
   pointer-events: ${props => (!props.show ? 'none' : null)};
   transition: opacity ${props => props.theme.animation.time.repaint};
@@ -188,9 +189,29 @@ const ShareLinkIcon = styled.img`
   width: 100%;
 `
 
-const DescriptionWrapper = styled(Card)`
+const PlayInfo = styled(Card)`
   width: 100%;
 `
+
+const PlayInfoButtons = styled.div`
+  display: flex;
+  margin: 15px 0 15px;
+`
+
+const ButtonIcon = styled(Button)`
+  display: flex;
+  margin-right: 10px;
+`
+
+const SVG = styled.svg`
+  display: block;
+  fill: ${props => props.theme.colors.VideoDescription.icon};
+  height: 20px;
+  margin-right: 10px;
+  width: 20px;
+`
+
+const PlayInfoHighlight = Text.withComponent('span')
 
 const HIDE_CONTROLS_THRESHOLD: number = 2000
 
@@ -742,7 +763,46 @@ class Play extends Component<Props, State> {
               ) : null}
             </PlayerWrapper>
           </VideoWrapper>
-          {!isEmbed && <DescriptionWrapper />}
+          {!isEmbed &&
+            video && (
+              <PlayInfo>
+                {video.title && <Title small>{video.title}</Title>}
+                {video.author && <Text>By {video.author}</Text>}
+                <PlayInfoButtons>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-view" />
+                    </SVG>
+                    <Text small gray>
+                      0
+                    </Text>
+                  </ButtonIcon>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-like" />
+                    </SVG>
+                    <Text small gray>
+                      0
+                    </Text>
+                  </ButtonIcon>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-dislike" />
+                    </SVG>
+                    <Text small gray>
+                      0
+                    </Text>
+                  </ButtonIcon>
+                </PlayInfoButtons>
+                <Text gray>
+                  Price{' '}
+                  <PlayInfoHighlight purple>
+                    {video.free ? 'Free' : 'Paid'}
+                  </PlayInfoHighlight>
+                </Text>
+                {video.description && <Text>{video.description}</Text>}
+              </PlayInfo>
+            )}
         </Wrapper>
       )
     }

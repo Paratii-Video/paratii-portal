@@ -55,12 +55,12 @@ const HelperLabel = styled.span`
 `
 
 class TextareaField extends Component<Props, void> {
-  constructor (props) {
+  constructor (props: Props) {
     super(props)
 
     this.state = {
-      filled: this.props.value ? this.props.value.length > 0 : false,
-      value: this.props.value
+      filled: props.value ? props.value.length > 0 : false,
+      value: props.value
     }
 
     this.handleHeight = this.handleHeight.bind(this)
@@ -103,6 +103,10 @@ class TextareaField extends Component<Props, void> {
     if (this.props.readonly) {
       e.target.select()
     }
+  }
+
+  componentDidMount (): void {
+    this.handleHeight()
   }
 
   componentWillReceiveProps (nextProps: Props): void {
