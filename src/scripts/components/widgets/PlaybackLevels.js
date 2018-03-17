@@ -11,6 +11,7 @@ import { CONTROLS_HEIGHT } from 'constants/UIConstants'
 const PADDING: string = '20px'
 
 const Wrapper = styled.div`
+  cursor: default;
   display: flex;
   flex-direction: column;
   height: 200px;
@@ -20,6 +21,8 @@ const Wrapper = styled.div`
 const TopBar = styled.div`
   flex: 0 0 20%;
   display: flex;
+  border-bottom: 0.5px solid
+    ${({ theme }) => theme.colors.VideoPlayer.levels.border};
 `
 
 const Title = styled.div`
@@ -28,8 +31,6 @@ const Title = styled.div`
   align-items: center;
   font-size: 14px;
   padding: 10px ${PADDING};
-  border-bottom: 1px solid
-    ${({ theme }) => theme.colors.VideoPlayer.levels.color};
 `
 
 const LevelsList = styled.ul`
@@ -44,6 +45,7 @@ const Level = styled.li`
   display: flex;
   flex: 0 0 30px;
   align-items: center;
+  justify-content: flex-end;
   width: 100%;
   font-size: 14px;
   cursor: pointer;
@@ -54,6 +56,10 @@ const Level = styled.li`
       : ''};
   padding: 0 ${PADDING};
   text-align: right;
+
+  &:first-child {
+    margin-bottom: 5px;
+  }
 `
 
 type Props = {

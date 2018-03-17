@@ -1,7 +1,8 @@
 /* @flow */
 
 const Colors: Object = {
-  white: '#fff',
+  white: 'rgb(255, 255, 255)',
+  whiteTransparent: 'rgba(255, 255, 255, 0.65)',
   grayLight: '#828282',
   gray: '#c7c7c7',
   grayMedium: '#404447',

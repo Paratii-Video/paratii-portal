@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   width: auto;
   height: auto;
   position: absolute;
-  border-radius: 4px;
+  border-radius: 2px;
   background-color: ${({ theme }) => theme.colors.Popover.background};
   color: ${({ theme }) => theme.colors.Popover.color};
   top: ${({ top }) => top};
