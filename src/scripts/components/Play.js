@@ -426,6 +426,7 @@ class Play extends Component<Props, State> {
 
     // Space key
     if (e.keyCode === 32) {
+      e.preventDefault()
       this.togglePlayPause()
     }
   }
