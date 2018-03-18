@@ -7,6 +7,7 @@ import type { Map } from 'immutable'
 import VideoListItem from 'containers/VideoListItemContainer'
 import Card from 'components/structures/Card'
 import Button from 'components/foundations/Button'
+import { VIDEO_MANAGER_MAX_HEIGHT } from 'constants/UIConstants'
 
 type Props = {
   videos: Map<string, VideoRecord>, // maps video ids to upload records
@@ -14,6 +15,10 @@ type Props = {
   setSelectedVideo: Object => void,
   videoFormRef: Object
 }
+
+const Wrapper = styled(Card)`
+  max-height: ${VIDEO_MANAGER_MAX_HEIGHT};
+`
 
 const Title = styled.h3`
   color: ${props => props.theme.colors.VideoList.title};
@@ -27,6 +32,7 @@ const List = styled.ul`
   display: block;
   padding-bottom: 80px;
   width: 100%;
+  overflow: scroll;
 `
 
 class VideoList extends Component<Props, void> {
@@ -50,7 +56,7 @@ class VideoList extends Component<Props, void> {
       ''
     )
     return (
-      <Card {...this.props} nopadding nobackground footer={footer}>
+      <Wrapper {...this.props} nopadding nobackground footer={footer}>
         <Title>Video List</Title>
         <List>
           {this.props.videos
@@ -64,7 +70,7 @@ class VideoList extends Component<Props, void> {
               />
             ))}
         </List>
-      </Card>
+      </Wrapper>
     )
   }
 }
