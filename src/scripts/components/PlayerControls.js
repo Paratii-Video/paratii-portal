@@ -73,7 +73,7 @@ const Controls = styled.div`
     switch (transitionState) {
       case TRANSITION_STATE.ENTERING:
       case TRANSITION_STATE.EXITED:
-        return `calc(${CONTROLS_HEIGHT} - ${PROGRESS_INDICATOR_DIMENSION}px)`
+        return `calc(${CONTROLS_HEIGHT} + ${PROGRESS_INDICATOR_DIMENSION}px)`
       case TRANSITION_STATE.EXITING:
       case TRANSITION_STATE.ENTERED:
       default:
