@@ -254,14 +254,6 @@ class Play extends Component<Props, State> {
         time: 0
       })
     }
-
-    const playerNode = document.querySelector(`#${PLAYER_ID}`)
-    if (playerNode) {
-      const parentNode: ?Node = playerNode.parentNode
-      if (parentNode) {
-        parentNode.removeChild(playerNode)
-      }
-    }
   }
 
   bindClapprEvents (): void {
@@ -498,6 +490,20 @@ class Play extends Component<Props, State> {
     window.removeEventListener('keydown', this.handleKeyDown)
   }
 
+  destroyPlayer () {
+    if (this.player) {
+      this.player.destroy()
+    }
+
+    const playerNode = document.querySelector(`#${PLAYER_ID}`)
+    if (playerNode) {
+      const parentNode: ?Node = playerNode.parentNode
+      if (parentNode) {
+        parentNode.removeChild(playerNode)
+      }
+    }
+  }
+
   componentDidMount (): void {
     const videoId = this.getVideoIdFromRequest()
     if (videoId) {
@@ -519,9 +525,7 @@ class Play extends Component<Props, State> {
     this.removeFullScreenEventListeners()
     this.removeKeyDownEventListeners()
 
-    if (this.player) {
-      this.player.destroy()
-    }
+    this.destroyPlayer()
 
     playerReset()
   }
