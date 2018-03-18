@@ -7,11 +7,10 @@ import VolumeBar from 'components/widgets/VolumeBar'
 import IconButton from 'components/foundations/buttons/IconButton'
 import Colors from 'components/foundations/base/Colors'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
+import { CONTROLS_BUTTON_DIMENSION } from 'constants/UIConstants'
 
 import playIcon from 'assets/img/play-icon.svg'
 import pauseIcon from 'assets/img/pause-icon.svg'
-import volumeIcon from 'assets/img/volume-icon.svg'
-import muteIcon from 'assets/img/mute-icon.svg'
 import normalscreenIcon from 'assets/img/normalscreen-icon.svg'
 import fullscreenIcon from 'assets/img/fullscreen-icon.svg'
 
@@ -151,14 +150,13 @@ const Time = styled.div`
 
 const VolumeBarWrapper = styled.div`
   position: relative;
-  width: 200px;
   margin-left: calc(-${CONTROLS_SPACING} / 2);
   margin-right: ${CONTROLS_SPACING};
   `
 
 const ControlButtonWrapper = styled.div`
-  width: 25px;
-  height: 25px;
+  width: ${CONTROLS_BUTTON_DIMENSION};
+  height: ${CONTROLS_BUTTON_DIMENSION};
   &:not(:last-child) {
     margin-right: ${CONTROLS_SPACING};
   }
@@ -295,18 +293,11 @@ class PlayerControls extends Component<Props, State> {
             <Time>{`${formattedCurrentTime} / ${formattedDuration}`}</Time>
           </LeftControls>
           <RightControls>
-            <ControlButtonWrapper>
-              <IconButton
-                icon={currentVolume === 0 ? muteIcon : volumeIcon}
-                onClick={() => {
-                  onToggleMute(!this.isMuted())
-                }}
-              />
-            </ControlButtonWrapper>
             <VolumeBarWrapper>
               <VolumeBar
-                onVolumeChange={onVolumeChange}
                 currentVolume={currentVolume}
+                onToggleMute={() => onToggleMute(!this.isMuted())}
+                onVolumeChange={onVolumeChange}
               />
             </VolumeBarWrapper>
             <ControlButtonWrapper>
