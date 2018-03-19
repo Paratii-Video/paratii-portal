@@ -13,8 +13,10 @@ const registryFilename = '/tmp/registry.json'
 
 const config = require(configFilename)
 
-config['provider'] = 'http://' + process.env.LOCAL_IP + ':8545'
-config['db.provider'] = 'http://' + process.env.LOCAL_IP + ':3000'
+if (process.env.NODE_ENV !== 'circleci') {
+  config['provider'] = 'http://' + process.env.LOCAL_IP + ':8545'
+  config['db.provider'] = 'http://' + process.env.LOCAL_IP + ':3000'
+}
 
 const paratii = new Paratii(config)
 
