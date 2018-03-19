@@ -50,6 +50,14 @@ export const UPDATE_VIDEO_BUFFERED_TIME = createActionConstant(
   'UPDATE_VIDEO_BUFFERED_TIME'
 )
 export const PLAYER_UPDATE_VOLUME = createActionConstant('PLAYER_UPDATE_VOLUME')
+export const PLAYBACK_LEVELS_LOADED = createActionConstant(
+  'PLAYBACK_LEVELS_LOADED'
+)
+export const PLAYBACK_LEVEL_SET = createActionConstant('PLAYBACK_LEVEL_SET')
+export const PLAYER_SET_ACTIVE_PLUGIN = createActionConstant(
+  'PLAYER_SET_ACTIVE_PLUGIN'
+)
+export const PLAYER_RESET = createActionConstant('PLAYER_RESET')
 
 /* Transcoding actions */
 export const TRANSCODING_REQUESTED = createActionConstant(

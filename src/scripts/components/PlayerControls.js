@@ -1,12 +1,18 @@
 /* @flow */
 
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
+import { List as ImmutableList } from 'immutable'
+
+import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
 import VolumeBar from 'components/widgets/VolumeBar'
+import PlaybackLevels from 'components/widgets/PlaybackLevels'
 import IconButton from 'components/foundations/buttons/IconButton'
 import Colors from 'components/foundations/base/Colors'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
+import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
+import { CONTROLS_HEIGHT } from 'constants/UIConstants'
 
 import playIcon from 'assets/img/play-icon.svg'
 import pauseIcon from 'assets/img/pause-icon.svg'
@@ -14,8 +20,9 @@ import volumeIcon from 'assets/img/volume-icon.svg'
 import muteIcon from 'assets/img/mute-icon.svg'
 import normalscreenIcon from 'assets/img/normalscreen-icon.svg'
 import fullscreenIcon from 'assets/img/fullscreen-icon.svg'
+import qualityIcon from 'assets/img/quality-icon.svg'
 
-import type { TransitionState } from 'types/ApplicationTypes'
+import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
 
 type Props = {
   video: ?VideoRecord,
@@ -32,7 +39,12 @@ type Props = {
   onScrub: (percentage: number) => void,
   toggleFullscreen: (goToFullscreen: boolean) => void,
   formattedCurrentTime: string,
-  formattedDuration: string
+  formattedDuration: string,
+  playbackLevels: ImmutableList<PlaybackLevel>,
+  currentPlaybackLevel: ?PlaybackLevel,
+  onPlaybackLevelChange: (levelId: number) => void,
+  activePlugin: ?PlayerPlugin,
+  setActivePlugin: (nextPlugin: ?PlayerPlugin) => void
 }
 
 type State = {
@@ -40,15 +52,20 @@ type State = {
   scrubbingPositionPercentage: number
 }
 
-const CONTROLS_HEIGHT: string = '75px'
 const CONTROL_BUTTONS_HEIGHT: string = '50px'
 const CONTROLS_SPACING: string = '20px'
 
-const Controls = styled.div`
+const Wrapper = styled.div`
+  position: relative;
+  display: flex;
   flex: 0 0 ${CONTROLS_HEIGHT};
+`
+
+const Controls = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%
   align-items: center;
   background: ${({ theme }) => theme.colors.VideoPlayer.controls.background};
   transform: translateY(
@@ -232,8 +249,38 @@ class PlayerControls extends Component<Props, State> {
     return currentVolume === 0
   }
 
+  setActivePlugin = (nextPlugin: PlayerPlugin): void => {
+    const { activePlugin, setActivePlugin } = this.props
+
+    setActivePlugin(
+      !nextPlugin || nextPlugin === activePlugin ? null : nextPlugin
+    )
+  }
+
+  renderPlugins () {
+    const {
+      activePlugin,
+      currentPlaybackLevel,
+      onPlaybackLevelChange,
+      playbackLevels
+    } = this.props
+
+    return (
+      <Fragment>
+        <PlaybackLevels
+          open={activePlugin === PLAYER_PLUGIN.PLAYBACK_LEVELS}
+          currentPlaybackLevel={currentPlaybackLevel}
+          playbackLevels={playbackLevels}
+          onPlaybackLevelChange={onPlaybackLevelChange}
+          onClose={() => this.setActivePlugin()}
+        />
+      </Fragment>
+    )
+  }
+
   render () {
     const {
+      activePlugin,
       isPlaying,
       isFullscreen,
       onScrub,
@@ -247,79 +294,98 @@ class PlayerControls extends Component<Props, State> {
       currentBufferedTimeSeconds,
       formattedCurrentTime,
       formattedDuration,
-      videoDurationSeconds
+      videoDurationSeconds,
+      playbackLevels
     } = this.props
     const { scrubbingPositionPercentage } = this.state
+
     return (
-      <Controls transitionState={transitionState}>
-        <ProgressBarWrapper
-          onClick={(e: Object) => {
-            if (this.progressBarRef) {
-              const wrapperRect: Object = this.progressBarRef.getBoundingClientRect()
-              onScrub((e.clientX - wrapperRect.x) * 100 / wrapperRect.width)
-            }
-          }}
-        >
-          <ProgressBar
-            innerRef={(ref: HTMLElement) => {
-              this.progressBarRef = ref
+      <Wrapper>
+        {this.renderPlugins()}
+        <Controls transitionState={transitionState}>
+          <ProgressBarWrapper
+            onClick={(e: Object) => {
+              if (this.progressBarRef) {
+                const wrapperRect: Object = this.progressBarRef.getBoundingClientRect()
+                onScrub((e.clientX - wrapperRect.x) * 100 / wrapperRect.width)
+              }
             }}
-            bufferTime={currentBufferedTimeSeconds}
-            totalDuration={videoDurationSeconds}
           >
-            <ProgressBuffer
-              bufferTime={currentBufferedTimeSeconds}
-              totalDuration={currentBufferedTimeSeconds}
-            />
-            <ProgressIndicator
-              currentTime={currentTimeSeconds}
-              onMouseDown={() => {
-                this.setState({
-                  userIsScrubbing: true
-                })
+            <ProgressBar
+              innerRef={(ref: HTMLElement) => {
+                this.progressBarRef = ref
               }}
-              scrubbingPositionPercentage={scrubbingPositionPercentage}
+              bufferTime={currentBufferedTimeSeconds}
               totalDuration={videoDurationSeconds}
-            />
-          </ProgressBar>
-        </ProgressBarWrapper>
-        <ControlButtons>
-          <LeftControls>
-            <ControlButtonWrapper>
-              <IconButton
-                color={Colors.purple}
-                icon={isPlaying ? pauseIcon : playIcon}
-                onClick={togglePlayPause}
+            >
+              <ProgressBuffer
+                bufferTime={currentBufferedTimeSeconds}
+                totalDuration={currentBufferedTimeSeconds}
               />
-            </ControlButtonWrapper>
-            <Time>{`${formattedCurrentTime} / ${formattedDuration}`}</Time>
-          </LeftControls>
-          <RightControls>
-            <ControlButtonWrapper>
-              <IconButton
-                icon={currentVolume === 0 ? muteIcon : volumeIcon}
-                onClick={() => {
-                  onToggleMute(!this.isMuted())
+              <ProgressIndicator
+                currentTime={currentTimeSeconds}
+                onMouseDown={() => {
+                  this.setState({
+                    userIsScrubbing: true
+                  })
                 }}
+                scrubbingPositionPercentage={scrubbingPositionPercentage}
+                totalDuration={videoDurationSeconds}
               />
-            </ControlButtonWrapper>
-            <VolumeBarWrapper>
-              <VolumeBar
-                onVolumeChange={onVolumeChange}
-                currentVolume={currentVolume}
-              />
-            </VolumeBarWrapper>
-            <ControlButtonWrapper>
-              <IconButton
-                icon={isFullscreen ? normalscreenIcon : fullscreenIcon}
-                onClick={() => {
-                  toggleFullscreen(!isFullscreen)
-                }}
-              />
-            </ControlButtonWrapper>
-          </RightControls>
-        </ControlButtons>
-      </Controls>
+            </ProgressBar>
+          </ProgressBarWrapper>
+          <ControlButtons>
+            <LeftControls>
+              <ControlButtonWrapper>
+                <IconButton
+                  color={Colors.purple}
+                  icon={isPlaying ? pauseIcon : playIcon}
+                  onClick={togglePlayPause}
+                />
+              </ControlButtonWrapper>
+              <Time>{`${formattedCurrentTime} / ${formattedDuration}`}</Time>
+            </LeftControls>
+            <RightControls>
+              <ControlButtonWrapper>
+                <IconButton
+                  color={
+                    activePlugin === PLAYER_PLUGIN.PLAYBACK_LEVELS
+                      ? Colors.purple
+                      : undefined
+                  }
+                  disabled={!playbackLevels.size}
+                  icon={qualityIcon}
+                  onClick={() => {
+                    this.setActivePlugin(PLAYER_PLUGIN.PLAYBACK_LEVELS)
+                  }}
+                />
+              </ControlButtonWrapper>
+              <ControlButtonWrapper>
+                <IconButton
+                  icon={currentVolume === 0 ? muteIcon : volumeIcon}
+                  onClick={() => {
+                    onToggleMute(!this.isMuted())
+                  }}
+                />
+              </ControlButtonWrapper>
+              <VolumeBarWrapper>
+                <VolumeBar
+                  onVolumeChange={onVolumeChange}
+                  currentVolume={currentVolume}
+                />
+              </VolumeBarWrapper>
+              <ControlButtonWrapper>
+                <IconButton
+                  icon={isFullscreen ? normalscreenIcon : fullscreenIcon}
+                  onClick={() => {
+                    toggleFullscreen(!isFullscreen)
+                  }}
+                />
+              </ControlButtonWrapper>
+            </RightControls>
+          </ControlButtons>
+        </Controls>
+      </Wrapper>
     )
   }
 }
