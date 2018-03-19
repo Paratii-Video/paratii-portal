@@ -10,10 +10,8 @@ export class StakingRecord extends ImmutableRecord({
   deposit: string
 
   constructor ({ ...rest }: Object = {}) {
-    // console.log(id)
     super({
       ...rest
-      // id: _id || ''
     })
   }
 }

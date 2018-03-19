@@ -105,7 +105,6 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
       })
     )
     const file = files[0]
-    console.log('upsert')
     upsertVideo(
       videoId,
       {
@@ -284,35 +283,4 @@ export const saveVideoStaked = (videoInfo: Object) => async (
 ) => {
   console.log(videoInfo)
   dispatch(videoStaked(videoInfo))
-
-  // let videoId
-  // videoInfo.owner = paratii.config.account.address
-  // if (videoInfo.id) {
-  //   videoId = videoInfo.id
-  // } else {
-  //   videoId = paratii.eth.vids.makeId()
-  //   videoInfo.id = videoId
-  //   dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
-  // }
-  // dispatch(videoDataStart(videoInfo))
-  // upsertVideo(videoId, videoInfo, getState())
-  //   .then(videoInfo => {
-  //     dispatch(videoDataSaved(videoInfo))
-  //     dispatch(
-  //       Notifications.success({
-  //         title: 'Saved',
-  //         message: 'Data saved!!'
-  //       })
-  //     )
-  //   })
-  //   .catch(error => {
-  //     dispatch(
-  //       Notifications.error({
-  //         title: 'Saving Error',
-  //         message: error.message,
-  //         autoDismiss: 0
-  //       })
-  //     )
-  //     throw error
-  //   })
 }

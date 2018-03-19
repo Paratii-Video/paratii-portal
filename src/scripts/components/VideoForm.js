@@ -131,13 +131,11 @@ class VideoForm extends Component<Props, Object> {
   onPublishVideo (e: Object) {
     e.preventDefault()
     const balance = Number(this.props.user.balances.PTI) // paratii.eth.web3.utils.fromWei(balance)
-    console.log(balance)
     // FIXME we need to manage this globally and not hardcoded
     const stakeAmount = 5
     const stakeAmountWei = Number(
       paratii.eth.web3.utils.toWei(stakeAmount + '')
     )
-    console.log(stakeAmountWei)
     if (balance < stakeAmountWei) {
       this.props.notification(
         {

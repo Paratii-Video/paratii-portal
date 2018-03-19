@@ -77,9 +77,6 @@ class ModalStake extends Component<Props, Object> {
           }
           this.props.saveVideoStaked(videoToSave)
 
-          console.log('stake done')
-          console.log(videoIdStaked, stakeAmountWei)
-
           this.props.closeModal()
           console.log(
             `video ${videoIdStaked} successfully applied to TCR Listing`
