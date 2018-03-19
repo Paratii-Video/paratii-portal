@@ -7,7 +7,10 @@ import VolumeBar from 'components/widgets/VolumeBar'
 import IconButton from 'components/foundations/buttons/IconButton'
 import Colors from 'components/foundations/base/Colors'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
-import { CONTROLS_BUTTON_DIMENSION } from 'constants/UIConstants'
+import {
+  CONTROLS_BUTTON_DIMENSION,
+  CONTROLS_SPACING
+} from 'constants/UIConstants'
 
 import playIcon from 'assets/img/play-icon.svg'
 import pauseIcon from 'assets/img/pause-icon.svg'
@@ -41,7 +44,6 @@ type State = {
 
 const CONTROLS_HEIGHT: string = '75px'
 const CONTROL_BUTTONS_HEIGHT: string = '50px'
-const CONTROLS_SPACING: string = '20px'
 
 const Controls = styled.div`
   flex: 0 0 ${CONTROLS_HEIGHT};
@@ -151,7 +153,6 @@ const Time = styled.div`
 const VolumeBarWrapper = styled.div`
   position: relative;
   margin-left: calc(-${CONTROLS_SPACING} / 2);
-  margin-right: ${CONTROLS_SPACING};
   `
 
 const ControlButtonWrapper = styled.div`

@@ -7,7 +7,10 @@ import Transition from 'react-transition-group/Transition'
 import IconButton from 'components/foundations/buttons/IconButton'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
-import { CONTROLS_BUTTON_DIMENSION } from 'constants/UIConstants'
+import {
+  CONTROLS_BUTTON_DIMENSION,
+  CONTROLS_SPACING
+} from 'constants/UIConstants'
 
 import type { TransitionState } from 'types/ApplicationTypes'
 
@@ -32,14 +35,15 @@ const TRANSITION_DURATION: string = '250ms'
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 10px;
+  margin-right: ${CONTROLS_SPACING};
+  min-width: ${CONTROLS_BUTTON_DIMENSION};
 `
 
 const ButtonWrapper = styled.div`
   flex: 0 0 ${CONTROLS_BUTTON_DIMENSION};
   height: ${CONTROLS_BUTTON_DIMENSION};
-  margin-right: 10px;
   cursor: pointer;
+  margin-right: 10px;
 `
 
 const VolumeIndicator = styled.div.attrs({
