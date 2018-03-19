@@ -27,7 +27,11 @@ exports.player = async function player (req, res, next) {
     helpers: {
       title: function () {
         if (video !== null) {
-          return video.title
+          if (video.title === '') {
+            return video.filename
+          } else {
+            return video.title
+          }
         } else {
           return 'Video not found'
         }
