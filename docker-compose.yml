@@ -47,11 +47,11 @@ services:
     expose:
       - "8180"
       - "8545"
-    network_mode: "bridge"
     command: >
         bash -c "parity -c parity-config.toml --log-file logs/parity.log --gasprice 0"
     volumes:
         - /tmp:/tmp
+    network_mode: "bridge"
 
   mongo:
     container_name: mongo
