@@ -13,7 +13,7 @@ const registryFilename = '/tmp/registry.json'
 
 const config = require(configFilename)
 
-if (process.env.NODE_ENV !== 'circleci') {
+if (process.env.NODE_ENV === 'development') {
   config['provider'] = 'http://' + process.env.LOCAL_IP + ':8545'
   config['db.provider'] = 'http://' + process.env.LOCAL_IP + ':3000'
 }
