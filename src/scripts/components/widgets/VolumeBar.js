@@ -32,12 +32,14 @@ const TRANSITION_DURATION: string = '250ms'
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  margin-right: 10px;
 `
 
 const ButtonWrapper = styled.div`
   flex: 0 0 ${CONTROLS_BUTTON_DIMENSION};
   height: ${CONTROLS_BUTTON_DIMENSION};
   margin-right: 10px;
+  cursor: pointer;
 `
 
 const VolumeIndicator = styled.div.attrs({
@@ -57,6 +59,7 @@ const VolumeIndicator = styled.div.attrs({
   })
 })`
   position: absolute;
+  cursor: pointer;
   width: ${VOLUME_INDICATOR_DIMENSION}px;
   height: ${VOLUME_INDICATOR_DIMENSION}px;
   border-radius: 50%;
@@ -67,6 +70,7 @@ const VolumeIndicator = styled.div.attrs({
 `
 
 const VolumeBarBuffer = styled.div`
+  cursor: pointer;
   height: 20px;
   width: ${({ transitionState }) => {
     switch (transitionState) {
@@ -174,6 +178,10 @@ class PlayerControls extends Component<Props, State> {
     })
   }
 
+  onMouseMoveWithinVolumeBar = () => {
+    this.markLastUserInteraction()
+  }
+
   addMouseEventListeners (): void {
     window.addEventListener('mouseup', this.onMouseUp)
     window.addEventListener('mousemove', this.onMouseMove)
@@ -191,6 +199,7 @@ class PlayerControls extends Component<Props, State> {
       <Wrapper
         onClick={this.markLastUserInteraction}
         onMouseEnter={this.onMouseEnter}
+        onMouseMove={this.onMouseMoveWithinVolumeBar}
       >
         <ButtonWrapper>
           <IconButton
