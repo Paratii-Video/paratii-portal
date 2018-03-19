@@ -32,6 +32,9 @@ export const UPLOAD_REMOTE_SUCCESS = createActionConstant(
 export const UPDATE_VIDEO_INFO = createActionConstant('UPDATE_VIDEO_INFO')
 export const UPLOAD_VIDEO_SELECT = createActionConstant('UPLOAD_VIDEO_SELECT')
 
+/* Staking actions */
+export const VIDEO_STAKED = createActionConstant('VIDEO_STAKED')
+
 /* Save to blockchain actions */
 export const VIDEO_DATA_START = createActionConstant('VIDEO_DATA_START')
 export const VIDEO_DATA_PROGRESS = createActionConstant('VIDEO_DATA_PROGRESS')

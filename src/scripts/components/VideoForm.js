@@ -87,6 +87,9 @@ type Props = {
   closeModal: () => void,
   openModal: () => void,
   notification: (Object, string) => void,
+  isUploaded: Boolean,
+  isPublished: Boolean,
+  isPublishable: Boolean,
   user: UserRecord,
   balance: String,
   innerRef: Object
@@ -167,8 +170,8 @@ class VideoForm extends Component<Props, Object> {
       id: this.state.id,
       title: this.state.title,
       description: this.state.description,
-      author: this.state.author,
-      published: publish
+      author: this.state.author
+      // published: publish
     }
     this.props.saveVideoInfo(videoToSave)
   }
@@ -196,12 +199,10 @@ class VideoForm extends Component<Props, Object> {
     }
 
     const title = video.title || video.filename
-
     const fileSize = prettyBytes((video && video.get('filesize')) || 0)
 
-    const isPublished = video.published === true || video.published === 'true'
-    const isPublishable =
-      video.transcodingStatus.name === 'success' && isPublished === false
+    const isPublished = this.props.isPublished
+    const isPublishable = this.props.isPublishable
 
     let publishButton = ''
     if (isPublishable && !isPublished) {

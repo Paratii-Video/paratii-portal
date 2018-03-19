@@ -14,7 +14,8 @@ import {
   TRANSCODING_REQUESTED,
   TRANSCODING_PROGRESS,
   TRANSCODING_SUCCESS,
-  TRANSCODING_FAILURE
+  TRANSCODING_FAILURE,
+  VIDEO_STAKED
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import { videoFetchSuccess } from 'actions/VideoActions'
@@ -34,11 +35,14 @@ const transcodingRequested = createAction(TRANSCODING_REQUESTED)
 const transcodingProgress = createAction(TRANSCODING_PROGRESS)
 const transcodingSuccess = createAction(TRANSCODING_SUCCESS)
 const transcodingFailure = createAction(TRANSCODING_FAILURE)
+const videoStaked = createAction(VIDEO_STAKED)
 
 function upsertVideo (videoId, dataToUpdate, state) {
   const v = state.videos.get(videoId)
   const updatedVideo = Object.assign({}, v.toJS(), dataToUpdate)
   delete updatedVideo.fetchStatus
+  delete updatedVideo.staked
+  delete updatedVideo.published
   if (!updatedVideo.filename) {
     updatedVideo.filename = ''
   }
@@ -101,7 +105,7 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
       })
     )
     const file = files[0]
-
+    console.log('upsert')
     upsertVideo(
       videoId,
       {
@@ -272,4 +276,43 @@ export const saveVideoInfo = (videoInfo: Object) => async (
       )
       throw error
     })
+}
+
+export const saveVideoStaked = (videoInfo: Object) => async (
+  dispatch: Dispatch<*>,
+  getState: () => RootState
+) => {
+  console.log(videoInfo)
+  dispatch(videoStaked(videoInfo))
+
+  // let videoId
+  // videoInfo.owner = paratii.config.account.address
+  // if (videoInfo.id) {
+  //   videoId = videoInfo.id
+  // } else {
+  //   videoId = paratii.eth.vids.makeId()
+  //   videoInfo.id = videoId
+  //   dispatch(videoFetchSuccess(new VideoRecord(videoInfo)))
+  // }
+  // dispatch(videoDataStart(videoInfo))
+  // upsertVideo(videoId, videoInfo, getState())
+  //   .then(videoInfo => {
+  //     dispatch(videoDataSaved(videoInfo))
+  //     dispatch(
+  //       Notifications.success({
+  //         title: 'Saved',
+  //         message: 'Data saved!!'
+  //       })
+  //     )
+  //   })
+  //   .catch(error => {
+  //     dispatch(
+  //       Notifications.error({
+  //         title: 'Saving Error',
+  //         message: error.message,
+  //         autoDismiss: 0
+  //       })
+  //     )
+  //     throw error
+  //   })
 }
