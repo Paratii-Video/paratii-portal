@@ -3,6 +3,7 @@
 ## Prerequisites:
 - Docker
 - Git paratii-portal repository cloned
+- Create a .env with LOCAL_IP=<your_local_ip> provided by ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'
 
 ### Docker instalation:
 
