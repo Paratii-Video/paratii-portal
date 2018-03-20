@@ -17,7 +17,8 @@ type Props = {
   closeModal: () => void,
   saveVideoInfo: Object => Object,
   selectedVideo: Object => Object,
-  notification: (Object, string) => void
+  notification: (Object, string) => void,
+  loadBalances: () => void
 }
 
 const Title = styled.h2`
@@ -57,6 +58,7 @@ class ModalStake extends Component<Props, Object> {
   }
 
   onSubmit (event: Object) {
+    const { loadBalances } = this.props
     event.preventDefault()
     this.props.notification({ title: 'Processing...' }, 'warning')
     // FIXME we need to manage this globally and not hardcoded
@@ -89,6 +91,7 @@ class ModalStake extends Component<Props, Object> {
             },
             'success'
           )
+          loadBalances()
         } else {
           const msg =
             'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
