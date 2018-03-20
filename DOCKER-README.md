@@ -46,7 +46,7 @@ Or, when you are developing:
 
 *It's possible to see the outlog come from the container split by service*
 
-- docker-compose logs -f <name of container>
+- docker-compose logs -f **name_container**
 
 for example:
 
