@@ -147,6 +147,7 @@ const RightControls = styled.div`
 
 const Time = styled.div`
   color: ${({ theme }) => theme.colors.VideoPlayer.controls.time};
+  flex: 0 0 100px;
   margin-right: ${CONTROLS_SPACING};
   `
 
@@ -156,7 +157,7 @@ const VolumeBarWrapper = styled.div`
   `
 
 const ControlButtonWrapper = styled.div`
-  width: ${CONTROLS_BUTTON_DIMENSION};
+  flex: 0 0 ${CONTROLS_BUTTON_DIMENSION};
   height: ${CONTROLS_BUTTON_DIMENSION};
   &:not(:last-child) {
     margin-right: ${CONTROLS_SPACING};
@@ -292,8 +293,6 @@ class PlayerControls extends Component<Props, State> {
               />
             </ControlButtonWrapper>
             <Time>{`${formattedCurrentTime} / ${formattedDuration}`}</Time>
-          </LeftControls>
-          <RightControls>
             <VolumeBarWrapper>
               <VolumeBar
                 currentVolume={currentVolume}
@@ -301,6 +300,8 @@ class PlayerControls extends Component<Props, State> {
                 onVolumeChange={onVolumeChange}
               />
             </VolumeBarWrapper>
+          </LeftControls>
+          <RightControls>
             <ControlButtonWrapper>
               <IconButton
                 icon={isFullscreen ? normalscreenIcon : fullscreenIcon}
