@@ -11,13 +11,15 @@ import PlaybackLevels from 'components/widgets/PlaybackLevels'
 import IconButton from 'components/foundations/buttons/IconButton'
 import Colors from 'components/foundations/base/Colors'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
+import {
+  CONTROLS_BUTTON_DIMENSION,
+  CONTROLS_SPACING,
+  CONTROLS_HEIGHT
+} from 'constants/UIConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
-import { CONTROLS_HEIGHT } from 'constants/UIConstants'
 
 import playIcon from 'assets/img/play-icon.svg'
 import pauseIcon from 'assets/img/pause-icon.svg'
-import volumeIcon from 'assets/img/volume-icon.svg'
-import muteIcon from 'assets/img/mute-icon.svg'
 import normalscreenIcon from 'assets/img/normalscreen-icon.svg'
 import fullscreenIcon from 'assets/img/fullscreen-icon.svg'
 import qualityIcon from 'assets/img/quality-icon.svg'
@@ -53,7 +55,6 @@ type State = {
 }
 
 const CONTROL_BUTTONS_HEIGHT: string = '50px'
-const CONTROLS_SPACING: string = '20px'
 
 const Wrapper = styled.div`
   position: relative;
@@ -104,15 +105,14 @@ const ProgressIndicator = styled.div.attrs({
   width: ${PROGRESS_INDICATOR_DIMENSION}px;
   height: ${PROGRESS_INDICATOR_DIMENSION}px;
   border-radius: 50%;
-  background-color: ${({ theme }) =>
-    theme.colors.VideoPlayer.progress.scrubber};
+  background-color: ${({ theme }) => theme.colors.bar.scrubber};
   `
 
 const ProgressBuffer = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
   height: 100%;
-  background: ${({ theme }) => theme.colors.VideoPlayer.progress.base};
+  background: ${({ theme }) => theme.colors.bar.base};
   `
 
 const ProgressBarWrapper = styled.div`
@@ -131,7 +131,7 @@ const ProgressBar = styled.div`
   display: flex;
   justify-content: flex-end;  
   align-items: center;
-  background: linear-gradient(to right, ${({ theme }) => `${theme.colors.VideoPlayer.progress.barFrom}, ${theme.colors.VideoPlayer.progress.barTo}`});
+  background: linear-gradient(to right, ${({ theme }) => `${theme.colors.bar.from}, ${theme.colors.bar.to}`});
   ${/* sc-custom */ProgressBuffer} {
     flex-basis: ${({ bufferTime, totalDuration }) => 100 - (!totalDuration ? 0 : Math.max(0, Math.min(100, bufferTime * 100 / totalDuration)))}%
   }
@@ -163,19 +163,18 @@ const RightControls = styled.div`
 
 const Time = styled.div`
   color: ${({ theme }) => theme.colors.VideoPlayer.controls.time};
+  flex: 0 0 100px;
   margin-right: ${CONTROLS_SPACING};
   `
 
 const VolumeBarWrapper = styled.div`
   position: relative;
-  width: 200px;
   margin-left: calc(-${CONTROLS_SPACING} / 2);
-  margin-right: ${CONTROLS_SPACING};
   `
 
 const ControlButtonWrapper = styled.div`
-  width: 25px;
-  height: 25px;
+  flex: 0 0 ${CONTROLS_BUTTON_DIMENSION};
+  height: ${CONTROLS_BUTTON_DIMENSION};
   &:not(:last-child) {
     margin-right: ${CONTROLS_SPACING};
   }
@@ -344,6 +343,13 @@ class PlayerControls extends Component<Props, State> {
                 />
               </ControlButtonWrapper>
               <Time>{`${formattedCurrentTime} / ${formattedDuration}`}</Time>
+              <VolumeBarWrapper>
+                <VolumeBar
+                  currentVolume={currentVolume}
+                  onToggleMute={() => onToggleMute(!this.isMuted())}
+                  onVolumeChange={onVolumeChange}
+                />
+              </VolumeBarWrapper>
             </LeftControls>
             <RightControls>
               <ControlButtonWrapper>
@@ -360,20 +366,6 @@ class PlayerControls extends Component<Props, State> {
                   }}
                 />
               </ControlButtonWrapper>
-              <ControlButtonWrapper>
-                <IconButton
-                  icon={currentVolume === 0 ? muteIcon : volumeIcon}
-                  onClick={() => {
-                    onToggleMute(!this.isMuted())
-                  }}
-                />
-              </ControlButtonWrapper>
-              <VolumeBarWrapper>
-                <VolumeBar
-                  onVolumeChange={onVolumeChange}
-                  currentVolume={currentVolume}
-                />
-              </VolumeBarWrapper>
               <ControlButtonWrapper>
                 <IconButton
                   icon={isFullscreen ? normalscreenIcon : fullscreenIcon}

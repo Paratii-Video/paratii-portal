@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
-    <title>volume-icon</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="player_v01" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="mvp-paused-ad" transform="translate(-247.000000, -373.000000)" fill="#FFFFFF">
-            <g id="player-control" transform="translate(88.000000, 321.000000)">
-                <g id="slide">
-                    <path d="M159,58 L159,64 L163,64 L168,69 L168,53 L163,58 L159,58 L159,58 Z M172.5,61 C172.5,59.23 171.48,57.71 170,56.97 L170,65.02 C171.48,64.29 172.5,62.77 172.5,61 L172.5,61 Z M170,52.23 L170,54.29 C172.89,55.15 175,57.83 175,61 C175,64.17 172.89,66.85 170,67.71 L170,69.77 C174.01,68.86 177,65.28 177,61 C177,56.72 174.01,53.14 170,52.23 L170,52.23 Z" id="volume-icon"></path>
-                </g>
-            </g>
-        </g>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="9456 526 32.2 28">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="SOUND" transform="translate(9456 526)">
+    <path id="Path_197" data-name="Path 197" class="cls-1" d="M15.2.26l-7.408,8.1H2.427A2.6,2.6,0,0,0,0,11.02V17a2.6,2.6,0,0,0,2.427,2.657H7.791l7.281,8.1a1.47,1.47,0,0,0,2.3-1.328V1.588A1.4,1.4,0,0,0,15.2.26Z" transform="translate(0 -0.019)"/>
+    <path id="Path_199" data-name="Path 199" class="cls-1" d="M18.886.917a1.633,1.633,0,0,0-2.044,1.2,2.382,2.382,0,0,0,.128,1.328,1.521,1.521,0,0,0,.766.8c2.171.93,4.215,2.125,5.365,4.384,3.193,6.111.128,13.019-5.237,14.613a1.715,1.715,0,0,0-1.15,2.126,1.757,1.757,0,0,0,1.533,1.328h.383c5.237-1.594,8.941-6.908,8.941-12.886A12.8,12.8,0,0,0,18.886.917Z" transform="translate(4.616 0.254)"/>
+    <path id="Path_198" data-name="Path 198" class="cls-1" d="M18.072,15.743a4.181,4.181,0,0,0,2.81-4.118,4.181,4.181,0,0,0-2.81-4.118c-.383-.133-.766.266-.766.664v6.908C17.178,15.477,17.561,15.876,18.072,15.743Z" transform="translate(4.792 2.432)"/>
+  </g>
 </svg>

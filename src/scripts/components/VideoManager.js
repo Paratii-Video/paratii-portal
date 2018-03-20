@@ -9,7 +9,6 @@ import RedeemVoucher from 'containers/RedeemVoucherContainer'
 import VideoList from 'containers/VideoListContainer'
 import VideoForm from 'containers/VideoFormContainer'
 import UploadFile from 'containers/FileUploaderContainer'
-import { VIDEO_MANAGER_MAX_HEIGHT } from 'constants/UIConstants'
 
 import type { Match } from 'react-router-dom'
 
@@ -26,7 +25,6 @@ const Wrapper = CardContainer.extend`
   margin: 0 auto;
   max-width: 1500px;
   width: 100%;
-  max-height: ${VIDEO_MANAGER_MAX_HEIGHT};
 
   @media (max-width: 1280px) {
     justify-content: ${props => (props.padding ? 'space-between' : 'center')};

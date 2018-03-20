@@ -15,9 +15,10 @@ type Props = {
   user: UserRecord,
   modalProps: Object,
   closeModal: () => void,
-  saveVideoInfo: Object => Object,
+  saveVideoStaked: Object => Object,
   selectedVideo: Object => Object,
-  notification: (Object, string) => void
+  notification: (Object, string) => void,
+  loadBalances: () => void
 }
 
 const Title = styled.h2`
@@ -57,12 +58,14 @@ class ModalStake extends Component<Props, Object> {
   }
 
   onSubmit (event: Object) {
+    const { loadBalances } = this.props
     event.preventDefault()
     this.props.notification({ title: 'Processing...' }, 'warning')
     // FIXME we need to manage this globally and not hardcoded
     const stakeAmount = 5
     const stakeAmountWei = paratii.eth.web3.utils.toWei(stakeAmount + '')
     const videoIdStaked = this.props.selectedVideo.id
+
     paratii.eth.tcr
       .checkEligiblityAndApply(videoIdStaked, stakeAmountWei)
       .then(resp => {
@@ -71,13 +74,11 @@ class ModalStake extends Component<Props, Object> {
             errorMessage: false
           })
           const videoToSave = {
-            id: this.props.selectedVideo.id,
-            title: this.props.selectedVideo.title,
-            description: this.props.selectedVideo.description,
-            author: this.props.selectedVideo.author,
-            published: true
+            id: videoIdStaked,
+            deposit: stakeAmountWei
           }
-          this.props.saveVideoInfo(videoToSave)
+          this.props.saveVideoStaked(videoToSave)
+
           this.props.closeModal()
           console.log(
             `video ${videoIdStaked} successfully applied to TCR Listing`
@@ -89,6 +90,7 @@ class ModalStake extends Component<Props, Object> {
             },
             'success'
           )
+          loadBalances()
         } else {
           const msg =
             'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'

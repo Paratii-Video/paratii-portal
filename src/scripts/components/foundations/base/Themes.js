@@ -107,17 +107,17 @@ const Themes = {
         text: Colors.grayLight
       }
     },
+    bar: {
+      from: Colors.purpleGradientFrom,
+      to: Colors.purpleGradientTo,
+      scrubber: Colors.white,
+      base: Colors.grayLight
+    },
     VideoPlayer: {
       background: Colors.black,
       header: {
         title: Colors.white,
         icons: Colors.white
-      },
-      progress: {
-        barFrom: Colors.purpleGradientFrom,
-        barTo: Colors.purpleGradientTo,
-        scrubber: Colors.white,
-        base: Colors.grayLight
       },
       controls: {
         background: Colors.black,

@@ -61,13 +61,13 @@ class Notification extends Component<Props, Array<Object>> {
           color: Colors.white
         },
         success: {
-          backgroundImage: 'url("assets/svg/icon-alert-positive.svg")'
+          backgroundImage: 'url("/assets/svg/icon-alert-positive.svg")'
         },
         error: {
-          backgroundImage: 'url("assets/svg/icon-alert-problem.svg")'
+          backgroundImage: 'url("/assets/svg/icon-alert-problem.svg")'
         },
         warning: {
-          backgroundImage: 'url("assets/svg/icon-alert-warning.svg")'
+          backgroundImage: 'url("/assets/svg/icon-alert-warning.svg")'
         }
       },
       MessageWrapper: {
