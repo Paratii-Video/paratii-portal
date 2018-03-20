@@ -9,6 +9,7 @@ services:
     volumes:
         - "./src:/paratii-portal/src"
         - "./config:/paratii-portal/config"
+        - "./test:/paratii-portal/test"
         - /tmp:/tmp
     ports:
         - "0.0.0.0:8080:8080"
