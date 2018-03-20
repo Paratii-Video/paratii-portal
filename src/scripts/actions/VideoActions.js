@@ -23,13 +23,15 @@ export const videosFetchSuccess = createAction(VIDEOS_FETCH_SUCCESS)
 
 // fetch the video data from paratii-db and save it in the redux state
 export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
-  console.log('FETCH VIDEO' + id)
+  console.log('FETCH VIDEO: ' + id)
   let videoInfo
   try {
     videoInfo = await paratii.core.vids.get(id)
 
     if (videoInfo) {
       videoInfo.id = videoInfo._id
+    } else {
+      dispatch(videoFetchError(new VideoRecord({ id: id, error: 'failed' })))
     }
     if (videoInfo && videoInfo.id) {
       dispatch(videoFetchSuccess(videoInfo))

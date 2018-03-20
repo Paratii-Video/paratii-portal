@@ -15,7 +15,7 @@ type Props = {
   user: UserRecord,
   modalProps: Object,
   closeModal: () => void,
-  saveVideoInfo: Object => Object,
+  saveVideoStaked: Object => Object,
   selectedVideo: Object => Object,
   notification: (Object, string) => void,
   loadBalances: () => void
@@ -65,6 +65,7 @@ class ModalStake extends Component<Props, Object> {
     const stakeAmount = 5
     const stakeAmountWei = paratii.eth.web3.utils.toWei(stakeAmount + '')
     const videoIdStaked = this.props.selectedVideo.id
+
     paratii.eth.tcr
       .checkEligiblityAndApply(videoIdStaked, stakeAmountWei)
       .then(resp => {
@@ -73,13 +74,11 @@ class ModalStake extends Component<Props, Object> {
             errorMessage: false
           })
           const videoToSave = {
-            id: this.props.selectedVideo.id,
-            title: this.props.selectedVideo.title,
-            description: this.props.selectedVideo.description,
-            author: this.props.selectedVideo.author,
-            published: true
+            id: videoIdStaked,
+            deposit: stakeAmountWei
           }
-          this.props.saveVideoInfo(videoToSave)
+          this.props.saveVideoStaked(videoToSave)
+
           this.props.closeModal()
           console.log(
             `video ${videoIdStaked} successfully applied to TCR Listing`

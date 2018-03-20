@@ -11,6 +11,7 @@ import {
   UPDATE_VIDEO_INFO,
   VIDEO_DATA_START,
   VIDEO_DATA_SAVED,
+  VIDEO_STAKED,
   TRANSCODING_REQUESTED,
   TRANSCODING_PROGRESS,
   TRANSCODING_SUCCESS,
@@ -21,6 +22,7 @@ import {
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
+import { StakingRecord } from 'records/StakingRecord'
 import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 
 const reducer = {
@@ -173,7 +175,23 @@ const reducer = {
       .setIn([payload.id, 'title'], payload.title)
       .setIn([payload.id, 'description'], payload.description)
       .setIn([payload.id, 'author'], payload.author)
-      .setIn([payload.id, 'published'], payload.published)
+    // .setIn([payload.id, 'published'], payload.published)
+  },
+  [VIDEO_STAKED]: (
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord> = {}
+  ): VideoRecordMap => {
+    if (!payload || !payload.id || !state.get(payload.id)) {
+      return state
+    }
+    console.log(payload)
+    return state.setIn(
+      [payload.id, 'staked'],
+      new StakingRecord({
+        id: payload.id,
+        deposit: payload.deposit
+      })
+    )
   },
   [TRANSCODING_REQUESTED]: (
     state: VideoRecordMap,
