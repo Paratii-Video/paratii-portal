@@ -29,7 +29,7 @@ type State = {
   draggingVolumePercentage: number
 }
 
-const VOLUME_INDICATOR_DIMENSION: number = 20
+const VOLUME_INDICATOR_DIMENSION: number = 15
 const TRANSITION_DURATION: string = '250ms'
 
 const Wrapper = styled.div`
@@ -40,10 +40,10 @@ const Wrapper = styled.div`
 `
 
 const ButtonWrapper = styled.div`
-  flex: 0 0 ${CONTROLS_BUTTON_DIMENSION};
-  height: ${CONTROLS_BUTTON_DIMENSION};
+  flex: 0 0 17px;
+  height: 17px;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: ${CONTROLS_SPACING};
 `
 
 const VolumeIndicator = styled.div.attrs({
@@ -82,7 +82,7 @@ const VolumeBarBuffer = styled.div`
         return 0
       case TRANSITION_STATE.ENTERED:
       default:
-        return '200px'
+        return '100px'
     }
   }};
   transition: all ${TRANSITION_DURATION}
@@ -223,7 +223,7 @@ class PlayerControls extends Component<Props, State> {
             onClick={() => onToggleMute()}
           />
         </ButtonWrapper>
-        <Transition in={open || true} timeout={250} unmountOnExit>
+        <Transition in={open} timeout={250} unmountOnExit>
           {(transitionState: TransitionState) => (
             <VolumeBarBuffer
               onClick={(e: Object) => {
