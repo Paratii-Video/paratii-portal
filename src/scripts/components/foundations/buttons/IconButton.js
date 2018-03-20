@@ -4,6 +4,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 type Props = {
+  color?: string,
+  disabled?: boolean,
   icon: string,
   onClick: (e: Object) => void
 }
@@ -16,11 +18,17 @@ const Button = styled.button`
   mask-position: center center;
   mask-size: contain;
   mask-repeat: no-repeat;
-  background-color: ${({ theme, color }) => color || theme.colors.button.white};
+  background-color: ${({ theme, color, disabled }) =>
+    color || (disabled ? theme.colors.button.gray : theme.colors.button.white)};
 `
 
-const IconButton = ({ onClick, ...rest }: Props) => (
-  <Button {...rest} onClick={onClick} />
+const IconButton = ({ onClick, disabled, icon, color, ...rest }: Props) => (
+  <Button
+    color={color}
+    disabled={disabled}
+    icon={icon}
+    onClick={disabled ? undefined : onClick}
+  />
 )
 
 export default IconButton

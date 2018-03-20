@@ -11,7 +11,10 @@ import {
   updateVideoTime,
   updateVideoBufferedTime,
   togglePlayPause,
-  updateVolume
+  updateVolume,
+  playbackLevelsLoaded,
+  playbackLevelSet,
+  playerReset
 } from 'actions/PlayerActions'
 import { fetchVideo } from 'actions/VideoActions'
 import {
@@ -19,7 +22,8 @@ import {
   getIsAttemptingPlay,
   getPlayerCurrentTimeSeconds,
   getPlayerCurrentBufferedTimeSeconds,
-  getPlayerCurrentVolume
+  getPlayerCurrentVolume,
+  getActivePlugin
 } from 'selectors/index'
 import { getPlayingVideo, getDurationSeconds } from 'selectors/PlayerSelectors'
 import type { RootState } from 'types/ApplicationTypes'
@@ -35,7 +39,8 @@ const mapStateToProps = (
   isEmbed: ownProps.isEmbed,
   currentTimeSeconds: getPlayerCurrentTimeSeconds(state),
   currentBufferedTimeSeconds: getPlayerCurrentBufferedTimeSeconds(state),
-  currentVolume: getPlayerCurrentVolume(state)
+  currentVolume: getPlayerCurrentVolume(state),
+  activePlugin: getActivePlugin(state)
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -49,7 +54,10 @@ const mapDispatchToProps = dispatch => ({
     updateVideoBufferedTime,
     dispatch
   ),
-  updateVolume: bindActionCreators(updateVolume, dispatch)
+  updateVolume: bindActionCreators(updateVolume, dispatch),
+  playbackLevelsLoaded: bindActionCreators(playbackLevelsLoaded, dispatch),
+  playbackLevelSet: bindActionCreators(playbackLevelSet, dispatch),
+  playerReset: bindActionCreators(playerReset, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play)

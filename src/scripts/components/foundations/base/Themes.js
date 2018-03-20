@@ -33,9 +33,8 @@ const Themes = {
       hightlight: Colors.white,
       color: Colors.grayLight
     },
-    popover: {
-      border: Colors.gray,
-      background: Colors.blackTransparent,
+    Popover: {
+      background: Colors.blackLightTransparent,
       color: Colors.white
     },
     TextField: {
@@ -123,6 +122,11 @@ const Themes = {
       controls: {
         background: Colors.black,
         time: Colors.white
+      },
+      levels: {
+        color: Colors.white,
+        border: Colors.whiteTransparent,
+        selectedBackground: Colors.blackDarkTransparent
       }
     },
     VideoDescription: {
