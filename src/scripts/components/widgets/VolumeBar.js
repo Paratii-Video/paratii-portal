@@ -94,8 +94,9 @@ const VolumeBarBuffer = styled.div`
 
 /* prettier-ignore */
 const VolumeBar = styled.div`
-  height: 5px;
+  height: 4px;
   width: 100%;
+  border-radius: 3px;
   position: relative;
   display: flex;
   justify-content: flex-end;  
@@ -211,7 +212,7 @@ class PlayerControls extends Component<Props, State> {
             onClick={() => onToggleMute()}
           />
         </ButtonWrapper>
-        <Transition in={open} timeout={250} unmountOnExit>
+        <Transition in={open || true} timeout={250} unmountOnExit>
           {(transitionState: TransitionState) => (
             <VolumeBarBuffer
               onClick={(e: Object) => {
