@@ -67,8 +67,7 @@ const VolumeIndicator = styled.div.attrs({
   width: ${VOLUME_INDICATOR_DIMENSION}px;
   height: ${VOLUME_INDICATOR_DIMENSION}px;
   border-radius: 50%;
-  background-color: ${({ theme }) =>
-    theme.colors.VideoPlayer.progress.scrubber};
+  background-color: ${({ theme }) => theme.colors.bar.scrubber};
   transition: transform ${TRANSITION_DURATION}
     ${({ theme }) => theme.animation.ease.smooth};
 `
@@ -101,8 +100,20 @@ const VolumeBar = styled.div`
   display: flex;
   justify-content: flex-end;  
   align-items: center;
-  background: linear-gradient(to right, ${({ theme }) => `${theme.colors.VideoPlayer.progress.barFrom}, ${theme.colors.VideoPlayer.progress.barTo}`});
+  background: linear-gradient(to right, ${({ theme }) => `${theme.colors.bar.from}, ${theme.colors.bar.to}`});
   `
+
+const VolumeRemaining = styled.div.attrs({
+  style: ({ currentVolume }) => ({
+    width: `${100 - currentVolume}%`
+  })
+})`
+  position: absolute;
+  border-radius: 3px;
+  right: 0;
+  height: 100%;
+  background: ${({ theme }) => theme.colors.bar.base};
+`
 
 class PlayerControls extends Component<Props, State> {
   volumeBarRef: ?HTMLElement
@@ -230,6 +241,7 @@ class PlayerControls extends Component<Props, State> {
                   this.volumeBarRef = ref
                 }}
               >
+                <VolumeRemaining currentVolume={currentVolume} />
                 <VolumeIndicator
                   currentVolume={currentVolume}
                   draggingVolumePercentage={draggingVolumePercentage}

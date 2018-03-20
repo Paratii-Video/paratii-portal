@@ -105,15 +105,14 @@ const ProgressIndicator = styled.div.attrs({
   width: ${PROGRESS_INDICATOR_DIMENSION}px;
   height: ${PROGRESS_INDICATOR_DIMENSION}px;
   border-radius: 50%;
-  background-color: ${({ theme }) =>
-    theme.colors.VideoPlayer.progress.scrubber};
+  background-color: ${({ theme }) => theme.colors.bar.scrubber};
   `
 
 const ProgressBuffer = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
   height: 100%;
-  background: ${({ theme }) => theme.colors.VideoPlayer.progress.base};
+  background: ${({ theme }) => theme.colors.bar.base};
   `
 
 const ProgressBarWrapper = styled.div`
@@ -132,7 +131,7 @@ const ProgressBar = styled.div`
   display: flex;
   justify-content: flex-end;  
   align-items: center;
-  background: linear-gradient(to right, ${({ theme }) => `${theme.colors.VideoPlayer.progress.barFrom}, ${theme.colors.VideoPlayer.progress.barTo}`});
+  background: linear-gradient(to right, ${({ theme }) => `${theme.colors.bar.from}, ${theme.colors.bar.to}`});
   ${/* sc-custom */ProgressBuffer} {
     flex-basis: ${({ bufferTime, totalDuration }) => 100 - (!totalDuration ? 0 : Math.max(0, Math.min(100, bufferTime * 100 / totalDuration)))}%
   }
