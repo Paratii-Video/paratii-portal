@@ -27,7 +27,6 @@ const List = styled.ul`
   display: block;
   padding-bottom: 80px;
   width: 100%;
-  overflow: scroll;
 `
 
 class VideoList extends Component<Props, void> {
