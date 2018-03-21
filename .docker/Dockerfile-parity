@@ -1,0 +1,41 @@
+FROM ubuntu:16.04
+
+WORKDIR /build
+
+# Set timezone to UTC by default
+RUN ln -sf /usr/share/zoneinfo/Etc/UTC /etc/localtime
+
+# Use unicode
+ENV LANG=C.UTF-8
+
+RUN apt-get update \
+  && mkdir -p /usr/share/man/man1 \
+  && apt-get install -y \
+    git mercurial xvfb \
+    locales sudo openssh-client ca-certificates tar gzip parallel \
+    net-tools netcat unzip zip bzip2 gnupg curl wget
+
+RUN apt-get update
+RUN apt install build-essential chrpath libssl-dev libxft-dev -y && apt install libfreetype6 libfreetype6-dev apt-transport-https git -y
+RUN apt install libfontconfig1 libfontconfig1-dev -y
+
+# openssl 1.1.0
+
+RUN wget https://www.openssl.org/source/openssl-1.1.0.tar.gz \
+ && tar xvzf openssl-1.1.0.tar.gz \
+ && cd openssl-1.1.0 \
+ && ./config -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)' \
+ && make \
+ && make install \
+ && ln -s /usr/local/lib/libcrypto.so.1.1 /usr/lib/ \
+ && rm /usr/bin/openssl \
+ && ln -s /usr/local/ssl/bin/openssl /usr/bin/openssl
+
+# parity 1.9.0
+RUN wget -q https://parity-downloads-mirror.parity.io/v1.9.0/x86_64-unknown-linux-gnu/parity_1.9.0_amd64.deb && dpkg -i parity_1.9.0_amd64.deb
+
+# paratii-parity
+WORKDIR /paratii-parity
+RUN mkdir /paratii-parity/logs
+ADD chain.json . 
+ADD parity-config.toml .

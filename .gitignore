@@ -28,3 +28,4 @@ yarn-error.log*
 .flooignore
 
 config/registry.json
+.env

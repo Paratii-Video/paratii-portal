@@ -8,5 +8,10 @@ max_peers = 0
 reseal_min_period = 0
 [rpc]
 cors = ["*"]
+hosts = ["all"]
+interface = "all"
 [websockets]
-origins = ["localhost:8080"]
+origins = ["*"]
+interface = "all"
+[ui]
+interface = "all"
