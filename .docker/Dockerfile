@@ -7,6 +7,8 @@ RUN yum clean all
 RUN yum -y install centos-release-scl
 RUN yum -y install epel-release curl wget git gcc gcc-c++ make bzip2 unzip
 RUN yum -y install openssl libssl-devel libudev-devel openssl-devel
+
+# node
 RUN wget http://nodejs.org/dist/v9.4.0/node-v9.4.0-linux-x64.tar.gz && tar --strip-components 1 -xzvf node-v* -C /usr/local \
     && ln -s /usr/local/bin/node /usr/bin/node && ln -s /usr/local/lib/node /usr/lib/node && ln -s /usr/local/bin/npm /usr/bin/npm \
     && ln -s /usr/local/bin/node-waf /usr/bin/node-waf
