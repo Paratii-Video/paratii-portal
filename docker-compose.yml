@@ -27,9 +27,11 @@ services:
       context: .
       dockerfile: .docker/Dockerfile-db
     ports:
-        - "3000:3000"
+        - "0.0.0.0:3000:3000"
+    expose:
+      - "30000"
     command: >
-        bash -c "sleep 15 && cd /paratii-db && yarn run dev"
+      bash -c "sleep 30 && cd /paratii-db && npm run docker-development"
     volumes:
         - /tmp:/tmp
     network_mode: "bridge"
