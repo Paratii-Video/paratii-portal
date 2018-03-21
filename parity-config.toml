@@ -12,6 +12,7 @@ hosts = ["all"]
 interface = "all"
 [websockets]
 origins = ["*"]
+hosts = ["all"]
 interface = "all"
 [ui]
 interface = "all"
