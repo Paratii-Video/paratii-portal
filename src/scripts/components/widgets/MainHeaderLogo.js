@@ -21,7 +21,7 @@ const MainLogoAnchor = styled(Link)`
 
 const MainLogoSVG = styled.svg`
   display: block;
-  fill: ${props => props.theme.colors.header.logoFill};
+  fill: ${props => props.theme.colors.header.logo};
   height: 100%;
   width: 100%;
 `

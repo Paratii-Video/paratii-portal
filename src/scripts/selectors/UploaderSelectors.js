@@ -92,7 +92,10 @@ export const isUploaded = createSelector(
 
 export const isPublished = createSelector(
   [getSelectedUploaderVideo],
-  upload => upload && (upload.published === true || upload.published === 'true')
+  upload => {
+    console.log(upload.getIn(['staked', 'deposit']))
+    return upload && upload.getIn(['staked', 'deposit']) !== ''
+  }
 )
 
 export const isPublishable = createSelector(

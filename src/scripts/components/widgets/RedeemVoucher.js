@@ -8,6 +8,7 @@ import Text from '../foundations/Text'
 import Card from '../structures/Card'
 
 type Props = {
+  loadBalances: () => void,
   notification: (Object, string) => void
 }
 
@@ -56,6 +57,7 @@ class RedeemVoucher extends Component<Props, Object> {
   }
 
   redeemVoucher (event: Object) {
+    const { loadBalances } = this.props
     event.preventDefault()
     this.setState({ disableInput: true, error: '' })
     this.props.notification({ title: 'Reading' }, 'warning')
@@ -63,6 +65,7 @@ class RedeemVoucher extends Component<Props, Object> {
     paratii.eth.vouchers
       .redeem(voucherCode)
       .then(resp => {
+        loadBalances()
         const amount = String(resp)
         this.props.notification(
           { title: 'Success', message: `You have earned ${amount} PTI.` },

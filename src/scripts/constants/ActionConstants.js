@@ -32,6 +32,9 @@ export const UPLOAD_REMOTE_SUCCESS = createActionConstant(
 export const UPDATE_VIDEO_INFO = createActionConstant('UPDATE_VIDEO_INFO')
 export const UPLOAD_VIDEO_SELECT = createActionConstant('UPLOAD_VIDEO_SELECT')
 
+/* Staking actions */
+export const VIDEO_STAKED = createActionConstant('VIDEO_STAKED')
+
 /* Save to blockchain actions */
 export const VIDEO_DATA_START = createActionConstant('VIDEO_DATA_START')
 export const VIDEO_DATA_PROGRESS = createActionConstant('VIDEO_DATA_PROGRESS')
@@ -50,6 +53,14 @@ export const UPDATE_VIDEO_BUFFERED_TIME = createActionConstant(
   'UPDATE_VIDEO_BUFFERED_TIME'
 )
 export const PLAYER_UPDATE_VOLUME = createActionConstant('PLAYER_UPDATE_VOLUME')
+export const PLAYBACK_LEVELS_LOADED = createActionConstant(
+  'PLAYBACK_LEVELS_LOADED'
+)
+export const PLAYBACK_LEVEL_SET = createActionConstant('PLAYBACK_LEVEL_SET')
+export const PLAYER_SET_ACTIVE_PLUGIN = createActionConstant(
+  'PLAYER_SET_ACTIVE_PLUGIN'
+)
+export const PLAYER_RESET = createActionConstant('PLAYER_RESET')
 
 /* Transcoding actions */
 export const TRANSCODING_REQUESTED = createActionConstant(

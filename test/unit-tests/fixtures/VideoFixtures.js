@@ -1,3 +1,8 @@
+export const getDefaultStakingStatus = () => ({
+  id: '',
+  deposit: ''
+})
+
 export const getDefaultResultStatus = () => ({
   root: '',
   duration: '',
@@ -29,7 +34,7 @@ export const getDefaultVideo = () => ({
   duration: '',
   author: '',
   free: '',
-  published: null,
+  // published: null,
   id: '',
   ipfsHashOrig: '',
   ipfsHash: '',
@@ -37,6 +42,7 @@ export const getDefaultVideo = () => ({
   price: '',
   thumbnails: [],
   title: '',
+  staked: getDefaultStakingStatus(),
   storageStatus: getDefaultAsyncTaskStatus(),
   transcodingStatus: getDefaultAsyncTaskStatus(),
   uploadStatus: getDefaultAsyncTaskStatus(),

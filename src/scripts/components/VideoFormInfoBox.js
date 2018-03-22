@@ -183,13 +183,39 @@ class InfoBox extends Component<Props, Object> {
       error: 'Error'
     }
 
+    let videoMediaBox = null
     let videoProgressBox = null
+    let videoShareInput = null
 
     if (isPublished) {
       videoProgressBox = (
         <VideoProgressTitle success={isPublished}>
           {publishedMessages['success']}
         </VideoProgressTitle>
+      )
+      videoShareInput = (
+        <TextField
+          id="video-title"
+          type="text"
+          margin="0 0 25px"
+          value={urlForSharing}
+          label="Share this video"
+          onChange={() => null}
+          readonly
+        />
+      )
+      videoMediaBox = (
+        <VideoMedia>
+          <VideoMediaLink to={urlToPlay}>
+            <VideoMediaOverlay>
+              <VideoMediaIcon>
+                <use xlinkHref="#icon-player-play" />
+              </VideoMediaIcon>
+              {durationBox}
+            </VideoMediaOverlay>
+            <VideoImage source={thumbImage} />
+          </VideoMediaLink>
+        </VideoMedia>
       )
     } else if (isPublishable) {
       videoProgressBox = (
@@ -198,7 +224,23 @@ class InfoBox extends Component<Props, Object> {
             video.transcodingStatus.name}
         </VideoProgressTitle>
       )
+      videoMediaBox = (
+        <VideoMedia>
+          <div>
+            <VideoMediaOverlay>{durationBox}</VideoMediaOverlay>
+            <VideoImage source={thumbImage} />
+          </div>
+        </VideoMedia>
+      )
     } else {
+      videoMediaBox = (
+        <VideoMedia>
+          <div>
+            <VideoMediaOverlay>{durationBox}</VideoMediaOverlay>
+            <VideoImage source={thumbImage} />
+          </div>
+        </VideoMedia>
+      )
       if (isUploaded) {
         videoProgressBox = (
           <div>
@@ -224,21 +266,10 @@ class InfoBox extends Component<Props, Object> {
 
     return (
       <VideoFormInfoBox>
-        <VideoMedia>
-          <VideoMediaLink to={urlToPlay}>
-            <VideoMediaOverlay>
-              <VideoMediaIcon>
-                <use xlinkHref="#icon-player-play" />
-              </VideoMediaIcon>
-              {durationBox}
-            </VideoMediaOverlay>
-            <VideoImage source={thumbImage} />
-          </VideoMediaLink>
-        </VideoMedia>
+        {videoMediaBox}
         <VideoProgress progress={progress + '%'} marginBottom marginTop>
           {videoProgressBox}
         </VideoProgress>
-
         <Hidden>
           <TextField
             id="video-title"
@@ -250,15 +281,7 @@ class InfoBox extends Component<Props, Object> {
             readonly
           />
         </Hidden>
-        <TextField
-          id="video-title"
-          type="text"
-          margin="0 0 25px"
-          value={urlForSharing}
-          label="Share this video"
-          onChange={() => null}
-          readonly
-        />
+        {videoShareInput}
         {!isPublishable && !isPublished ? (
           <PublishLabel>
             You can publish this video as soon as it is <strong>ready</strong>

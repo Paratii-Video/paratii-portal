@@ -2,6 +2,7 @@
 
 import { List as ImmutableList, Record as ImmutableRecord } from 'immutable'
 import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
+import { StakingRecord } from 'records/StakingRecord'
 
 class Video extends ImmutableRecord({
   description: '',
@@ -17,7 +18,8 @@ class Video extends ImmutableRecord({
   title: '',
   author: '',
   free: '',
-  published: null,
+  // published: '',
+  staked: new StakingRecord(),
   storageStatus: new AsyncTaskStatusRecord(),
   transcodingStatus: new AsyncTaskStatusRecord(),
   uploadStatus: new AsyncTaskStatusRecord(),
@@ -36,7 +38,8 @@ class Video extends ImmutableRecord({
   title: string
   author: string
   free: string
-  published: boolean
+  // published: string
+  staked: StakingRecord
   storageStatus: AsyncTaskStatusRecord
   transcodingStatus: AsyncTaskStatusRecord
   uploadStatus: AsyncTaskStatusRecord
@@ -44,6 +47,7 @@ class Video extends ImmutableRecord({
 
   constructor ({
     thumbnails,
+    staked,
     storageStatus,
     transcodingStatus,
     uploadStatus,
@@ -53,6 +57,7 @@ class Video extends ImmutableRecord({
     super({
       ...rest,
       thumbnails: ImmutableList(thumbnails),
+      staked: new StakingRecord(staked),
       storageStatus: new AsyncTaskStatusRecord(storageStatus),
       transcodingStatus: new AsyncTaskStatusRecord(transcodingStatus),
       uploadStatus: new AsyncTaskStatusRecord(uploadStatus),

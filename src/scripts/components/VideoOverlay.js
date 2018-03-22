@@ -22,14 +22,8 @@ type Props = {
   toggleFullscreen: (goToFullscreen: boolean) => void,
   onScrub: (percentage: number) => void,
   onVolumeChange: (percentage: number) => void,
-  onToggleMute: (mute: boolean) => void
-}
-
-type State = {
-  openPopover: ?string,
-  buttons: {
-    profile: ?Class<React.Component<any>>
-  }
+  onToggleMute: (mute: boolean) => void,
+  onPlaybackLevelChange: (levelId: number) => void
 }
 
 const CONTROLS_HEIGHT: string = '75px'
@@ -124,76 +118,11 @@ const SVGButton = styled.svg`
   width: 100%;
 `
 
-const PopoverWrapper = styled.div`
-  position: absolute;
-  top: ${overlayPadding};
-  right: ${overlayPadding};
-  width: 230px;
-  height: 110px;
-  display: ${props => (props.open ? 'block' : 'none')};
-  cursor: default;
-`
-
-class VideoOverlay extends Component<Props, State> {
-  onProfileButtonClick: (e: Object) => void
-  popoverWrapperRefCallback: (ref: HTMLElement) => void
-  popoverWrapperRef: ?HTMLElement
-
-  constructor (props: Props) {
-    super(props)
-
-    this.state = {
-      openPopover: null,
-      buttons: {
-        profile: null
-      }
-    }
-
-    this.loadEmbedPlugins()
-  }
-
-  loadEmbedPlugins () {
-    // Disabled this as it is not working
-    // const { isEmbed } = this.props
-    // if (isEmbed) {
-    //   import(/* webpackChunkName: ProfileButton */ 'components/widgets/PlayerPlugins/ProfileButton').then(
-    //     ProfileButtonModule => {
-    //       const ProfileButton: Class<
-    //         React.Component<any>
-    //       > = ((ProfileButtonModule.default: any): Class<React.Component<any>>)
-    //       this.setState(prevState => ({
-    //         buttons: {
-    //           ...prevState.buttons,
-    //           profile: ProfileButton
-    //         }
-    //       }))
-    //     }
-    //   )
-    // }
-  }
-
+class VideoOverlay extends Component<Props> {
   getVideoTitle (): string {
     const { video } = this.props
 
     return (video && (video.get('title') || video.get('filename'))) || ''
-  }
-
-  onProfileButtonClick = (e: Object): void => {
-    e.stopPropagation()
-    this.setState({
-      openPopover: 'profile'
-    })
-  }
-
-  closePopover = (e: Object): void => {
-    e.stopPropagation()
-    this.setState({
-      openPopover: null
-    })
-  }
-
-  popoverWrapperRefCallback = (ref: HTMLElement): void => {
-    this.popoverWrapperRef = ref
   }
 
   render () {
@@ -202,14 +131,12 @@ class VideoOverlay extends Component<Props, State> {
       onScrub,
       onVolumeChange,
       onToggleMute,
+      onPlaybackLevelChange,
       togglePlayPause,
       toggleShareModal,
       toggleFullscreen,
       transitionState
     } = this.props
-    const { openPopover } = this.state
-    const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
-      .profile
     return (
       <Wrapper>
         <Overlay
@@ -221,17 +148,7 @@ class VideoOverlay extends Component<Props, State> {
             <PlayerTitle small>
               <TruncatedText>{this.getVideoTitle()}</TruncatedText>
             </PlayerTitle>
-            <ButtonGroup hide={!!this.state.openPopover}>
-              {ProfileButton ? (
-                <ButtonWrapper>
-                  <ProfileButton
-                    onClick={this.onProfileButtonClick}
-                    onClose={this.closePopover}
-                    popoverPortal={this.popoverWrapperRef}
-                    popoverOpen={openPopover === 'profile'}
-                  />
-                </ButtonWrapper>
-              ) : null}
+            <ButtonGroup>
               <ButtonWrapper>
                 <ShareButton
                   onClick={(e: Object) => {
@@ -247,16 +164,13 @@ class VideoOverlay extends Component<Props, State> {
                 </ShareButton>
               </ButtonWrapper>
             </ButtonGroup>
-            <PopoverWrapper
-              open={!!openPopover}
-              innerRef={this.popoverWrapperRefCallback}
-            />
           </VideoInfo>
         </Overlay>
         <PlayerControlsContainer
           onScrub={onScrub}
           onVolumeChange={onVolumeChange}
           onToggleMute={onToggleMute}
+          onPlaybackLevelChange={onPlaybackLevelChange}
           togglePlayPause={togglePlayPause}
           toggleFullscreen={toggleFullscreen}
           transitionState={transitionState}

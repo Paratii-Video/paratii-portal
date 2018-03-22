@@ -10,8 +10,8 @@ const Themes = {
     },
     header: {
       background: Colors.blackLight,
-      iconsFill: Colors.grayLight,
-      logoFill: Colors.white
+      icon: Colors.grayLight,
+      logo: Colors.white
     },
     footer: {
       background: Colors.black,
@@ -33,9 +33,8 @@ const Themes = {
       hightlight: Colors.white,
       color: Colors.grayLight
     },
-    popover: {
-      border: Colors.gray,
-      background: Colors.blackTransparent,
+    Popover: {
+      background: Colors.blackLightTransparent,
       color: Colors.white
     },
     TextField: {
@@ -108,22 +107,30 @@ const Themes = {
         text: Colors.grayLight
       }
     },
+    bar: {
+      from: Colors.purpleGradientFrom,
+      to: Colors.purpleGradientTo,
+      scrubber: Colors.white,
+      base: Colors.grayLight
+    },
     VideoPlayer: {
       background: Colors.black,
       header: {
         title: Colors.white,
         icons: Colors.white
       },
-      progress: {
-        barFrom: Colors.purpleGradientFrom,
-        barTo: Colors.purpleGradientTo,
-        scrubber: Colors.white,
-        base: Colors.grayLight
-      },
       controls: {
         background: Colors.black,
         time: Colors.white
+      },
+      levels: {
+        color: Colors.white,
+        border: Colors.whiteTransparent,
+        selectedBackground: Colors.blackDarkTransparent
       }
+    },
+    VideoDescription: {
+      icon: Colors.grayLight
     }
   }
 }

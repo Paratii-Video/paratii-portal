@@ -11,6 +11,7 @@ import {
   REQUEST_STATUS,
   TRANSITION_STATE
 } from 'constants/ApplicationConstants'
+import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 
 export type Location = {
   pathname: string,
@@ -54,21 +55,28 @@ type EventEmitter = {
 }
 
 // TODO move this into paratii-mediaplayer repo
-type ClapprCore = EventEmitter & {}
-
 type ClapprContainer = EventEmitter & {}
 
-export type ClapprPlayer = EventEmitter & {
-  core?: {
-    getCurrentPlayback: () => ClapprCore,
-    getCurrentContainer: () => ClapprContainer,
-    mediaControl: {
-      show: () => void,
-      hide: () => void,
-      setUserKeepVisible: () => void,
-      resetUserKeepVisible: () => void
-    }
+type ClapprPlayback = EventEmitter & {
+  _hls?: {
+    startLevel: number
   },
+  currentLevel: number
+}
+
+type ClapprCore = EventEmitter & {
+  getCurrentPlayback: () => ClapprPlayback,
+  getCurrentContainer: () => ClapprContainer,
+  mediaControl: {
+    show: () => void,
+    hide: () => void,
+    setUserKeepVisible: () => void,
+    resetUserKeepVisible: () => void
+  }
+}
+
+export type ClapprPlayer = EventEmitter & {
+  core: ClapprCore,
   isPlaying: () => boolean,
   play: () => void,
   pause: () => void,
@@ -217,8 +225,8 @@ type Colors = {
   },
   header: {
     background: string,
-    iconsFill: string,
-    logoFill: string
+    icon: string,
+    logo: string
   },
   footer: {
     background: string,
@@ -230,8 +238,7 @@ type Colors = {
     gray: string,
     purple: string
   },
-  popover: {
-    border: string,
+  Popover: {
     background: string,
     color: string
   },
@@ -306,3 +313,5 @@ export type Theme = Object & {
 export type RequestStatus = $Values<typeof REQUEST_STATUS>
 
 export type TransitionState = $Values<typeof TRANSITION_STATE>
+
+export type PlayerPlugin = $Values<typeof PLAYER_PLUGIN>
