@@ -10,6 +10,7 @@ services:
         - "./src:/paratii-portal/src"
         - "./config:/paratii-portal/config"
         - "./test:/paratii-portal/test"
+        - "./.env:/paratii-portal/.env"
         - /tmp:/tmp
     ports:
         - "0.0.0.0:8080:8080"
