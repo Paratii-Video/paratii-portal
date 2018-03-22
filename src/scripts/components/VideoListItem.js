@@ -145,7 +145,11 @@ class VideoListItem extends Component<Props, void> {
         isReady = true
       }
     } else {
-      if (video.uploadStatus.name === 'success') {
+      if (video.uploadStatus.name === 'failed') {
+        statusMessage = 'Your video could not be uploaded'
+      } else if (video.transcodingStatus.name === 'failed') {
+        statusMessage = 'Your video could not be transcoded'
+      } else if (video.transcodingStatus.name === 'running') {
         statusMessage = 'Transcoding your video'
       } else {
         statusMessage = 'Uploading your video'
