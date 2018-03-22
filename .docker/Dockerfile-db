@@ -5,8 +5,7 @@ WORKDIR /build
 RUN yum clean all
 
 RUN yum -y install centos-release-scl
-RUN yum -y install epel-release curl wget git gcc gcc-c++ make bzip2 unzip
-RUN yum -y install openssl libssl-devel libudev-devel openssl-devel
+RUN yum -y install epel-release wget git gcc gcc-c++ make
 
 # node
 RUN wget http://nodejs.org/dist/v9.4.0/node-v9.4.0-linux-x64.tar.gz && tar --strip-components 1 -xzvf node-v* -C /usr/local \
@@ -20,5 +19,5 @@ RUN yum -y install yarn
 # paratii-db
 WORKDIR /paratii-db
 RUN cd /paratii-db && git clone https://github.com/Paratii-Video/paratii-db.git . && git checkout feature/change-urls \
-        && yarn install
+        && npm install
 ADD .env /paratii-db
