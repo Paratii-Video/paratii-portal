@@ -1,23 +1,12 @@
-FROM ubuntu:16.04
+FROM centos:latest
 
 WORKDIR /build
 
-# Set timezone to UTC by default
-RUN ln -sf /usr/share/zoneinfo/Etc/UTC /etc/localtime
+RUN yum clean all
 
-# Use unicode
-ENV LANG=C.UTF-8
-
-RUN apt-get update \
-  && mkdir -p /usr/share/man/man1 \
-  && apt-get install -y \
-    git mercurial xvfb \
-    locales sudo openssh-client ca-certificates tar gzip parallel \
-    net-tools netcat unzip zip bzip2 gnupg curl wget
-
-RUN apt-get update
-RUN apt install build-essential chrpath libssl-dev libxft-dev -y && apt install libfreetype6 libfreetype6-dev apt-transport-https git -y
-RUN apt install libfontconfig1 libfontconfig1-dev -y
+RUN yum -y install centos-release-scl
+RUN yum -y install epel-release curl wget git gcc gcc-c++ make
+RUN yum -y install openssl libssl-devel libudev-devel openssl-devel
 
 # openssl 1.1.0
 
@@ -32,7 +21,7 @@ RUN wget https://www.openssl.org/source/openssl-1.1.0.tar.gz \
  && ln -s /usr/local/ssl/bin/openssl /usr/bin/openssl
 
 # parity 1.9.0
-RUN wget -q https://parity-downloads-mirror.parity.io/v1.9.0/x86_64-unknown-linux-gnu/parity_1.9.0_amd64.deb && dpkg -i parity_1.9.0_amd64.deb
+RUN rpm -i http://d1h4xl4cr1h0mo.cloudfront.net/v1.9.0/x86_64-unknown-centos-gnu/parity_1.9.0_x86_64.rpm
 
 # paratii-parity
 WORKDIR /paratii-parity
