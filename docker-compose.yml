@@ -30,7 +30,7 @@ services:
     ports:
         - "0.0.0.0:3000:3000"
     expose:
-      - "30000"
+      - "3000"
     command: >
       bash -c "sleep 30 && cd /paratii-db && npm run docker-development"
     volumes:
