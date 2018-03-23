@@ -132,20 +132,28 @@ class VideoListItem extends Component<Props, void> {
       return <ListItem>Something went wrong - no video known</ListItem>
     }
 
+    let statusMessage = ''
+
     if (
-      video.storageStatus.name === 'success' &&
+      video.uploadStatus.name === 'success' &&
       video.transcodingStatus.name === 'success'
     ) {
-      isReady = true
-    }
-
-    let statusMessage = ''
-    if (video.storageStatus.name !== 'success' && title === null) {
-      statusMessage = 'Please provide a title and description'
-    } else if (video.transcodingStatus.name === 'success') {
-      statusMessage = 'Your video is ready to play'
-    } else if (video.transcodingStatus.name === 'failed') {
-      statusMessage = 'Your video could not be transcoded'
+      if (video.title.length < 1) {
+        statusMessage = 'Please provide a title and description'
+      } else {
+        statusMessage = 'Your video is ready'
+        isReady = true
+      }
+    } else {
+      if (video.uploadStatus.name === 'failed') {
+        statusMessage = 'Your video could not be uploaded'
+      } else if (video.transcodingStatus.name === 'failed') {
+        statusMessage = 'Your video could not be transcoded'
+      } else if (video.transcodingStatus.name === 'running') {
+        statusMessage = 'Transcoding your video'
+      } else {
+        statusMessage = 'Uploading your video'
+      }
     }
 
     const uploadProgress = video.uploadStatus.data.progress
