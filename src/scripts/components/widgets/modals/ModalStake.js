@@ -86,7 +86,7 @@ class ModalStake extends Component<Props, Object> {
           this.props.notification(
             {
               title: 'Stake well-done',
-              message: `You have staked ${stakeAmount} PTI.`
+              message: `You have staked ${stakeAmount}PTI.`
             },
             'success'
           )

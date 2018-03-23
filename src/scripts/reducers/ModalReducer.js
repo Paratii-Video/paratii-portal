@@ -14,7 +14,7 @@ const reducer = {
   },
   [CLOSE_MODAL]: (state: ModalRecord, action: Action<boolean>) => {
     return state.merge({
-      showModal: !!state.modalIsDisabled
+      showModal: false
     })
   }
 }
