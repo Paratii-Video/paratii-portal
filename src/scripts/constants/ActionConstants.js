@@ -72,3 +72,4 @@ export const TRANSCODING_FAILURE = createActionConstant('TRANSCODING_FAILURE')
 
 export const OPEN_MODAL = createActionConstant('OPEN_MODAL')
 export const CLOSE_MODAL = createActionConstant('CLOSE_MODAL')
+export const DISABLE_MODAL = createActionConstant('DISABLE_MODAL')

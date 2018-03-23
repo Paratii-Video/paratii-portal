@@ -18,7 +18,7 @@ const Header = styled.header`
   position: fixed;
   width: 100%;
   height: ${props => props.theme.sizes.mainHeader.height};
-  z-index: 10000;
+  z-index: 990;
   transition: box-shadow 0.3s;
   box-shadow: ${({ displayShadow }) =>
     displayShadow ? '0 3px 5px rgba(0,0,0,0.16)' : ''};
