@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { show } from 'react-notification-system-redux'
 
-import { closeModal, disableModal } from 'actions/ModalActions'
+import { closeModal } from 'actions/ModalActions'
 import { getSelectedUploaderVideo } from 'selectors/UploaderSelectors'
 import { saveVideoStaked, uploadAndTranscode } from 'actions/UploaderActions'
 import { getUser } from 'selectors/index'
@@ -15,15 +15,13 @@ import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState) => ({
   selectedVideo: getSelectedUploaderVideo(state),
-  user: getUser(state),
-  modalIsDisabled: state.modal.modalIsDisabled
+  user: getUser(state)
 })
 
 const mapDispatchToProps = dispatch => ({
   saveVideoStaked: bindActionCreators(saveVideoStaked, dispatch),
   uploadAndTranscode: bindActionCreators(uploadAndTranscode, dispatch),
   closeModal: bindActionCreators(closeModal, dispatch),
-  disableModal: bindActionCreators(disableModal, dispatch),
   notification: bindActionCreators(show, dispatch),
   loadBalances: bindActionCreators(loadBalances, dispatch)
 })
