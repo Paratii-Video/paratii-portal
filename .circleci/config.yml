@@ -1,12 +1,28 @@
 version: 2.0
 
 jobs:
-  install_dependencies:
+  checkout_code:
     docker:
       - image: leeaandrob/paratii-portal:0.0.6
+      - image: circleci/mongo:latest
     working_directory: ~/repo
     steps:
       - checkout
+      - save_cache:
+        key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+        paths:
+          - ~/repo
+
+  install_dependencies:
+    docker:
+      - image: leeaandrob/paratii-portal:0.0.6
+      - image: circleci/mongo:latest
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "yarn.lock" }}
@@ -24,6 +40,9 @@ jobs:
     steps:
       - restore_cache:
           keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
             - v1-dependencies-{{ checksum "yarn.lock" }}
       - run: yarn run quality
 
@@ -33,6 +52,9 @@ jobs:
       - image: circleci/mongo:latest
     working_directory: ~/repo
     steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "yarn.lock" }}
