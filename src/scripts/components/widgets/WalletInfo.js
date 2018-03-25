@@ -73,7 +73,6 @@ class WalletInfo extends React.Component<Props> {
                 <PTIBalanceContainer />
               </span>
             </Balance>
-
             <AddressPrompt>Public Address: </AddressPrompt>
             <Address>{paratii.config.account.address}</Address>
           </Content>
