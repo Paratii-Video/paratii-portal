@@ -54,6 +54,7 @@ const Wrapper = styled.div`
   }}
   );
   transition: all 250ms ${({ theme }) => theme.animation.ease.smooth};
+  z-index: 1000;
 `
 
 class Popover extends React.Component<Props, void> {

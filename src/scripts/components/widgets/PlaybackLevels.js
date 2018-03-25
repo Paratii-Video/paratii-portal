@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { List as ImmutableList } from 'immutable'
 
 import Popover from 'components/foundations/Popover'
-import IconButton from 'components/foundations/buttons/IconButton'
+import CloseButton from 'components/foundations/buttons/CloseButton'
 import { CONTROLS_HEIGHT } from 'constants/UIConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
 
@@ -33,12 +33,6 @@ const Title = styled.div`
   flex: 1 1 0;
   align-items: center;
   font-size: 14px;
-`
-
-const CloseButton = styled.div`
-  display: flex;
-  height: 12px;
-  width: 12px;
 `
 
 const LevelsList = styled.ul`
@@ -124,9 +118,7 @@ class PlaybackLevels extends React.Component<Props> {
         <Wrapper>
           <TopBar>
             <Title>Video Quality</Title>
-            <CloseButton>
-              <IconButton icon="/assets/img/close-icon.svg" onClick={onClose} />
-            </CloseButton>
+            <CloseButton onClick={onClose} />
           </TopBar>
           <LevelsList offsetXPercentage={offsetXPercentage}>
             {playbackLevels.map((level: PlaybackLevel, index: number) => (

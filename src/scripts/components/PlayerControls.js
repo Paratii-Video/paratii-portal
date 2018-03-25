@@ -1,13 +1,12 @@
 /* @flow */
 
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import { List as ImmutableList } from 'immutable'
 
 import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
 import VolumeBar from 'components/widgets/VolumeBar'
-import PlaybackLevels from 'components/widgets/PlaybackLevels'
 import IconButton from 'components/foundations/buttons/IconButton'
 import Colors from 'components/foundations/base/Colors'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
@@ -46,7 +45,7 @@ type Props = {
   currentPlaybackLevel: ?PlaybackLevel,
   onPlaybackLevelChange: (levelId: number) => void,
   activePlugin: ?PlayerPlugin,
-  setActivePlugin: (nextPlugin: ?PlayerPlugin) => void
+  toggleActivePlugin: (nextPlugin: ?PlayerPlugin) => void
 }
 
 type State = {
@@ -248,35 +247,6 @@ class PlayerControls extends Component<Props, State> {
     return currentVolume === 0
   }
 
-  setActivePlugin = (nextPlugin: PlayerPlugin): void => {
-    const { activePlugin, setActivePlugin } = this.props
-
-    setActivePlugin(
-      !nextPlugin || nextPlugin === activePlugin ? null : nextPlugin
-    )
-  }
-
-  renderPlugins () {
-    const {
-      activePlugin,
-      currentPlaybackLevel,
-      onPlaybackLevelChange,
-      playbackLevels
-    } = this.props
-
-    return (
-      <Fragment>
-        <PlaybackLevels
-          open={activePlugin === PLAYER_PLUGIN.PLAYBACK_LEVELS}
-          currentPlaybackLevel={currentPlaybackLevel}
-          playbackLevels={playbackLevels}
-          onPlaybackLevelChange={onPlaybackLevelChange}
-          onClose={() => this.setActivePlugin()}
-        />
-      </Fragment>
-    )
-  }
-
   render () {
     const {
       activePlugin,
@@ -294,13 +264,13 @@ class PlayerControls extends Component<Props, State> {
       formattedCurrentTime,
       formattedDuration,
       videoDurationSeconds,
-      playbackLevels
+      playbackLevels,
+      toggleActivePlugin
     } = this.props
     const { scrubbingPositionPercentage } = this.state
 
     return (
       <Wrapper>
-        {this.renderPlugins()}
         <Controls transitionState={transitionState}>
           <ProgressBarWrapper
             onClick={(e: Object) => {
@@ -362,7 +332,7 @@ class PlayerControls extends Component<Props, State> {
                   disabled={!playbackLevels.size}
                   icon={qualityIcon}
                   onClick={() => {
-                    this.setActivePlugin(PLAYER_PLUGIN.PLAYBACK_LEVELS)
+                    toggleActivePlugin(PLAYER_PLUGIN.PLAYBACK_LEVELS)
                   }}
                 />
               </ControlButtonWrapper>
