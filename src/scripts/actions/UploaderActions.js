@@ -174,6 +174,13 @@ export const transcodeVideo = (videoInfo: Object) => async (
     })
 
     transcoder.on('transcoding:started', function (hash, author) {
+      // Once we have this, the file is fully uploaded to the transcoder
+      console.log('Remote upload done!')
+      dispatch(uploadProgress({ id: videoInfo.id, progress: 100 }))
+      dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
+      // save the updaded state
+      upsertVideo(videoInfo.id, {}, getState())
+
       console.log('TRANSCODER STARTED', hash, author)
       dispatch(
         Notifications.success({
@@ -183,14 +190,9 @@ export const transcodeVideo = (videoInfo: Object) => async (
       )
     })
 
-    transcoder.once('transcoding:progress', function (hash, size, percent) {
-      // Once we have this, the file is fully uploaded to the transcoder
-      console.log('Remote upload done!')
-      dispatch(uploadProgress({ id: videoInfo.id, progress: 100 }))
-      dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
-      // save the updaded state
-      upsertVideo(videoInfo.id, {}, getState())
-    })
+    // transcoder.once('transcoding:progress', function (hash, size, percent) {
+    //
+    // })
 
     transcoder.on('transcoding:progress', function (hash, size, percent) {
       console.log('TRANSCODER PROGRESS', percent)
