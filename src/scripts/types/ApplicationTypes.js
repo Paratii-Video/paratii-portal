@@ -7,7 +7,6 @@ import UserRecord from 'records/UserRecords'
 import PlayerRecord from 'records/PlayerRecords'
 import UploaderRecord from 'records/UploaderRecords'
 import NotificationRecord from 'records/NotificationRecord'
-import ModalRecord from 'records/ModalRecord'
 import {
   REQUEST_STATUS,
   TRANSITION_STATE
@@ -40,8 +39,7 @@ export type RootState = {
   user: UserRecord,
   videos: VideoRecordMap,
   player: PlayerRecord,
-  notifications: NotificationsArray,
-  modal: ModalRecord
+  notifications: NotificationsArray
 }
 
 type _ThunkAction<R> = (dispatch: Dispatch, getState?: () => RootState) => R

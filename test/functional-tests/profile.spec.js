@@ -11,7 +11,6 @@ import {
   USERADDRESS,
   assertUserIsLoggedIn,
   createUserKeystore,
-  getAnonymousAddress,
   createUserAndLogin,
   login,
   waitForUserIsLoggedIn,
@@ -119,48 +118,6 @@ describe('Profile and accounts workflow:', function () {
       'guildenstern@rosencrantz.com',
       'not same email'
     )
-  })
-
-  it.skip('login as an existing user on a device with no keystore - use existing anonymous keystore ', function () {
-    // create a meteor user
-    // server.execute(createUser)
-
-    assertUserIsNotLoggedIn(browser)
-
-    // go to the home page
-    browser.url('http://localhost:3000')
-    // wait until we have an anymous keystore available
-    browser.waitUntil(function () {
-      return browser.execute(function () {
-        return localStorage.getItem(`keystore-anonymous`)
-      }).value
-    })
-    const anonymousAddress = getAnonymousAddress()
-
-    browser.waitAndClick('#nav-profile')
-    browser.waitForClickable('[name="at-field-email"]')
-    browser.waitAndSetValue(
-      '[name="at-field-email"]',
-      'guildenstern@rosencrantz.com'
-    )
-    browser.waitAndSetValue('[name="at-field-password"]', 'password')
-    browser.waitAndClick('#at-btn')
-
-    // the user is now logged in
-
-    waitForUserIsLoggedIn(browser)
-
-    // we should now see a modal presenting a choice to restore the wallet or use a new one
-    browser.waitForClickable('#walletModal')
-    browser.waitAndClick('#create-wallet')
-    browser.waitAndSetValue('[name="user_password"]', 'password')
-    browser.click('#btn-create-wallet')
-
-    waitForKeystore(browser)
-
-    // the address of the new keystore should be the same as the old 'anonymous' address
-    const publicAddress = getEthAccountFromApp()
-    assert.equal(publicAddress, add0x(anonymousAddress))
   })
 
   it.skip('change password', async function (done) {

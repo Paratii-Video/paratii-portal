@@ -184,7 +184,6 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
-    console.log(payload)
     return state.setIn(
       [payload.id, 'staked'],
       new StakingRecord({
@@ -212,7 +211,6 @@ const reducer = {
     state: VideoRecordMap,
     { payload }: Action<{ id: string, progress: number }> = {}
   ): VideoRecordMap => {
-    console.log('TRANSCODING_PROGRESS reducer')
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }

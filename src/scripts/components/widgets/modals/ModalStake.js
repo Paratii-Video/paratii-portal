@@ -14,13 +14,11 @@ type Props = {
   author: string,
   user: UserRecord,
   modalProps: Object,
-  modalIsDisabled: boolean,
   closeModal: () => void,
   saveVideoStaked: Object => Object,
   selectedVideo: Object => Object,
   notification: (Object, string) => void,
-  loadBalances: () => void,
-  disableModal: boolean => void
+  loadBalances: () => void
 }
 
 const Title = styled.h2`
@@ -60,8 +58,6 @@ class ModalStake extends Component<Props, Object> {
   }
 
   onSubmit (event: Object) {
-    this.props.disableModal(true)
-
     const { loadBalances } = this.props
     event.preventDefault()
     this.props.notification({ title: 'Processing...' }, 'warning')
@@ -73,7 +69,6 @@ class ModalStake extends Component<Props, Object> {
     paratii.eth.tcr
       .checkEligiblityAndApply(videoIdStaked, stakeAmountWei)
       .then(resp => {
-        this.props.disableModal(false)
         if (resp && resp === true) {
           this.setState({
             errorMessage: false
@@ -91,7 +86,7 @@ class ModalStake extends Component<Props, Object> {
           this.props.notification(
             {
               title: 'Stake well-done',
-              message: `You have staked ${stakeAmount} PTI.`
+              message: `You have staked ${stakeAmount}PTI.`
             },
             'success'
           )
@@ -106,7 +101,6 @@ class ModalStake extends Component<Props, Object> {
         }
       })
       .catch(e => {
-        this.props.disableModal(false)
         if (e) {
           const msg = String(e)
           this.setState({
@@ -137,7 +131,7 @@ class ModalStake extends Component<Props, Object> {
           <Highlight>
             By publishing this video you agree to make a stake deposit of{' '}
             {minDeposit} PTI. The tokens still belong to you, and can be
-            retrieved, along with the video, any time.
+            retrieved, along with the video, at any time.
           </Highlight>
           {!balanceIsTooLow ? (
             <MainText small gray>
@@ -173,11 +167,7 @@ class ModalStake extends Component<Props, Object> {
             </MainText>
           ) : (
             <Footer>
-              <Button
-                purple
-                onClick={this.onSubmit}
-                disabled={this.props.modalIsDisabled}
-              >
+              <Button purple onClick={this.onSubmit}>
                 Continue
               </Button>
             </Footer>
