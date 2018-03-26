@@ -8,6 +8,7 @@ import TruncatedText from 'components/foundations/TruncatedText'
 import PlayerControlsContainer from 'containers/PlayerControlsContainer'
 import VideoRecord from 'records/VideoRecords'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
+import { CONTROLS_HEIGHT } from 'constants/UIConstants'
 
 import type { TransitionState } from 'types/ApplicationTypes'
 
@@ -25,8 +26,6 @@ type Props = {
   onToggleMute: (mute: boolean) => void,
   onPlaybackLevelChange: (levelId: number) => void
 }
-
-const CONTROLS_HEIGHT: string = '75px'
 
 const Wrapper = styled.div`
   height: 100%;

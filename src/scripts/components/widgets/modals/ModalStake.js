@@ -131,7 +131,7 @@ class ModalStake extends Component<Props, Object> {
           <Highlight>
             By publishing this video you agree to make a stake deposit of{' '}
             {minDeposit} PTI. The tokens still belong to you, and can be
-            retrieved, along with the video, any time.
+            retrieved, along with the video, at any time.
           </Highlight>
           {!balanceIsTooLow ? (
             <MainText small gray>

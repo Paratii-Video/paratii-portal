@@ -129,7 +129,7 @@ const ProgressBar = styled.div`
   width: 100%;
   height: 5px;
   display: flex;
-  justify-content: flex-end;  
+  justify-content: flex-end;
   align-items: center;
   background: linear-gradient(to right, ${({ theme }) => `${theme.colors.bar.from}, ${theme.colors.bar.to}`});
   ${/* sc-custom */ProgressBuffer} {
