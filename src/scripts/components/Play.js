@@ -771,7 +771,9 @@ class Play extends Component<Props, State> {
           {!isEmbed &&
             video && (
               <PlayInfo>
-                {video.title && <Title small>{video.title}</Title>}
+                {(video.title || video.filename) && (
+                  <Title small>{video.title || video.filename}</Title>
+                )}
                 {video.author && <Text>By {video.author}</Text>}
                 {video.like && (
                   <PlayInfoButtons>
