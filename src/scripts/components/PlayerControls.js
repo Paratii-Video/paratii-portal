@@ -83,7 +83,7 @@ const Controls = styled.div`
   }}
   );
   transition: all 250ms linear;
-`
+  `
 
 const PROGRESS_INDICATOR_DIMENSION: number = 20
 
@@ -106,14 +106,14 @@ const ProgressIndicator = styled.div.attrs({
   height: ${PROGRESS_INDICATOR_DIMENSION}px;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.bar.scrubber};
-`
+  `
 
 const ProgressBuffer = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
   height: 100%;
   background: ${({ theme }) => theme.colors.bar.base};
-`
+  `
 
 const ProgressBarWrapper = styled.div`
   position: absolute;
@@ -122,7 +122,7 @@ const ProgressBarWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-`
+  `
 
 /* prettier-ignore */
 const ProgressBar = styled.div`
@@ -135,7 +135,7 @@ const ProgressBar = styled.div`
   ${/* sc-custom */ProgressBuffer} {
     flex-basis: ${({ bufferTime, totalDuration }) => 100 - (!totalDuration ? 0 : Math.max(0, Math.min(100, bufferTime * 100 / totalDuration)))}%
   }
-`
+  `
 
 const ControlButtons = styled.div`
   width: 100%;
@@ -145,32 +145,32 @@ const ControlButtons = styled.div`
   flex-direction: row;
   padding: 0 10px;
   height: ${CONTROL_BUTTONS_HEIGHT};
-`
+  `
 
 const LeftControls = styled.div`
   flex: 1 1 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-`
+  `
 
 const RightControls = styled.div`
   flex: 1 1 0;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-`
+  `
 
 const Time = styled.div`
   color: ${({ theme }) => theme.colors.VideoPlayer.controls.time};
   flex: 0 0 100px;
   margin-right: ${CONTROLS_SPACING};
-`
+  `
 
 const VolumeBarWrapper = styled.div`
   position: relative;
   margin-left: calc(-${CONTROLS_SPACING} / 2);
-`
+  `
 
 const ControlButtonWrapper = styled.div`
   flex: 0 0 ${CONTROLS_BUTTON_DIMENSION};
@@ -178,7 +178,7 @@ const ControlButtonWrapper = styled.div`
   &:not(:last-child) {
     margin-right: ${CONTROLS_SPACING};
   }
-`
+  `
 
 class PlayerControls extends Component<Props, State> {
   progressBarRef: ?HTMLElement
