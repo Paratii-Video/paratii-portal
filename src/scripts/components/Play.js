@@ -770,46 +770,46 @@ class Play extends Component<Props, State> {
           </VideoWrapper>
           {!isEmbed &&
             video && (
-              <PlayInfo>
-                {video.title && <Title small>{video.title}</Title>}
-                {video.author && <Text>By {video.author}</Text>}
-                {video.like && (
-                  <PlayInfoButtons>
-                    <ButtonIcon>
-                      <SVG>
-                        <use xlinkHref="#icon-play-view" />
-                      </SVG>
-                      <Text small gray>
+            <PlayInfo>
+              {video.title && <Title small>{video.title}</Title>}
+              {video.author && <Text>By {video.author}</Text>}
+              {video.like && (
+                <PlayInfoButtons>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-view" />
+                    </SVG>
+                    <Text small gray>
                         0
-                      </Text>
-                    </ButtonIcon>
-                    <ButtonIcon>
-                      <SVG>
-                        <use xlinkHref="#icon-play-like" />
-                      </SVG>
-                      <Text small gray>
+                    </Text>
+                  </ButtonIcon>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-like" />
+                    </SVG>
+                    <Text small gray>
                         0
-                      </Text>
-                    </ButtonIcon>
-                    <ButtonIcon>
-                      <SVG>
-                        <use xlinkHref="#icon-play-dislike" />
-                      </SVG>
-                      <Text small gray>
+                    </Text>
+                  </ButtonIcon>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-dislike" />
+                    </SVG>
+                    <Text small gray>
                         0
-                      </Text>
-                    </ButtonIcon>
-                  </PlayInfoButtons>
-                )}
-                <Text gray>
+                    </Text>
+                  </ButtonIcon>
+                </PlayInfoButtons>
+              )}
+              <Text gray>
                   Price{' '}
-                  <PlayInfoHighlight purple>
-                    {video.free ? 'Free' : 'Free'}
-                  </PlayInfoHighlight>
-                </Text>
-                {video.description && <Text>{video.description}</Text>}
-              </PlayInfo>
-            )}
+                <PlayInfoHighlight purple>
+                  {video.free ? 'Free' : 'Free'}
+                </PlayInfoHighlight>
+              </Text>
+              {video.description && <Text>{video.description}</Text>}
+            </PlayInfo>
+          )}
         </Wrapper>
       )
     }

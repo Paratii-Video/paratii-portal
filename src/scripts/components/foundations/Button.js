@@ -16,9 +16,9 @@ export const ButtonStyleColor = css`
 
     return css`
       color: ${_color};
-    `
+`
   }};
-  `
+`
 
 export const StyleAnchor = css`
   ${props => {
@@ -35,10 +35,10 @@ export const StyleAnchor = css`
 
       return css`
         ${_css};
-      `
+`
     }
   }};
-  `
+`
 
 export const ButtonStyleHover = css`
   transition: opacity ${props => props.theme.animation.time.repaint};
@@ -46,7 +46,7 @@ export const ButtonStyleHover = css`
   &:hover {
     opacity: ${props => props.theme.animation.opacity.hover};
   }
-  `
+`
 
 const Button = styled.button`
   ${StyleAnchor} ${ButtonStyleColor} ${ButtonStyleHover} cursor: ${props =>
@@ -61,6 +61,6 @@ const Button = styled.button`
   pointer-events: ${props => (props.disabled ? 'none' : '')};
   text-transform: ${props => (props.anchor ? '' : 'uppercase')};
   user-select: ${props => (props.anchor ? '' : 'none')};
-  `
+`
 
 export default Button
