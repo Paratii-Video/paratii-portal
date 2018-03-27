@@ -43,7 +43,7 @@ const ButtonWrapper = styled.div`
   flex: 0 0 17px;
   height: 17px;
   cursor: pointer;
-  margin-right: ${CONTROLS_SPACING};
+  margin-right: 10px;
 `
 
 const VolumeIndicator = styled.div.attrs({

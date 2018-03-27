@@ -6,6 +6,7 @@ import { List as ImmutableList } from 'immutable'
 
 import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
+import Text from 'components/foundations/Text'
 import VolumeBar from 'components/widgets/VolumeBar'
 import PlaybackLevels from 'components/widgets/PlaybackLevels'
 import IconButton from 'components/foundations/buttons/IconButton'
@@ -13,7 +14,10 @@ import Colors from 'components/foundations/base/Colors'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 import {
   CONTROLS_BUTTON_DIMENSION,
+  CONTROLS_BUTTON_DIMENSION_DESKTOP,
+  CONTROLS_BUTTON_DIMENSION_MOBILE,
   CONTROLS_SPACING,
+  CONTROLS_SPACING_MOBILE,
   CONTROLS_HEIGHT
 } from 'constants/UIConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
@@ -55,6 +59,7 @@ type State = {
 }
 
 const CONTROL_BUTTONS_HEIGHT: string = '50px'
+const PROGRESS_INDICATOR_DIMENSION: number = 20
 
 const Wrapper = styled.div`
   position: relative;
@@ -89,14 +94,12 @@ const Controls = styled.div`
 
 const ProgressWrapper = styled.div`
   position: absolute;
-  top: -10px;
+  top: -8px;
   height: 20px;
   width: 100%;
   display: flex;
   align-items: center;
   `
-
-const PROGRESS_INDICATOR_DIMENSION: number = 20
 
 const ProgressIndicator = styled.div.attrs({
   style: ({ currentTime, totalDuration, scrubbingPositionPercentage }) => ({
@@ -120,30 +123,31 @@ const ProgressIndicator = styled.div.attrs({
   justify-content: center;
   border-radius: 50%;
 
-  &::before {
+  &::before,
+  &::after {
     content: '';
     position: absolute;
-    height: 50%;
-    width: 50%;
+    height: 100%;
+    width: 100%;
     background-color: ${({ theme }) => theme.colors.bar.scrubber};
     border-radius: 50%;
   }
-  `
 
-const ProgressIndicatorIcon = styled.span`
-  position: absolute;
-  height: ${props => (props.userIsScrubbing ? '100%' : '50%')};
-  width: ${props => (props.userIsScrubbing ? '100%' : '50%')};
-  background-color: ${({ theme }) => theme.colors.bar.scrubber};
-  border-radius: 50%;
-  opacity: 0.5;
-  transition: all ${props => (props.userIsScrubbing ? '0.7s' : '0.6s')}
-    ${({ theme }) => theme.animation.ease.smooth};
+  &::before {
+    opacity: 0.5;
+    transform: scale(${props => (props.userIsScrubbing ? 1 : 0.5)});
+    transition: transform ${props => (props.userIsScrubbing ? '1s' : '0.8s')}
+      ${({ theme }) => theme.animation.ease.smooth};
 
   ${ProgressWrapper}:hover & {
-    height: 100%;
-    width: 100%;
-    transition: all 0.7s ${({ theme }) => theme.animation.ease.smooth};
+      transform: scale(1);
+    }
+  }
+
+  &::after {
+    transform: scale(${props => (props.userIsScrubbing ? 0.6 : 0.5)});
+    transition: transform ${props => (props.userIsScrubbing ? '0.7s' : '0.5s')}
+      ${({ theme }) => theme.animation.ease.smooth};
   }
   `
 
@@ -172,7 +176,7 @@ const ControlButtons = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
-  padding: 0 10px;
+  padding: 4px 24px 0;
   height: ${CONTROL_BUTTONS_HEIGHT};
   `
 
@@ -191,21 +195,33 @@ const RightControls = styled.div`
   `
 
 const Time = styled.div`
-  color: ${({ theme }) => theme.colors.VideoPlayer.controls.time};
-  flex: 0 0 100px;
   margin-right: ${CONTROLS_SPACING};
   `
 
 const VolumeBarWrapper = styled.div`
   position: relative;
-  margin-left: calc(-${CONTROLS_SPACING} / 2);
   `
 
 const ControlButtonWrapper = styled.div`
   flex: 0 0 ${CONTROLS_BUTTON_DIMENSION};
   height: ${CONTROLS_BUTTON_DIMENSION};
+
+  @media (max-width: 1440px) {
+    flex: 0 0 ${CONTROLS_BUTTON_DIMENSION_DESKTOP};
+    height: ${CONTROLS_BUTTON_DIMENSION_DESKTOP};
+  }
+
+  @media (max-width: 320px) {
+    flex: 0 0 ${CONTROLS_BUTTON_DIMENSION_MOBILE};
+    height: ${CONTROLS_BUTTON_DIMENSION_MOBILE};
+  }
+
   &:not(:last-child) {
     margin-right: ${CONTROLS_SPACING};
+
+    @media (max-width: 320px) {
+      margin-right: ${CONTROLS_SPACING_MOBILE};
+    }
   }
   `
 
@@ -362,22 +378,21 @@ class PlayerControls extends Component<Props, State> {
               scrubbingPositionPercentage={scrubbingPositionPercentage}
               totalDuration={videoDurationSeconds}
               userIsScrubbing={this.state.userIsScrubbing}
-            >
-              <ProgressIndicatorIcon
-                userIsScrubbing={this.state.userIsScrubbing}
-              />
-            </ProgressIndicator>
+            />
           </ProgressWrapper>
           <ControlButtons>
             <LeftControls>
               <ControlButtonWrapper>
                 <IconButton
-                  color={Colors.purple}
                   icon={isPlaying ? pauseIcon : playIcon}
                   onClick={togglePlayPause}
                 />
               </ControlButtonWrapper>
-              <Time>{`${formattedCurrentTime} / ${formattedDuration}`}</Time>
+              <Time>
+                <Text
+                  small
+                >{`${formattedCurrentTime} / ${formattedDuration}`}</Text>
+              </Time>
               <VolumeBarWrapper>
                 <VolumeBar
                   currentVolume={currentVolume}
