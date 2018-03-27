@@ -63,7 +63,7 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
   dispatch(
     Notifications.success({
       title: 'Be Patient!',
-      message: 'We are working on your file.'
+      message: 'We are preparing your file.'
     })
   )
   // create a new Id if none was given
