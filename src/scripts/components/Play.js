@@ -551,9 +551,7 @@ class Play extends Component<Props, State> {
 
   createPlayer = (video: VideoRecord): void => {
     const { updateVolume } = this.props
-    if (this.player && this.player.destroy) {
-      this.player.destroy()
-    }
+
     if (!video.ipfsHash) {
       throw new Error("Can't create player without ipfsHash")
     }
@@ -562,6 +560,10 @@ class Play extends Component<Props, State> {
       poster = video.thumbnails.get(0)
     }
     import('paratii-mediaplayer').then(CreatePlayer => {
+      if (this.player && this.player.destroy) {
+        this.player.destroy()
+      }
+
       this.player = CreatePlayer({
         selector: `#${PLAYER_ID}`,
         source: `https://gateway.paratii.video/ipfs/${
