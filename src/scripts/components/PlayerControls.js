@@ -325,10 +325,13 @@ class PlayerControls extends Component<Props, State> {
         {this.renderPlugins()}
         <Controls transitionState={transitionState}>
           <ProgressWrapper
-            onClick={(e: Object) => {
+            onMouseDown={(e: Object) => {
               if (this.progressBarRef) {
                 const wrapperRect: Object = this.progressBarRef.getBoundingClientRect()
                 onScrub((e.clientX - wrapperRect.x) * 100 / wrapperRect.width)
+                this.setState({
+                  userIsScrubbing: true
+                })
               }
             }}
           >
@@ -349,11 +352,6 @@ class PlayerControls extends Component<Props, State> {
             </ProgressBarWrapper>
             <ProgressIndicator
               currentTime={currentTimeSeconds}
-              onMouseDown={() => {
-                this.setState({
-                  userIsScrubbing: true
-                })
-              }}
               scrubbingPositionPercentage={scrubbingPositionPercentage}
               totalDuration={videoDurationSeconds}
             />

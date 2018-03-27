@@ -111,8 +111,8 @@ const Themes = {
       from: Colors.purpleGradientFrom,
       to: Colors.purpleGradientTo,
       scrubber: Colors.white,
-      base: Colors.gray,
-      buffer: Colors.grayLight
+      base: Colors.grayLight,
+      buffer: Colors.gray
     },
     VideoPlayer: {
       background: Colors.black,
