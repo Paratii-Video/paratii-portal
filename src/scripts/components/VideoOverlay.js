@@ -8,7 +8,7 @@ import IconButton from 'components/foundations/buttons/IconButton'
 import Title from 'components/foundations/Title'
 import TruncatedText from 'components/foundations/TruncatedText'
 import PlaybackLevels from 'components/widgets/PlaybackLevels'
-import WalletInfo from 'components/widgets/WalletInfo'
+import WalletInfoContainer from 'containers/widgets/WalletInfoContainer'
 import PlayerControlsContainer from 'containers/PlayerControlsContainer'
 import VideoRecord from 'records/VideoRecords'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
@@ -149,7 +149,7 @@ class VideoOverlay extends Component<Props> {
           onPlaybackLevelChange={onPlaybackLevelChange}
           onClose={() => toggleActivePlugin()}
         />
-        <WalletInfo
+        <WalletInfoContainer
           open={activePlugin === PLAYER_PLUGIN.WALLET}
           onClose={() => toggleActivePlugin()}
         />

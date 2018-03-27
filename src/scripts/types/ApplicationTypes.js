@@ -9,7 +9,9 @@ import UploaderRecord from 'records/UploaderRecords'
 import NotificationRecord from 'records/NotificationRecord'
 import {
   REQUEST_STATUS,
-  TRANSITION_STATE
+  TRANSITION_STATE,
+  NOTIFICATION_LEVELS,
+  NOTIFICATION_POSITIONS
 } from 'constants/ApplicationConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 
@@ -315,3 +317,13 @@ export type RequestStatus = $Values<typeof REQUEST_STATUS>
 export type TransitionState = $Values<typeof TRANSITION_STATE>
 
 export type PlayerPlugin = $Values<typeof PLAYER_PLUGIN>
+
+export type NotificationPosition = $Values<typeof NOTIFICATION_POSITIONS>
+
+export type NotificationLevel = $Values<typeof NOTIFICATION_LEVELS>
+
+export type Notification = {
+  title: string,
+  message?: string,
+  position?: NotificationPosition
+}

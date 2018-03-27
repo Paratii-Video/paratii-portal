@@ -7,14 +7,21 @@ import paratii from 'utils/ParatiiLib'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 import CloseButton from 'components/foundations/buttons/CloseButton'
 import Popover from 'components/foundations/Popover'
+import Colors from 'components/foundations/base/Colors'
 import { POPOVER_PADDING, OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
+import {
+  NOTIFICATION_LEVELS,
+  NOTIFICATION_POSITIONS
+} from 'constants/ApplicationConstants'
+import { copyTextToClipboard } from 'utils/AppUtils'
+
+import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
 
 const Wrapper = styled.div`
   cursor: default;
   display: flex;
   flex-direction: column;
-  height: 130px;
-  width: 200px;
+  width: 250px;
   padding: ${POPOVER_PADDING};
 `
 
@@ -22,7 +29,17 @@ const TopBar = styled.div`
   flex: 0 0 20%;
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+`
+const Header = styled.h1`
+  flex: 1 1 0;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+
+  &:not(:first-child) {
+    margin-top: 15px;
+  }
 `
 
 const Content = styled.div`
@@ -31,32 +48,59 @@ const Content = styled.div`
   font-size: 14px;
 `
 
-const Balance = styled.div`
+const AddressWrapper = styled.div`
   display: flex;
   align-items: center;
-`
-
-const BalancePrompt = styled.div`
-  margin-right: 10px;
-`
-
-const AddressPrompt = styled.div`
-  margin-top: 10px;
-  margin-right: 10px;
+  cursor: pointer;
 `
 
 const Address = styled.div`
-  margin-top: 5px;
-  font-size: 12px;
+  font-size: 14px;
   word-break: break-word;
+`
+
+const CopySvg = styled.svg`
+  flex: 0 0 15px;
+  height: 20px;
+  margin-right: 15px;
+  stroke: ${Colors.white};
+  fill: ${Colors.white};
 `
 
 type Props = {
   onClose: () => void,
-  open: boolean
+  open: boolean,
+  showNotification: (Notification, NotificationLevel) => void
 }
 
 class WalletInfo extends React.Component<Props> {
+  addressRef: ?HTMLElement
+
+  getAddress = (): string => paratii.config.account.address
+
+  copyAddressToClipboard = (): void => {
+    const { showNotification } = this.props
+    const { addressRef } = this
+
+    if (addressRef) {
+      copyTextToClipboard(addressRef)
+      showNotification(
+        {
+          title: 'Success',
+          message: 'Your address has been copied to the clipboard',
+          position: NOTIFICATION_POSITIONS.BOTTOM_RIGHT
+        },
+        NOTIFICATION_LEVELS.SUCCESS
+      )
+    }
+  }
+
+  getAddress = (): string => paratii.config.account.address
+
+  setAddressRef = (ref: HTMLElement): void => {
+    this.addressRef = ref
+  }
+
   render () {
     const { onClose, open } = this.props
 
@@ -64,17 +108,20 @@ class WalletInfo extends React.Component<Props> {
       <Popover open={open} top={OVERLAY_BUTTONS_HEIGHT} right={0}>
         <Wrapper>
           <TopBar>
+            <Header>Balance</Header>
             <CloseButton onClick={onClose} />
           </TopBar>
           <Content>
-            <Balance>
-              <BalancePrompt>Balance: </BalancePrompt>
-              <span>
-                <PTIBalanceContainer />
-              </span>
-            </Balance>
-            <AddressPrompt>Public Address: </AddressPrompt>
-            <Address>{paratii.config.account.address}</Address>
+            <PTIBalanceContainer color={Colors.white} />
+            <Header>Public Address</Header>
+            <AddressWrapper onClick={this.copyAddressToClipboard}>
+              <CopySvg>
+                <use xlinkHref="#icon-copy" />
+              </CopySvg>
+              <Address innerRef={this.setAddressRef}>
+                {this.getAddress()}
+              </Address>
+            </AddressWrapper>
           </Content>
         </Wrapper>
       </Popover>

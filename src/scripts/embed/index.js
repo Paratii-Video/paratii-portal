@@ -1,6 +1,6 @@
 /* @flow */
 
-import React from 'react'
+import React, { Fragment } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { Provider, connect } from 'react-redux'
@@ -8,6 +8,7 @@ import styled, { ThemeProvider } from 'styled-components'
 
 import { getRoot } from 'utils/AppUtils'
 import PlayContainer from 'containers/PlayContainer'
+import Notifications from 'containers/NotificationContainer'
 import MainSvg from 'components/foundations/svgs/MainSvg'
 import createStore from 'scripts/createStore'
 import { paratiiTheme } from 'constants/ApplicationConstants'
@@ -50,15 +51,18 @@ class EmbedApp extends React.Component<Props, void> {
 
     return (
       <ThemeProvider theme={paratiiTheme}>
-        <Wrapper>
-          <MainSvg />
+        <Fragment>
+          <Notifications />
+          <Wrapper>
+            <MainSvg />
 
-          <Route
-            exact
-            path={`${match.url}embed/:id`}
-            render={props => <PlayContainer isEmbed {...props} />}
-          />
-        </Wrapper>
+            <Route
+              exact
+              path={`${match.url}embed/:id`}
+              render={props => <PlayContainer isEmbed {...props} />}
+            />
+          </Wrapper>
+        </Fragment>
       </ThemeProvider>
     )
   }

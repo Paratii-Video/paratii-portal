@@ -119,3 +119,21 @@ export const requestFullscreen = (element: HTMLElement): void => {
     element.webkitRequestFullscreen()
   }
 }
+
+export const copyTextToClipboard = (element: HTMLElement): void => {
+  const { body } = document
+
+  if (body) {
+    const dummyInput: HTMLInputElement = document.createElement('input')
+    dummyInput.setAttribute('style', 'height: 0;')
+    dummyInput.setAttribute('value', element.innerText)
+
+    body.appendChild(dummyInput)
+
+    dummyInput.select()
+
+    document.execCommand('copy')
+
+    body.removeChild(dummyInput)
+  }
+}
