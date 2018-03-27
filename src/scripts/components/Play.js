@@ -14,7 +14,7 @@ import Button from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
-import NotFound from './pages/NotFound'
+import VideoNotFound from './pages/VideoNotFound'
 import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
 
 import type { ClapprPlayer, PlayerPlugin } from 'types/ApplicationTypes'
@@ -674,7 +674,7 @@ class Play extends Component<Props, State> {
     const { activePlugin, isEmbed, video } = this.props
 
     if (this.state.videoNotFound) {
-      return <NotFound />
+      return <VideoNotFound />
     } else {
       return (
         <Wrapper isEmbed={isEmbed}>

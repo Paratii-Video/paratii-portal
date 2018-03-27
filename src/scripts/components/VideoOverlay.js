@@ -14,7 +14,7 @@ import VideoRecord from 'records/VideoRecords'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
-import { OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
+import { OVERLAY_BUTTONS_HEIGHT, CONTROLS_HEIGHT } from 'constants/UIConstants'
 import Colors from 'components/foundations/base/Colors'
 
 import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
@@ -37,8 +37,6 @@ type Props = {
   currentPlaybackLevel: ?PlaybackLevel,
   activePlugin: ?PlayerPlugin
 }
-
-const CONTROLS_HEIGHT: string = '75px'
 
 const Wrapper = styled.div`
   height: 100%;
