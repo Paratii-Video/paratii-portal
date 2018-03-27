@@ -18,8 +18,8 @@ import {
 } from 'constants/UIConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 
-import playIcon from 'assets/img/play-icon.svg'
-import pauseIcon from 'assets/img/pause-icon.svg'
+import playIcon from 'assets/svg/icon-player-play.svg'
+import pauseIcon from 'assets/svg/icon-player-pause.svg'
 import normalscreenIcon from 'assets/img/normalscreen-icon.svg'
 import fullscreenIcon from 'assets/img/fullscreen-icon.svg'
 import qualityIcon from 'assets/img/quality-icon.svg'
@@ -137,7 +137,8 @@ const ProgressIndicatorIcon = styled.span`
   background-color: ${({ theme }) => theme.colors.bar.scrubber};
   border-radius: 50%;
   opacity: 0.5;
-  transition: all 1s ${({ theme }) => theme.animation.ease.smooth};
+  transition: all ${props => (props.userIsScrubbing ? '0.7s' : '0.6s')}
+    ${({ theme }) => theme.animation.ease.smooth};
 
   ${ProgressWrapper}:hover & {
     height: 100%;
