@@ -1,8 +1,4 @@
 const Sizes = {
-  mainHeader: {
-    height: '72px',
-    padding: '0 80px'
-  },
   mainFooter: {
     height: '72px',
     padding: '0 80px'
