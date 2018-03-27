@@ -120,23 +120,25 @@ const ProgressIndicator = styled.div.attrs({
   justify-content: center;
   border-radius: 50%;
 
-  &::before,
-  &::after {
+  &::before {
     content: '';
     position: absolute;
-    height: 100%;
-    width: 100%;
+    height: 50%;
+    width: 50%;
     background-color: ${({ theme }) => theme.colors.bar.scrubber};
     border-radius: 50%;
   }
+  `
 
-  &::before {
-    opacity: 0.5;
-  }
-
-  &::after {
-    transform: scale(0.5);
-  }
+const ProgressIndicatorIcon = styled.span`
+  position: absolute;
+  height: ${props => (props.userIsScrubbing ? '100%' : '50%')};
+  width: ${props => (props.userIsScrubbing ? '100%' : '50%')};
+  background-color: ${({ theme }) => theme.colors.bar.scrubber};
+  border-radius: 50%;
+  opacity: 0.5;
+  transition: all ${props => (props.userIsScrubbing ? '0.7s' : '1s')}
+    ${({ theme }) => theme.animation.ease.smooth};
   `
 
 /* prettier-ignore */
@@ -354,7 +356,12 @@ class PlayerControls extends Component<Props, State> {
               currentTime={currentTimeSeconds}
               scrubbingPositionPercentage={scrubbingPositionPercentage}
               totalDuration={videoDurationSeconds}
-            />
+              userIsScrubbing={this.state.userIsScrubbing}
+            >
+              <ProgressIndicatorIcon
+                userIsScrubbing={this.state.userIsScrubbing}
+              />
+            </ProgressIndicator>
           </ProgressWrapper>
           <ControlButtons>
             <LeftControls>
