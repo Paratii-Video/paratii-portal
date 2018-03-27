@@ -1,8 +1,10 @@
+/* @flow */
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 
 import ModalStake from 'containers/ModalStakeContainer' // need to receive any content
+import ModalSecure from 'containers/ModalSecureContainer' // need to receive any content
 
 type Props = {
   modalContent: string,
@@ -102,6 +104,8 @@ class Modal extends Component<Props, void> {
     switch (modalContent) {
       case 'ModalStake':
         return <ModalStake />
+      case 'ModalSecure':
+        return <ModalSecure />
     }
   }
 
