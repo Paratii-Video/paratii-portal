@@ -125,7 +125,6 @@ const Themes = {
       },
       levels: {
         color: Colors.white,
-        border: Colors.whiteTransparent,
         selectedBackground: Colors.blackDarkTransparent
       }
     },
