@@ -66,7 +66,7 @@ const Controls = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%
+  height: 100%;
   align-items: center;
   background: ${({ theme }) => theme.colors.VideoPlayer.controls.background};
   transform: translateY(
@@ -82,7 +82,18 @@ const Controls = styled.div`
     }
   }}
   );
-  transition: all 250ms linear;
+  transition: transform
+    ${({ transitionState }) => (TRANSITION_STATE.EXITED ? '0.8s' : '0.9s')}
+    ${({ theme }) => theme.animation.ease.smooth};
+  `
+
+const ProgressWrapper = styled.div`
+  position: absolute;
+  top: -10px;
+  height: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
   `
 
 const PROGRESS_INDICATOR_DIMENSION: number = 20
@@ -104,37 +115,48 @@ const ProgressIndicator = styled.div.attrs({
   position: absolute;
   width: ${PROGRESS_INDICATOR_DIMENSION}px;
   height: ${PROGRESS_INDICATOR_DIMENSION}px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.bar.scrubber};
-  `
-
-const ProgressBuffer = styled.div`
-  flex-grow: 0;
-  flex-shrink: 0;
-  height: 100%;
-  background: ${({ theme }) => theme.colors.bar.base};
-  `
-
-const ProgressBarWrapper = styled.div`
-  position: absolute;
-  top: -10px;
-  height: 20px;
-  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: ${({ theme }) => theme.colors.bar.scrubber};
+    border-radius: 50%;
+  }
+
+  &::before {
+    opacity: 0.5;
+  }
+
+  &::after {
+    transform: scale(0.5);
+  }
   `
 
 /* prettier-ignore */
-const ProgressBar = styled.div`
+const ProgressBarWrapper = styled.div`
   width: 100%;
   height: 5px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  background: linear-gradient(to right, ${({ theme }) => `${theme.colors.bar.from}, ${theme.colors.bar.to}`});
-  ${/* sc-custom */ProgressBuffer} {
-    flex-basis: ${({ bufferTime, totalDuration }) => 100 - (!totalDuration ? 0 : Math.max(0, Math.min(100, bufferTime * 100 / totalDuration)))}%
-  }
+  position: relative;
+  background: ${props => props.theme.colors.bar.base};
+  `
+
+const ProgressBar = styled.div`
+  position: absolute;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    ${({ theme }) => `${theme.colors.bar.from}, ${theme.colors.bar.to}`}
+  );
+  background: ${props =>
+    props.colorful ? null : props.theme.colors.bar.buffer};
+  width: ${props => Math.min(props.current / props.total * 100, 100) + '%'};
   `
 
 const ControlButtons = styled.div`
@@ -302,7 +324,7 @@ class PlayerControls extends Component<Props, State> {
       <Wrapper>
         {this.renderPlugins()}
         <Controls transitionState={transitionState}>
-          <ProgressBarWrapper
+          <ProgressWrapper
             onClick={(e: Object) => {
               if (this.progressBarRef) {
                 const wrapperRect: Object = this.progressBarRef.getBoundingClientRect()
@@ -310,29 +332,32 @@ class PlayerControls extends Component<Props, State> {
               }
             }}
           >
-            <ProgressBar
+            <ProgressBarWrapper
               innerRef={(ref: HTMLElement) => {
                 this.progressBarRef = ref
               }}
-              bufferTime={currentBufferedTimeSeconds}
-              totalDuration={videoDurationSeconds}
             >
-              <ProgressBuffer
-                bufferTime={currentBufferedTimeSeconds}
-                totalDuration={currentBufferedTimeSeconds}
+              <ProgressBar
+                current={currentBufferedTimeSeconds}
+                total={videoDurationSeconds}
               />
-              <ProgressIndicator
-                currentTime={currentTimeSeconds}
-                onMouseDown={() => {
-                  this.setState({
-                    userIsScrubbing: true
-                  })
-                }}
-                scrubbingPositionPercentage={scrubbingPositionPercentage}
-                totalDuration={videoDurationSeconds}
+              <ProgressBar
+                current={currentTimeSeconds}
+                total={videoDurationSeconds}
+                colorful
               />
-            </ProgressBar>
-          </ProgressBarWrapper>
+            </ProgressBarWrapper>
+            <ProgressIndicator
+              currentTime={currentTimeSeconds}
+              onMouseDown={() => {
+                this.setState({
+                  userIsScrubbing: true
+                })
+              }}
+              scrubbingPositionPercentage={scrubbingPositionPercentage}
+              totalDuration={videoDurationSeconds}
+            />
+          </ProgressWrapper>
           <ControlButtons>
             <LeftControls>
               <ControlButtonWrapper>
