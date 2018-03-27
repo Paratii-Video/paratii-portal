@@ -132,13 +132,17 @@ const ProgressIndicator = styled.div.attrs({
 
 const ProgressIndicatorIcon = styled.span`
   position: absolute;
-  height: ${props => (props.userIsScrubbing ? '100%' : '50%')};
-  width: ${props => (props.userIsScrubbing ? '100%' : '50%')};
+  height: 50%;
+  width: 50%;
   background-color: ${({ theme }) => theme.colors.bar.scrubber};
   border-radius: 50%;
   opacity: 0.5;
-  transition: all ${props => (props.userIsScrubbing ? '0.7s' : '1s')}
-    ${({ theme }) => theme.animation.ease.smooth};
+  transition: all 1s ${({ theme }) => theme.animation.ease.smooth};
+  ${ProgressWrapper}:hover & {
+    height: 100%;
+    width: 100%;
+    transition: all 0.7s ${({ theme }) => theme.animation.ease.smooth};
+  }
   `
 
 /* prettier-ignore */
