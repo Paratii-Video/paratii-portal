@@ -78,7 +78,8 @@ const VideoInfo = styled.div`
     }
   }}
   );
-  transition: all ${({ theme }) => theme.animation.time.repaint}
+  transition: transform
+    ${({ transitionState }) => (TRANSITION_STATE.EXITED ? '0.6s' : '0.9s')}
     ${({ theme }) => theme.animation.ease.smooth};
 `
 

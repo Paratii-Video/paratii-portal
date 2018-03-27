@@ -83,7 +83,7 @@ const Controls = styled.div`
   }}
   );
   transition: transform
-    ${({ transitionState }) => (TRANSITION_STATE.EXITED ? '0.8s' : '0.9s')}
+    ${({ transitionState }) => (TRANSITION_STATE.EXITED ? '0.6s' : '0.9s')}
     ${({ theme }) => theme.animation.ease.smooth};
   `
 
@@ -146,8 +146,7 @@ const ProgressBarWrapper = styled.div`
   width: 100%;
   height: 5px;
   position: relative;
-  background: ${props => props.theme.colors.bar.base};
-  `
+  background: ${props => props.theme.colors.bar.base};`
 
 const ProgressBar = styled.div`
   position: absolute;
