@@ -206,6 +206,7 @@ const VolumeBarWrapper = styled.div`
   `
 
 const ControlButtonWrapper = styled.div`
+  display: flex;
   flex: 0 0 ${CONTROLS_BUTTON_DIMENSION};
   height: ${CONTROLS_BUTTON_DIMENSION};
 
