@@ -57,6 +57,7 @@ const Overlay = styled.div`
   }};
   transition: all ${({ theme }) => theme.animation.time.repaint}
     ${({ theme }) => theme.animation.ease.smooth};
+  cursor: pointer;
 `
 
 const VideoInfo = styled.div`

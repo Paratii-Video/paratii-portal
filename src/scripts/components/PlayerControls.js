@@ -99,6 +99,7 @@ const ProgressWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  cursor: pointer;
   `
 
 const ProgressIndicator = styled.div.attrs({
