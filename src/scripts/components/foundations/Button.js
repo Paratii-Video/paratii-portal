@@ -1,4 +1,10 @@
+import React from 'react'
 import styled, { css } from 'styled-components'
+
+type Props = {
+  color?: string,
+  icon: string
+}
 
 export const ButtonStyleColor = css`
   ${props => {
@@ -47,6 +53,38 @@ export const ButtonStyleHover = css`
     opacity: ${props => props.theme.animation.opacity.hover};
   }
   `
+
+export const IconFillStyleColor = css`
+  ${props => {
+    let _color: String
+
+    if (props.color === 'white') {
+      _color = props.theme.colors.button.white
+    } else if (props.color === 'purple') {
+      _color = props.theme.colors.button.purple
+    } else if (props.color === 'pink') {
+      _color = props.theme.colors.button.pink
+    } else {
+      _color = props.theme.colors.button.gray
+    }
+
+    return css`
+      fill: ${_color};
+    `
+  }};
+  `
+
+const SVG = styled.svg`
+  ${IconFillStyleColor};
+  width: 100%;
+  height: 100%;
+  `
+
+export const SVGIcon = ({ icon, color, ...rest }: Props) => (
+  <SVG color={color}>
+    <use xlinkHref={'#' + icon} />
+  </SVG>
+)
 
 const Button = styled.button`
   ${StyleAnchor} ${ButtonStyleColor} ${ButtonStyleHover} cursor: ${props =>
