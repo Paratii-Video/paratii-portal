@@ -99,12 +99,11 @@ const ButtonWrapper = styled.div`
 `
 
 const ShareButton = Button.extend`
-  height: 18px;
+  height: 20px;
   margin-left: 10px;
-  width: 30px;
+  width: 26px;
 
   @media (max-width: 768px) {
-    height: 12px;
     width: 20px;
   }
 `
