@@ -46,32 +46,6 @@ const ButtonWrapper = styled.div`
   margin-right: 10px;
 `
 
-const VolumeIndicator = styled.div.attrs({
-  style: ({ currentVolume, draggingVolumePercentage, transitionState }) => ({
-    transform: `scale(${
-      transitionState === TRANSITION_STATE.ENTERED ? 1.0 : 0.0
-    })`,
-    left: draggingVolumePercentage
-      ? `calc(${Math.max(
-        0,
-        Math.min(100, draggingVolumePercentage)
-      )}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
-      : `calc(${Math.max(
-        0,
-        Math.min(100, currentVolume)
-      )}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
-  })
-})`
-  position: absolute;
-  cursor: pointer;
-  width: ${VOLUME_INDICATOR_DIMENSION}px;
-  height: ${VOLUME_INDICATOR_DIMENSION}px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.bar.scrubber};
-  transition: transform ${TRANSITION_DURATION}
-    ${({ theme }) => theme.animation.ease.smooth};
-`
-
 const VolumeBarBuffer = styled.div`
   cursor: pointer;
   height: 20px;
@@ -85,10 +59,58 @@ const VolumeBarBuffer = styled.div`
         return '100px'
     }
   }};
+  width: 100px;
   transition: all ${TRANSITION_DURATION}
     ${({ theme }) => theme.animation.ease.smooth};
   display: flex;
   align-items: center;
+`
+
+const VolumeIndicator = styled.div.attrs({
+  style: ({ currentVolume, draggingVolumePercentage, transitionState }) => ({
+    transform: `scale(${
+      transitionState === TRANSITION_STATE.ENTERED ? 1.0 : 1.0
+    })`,
+    left: draggingVolumePercentage
+      ? `calc(${Math.max(
+        0,
+        Math.min(100, draggingVolumePercentage)
+      )}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
+      : `calc(${Math.max(
+        0,
+        Math.min(100, currentVolume)
+      )}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
+  })
+})`
+  position: absolute;
+  width: ${VOLUME_INDICATOR_DIMENSION}px;
+  height: ${VOLUME_INDICATOR_DIMENSION}px;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: ${({ theme }) => theme.colors.bar.scrubber};
+    border-radius: 50%;
+  }
+
+  &::before {
+    opacity: 0.5;
+    transform: scale(${props => (props.userIsScrubbing ? 1 : 0.5)});
+    transition: transform ${props => (props.userIsScrubbing ? '1s' : '0.8s')}
+      ${({ theme }) => theme.animation.ease.smooth};
+    ${VolumeBarBuffer}:hover & {
+      transform: scale(1);
+    }
+  }
+
+  &::after {
+    transform: scale(${props => (props.userIsScrubbing ? 0.6 : 0.5)});
+    transition: transform ${props => (props.userIsScrubbing ? '0.7s' : '0.5s')}
+      ${({ theme }) => theme.animation.ease.smooth};
+  }
 `
 
 /* prettier-ignore */
@@ -251,6 +273,7 @@ class PlayerControls extends Component<Props, State> {
                     })
                   }}
                   transitionState={transitionState}
+                  userIsScrubbing={this.state.userIsDragging}
                 />
               </VolumeBar>
             </VolumeBarBuffer>

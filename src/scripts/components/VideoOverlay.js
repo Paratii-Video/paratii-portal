@@ -2,9 +2,8 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Button from 'components/foundations/Button'
+import Button, { SVGIcon } from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
-import TruncatedText from 'components/foundations/TruncatedText'
 import PlayerControlsContainer from 'containers/PlayerControlsContainer'
 import VideoRecord from 'records/VideoRecords'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
@@ -61,9 +60,9 @@ const Overlay = styled.div`
 `
 
 const VideoInfo = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex: 1 0 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
   padding: ${overlayPadding};
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   transform: translateY(
@@ -86,37 +85,28 @@ const VideoInfo = styled.div`
 
 const PlayerTitle = Title.extend`
   color: ${props => props.theme.colors.VideoPlayer.header.title};
-  flex: 0 0 75%;
   max-width: 75%;
 `
 
-const ButtonGroup = styled.div`
-  align-items: center;
+const ButtonWrapper = styled.div`
+  position: absolute;
+  top: 30px;
+  right: 25px;
   display: flex;
   flex-direction: row;
-  flex: 1 0 0;
   justify-content: flex-end;
   opacity: ${({ hide }) => (hide ? 0 : 1)};
 `
 
-const ButtonWrapper = styled.div`
-  width: 25px;
-  height: 25px;
-`
-
 const ShareButton = Button.extend`
   height: 18px;
-  position: absolute;
-  right: 25px;
-  top: 28px;
+  margin-left: 10px;
   width: 30px;
-`
 
-const SVGButton = styled.svg`
-  fill: ${props => props.theme.colors.VideoPlayer.header.icons};
-  display: block;
-  height: 100%;
-  width: 100%;
+  @media (max-width: 768px) {
+    height: 12px;
+    width: 20px;
+  }
 `
 
 class VideoOverlay extends Component<Props> {
@@ -146,25 +136,17 @@ class VideoOverlay extends Component<Props> {
           transitionState={transitionState}
         >
           <VideoInfo transitionState={transitionState}>
-            <PlayerTitle small>
-              <TruncatedText>{this.getVideoTitle()}</TruncatedText>
-            </PlayerTitle>
-            <ButtonGroup>
-              <ButtonWrapper>
-                <ShareButton
-                  onClick={(e: Object) => {
-                    e.stopPropagation()
-                    toggleShareModal(e)
-                  }}
-                >
-                  {!this.props.showShareModal && (
-                    <SVGButton>
-                      <use xlinkHref="#icon-player-share" />
-                    </SVGButton>
-                  )}
-                </ShareButton>
-              </ButtonWrapper>
-            </ButtonGroup>
+            <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>
+            <ButtonWrapper>
+              <ShareButton
+                onClick={(e: Object) => {
+                  e.stopPropagation()
+                  toggleShareModal(e)
+                }}
+              >
+                <SVGIcon icon="icon-player-share" color="white" />
+              </ShareButton>
+            </ButtonWrapper>
           </VideoInfo>
         </Overlay>
         <PlayerControlsContainer

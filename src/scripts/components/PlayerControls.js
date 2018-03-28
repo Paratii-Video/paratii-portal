@@ -102,27 +102,21 @@ const ProgressWrapper = styled.div`
   cursor: pointer;
   `
 
-const ProgressIndicator = styled.div.attrs({
-  style: ({ currentTime, totalDuration, scrubbingPositionPercentage }) => ({
-    left: scrubbingPositionPercentage
+export const ProgressIndicator = styled.div.attrs({
+  style: ({ current, total, position }) => ({
+    left: position
       ? `calc(${Math.max(
         0,
-        Math.min(scrubbingPositionPercentage, 100)
+        Math.min(position, 100)
       )}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
       : `calc(${
-        !totalDuration
-          ? 0
-          : Math.max(0, Math.min(100, currentTime * 100 / totalDuration))
+        !total ? 0 : Math.max(0, Math.min(100, current * 100 / total))
       }% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
   })
 })`
   position: absolute;
   width: ${PROGRESS_INDICATOR_DIMENSION}px;
   height: ${PROGRESS_INDICATOR_DIMENSION}px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
 
   &::before,
   &::after {
@@ -139,8 +133,7 @@ const ProgressIndicator = styled.div.attrs({
     transform: scale(${props => (props.userIsScrubbing ? 1 : 0.5)});
     transition: transform ${props => (props.userIsScrubbing ? '1s' : '0.8s')}
       ${({ theme }) => theme.animation.ease.smooth};
-
-  ${ProgressWrapper}:hover & {
+    ${ProgressWrapper}:hover & {
       transform: scale(1);
     }
   }
@@ -375,9 +368,9 @@ class PlayerControls extends Component<Props, State> {
               />
             </ProgressBarWrapper>
             <ProgressIndicator
-              currentTime={currentTimeSeconds}
-              scrubbingPositionPercentage={scrubbingPositionPercentage}
-              totalDuration={videoDurationSeconds}
+              current={currentTimeSeconds}
+              position={scrubbingPositionPercentage}
+              total={videoDurationSeconds}
               userIsScrubbing={this.state.userIsScrubbing}
             />
           </ProgressWrapper>
