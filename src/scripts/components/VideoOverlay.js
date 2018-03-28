@@ -7,7 +7,6 @@ import Title from 'components/foundations/Title'
 import PlayerControlsContainer from 'containers/PlayerControlsContainer'
 import VideoRecord from 'records/VideoRecords'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
-import { CONTROLS_HEIGHT } from 'constants/UIConstants'
 
 import type { TransitionState } from 'types/ApplicationTypes'
 
@@ -38,7 +37,7 @@ const overlayPadding: string = '20px 25px 0'
 
 const Overlay = styled.div`
   width: 100%;
-  flex: 0 0 calc(100% - ${CONTROLS_HEIGHT});
+  flex: 0 1 100%;
   display: flex;
   flex-direction: column;
   color: white;

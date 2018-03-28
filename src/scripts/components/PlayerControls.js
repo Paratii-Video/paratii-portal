@@ -8,6 +8,7 @@ import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
 import Text from 'components/foundations/Text'
 import VolumeBar from 'components/widgets/VolumeBar'
+import ProgressIndicator from 'components/widgets/ProgressIndicator'
 import PlaybackLevels from 'components/widgets/PlaybackLevels'
 import IconButton from 'components/foundations/buttons/IconButton'
 import Colors from 'components/foundations/base/Colors'
@@ -59,7 +60,6 @@ type State = {
 }
 
 const CONTROL_BUTTONS_HEIGHT: string = '50px'
-const PROGRESS_INDICATOR_DIMENSION: number = 20
 
 const Wrapper = styled.div`
   position: relative;
@@ -79,7 +79,7 @@ const Controls = styled.div`
     switch (transitionState) {
       case TRANSITION_STATE.ENTERING:
       case TRANSITION_STATE.EXITED:
-        return `calc(${CONTROLS_HEIGHT} + ${PROGRESS_INDICATOR_DIMENSION}px)`
+        return 0
       case TRANSITION_STATE.EXITING:
       case TRANSITION_STATE.ENTERED:
       default:
@@ -90,7 +90,7 @@ const Controls = styled.div`
   transition: transform
     ${({ transitionState }) => (TRANSITION_STATE.EXITED ? '0.6s' : '0.9s')}
     ${({ theme }) => theme.animation.ease.smooth};
-  `
+`
 
 const ProgressWrapper = styled.div`
   position: absolute;
@@ -100,50 +100,7 @@ const ProgressWrapper = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  `
-
-export const ProgressIndicator = styled.div.attrs({
-  style: ({ current, total, position }) => ({
-    left: position
-      ? `calc(${Math.max(
-        0,
-        Math.min(position, 100)
-      )}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
-      : `calc(${
-        !total ? 0 : Math.max(0, Math.min(100, current * 100 / total))
-      }% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
-  })
-})`
-  position: absolute;
-  width: ${PROGRESS_INDICATOR_DIMENSION}px;
-  height: ${PROGRESS_INDICATOR_DIMENSION}px;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background-color: ${({ theme }) => theme.colors.bar.scrubber};
-    border-radius: 50%;
-  }
-
-  &::before {
-    opacity: 0.5;
-    transform: scale(${props => (props.userIsScrubbing ? 1 : 0.5)});
-    transition: transform ${props => (props.userIsScrubbing ? '1s' : '0.8s')}
-      ${({ theme }) => theme.animation.ease.smooth};
-    ${ProgressWrapper}:hover & {
-      transform: scale(1);
-    }
-  }
-
-  &::after {
-    transform: scale(${props => (props.userIsScrubbing ? 0.6 : 0.5)});
-    transition: transform ${props => (props.userIsScrubbing ? '0.7s' : '0.5s')}
-      ${({ theme }) => theme.animation.ease.smooth};
-  }
-  `
+`
 
 /* prettier-ignore */
 const ProgressBarWrapper = styled.div`
@@ -153,6 +110,7 @@ const ProgressBarWrapper = styled.div`
   background: ${props => props.theme.colors.bar.base};`
 
 const ProgressBar = styled.div`
+  left: -100%;
   position: absolute;
   height: 100%;
   background: linear-gradient(
@@ -161,8 +119,13 @@ const ProgressBar = styled.div`
   );
   background: ${props =>
     props.colorful ? null : props.theme.colors.bar.buffer};
-  width: ${props => Math.min(props.current / props.total * 100, 100) + '%'};
-  `
+  transform: translate3d(
+    ${props => Math.min(props.current / props.total * 100, 100) + '%'},
+    0,
+    0
+  );
+  width: 100%;
+`
 
 const ControlButtons = styled.div`
   width: 100%;
@@ -172,21 +135,21 @@ const ControlButtons = styled.div`
   flex-direction: row;
   padding: 2px 24px 0;
   height: ${CONTROL_BUTTONS_HEIGHT};
-  `
+`
 
 const LeftControls = styled.div`
   flex: 1 1 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  `
+`
 
 const RightControls = styled.div`
   flex: 1 1 0;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  `
+`
 
 const Time = styled.div`
   margin-right: ${CONTROLS_SPACING};
@@ -195,7 +158,7 @@ const Time = styled.div`
   @media (max-width: 767px) {
     display: none;
   }
-  `
+`
 
 const VolumeBarWrapper = styled.div`
   position: relative;
@@ -203,7 +166,7 @@ const VolumeBarWrapper = styled.div`
   @media (max-width: 767px) {
     display: none;
   }
-  `
+`
 
 const ControlButtonWrapper = styled.div`
   display: flex;
@@ -227,7 +190,7 @@ const ControlButtonWrapper = styled.div`
       margin-right: ${CONTROLS_SPACING_MOBILE};
     }
   }
-  `
+`
 
 class PlayerControls extends Component<Props, State> {
   progressBarRef: ?HTMLElement
@@ -345,7 +308,6 @@ class PlayerControls extends Component<Props, State> {
       videoDurationSeconds,
       playbackLevels
     } = this.props
-    const { scrubbingPositionPercentage } = this.state
 
     return (
       <Wrapper>
@@ -379,7 +341,6 @@ class PlayerControls extends Component<Props, State> {
             </ProgressBarWrapper>
             <ProgressIndicator
               current={currentTimeSeconds}
-              position={scrubbingPositionPercentage}
               total={videoDurationSeconds}
               userIsScrubbing={this.state.userIsScrubbing}
             />

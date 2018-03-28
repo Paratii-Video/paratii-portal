@@ -3,8 +3,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Transition from 'react-transition-group/Transition'
-
 import IconButton from 'components/foundations/buttons/IconButton'
+import ProgressIndicator from 'components/widgets/ProgressIndicator'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
 import {
@@ -29,7 +29,6 @@ type State = {
   draggingVolumePercentage: number
 }
 
-const VOLUME_INDICATOR_DIMENSION: number = 15
 const TRANSITION_DURATION: string = '250ms'
 
 const Wrapper = styled.div`
@@ -67,56 +66,9 @@ const VolumeBarBuffer = styled.div`
   align-items: center;
 `
 
-const VolumeIndicator = styled.div.attrs({
-  style: ({ currentVolume, draggingVolumePercentage, transitionState }) => ({
-    transform: `scale(${
-      transitionState === TRANSITION_STATE.ENTERED ? 1.0 : 1.0
-    })`,
-    left: draggingVolumePercentage
-      ? `calc(${Math.max(
-        0,
-        Math.min(100, draggingVolumePercentage)
-      )}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
-      : `calc(${Math.max(
-        0,
-        Math.min(100, currentVolume)
-      )}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
-  })
-})`
-  position: absolute;
-  width: ${VOLUME_INDICATOR_DIMENSION}px;
-  height: ${VOLUME_INDICATOR_DIMENSION}px;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background-color: ${({ theme }) => theme.colors.bar.scrubber};
-    border-radius: 50%;
-  }
-
-  &::before {
-    opacity: 0.5;
-    transform: scale(${props => (props.userIsScrubbing ? 1 : 0.5)});
-    transition: transform ${props => (props.userIsScrubbing ? '1s' : '0.8s')}
-      ${({ theme }) => theme.animation.ease.smooth};
-    ${VolumeBarBuffer}:hover & {
-      transform: scale(1);
-    }
-  }
-
-  &::after {
-    transform: scale(${props => (props.userIsScrubbing ? 0.6 : 0.5)});
-    transition: transform ${props => (props.userIsScrubbing ? '0.7s' : '0.5s')}
-      ${({ theme }) => theme.animation.ease.smooth};
-  }
-`
-
 /* prettier-ignore */
 const VolumeBar = styled.div`
-  height: 2px;
+  height: 100%;
   width: 100%;
   border-radius: 3px;
   position: relative;
@@ -125,18 +77,6 @@ const VolumeBar = styled.div`
   align-items: center;
   background: linear-gradient(to right, ${({ theme }) => `${theme.colors.bar.from}, ${theme.colors.bar.to}`});
   `
-
-const VolumeRemaining = styled.div.attrs({
-  style: ({ currentVolume }) => ({
-    width: `${100 - currentVolume}%`
-  })
-})`
-  position: absolute;
-  border-radius: 3px;
-  right: 0;
-  height: 100%;
-  background: ${({ theme }) => theme.colors.bar.base};
-`
 
 class PlayerControls extends Component<Props, State> {
   volumeBarRef: ?HTMLElement
@@ -233,7 +173,7 @@ class PlayerControls extends Component<Props, State> {
 
   render () {
     const { onVolumeChange, currentVolume, onToggleMute } = this.props
-    const { draggingVolumePercentage, open } = this.state
+    const { open } = this.state
     return (
       <Wrapper
         onClick={this.markLastUserInteraction}
@@ -246,7 +186,7 @@ class PlayerControls extends Component<Props, State> {
             onClick={() => onToggleMute()}
           />
         </ButtonWrapper>
-        <Transition in={open} timeout={250} unmountOnExit>
+        <Transition in={open} timeout={10000000} unmountOnExit>
           {(transitionState: TransitionState) => (
             <VolumeBarBuffer
               onClick={(e: Object) => {
@@ -263,17 +203,15 @@ class PlayerControls extends Component<Props, State> {
                 innerRef={(ref: HTMLElement) => {
                   this.volumeBarRef = ref
                 }}
+                onMouseDown={() => {
+                  this.setState({
+                    userIsDragging: true
+                  })
+                }}
               >
-                <VolumeRemaining currentVolume={currentVolume} />
-                <VolumeIndicator
-                  currentVolume={currentVolume}
-                  draggingVolumePercentage={draggingVolumePercentage}
-                  onMouseDown={() => {
-                    this.setState({
-                      userIsDragging: true
-                    })
-                  }}
-                  transitionState={transitionState}
+                <ProgressIndicator
+                  current={currentVolume}
+                  total={100}
                   userIsScrubbing={this.state.userIsDragging}
                 />
               </VolumeBar>
