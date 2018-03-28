@@ -3,8 +3,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 
-import ModalStake from 'containers/ModalStakeContainer' // need to receive any content
-import ModalSecure from 'containers/ModalSecureContainer' // need to receive any content
+import ModalStake from 'containers/widgets/modals/ModalStakeContainer' // need to receive any content
+import ModalSecure from 'containers/widgets/modals/ModalSecureContainer'
+import ModalShowSeed from 'containers/widgets/modals/ModalShowSeedContainer'
+import ModalRewriteSeed from 'containers/widgets/modals/ModalRewriteSeedContainer'
+import ModalSetPin from 'containers/widgets/modals/ModalSetPinContainer'
 
 type Props = {
   modalContent: string,
@@ -106,6 +109,12 @@ class Modal extends Component<Props, void> {
         return <ModalStake />
       case 'ModalSecure':
         return <ModalSecure />
+      case 'ModalShowSeed':
+        return <ModalShowSeed />
+      case 'ModalRewriteSeed':
+        return <ModalRewriteSeed />
+      case 'ModalSetPin':
+        return <ModalSetPin />
     }
   }
 

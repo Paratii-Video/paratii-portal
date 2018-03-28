@@ -17,7 +17,7 @@ import Notifications from 'containers/NotificationContainer'
 import type { Match } from 'react-router-dom'
 
 import MainTemplate from './templates/MainTemplate'
-import Modal from 'containers/ModalContainer'
+import Modal from 'containers/widgets/modals/ModalContainer'
 import MainHeader from './structures/header/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/footer/MainFooter'

@@ -33,9 +33,6 @@ class Wallet extends Component<Props> {
         <Text>
           You have <b>{paratii.eth.web3.utils.fromWei(balance)}</b> PTI
         </Text>
-        <Text>
-          <b>{paratii.eth.wallet.getMnemonic()}</b>
-        </Text>
         <br />
         <Button onClick={this.secureWallet} purple>
           Secure Wallet

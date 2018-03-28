@@ -4,7 +4,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
-// import UserRecord from 'records/UserRecords'
+import paratii from 'utils/ParatiiLib'
+
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
 type Props = {
@@ -26,8 +27,6 @@ const MainText = styled(Text)`
   margin-bottom: 35px;
 `
 
-// const Anchor = Button.withComponent('a')
-
 const Footer = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -39,49 +38,45 @@ const ButtonContainer = styled.div`
   margin-left: 10px;
 `
 
-class ModalSecure extends Component<Props, Object> {
-  restoreAccount: (e: Object) => void
-  showSeed: (e: Object) => void
+class ModalShowSeed extends Component<Props, Object> {
+  secureWallet: (e: Object) => void
+  rewriteSeed: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
-    this.restoreAccount = this.restoreAccount.bind(this)
-    this.showSeed = this.showSeed.bind(this)
+    this.secureWallet = this.secureWallet.bind(this)
+    this.rewriteSeed = this.rewriteSeed.bind(this)
   }
 
-  restoreAccount () {
-    console.log('Restore Account')
-    this.props.openModal('ModalRestoreAccount')
+  secureWallet () {
+    console.log('Back to secure Wallet')
+    this.props.openModal('ModalSecure')
   }
 
-  showSeed () {
-    console.log('Show Seed')
-    this.props.openModal('ModalShowSeed')
+  rewriteSeed () {
+    console.log('Rewrite your Seed')
+    this.props.openModal('ModalRewriteSeed')
   }
 
   render () {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Secure you wallet</Title>
-          <Highlight>
-            Vestibulum turpis ex, sagittis non libero sed, tincidunt egestas
-            augue.
-          </Highlight>
+          <Title>Your account seed</Title>
           <MainText small gray>
-            Donec eleifend vitae felis nec laoreet. Nam ullamcorper justo et
-            ante malesuada iaculis. Aliquam lacus quam, condimentum eget massa
-            vitae, ultrices porta ligula.
+            This is you seed
           </MainText>
+          <Highlight>
+            <b>{paratii.eth.wallet.getMnemonic()}</b>
+          </Highlight>
+
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.restoreAccount}>
-                I already have an account
-              </Button>
+              <Button onClick={this.secureWallet}>Go Back</Button>
             </ButtonContainer>
             <ButtonContainer>
-              <Button purple onClick={this.showSeed}>
-                I am new here
+              <Button purple onClick={this.rewriteSeed}>
+                Continue
               </Button>
             </ButtonContainer>
           </Footer>
@@ -91,4 +86,4 @@ class ModalSecure extends Component<Props, Object> {
   }
 }
 
-export default ModalSecure
+export default ModalShowSeed
