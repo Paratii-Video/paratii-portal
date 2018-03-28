@@ -40,6 +40,7 @@ const Wrapper = styled.div`
 `
 
 const ButtonWrapper = styled.div`
+  display: flex;
   flex: 0 0 17px;
   height: 17px;
   cursor: pointer;
