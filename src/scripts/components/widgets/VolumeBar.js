@@ -4,7 +4,10 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Transition from 'react-transition-group/Transition'
 import IconButton from 'components/foundations/buttons/IconButton'
-import ProgressIndicator from 'components/widgets/ProgressIndicator'
+import ProgressBar, {
+  ProgressBarWrapper
+} from 'components/foundations/ProgressBar'
+import ProgressIndicator from 'components/widgets/player/ProgressIndicator'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
 import {
@@ -205,10 +208,14 @@ class PlayerControls extends Component<Props, State> {
               }}
             >
               <VolumeBar>
+                <ProgressBarWrapper small>
+                  <ProgressBar current={currentVolume} total={100} colorful />
+                </ProgressBarWrapper>
                 <ProgressIndicator
                   current={currentVolume}
                   total={100}
                   userIsScrubbing={this.state.userIsDragging}
+                  small
                 />
               </VolumeBar>
             </VolumeBarBuffer>

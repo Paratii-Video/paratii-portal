@@ -8,7 +8,10 @@ import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
 import Text from 'components/foundations/Text'
 import VolumeBar from 'components/widgets/VolumeBar'
-import ProgressIndicator from 'components/widgets/ProgressIndicator'
+import ProgressBar, {
+  ProgressBarWrapper
+} from 'components/foundations/ProgressBar'
+import ProgressIndicator from 'components/widgets/player/ProgressIndicator'
 import PlaybackLevels from 'components/widgets/PlaybackLevels'
 import IconButton from 'components/foundations/buttons/IconButton'
 import Colors from 'components/foundations/base/Colors'
@@ -100,32 +103,6 @@ const ProgressWrapper = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-`
-
-/* prettier-ignore */
-const ProgressBarWrapper = styled.div`
-  width: 100%;
-  height: 3px;
-  overflow: hidden;
-  position: relative;
-  background: ${props => props.theme.colors.bar.base};`
-
-const ProgressBar = styled.div`
-  left: -100%;
-  position: absolute;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    ${({ theme }) => `${theme.colors.bar.from}, ${theme.colors.bar.to}`}
-  );
-  background: ${props =>
-    props.colorful ? null : props.theme.colors.bar.buffer};
-  transform: translate3d(
-    ${props => Math.min(props.current / props.total * 100, 100) + '%'},
-    0,
-    0
-  );
-  width: 100%;
 `
 
 const ControlButtons = styled.div`
