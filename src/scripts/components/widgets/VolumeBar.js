@@ -115,7 +115,7 @@ const VolumeIndicator = styled.div.attrs({
 
 /* prettier-ignore */
 const VolumeBar = styled.div`
-  height: 4px;
+  height: 2px;
   width: 100%;
   border-radius: 3px;
   position: relative;

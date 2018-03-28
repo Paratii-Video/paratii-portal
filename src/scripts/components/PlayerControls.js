@@ -94,7 +94,7 @@ const Controls = styled.div`
 
 const ProgressWrapper = styled.div`
   position: absolute;
-  top: -8px;
+  top: -9px;
   height: 20px;
   width: 100%;
   display: flex;
@@ -148,7 +148,7 @@ export const ProgressIndicator = styled.div.attrs({
 /* prettier-ignore */
 const ProgressBarWrapper = styled.div`
   width: 100%;
-  height: 5px;
+  height: 3px;
   position: relative;
   background: ${props => props.theme.colors.bar.base};`
 
@@ -170,7 +170,7 @@ const ControlButtons = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
-  padding: 4px 24px 0;
+  padding: 2px 24px 0;
   height: ${CONTROL_BUTTONS_HEIGHT};
   `
 
@@ -190,10 +190,19 @@ const RightControls = styled.div`
 
 const Time = styled.div`
   margin-right: ${CONTROLS_SPACING};
+  user-select: none;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
   `
 
 const VolumeBarWrapper = styled.div`
   position: relative;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
   `
 
 const ControlButtonWrapper = styled.div`
