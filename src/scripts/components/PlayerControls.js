@@ -106,6 +106,7 @@ const ProgressWrapper = styled.div`
 const ProgressBarWrapper = styled.div`
   width: 100%;
   height: 3px;
+  overflow: hidden;
   position: relative;
   background: ${props => props.theme.colors.bar.base};`
 

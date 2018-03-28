@@ -5,15 +5,23 @@ import styled from 'styled-components'
 
 const PROGRESS_INDICATOR_DIMENSION: number = 20
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
+  padding: 0 12px;
   position: absolute;
 `
 
-export const Move = styled.div`
+const WrapperMove = styled.div`
   width: 100%;
-  height: 100%;
+  height: ${PROGRESS_INDICATOR_DIMENSION + 4}px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+`
+const Move = styled.div`
+  width: 100%;
+  height: 0;
+  top: 0;
   position: absolute;
   transform: translate3d(
     ${props =>
@@ -24,10 +32,10 @@ export const Move = styled.div`
 `
 
 export const Circle = styled.div`
-  transform: translate3d(-50%, 0, 0);
-  position: relative;
   width: ${PROGRESS_INDICATOR_DIMENSION}px;
   height: ${PROGRESS_INDICATOR_DIMENSION}px;
+  transform: translate3d(-100%, 2px, 0);
+  position: relative;
 
   &::before,
   &::after {
@@ -74,13 +82,15 @@ class ProgressIndicator extends Component<Props, void> {
   render () {
     return (
       <Wrapper>
-        <Move
-          current={this.props.current}
-          total={this.props.total}
-          userIsScrubbing={this.props.userIsScrubbing}
-        >
-          <Circle userIsScrubbing={this.props.userIsScrubbing} />
-        </Move>
+        <WrapperMove>
+          <Move
+            current={this.props.current}
+            total={this.props.total}
+            userIsScrubbing={this.props.userIsScrubbing}
+          >
+            <Circle userIsScrubbing={this.props.userIsScrubbing} />
+          </Move>
+        </WrapperMove>
       </Wrapper>
     )
   }

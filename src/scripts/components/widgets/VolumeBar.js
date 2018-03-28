@@ -75,7 +75,6 @@ const VolumeBar = styled.div`
   display: flex;
   justify-content: flex-end;  
   align-items: center;
-  background: linear-gradient(to right, ${({ theme }) => `${theme.colors.bar.from}, ${theme.colors.bar.to}`});
   `
 
 class PlayerControls extends Component<Props, State> {
@@ -186,29 +185,26 @@ class PlayerControls extends Component<Props, State> {
             onClick={() => onToggleMute()}
           />
         </ButtonWrapper>
-        <Transition in={open} timeout={10000000} unmountOnExit>
+        <Transition in={open} timeout={250} unmountOnExit>
           {(transitionState: TransitionState) => (
             <VolumeBarBuffer
-              onClick={(e: Object) => {
+              onMouseDown={(e: Object) => {
                 if (this.volumeBarRef) {
                   const wrapperRect: Object = this.volumeBarRef.getBoundingClientRect()
                   onVolumeChange(
                     (e.clientX - wrapperRect.x) * 100 / wrapperRect.width
                   )
                 }
+                this.setState({
+                  userIsDragging: true
+                })
               }}
               transitionState={transitionState}
+              innerRef={(ref: HTMLElement) => {
+                this.volumeBarRef = ref
+              }}
             >
-              <VolumeBar
-                innerRef={(ref: HTMLElement) => {
-                  this.volumeBarRef = ref
-                }}
-                onMouseDown={() => {
-                  this.setState({
-                    userIsDragging: true
-                  })
-                }}
-              >
+              <VolumeBar>
                 <ProgressIndicator
                   current={currentVolume}
                   total={100}
