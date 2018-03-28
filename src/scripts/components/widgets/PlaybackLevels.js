@@ -23,8 +23,6 @@ const TopBar = styled.div`
   flex: 0 0 20%;
   display: flex;
   align-items: center;
-  border-bottom: 0.5px solid
-    ${({ theme }) => theme.colors.VideoPlayer.levels.border};
   padding: 10px ${PADDING};
 `
 
