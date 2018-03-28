@@ -55,6 +55,7 @@ export const CardWrapper = styled.div`
 
   @media (max-width: 1024px) {
     flex: 1 1 100%;
+    min-width: initial;
     max-width: initial;
     margin: 0 0 25px;
     width: 100%;
