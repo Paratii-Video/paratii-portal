@@ -6,7 +6,9 @@ import Button from 'components/foundations/Button'
 import Hidden from 'components/foundations/Hidden'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 
-type Props = {}
+type Props = {
+  closeNav: () => void
+}
 
 const Nav = styled.nav`
   display: block;
@@ -15,10 +17,20 @@ const Nav = styled.nav`
 const NavList = styled.ul`
   display: flex;
   align-items: center;
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 `
 
 const NavItem = styled.li`
   padding-left: 45px;
+
+  @media (max-width: 768px) {
+    padding: 20px 0;
+  }
 `
 
 const StyleNavLink = Button.extend`
@@ -37,18 +49,28 @@ class MainNavigation extends Component<Props, void> {
       <Nav>
         <NavList>
           <NavItem>
-            <NavLink to="/voucher">Get PTI</NavLink>
+            <NavLink onClick={this.props.closeNav} to="/voucher">
+              Get PTI
+            </NavLink>
           </NavItem>
           <Hidden>
             <NavItem>
-              <NavLink to="/my-videos">My videos</NavLink>
+              <NavLink onClick={this.props.closeNav} to="/my-videos">
+                My videos
+              </NavLink>
             </NavItem>
           </Hidden>
           <NavItem>
-            <NavLink to="/upload">Upload</NavLink>
+            <NavLink onClick={this.props.closeNav} to="/upload">
+              Upload
+            </NavLink>
           </NavItem>
           <NavItem>
-            <Anchor href="http://paratii.video/" target="_blank">
+            <Anchor
+              onClick={this.props.closeNav}
+              href="http://paratii.video/"
+              target="_blank"
+            >
               About Paratii
             </Anchor>
           </NavItem>
