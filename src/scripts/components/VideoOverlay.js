@@ -180,7 +180,7 @@ class VideoOverlay extends Component<Props> {
           transitionState={transitionState}
         >
           <VideoInfo transitionState={transitionState}>
-            <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>
+            {isEmbed && <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>}
             <ButtonWrapper>
               {isEmbed && (
                 <ShareButton>
