@@ -1,0 +1,65 @@
+version: '3'
+services:
+  portal:
+    container_name: paratii-portal
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    image: paratii-portal
+    volumes:
+        - "./src:/paratii-portal/src"
+        - "./config:/paratii-portal/config"
+        - "./test:/paratii-portal/test"
+        - "./.env:/paratii-portal/.env"
+        - /tmp:/tmp
+    ports:
+        - "0.0.0.0:8080:8080"
+    command:
+      sleep 15 && cd /paratii-portal && yarn run setup-dev-env && yarn run build:dev
+    command:
+      yarn run server:dev
+    expose:
+      - 8080
+    network_mode: "bridge"
+
+  db:
+    container_name: paratii-db
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile-db
+    ports:
+        - "0.0.0.0:3000:3000"
+    expose:
+      - "3000"
+    command: >
+      bash -c "sleep 30 && cd /paratii-db && npm run docker-development"
+    volumes:
+        - /tmp:/tmp
+    network_mode: "bridge"
+
+  parity:
+    container_name: paratii-parity
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile-parity
+    ports:
+        - "0.0.0.0:8180:8180"
+        - "0.0.0.0:8545:8545"
+        - "0.0.0.0:8546:8546"
+        - "0.0.0.0:30303:30303"
+        - "0.0.0.0:30303:30303/udp"
+    expose:
+      - "8180"
+      - "8545"
+    command: >
+        bash -c "parity -c parity-config.toml --log-file logs/parity.log --gasprice 0"
+    volumes:
+        - /tmp:/tmp
+    network_mode: "bridge"
+
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    ports:
+        - "27017:27017"
+    network_mode: "bridge"
