@@ -127,6 +127,9 @@ const Themes = {
       levels: {
         color: Colors.white,
         selectedBackground: Colors.blackDarkTransparent
+      },
+      share: {
+        background: Colors.blackDarkTransparent
       }
     },
     VideoDescription: {

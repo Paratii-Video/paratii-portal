@@ -124,13 +124,13 @@ const OverlayWrapper = styled.div`
 
 const ShareOverlay = styled.div`
   align-items: center;
-  background-color: ${props => props.theme.colors.Modal.background};
+  background-color: ${props => props.theme.colors.VideoPlayer.share.background};
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: center;
   left: 0;
-  opacity: ${props => (props.show ? 0.9 : 0)};
+  opacity: ${props => (props.show ? 1 : 0)};
   position: absolute;
   pointer-events: ${props => (!props.show ? 'none' : null)};
   transition: opacity ${props => props.theme.animation.time.repaint};

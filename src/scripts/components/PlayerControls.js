@@ -77,18 +77,20 @@ const Controls = styled.div`
   height: 100%;
   align-items: center;
   background: ${({ theme }) => theme.colors.VideoPlayer.controls.background};
-  transform: translateY(
+  transform: translate3d(
+    0,
     ${({ transitionState }) => {
     switch (transitionState) {
       case TRANSITION_STATE.ENTERING:
       case TRANSITION_STATE.EXITED:
-        return 0
+        return 'calc(100% + 10px)'
       case TRANSITION_STATE.EXITING:
       case TRANSITION_STATE.ENTERED:
       default:
         return 0
     }
-  }}
+  }},
+    0
   );
   transition: transform
     ${({ transitionState }) => (TRANSITION_STATE.EXITED ? '0.6s' : '0.9s')}
