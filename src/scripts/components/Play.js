@@ -9,7 +9,7 @@ import TimeFormat from 'hh-mm-ss'
 
 import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
-import VideoOverlay from 'components/VideoOverlay'
+import VideoOverlayContainer from 'containers/VideoOverlayContainer'
 import Button from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
@@ -697,7 +697,7 @@ class Play extends Component<Props, State> {
                     onMouseLeave={this.onMouseLeave}
                     onMouseMove={this.onMouseMove}
                   >
-                    <VideoOverlay
+                    <VideoOverlayContainer
                       onClick={this.onOverlayClick}
                       video={video}
                       isEmbed={isEmbed}
