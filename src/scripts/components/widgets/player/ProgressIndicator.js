@@ -21,7 +21,10 @@ const Wrapper = styled.div`
 
 const WrapperMove = styled.div`
   width: 100%;
-  height: ${props => props.small ? PROGRESS_INDICATOR_DIMENSION_SMALL + 2 : PROGRESS_INDICATOR_DIMENSION + 4}px;
+  height: ${props =>
+    props.small
+      ? PROGRESS_INDICATOR_DIMENSION_SMALL + 2
+      : PROGRESS_INDICATOR_DIMENSION + 4}px;
   display: flex;
   align-items: center;
 `
@@ -39,8 +42,14 @@ const Move = styled.div`
 `
 
 export const Circle = styled.div`
-  width: ${props => props.small ? PROGRESS_INDICATOR_DIMENSION_SMALL : PROGRESS_INDICATOR_DIMENSION}px;
-  height: ${props => props.small ? PROGRESS_INDICATOR_DIMENSION_SMALL : PROGRESS_INDICATOR_DIMENSION}px;
+  width: ${props =>
+    props.small
+      ? PROGRESS_INDICATOR_DIMENSION_SMALL
+      : PROGRESS_INDICATOR_DIMENSION}px;
+  height: ${props =>
+    props.small
+      ? PROGRESS_INDICATOR_DIMENSION_SMALL
+      : PROGRESS_INDICATOR_DIMENSION}px;
   transform: translate3d(-100%, -50%, 0);
   position: relative;
 
@@ -71,14 +80,6 @@ export const Circle = styled.div`
   }
 `
 class ProgressIndicator extends Component<Props, void> {
-  constructor (props: Props) {
-    super(props)
-    console.log(props)
-  }
-
-  componentWillReceiveProps (nextProps: Props): void {
-    console.log(nextProps)
-  }
   render () {
     return (
       <Wrapper>
