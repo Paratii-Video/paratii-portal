@@ -23,7 +23,8 @@ import {
   CONTROLS_BUTTON_DIMENSION_MOBILE,
   CONTROLS_SPACING,
   CONTROLS_SPACING_MOBILE,
-  CONTROLS_HEIGHT
+  CONTROLS_HEIGHT,
+  CONTROLS_HEIGHT_TABLET
 } from 'constants/UIConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 
@@ -69,6 +70,10 @@ const Wrapper = styled.div`
   position: relative;
   display: flex;
   flex: 0 0 ${CONTROLS_HEIGHT};
+
+  @media (max-width: 768px) {
+    flex: 0 0 ${CONTROLS_HEIGHT_TABLET};
+  }
 `
 
 const Controls = styled.div`
@@ -84,7 +89,8 @@ const Controls = styled.div`
     switch (transitionState) {
       case TRANSITION_STATE.ENTERING:
       case TRANSITION_STATE.EXITED:
-        return 'calc(100% + 10px)'
+        // return 'calc(100% + 10px)'
+        return 0
       case TRANSITION_STATE.EXITING:
       case TRANSITION_STATE.ENTERED:
       default:
