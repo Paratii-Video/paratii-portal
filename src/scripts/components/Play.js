@@ -779,7 +779,7 @@ class Play extends Component<Props, State> {
                   <Title small>{video.title || video.filename}</Title>
                 )}
                 {video.author && <Text>By {video.author}</Text>}
-                {video.title && (
+                {video.share && (
                   <PlayInfoButtons>
                     <ButtonIcon>
                       <SVG>
