@@ -79,21 +79,23 @@ export const Circle = styled.div`
       ${({ theme }) => theme.animation.ease.smooth};
   }
 `
+
 class ProgressIndicator extends Component<Props, void> {
+  static defaultProps = {
+    small: false
+  }
+
   render () {
+    const { userIsScrubbing, small, current, total } = this.props
     return (
       <Wrapper>
-        <WrapperMove>
+        <WrapperMove small={small}>
           <Move
-            current={this.props.current}
-            total={this.props.total}
-            userIsScrubbing={this.props.userIsScrubbing}
-            small={this.props.small}
+            current={current}
+            total={total}
+            userIsScrubbing={userIsScrubbing}
           >
-            <Circle
-              userIsScrubbing={this.props.userIsScrubbing}
-              small={this.props.small}
-            />
+            <Circle userIsScrubbing={userIsScrubbing} small={small} />
           </Move>
         </WrapperMove>
       </Wrapper>
