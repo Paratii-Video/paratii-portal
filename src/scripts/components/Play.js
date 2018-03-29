@@ -211,6 +211,10 @@ const SVG = styled.svg`
 
 const PlayInfoHighlight = Text.withComponent('span')
 
+const DescriptionWrapper = styled.div`
+  margin-top: 30px;
+`
+
 const HIDE_CONTROLS_THRESHOLD: number = 2000
 
 class Play extends Component<Props, State> {
@@ -775,7 +779,7 @@ class Play extends Component<Props, State> {
                   <Title small>{video.title || video.filename}</Title>
                 )}
                 {video.author && <Text>By {video.author}</Text>}
-                {video.like && (
+                {video.title && (
                   <PlayInfoButtons>
                     <ButtonIcon>
                       <SVG>
@@ -809,7 +813,11 @@ class Play extends Component<Props, State> {
                     {video.free ? 'Free' : 'Free'}
                   </PlayInfoHighlight>
                 </Text>
-                {video.description && <Text>{video.description}</Text>}
+                {video.description && (
+                  <DescriptionWrapper>
+                    <Text>{video.description}</Text>
+                  </DescriptionWrapper>
+                )}
               </PlayInfo>
             )}
         </Wrapper>
