@@ -32,8 +32,6 @@ type State = {
   draggingVolumePercentage: number
 }
 
-const TRANSITION_DURATION: string = '250ms'
-
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -62,15 +60,19 @@ const VolumeBarBuffer = styled.div`
         return '100px'
     }
   }};
-  width: 100px;
-  transition: all ${TRANSITION_DURATION}
-    ${({ theme }) => theme.animation.ease.smooth};
+  transition: width 0.75s ${({ theme }) => theme.animation.ease.outexpo};
   display: flex;
   align-items: center;
 `
 
 /* prettier-ignore */
-const VolumeBar = styled.div`
+const VolumeBar = styled.div.attrs({
+  style: ({ currentVolume, draggingVolumePercentage, transitionState }) => ({
+    transform: `scale(${
+      transitionState === TRANSITION_STATE.ENTERED ? 1.0 : 0.0
+    })`
+  })
+})`
   height: 100%;
   width: 100%;
   border-radius: 3px;
@@ -175,7 +177,7 @@ class PlayerControls extends Component<Props, State> {
 
   render () {
     const { onVolumeChange, currentVolume, onToggleMute } = this.props
-    const { open } = this.state
+    const { draggingVolumePercentage, open } = this.state
     return (
       <Wrapper
         onClick={this.markLastUserInteraction}
@@ -207,7 +209,16 @@ class PlayerControls extends Component<Props, State> {
                 this.volumeBarRef = ref
               }}
             >
-              <VolumeBar>
+              <VolumeBar
+                currentVolume={currentVolume}
+                draggingVolumePercentage={draggingVolumePercentage}
+                onMouseDown={() => {
+                  this.setState({
+                    userIsDragging: true
+                  })
+                }}
+                transitionState={transitionState}
+              >
                 <ProgressBarWrapper small>
                   <ProgressBar current={currentVolume} total={100} colorful />
                 </ProgressBarWrapper>
