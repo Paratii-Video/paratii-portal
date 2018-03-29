@@ -7,13 +7,14 @@ import Colors from 'components/foundations/base/Colors'
 import TruncatedText from 'components/foundations/TruncatedText'
 
 type Props = {
-  loadBalances: () => void,
-  balance: string
+  balance: string,
+  color?: string,
+  loadBalances: () => void
 }
 
 const Wrapper = styled.div`
   font-size: 14px;
-  color: ${Colors.purple};
+  color: ${({ color }) => color || Colors.purple};
   display: flex;
 `
 
@@ -41,10 +42,10 @@ class PTIBalance extends React.Component<Props, void> {
   }
 
   render () {
-    const { balance } = this.props
+    const { balance, color } = this.props
 
     return (
-      <Wrapper>
+      <Wrapper color={color}>
         <NumberWrapper>
           <TruncatedText maxWidth="60px">{balance}</TruncatedText>
         </NumberWrapper>PTI
