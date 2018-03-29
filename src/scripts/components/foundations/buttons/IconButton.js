@@ -2,6 +2,7 @@
 
 import React from 'react'
 import styled from 'styled-components'
+import { ButtonStyleHover } from '../Button'
 
 type Props = {
   color?: string,
@@ -11,6 +12,7 @@ type Props = {
 }
 
 const Button = styled.button`
+  ${ButtonStyleHover};
   cursor: pointer;
   width: 100%;
   height: 100%;

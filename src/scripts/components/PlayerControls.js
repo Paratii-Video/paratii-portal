@@ -6,19 +6,30 @@ import { List as ImmutableList } from 'immutable'
 
 import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
+import Text from 'components/foundations/Text'
 import VolumeBar from 'components/widgets/VolumeBar'
+
+import ProgressBar, {
+  ProgressBarWrapper
+} from 'components/foundations/ProgressBar'
+import ProgressIndicator from 'components/widgets/player/ProgressIndicator'
+
 import IconButton from 'components/foundations/buttons/IconButton'
 import Colors from 'components/foundations/base/Colors'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 import {
   CONTROLS_BUTTON_DIMENSION,
+  CONTROLS_BUTTON_DIMENSION_DESKTOP,
+  CONTROLS_BUTTON_DIMENSION_MOBILE,
   CONTROLS_SPACING,
-  CONTROLS_HEIGHT
+  CONTROLS_SPACING_MOBILE,
+  CONTROLS_HEIGHT,
+  CONTROLS_HEIGHT_TABLET
 } from 'constants/UIConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 
-import playIcon from 'assets/img/play-icon.svg'
-import pauseIcon from 'assets/img/pause-icon.svg'
+import playIcon from 'assets/svg/icon-player-play.svg'
+import pauseIcon from 'assets/svg/icon-player-pause.svg'
 import normalscreenIcon from 'assets/img/normalscreen-icon.svg'
 import fullscreenIcon from 'assets/img/fullscreen-icon.svg'
 import qualityIcon from 'assets/img/quality-icon.svg'
@@ -59,82 +70,49 @@ const Wrapper = styled.div`
   position: relative;
   display: flex;
   flex: 0 0 ${CONTROLS_HEIGHT};
+
+  @media (max-width: 768px) {
+    flex: 0 0 ${CONTROLS_HEIGHT_TABLET};
+  }
 `
 
 const Controls = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%
+  height: 100%;
   align-items: center;
   background: ${({ theme }) => theme.colors.VideoPlayer.controls.background};
-  transform: translateY(
+  transform: translate3d(
+    0,
     ${({ transitionState }) => {
     switch (transitionState) {
       case TRANSITION_STATE.ENTERING:
       case TRANSITION_STATE.EXITED:
-        return `calc(${CONTROLS_HEIGHT} + ${PROGRESS_INDICATOR_DIMENSION}px)`
+        // return 'calc(100% + 10px)'
+        return 0
       case TRANSITION_STATE.EXITING:
       case TRANSITION_STATE.ENTERED:
       default:
         return 0
     }
-  }}
+  }},
+    0
   );
-  transition: all 250ms linear;
-  `
+  transition: transform
+    ${({ transitionState }) => (TRANSITION_STATE.EXITED ? '0.6s' : '0.9s')}
+    ${({ theme }) => theme.animation.ease.smooth};
+`
 
-const PROGRESS_INDICATOR_DIMENSION: number = 20
-
-const ProgressIndicator = styled.div.attrs({
-  style: ({ currentTime, totalDuration, scrubbingPositionPercentage }) => ({
-    left: scrubbingPositionPercentage
-      ? `calc(${Math.max(
-        0,
-        Math.min(scrubbingPositionPercentage, 100)
-      )}% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
-      : `calc(${
-        !totalDuration
-          ? 0
-          : Math.max(0, Math.min(100, currentTime * 100 / totalDuration))
-      }% - ${PROGRESS_INDICATOR_DIMENSION / 2}px)`
-  })
-})`
+const ProgressWrapper = styled.div`
   position: absolute;
-  width: ${PROGRESS_INDICATOR_DIMENSION}px;
-  height: ${PROGRESS_INDICATOR_DIMENSION}px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.bar.scrubber};
-  `
-
-const ProgressBuffer = styled.div`
-  flex-grow: 0;
-  flex-shrink: 0;
-  height: 100%;
-  background: ${({ theme }) => theme.colors.bar.base};
-  `
-
-const ProgressBarWrapper = styled.div`
-  position: absolute;
-  top: -10px;
+  top: -9px;
   height: 20px;
   width: 100%;
   display: flex;
   align-items: center;
-  `
-
-/* prettier-ignore */
-const ProgressBar = styled.div`
-  width: 100%;
-  height: 5px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  background: linear-gradient(to right, ${({ theme }) => `${theme.colors.bar.from}, ${theme.colors.bar.to}`});
-  ${/* sc-custom */ProgressBuffer} {
-    flex-basis: ${({ bufferTime, totalDuration }) => 100 - (!totalDuration ? 0 : Math.max(0, Math.min(100, bufferTime * 100 / totalDuration)))}%
-  }
-  `
+  cursor: pointer;
+`
 
 const ControlButtons = styled.div`
   width: 100%;
@@ -142,42 +120,64 @@ const ControlButtons = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
-  padding: 0 10px;
+  padding: 2px 24px 0;
   height: ${CONTROL_BUTTONS_HEIGHT};
-  `
+`
 
 const LeftControls = styled.div`
   flex: 1 1 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  `
+`
 
 const RightControls = styled.div`
   flex: 1 1 0;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  `
+`
 
 const Time = styled.div`
-  color: ${({ theme }) => theme.colors.VideoPlayer.controls.time};
-  flex: 0 0 100px;
   margin-right: ${CONTROLS_SPACING};
-  `
+  user-select: none;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+`
 
 const VolumeBarWrapper = styled.div`
   position: relative;
-  margin-left: calc(-${CONTROLS_SPACING} / 2);
-  `
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+`
 
 const ControlButtonWrapper = styled.div`
+  display: flex;
   flex: 0 0 ${CONTROLS_BUTTON_DIMENSION};
   height: ${CONTROLS_BUTTON_DIMENSION};
+
+  @media (max-width: 1440px) {
+    flex: 0 0 ${CONTROLS_BUTTON_DIMENSION_DESKTOP};
+    height: ${CONTROLS_BUTTON_DIMENSION_DESKTOP};
+  }
+
+  @media (max-width: 320px) {
+    flex: 0 0 ${CONTROLS_BUTTON_DIMENSION_MOBILE};
+    height: ${CONTROLS_BUTTON_DIMENSION_MOBILE};
+  }
+
   &:not(:last-child) {
     margin-right: ${CONTROLS_SPACING};
+
+    @media (max-width: 320px) {
+      margin-right: ${CONTROLS_SPACING_MOBILE};
+    }
   }
-  `
+`
 
 class PlayerControls extends Component<Props, State> {
   progressBarRef: ?HTMLElement
@@ -267,52 +267,55 @@ class PlayerControls extends Component<Props, State> {
       playbackLevels,
       toggleActivePlugin
     } = this.props
-    const { scrubbingPositionPercentage } = this.state
 
     return (
       <Wrapper>
         <Controls transitionState={transitionState}>
-          <ProgressBarWrapper
-            onClick={(e: Object) => {
+          <ProgressWrapper
+            onMouseDown={(e: Object) => {
               if (this.progressBarRef) {
                 const wrapperRect: Object = this.progressBarRef.getBoundingClientRect()
                 onScrub((e.clientX - wrapperRect.x) * 100 / wrapperRect.width)
+                this.setState({
+                  userIsScrubbing: true
+                })
               }
             }}
           >
-            <ProgressBar
+            <ProgressBarWrapper
               innerRef={(ref: HTMLElement) => {
                 this.progressBarRef = ref
               }}
-              bufferTime={currentBufferedTimeSeconds}
-              totalDuration={videoDurationSeconds}
             >
-              <ProgressBuffer
-                bufferTime={currentBufferedTimeSeconds}
-                totalDuration={currentBufferedTimeSeconds}
+              <ProgressBar
+                current={currentBufferedTimeSeconds}
+                total={videoDurationSeconds}
               />
-              <ProgressIndicator
-                currentTime={currentTimeSeconds}
-                onMouseDown={() => {
-                  this.setState({
-                    userIsScrubbing: true
-                  })
-                }}
-                scrubbingPositionPercentage={scrubbingPositionPercentage}
-                totalDuration={videoDurationSeconds}
+              <ProgressBar
+                current={currentTimeSeconds}
+                total={videoDurationSeconds}
+                colorful
               />
-            </ProgressBar>
-          </ProgressBarWrapper>
+            </ProgressBarWrapper>
+            <ProgressIndicator
+              current={currentTimeSeconds}
+              total={videoDurationSeconds}
+              userIsScrubbing={this.state.userIsScrubbing}
+            />
+          </ProgressWrapper>
           <ControlButtons>
             <LeftControls>
               <ControlButtonWrapper>
                 <IconButton
-                  color={Colors.purple}
                   icon={isPlaying ? pauseIcon : playIcon}
                   onClick={togglePlayPause}
                 />
               </ControlButtonWrapper>
-              <Time>{`${formattedCurrentTime} / ${formattedDuration}`}</Time>
+              <Time>
+                <Text
+                  small
+                >{`${formattedCurrentTime} / ${formattedDuration}`}</Text>
+              </Time>
               <VolumeBarWrapper>
                 <VolumeBar
                   currentVolume={currentVolume}

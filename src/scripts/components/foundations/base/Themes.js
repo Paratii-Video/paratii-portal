@@ -111,7 +111,8 @@ const Themes = {
       from: Colors.purpleGradientFrom,
       to: Colors.purpleGradientTo,
       scrubber: Colors.white,
-      base: Colors.grayLight
+      base: Colors.grayLight,
+      buffer: Colors.gray
     },
     VideoPlayer: {
       background: Colors.black,
@@ -126,6 +127,9 @@ const Themes = {
       levels: {
         color: Colors.white,
         selectedBackground: Colors.blackDarkTransparent
+      },
+      share: {
+        background: Colors.blackDarkTransparent
       }
     },
     VideoDescription: {

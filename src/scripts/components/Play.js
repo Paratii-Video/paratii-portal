@@ -105,7 +105,6 @@ const PlayerWrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  overflow: hidden;
 `
 
 const Player = styled.div`
@@ -121,18 +120,17 @@ const OverlayWrapper = styled.div`
   width: 100%;
   height: 100%;
   z-index: 10;
-  cursor: pointer;
 `
 
 const ShareOverlay = styled.div`
   align-items: center;
-  background-color: ${props => props.theme.colors.Modal.background};
+  background-color: ${props => props.theme.colors.VideoPlayer.share.background};
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: center;
   left: 0;
-  opacity: ${props => (props.show ? 0.9 : 0)};
+  opacity: ${props => (props.show ? 1 : 0)};
   position: absolute;
   pointer-events: ${props => (!props.show ? 'none' : null)};
   transition: opacity ${props => props.theme.animation.time.repaint};
@@ -212,6 +210,10 @@ const SVG = styled.svg`
 `
 
 const PlayInfoHighlight = Text.withComponent('span')
+
+const DescriptionWrapper = styled.div`
+  margin-top: 30px;
+`
 
 const HIDE_CONTROLS_THRESHOLD: number = 2000
 
@@ -777,7 +779,7 @@ class Play extends Component<Props, State> {
                   <Title small>{video.title || video.filename}</Title>
                 )}
                 {video.author && <Text>By {video.author}</Text>}
-                {video.like && (
+                {video.share && (
                   <PlayInfoButtons>
                     <ButtonIcon>
                       <SVG>
@@ -811,7 +813,11 @@ class Play extends Component<Props, State> {
                     {video.free ? 'Free' : 'Free'}
                   </PlayInfoHighlight>
                 </Text>
-                {video.description && <Text>{video.description}</Text>}
+                {video.description && (
+                  <DescriptionWrapper>
+                    <Text>{video.description}</Text>
+                  </DescriptionWrapper>
+                )}
               </PlayInfo>
             )}
         </Wrapper>
