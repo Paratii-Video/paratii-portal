@@ -17,22 +17,49 @@
 //
 
 import {
-  assertUserIsLoggedIn,
+  // assertUserIsLoggedIn,
   web3,
-  createUserAndLogin,
-  getEthAccountFromApp
+  // createUserAndLogin,
+  // getEthAccountFromApp,
+  mnemonic23
 } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
 describe('wallet:', function () {
   let userAccount
 
-  beforeEach(function () {
-    browser.url('http://localhost:3000/')
-    createUserAndLogin(browser)
-    browser.url('http://localhost:3000/profile')
-    userAccount = getEthAccountFromApp()
-    assertUserIsLoggedIn(browser)
+  // beforeEach(function () {
+  //   browser.url('http://localhost:3000/')
+  //   createUserAndLogin(browser)
+  //   browser.url('http://localhost:3000/profile')
+  //   userAccount = getEthAccountFromApp()
+  //   assertUserIsLoggedIn(browser)
+  // })
+
+  it('secure your wallet @watch', function () {
+    browser.url(`http://localhost:8080/wallet`)
+    browser.waitUntil(() => {
+      return browser.getTitle() === 'Paratii'
+    })
+    browser.waitAndClick('[data-test-id="secure-wallet"]')
+    browser.pause(1000)
+    browser.waitAndClick('[data-test-id="new-here"]')
+    browser.waitAndClick('[data-test-id="rewrite-seed"]')
+    browser.waitForClickable('[name="rewrite-mnemonic"]')
+    browser.setValue('[name="rewrite-mnemonic"]', mnemonic23)
+    browser.waitAndClick('[data-test-id="check-seed"]')
+    // Set pin number: 1234
+    browser.waitAndClick('[data-test-id="button-1"]')
+    browser.waitAndClick('[data-test-id="button-2"]')
+    browser.waitAndClick('[data-test-id="button-3"]')
+    browser.waitAndClick('[data-test-id="button-4"]')
+    browser.waitAndClick('[data-test-id="pin-continue"]')
+    // Re-enter the same pin number: 1234
+    browser.waitAndClick('[data-test-id="button-1"]')
+    browser.waitAndClick('[data-test-id="button-2"]')
+    browser.waitAndClick('[data-test-id="button-3"]')
+    browser.waitAndClick('[data-test-id="button-4"]')
+    browser.waitAndClick('[data-test-id="pin-continue"]')
   })
 
   it.skip('should show ETH balance', function () {

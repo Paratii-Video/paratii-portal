@@ -80,7 +80,7 @@ class ModalSecure extends Component<Props, Object> {
               </Button>
             </ButtonContainer>
             <ButtonContainer>
-              <Button purple onClick={this.showSeed}>
+              <Button data-test-id="new-here" purple onClick={this.showSeed}>
                 I am new here
               </Button>
             </ButtonContainer>

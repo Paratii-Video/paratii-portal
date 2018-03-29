@@ -34,7 +34,7 @@ class Wallet extends Component<Props> {
           You have <b>{paratii.eth.web3.utils.fromWei(balance)}</b> PTI
         </Text>
         <br />
-        <Button onClick={this.secureWallet} purple>
+        <Button data-test-id="secure-wallet" onClick={this.secureWallet} purple>
           Secure Wallet
         </Button>
       </Card>

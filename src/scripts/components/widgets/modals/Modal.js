@@ -8,6 +8,7 @@ import ModalSecure from 'containers/widgets/modals/ModalSecureContainer'
 import ModalShowSeed from 'containers/widgets/modals/ModalShowSeedContainer'
 import ModalRewriteSeed from 'containers/widgets/modals/ModalRewriteSeedContainer'
 import ModalSetPin from 'containers/widgets/modals/ModalSetPinContainer'
+import ModalAskPin from 'containers/widgets/modals/ModalAskPinContainer'
 
 type Props = {
   modalContent: string,
@@ -115,6 +116,8 @@ class Modal extends Component<Props, void> {
         return <ModalRewriteSeed />
       case 'ModalSetPin':
         return <ModalSetPin />
+      case 'ModalAskPin':
+        return <ModalAskPin />
     }
   }
 

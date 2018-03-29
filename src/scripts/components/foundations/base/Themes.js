@@ -6,7 +6,8 @@ const Themes = {
   dark: {
     body: {
       background: Colors.grayDark,
-      color: Colors.grayLight
+      color: Colors.grayLight,
+      primary: Colors.purple
     },
     header: {
       background: Colors.blackLight,

@@ -1,5 +1,5 @@
 /* @flow */
-// import paratii from 'utils/ParatiiLib'
+import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
@@ -11,7 +11,8 @@ import { ModalContentWrapper, ModalScrollContent } from './Modal'
 type Props = {
   openModal: () => void,
   closeModal: () => void,
-  secureKeystore: String => void
+  secureKeystore: String => void,
+  notification: (Object, string) => void
 }
 
 const Title = styled.h2`
@@ -35,7 +36,7 @@ const ButtonContainer = styled.div`
   margin-left: 10px;
 `
 
-class ModalSetPin extends Component<Props, Object> {
+class ModalAskPin extends Component<Props, Object> {
   clearPin: () => void
   setPin: () => void
   handlePinChange: (e: Object) => void
@@ -44,7 +45,6 @@ class ModalSetPin extends Component<Props, Object> {
     super(props)
     this.state = {
       pin: '',
-      newPin: '',
       isPin: false,
       resetPinField: false,
       error: ''
@@ -55,38 +55,43 @@ class ModalSetPin extends Component<Props, Object> {
   }
 
   clearPin () {
-    if (this.state.isPin) {
-      this.setState({
-        newPin: '',
-        resetPinField: true
-      })
-    } else {
-      this.setState({
-        pin: '',
-        resetPinField: true
-      })
-    }
+    this.setState({
+      pin: '',
+      resetPinField: true,
+      error: ''
+    })
   }
 
   setPin () {
-    if (this.state.newPin !== '') {
-      if (this.state.pin === this.state.newPin) {
-        // Create new wallet and encrypt with this pin
-        console.log('Create new wallet and encrypt with this pin')
-        this.props.closeModal()
-        this.props.secureKeystore(this.state.pin)
-        // Close modal
-      } else {
-        // Error, the two pins are different
-        this.setState({
-          error: `Hey, you have insert two different pins`,
-          resetPinField: true
-        })
-      }
-    } else {
+    // Decrypt Keystore
+    const pin = this.state.pin
+    const walletString = localStorage.getItem('keystore') || ''
+    this.props.notification(
+      { title: 'Trying to unlock your keystore...' },
+      'warning'
+    )
+    try {
+      paratii.eth.wallet.decrypt(JSON.parse(walletString), pin)
+      this.props.closeModal()
+
+      this.props.notification(
+        {
+          title: 'Success!',
+          message: 'Your keystore has been unlocked...'
+        },
+        'success'
+      )
+    } catch (err) {
+      // wallet is not valid
       this.setState({
-        resetPinField: true
+        error: err.message
       })
+      this.props.notification(
+        {
+          title: err.message
+        },
+        'error'
+      )
     }
   }
 
@@ -101,10 +106,6 @@ class ModalSetPin extends Component<Props, Object> {
           pin: pin,
           isPin: true
         })
-      } else {
-        this.setState({
-          newPin: pin
-        })
       }
     }
   }
@@ -113,9 +114,9 @@ class ModalSetPin extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Create a security PIN.</Title>
+          <Title>Insert your PIN.</Title>
           <MainText small gray>
-            It will work like a password for your account, in this browser.
+            Insert your PIN to unlock the keystore.
           </MainText>
 
           <NumPad
@@ -150,4 +151,4 @@ class ModalSetPin extends Component<Props, Object> {
   }
 }
 
-export default ModalSetPin
+export default ModalAskPin

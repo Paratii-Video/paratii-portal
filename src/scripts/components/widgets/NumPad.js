@@ -3,7 +3,9 @@ import styled from 'styled-components'
 import Colors from 'components/foundations/base/Colors'
 
 type Props = {
-  onSetPin: () => String
+  onSetPin: () => String,
+  reset: Boolean,
+  error: String
 }
 
 const NumPadWrapper = styled.div`
@@ -16,6 +18,7 @@ const ButtonsWrapper = styled.div`
   flex-wrap: wrap;
 `
 const NumberBtn = styled.div`
+  user-select: none;
   padding: 10px;
   border: 1px solid ${Colors.purple};
   color: ${Colors.purple};
@@ -37,10 +40,18 @@ const NumberBtn = styled.div`
 `
 
 const HashPin = styled.div`
-  border-bottom: 1px solid ${Colors.purple};
-  color: ${Colors.purple};
+  border-bottom: 1px solid
+    ${props =>
+    props.error
+      ? props.theme.colors.TextField.error
+      : props.theme.colors.body.primary};
+  color: ${props =>
+    props.error
+      ? props.theme.colors.TextField.error
+      : props.theme.colors.body.primary};
   text-align: center;
   padding: 10px;
+  height: 40px;
   margin-top: 15px;
 `
 
@@ -53,11 +64,19 @@ class NumPad extends Component<Props, Object> {
     super(props)
     this.state = {
       pin: [],
-      hidePin: '',
-      error: ''
+      hidePin: ''
     }
 
     this.handleClick = this.handleClick.bind(this)
+  }
+
+  componentWillReceiveProps (nextProps: Props): void {
+    if (nextProps.reset) {
+      this.setState({
+        pin: [],
+        hidePin: ''
+      })
+    }
   }
 
   handleClick (number: Number) {
@@ -83,18 +102,16 @@ class NumPad extends Component<Props, Object> {
       <NumberBtn
         key={number.toString()}
         value={number}
+        data-test-id={'button-' + number}
         onClick={e => this.handleClick(number)}
       >
         {number}
       </NumberBtn>
     ))
-
     return (
       <NumPadWrapper>
         <ButtonsWrapper>{numberBtns}</ButtonsWrapper>
-        <HashPin error={this.state.error.length > 0}>
-          {this.state.hidePin}
-        </HashPin>
+        <HashPin error={this.props.error}>{this.state.hidePin}</HashPin>
       </NumPadWrapper>
     )
   }

@@ -60,7 +60,6 @@ class ModalRewriteSeed extends Component<Props, Object> {
 
   checkSeed () {
     console.log('Check Seed and chose pin')
-    console.log(this.state.mnemonic)
     const mnemonic = paratii.eth.wallet.getMnemonic()
     if (this.state.mnemonic !== mnemonic) {
       this.setState({
@@ -77,8 +76,6 @@ class ModalRewriteSeed extends Component<Props, Object> {
     this.setState({
       mnemonic: e.target.value
     })
-
-    console.log(this.state.mnemonic)
   }
 
   render () {
@@ -92,6 +89,7 @@ class ModalRewriteSeed extends Component<Props, Object> {
           <TextField
             label="Mnemonic"
             id="mnemonic"
+            name="rewrite-mnemonic"
             type="text"
             value={this.state.mnemonic}
             onChange={e => this.handleMnemonicChange(e)}
@@ -108,7 +106,7 @@ class ModalRewriteSeed extends Component<Props, Object> {
               <Button onClick={this.showSeed}>Go Back</Button>
             </ButtonContainer>
             <ButtonContainer>
-              <Button purple onClick={this.checkSeed}>
+              <Button data-test-id="check-seed" purple onClick={this.checkSeed}>
                 Continue
               </Button>
             </ButtonContainer>

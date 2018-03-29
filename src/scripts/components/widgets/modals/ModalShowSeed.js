@@ -75,7 +75,11 @@ class ModalShowSeed extends Component<Props, Object> {
               <Button onClick={this.secureWallet}>Go Back</Button>
             </ButtonContainer>
             <ButtonContainer>
-              <Button purple onClick={this.rewriteSeed}>
+              <Button
+                data-test-id="rewrite-seed"
+                purple
+                onClick={this.rewriteSeed}
+              >
                 Continue
               </Button>
             </ButtonContainer>
