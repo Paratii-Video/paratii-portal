@@ -126,7 +126,6 @@ class MainHeader extends Component<Props, void> {
       )
     }
 
-    console.log(this.props.userAddress)
     return (
       <Header displayShadow={this.state.displayShadow}>
         {this.props.children}

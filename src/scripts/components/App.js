@@ -71,7 +71,6 @@ class App extends Component<Props, State> {
 
   render () {
     const { match } = this.props
-    console.log(this.props.userAddress)
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
