@@ -89,8 +89,7 @@ const Controls = styled.div`
     switch (transitionState) {
       case TRANSITION_STATE.ENTERING:
       case TRANSITION_STATE.EXITED:
-        // return 'calc(100% + 10px)'
-        return 0
+        return 'calc(100% + 10px)'
       case TRANSITION_STATE.EXITING:
       case TRANSITION_STATE.ENTERED:
       default:
