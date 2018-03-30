@@ -9,10 +9,10 @@ import NumPad from 'components/widgets/NumPad'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
 type Props = {
-  openModal: String => void,
+  openModal: string => void,
   closeModal: () => void,
   notification: (Object, string) => void,
-  setWalletAddress: String => void
+  setWalletAddress: string => void
 }
 
 const Title = styled.h2`
@@ -74,9 +74,7 @@ class ModalAskPin extends Component<Props, Object> {
       paratii.eth.wallet.decrypt(JSON.parse(walletString), pin)
       this.props.closeModal()
       const address = paratii.config.account.address
-      this.props.setWalletAddress({
-        address
-      })
+      this.props.setWalletAddress(address)
       this.props.notification(
         {
           title: 'Success!',
