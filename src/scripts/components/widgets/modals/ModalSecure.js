@@ -4,11 +4,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
-// import UserRecord from 'records/UserRecords'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
+import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
-  openModal: () => void
+  openModal: String => void
 }
 
 const Title = styled.h2`
@@ -51,12 +51,12 @@ class ModalSecure extends Component<Props, Object> {
 
   restoreAccount () {
     console.log('Restore Account')
-    this.props.openModal('ModalRestoreAccount')
+    this.props.openModal(MODAL.RESTORE_ACCOUNT)
   }
 
   showSeed () {
     console.log('Show Seed')
-    this.props.openModal('ModalShowSeed')
+    this.props.openModal(MODAL.SHOW_SEED)
   }
 
   render () {
@@ -75,7 +75,10 @@ class ModalSecure extends Component<Props, Object> {
           </MainText>
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.restoreAccount}>
+              <Button
+                data-test-id="restore-account"
+                onClick={this.restoreAccount}
+              >
                 I already have an account
               </Button>
             </ButtonContainer>

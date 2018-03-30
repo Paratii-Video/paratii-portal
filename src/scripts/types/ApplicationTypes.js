@@ -111,7 +111,7 @@ export type ParatiiLib = {
       encrypt: (password: string) => Object,
       // newMnemonic: () => string,
       getMnemonic: () => Promise<string>,
-      create: () => Object,
+      create: (num: ?number, mnemonic: ?string) => Object,
       clear: () => void
     },
     vids: {

@@ -7,8 +7,11 @@ import ModalStake from 'containers/widgets/modals/ModalStakeContainer' // need t
 import ModalSecure from 'containers/widgets/modals/ModalSecureContainer'
 import ModalShowSeed from 'containers/widgets/modals/ModalShowSeedContainer'
 import ModalRewriteSeed from 'containers/widgets/modals/ModalRewriteSeedContainer'
+import ModalRestoreAccount from 'containers/widgets/modals/ModalRestoreAccountContainer'
 import ModalSetPin from 'containers/widgets/modals/ModalSetPinContainer'
 import ModalAskPin from 'containers/widgets/modals/ModalAskPinContainer'
+
+import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
   modalContent: string,
@@ -106,22 +109,24 @@ class Modal extends Component<Props, void> {
   renderModal () {
     const { modalContent } = this.props
     switch (modalContent) {
-      case 'ModalStake':
+      case MODAL.STAKE:
         return <ModalStake />
-      case 'ModalSecure':
+      case MODAL.SECURE:
         return <ModalSecure />
-      case 'ModalShowSeed':
+      case MODAL.SHOW_SEED:
         return <ModalShowSeed />
-      case 'ModalRewriteSeed':
+      case MODAL.REWRITE_SEED:
         return <ModalRewriteSeed />
-      case 'ModalSetPin':
+      case MODAL.RESTORE_ACCOUNT:
+        return <ModalRestoreAccount />
+      case MODAL.SET_PIN:
         return <ModalSetPin />
-      case 'ModalAskPin':
+      case MODAL.ASK_PIN:
         return <ModalAskPin />
     }
   }
 
-  handleKeydown (event) {
+  handleKeydown = (e: Event): void => {
     if (event.keyCode === 27) {
       this.props.closeModal()
     }

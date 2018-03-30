@@ -3,6 +3,7 @@ import Card from 'components/structures/Card'
 import Text from 'components/foundations/Text'
 import Button from './foundations/Button'
 import paratii from 'utils/ParatiiLib'
+import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
   user: Object,
@@ -20,7 +21,7 @@ class Wallet extends Component<Props> {
 
   secureWallet () {
     console.log('secure')
-    this.props.openModal('ModalSecure')
+    this.props.openModal(MODAL.SECURE)
   }
 
   render () {

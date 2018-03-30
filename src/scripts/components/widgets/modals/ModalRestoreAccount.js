@@ -1,5 +1,5 @@
 /* @flow */
-import paratii from 'utils/ParatiiLib'
+// import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
@@ -10,7 +10,8 @@ import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
-  openModal: String => void
+  openModal: String => void,
+  restoreKeystore: String => void
 }
 
 const Title = styled.h2`
@@ -40,8 +41,8 @@ const ButtonContainer = styled.div`
 `
 
 class ModalRewriteSeed extends Component<Props, Object> {
-  showSeed: () => void
-  checkSeed: () => void
+  goBack: () => void
+  restoreWallet: () => void
   handleMnemonicChange: (e: Object) => void
 
   constructor (props: Props) {
@@ -50,27 +51,20 @@ class ModalRewriteSeed extends Component<Props, Object> {
       mnemonic: '',
       error: ''
     }
-    this.showSeed = this.showSeed.bind(this)
-    this.checkSeed = this.checkSeed.bind(this)
+    this.goBack = this.goBack.bind(this)
+    this.restoreWallet = this.restoreWallet.bind(this)
     this.handleMnemonicChange = this.handleMnemonicChange.bind(this)
   }
 
-  showSeed () {
-    this.props.openModal(MODAL.SHOW_SEED)
+  goBack () {
+    this.props.openModal(MODAL.SECURE)
   }
 
-  checkSeed () {
-    console.log('Check Seed and chose pin')
-    const mnemonic = paratii.eth.wallet.getMnemonic()
-    if (this.state.mnemonic !== mnemonic) {
-      this.setState({
-        error: 'The mnemonic you insert is uncorrect'
-      })
-    } else {
-      this.setState({ error: '' })
-      console.log('set you pin')
-      this.props.openModal(MODAL.SET_PIN)
-    }
+  restoreWallet () {
+    const mnemonic = this.state.mnemonic
+    this.props.restoreKeystore(mnemonic)
+    // sessionStorage.setItem('mnemonic-temp', mnemonic)
+    this.props.openModal(MODAL.SET_PIN)
   }
 
   handleMnemonicChange (e: Object) {
@@ -83,14 +77,14 @@ class ModalRewriteSeed extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Rewrite your account seed</Title>
+          <Title>Write down your wallet seed</Title>
           <MainText small gray>
-            Rewrite your 12 words
+            Insert the 12 words to restors your wallet
           </MainText>
           <TextField
             label="Mnemonic"
             id="mnemonic"
-            name="rewrite-mnemonic"
+            name="mnemonic-restore"
             type="text"
             value={this.state.mnemonic}
             onChange={e => this.handleMnemonicChange(e)}
@@ -104,10 +98,14 @@ class ModalRewriteSeed extends Component<Props, Object> {
           )}
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.showSeed}>Go Back</Button>
+              <Button onClick={this.goBack}>Go Back</Button>
             </ButtonContainer>
             <ButtonContainer>
-              <Button data-test-id="check-seed" purple onClick={this.checkSeed}>
+              <Button
+                data-test-id="restore-wallet"
+                purple
+                onClick={this.restoreWallet}
+              >
                 Continue
               </Button>
             </ButtonContainer>

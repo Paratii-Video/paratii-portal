@@ -19,6 +19,7 @@ import { getWalletKey, getMnemonicKey } from 'selectors/index'
 import Notifications from 'react-notification-system-redux'
 
 import type { RootState, Dispatch } from 'types/ApplicationTypes'
+import { MODAL } from 'constants/ModalConstants'
 
 const loginRequested = createAction(LOGIN_REQUESTED)
 const loginSuccess = createAction(LOGIN_SUCCESS)
@@ -61,13 +62,13 @@ export const loadBalances = () => (dispatch: Dispatch) => {
 }
 
 const setAndSyncWalletData = ({
-  walletKey,
   wallet,
+  walletKey,
   mnemonic,
   mnemonicKey
 }: {
-  walletKey: string,
   wallet: Object,
+  walletKey: string,
   mnemonicKey: string,
   mnemonic: string
 }) => (dispatch: Dispatch): void => {
@@ -80,11 +81,13 @@ const setAndSyncWalletData = ({
   localStorage.setItem(walletKey, JSON.stringify(wallet))
 
   // TODO: needs to be encrypted
-  localStorage.setItem(mnemonicKey, mnemonic)
+  if (mnemonic !== '' && mnemonicKey !== '') {
+    localStorage.setItem(mnemonicKey, mnemonic)
+  }
 }
 
 export const setupKeystore = () => async (
-  dispatch: Dispatch<*>,
+  dispatch: Dispatch,
   getState: () => RootState
 ) => {
   let wallet: ?Object
@@ -97,7 +100,7 @@ export const setupKeystore = () => async (
   if (walletString) {
     console.log('Try to open encrypted keystore')
     // Need to ask the PIN
-    dispatch(openModal('ModalAskPin'))
+    dispatch(openModal(MODAL.ASK_PIN))
   } else {
     walletString = localStorage.getItem('keystore-anon') || ''
     try {
@@ -124,14 +127,16 @@ export const setupKeystore = () => async (
       paratii.eth.wallet.create()
       mnemonic = await paratii.eth.wallet.getMnemonic()
       wallet = paratii.eth.wallet.encrypt(DEFAULT_PASSWORD)
-      dispatch(
-        setAndSyncWalletData({
-          wallet,
-          walletKey,
-          mnemonic,
-          mnemonicKey
-        })
-      )
+      if (wallet !== undefined && wallet !== null) {
+        dispatch(
+          setAndSyncWalletData({
+            wallet,
+            walletKey,
+            mnemonic,
+            mnemonicKey
+          })
+        )
+      }
     }
   }
 }
@@ -146,25 +151,65 @@ export const secureKeystore = (password: string) => async (
       title: 'Securing your wallet..'
     })
   )
-  const walletKey: string = `keystore`
-  const mnemonicKey: string = ''
-  const mnemonic: string = ''
-  const wallet: ?Object = await paratii.eth.wallet.encrypt(password)
-  // Clear Paratii and remove keystore-anon
+  try {
+    const walletKey: string = `keystore`
+    const mnemonicKey: string = ''
+    const mnemonic: string = ''
+    const wallet: ?Object = await paratii.eth.wallet.encrypt(password)
+    // Clear Paratii and remove keystore-anon
+    dispatch(
+      Notifications.success({
+        title: 'Your wallet is now secured'
+      })
+    )
+    console.log('Clear Paratii and remove Keystore-anon')
+    paratii.eth.wallet.clear()
+    localStorage.removeItem('keystore-anon')
+    localStorage.removeItem('mnemonic-anon')
+    if (wallet !== undefined && wallet !== null) {
+      dispatch(
+        setAndSyncWalletData({
+          wallet,
+          walletKey,
+          mnemonic,
+          mnemonicKey
+        })
+      )
+    }
+  } catch (error) {
+    dispatch(
+      Notifications.warning({
+        title: error.message
+      })
+    )
+  }
+}
+
+export const restoreKeystore = (mnemonic: string) => async (
+  dispatch: Dispatch,
+  getState: () => RootState
+) => {
+  console.log('Restoring wallet')
   dispatch(
-    Notifications.success({
-      title: 'Your wallet is now secured'
+    Notifications.warning({
+      title: 'Trying to restore your wallet..'
     })
   )
-  console.log('Clear Paratii and remove Keystore-anon')
-  paratii.eth.wallet.clear()
-  localStorage.removeItem('keystore-anon')
-  dispatch(
-    setAndSyncWalletData({
-      wallet,
-      walletKey,
-      mnemonic,
-      mnemonicKey
-    })
-  )
+  try {
+    paratii.eth.wallet.clear()
+    paratii.eth.wallet.create(1, mnemonic)
+    // Clear Paratii and remove keystore-anon
+    dispatch(
+      Notifications.success({
+        title: 'Your wallet has been created'
+      })
+    )
+  } catch (error) {
+    dispatch(
+      Notifications.error({
+        title: error.message,
+        autoDismiss: 0
+      })
+    )
+  }
 }

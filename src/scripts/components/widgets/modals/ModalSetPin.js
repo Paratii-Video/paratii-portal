@@ -9,7 +9,7 @@ import NumPad from 'components/widgets/NumPad'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
 type Props = {
-  openModal: () => void,
+  openModal: String => void,
   closeModal: () => void,
   secureKeystore: String => void
 }

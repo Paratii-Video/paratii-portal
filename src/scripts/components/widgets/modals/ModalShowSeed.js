@@ -7,9 +7,10 @@ import Button from 'components/foundations/Button'
 import paratii from 'utils/ParatiiLib'
 
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
+import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
-  openModal: () => void
+  openModal: String => void
 }
 
 const Title = styled.h2`
@@ -50,12 +51,12 @@ class ModalShowSeed extends Component<Props, Object> {
 
   secureWallet () {
     console.log('Back to secure Wallet')
-    this.props.openModal('ModalSecure')
+    this.props.openModal(MODAL.SECURE)
   }
 
   rewriteSeed () {
     console.log('Rewrite your Seed')
-    this.props.openModal('ModalRewriteSeed')
+    this.props.openModal(MODAL.REWRITE_SEED)
   }
 
   render () {
@@ -66,9 +67,7 @@ class ModalShowSeed extends Component<Props, Object> {
           <MainText small gray>
             This is you seed
           </MainText>
-          <Highlight>
-            <b>{paratii.eth.wallet.getMnemonic()}</b>
-          </Highlight>
+          <Highlight>{paratii.eth.wallet.getMnemonic()}</Highlight>
 
           <Footer>
             <ButtonContainer>

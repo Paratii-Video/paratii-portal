@@ -14,6 +14,7 @@ import RadioCheck, {
 } from './widgets/forms/RadioCheck'
 import VideoFormInfoBox from 'containers/VideoFormInfoBoxContainer'
 import { prettyBytes } from 'utils/AppUtils'
+import { MODAL } from 'constants/ModalConstants'
 
 const VideoFormHeader = styled.div`
   border-bottom: 1px solid
@@ -160,7 +161,7 @@ class VideoForm extends Component<Props, Object> {
   }
 
   publishVideo (publish: false) {
-    this.props.openModal('ModalStake')
+    this.props.openModal(MODAL.STAKE)
   }
 
   saveData (publish: false) {

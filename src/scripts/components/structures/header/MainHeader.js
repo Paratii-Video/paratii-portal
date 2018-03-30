@@ -1,3 +1,4 @@
+import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
@@ -61,7 +62,7 @@ const ProfileAvatarLink = styled(Link)`
 `
 
 class MainHeader extends Component<Props, void> {
-  constructor (props) {
+  constructor (props: Props) {
     super(props)
     this.state = {
       displayShadow: false
@@ -125,7 +126,7 @@ class MainHeader extends Component<Props, void> {
               <MainNavigation />
               <ProfileAvatarLink to="/wallet">
                 <Blockies
-                  seed={window.paratii.config.account.address}
+                  seed={paratii.config.account.address}
                   size={10}
                   scale={4}
                 />
