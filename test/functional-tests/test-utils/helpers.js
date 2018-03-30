@@ -27,7 +27,7 @@ if (fs.existsSync(path.resolve(__dirname, registryConfigPath))) {
 }
 
 // this address will be used as the owner address for all paratii contracts in the tests
-let address = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
+let address = '0x627ac4c2d731E12fB386BD649114a08ebCc0C33f'
 let privateKey =
   '399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6'
 
@@ -42,7 +42,7 @@ let privateKey17 =
 let mnemonic23 =
   'jelly better achieve collect unaware mountain thought cargo oxygen act hood bridge'
 // this is the first HD address generated
-let address23 = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
+let address23 = '0x627ac4c2d731E12fB386BD649114a08ebCc0C33f'
 
 export {
   address,
