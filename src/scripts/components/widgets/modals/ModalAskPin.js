@@ -12,7 +12,7 @@ type Props = {
   openModal: string => void,
   closeModal: () => void,
   notification: (Object, string) => void,
-  setWalletAddress: string => void
+  setWalletAddress: Object => void
 }
 
 const Title = styled.h2`
@@ -71,10 +71,12 @@ class ModalAskPin extends Component<Props, Object> {
       'warning'
     )
     try {
+      paratii.eth.wallet.clear()
       paratii.eth.wallet.decrypt(JSON.parse(walletString), pin)
       this.props.closeModal()
       const address = paratii.config.account.address
-      this.props.setWalletAddress(address)
+      console.log(address)
+      this.props.setWalletAddress({ address })
       this.props.notification(
         {
           title: 'Success!',

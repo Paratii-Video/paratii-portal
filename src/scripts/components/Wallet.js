@@ -8,7 +8,8 @@ import { MODAL } from 'constants/ModalConstants'
 type Props = {
   user: Object,
   closeModal: () => void,
-  openModal: () => void
+  openModal: () => void,
+  userAddress: String
 }
 
 class Wallet extends Component<Props> {
@@ -29,10 +30,11 @@ class Wallet extends Component<Props> {
     return (
       <Card title="Wallet">
         <Text>
-          Your address is <b>{paratii.config.account.address}</b>
+          Your address is <strong>{this.props.userAddress}</strong>
         </Text>
         <Text>
-          You have <b>{paratii.eth.web3.utils.fromWei(balance)}</b> PTI
+          You have <strong>{paratii.eth.web3.utils.fromWei(balance)}</strong>{' '}
+          PTI
         </Text>
         <br />
         <Button data-test-id="secure-wallet" onClick={this.secureWallet} purple>

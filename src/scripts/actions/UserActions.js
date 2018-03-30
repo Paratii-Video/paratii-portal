@@ -3,6 +3,7 @@
 import { createAction } from 'redux-actions'
 import Promise from 'bluebird'
 import Cookies from 'js-cookie'
+import bip39 from 'bip39'
 
 import {
   LOGIN_REQUESTED,
@@ -74,19 +75,16 @@ const setAndSyncWalletData = ({
   mnemonicKey: string,
   mnemonic: string
 }) => (dispatch: Dispatch): void => {
-  const address = paratii.config.account.address || ''
+  const address = wallet[0].address
   console.log(address)
-  dispatch(
-    setWalletAddress({
-      address
-    })
-  )
+  dispatch(setWalletAddress({ address }))
   dispatch(
     setWalletData({
       walletKey,
       mnemonicKey
     })
   )
+  console.log(wallet)
   localStorage.setItem(walletKey, JSON.stringify(wallet))
 
   // TODO: needs to be encrypted
@@ -99,6 +97,7 @@ export const setupKeystore = () => async (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {
+  console.log('Setup Keystore')
   let wallet: ?Object
   let walletIsValid: boolean = true
   const walletKey: string = getWalletKey(getState())
@@ -133,19 +132,23 @@ export const setupKeystore = () => async (
 
     if (!wallet || !walletIsValid) {
       console.log('Create a new wallet')
-      paratii.eth.wallet.create()
-      mnemonic = await paratii.eth.wallet.getMnemonic()
+      mnemonic = bip39.generateMnemonic()
+      console.log(mnemonic)
+      // await paratii.eth.wallet.create(1, mnemonic)
+      // mnemonic = await paratii.eth.wallet.getMnemonic()
       wallet = paratii.eth.wallet.encrypt(DEFAULT_PASSWORD)
-      if (wallet !== undefined && wallet !== null) {
-        dispatch(
-          setAndSyncWalletData({
-            wallet,
-            walletKey,
-            mnemonic,
-            mnemonicKey
-          })
-        )
-      }
+      console.log(wallet)
+    }
+
+    if (wallet !== undefined && wallet !== null) {
+      dispatch(
+        setAndSyncWalletData({
+          wallet,
+          walletKey,
+          mnemonic,
+          mnemonicKey
+        })
+      )
     }
   }
 }
@@ -172,7 +175,7 @@ export const secureKeystore = (password: string) => async (
       })
     )
     console.log('Clear Paratii and remove Keystore-anon')
-    paratii.eth.wallet.clear()
+    // paratii.eth.wallet.clear()
     localStorage.removeItem('keystore-anon')
     localStorage.removeItem('mnemonic-anon')
     if (wallet !== undefined && wallet !== null) {
@@ -206,7 +209,8 @@ export const restoreKeystore = (mnemonic: string) => async (
   )
   try {
     paratii.eth.wallet.clear()
-    paratii.eth.wallet.create(1, mnemonic)
+    const wallet = await paratii.eth.wallet.create(1, mnemonic)
+    console.log(wallet)
     // Clear Paratii and remove keystore-anon
     dispatch(
       Notifications.success({

@@ -4,8 +4,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
-import paratii from 'utils/ParatiiLib'
-
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
 
@@ -60,6 +58,8 @@ class ModalShowSeed extends Component<Props, Object> {
   }
 
   render () {
+    // const mnemonic = paratii.eth.wallet.getMnemonic()
+    const mnemonic = localStorage.getItem('mnemonic-anon') || ''
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
@@ -67,7 +67,7 @@ class ModalShowSeed extends Component<Props, Object> {
           <MainText small gray>
             This is you seed
           </MainText>
-          <Highlight>{paratii.eth.wallet.getMnemonic()}</Highlight>
+          <Highlight>{mnemonic}</Highlight>
 
           <Footer>
             <ButtonContainer>
