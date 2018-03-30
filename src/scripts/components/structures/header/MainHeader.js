@@ -1,4 +1,4 @@
-import paratii from 'utils/ParatiiLib'
+// import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
@@ -7,7 +7,8 @@ import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
 
 type Props = {
-  children: Object
+  children: Object,
+  userAddress: String
 }
 
 const Header = styled.header`
@@ -116,6 +117,16 @@ class MainHeader extends Component<Props, void> {
   }
 
   render () {
+    let userAvatar = ''
+    if (this.props.userAddress !== '') {
+      userAvatar = (
+        <ProfileAvatarLink to="/wallet">
+          <Blockies seed={this.props.userAddress} size={10} scale={4} />
+        </ProfileAvatarLink>
+      )
+    }
+
+    console.log(this.props.userAddress)
     return (
       <Header displayShadow={this.state.displayShadow}>
         {this.props.children}
@@ -124,13 +135,7 @@ class MainHeader extends Component<Props, void> {
           <HeaderContent>
             <HeaderButtons>
               <MainNavigation />
-              <ProfileAvatarLink to="/wallet">
-                <Blockies
-                  seed={paratii.config.account.address}
-                  size={10}
-                  scale={4}
-                />
-              </ProfileAvatarLink>
+              {userAvatar}
             </HeaderButtons>
           </HeaderContent>
         </HeaderWrapper>

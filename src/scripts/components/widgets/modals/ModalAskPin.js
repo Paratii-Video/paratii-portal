@@ -11,7 +11,8 @@ import { ModalContentWrapper, ModalScrollContent } from './Modal'
 type Props = {
   openModal: String => void,
   closeModal: () => void,
-  notification: (Object, string) => void
+  notification: (Object, string) => void,
+  setWalletAddress: String => void
 }
 
 const Title = styled.h2`
@@ -72,7 +73,10 @@ class ModalAskPin extends Component<Props, Object> {
     try {
       paratii.eth.wallet.decrypt(JSON.parse(walletString), pin)
       this.props.closeModal()
-
+      const address = paratii.config.account.address
+      this.props.setWalletAddress({
+        address
+      })
       this.props.notification(
         {
           title: 'Success!',

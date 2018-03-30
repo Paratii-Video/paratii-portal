@@ -34,7 +34,8 @@ type Props = {
   initializeApp: () => void,
   match: Match,
   setSelectedVideo: (id: string) => void,
-  videos: Map<string, VideoRecord>
+  videos: Map<string, VideoRecord>,
+  userAddress: String
 }
 
 type State = {
@@ -70,13 +71,14 @@ class App extends Component<Props, State> {
 
   render () {
     const { match } = this.props
+    console.log(this.props.userAddress)
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
           <Modal />
           <Notifications />
 
-          <MainHeader />
+          <MainHeader userAddress={this.props.userAddress} />
           <Main>
             <Switch>
               <Route exact path="/" component={Home} />

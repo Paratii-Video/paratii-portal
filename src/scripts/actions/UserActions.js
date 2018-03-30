@@ -9,6 +9,7 @@ import {
   LOGIN_SUCCESS,
   LOGOUT,
   SET_WALLET_DATA,
+  SET_WALLET_ADDRESS,
   BALANCES_LOADED
 } from 'constants/ActionConstants'
 import paratii from 'utils/ParatiiLib'
@@ -24,8 +25,9 @@ import { MODAL } from 'constants/ModalConstants'
 const loginRequested = createAction(LOGIN_REQUESTED)
 const loginSuccess = createAction(LOGIN_SUCCESS)
 const logoutAction = createAction(LOGOUT)
-const setWalletData = createAction(SET_WALLET_DATA)
 const balancesLoaded = createAction(BALANCES_LOADED)
+export const setWalletData = createAction(SET_WALLET_DATA)
+export const setWalletAddress = createAction(SET_WALLET_ADDRESS)
 
 const sleep = ms => {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -72,6 +74,13 @@ const setAndSyncWalletData = ({
   mnemonicKey: string,
   mnemonic: string
 }) => (dispatch: Dispatch): void => {
+  const address = paratii.config.account.address || ''
+  console.log(address)
+  dispatch(
+    setWalletAddress({
+      address
+    })
+  )
   dispatch(
     setWalletData({
       walletKey,
