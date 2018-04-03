@@ -1,5 +1,11 @@
 /* @flow */
 
+// z-index
+export const Z_INDEX_MODAL: number = 1000
+export const Z_INDEX_TOOLTIPS: number = 990
+export const Z_INDEX_HEADER: number = 980
+
+//
 export const CONTROLS_HEIGHT: string = '58px'
 export const CONTROLS_HEIGHT_TABLET: string = '52px'
 

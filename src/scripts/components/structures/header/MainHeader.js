@@ -6,6 +6,8 @@ import MainNavigation from 'components/structures/header/MainNavigation'
 import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
 
+import { Z_INDEX_HEADER } from 'constants/UIConstants'
+
 type Props = {
   children: Object
 }
@@ -19,7 +21,7 @@ const Header = styled.header`
   position: fixed;
   transition: box-shadow 0.3s;
   width: 100%;
-  z-index: 10000;
+  z-index: ${Z_INDEX_HEADER};
 
   @media (max-width: 768px) {
     height: ${props => (props.open ? '100vh' : null)};
