@@ -18,7 +18,7 @@
     "chimp-test:concurrently:watch": "concurrently --kill-others --success all \"NODE_ENV=test yarn run dev\" \"yarn run chimp-test --watch\"",
     "setup-dev-env": "node src/scripts/setupDevEnv.js",
     "diagnose": "node src/scripts/diagnose.js",
-    "dev": "concurrently \"yarn run build:dev\" \"yarn run server:staging\" \"yarn run parity\"",
+    "dev": "concurrently \"yarn run build:dev\" \"yarn run server:dev\" \"yarn run parity\"",
     "flow": "flow",
     "lint": "yarn run lint:scripts && yarn run lint:styles",
     "lint:fix": "yarn run lint:scripts --fix",
