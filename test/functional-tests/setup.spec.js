@@ -73,7 +73,7 @@ before(async function (done) {
   //       }
   //     }, timeout, `Could not set value on ${selector} (timeout: ${timeout}s)`)
   //   })
-  browser.addCommand('waitAndClick', function (selector, timeout) {
+  browser.addCommand('waitAndClick', function (selector, timeout = 1000) {
     this.waitForVisible(selector, timeout)
     this.waitForEnabled(selector, timeout)
     browser.waitUntil(
@@ -96,22 +96,7 @@ before(async function (done) {
         }
       },
       timeout,
-      `Could not click on ${selector} (timeout: ${timeout}s)`
-    )
-  })
-  browser.addCommand('waitUntilVideoIsPlaying', function (
-    selector = 'video',
-    timeout = 20000
-  ) {
-    this.waitUntil(
-      () => {
-        return browser.execute(() => {
-          const video = document.querySelector('video')
-          return !!(video && video.currentTime > 0)
-        }).value
-      },
-      timeout,
-      `Video did not play (timeout: ${timeout}s`
+      `Could not click on ${selector} in ${timeout}ms`
     )
   })
   //   browser.addCommand('waitUntilRequestHasStatus', function (url, status = 200, method = 'GET', timeout) {

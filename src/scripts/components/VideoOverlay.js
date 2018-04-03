@@ -172,13 +172,9 @@ class VideoOverlay extends Component<Props> {
       transitionState
     } = this.props
     return (
-      <Wrapper>
+      <Wrapper data-test-id="video-overlay">
         {this.renderPlugins()}
-        <Overlay
-          data-test-id="video-overlay"
-          onClick={onClick}
-          transitionState={transitionState}
-        >
+        <Overlay onClick={onClick} transitionState={transitionState}>
           <VideoInfo transitionState={transitionState}>
             {isEmbed && <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>}
             <ButtonWrapper>

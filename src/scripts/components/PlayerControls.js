@@ -270,7 +270,10 @@ class PlayerControls extends Component<Props, State> {
 
     return (
       <Wrapper>
-        <Controls transitionState={transitionState}>
+        <Controls
+          data-test-id="player-controls"
+          transitionState={transitionState}
+        >
           <ProgressWrapper
             onMouseDown={(e: Object) => {
               if (this.progressBarRef) {

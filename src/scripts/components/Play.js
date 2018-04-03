@@ -722,7 +722,7 @@ class Play extends Component<Props, State> {
                   </OverlayWrapper>
                 )}
               </Transition>
-              <Player id={PLAYER_ID} />
+              <Player id={PLAYER_ID} data-test-id="player" />
               {this.props.video ? (
                 <ShareOverlay show={this.state.showShareModal}>
                   <CloseButton onClick={this.toggleShareModal}>
