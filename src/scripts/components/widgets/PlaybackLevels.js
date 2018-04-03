@@ -10,6 +10,7 @@ import { CONTROLS_HEIGHT } from 'constants/UIConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
 
 const PADDING: string = '20px'
+const LevelHeight: string = '42px'
 
 const Wrapper = styled.div`
   cursor: default;
@@ -36,8 +37,8 @@ const LevelsList = styled.ul`
 `
 
 const Level = styled.li`
-  height: 38px;
-  line-height: 38px;
+  height: ${LevelHeight};
+  line-height: ${LevelHeight};
   width: 100%;
   cursor: pointer;
   display: flex;

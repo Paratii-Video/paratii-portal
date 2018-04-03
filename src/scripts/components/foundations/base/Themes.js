@@ -127,7 +127,7 @@ const Themes = {
       },
       levels: {
         color: Colors.white,
-        selectedBackground: Colors.black
+        selectedBackground: Colors.blackDark
       },
       share: {
         background: Colors.blackDarkTransparent
