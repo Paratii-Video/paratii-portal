@@ -51,12 +51,13 @@ const Wrapper = styled.div`
       case TRANSITION_STATE.ENTERING:
       case TRANSITION_STATE.EXITING:
       default:
-        return '50%'
+        return '40px'
     }
   }}
   );
-  transition: all 250ms ${({ theme }) => theme.animation.ease.smooth};
+  transition: all 0.5s ${({ theme }) => theme.animation.ease.smooth};
   z-index: ${Z_INDEX_POPUPS};
+  user-select: none;
 `
 
 class Popover extends React.Component<Props, void> {
