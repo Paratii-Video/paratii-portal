@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 
 type Props = {
   color?: string,
+  'data-test-id'?: string,
   icon: string
 }
 
@@ -86,7 +87,9 @@ export const SVGIcon = ({ icon, color, ...rest }: Props) => (
   </SVG>
 )
 
-const Button = styled.button`
+const Button = styled.button.attrs({
+  'data-test-id': props => props['data-test-id']
+})`
   ${StyleAnchor} ${ButtonStyleColor} ${ButtonStyleHover} cursor: ${props =>
   props.disabled ? 'initial' : 'pointer'};
   font-size: ${props => (props.anchor ? '' : props.theme.fonts.button)};

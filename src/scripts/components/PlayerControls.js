@@ -310,6 +310,7 @@ class PlayerControls extends Component<Props, State> {
             <LeftControls>
               <ControlButtonWrapper>
                 <IconButton
+                  data-test-id="playpause-button"
                   icon={isPlaying ? pauseIcon : playIcon}
                   onClick={togglePlayPause}
                 />

@@ -3,6 +3,7 @@ describe('🎥 Player:', function () {
   const videoElementSelector = '[data-test-id="player"] video'
   const overlaySelector = '[data-test-id="video-overlay"]'
   const controlsSelector = '[data-test-id="player-controls"]'
+  const playpauseButtonSelector = '[data-test-id="playpause-button"]'
 
   const goToTestVideoUrl = ({ embed, overrideVideoId } = {}) => {
     browser.url(
@@ -121,6 +122,28 @@ describe('🎥 Player:', function () {
       assertControlsAreHidden()
       browser.moveToObject(overlaySelector)
       assertControlsAreVisible()
+    })
+
+    it('pauses the video when the playpause button is clicked for the first time', () => {
+      goToTestVideoUrl({ embed })
+      browser.waitUntilVideoIsPlaying()
+      browser.moveToObject(overlaySelector)
+      browser.waitAndClick(playpauseButtonSelector)
+      browser.waitUntilVideoIsPaused()
+    })
+
+    it('toggles between pause and play when repeatedly clicking the playpause button', () => {
+      goToTestVideoUrl({ embed })
+      browser.waitUntilVideoIsPlaying()
+      browser.moveToObject(overlaySelector)
+      browser.waitAndClick(playpauseButtonSelector)
+      browser.waitUntilVideoIsPaused()
+      browser.waitAndClick(playpauseButtonSelector)
+      browser.waitUntilVideoIsPlaying()
+      browser.waitAndClick(playpauseButtonSelector)
+      browser.waitUntilVideoIsPaused()
+      browser.waitAndClick(playpauseButtonSelector)
+      browser.waitUntilVideoIsPlaying()
     })
   }
 
