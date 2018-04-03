@@ -25,7 +25,7 @@ jobs:
           command: yarn run build:staging
           background: true
       - run:
-          command: yarn run server:dev
+          command: yarn run server
           background: true
       - run:
           command: mv /paratii-db/paratii-db db
