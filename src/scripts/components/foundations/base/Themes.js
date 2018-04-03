@@ -35,7 +35,8 @@ const Themes = {
     },
     Popover: {
       background: Colors.blackLightTransparent,
-      color: Colors.white
+      color: Colors.white,
+      shadow: '0 3px 6px rgba(32, 35, 46, 0.9)'
     },
     TextField: {
       border: Colors.grayLight,
@@ -126,7 +127,7 @@ const Themes = {
       },
       levels: {
         color: Colors.white,
-        selectedBackground: Colors.blackDarkTransparent
+        selectedBackground: Colors.blackDark
       },
       share: {
         background: Colors.blackDarkTransparent

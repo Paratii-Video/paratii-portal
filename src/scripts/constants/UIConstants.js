@@ -2,7 +2,7 @@
 
 // z-index
 export const Z_INDEX_MODAL: string = '1000'
-export const Z_INDEX_TOOLTIPS: string = '990'
+export const Z_INDEX_POPUPS: string = '990'
 export const Z_INDEX_HEADER: string = '980'
 
 //
