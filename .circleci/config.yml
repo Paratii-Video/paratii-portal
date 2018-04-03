@@ -27,11 +27,6 @@ jobs:
       - run:
           command: yarn run server
           background: true
-      - run:
-          command: mv /paratii-db/paratii-db db
-      - run:
-          command: cd db && npm run dev
-          background: true
       - run: node src/scripts/waitForServer.js
       - run: yarn run chimp-circleci-test
       - deploy:
