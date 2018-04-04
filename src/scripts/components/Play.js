@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import debounce from 'lodash.debounce'
 import Transition from 'react-transition-group/Transition'
 import TimeFormat from 'hh-mm-ss'
+import playerjs from 'player.js'
 
 import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
@@ -224,6 +225,7 @@ class Play extends Component<Props, State> {
   lastMouseMove: number
   playerHideTimeout: number
   wrapperRef: ?HTMLElement
+  playerWrapperRef: ?HTMLElement
   stagedPlaybackLevel: number
 
   constructor (props: Props) {
@@ -552,6 +554,17 @@ class Play extends Component<Props, State> {
     }
   }
 
+  configureVideoAdapter = (): void => {
+    if (this.playerWrapperRef) {
+      const videoEl: ?HTMLElement = this.playerWrapperRef.querySelector('video')
+
+      if (videoEl) {
+        const adapter = playerjs.HTML5Adapter(videoEl)
+        adapter.ready()
+      }
+    }
+  }
+
   createPlayer = (video: VideoRecord): void => {
     const { updateVolume } = this.props
 
@@ -581,6 +594,7 @@ class Play extends Component<Props, State> {
       })
 
       this.bindClapprEvents()
+      this.configureVideoAdapter()
 
       if (this.player) {
         updateVolume(this.player.getVolume())
@@ -722,7 +736,12 @@ class Play extends Component<Props, State> {
                   </OverlayWrapper>
                 )}
               </Transition>
-              <Player id={PLAYER_ID} />
+              <Player
+                id={PLAYER_ID}
+                innerRef={(ref: HTMLElement) => {
+                  this.playerWrapperRef = ref
+                }}
+              />
               {this.props.video ? (
                 <ShareOverlay show={this.state.showShareModal}>
                   <CloseButton onClick={this.toggleShareModal}>
