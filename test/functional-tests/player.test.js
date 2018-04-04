@@ -1,4 +1,4 @@
-describe('🎥 Player:', function () {
+describe('🎥 Player: @watch', function () {
   const videoId = 'TXWzBRXgWytP'
   const videoElementSelector = '[data-test-id="player"] video'
   const overlaySelector = '[data-test-id="video-overlay"]'
@@ -124,6 +124,16 @@ describe('🎥 Player:', function () {
       assertControlsAreVisible()
     })
 
+    it('hides the controls after not moving the mouse for approximately 2 seconds', () => {
+      goToTestVideoUrl({ embed })
+      browser.waitUntilVideoIsPlaying()
+      assertControlsAreHidden()
+      browser.moveToObject(overlaySelector)
+      assertControlsAreVisible()
+      browser.pause(2500)
+      assertControlsAreHidden()
+    })
+
     it('pauses the video when the playpause button is clicked for the first time', () => {
       goToTestVideoUrl({ embed })
       browser.waitUntilVideoIsPlaying()
@@ -147,7 +157,7 @@ describe('🎥 Player:', function () {
     })
   }
 
-  describe('portal player', () => {
+  describe('portal player @watch', () => {
     runPlayerExpectations({ embed: false })
   })
 
