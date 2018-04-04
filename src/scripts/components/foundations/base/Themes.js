@@ -112,8 +112,8 @@ const Themes = {
       from: Colors.purpleGradientFrom,
       to: Colors.purpleGradientTo,
       scrubber: Colors.white,
-      base: Colors.grayLight,
-      buffer: Colors.gray
+      base: Colors.gray,
+      buffer: Colors.grayLight
     },
     VideoPlayer: {
       background: Colors.black,
@@ -122,7 +122,7 @@ const Themes = {
         icons: Colors.white
       },
       controls: {
-        background: Colors.black,
+        background: 'transparent',
         time: Colors.white
       },
       levels: {
