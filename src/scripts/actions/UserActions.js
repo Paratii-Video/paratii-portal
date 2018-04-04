@@ -123,6 +123,7 @@ export const setupKeystore = () => async (
 
   console.log(paratii.eth.wallet[0].address)
   dispatch(setWalletAddress({ address: paratii.eth.wallet[0].address }))
+  dispatch(loadBalances())
 }
 
 export const secureKeystore = (password: string) => async (
@@ -136,31 +137,21 @@ export const secureKeystore = (password: string) => async (
     })
   )
   try {
-    // const walletKey: string = `keystore`
-    // const mnemonicKey: string = ''
-    // const mnemonic: string = ''
-    const wallet: ?Object = await paratii.eth.wallet.encrypt(password)
-    // Clear Paratii and remove keystore-anon
+    const encryptedWallet: ?Object = await paratii.eth.wallet.encrypt(password)
     dispatch(
       Notifications.success({
         title: 'Your wallet is now secured'
       })
     )
+    // Clear Paratii and remove keystore-anon
     console.log('Clear Paratii and remove Keystore-anon')
     // paratii.eth.wallet.clear()
     // localStorage.removeItem('keystore-anon')
     localStorage.removeItem(MNEMONIC_KEY_ANON)
-    if (wallet !== undefined && wallet !== null) {
-      paratii.setAccount(paratii.eth.wallet[0].address)
-      dispatch(setWalletAddress({ wallet: paratii.eth.wallet[0].address }))
-      // dispatch(
-      //   setAndSyncWalletData({
-      //     wallet,
-      //     walletKey,
-      //     mnemonic,
-      //     mnemonicKey
-      //   })
-      // )
+    if (encryptedWallet) {
+      localStorage.setItem(WALLET_KEY_SECURE, JSON.stringify(encryptedWallet))
+      dispatch(setWalletAddress({ address: paratii.eth.wallet[0].address }))
+      dispatch(loadBalances())
     }
   } catch (error) {
     dispatch(

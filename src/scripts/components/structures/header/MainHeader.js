@@ -120,7 +120,7 @@ class MainHeader extends Component<Props, void> {
   render () {
     let userAvatar = ''
     if (this.props.userAddress) {
-      const lowerAddress = add0x(this.props.userAddress.toLowerCase())
+      const lowerAddress = add0x(this.props.userAddress)
       userAvatar = (
         <ProfileAvatarLink to="/wallet">
           <Blockies seed={lowerAddress} size={10} scale={4} />
