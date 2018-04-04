@@ -4,7 +4,7 @@ const Colors: Object = {
   white: '#fff',
   whiteTransparent: 'rgba(255, 255, 255, 0.65)',
   grayLight: '#c7c7c7',
-  gray: '#828282',
+  gray: '#65667C',
   grayMedium: '#404447',
   grayDark: '#14161D',
   blackLight: '#262933',
