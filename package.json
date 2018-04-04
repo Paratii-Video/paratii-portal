@@ -138,6 +138,7 @@
     "bluebird": "^3.5.1",
     "clappr": "^0.2.87",
     "compression": "^1.7.2",
+    "cors": "^2.8.4",
     "express-handlebars": "^3.0.0",
     "hh-mm-ss": "^1.2.0",
     "hlsjs-ipfs-loader": "github:ya7ya/hlsjs-ipfs-loader#bd890b9e78f2c273fcb1dc4e1d43ad0afc69558c",
