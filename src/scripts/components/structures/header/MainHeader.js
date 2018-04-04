@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
 import MainNavigation from 'components/structures/header/MainNavigation'
 import { Link } from 'react-router-dom'
+import { add0x } from 'utils/AppUtils'
 import Blockies from 'react-blockies'
 
 type Props = {
@@ -118,10 +119,11 @@ class MainHeader extends Component<Props, void> {
 
   render () {
     let userAvatar = ''
-    if (this.props.userAddress !== '') {
+    if (this.props.userAddress) {
+      const lowerAddress = add0x(this.props.userAddress.toLowerCase())
       userAvatar = (
         <ProfileAvatarLink to="/wallet">
-          <Blockies seed={this.props.userAddress} size={10} scale={4} />
+          <Blockies seed={lowerAddress} size={10} scale={4} />
         </ProfileAvatarLink>
       )
     }

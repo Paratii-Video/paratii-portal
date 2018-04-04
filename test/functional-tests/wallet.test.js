@@ -1,42 +1,47 @@
-//
-// Note for devs: WORK IN PROGRESS
-//
-//
-// MIGRATING FROM paratii-player/tests/
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-import {
-  // assertUserIsLoggedIn,
-  web3,
-  // createUserAndLogin,
-  // getEthAccountFromApp,
-  mnemonic23
-} from './test-utils/helpers.js'
+import { web3, nukeLocalStorage, mnemonic23 } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
 describe('wallet:', function () {
   let userAccount
 
-  // beforeEach(function () {
-  //   browser.url('http://localhost:3000/')
-  //   createUserAndLogin(browser)
-  //   browser.url('http://localhost:3000/profile')
-  //   userAccount = getEthAccountFromApp()
-  //   assertUserIsLoggedIn(browser)
+  beforeEach(function () {
+    browser.url(`http://localhost:8080`)
+    browser.execute(nukeLocalStorage)
+  })
+
+  it('If we have a secured wallet in localStorage, we open it with a Pin', function () {
+    browser.url(`http://localhost:8080`)
+    browser.execute(function () {
+      const password = '1234'
+      window.paratii.eth.wallet.clear()
+      window.paratii.eth.wallet
+        .create()
+        .then(
+          localStorage.setItem(
+            'keystore-secure',
+            JSON.stringify(window.paratii.eth.wallet.encrypt(password))
+          )
+        )
+    })
+    browser.url(`http://localhost:8080/wallet`)
+    // Set pin number: 1234
+    browser.waitAndClick('[data-test-id="button-1"]')
+    browser.waitAndClick('[data-test-id="button-2"]')
+    browser.waitAndClick('[data-test-id="button-3"]')
+    browser.waitAndClick('[data-test-id="button-4"]')
+    browser.waitAndClick('[data-test-id="pin-continue"]')
+    const balance = browser.getText('[data-test-id="pti-balance"]')
+    // We have a new account so the balance should be zero
+    assert.equal(balance, '0')
+  })
+
+  // it('If there is an anonymous wallet in localStorage we open it @watch', function () {
+  //   const balance = browser.getText('[data-test-id="pti-balance"]')
+  //   // We check the default address balance
+  //   assert.equal(balance, '21M')
   // })
 
-  it('secure your wallet @watch', function () {
+  it('secure your wallet, transfer to new address', function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'

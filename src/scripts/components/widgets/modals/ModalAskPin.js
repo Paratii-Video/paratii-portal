@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import NumPad from 'components/widgets/NumPad'
+import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
 
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
@@ -12,7 +13,8 @@ type Props = {
   openModal: string => void,
   closeModal: () => void,
   notification: (Object, string) => void,
-  setWalletAddress: Object => void
+  setWalletAddress: Object => void,
+  loadBalances: () => void
 }
 
 const Title = styled.h2`
@@ -65,7 +67,7 @@ class ModalAskPin extends Component<Props, Object> {
   setPin () {
     // Decrypt Keystore
     const pin = this.state.pin
-    const walletString = localStorage.getItem('keystore') || ''
+    const walletString = localStorage.getItem(WALLET_KEY_SECURE) || ''
     this.props.notification(
       { title: 'Trying to unlock your keystore...' },
       'warning'
@@ -84,6 +86,8 @@ class ModalAskPin extends Component<Props, Object> {
         },
         'success'
       )
+      // Set the balance
+      this.props.loadBalances()
     } catch (err) {
       // wallet is not valid
       this.setState({
@@ -95,6 +99,7 @@ class ModalAskPin extends Component<Props, Object> {
         },
         'error'
       )
+      throw err
     }
   }
 

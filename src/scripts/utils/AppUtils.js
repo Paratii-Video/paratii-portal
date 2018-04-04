@@ -119,3 +119,13 @@ export const requestFullscreen = (element: HTMLElement): void => {
     element.webkitRequestFullscreen()
   }
 }
+
+export function add0x (input) {
+  // const input = input.toUpperCase();
+  if (typeof input !== 'string') {
+    return input
+  } else if (input.length < 2 || input.slice(0, 2) !== '0x') {
+    return `0x${input}`
+  }
+  return input
+}

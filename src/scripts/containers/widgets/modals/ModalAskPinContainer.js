@@ -3,7 +3,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { openModal, closeModal } from 'actions/ModalActions'
-import { setWalletAddress } from 'actions/UserActions'
+import { setWalletAddress, loadBalances } from 'actions/UserActions'
 import { show } from 'react-notification-system-redux'
 import ModalAskPin from 'components/widgets/modals/ModalAskPin'
 
@@ -15,7 +15,8 @@ const mapDispatchToProps = dispatch => ({
   openModal: bindActionCreators(openModal, dispatch),
   closeModal: bindActionCreators(closeModal, dispatch),
   notification: bindActionCreators(show, dispatch),
-  setWalletAddress: bindActionCreators(setWalletAddress, dispatch)
+  setWalletAddress: bindActionCreators(setWalletAddress, dispatch),
+  loadBalances: bindActionCreators(loadBalances, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalAskPin)

@@ -26,10 +26,15 @@ if (fs.existsSync(path.resolve(__dirname, registryConfigPath))) {
   registryAddressConfig = require(registryConfigPath)
 }
 
+export const DEFAULT_PASSWORD = ''
+export const WALLET_KEY_ANON = 'keystore-anon'
+export const MNEMONIC_KEY_ANON = 'mnemonic-anon'
+export const WALLET_KEY_SECURE = 'keystore-secure'
+
 // this address will be used as the owner address for all paratii contracts in the tests
-let address = '0x627ac4c2d731E12fB386BD649114a08ebCc0C33f'
+let address = '0xCbe4f07b343171ac37055B25a5266f48f6945b7d'
 let privateKey =
-  '399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6'
+  '0x399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6'
 
 // some other addresses and keys used in testing
 let address1 = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
@@ -42,7 +47,7 @@ let privateKey17 =
 let mnemonic23 =
   'jelly better achieve collect unaware mountain thought cargo oxygen act hood bridge'
 // this is the first HD address generated
-let address23 = '0x627ac4c2d731E12fB386BD649114a08ebCc0C33f'
+let address23 = '0xCbe4f07b343171ac37055B25a5266f48f6945b7d'
 
 export {
   address,
