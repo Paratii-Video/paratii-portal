@@ -43,7 +43,6 @@ module.exports = async (req: $Request, res: $Response) => {
       oembedresponse.type = 'rich'
       oembedresponse.title = videoTitle
       oembedresponse.description = videoDescription
-      oembedresponse.provider_name = creatorName
       oembedresponse.provider_url = baseUrl
       oembedresponse.author_name = creatorName
       oembedresponse.provider_name = 'Paratii'
