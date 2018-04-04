@@ -66,7 +66,7 @@ export const Circle = styled.div`
   &::before {
     opacity: 0.5;
     transform: scale(${props => (props.userIsScrubbing ? 1 : 0.5)});
-    transition: transform ${props => (props.userIsScrubbing ? '1s' : '0.8s')}
+    transition: transform ${props => (props.userIsScrubbing ? '0.8s' : '0.6s')}
       ${({ theme }) => theme.animation.ease.smooth};
     ${Wrapper}:hover & {
       transform: scale(1);
@@ -74,8 +74,8 @@ export const Circle = styled.div`
   }
 
   &::after {
-    transform: scale(${props => (props.userIsScrubbing ? 0.6 : 0.5)});
-    transition: transform ${props => (props.userIsScrubbing ? '0.7s' : '0.5s')}
+    transform: scale(${props => (props.userIsScrubbing ? 0.7 : 0.6)});
+    transition: transform ${props => (props.userIsScrubbing ? '0.5s' : '0.3s')}
       ${({ theme }) => theme.animation.ease.smooth};
   }
 `
