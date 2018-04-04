@@ -25,7 +25,6 @@ const Wrapper = styled.div`
   position: absolute;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.Popover.background};
-  box-shadow: ${({ theme }) => theme.colors.Popover.shadow};
   color: ${({ theme }) => theme.colors.Popover.color};
   top: ${({ top }) => top};
   bottom: ${({ bottom }) => bottom};
@@ -55,7 +54,7 @@ const Wrapper = styled.div`
     }
   }}
   );
-  transition: all 0.5s ${({ theme }) => theme.animation.ease.smooth};
+  transition: all 0.45s ${({ theme }) => theme.animation.ease.smooth};
   z-index: ${Z_INDEX_POPUPS};
   user-select: none;
 `
