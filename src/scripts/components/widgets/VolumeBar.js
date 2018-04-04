@@ -219,7 +219,7 @@ class PlayerControls extends Component<Props, State> {
                 }}
                 transitionState={transitionState}
               >
-                <ProgressBarWrapper small>
+                <ProgressBarWrapper>
                   <ProgressBar current={currentVolume} total={100} colorful />
                 </ProgressBarWrapper>
                 <ProgressIndicator
