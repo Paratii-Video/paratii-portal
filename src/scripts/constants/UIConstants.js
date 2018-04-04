@@ -6,8 +6,8 @@ export const Z_INDEX_POPUPS: string = '990'
 export const Z_INDEX_HEADER: string = '980'
 
 //
-export const CONTROLS_HEIGHT: string = '58px'
-export const CONTROLS_HEIGHT_TABLET: string = '52px'
+export const CONTROLS_HEIGHT: string = '48px'
+export const CONTROLS_HEIGHT_TABLET: string = '42px'
 
 export const VIDEO_MANAGER_MAX_HEIGHT: string = '600px'
 
