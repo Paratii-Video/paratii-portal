@@ -60,6 +60,9 @@ exports.player = async function player (req, res, next) {
       },
       embedUrl: function () {
         return 'https://portal.paratii.video/embed/' + video._id
+      },
+      oembedUrl: function () {
+        return 'https://portal.paratii.video/oembed?url='
       }
     }
   })

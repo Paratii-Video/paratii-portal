@@ -149,6 +149,7 @@
     "mux-embed": "^2.3.2",
     "paratii-lib": "github:Paratii-Video/paratii-lib#a9887b1dfb3d344718dd1a4859d91938c9ae2347",
     "paratii-mediaplayer": "^3.0.2",
+    "player.js": "^0.1.0",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
     "react-blockies": "^1.2.2",

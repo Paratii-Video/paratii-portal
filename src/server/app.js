@@ -43,7 +43,7 @@ app.set('views', path.join(__dirname, '/views'))
 app.use(express.static(path.resolve(__dirname, '../../', 'build')))
 app.get('/embed/:id', routeHelper.player)
 app.get('/play/:id', routeHelper.player)
-app.get('*', routeHelper.default)
 app.get('/oembed', oembedRoute)
+app.get('*', routeHelper.default)
 
 module.exports = app

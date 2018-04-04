@@ -120,6 +120,13 @@ export const requestFullscreen = (element: HTMLElement): void => {
   }
 }
 
+export const getFullscreenEnabled = () =>
+  document.fullscreenEnabled ||
+  document.webkitFullscreenEnabled ||
+  document.mozFullScreenEnabled ||
+  // $FlowFixMe
+  document.msFullscreenEnabled
+
 export const copyTextToClipboard = (element: HTMLElement): void => {
   const { body } = document
 

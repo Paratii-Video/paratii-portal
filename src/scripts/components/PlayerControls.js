@@ -27,6 +27,7 @@ import {
   CONTROLS_HEIGHT_TABLET
 } from 'constants/UIConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
+import { getFullscreenEnabled } from 'utils/AppUtils'
 
 import playIcon from 'assets/svg/icon-player-play.svg'
 import pauseIcon from 'assets/svg/icon-player-pause.svg'
@@ -338,14 +339,16 @@ class PlayerControls extends Component<Props, State> {
                   }}
                 />
               </ControlButtonWrapper>
-              <ControlButtonWrapper>
-                <IconButton
-                  icon={isFullscreen ? normalscreenIcon : fullscreenIcon}
-                  onClick={() => {
-                    toggleFullscreen(!isFullscreen)
-                  }}
-                />
-              </ControlButtonWrapper>
+              {getFullscreenEnabled() && (
+                <ControlButtonWrapper>
+                  <IconButton
+                    icon={isFullscreen ? normalscreenIcon : fullscreenIcon}
+                    onClick={() => {
+                      toggleFullscreen(!isFullscreen)
+                    }}
+                  />
+                </ControlButtonWrapper>
+              )}
             </RightControls>
           </ControlButtons>
         </Controls>
