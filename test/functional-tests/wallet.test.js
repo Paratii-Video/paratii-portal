@@ -1,4 +1,10 @@
-import { web3, nukeLocalStorage, mnemonic23 } from './test-utils/helpers.js'
+import {
+  web3,
+  nukeLocalStorage,
+  mnemonic23,
+  restoreMnemonic,
+  walletRestored
+} from './test-utils/helpers.js'
 import { assert } from 'chai'
 
 describe('wallet:', function () {
@@ -41,7 +47,37 @@ describe('wallet:', function () {
   //   assert.equal(balance, '21M')
   // })
 
-  it('secure your wallet, transfer to new address', function () {
+  it('restore your wallet using a seed @watch', function () {
+    browser.url(`http://localhost:8080/wallet`)
+    browser.waitUntil(() => {
+      return browser.getTitle() === 'Paratii'
+    })
+    browser.waitAndClick('[data-test-id="secure-wallet"]')
+    browser.pause(500)
+    browser.waitAndClick('[data-test-id="restore-account"]')
+    // Insert the seed
+    browser.waitForClickable('[name="mnemonic-restore"]')
+    browser.setValue('[name="mnemonic-restore"]', restoreMnemonic)
+    browser.waitAndClick('[data-test-id="restore-wallet"]')
+    // Set pin number: 1234
+    browser.waitAndClick('[data-test-id="button-1"]')
+    browser.waitAndClick('[data-test-id="button-2"]')
+    browser.waitAndClick('[data-test-id="button-3"]')
+    browser.waitAndClick('[data-test-id="button-4"]')
+    browser.waitAndClick('[data-test-id="pin-continue"]')
+    // Re-enter the same pin number: 1234
+    browser.waitAndClick('[data-test-id="button-1"]')
+    browser.waitAndClick('[data-test-id="button-2"]')
+    browser.waitAndClick('[data-test-id="button-3"]')
+    browser.waitAndClick('[data-test-id="button-4"]')
+    browser.waitAndClick('[data-test-id="pin-continue"]')
+    // Check the if the address is the restored one
+    browser.waitForClickable('[data-test-id="user-address"]')
+    const newAddress = browser.getText('[data-test-id="user-address"]')
+    assert(newAddress, walletRestored)
+  })
+
+  it('secure your wallet, transfer data to a new address', function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'

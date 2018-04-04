@@ -30,7 +30,8 @@ class Wallet extends Component<Props> {
     return (
       <Card title="Wallet">
         <Text>
-          Your address is <strong>{this.props.userAddress}</strong>
+          Your address is{' '}
+          <strong data-test-id="user-address">{this.props.userAddress}</strong>
         </Text>
         <Text>
           You have <strong>{paratii.eth.web3.utils.fromWei(balance)}</strong>{' '}

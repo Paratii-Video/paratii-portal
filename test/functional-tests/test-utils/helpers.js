@@ -49,6 +49,10 @@ let mnemonic23 =
 // this is the first HD address generated
 let address23 = '0xCbe4f07b343171ac37055B25a5266f48f6945b7d'
 
+export let restoreMnemonic =
+  'design under day valve eagle exact night maid circle hammer polar ramp'
+export let walletRestored = '0x500B678cAC6BEB4092662437698Daa49c5d2E267'
+
 export {
   address,
   address1,
