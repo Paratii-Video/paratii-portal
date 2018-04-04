@@ -46,6 +46,7 @@ module.exports = async (req: $Request, res: $Response) => {
       oembedresponse.provider_name = creatorName
       oembedresponse.provider_url = baseUrl
       oembedresponse.author_name = creatorName
+      oembedresponse.provider_name = 'Paratii'
       // TODO: creatore page it's not defined
       // oembedresponse.author_url = 'Creator url, maybe the channel?'
       // TODO: get iframe code of the mini version
