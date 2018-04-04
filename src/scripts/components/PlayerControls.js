@@ -88,9 +88,9 @@ const Shadow = styled.span`
   width: 100%;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0) 10%,
-    rgba(0, 0, 0, 0.15) 30%,
-    rgba(0, 0, 0, 0.5) 70%,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.2) 30%,
+    rgba(0, 0, 0, 0.55) 70%,
     rgba(0, 0, 0, 0.7) 95%
   );
   opacity: ${({ transitionState }) => {
