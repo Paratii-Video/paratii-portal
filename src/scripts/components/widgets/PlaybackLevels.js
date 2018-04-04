@@ -113,7 +113,7 @@ class PlaybackLevels extends React.Component<Props> {
       <Popover open={open} bottom={`${CONTROLS_HEIGHT}`} right={0}>
         <Wrapper>
           <TopBar>
-            <Title small>Video Quality</Title>
+            <Title small>Quality</Title>
             <CloseButton onClick={onClose} />
           </TopBar>
           <LevelsList offsetXPercentage={offsetXPercentage}>
