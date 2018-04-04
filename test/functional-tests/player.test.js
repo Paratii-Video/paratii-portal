@@ -5,6 +5,7 @@ describe('🎥 Player:', function () {
   const controlsSelector = '[data-test-id="player-controls"]'
   const playpauseButtonSelector = '[data-test-id="playpause-button"]'
   const fullscreenButtonSelector = '[data-test-id="fullscreen-button"]'
+  const volumeButtonSelector = '[data-test-id="volume-button"]'
 
   const goToTestVideoUrl = ({ embed, overrideVideoId } = {}) => {
     browser.url(
@@ -65,6 +66,27 @@ describe('🎥 Player:', function () {
 
   const assertControlsAreHidden = () => assertControlsAre({ hidden: true })
   const assertControlsAreVisible = () => assertControlsAre({ hidden: false })
+
+  const assertVolumeIsMuted = () =>
+    browser.waitUntil(
+      () =>
+        browser.execute(videoElementSelector => {
+          const videoEl = document.querySelector(videoElementSelector)
+
+          return videoEl.getAttribute('volume') === 0
+        }, videoElementSelector).value,
+      true
+    )
+
+  const assertVolumeIsNotMuted = () =>
+    browser.waitUntil(
+      () =>
+        browser.execute(videoElementSelector => {
+          const videoEl = document.querySelector(videoElementSelector)
+          return videoEl.getAttribute('volume') >= 0
+        }, videoElementSelector).value,
+      true
+    )
 
   before(() => {
     browser.addCommand('waitUntilVideoIsPlaying', function (timeout = 20000) {
@@ -188,6 +210,21 @@ describe('🎥 Player:', function () {
               )
           ).value
       )
+    })
+
+    it('should default the volume to not be muted', () => {
+      goToTestVideoUrl({ embed })
+      assertVolumeIsNotMuted()
+    })
+
+    // This is skipped until we fix the issue where volume and duration do not show up
+    // on many screen widths
+    it.skip('should mute the video when the volume button is clicked', () => {
+      goToTestVideoUrl({ embed })
+      assertVolumeIsNotMuted()
+      browser.moveToObject(overlaySelector)
+      browser.waitAndClick(volumeButtonSelector)
+      assertVolumeIsMuted()
     })
   }
 
