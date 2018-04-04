@@ -1,9 +1,10 @@
-describe('🎥 Player: @watch', function () {
+describe('🎥 Player:', function () {
   const videoId = 'TXWzBRXgWytP'
   const videoElementSelector = '[data-test-id="player"] video'
   const overlaySelector = '[data-test-id="video-overlay"]'
   const controlsSelector = '[data-test-id="player-controls"]'
   const playpauseButtonSelector = '[data-test-id="playpause-button"]'
+  const fullscreenButtonSelector = '[data-test-id="fullscreen-button"]'
 
   const goToTestVideoUrl = ({ embed, overrideVideoId } = {}) => {
     browser.url(
@@ -155,9 +156,42 @@ describe('🎥 Player: @watch', function () {
       browser.waitAndClick(playpauseButtonSelector)
       browser.waitUntilVideoIsPlaying()
     })
+
+    it('should bring the player fullscreen and back', () => {
+      goToTestVideoUrl({ embed })
+      browser.moveToObject(overlaySelector)
+      browser.waitAndClick(fullscreenButtonSelector)
+      browser.waitUntil(
+        () =>
+          browser.execute(videoElementSelector => {
+            const videoEl = document.querySelector(videoElementSelector)
+            const fullscreenElement =
+              document.fullscreenElement ||
+              document.webkitFullscreenElement ||
+              document.mozFullScreenElement ||
+              document.msFullscreenElement
+
+            return fullscreenElement.contains(videoEl)
+          }, videoElementSelector).value
+      )
+      browser.moveToObject(overlaySelector)
+      browser.waitAndClick(fullscreenButtonSelector)
+      browser.waitUntil(
+        () =>
+          browser.execute(
+            () =>
+              !(
+                document.fullscreenElement ||
+                document.webkitFullscreenElement ||
+                document.mozFullScreenElement ||
+                document.msFullscreenElement
+              )
+          ).value
+      )
+    })
   }
 
-  describe('portal player @watch', () => {
+  describe('portal player', () => {
     runPlayerExpectations({ embed: false })
   })
 
