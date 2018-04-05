@@ -744,14 +744,21 @@ class Play extends Component<Props, State> {
                 }}
               />
               {this.props.video ? (
-                <ShareOverlay show={this.state.showShareModal}>
-                  <CloseButton onClick={this.toggleShareModal}>
+                <ShareOverlay
+                  data-test-id="share-overlay"
+                  show={this.state.showShareModal}
+                >
+                  <CloseButton
+                    data-test-id="share-close-button"
+                    onClick={this.toggleShareModal}
+                  >
                     <SVGButton>
                       <use xlinkHref="#icon-close" />
                     </SVGButton>
                   </CloseButton>
                   <ShareTitle small />
                   <AnchorLink
+                    data-test-id="share-anchor-link"
                     href={
                       this.getPortalUrl() +
                       '/play/' +
@@ -767,6 +774,7 @@ class Play extends Component<Props, State> {
                   </AnchorLink>
                   <ShareButtons>
                     <ShareLink
+                      data-test-id="telegram-share-link"
                       href={this.getTelegramHref()}
                       target="_blank"
                       anchor
@@ -774,6 +782,7 @@ class Play extends Component<Props, State> {
                       <ShareLinkIcon src="/assets/svg/icons-share-telegram.svg" />
                     </ShareLink>
                     <ShareLink
+                      data-test-id="twitter-share-link"
                       href={this.getTwitterHref()}
                       target="_blank"
                       anchor
@@ -781,6 +790,7 @@ class Play extends Component<Props, State> {
                       <ShareLinkIcon src="/assets/svg/icons-share-twitter.svg" />
                     </ShareLink>
                     <ShareLink
+                      data-test-id="whatsapp-share-link"
                       href={this.getWhatsAppMobileHref()}
                       target="_blank"
                       anchor

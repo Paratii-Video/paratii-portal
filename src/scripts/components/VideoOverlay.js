@@ -179,22 +179,21 @@ class VideoOverlay extends Component<Props> {
             {isEmbed && <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>}
             <ButtonWrapper>
               {isEmbed && (
-                <ShareButton>
-                  <IconButton
-                    color={
-                      activePlugin === PLAYER_PLUGIN.WALLET ? Colors.purple : ''
-                    }
-                    data-test-id="wallet-info-button"
-                    icon="/assets/img/profile.svg"
-                    onClick={(e: Object) => {
-                      e.stopPropagation()
-                      toggleActivePlugin(PLAYER_PLUGIN.WALLET)
-                    }}
-                  />
-                </ShareButton>
+                <IconButton
+                  color={
+                    activePlugin === PLAYER_PLUGIN.WALLET ? Colors.purple : ''
+                  }
+                  data-test-id="wallet-info-button"
+                  icon="/assets/img/profile.svg"
+                  onClick={(e: Object) => {
+                    e.stopPropagation()
+                    toggleActivePlugin(PLAYER_PLUGIN.WALLET)
+                  }}
+                />
               )}
               {!this.props.showShareModal && (
                 <ShareButton
+                  data-test-id="share-button"
                   onClick={(e: Object) => {
                     e.stopPropagation()
                     toggleShareModal(e)

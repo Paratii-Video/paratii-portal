@@ -2,6 +2,7 @@ import { assert } from 'chai'
 
 describe('🎥 Player:', function () {
   const videoId = '1mQRk9d7wgOJ'
+  const videoTitle = 'Great title'
   const videoElementSelector = '[data-test-id="player"] video'
   const overlaySelector = '[data-test-id="video-overlay"]'
   const controlsSelector = '[data-test-id="player-controls"]'
@@ -19,6 +20,13 @@ describe('🎥 Player:', function () {
   const walletInfoCloseButtonSelector =
     '[data-test-id="wallet-info-close-button"]'
   const ptiBalanceSelector = '[data-test-id="pti-balance"]'
+  const shareOverlaySelector = '[data-test-id="share-overlay"]'
+  const shareButtonSelector = '[data-test-id="share-button"]'
+  const shareCloseButtonSelector = '[data-test-id="share-close-button"]'
+  const shareAnchorLinkSelector = '[data-test-id="share-anchor-link"]'
+  const telegramShareLinkSelector = '[data-test-id="telegram-share-link"]'
+  const twitterShareLinkSelector = '[data-test-id="twitter-share-link"]'
+  const whatsAppShareLinkSelector = '[data-test-id="whatsapp-share-link"]'
 
   const goToTestVideoUrl = ({ embed, overrideVideoId } = {}) => {
     browser.url(
@@ -299,7 +307,9 @@ describe('🎥 Player:', function () {
               document.msFullscreenElement
 
             return fullscreenElement.contains(videoEl)
-          }, videoElementSelector).value
+          }, videoElementSelector).value,
+        undefined,
+        'video did not enter fullscreen mode'
       )
       browser.moveToObject(overlaySelector)
       browser.waitAndClick(fullscreenButtonSelector)
@@ -313,7 +323,9 @@ describe('🎥 Player:', function () {
                 document.mozFullScreenElement ||
                 document.msFullscreenElement
               )
-          ).value
+          ).value,
+        undefined,
+        'video did not exit fullscreen mode'
       )
     })
 
@@ -353,7 +365,9 @@ describe('🎥 Player:', function () {
             },
             levelSelector,
             qualityMenuSelector
-          ).value
+          ).value,
+        undefined,
+        'playback levels menu did not render correctly'
       )
     })
 
@@ -442,6 +456,172 @@ describe('🎥 Player:', function () {
           assert.equal(browser.isVisible(walletButtonSelector), false)
         })
       }
+    })
+
+    describe('share overlay', () => {
+      const assertShareOverlayIsHidden = () =>
+        browser.waitUntil(() => !browser.isVisible(shareOverlaySelector))
+      const assertShareOverlayIsVisible = () =>
+        browser.waitUntil(
+          () =>
+            browser.execute(
+              (shareOverlaySelector, videoElementSelector) => {
+                const videoEl = document.querySelector(videoElementSelector)
+                const videoRect = videoEl.getBoundingClientRect()
+                const shareOverlayEl = document.querySelector(
+                  shareOverlaySelector
+                )
+                const shareOverlayRect = shareOverlayEl.getBoundingClientRect()
+
+                const shareOverlayStyle = window.getComputedStyle(
+                  shareOverlayEl
+                )
+                const overlayIsVisible =
+                  parseInt(
+                    shareOverlayStyle.getPropertyValue('opacity'),
+                    10
+                  ) === 1
+
+                const overlayIsFullHeightAndWidth =
+                  videoRect.x === shareOverlayRect.x &&
+                  videoRect.y === shareOverlayRect.y &&
+                  videoRect.width === shareOverlayRect.width &&
+                  videoRect.height === shareOverlayRect.height
+
+                return overlayIsVisible && overlayIsFullHeightAndWidth
+              },
+              shareOverlaySelector,
+              videoElementSelector
+            ).value
+        )
+      before(() => {
+        goToTestVideoUrl({ embed })
+      })
+      it('should show the share overlay when the button is clicked', () => {
+        assertShareOverlayIsHidden()
+        browser.moveToObject(overlaySelector)
+        browser.waitAndClick(shareButtonSelector)
+        assertShareOverlayIsVisible()
+      })
+
+      it('should have the correct contents', () => {
+        browser.waitUntil(
+          () =>
+            browser.execute(
+              (shareOverlaySelector, shareAnchorLinkSelector, videoId) => {
+                const shareOverlayEl = document.querySelector(
+                  shareOverlaySelector
+                )
+                const anchorLinkEl = shareOverlayEl.querySelector(
+                  shareAnchorLinkSelector
+                )
+                return (
+                  anchorLinkEl.getAttribute('href') ===
+                  `https://portal.paratii.video/play/${videoId}`
+                )
+              },
+              shareOverlaySelector,
+              shareAnchorLinkSelector,
+              videoId
+            ).value,
+          undefined,
+          'video link is incorrect'
+        )
+
+        browser.waitUntil(
+          () =>
+            browser.execute(
+              (
+                shareOverlaySelector,
+                telegramShareLinkSelector,
+                videoId,
+                videoTitle
+              ) => {
+                const shareOverlayEl = document.querySelector(
+                  shareOverlaySelector
+                )
+                const telegramEl = shareOverlayEl.querySelector(
+                  telegramShareLinkSelector
+                )
+                return (
+                  telegramEl.getAttribute('href') ===
+                  `https://t.me/share/url?url=https://portal.paratii.video/play/${videoId}&text=🎬 Worth a watch: ${videoTitle}`
+                )
+              },
+              shareOverlaySelector,
+              telegramShareLinkSelector,
+              videoId,
+              videoTitle
+            ).value,
+          undefined,
+          'telegram link is incorrect'
+        )
+
+        browser.waitUntil(
+          () =>
+            browser.execute(
+              (
+                shareOverlaySelector,
+                twitterShareLinkSelector,
+                videoId,
+                videoTitle
+              ) => {
+                const shareOverlayEl = document.querySelector(
+                  shareOverlaySelector
+                )
+
+                const twitterEl = shareOverlayEl.querySelector(
+                  twitterShareLinkSelector
+                )
+                return (
+                  twitterEl.getAttribute('href') ===
+                  `https://twitter.com/intent/tweet?url=https://portal.paratii.video/play/${videoId}&text=🎬 Worth a watch: ${videoTitle}`
+                )
+              },
+              shareOverlaySelector,
+              twitterShareLinkSelector,
+              videoId,
+              videoTitle
+            ).value,
+          undefined,
+          'twitter link is incorrect'
+        )
+
+        browser.waitUntil(
+          () =>
+            browser.execute(
+              (
+                shareOverlaySelector,
+                whatsAppShareLinkSelector,
+                videoId,
+                videoTitle
+              ) => {
+                const shareOverlayEl = document.querySelector(
+                  shareOverlaySelector
+                )
+                const whatsAppEl = shareOverlayEl.querySelector(
+                  whatsAppShareLinkSelector
+                )
+                return (
+                  whatsAppEl.getAttribute('href') ===
+                  `whatsapp://send?text=🎬 Worth a watch: ${videoTitle} https://portal.paratii.video/play/${videoId}`
+                )
+              },
+              shareOverlaySelector,
+              whatsAppShareLinkSelector,
+              videoId,
+              videoTitle
+            ).value,
+          undefined,
+          'whatsapp link is incorrect'
+        )
+      })
+
+      it('should dismiss the share overlay when the close button is clicked', () => {
+        assertShareOverlayIsVisible()
+        browser.waitAndClick(shareCloseButtonSelector)
+        assertShareOverlayIsHidden()
+      })
     })
   }
 
