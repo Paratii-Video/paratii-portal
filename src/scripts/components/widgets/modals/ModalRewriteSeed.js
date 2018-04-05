@@ -1,10 +1,11 @@
 /* @flow */
-import paratii from 'utils/ParatiiLib'
+// import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import TextField from 'components/widgets/forms/TextField'
+import { MNEMONIC_KEY_TEMP } from 'constants/ParatiiLibConstants'
 
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
@@ -61,7 +62,7 @@ class ModalRewriteSeed extends Component<Props, Object> {
 
   checkSeed () {
     console.log('Check Seed and chose pin')
-    const mnemonic = paratii.eth.wallet.getMnemonic()
+    const mnemonic = sessionStorage.getItem(MNEMONIC_KEY_TEMP)
     if (this.state.mnemonic !== mnemonic) {
       this.setState({
         error: 'The mnemonic you insert is uncorrect'

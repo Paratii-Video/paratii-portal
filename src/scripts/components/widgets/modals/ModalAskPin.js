@@ -14,7 +14,7 @@ type Props = {
   closeModal: () => void,
   notification: (Object, string) => void,
   setWalletAddress: Object => void,
-  loadBalances: () => void
+  setAddressAndBalance: () => void
 }
 
 const Title = styled.h2`
@@ -72,22 +72,22 @@ class ModalAskPin extends Component<Props, Object> {
       { title: 'Trying to unlock your keystore...' },
       'warning'
     )
+    this.props.closeModal()
     try {
       paratii.eth.wallet.clear()
       paratii.eth.wallet.decrypt(JSON.parse(walletString), pin)
-      this.props.closeModal()
       const address = paratii.config.account.address
       console.log(address)
       this.props.setWalletAddress({ address })
       this.props.notification(
         {
           title: 'Success!',
-          message: 'Your keystore has been unlocked...'
+          message: 'Your keystore has been unlocked.'
         },
         'success'
       )
       // Set the balance
-      this.props.loadBalances()
+      this.props.setAddressAndBalance()
     } catch (err) {
       // wallet is not valid
       this.setState({

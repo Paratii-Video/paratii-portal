@@ -1,10 +1,11 @@
 /* @flow */
-// import paratii from 'utils/ParatiiLib'
+import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
+import { MNEMONIC_KEY_TEMP } from 'constants/ParatiiLibConstants'
 import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
@@ -48,18 +49,21 @@ class ModalShowSeed extends Component<Props, Object> {
   }
 
   secureWallet () {
-    console.log('Back to secure Wallet')
     this.props.openModal(MODAL.SECURE)
   }
 
   rewriteSeed () {
-    console.log('Rewrite your Seed')
     this.props.openModal(MODAL.REWRITE_SEED)
   }
 
   render () {
-    // const mnemonic = paratii.eth.wallet.getMnemonic()
-    const mnemonic = localStorage.getItem('mnemonic-anon') || ''
+    // Generation of a fresh new mnemonic
+    let mnemonic = sessionStorage.getItem(MNEMONIC_KEY_TEMP)
+    if (!mnemonic) {
+      mnemonic = paratii.eth.wallet.newMnemonic()
+      sessionStorage.setItem(MNEMONIC_KEY_TEMP, mnemonic)
+    }
+
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
@@ -67,7 +71,7 @@ class ModalShowSeed extends Component<Props, Object> {
           <MainText small gray>
             This is you seed
           </MainText>
-          <Highlight>{mnemonic}</Highlight>
+          <Highlight data-test-id="new-mnemonic">{mnemonic}</Highlight>
 
           <Footer>
             <ButtonContainer>

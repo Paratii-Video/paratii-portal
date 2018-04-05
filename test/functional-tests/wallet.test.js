@@ -1,7 +1,6 @@
 import {
   web3,
   nukeLocalStorage,
-  mnemonic23,
   restoreMnemonic,
   walletRestored
 } from './test-utils/helpers.js'
@@ -47,7 +46,7 @@ describe('wallet:', function () {
   //   assert.equal(balance, '21M')
   // })
 
-  it('restore your wallet using a seed @watch', function () {
+  it('restore your wallet using a seed', function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
@@ -71,25 +70,32 @@ describe('wallet:', function () {
     browser.waitAndClick('[data-test-id="button-3"]')
     browser.waitAndClick('[data-test-id="button-4"]')
     browser.waitAndClick('[data-test-id="pin-continue"]')
-    // Check the if the address is the restored one
     browser.waitForClickable('[data-test-id="user-address"]')
     const newAddress = browser.getText('[data-test-id="user-address"]')
-    assert(newAddress, walletRestored)
+    const balance = browser.getText('[data-test-id="pti-balance"]')
+    // Check the if the address is the restored one
+    assert.equal(newAddress, walletRestored)
+    // We have a new account so the balance should be zero
+    assert.equal(balance, '0')
   })
 
-  it('secure your wallet, transfer data to a new address', function () {
+  it('secure your wallet, transfer data to a new address @watch', function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
     })
+    // const anonAddress = browser.getText('[data-test-id="user-address"]')
+    const balance = browser.getText('[data-test-id="pti-balance"]')
     browser.waitAndClick('[data-test-id="secure-wallet"]')
-    browser.pause(1000)
+    browser.pause(500)
     browser.waitAndClick('[data-test-id="new-here"]')
+    browser.waitForClickable('[data-test-id="new-mnemonic"]')
+    const newMnemonic = browser.getText('[data-test-id="new-mnemonic"]')
     browser.waitAndClick('[data-test-id="rewrite-seed"]')
     browser.waitForClickable('[name="rewrite-mnemonic"]')
-    browser.setValue('[name="rewrite-mnemonic"]', mnemonic23)
+    browser.setValue('[name="rewrite-mnemonic"]', newMnemonic)
     browser.waitAndClick('[data-test-id="check-seed"]')
-    // Set pin number: 1234
+    // // Set pin number: 1234
     browser.waitAndClick('[data-test-id="button-1"]')
     browser.waitAndClick('[data-test-id="button-2"]')
     browser.waitAndClick('[data-test-id="button-3"]')
@@ -101,6 +107,11 @@ describe('wallet:', function () {
     browser.waitAndClick('[data-test-id="button-3"]')
     browser.waitAndClick('[data-test-id="button-4"]')
     browser.waitAndClick('[data-test-id="pin-continue"]')
+    const newBalance = browser.getText('[data-test-id="pti-balance"]')
+    // Check the if the address is the restored one
+    // assert.equal(anonAddress, walletRestored)
+    // We have a new account so the balance should be zero
+    assert.equal(balance, newBalance)
   })
 
   it.skip('should show ETH balance', function () {

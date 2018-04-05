@@ -9,7 +9,6 @@
 //
 
 import { Paratii, utils } from 'paratii-lib'
-// import testConfig from '../../../config/test.json'
 import testConfig from '../../../config/test.json'
 
 const fs = require('fs')
@@ -68,9 +67,9 @@ export const SEED =
   'road inherit leave arm unlock estate option merge mechanic rate blade dumb'
 export const USERADDRESS = '0xdef933d2d0203821af2a1579d77fb42b4f8dcf7b'
 
+testConfig.eth.registryAddress = registryAddressConfig.registryAddress
 export const paratii = new Paratii({
-  ...testConfig,
-  ...registryAddressConfig
+  ...testConfig
 })
 
 export const getPath = path => {

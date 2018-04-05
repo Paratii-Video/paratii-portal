@@ -4,4 +4,5 @@
 export const DEFAULT_PASSWORD = ''
 export const WALLET_KEY_ANON = 'keystore-anon'
 export const MNEMONIC_KEY_ANON = 'mnemonic-anon'
+export const MNEMONIC_KEY_TEMP = 'mnemonic-temp'
 export const WALLET_KEY_SECURE = 'keystore-secure'
