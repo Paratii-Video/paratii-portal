@@ -16,9 +16,9 @@ export const ColorText = css`
 
     return css`
       color: ${_color};
-`
+    `
   }};
-`
+  `
 
 export default styled.p`
   ${ColorText} font-size: ${props => {

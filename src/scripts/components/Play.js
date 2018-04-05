@@ -793,52 +793,52 @@ class Play extends Component<Props, State> {
           </VideoWrapper>
           {!isEmbed &&
             video && (
-            <PlayInfo>
-              {(video.title || video.filename) && (
-                <Title small>{video.title || video.filename}</Title>
-              )}
-              {video.author && <Text>By {video.author}</Text>}
-              {video.share && (
-                <PlayInfoButtons>
-                  <ButtonIcon>
-                    <SVG>
-                      <use xlinkHref="#icon-play-view" />
-                    </SVG>
-                    <Text small gray>
+              <PlayInfo>
+                {(video.title || video.filename) && (
+                  <Title small>{video.title || video.filename}</Title>
+                )}
+                {video.author && <Text>By {video.author}</Text>}
+                {video.share && (
+                  <PlayInfoButtons>
+                    <ButtonIcon>
+                      <SVG>
+                        <use xlinkHref="#icon-play-view" />
+                      </SVG>
+                      <Text small gray>
                         0
-                    </Text>
-                  </ButtonIcon>
-                  <ButtonIcon>
-                    <SVG>
-                      <use xlinkHref="#icon-play-like" />
-                    </SVG>
-                    <Text small gray>
+                      </Text>
+                    </ButtonIcon>
+                    <ButtonIcon>
+                      <SVG>
+                        <use xlinkHref="#icon-play-like" />
+                      </SVG>
+                      <Text small gray>
                         0
-                    </Text>
-                  </ButtonIcon>
-                  <ButtonIcon>
-                    <SVG>
-                      <use xlinkHref="#icon-play-dislike" />
-                    </SVG>
-                    <Text small gray>
+                      </Text>
+                    </ButtonIcon>
+                    <ButtonIcon>
+                      <SVG>
+                        <use xlinkHref="#icon-play-dislike" />
+                      </SVG>
+                      <Text small gray>
                         0
-                    </Text>
-                  </ButtonIcon>
-                </PlayInfoButtons>
-              )}
-              <Text gray>
+                      </Text>
+                    </ButtonIcon>
+                  </PlayInfoButtons>
+                )}
+                <Text gray>
                   Price{' '}
-                <PlayInfoHighlight purple>
-                  {video.free ? 'Free' : 'Free'}
-                </PlayInfoHighlight>
-              </Text>
-              {video.description && (
-                <DescriptionWrapper>
-                  <Text>{video.description}</Text>
-                </DescriptionWrapper>
-              )}
-            </PlayInfo>
-          )}
+                  <PlayInfoHighlight purple>
+                    {video.free ? 'Free' : 'Free'}
+                  </PlayInfoHighlight>
+                </Text>
+                {video.description && (
+                  <DescriptionWrapper>
+                    <Text>{video.description}</Text>
+                  </DescriptionWrapper>
+                )}
+              </PlayInfo>
+            )}
         </Wrapper>
       )
     }
