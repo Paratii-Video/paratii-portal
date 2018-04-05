@@ -1,3 +1,5 @@
+import { assert } from 'chai'
+
 describe('🎥 Player:', function () {
   const videoId = '1mQRk9d7wgOJ'
   const videoElementSelector = '[data-test-id="player"] video'
@@ -8,7 +10,15 @@ describe('🎥 Player:', function () {
   const volumeButtonSelector = '[data-test-id="volume-button"]'
   const qualityButtonSelector = '[data-test-id="playback-levels-button"]'
   const qualityMenuSelector = '[data-test-id="playback-levels-popover"]'
+  const qualityCloseButtonSelector =
+    '[data-test-id="playback-levels-close-button"]'
   const levelSelector = '[data-test-id="playback-level"]'
+  const walletButtonSelector = '[data-test-id="wallet-info-button"]'
+  const walletPopoverSelector = '[data-test-id="wallet-info-popover"]'
+  const walletInfoAddressSelector = '[data-test-id="wallet-info-address"]'
+  const walletInfoCloseButtonSelector =
+    '[data-test-id="wallet-info-close-button"]'
+  const ptiBalanceSelector = '[data-test-id="pti-balance"]'
 
   const goToTestVideoUrl = ({ embed, overrideVideoId } = {}) => {
     browser.url(
@@ -122,6 +132,63 @@ describe('🎥 Player:', function () {
           qualityMenuSelector,
           controlsSelector,
           videoElementSelector
+        ).value
+    )
+  }
+
+  const assertWalletInfoIsNotVisible = () => {
+    browser.waitUntil(() => !browser.isVisible(walletPopoverSelector))
+  }
+
+  const assertWalletInfoIsVisible = () => {
+    browser.waitUntil(
+      () =>
+        browser.execute(
+          (
+            walletPopoverSelector,
+            controlsSelector,
+            videoElementSelector,
+            ptiBalanceSelector,
+            walletInfoAddressSelector
+          ) => {
+            const videoEl = document.querySelector(videoElementSelector)
+            const videoRect = videoEl.getBoundingClientRect()
+            const controlsEl = document.querySelector(controlsSelector)
+            const controlsRect = controlsEl.getBoundingClientRect()
+            const walletEl = document.querySelector(walletPopoverSelector)
+            const walletRect = walletEl.getBoundingClientRect()
+
+            const walletIsVerticallyContained =
+              controlsRect.y > walletRect.y + walletRect.height &&
+              videoRect.y < walletRect.y
+
+            const walletIsHorizontallyContained =
+              videoRect.x < walletRect.x &&
+              videoRect.x + videoRect.width > walletRect.x + walletRect.width
+
+            const balanceEl = walletEl.querySelector(ptiBalanceSelector)
+            const balanceText = balanceEl.innerText
+            const balanceTextIsExpected =
+              balanceText.indexOf('PTI') === balanceText.length - 3 &&
+              balanceText.length > 3
+
+            const addressEl = walletEl.querySelector(walletInfoAddressSelector)
+            const addressText = addressEl.innerText
+            const addressTextIsExpected =
+              addressText === window.paratii.config.account.address
+
+            return (
+              walletIsVerticallyContained &&
+              walletIsHorizontallyContained &&
+              balanceTextIsExpected &&
+              addressTextIsExpected
+            )
+          },
+          walletPopoverSelector,
+          controlsSelector,
+          videoElementSelector,
+          ptiBalanceSelector,
+          walletInfoAddressSelector
         ).value
     )
   }
@@ -301,18 +368,7 @@ describe('🎥 Player:', function () {
       assertControlsAreVisible()
     })
 
-    it('should close the quality menu when the quality button is clicked', () => {
-      goToTestVideoUrl({ embed })
-      browser.moveToObject(overlaySelector)
-      assertQualityPopoverIsNotVisible()
-      assertControlsAreVisible()
-      browser.waitAndClick(qualityButtonSelector)
-      assertQualityPopoverIsVisible()
-      browser.waitAndClick(qualityButtonSelector)
-      assertQualityPopoverIsNotVisible()
-    })
-
-    it('should hide the controls after the quality menu is dismissed', () => {
+    it('should close the quality menu and hide the controls when the quality button is clicked again', () => {
       goToTestVideoUrl({ embed })
       browser.moveToObject(overlaySelector)
       assertQualityPopoverIsNotVisible()
@@ -322,6 +378,70 @@ describe('🎥 Player:', function () {
       browser.waitAndClick(qualityButtonSelector)
       assertQualityPopoverIsNotVisible()
       assertControlsAreHidden()
+    })
+
+    it('should close the quality menu and hide the controls when the close button is clicked', () => {
+      goToTestVideoUrl({ embed })
+      browser.moveToObject(overlaySelector)
+      assertQualityPopoverIsNotVisible()
+      assertControlsAreVisible()
+      browser.waitAndClick(qualityButtonSelector)
+      assertQualityPopoverIsVisible()
+      browser.waitAndClick(qualityCloseButtonSelector)
+      assertQualityPopoverIsNotVisible()
+      assertControlsAreHidden()
+    })
+
+    describe('wallet info', () => {
+      if (embed) {
+        it('should show the wallet info when the wallet button is clicked', () => {
+          goToTestVideoUrl({ embed })
+          browser.moveToObject(overlaySelector)
+          assertWalletInfoIsNotVisible()
+          browser.waitAndClick(walletButtonSelector)
+          assertWalletInfoIsVisible()
+        })
+
+        it('should not dismiss the controls as long as the wallet info is being displayed', () => {
+          goToTestVideoUrl({ embed })
+          browser.moveToObject(overlaySelector)
+          assertWalletInfoIsNotVisible()
+          browser.waitAndClick(walletButtonSelector)
+          assertWalletInfoIsVisible()
+          assertControlsAreVisible()
+          browser.pause(5000)
+          assertControlsAreVisible()
+        })
+
+        it('should close the wallet info menu and hide the controls when the button is clicked again', () => {
+          goToTestVideoUrl({ embed })
+          browser.moveToObject(overlaySelector)
+          assertWalletInfoIsNotVisible()
+          browser.waitAndClick(walletButtonSelector)
+          assertWalletInfoIsVisible()
+          browser.waitAndClick(walletButtonSelector)
+          assertWalletInfoIsNotVisible()
+          assertControlsAreHidden()
+        })
+
+        it('should close the wallet info and hide the controls menu when the close button is clicked', () => {
+          goToTestVideoUrl({ embed })
+          browser.moveToObject(overlaySelector)
+          assertWalletInfoIsNotVisible()
+          browser.waitAndClick(walletButtonSelector)
+          assertWalletInfoIsVisible()
+          browser.waitAndClick(walletInfoCloseButtonSelector)
+          assertWalletInfoIsNotVisible()
+          assertControlsAreHidden()
+        })
+      } else {
+        it('should not show the wallet info button', () => {
+          goToTestVideoUrl({ embed })
+          browser.moveToObject(overlaySelector)
+          assertWalletInfoIsNotVisible()
+          assert.equal(browser.isVisible(walletButtonSelector), false)
+        })
+      }
     })
   }
 

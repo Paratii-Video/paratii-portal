@@ -121,7 +121,10 @@ class PlaybackLevels extends React.Component<Props> {
         <Wrapper>
           <TopBar>
             <Title>Video Quality</Title>
-            <CloseButton onClick={onClose} />
+            <CloseButton
+              data-test-id="playback-levels-close-button"
+              onClick={onClose}
+            />
           </TopBar>
           <LevelsList offsetXPercentage={offsetXPercentage}>
             {playbackLevels.map((level: PlaybackLevel, index: number) => (

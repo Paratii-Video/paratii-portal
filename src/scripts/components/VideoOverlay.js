@@ -184,6 +184,7 @@ class VideoOverlay extends Component<Props> {
                     color={
                       activePlugin === PLAYER_PLUGIN.WALLET ? Colors.purple : ''
                     }
+                    data-test-id="wallet-info-button"
                     icon="/assets/img/profile.svg"
                     onClick={(e: Object) => {
                       e.stopPropagation()
