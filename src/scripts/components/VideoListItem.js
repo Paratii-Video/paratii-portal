@@ -135,7 +135,7 @@ class VideoListItem extends Component<Props, void> {
     let statusMessage = ''
 
     if (
-      video.storageStatus.name === 'success' &&
+      video.uploadStatus.name === 'success' &&
       video.transcodingStatus.name === 'success'
     ) {
       if (video.title.length < 1) {

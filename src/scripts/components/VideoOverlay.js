@@ -196,16 +196,14 @@ class VideoOverlay extends Component<Props> {
                   />
                 </ShareButton>
               )}
-              {!this.props.showShareModal && (
-                <ShareButton
-                  onClick={(e: Object) => {
-                    e.stopPropagation()
-                    toggleShareModal(e)
-                  }}
-                >
-                  <SVGIcon icon="icon-player-share" color="white" />
-                </ShareButton>
-              )}
+              <ShareButton
+                onClick={(e: Object) => {
+                  e.stopPropagation()
+                  toggleShareModal(e)
+                }}
+              >
+                <SVGIcon icon="icon-player-share" color="white" />
+              </ShareButton>
             </ButtonWrapper>
           </VideoInfo>
         </Overlay>

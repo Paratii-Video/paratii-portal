@@ -66,6 +66,8 @@ type State = {
 }
 
 const CONTROL_BUTTONS_HEIGHT: string = '50px'
+const Z_INDEX_SHADOW: string = '1'
+const Z_INDEX_CONTENT: string = '2'
 
 const Wrapper = styled.div`
   position: relative;
@@ -77,11 +79,52 @@ const Wrapper = styled.div`
   }
 `
 
+const Shadow = styled.span`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: ${Z_INDEX_SHADOW};
+  height: 180%;
+  width: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.2) 30%,
+    rgba(0, 0, 0, 0.55) 70%,
+    rgba(0, 0, 0, 0.7) 95%
+  );
+  opacity: ${({ transitionState }) => {
+    switch (transitionState) {
+      case TRANSITION_STATE.ENTERING:
+      case TRANSITION_STATE.EXITED:
+        return 0
+      case TRANSITION_STATE.EXITING:
+      case TRANSITION_STATE.ENTERED:
+      default:
+        return 1
+    }
+  }};
+  transition: opacity
+    ${({ transitionState }) => {
+    switch (transitionState) {
+      case TRANSITION_STATE.ENTERING:
+      case TRANSITION_STATE.EXITED:
+        return '0.7s'
+      case TRANSITION_STATE.EXITING:
+      case TRANSITION_STATE.ENTERED:
+      default:
+        return '0.3s'
+    }
+  }};
+`
+
 const Controls = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
+  position: relative;
+  z-index: ${Z_INDEX_CONTENT};
   align-items: center;
   background: ${({ theme }) => theme.colors.VideoPlayer.controls.background};
   transform: translate3d(
@@ -141,18 +184,10 @@ const RightControls = styled.div`
 const Time = styled.div`
   margin-right: ${CONTROLS_SPACING};
   user-select: none;
-
-  @media (max-width: 767px) {
-    display: none;
-  }
 `
 
 const VolumeBarWrapper = styled.div`
   position: relative;
-
-  @media (max-width: 767px) {
-    display: none;
-  }
 `
 
 const ControlButtonWrapper = styled.div`
@@ -270,6 +305,7 @@ class PlayerControls extends Component<Props, State> {
 
     return (
       <Wrapper>
+        <Shadow transitionState={transitionState} />
         <Controls transitionState={transitionState}>
           <ProgressWrapper
             onMouseDown={(e: Object) => {
