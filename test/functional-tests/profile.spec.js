@@ -25,12 +25,16 @@ import {
 } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
-describe('Profile and accounts workflow:', function () {
-  it('arriving on a fresh device should create a keystore in localstorage', async function () {
-    // as spec'd in https://github.com/Paratii-Video/paratii-portal/wiki/Portal-Specs:-wallet-handling
+describe('Profile and accounts workflow: @watch', function () {
+  beforeEach(function () {
+    browser.url(`http://localhost:8080`)
     browser.execute(nukeLocalStorage)
     browser.execute(nukeSessionStorage)
-    browser.url(getPath('/'))
+  })
+
+  it('arriving on a fresh device should create a keystore in localstorage', async function () {
+    // as spec'd in https://github.com/Paratii-Video/paratii-portal/wiki/Portal-Specs:-wallet-handling
+    browser.url(`http://localhost:8080`)
 
     // check localStorage
     let keystore = waitForKeystore(browser)
@@ -48,7 +52,7 @@ describe('Profile and accounts workflow:', function () {
     )
   })
 
-  it('register a new user', function () {
+  it.skip('register a new user', function () {
     browser.url(getPath('signup'))
 
     // fill in the form
@@ -89,7 +93,7 @@ describe('Profile and accounts workflow:', function () {
     // assertUserIsLoggedIn(browser)
   })
 
-  it('login', () => {
+  it.skip('login', () => {
     // clear Cookies
     clearCookies()
 

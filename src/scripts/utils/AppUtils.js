@@ -117,7 +117,7 @@ export const requestFullscreen = (element: HTMLElement): void => {
   }
 }
 
-export function add0x (input) {
+export function add0x (input: string) {
   // const input = input.toUpperCase();
   if (typeof input !== 'string') {
     return input

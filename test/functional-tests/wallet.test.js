@@ -1,6 +1,7 @@
 import {
   web3,
   nukeLocalStorage,
+  nukeSessionStorage,
   restoreMnemonic,
   walletRestored
 } from './test-utils/helpers.js'
@@ -12,6 +13,7 @@ describe('wallet:', function () {
   beforeEach(function () {
     browser.url(`http://localhost:8080`)
     browser.execute(nukeLocalStorage)
+    browser.execute(nukeSessionStorage)
   })
 
   it('If we have a secured wallet in localStorage, we open it with a Pin', function () {
