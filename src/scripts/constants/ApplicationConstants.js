@@ -31,3 +31,19 @@ export const TRANSITION_STATE = {
   APPEARING: 'appearing',
   APPEARED: 'appeared'
 }
+
+export const NOTIFICATION_LEVELS = {
+  SUCCESS: 'success',
+  ERROR: 'error',
+  WARNING: 'warning',
+  INFO: 'info'
+}
+
+export const NOTIFICATION_POSITIONS = {
+  TOP_RIGHT: 'tr',
+  TOP_LEFT: 'tl',
+  TOP_CENTER: 'tc',
+  BOTTOM_RIGHT: 'br',
+  BOTTOM_LEFT: 'bl',
+  BOTTOM_CENTER: 'bc'
+}

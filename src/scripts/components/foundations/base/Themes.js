@@ -36,7 +36,8 @@ const Themes = {
     },
     Popover: {
       background: Colors.blackLightTransparent,
-      color: Colors.white
+      color: Colors.white,
+      shadow: '0 3px 6px rgba(32, 35, 46, 0.7)'
     },
     TextField: {
       border: Colors.grayLight,
@@ -112,7 +113,8 @@ const Themes = {
       from: Colors.purpleGradientFrom,
       to: Colors.purpleGradientTo,
       scrubber: Colors.white,
-      base: Colors.grayLight
+      base: Colors.gray,
+      buffer: Colors.grayLight
     },
     VideoPlayer: {
       background: Colors.black,
@@ -121,13 +123,15 @@ const Themes = {
         icons: Colors.white
       },
       controls: {
-        background: Colors.black,
+        background: 'transparent',
         time: Colors.white
       },
       levels: {
         color: Colors.white,
-        border: Colors.whiteTransparent,
-        selectedBackground: Colors.blackDarkTransparent
+        selectedBackground: Colors.blackDark
+      },
+      share: {
+        background: Colors.blackDarkTransparent
       }
     },
     VideoDescription: {

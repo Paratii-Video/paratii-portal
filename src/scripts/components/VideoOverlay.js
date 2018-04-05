@@ -1,16 +1,25 @@
 /* @flow */
 
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
-import Button from 'components/foundations/Button'
+
+import Button, { SVGIcon } from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
-import TruncatedText from 'components/foundations/TruncatedText'
 import PlayerControlsContainer from 'containers/PlayerControlsContainer'
 import VideoRecord from 'records/VideoRecords'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
-import { CONTROLS_HEIGHT } from 'constants/UIConstants'
 
-import type { TransitionState } from 'types/ApplicationTypes'
+import { List as ImmutableList } from 'immutable'
+
+import IconButton from 'components/foundations/buttons/IconButton'
+import PlaybackLevels from 'components/widgets/PlaybackLevels'
+import WalletInfoContainer from 'containers/widgets/WalletInfoContainer'
+import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
+import { PlaybackLevel } from 'records/PlayerRecords'
+import { OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
+import Colors from 'components/foundations/base/Colors'
+
+import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
 
 type Props = {
   video: ?VideoRecord,
@@ -24,7 +33,11 @@ type Props = {
   onScrub: (percentage: number) => void,
   onVolumeChange: (percentage: number) => void,
   onToggleMute: (mute: boolean) => void,
-  onPlaybackLevelChange: (levelId: number) => void
+  playbackLevels: ImmutableList<PlaybackLevel>,
+  onPlaybackLevelChange: (levelId: number) => void,
+  toggleActivePlugin: (plugin: PlayerPlugin) => void,
+  currentPlaybackLevel: ?PlaybackLevel,
+  activePlugin: ?PlayerPlugin
 }
 
 const Wrapper = styled.div`
@@ -39,7 +52,7 @@ const overlayPadding: string = '20px 25px 0'
 
 const Overlay = styled.div`
   width: 100%;
-  flex: 0 0 calc(100% - ${CONTROLS_HEIGHT});
+  flex: 0 1 100%;
   display: flex;
   flex-direction: column;
   color: white;
@@ -57,12 +70,13 @@ const Overlay = styled.div`
   }};
   transition: all ${({ theme }) => theme.animation.time.repaint}
     ${({ theme }) => theme.animation.ease.smooth};
+  cursor: pointer;
 `
 
 const VideoInfo = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex: 1 0 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
   padding: ${overlayPadding};
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   transform: translateY(
@@ -78,43 +92,35 @@ const VideoInfo = styled.div`
     }
   }}
   );
-  transition: all ${({ theme }) => theme.animation.time.repaint}
+  transition: transform
+    ${({ transitionState }) => (TRANSITION_STATE.EXITED ? '0.6s' : '0.9s')}
     ${({ theme }) => theme.animation.ease.smooth};
 `
 
 const PlayerTitle = Title.extend`
   color: ${props => props.theme.colors.VideoPlayer.header.title};
-  flex: 0 0 75%;
   max-width: 75%;
 `
 
-const ButtonGroup = styled.div`
-  align-items: center;
+const ButtonWrapper = styled.div`
+  position: absolute;
+  top: 30px;
+  right: 25px;
   display: flex;
   flex-direction: row;
-  flex: 1 0 0;
   justify-content: flex-end;
   opacity: ${({ hide }) => (hide ? 0 : 1)};
-`
-
-const ButtonWrapper = styled.div`
-  width: 25px;
-  height: 25px;
+  height: ${OVERLAY_BUTTONS_HEIGHT};
 `
 
 const ShareButton = Button.extend`
-  height: 18px;
-  position: absolute;
-  right: 25px;
-  top: 28px;
-  width: 30px;
-`
+  height: 20px;
+  margin-left: 10px;
+  width: 26px;
 
-const SVGButton = styled.svg`
-  fill: ${props => props.theme.colors.VideoPlayer.header.icons};
-  display: block;
-  height: 100%;
-  width: 100%;
+  @media (max-width: 768px) {
+    width: 20px;
+  }
 `
 
 class VideoOverlay extends Component<Props> {
@@ -124,8 +130,36 @@ class VideoOverlay extends Component<Props> {
     return (video && (video.get('title') || video.get('filename'))) || ''
   }
 
+  renderPlugins () {
+    const {
+      activePlugin,
+      currentPlaybackLevel,
+      onPlaybackLevelChange,
+      playbackLevels,
+      toggleActivePlugin
+    } = this.props
+
+    return (
+      <Fragment>
+        <PlaybackLevels
+          open={activePlugin === PLAYER_PLUGIN.PLAYBACK_LEVELS}
+          currentPlaybackLevel={currentPlaybackLevel}
+          playbackLevels={playbackLevels}
+          onPlaybackLevelChange={onPlaybackLevelChange}
+          onClose={() => toggleActivePlugin()}
+        />
+        <WalletInfoContainer
+          open={activePlugin === PLAYER_PLUGIN.WALLET}
+          onClose={() => toggleActivePlugin()}
+        />
+      </Fragment>
+    )
+  }
+
   render () {
     const {
+      activePlugin,
+      isEmbed,
       onClick,
       onScrub,
       onVolumeChange,
@@ -134,35 +168,43 @@ class VideoOverlay extends Component<Props> {
       togglePlayPause,
       toggleShareModal,
       toggleFullscreen,
+      toggleActivePlugin,
       transitionState
     } = this.props
     return (
       <Wrapper>
+        {this.renderPlugins()}
         <Overlay
           data-test-id="video-overlay"
           onClick={onClick}
           transitionState={transitionState}
         >
           <VideoInfo transitionState={transitionState}>
-            <PlayerTitle small>
-              <TruncatedText>{this.getVideoTitle()}</TruncatedText>
-            </PlayerTitle>
-            <ButtonGroup>
-              <ButtonWrapper>
-                <ShareButton
-                  onClick={(e: Object) => {
-                    e.stopPropagation()
-                    toggleShareModal(e)
-                  }}
-                >
-                  {!this.props.showShareModal && (
-                    <SVGButton>
-                      <use xlinkHref="#icon-player-share" />
-                    </SVGButton>
-                  )}
+            {isEmbed && <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>}
+            <ButtonWrapper>
+              {isEmbed && (
+                <ShareButton>
+                  <IconButton
+                    color={
+                      activePlugin === PLAYER_PLUGIN.WALLET ? Colors.purple : ''
+                    }
+                    icon="/assets/img/profile.svg"
+                    onClick={(e: Object) => {
+                      e.stopPropagation()
+                      toggleActivePlugin(PLAYER_PLUGIN.WALLET)
+                    }}
+                  />
                 </ShareButton>
-              </ButtonWrapper>
-            </ButtonGroup>
+              )}
+              <ShareButton
+                onClick={(e: Object) => {
+                  e.stopPropagation()
+                  toggleShareModal(e)
+                }}
+              >
+                <SVGIcon icon="icon-player-share" color="white" />
+              </ShareButton>
+            </ButtonWrapper>
           </VideoInfo>
         </Overlay>
         <PlayerControlsContainer

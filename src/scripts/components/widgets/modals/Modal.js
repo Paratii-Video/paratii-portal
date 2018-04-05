@@ -1,6 +1,7 @@
 /* @flow */
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { Z_INDEX_MODAL } from 'constants/UIConstants'
 import Button from 'components/foundations/Button'
 
 import ModalStake from 'containers/widgets/modals/ModalStakeContainer' // need to receive any content
@@ -29,7 +30,7 @@ const Wrapper = styled.div`
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 999;
+  z-index: ${Z_INDEX_MODAL};
 `
 
 const Background = styled.span`

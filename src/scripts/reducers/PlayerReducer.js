@@ -14,7 +14,7 @@ import {
   PLAYER_UPDATE_VOLUME,
   PLAYBACK_LEVELS_LOADED,
   PLAYBACK_LEVEL_SET,
-  PLAYER_SET_ACTIVE_PLUGIN,
+  PLAYER_TOGGLE_ACTIVE_PLUGIN,
   PLAYER_RESET
 } from 'constants/ActionConstants'
 
@@ -61,10 +61,14 @@ const reducer = {
     state: PlayerRecord,
     action: Action<number>
   ): PlayerRecord => state.set('currentPlaybackLevelId', action.payload),
-  [PLAYER_SET_ACTIVE_PLUGIN]: (
+  [PLAYER_TOGGLE_ACTIVE_PLUGIN]: (
     state: PlayerRecord,
     action: Action<?PlayerPlugin>
-  ): PlayerRecord => state.set('activePlugin', action.payload),
+  ): PlayerRecord =>
+    state.set(
+      'activePlugin',
+      state.get('activePlugin') === action.payload ? null : action.payload
+    ),
   [PLAYER_RESET]: () => new PlayerRecord()
 }
 

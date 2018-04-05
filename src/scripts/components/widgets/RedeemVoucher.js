@@ -68,7 +68,7 @@ class RedeemVoucher extends Component<Props, Object> {
         loadBalances()
         const amount = String(resp)
         this.props.notification(
-          { title: 'Success', message: `You have earned ${amount} PTI.` },
+          { title: 'Success', message: `You have received ${amount} PTI.` },
           'success'
         )
         this.setState({

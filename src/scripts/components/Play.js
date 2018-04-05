@@ -6,10 +6,11 @@ import styled from 'styled-components'
 import debounce from 'lodash.debounce'
 import Transition from 'react-transition-group/Transition'
 import TimeFormat from 'hh-mm-ss'
+import playerjs from 'player.js'
 
 import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
-import VideoOverlay from 'components/VideoOverlay'
+import VideoOverlayContainer from 'containers/VideoOverlayContainer'
 import Button from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
@@ -105,7 +106,6 @@ const PlayerWrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  overflow: hidden;
 `
 
 const Player = styled.div`
@@ -121,18 +121,17 @@ const OverlayWrapper = styled.div`
   width: 100%;
   height: 100%;
   z-index: 10;
-  cursor: pointer;
 `
 
 const ShareOverlay = styled.div`
   align-items: center;
-  background-color: ${props => props.theme.colors.Modal.background};
+  background-color: ${props => props.theme.colors.VideoPlayer.share.background};
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: center;
   left: 0;
-  opacity: ${props => (props.show ? 0.9 : 0)};
+  opacity: ${props => (props.show ? 1 : 0)};
   position: absolute;
   pointer-events: ${props => (!props.show ? 'none' : null)};
   transition: opacity ${props => props.theme.animation.time.repaint};
@@ -213,6 +212,10 @@ const SVG = styled.svg`
 
 const PlayInfoHighlight = Text.withComponent('span')
 
+const DescriptionWrapper = styled.div`
+  margin-top: 30px;
+`
+
 const HIDE_CONTROLS_THRESHOLD: number = 2000
 
 class Play extends Component<Props, State> {
@@ -222,6 +225,7 @@ class Play extends Component<Props, State> {
   lastMouseMove: number
   playerHideTimeout: number
   wrapperRef: ?HTMLElement
+  playerWrapperRef: ?HTMLElement
   stagedPlaybackLevel: number
 
   constructor (props: Props) {
@@ -550,11 +554,20 @@ class Play extends Component<Props, State> {
     }
   }
 
+  configureVideoAdapter = (): void => {
+    if (this.playerWrapperRef) {
+      const videoEl: ?HTMLElement = this.playerWrapperRef.querySelector('video')
+
+      if (videoEl) {
+        const adapter = playerjs.HTML5Adapter(videoEl)
+        adapter.ready()
+      }
+    }
+  }
+
   createPlayer = (video: VideoRecord): void => {
     const { updateVolume } = this.props
-    if (this.player && this.player.destroy) {
-      this.player.destroy()
-    }
+
     if (!video.ipfsHash) {
       throw new Error("Can't create player without ipfsHash")
     }
@@ -563,6 +576,10 @@ class Play extends Component<Props, State> {
       poster = video.thumbnails.get(0)
     }
     import('paratii-mediaplayer').then(CreatePlayer => {
+      if (this.player && this.player.destroy) {
+        this.player.destroy()
+      }
+
       this.player = CreatePlayer({
         selector: `#${PLAYER_ID}`,
         source: `https://gateway.paratii.video/ipfs/${
@@ -577,6 +594,7 @@ class Play extends Component<Props, State> {
       })
 
       this.bindClapprEvents()
+      this.configureVideoAdapter()
 
       if (this.player) {
         updateVolume(this.player.getVolume())
@@ -695,7 +713,7 @@ class Play extends Component<Props, State> {
                     onMouseLeave={this.onMouseLeave}
                     onMouseMove={this.onMouseMove}
                   >
-                    <VideoOverlay
+                    <VideoOverlayContainer
                       onClick={this.onOverlayClick}
                       video={video}
                       isEmbed={isEmbed}
@@ -718,7 +736,12 @@ class Play extends Component<Props, State> {
                   </OverlayWrapper>
                 )}
               </Transition>
-              <Player id={PLAYER_ID} />
+              <Player
+                id={PLAYER_ID}
+                innerRef={(ref: HTMLElement) => {
+                  this.playerWrapperRef = ref
+                }}
+              />
               {this.props.video ? (
                 <ShareOverlay show={this.state.showShareModal}>
                   <CloseButton onClick={this.toggleShareModal}>
@@ -770,46 +793,52 @@ class Play extends Component<Props, State> {
           </VideoWrapper>
           {!isEmbed &&
             video && (
-              <PlayInfo>
-                {video.title && <Title small>{video.title}</Title>}
-                {video.author && <Text>By {video.author}</Text>}
-                {video.like && (
-                  <PlayInfoButtons>
-                    <ButtonIcon>
-                      <SVG>
-                        <use xlinkHref="#icon-play-view" />
-                      </SVG>
-                      <Text small gray>
+            <PlayInfo>
+              {(video.title || video.filename) && (
+                <Title small>{video.title || video.filename}</Title>
+              )}
+              {video.author && <Text>By {video.author}</Text>}
+              {video.share && (
+                <PlayInfoButtons>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-view" />
+                    </SVG>
+                    <Text small gray>
                         0
-                      </Text>
-                    </ButtonIcon>
-                    <ButtonIcon>
-                      <SVG>
-                        <use xlinkHref="#icon-play-like" />
-                      </SVG>
-                      <Text small gray>
+                    </Text>
+                  </ButtonIcon>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-like" />
+                    </SVG>
+                    <Text small gray>
                         0
-                      </Text>
-                    </ButtonIcon>
-                    <ButtonIcon>
-                      <SVG>
-                        <use xlinkHref="#icon-play-dislike" />
-                      </SVG>
-                      <Text small gray>
+                    </Text>
+                  </ButtonIcon>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-dislike" />
+                    </SVG>
+                    <Text small gray>
                         0
-                      </Text>
-                    </ButtonIcon>
-                  </PlayInfoButtons>
-                )}
-                <Text gray>
+                    </Text>
+                  </ButtonIcon>
+                </PlayInfoButtons>
+              )}
+              <Text gray>
                   Price{' '}
-                  <PlayInfoHighlight purple>
-                    {video.free ? 'Free' : 'Free'}
-                  </PlayInfoHighlight>
-                </Text>
-                {video.description && <Text>{video.description}</Text>}
-              </PlayInfo>
-            )}
+                <PlayInfoHighlight purple>
+                  {video.free ? 'Free' : 'Free'}
+                </PlayInfoHighlight>
+              </Text>
+              {video.description && (
+                <DescriptionWrapper>
+                  <Text>{video.description}</Text>
+                </DescriptionWrapper>
+              )}
+            </PlayInfo>
+          )}
         </Wrapper>
       )
     }

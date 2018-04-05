@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Transition from 'react-transition-group/Transition'
 
+import { Z_INDEX_POPUPS } from 'constants/UIConstants'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
 import type { TransitionState } from 'types/ApplicationTypes'
@@ -22,7 +23,7 @@ const Wrapper = styled.div`
   width: auto;
   height: auto;
   position: absolute;
-  border-radius: 2px;
+  border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.Popover.background};
   color: ${({ theme }) => theme.colors.Popover.color};
   top: ${({ top }) => top};
@@ -49,11 +50,13 @@ const Wrapper = styled.div`
       case TRANSITION_STATE.ENTERING:
       case TRANSITION_STATE.EXITING:
       default:
-        return '50%'
+        return '40px'
     }
   }}
   );
-  transition: all 250ms ${({ theme }) => theme.animation.ease.smooth};
+  transition: all 0.45s ${({ theme }) => theme.animation.ease.smooth};
+  z-index: ${Z_INDEX_POPUPS};
+  user-select: none;
 `
 
 class Popover extends React.Component<Props, void> {

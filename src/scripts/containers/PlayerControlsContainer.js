@@ -20,7 +20,7 @@ import {
   getCurrentPlaybackLevel,
   getPlaybackLevelsSorted
 } from 'selectors/PlayerSelectors'
-import { playerSetActivePlugin } from 'actions/PlayerActions'
+import { playerToggleActivePlugin } from 'actions/PlayerActions'
 
 import type { RootState } from 'types/ApplicationTypes'
 import type { Dispatch } from 'redux'
@@ -41,7 +41,7 @@ const mapStateToProps = (state: RootState): Object => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<*>): Object => ({
-  setActivePlugin: bindActionCreators(playerSetActivePlugin, dispatch)
+  toggleActivePlugin: bindActionCreators(playerToggleActivePlugin, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayerControls)
