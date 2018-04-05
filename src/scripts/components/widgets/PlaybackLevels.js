@@ -112,7 +112,12 @@ class PlaybackLevels extends React.Component<Props> {
     const numLevels: number = playbackLevels.size
 
     return (
-      <Popover open={open} bottom={`${CONTROLS_HEIGHT}`} right={0}>
+      <Popover
+        open={open}
+        bottom={`${CONTROLS_HEIGHT}`}
+        right={0}
+        data-test-id="playback-levels-popover"
+      >
         <Wrapper>
           <TopBar>
             <Title>Video Quality</Title>
@@ -121,6 +126,7 @@ class PlaybackLevels extends React.Component<Props> {
           <LevelsList offsetXPercentage={offsetXPercentage}>
             {playbackLevels.map((level: PlaybackLevel, index: number) => (
               <Level
+                data-test-id="playback-level"
                 numLevels={numLevels}
                 selected={selectedIndex === index}
                 key={level.get('id')}

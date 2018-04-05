@@ -1,11 +1,14 @@
 describe('🎥 Player:', function () {
-  const videoId = 'TXWzBRXgWytP'
+  const videoId = '1mQRk9d7wgOJ'
   const videoElementSelector = '[data-test-id="player"] video'
   const overlaySelector = '[data-test-id="video-overlay"]'
   const controlsSelector = '[data-test-id="player-controls"]'
   const playpauseButtonSelector = '[data-test-id="playpause-button"]'
   const fullscreenButtonSelector = '[data-test-id="fullscreen-button"]'
   const volumeButtonSelector = '[data-test-id="volume-button"]'
+  const qualityButtonSelector = '[data-test-id="playback-levels-button"]'
+  const qualityMenuSelector = '[data-test-id="playback-levels-popover"]'
+  const levelSelector = '[data-test-id="playback-level"]'
 
   const goToTestVideoUrl = ({ embed, overrideVideoId } = {}) => {
     browser.url(
@@ -87,6 +90,41 @@ describe('🎥 Player:', function () {
         }, videoElementSelector).value,
       true
     )
+
+  const assertQualityPopoverIsNotVisible = () => {
+    browser.waitUntil(() => !browser.isVisible(qualityMenuSelector))
+  }
+
+  const assertQualityPopoverIsVisible = () => {
+    browser.waitUntil(
+      () =>
+        browser.execute(
+          (qualityMenuSelector, controlsSelector, videoElementSelector) => {
+            const videoEl = document.querySelector(videoElementSelector)
+            const videoRect = videoEl.getBoundingClientRect()
+            const controlsEl = document.querySelector(controlsSelector)
+            const controlsRect = controlsEl.getBoundingClientRect()
+            const qualityEl = document.querySelector(qualityMenuSelector)
+            const qualityRect = qualityEl.getBoundingClientRect()
+
+            const qualityIsVerticallyContained =
+              controlsRect.y > qualityRect.y + qualityRect.height &&
+              videoRect.y < qualityRect.y
+
+            const qualityIsHorizontallyContained =
+              videoRect.x < qualityRect.x &&
+              videoRect.x + videoRect.width > qualityRect.x + qualityRect.width
+
+            return (
+              qualityIsVerticallyContained && qualityIsHorizontallyContained
+            )
+          },
+          qualityMenuSelector,
+          controlsSelector,
+          videoElementSelector
+        ).value
+    )
+  }
 
   before(() => {
     browser.addCommand('waitUntilVideoIsPlaying', function (timeout = 20000) {
@@ -225,6 +263,65 @@ describe('🎥 Player:', function () {
       browser.moveToObject(overlaySelector)
       browser.waitAndClick(volumeButtonSelector)
       assertVolumeIsMuted()
+    })
+
+    it('should show the playback levels menu when the quality button is clicked', () => {
+      goToTestVideoUrl({ embed })
+      browser.moveToObject(overlaySelector)
+      assertQualityPopoverIsNotVisible()
+      browser.waitAndClick(qualityButtonSelector)
+      assertQualityPopoverIsVisible()
+      browser.waitUntil(
+        () =>
+          browser.execute(
+            (levelSelector, qualityMenuSelector) => {
+              const qualityEl = document.querySelector(qualityMenuSelector)
+              const levels = Array.prototype.slice.call(
+                qualityEl.querySelectorAll(levelSelector)
+              )
+              const firstLevelTextIsAutomatic = (levels[0].innerText =
+                'Automatic')
+
+              return firstLevelTextIsAutomatic && levels.length > 1
+            },
+            levelSelector,
+            qualityMenuSelector
+          ).value
+      )
+    })
+
+    it('should not dismiss the controls as long as the quality menu is visible', () => {
+      goToTestVideoUrl({ embed })
+      browser.moveToObject(overlaySelector)
+      assertQualityPopoverIsNotVisible()
+      assertControlsAreVisible()
+      browser.waitAndClick(qualityButtonSelector)
+      assertQualityPopoverIsVisible()
+      browser.pause(5000)
+      assertControlsAreVisible()
+    })
+
+    it('should close the quality menu when the quality button is clicked', () => {
+      goToTestVideoUrl({ embed })
+      browser.moveToObject(overlaySelector)
+      assertQualityPopoverIsNotVisible()
+      assertControlsAreVisible()
+      browser.waitAndClick(qualityButtonSelector)
+      assertQualityPopoverIsVisible()
+      browser.waitAndClick(qualityButtonSelector)
+      assertQualityPopoverIsNotVisible()
+    })
+
+    it('should hide the controls after the quality menu is dismissed', () => {
+      goToTestVideoUrl({ embed })
+      browser.moveToObject(overlaySelector)
+      assertQualityPopoverIsNotVisible()
+      assertControlsAreVisible()
+      browser.waitAndClick(qualityButtonSelector)
+      assertQualityPopoverIsVisible()
+      browser.waitAndClick(qualityButtonSelector)
+      assertQualityPopoverIsNotVisible()
+      assertControlsAreHidden()
     })
   }
 

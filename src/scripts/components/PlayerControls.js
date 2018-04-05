@@ -336,6 +336,7 @@ class PlayerControls extends Component<Props, State> {
                       ? Colors.purple
                       : undefined
                   }
+                  data-test-id="playback-levels-button"
                   disabled={!playbackLevels.size}
                   icon={qualityIcon}
                   onClick={() => {
@@ -346,6 +347,7 @@ class PlayerControls extends Component<Props, State> {
               {getFullscreenEnabled() && (
                 <ControlButtonWrapper>
                   <IconButton
+                    data-test-id="fullscreen-button"
                     icon={isFullscreen ? normalscreenIcon : fullscreenIcon}
                     onClick={() => {
                       toggleFullscreen(!isFullscreen)
