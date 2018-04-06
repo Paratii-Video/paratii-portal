@@ -70,12 +70,10 @@ export const loadBalances = () => (dispatch: Dispatch) => {
 
 export const setAddressAndBalance = () => (dispatch: Dispatch) => {
   // FIXME this is a temporary fix because paratii lib not sync eth.wallet and config.address
-  const address: string =
-    paratii.eth.wallet[0].address || paratii.config.account.address
-  console.log(address)
-  if (address) {
+  if (paratii.eth.wallet[0]) {
+    const address: string = paratii.eth.wallet[0].address
     paratii.eth.setAccount(address)
-    dispatch(setWalletAddress({ address }))
+    dispatch(setWalletAddress({ address: address }))
   }
   dispatch(loadBalances())
 }
