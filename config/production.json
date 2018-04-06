@@ -3,10 +3,6 @@
     "provider": "https://newchain.paratii.video",
     "registryAddress": "0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F"
   },
-  "account": {
-    "address": "0xCbe4f07b343171ac37055B25a5266f48f6945b7d",
-    "privateKey": "0x399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6"
-  },
   "db": {
     "provider": "https://db.paratii.video"
   }
