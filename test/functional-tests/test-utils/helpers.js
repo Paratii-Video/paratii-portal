@@ -9,7 +9,6 @@
 //
 
 import { Paratii, utils } from 'paratii-lib'
-// import testConfig from '../../../config/test.json'
 import testConfig from '../../../config/test.json'
 
 const fs = require('fs')
@@ -26,10 +25,15 @@ if (fs.existsSync(path.resolve(__dirname, registryConfigPath))) {
   registryAddressConfig = require(registryConfigPath)
 }
 
+export const DEFAULT_PASSWORD = ''
+export const WALLET_KEY_ANON = 'keystore-anon'
+export const MNEMONIC_KEY_ANON = 'mnemonic-anon'
+export const WALLET_KEY_SECURE = 'keystore-secure'
+
 // this address will be used as the owner address for all paratii contracts in the tests
-let address = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
+let address = '0xCbe4f07b343171ac37055B25a5266f48f6945b7d'
 let privateKey =
-  '399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6'
+  '0x399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6'
 
 // some other addresses and keys used in testing
 let address1 = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
@@ -42,7 +46,11 @@ let privateKey17 =
 let mnemonic23 =
   'jelly better achieve collect unaware mountain thought cargo oxygen act hood bridge'
 // this is the first HD address generated
-let address23 = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
+let address23 = '0xCbe4f07b343171ac37055B25a5266f48f6945b7d'
+
+export let restoreMnemonic =
+  'design under day valve eagle exact night maid circle hammer polar ramp'
+export let restoredAddress = '0x500B678cAC6BEB4092662437698Daa49c5d2E267'
 
 export {
   address,
@@ -59,9 +67,9 @@ export const SEED =
   'road inherit leave arm unlock estate option merge mechanic rate blade dumb'
 export const USERADDRESS = '0xdef933d2d0203821af2a1579d77fb42b4f8dcf7b'
 
+testConfig.eth.registryAddress = registryAddressConfig.registryAddress
 export const paratii = new Paratii({
-  ...testConfig,
-  ...registryAddressConfig
+  ...testConfig
 })
 
 export const getPath = path => {

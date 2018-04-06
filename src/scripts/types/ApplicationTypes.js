@@ -99,6 +99,7 @@ export type ParatiiLib = {
     }
   },
   core: {
+    migrateAccount: (address: string) => Object,
     vids: {
       get: (id: string) => ?Object,
       create: Object => Object,
@@ -111,10 +112,11 @@ export type ParatiiLib = {
     wallet: {
       decrypt: (string, password: string) => Object,
       encrypt: (password: string) => Object,
-      // newMnemonic: () => string,
+      newMnemonic: () => string,
       getMnemonic: () => Promise<string>,
-      create: () => Object,
-      clear: () => void
+      create: (num: ?number, mnemonic: ?string) => Object,
+      clear: () => void,
+      length: number
     },
     vids: {
       get: (id: string) => ?Object,
@@ -123,7 +125,7 @@ export type ParatiiLib = {
     vouchers: {
       redeem: (value: string) => Promise<Object>
     },
-    setAccount: (string, string) => ?Object,
+    setAccount: (string, ?string) => ?Object,
     balanceOf: (address: string, token: ?string) => Promise<Object>,
     web3: {
       utils: {

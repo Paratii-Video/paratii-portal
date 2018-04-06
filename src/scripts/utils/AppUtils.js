@@ -35,14 +35,11 @@ export const getParatiiConfig = (env: ?string = 'development'): Object => {
   }
 
   // If a registry address is not given in the config file, we read it from the environment
-  if (config.registryAddress === undefined) {
+  if (config.eth.registryAddress === undefined) {
     const registryAddress = process.env.REGISTRY_ADDRESS
-
     if (registryAddress) {
-      return {
-        ...config,
-        registryAddress
-      }
+      config.eth.registryAddress = registryAddress
+      return config
     }
   }
 
@@ -118,6 +115,16 @@ export const requestFullscreen = (element: HTMLElement): void => {
     // $FlowFixMe
     element.webkitRequestFullscreen()
   }
+}
+
+export function add0x (input: string) {
+  // const input = input.toUpperCase();
+  if (typeof input !== 'string') {
+    return input
+  } else if (input.length < 2 || input.slice(0, 2) !== '0x') {
+    return `0x${input}`
+  }
+  return input
 }
 
 export const getFullscreenEnabled = () =>

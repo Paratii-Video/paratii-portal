@@ -1,15 +1,18 @@
+// import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
 import MainNavigation from 'components/structures/header/MainNavigation'
 import { Link } from 'react-router-dom'
+import { add0x } from 'utils/AppUtils'
 import Blockies from 'react-blockies'
 
 import { Z_INDEX_HEADER } from 'constants/UIConstants'
 
 type Props = {
-  children: Object
+  children: Object,
+  userAddress: String
 }
 
 const Header = styled.header`
@@ -106,7 +109,7 @@ const SVG = styled.svg`
 `
 
 class MainHeader extends Component<Props, void> {
-  constructor (props) {
+  constructor (props: Props) {
     super(props)
     this.state = {
       navOpen: false,
@@ -183,6 +186,16 @@ class MainHeader extends Component<Props, void> {
   }
 
   render () {
+    let userAvatar = ''
+    if (this.props.userAddress) {
+      const lowerAddress = add0x(this.props.userAddress)
+      userAvatar = (
+        <ProfileAvatarLink to="/wallet">
+          <Blockies seed={lowerAddress} size={10} scale={4} />
+        </ProfileAvatarLink>
+      )
+    }
+
     return (
       <Header
         displayShadow={this.state.displayShadow}
@@ -193,14 +206,8 @@ class MainHeader extends Component<Props, void> {
           <MainHeaderLogo />
           <HeaderContent open={this.state.navOpen}>
             <HeaderButtons>
-              <MainNavigation closeNav={this.closeNav} />
-              <ProfileAvatarLink onClick={this.closeNav} to="/wallet">
-                <Blockies
-                  seed={window.paratii.config.account.address}
-                  size={10}
-                  scale={4}
-                />
-              </ProfileAvatarLink>
+              <MainNavigation />
+              {userAvatar}
             </HeaderButtons>
           </HeaderContent>
           <MobileButton onClick={this.toggleNav} open={this.state.navOpen}>
