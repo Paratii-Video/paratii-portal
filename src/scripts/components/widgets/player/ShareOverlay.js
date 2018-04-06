@@ -17,9 +17,14 @@ type Props = {
   portalUrl?: string,
   videoId?: string,
   videoLabelUrl?: string,
-  shareOptions?: Array,
+  shareOptions?: Array<Object>,
   onToggle: (e: Object) => void,
   showNotification: (Notification, NotificationLevel) => void
+}
+
+type State = {
+  showEmbed: boolean,
+  embedOptions: Array<Object>
 }
 
 // z-index
@@ -141,9 +146,15 @@ const ShareLinkIcon = styled.img`
   width: 100%;
 `
 
-class ShareOverlay extends Component<Props> {
-  Array
-  constructor (props) {
+class ShareOverlay extends Component<Props, State> {
+  embedOptionsArray: Array<Object>
+  toggleShareContent: (e: Object) => void
+  getEmbedCode: () => void
+  toggleOption: (e: Object) => void
+  copyCodeToClipboard: (e: Object) => void
+  getUrl: () => string
+
+  constructor (props: Props) {
     super(props)
 
     this.embedOptionsArray = [
@@ -182,21 +193,29 @@ class ShareOverlay extends Component<Props> {
     this.getEmbedCode = this.getEmbedCode.bind(this)
     this.toggleOption = this.toggleOption.bind(this)
     this.copyCodeToClipboard = this.copyCodeToClipboard.bind(this)
+    this.getUrl = this.getUrl.bind(this)
+  }
+
+  getUrl () {
+    let linkHref = this.props.portalUrl || ''
+    linkHref += '/play/'
+    linkHref += this.props.videoId || ''
+    return linkHref
   }
 
   getEmbedCode () {
     let code: string =
-      '<iframe webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" src="' +
-      this.props.portalUrl +
-      '/embed/' +
-      this.props.videoId
+      '<iframe webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" src="'
+    code += this.props.portalUrl || ''
+    code += '/embed/'
+    code += this.props.videoId || ''
+
     let embedOptions: string = '?'
     this.state.embedOptions.map((opt: Object, index: number) => {
       embedOptions += opt.checked ? opt.value + '=' + opt.checked + '&' : ''
     })
-    code +=
-      embedOptions +
-      'type=mini" width="570" height="320" frameborder="0"></iframe>'
+    code += embedOptions
+    code += 'type=mini" width="570" height="320" frameborder="0"></iframe>'
     return code
   }
 
@@ -250,28 +269,24 @@ class ShareOverlay extends Component<Props> {
         </CloseButton>
         <Content show={!this.state.showEmbed}>
           <ShareTitle small>Share this video</ShareTitle>
-          <AnchorLink
-            href={this.props.portalUrl + 'play' + this.props.videoId}
-            target="_blank"
-            anchor
-            white
-          >
+          <AnchorLink href={this.getUrl()} target="_blank" anchor white>
             {this.props.videoLabelUrl}
           </AnchorLink>
           <ShareButtons>
-            {this.props.shareOptions.map((share: Object, index: number) => (
-              <Anchor
-                key={index}
-                href={share.href}
-                title={share.label}
-                target="_blank"
-                anchor
-              >
-                <ShareLinkIcon
-                  src={'/assets/svg/icons-share-' + share.icon + '.svg'}
-                />
-              </Anchor>
-            ))}
+            {this.props.shareOptions &&
+              this.props.shareOptions.map((share: Object, index: number) => (
+                <Anchor
+                  key={index}
+                  href={share.href}
+                  title={share.label}
+                  target="_blank"
+                  anchor
+                >
+                  <ShareLinkIcon
+                    src={'/assets/svg/icons-share-' + share.icon + '.svg'}
+                  />
+                </Anchor>
+              ))}
             <ShareLink onClick={this.toggleShareContent} title="Embed">
               <ShareLinkIcon src="/assets/svg/icons-embed-link.svg" />
             </ShareLink>
