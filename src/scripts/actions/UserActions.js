@@ -128,7 +128,7 @@ export const setupKeystore = () => async (
     const encryptedWallet = paratii.eth.wallet.encrypt(DEFAULT_PASSWORD)
     localStorage.setItem(WALLET_KEY_ANON, JSON.stringify(encryptedWallet))
   }
-  setAddressAndBalance()
+  dispatch(setAddressAndBalance())
 }
 
 export const secureKeystore = (password: string) => async (
@@ -160,7 +160,6 @@ export const secureKeystore = (password: string) => async (
         WALLET_KEY_SECURE,
         JSON.stringify(encryptedSecuredWallet)
       )
-      setAddressAndBalance()
     }
     paratii.eth.wallet.clear()
   } catch (error) {
@@ -193,14 +192,15 @@ export const secureKeystore = (password: string) => async (
       // Reload the new secure wallet from localStorage
       console.log('restore secure wallet')
       // const walletStringSecure: ?string = localStorage.getItem(WALLET_KEY_SECURE)
-
-      paratii.eth.wallet.decrypt(JSON.parse(encryptedSecuredWallet), password)
+      console.log(encryptedSecuredWallet)
+      paratii.eth.wallet.decrypt(encryptedSecuredWallet, password)
       dispatch(
         Notifications.success({
           title: 'Your wallet is now secured'
         })
       )
       localStorage.removeItem(MNEMONIC_KEY_ANON)
+      sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
       console.log('set address')
       console.log(paratii.eth.wallet[0].address)
     } catch (error) {
@@ -212,10 +212,7 @@ export const secureKeystore = (password: string) => async (
     }
   }
 
-  // FIXME this function doesn't work here, why?
-  // setAddressAndBalance()
-  dispatch(setWalletAddress({ address: paratii.eth.wallet[0].address }))
-  dispatch(loadBalances())
+  dispatch(setAddressAndBalance())
   // FIXME this is a temporary fix because paratii lib not sync eth.wallet and config.address
   paratii.eth.setAccount(paratii.eth.wallet[0].address)
 }
@@ -232,16 +229,14 @@ export const restoreKeystore = (mnemonic: string) => async (
   )
   try {
     paratii.eth.wallet.clear()
-    const wallet = await paratii.eth.wallet.create(1, mnemonic)
-
-    console.log(wallet)
+    await paratii.eth.wallet.create(1, mnemonic)
+    sessionStorage.setItem(MNEMONIC_KEY_TEMP, mnemonic)
     // Clear Paratii and remove keystore-anon
     dispatch(
       Notifications.success({
         title: 'Your wallet has been created'
       })
     )
-    setAddressAndBalance()
   } catch (error) {
     dispatch(
       Notifications.error({

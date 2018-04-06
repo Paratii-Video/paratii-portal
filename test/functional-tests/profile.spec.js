@@ -25,7 +25,7 @@ import {
 } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
-describe('Profile and accounts workflow: @watch', function () {
+describe('Profile and accounts workflow:', function () {
   beforeEach(function () {
     browser.url(`http://localhost:8080`)
     browser.execute(nukeLocalStorage)

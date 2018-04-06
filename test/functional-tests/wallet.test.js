@@ -3,7 +3,7 @@ import {
   nukeLocalStorage,
   nukeSessionStorage,
   restoreMnemonic,
-  walletRestored
+  restoredAddress
 } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
@@ -74,19 +74,22 @@ describe('wallet:', function () {
     browser.waitAndClick('[data-test-id="pin-continue"]')
     browser.waitForClickable('[data-test-id="user-address"]')
     const newAddress = browser.getText('[data-test-id="user-address"]')
+    browser.waitForClickable('[data-test-id="pti-balance"]')
     const balance = browser.getText('[data-test-id="pti-balance"]')
     // Check the if the address is the restored one
-    assert.equal(newAddress, walletRestored)
+    assert.equal(newAddress, restoredAddress)
     // We have a new account so the balance should be zero
     assert.equal(balance, '0')
   })
 
-  it('secure your wallet, transfer data to a new address @watch', function () {
+  it('secure your wallet, transfer data to a new address', function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
     })
-    // const anonAddress = browser.getText('[data-test-id="user-address"]')
+    browser.waitForClickable('[data-test-id="user-address"]')
+    const anonAddress = browser.getText('[data-test-id="user-address"]')
+    browser.waitForClickable('[data-test-id="pti-balance"]')
     const balance = browser.getText('[data-test-id="pti-balance"]')
     browser.waitAndClick('[data-test-id="secure-wallet"]')
     browser.pause(500)
@@ -110,8 +113,8 @@ describe('wallet:', function () {
     browser.waitAndClick('[data-test-id="button-4"]')
     browser.waitAndClick('[data-test-id="pin-continue"]')
     const newBalance = browser.getText('[data-test-id="pti-balance"]')
-    // Check the if the address is the restored one
-    // assert.equal(anonAddress, walletRestored)
+    // Check the if the restoredAddress is different than the anonAddress
+    assert.notEqual(anonAddress, restoredAddress)
     // We have a new account so the balance should be zero
     assert.equal(balance, newBalance)
   })
