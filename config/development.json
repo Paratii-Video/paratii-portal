@@ -3,7 +3,8 @@
     "provider": "http://localhost:8545"
   },
   "account": {
-    "mnemonic": "jelly better achieve collect unaware mountain thought cargo oxygen act hood bridge"
+    "address": "0xCbe4f07b343171ac37055B25a5266f48f6945b7d",
+    "privateKey": "0x399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6"
   },
   "db": {
     "provider": "http://localhost:3000/api/v1/"
