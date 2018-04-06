@@ -90,7 +90,7 @@ export type ClapprPlayer = EventEmitter & {
   seek: (time: number) => void
 }
 
-// TODO move this into paratii-lib repo
+// TODO move this into paratii-js repo
 export type ParatiiLib = {
   config: {
     account: {

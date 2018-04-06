@@ -8,7 +8,7 @@
 // */
 //
 
-import { Paratii, utils } from 'paratii-lib'
+import { Paratii, utils } from 'paratii-js'
 // import testConfig from '../../../config/test.json'
 import testConfig from '../../../config/test.json'
 

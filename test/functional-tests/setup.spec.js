@@ -22,7 +22,7 @@ before(async function (done) {
   //   await paratii.eth.deployContracts()
   //
   //   // we open the browser and save the registryAddress in localStorage
-  //   // where it will be picked up by paratii-lib (in ParatiiLib.js)
+  //   // where it will be picked up by paratii-js (in ParatiiLib.js)
   //   browser.url(`http://localhost:8080/`)
   //
   //   browser.execute(
