@@ -148,7 +148,7 @@
     "js-cookie": "^2.2.0",
     "lodash.debounce": "^4.0.8",
     "mux-embed": "^2.3.2",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#a9887b1dfb3d344718dd1a4859d91938c9ae2347",
+    "paratii-js": "github:Paratii-Video/paratii-js#bfb730a669f462c2c0ef946924551a9fb245ea5d",
     "paratii-mediaplayer": "^3.0.2",
     "player.js": "^0.1.0",
     "query-string": "^5.0.1",
