@@ -1,4 +1,5 @@
 import {
+  paratii,
   web3,
   nukeLocalStorage,
   nukeSessionStorage,
@@ -48,11 +49,14 @@ describe('wallet:', function () {
   //   assert.equal(balance, '21M')
   // })
 
-  it('restore your wallet using a seed', function () {
+  it('restore your wallet using a seed', async function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
     })
+    browser.waitForClickable('[data-test-id="pti-balance"]')
+    let balance = browser.getText('[data-test-id="pti-balance"]')
+    assert.equal(balance, '21M')
     browser.waitAndClick('[data-test-id="secure-wallet"]')
     browser.pause(500)
     browser.waitAndClick('[data-test-id="restore-account"]')
@@ -75,14 +79,14 @@ describe('wallet:', function () {
     browser.waitForClickable('[data-test-id="user-address"]')
     const newAddress = browser.getText('[data-test-id="user-address"]')
     browser.waitForClickable('[data-test-id="pti-balance"]')
-    const balance = browser.getText('[data-test-id="pti-balance"]')
+    balance = browser.getText('[data-test-id="pti-balance"]')
     // Check the if the address is the restored one
     assert.equal(newAddress, restoredAddress)
     // We have a new account so the balance should be zero
     assert.equal(balance, '0')
   })
 
-  it('secure your wallet, transfer data to a new address', function () {
+  it('secure your wallet, transfer data to a new address @watch', async function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
@@ -117,6 +121,9 @@ describe('wallet:', function () {
     assert.notEqual(anonAddress, restoredAddress)
     // We have a new account so the balance should be zero
     assert.equal(balance, newBalance)
+    // After the test we resend the money back to the default address
+    // await paratii.eth.transfer(anonAddress, 21000000000000000000000000, 'PTI')
+    await paratii.core.migrateAccount(anonAddress)
   })
 
   it.skip('should show ETH balance', function () {

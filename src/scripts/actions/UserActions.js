@@ -69,11 +69,10 @@ export const loadBalances = () => (dispatch: Dispatch) => {
 }
 
 export const setAddressAndBalance = () => (dispatch: Dispatch) => {
-  console.log('set address in redux')
-  dispatch(setWalletAddress({ address: paratii.eth.wallet[0].address }))
-  dispatch(loadBalances())
   // FIXME this is a temporary fix because paratii lib not sync eth.wallet and config.address
   paratii.eth.setAccount(paratii.eth.wallet[0].address)
+  dispatch(setWalletAddress({ address: paratii.eth.wallet[0].address }))
+  dispatch(loadBalances())
 }
 
 export const setupKeystore = () => async (
@@ -148,12 +147,8 @@ export const secureKeystore = (password: string) => async (
     })
   )
 
-  try {
-    // Create the new wallet based on the generated mnemonic
-    paratii.eth.wallet.clear()
-    await paratii.eth.wallet.create(1, mnemonic)
-    newWalletAddress = paratii.eth.wallet[0].address
-    console.log('new wallet address', newWalletAddress)
+  // There is non mnemonic means we arrive from restoreKeystore
+  if (!mnemonic) {
     encryptedSecuredWallet = await paratii.eth.wallet.encrypt(password)
     if (encryptedSecuredWallet) {
       localStorage.setItem(
@@ -161,60 +156,72 @@ export const secureKeystore = (password: string) => async (
         JSON.stringify(encryptedSecuredWallet)
       )
     }
-    paratii.eth.wallet.clear()
-  } catch (error) {
-    dispatch(
-      Notifications.error({
-        title: error.message
-      })
-    )
-    throw error
-  }
-
-  if (walletStringAnon) {
+  } else {
+    // Here we want to secure and migrate
     try {
-      // Restore anonymous account to sign the migration
-      paratii.eth.wallet.decrypt(JSON.parse(walletStringAnon), DEFAULT_PASSWORD)
-      console.log('migrate account')
-      await paratii.core.migrateAccount(newWalletAddress)
+      // Create the new wallet based on the generated mnemonic
+      paratii.eth.wallet.clear()
+      await paratii.eth.wallet.create(1, mnemonic)
+      newWalletAddress = paratii.eth.wallet[0].address
+      encryptedSecuredWallet = await paratii.eth.wallet.encrypt(password)
+      if (encryptedSecuredWallet) {
+        localStorage.setItem(
+          WALLET_KEY_SECURE,
+          JSON.stringify(encryptedSecuredWallet)
+        )
+      }
       paratii.eth.wallet.clear()
     } catch (error) {
-      // error opening the anonymous wallet
-      Notifications.error({
-        title: error.message
-      })
-      throw error
-    }
-  }
-
-  if (encryptedSecuredWallet) {
-    try {
-      // Reload the new secure wallet from localStorage
-      console.log('restore secure wallet')
-      // const walletStringSecure: ?string = localStorage.getItem(WALLET_KEY_SECURE)
-      console.log(encryptedSecuredWallet)
-      paratii.eth.wallet.decrypt(encryptedSecuredWallet, password)
       dispatch(
-        Notifications.success({
-          title: 'Your wallet is now secured'
+        Notifications.error({
+          title: error.message
         })
       )
-      localStorage.removeItem(MNEMONIC_KEY_ANON)
-      sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
-      console.log('set address')
-      console.log(paratii.eth.wallet[0].address)
-    } catch (error) {
-      // error opening the secure wallet
-      Notifications.error({
-        title: error.message
-      })
       throw error
     }
-  }
 
+    if (walletStringAnon) {
+      try {
+        // Restore anonymous account to sign the migration
+        paratii.eth.wallet.decrypt(
+          JSON.parse(walletStringAnon),
+          DEFAULT_PASSWORD
+        )
+        console.log('migrate account')
+        await paratii.core.migrateAccount(newWalletAddress)
+        paratii.eth.wallet.clear()
+      } catch (error) {
+        // error opening the anonymous wallet
+        Notifications.error({
+          title: error.message
+        })
+        throw error
+      }
+    }
+
+    if (encryptedSecuredWallet) {
+      try {
+        // Reload the new secure wallet from localStorage
+        console.log('restore secure wallet')
+        paratii.eth.wallet.decrypt(encryptedSecuredWallet, password)
+        dispatch(
+          Notifications.success({
+            title: 'Your wallet is now secured'
+          })
+        )
+        sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
+        console.log('set address')
+        console.log(paratii.eth.wallet[0].address)
+      } catch (error) {
+        // error opening the secure wallet
+        Notifications.error({
+          title: error.message
+        })
+        throw error
+      }
+    }
+  }
   dispatch(setAddressAndBalance())
-  // FIXME this is a temporary fix because paratii lib not sync eth.wallet and config.address
-  paratii.eth.setAccount(paratii.eth.wallet[0].address)
 }
 
 export const restoreKeystore = (mnemonic: string) => async (
@@ -230,7 +237,7 @@ export const restoreKeystore = (mnemonic: string) => async (
   try {
     paratii.eth.wallet.clear()
     await paratii.eth.wallet.create(1, mnemonic)
-    sessionStorage.setItem(MNEMONIC_KEY_TEMP, mnemonic)
+    // sessionStorage.setItem(MNEMONIC_KEY_TEMP, mnemonic)
     // Clear Paratii and remove keystore-anon
     dispatch(
       Notifications.success({
