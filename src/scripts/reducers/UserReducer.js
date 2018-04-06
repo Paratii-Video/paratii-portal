@@ -7,7 +7,8 @@ import {
   LOGIN_REQUESTED,
   LOGIN_SUCCESS,
   LOGOUT,
-  SET_WALLET_DATA
+  SET_WALLET_DATA,
+  SET_WALLET_ADDRESS
 } from 'constants/ActionConstants'
 import UserRecord, { Balances } from 'records/UserRecords'
 import { BALANCES_LOADED } from '../constants/ActionConstants'
@@ -46,6 +47,13 @@ const reducer = {
     state.merge({
       walletKey,
       mnemonicKey
+    }),
+  [SET_WALLET_ADDRESS]: (
+    state: UserRecord,
+    { payload: { address } }
+  ): UserRecord =>
+    state.merge({
+      address
     }),
   [BALANCES_LOADED]: (
     state: UserRecord,

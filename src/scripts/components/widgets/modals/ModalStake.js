@@ -13,7 +13,7 @@ type Props = {
   description: string,
   author: string,
   user: UserRecord,
-  modalProps: Object,
+  // modalProps: Object,
   closeModal: () => void,
   saveVideoStaked: Object => Object,
   selectedVideo: Object => Object,

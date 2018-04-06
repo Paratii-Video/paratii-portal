@@ -13,6 +13,7 @@ export const VIDEOS_FETCH_SUCCESS = createActionConstant('VIDEOS_FETCH_SUCCESS')
 
 /* User Actions */
 export const SET_WALLET_DATA = createActionConstant('SET_WALLET_DATA')
+export const SET_WALLET_ADDRESS = createActionConstant('SET_WALLET_ADDRESS')
 export const LOGIN_REQUESTED = createActionConstant('LOGIN_REQUESTED')
 export const LOGIN_SUCCESS = createActionConstant('LOGIN_SUCCESS')
 export const LOGIN_FAILURE = createActionConstant('LOGIN_FAILURE')

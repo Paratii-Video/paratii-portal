@@ -1,5 +1,9 @@
 {
-  "provider": "https://newchain.paratii.video",
-  "registryAddress": "0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F",
-  "db.provider": "https://db.paratii.video"
+  "eth": {
+    "provider": "https://newchain.paratii.video",
+    "registryAddress": "0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F"
+  },
+  "db": {
+    "provider": "https://db.paratii.video"
+  }
 }
