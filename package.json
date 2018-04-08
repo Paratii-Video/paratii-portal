@@ -135,6 +135,7 @@
     "webpack-hot-middleware": "^2.21.0"
   },
   "dependencies": {
+    "bip39": "^2.5.0",
     "bluebird": "^3.5.1",
     "clappr": "^0.2.87",
     "compression": "^1.7.2",
