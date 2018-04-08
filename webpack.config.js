@@ -135,14 +135,14 @@ const config = {
             reserved:
             ['DAGNode', 'DAGLink','Name', 'Tsize', 'Hash', 'Block', '_idB58String',
             'Multiaddr', 'WebSockets'],
-            safari10: true
             // NOTE I'm still working on this. keep this commented out for now.
             // ['_links', 'links', '_data', 'data', 'mutlihash', '_multihash',
             //   'serialized', '_serialized', 'size', '_size',
             // '_id', 'peerId._id', 'peerId._idB58String', 'peerId', 'id', 'multiaddr',
             // 'multiaddrs', 'buffer', 'Buffer',
           },
-          compress: false
+          compress: false,
+          safari10: true
         }
       })
     : new webpack.HotModuleReplacementPlugin(),
