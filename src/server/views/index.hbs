@@ -6,7 +6,15 @@
     <meta name="viewport" content="width=device-width,user-scalable=no">
     {{#if player}}
       {{#if video}}
-        {{> metas }}
+        {{> metas
+          embedUrl=embedUrl
+          title=title
+          width=width
+          height=height
+          thumbnailUrl=thumbnailUrl
+          video=video
+          ipfsSource=ipfsSource
+        }}
       {{else}}
         {{> notfoundmetas }}
       {{/if}}
