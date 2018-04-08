@@ -1,8 +1,18 @@
+/* @flow */
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { Z_INDEX_MODAL } from 'constants/UIConstants'
 import Button from 'components/foundations/Button'
 
-import ModalStake from 'containers/ModalStakeContainer' // need to receive any content
+import ModalStake from 'containers/widgets/modals/ModalStakeContainer' // need to receive any content
+import ModalSecure from 'containers/widgets/modals/ModalSecureContainer'
+import ModalShowSeed from 'containers/widgets/modals/ModalShowSeedContainer'
+import ModalRewriteSeed from 'containers/widgets/modals/ModalRewriteSeedContainer'
+import ModalRestoreAccount from 'containers/widgets/modals/ModalRestoreAccountContainer'
+import ModalSetPin from 'containers/widgets/modals/ModalSetPinContainer'
+import ModalAskPin from 'containers/widgets/modals/ModalAskPinContainer'
+
+import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
   modalContent: string,
@@ -20,7 +30,7 @@ const Wrapper = styled.div`
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 10;
+  z-index: ${Z_INDEX_MODAL};
 `
 
 const Background = styled.span`
@@ -100,12 +110,24 @@ class Modal extends Component<Props, void> {
   renderModal () {
     const { modalContent } = this.props
     switch (modalContent) {
-      case 'ModalStake':
+      case MODAL.STAKE:
         return <ModalStake />
+      case MODAL.SECURE:
+        return <ModalSecure />
+      case MODAL.SHOW_SEED:
+        return <ModalShowSeed />
+      case MODAL.REWRITE_SEED:
+        return <ModalRewriteSeed />
+      case MODAL.RESTORE_ACCOUNT:
+        return <ModalRestoreAccount />
+      case MODAL.SET_PIN:
+        return <ModalSetPin />
+      case MODAL.ASK_PIN:
+        return <ModalAskPin />
     }
   }
 
-  handleKeydown (event) {
+  handleKeydown = (e: Event): void => {
     if (event.keyCode === 27) {
       this.props.closeModal()
     }

@@ -2,7 +2,7 @@ import { assert } from 'chai'
 import { paratii } from './test-utils/helpers'
 
 describe('🦄 Uploader Tool', function () {
-  it.skip('should have basic flow in place @watch', async function () {
+  it.skip('should have basic flow in place', async function () {
     // THIS TEST is SKiPPED BECAUSE IT EXPECTS TO FIND A PARATII-DB INSTANCE LISTENING ON LOCALHOST:348539b9cd58fe0344dfa029cbfd601bfd3d8745
     // AND THIS IS NOT THE CASE IN CIRCLECI
 

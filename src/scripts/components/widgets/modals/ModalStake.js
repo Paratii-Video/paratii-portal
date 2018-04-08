@@ -13,10 +13,12 @@ type Props = {
   description: string,
   author: string,
   user: UserRecord,
-  modalProps: Object,
+  // modalProps: Object,
   closeModal: () => void,
-  saveVideoInfo: Object => Object,
-  selectedVideo: Object => Object
+  saveVideoStaked: Object => Object,
+  selectedVideo: Object => Object,
+  notification: (Object, string) => void,
+  loadBalances: () => void
 }
 
 const Title = styled.h2`
@@ -45,6 +47,7 @@ const Footer = styled.div`
 
 class ModalStake extends Component<Props, Object> {
   onSubmit: (e: Object) => void
+
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -55,32 +58,39 @@ class ModalStake extends Component<Props, Object> {
   }
 
   onSubmit (event: Object) {
+    const { loadBalances } = this.props
     event.preventDefault()
-    console.log(this.props)
+    this.props.notification({ title: 'Processing...' }, 'warning')
+    // FIXME we need to manage this globally and not hardcoded
+    const stakeAmount = 5
+    const stakeAmountWei = paratii.eth.web3.utils.toWei(stakeAmount + '')
+    const videoIdStaked = this.props.selectedVideo.id
+
     paratii.eth.tcr
-      .checkEligiblityAndApply(
-        this.props.selectedVideo.id,
-        paratii.eth.web3.utils.toWei(5 + '')
-      )
+      .checkEligiblityAndApply(videoIdStaked, stakeAmountWei)
       .then(resp => {
         if (resp && resp === true) {
           this.setState({
             errorMessage: false
           })
           const videoToSave = {
-            id: this.props.selectedVideo.id,
-            title: this.props.selectedVideo.title,
-            description: this.props.selectedVideo.description,
-            author: this.props.selectedVideo.author,
-            published: true
+            id: videoIdStaked,
+            deposit: stakeAmountWei
           }
-          this.props.saveVideoInfo(videoToSave)
+          this.props.saveVideoStaked(videoToSave)
+
           this.props.closeModal()
           console.log(
-            `video ${
-              this.props.selectedVideo.id
-            } successfully applied to TCR Listing`
+            `video ${videoIdStaked} successfully applied to TCR Listing`
           )
+          this.props.notification(
+            {
+              title: 'Stake well done',
+              message: `You have staked ${stakeAmount} PTI.`
+            },
+            'success'
+          )
+          loadBalances()
         } else {
           const msg =
             'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
@@ -121,7 +131,7 @@ class ModalStake extends Component<Props, Object> {
           <Highlight>
             By publishing this video you agree to make a stake deposit of{' '}
             {minDeposit} PTI. The tokens still belong to you, and can be
-            retrieved, along with the video, any time.
+            retrieved, along with the video, at any time.
           </Highlight>
           {!balanceIsTooLow ? (
             <MainText small gray>

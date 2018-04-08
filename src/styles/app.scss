@@ -1,13 +1,7 @@
 @import 'reset.scss';
 
 html, body, #root {
-  height: 100%;
   width: 100%;
-}
-
-#root {
-  overflow-x: hidden;
-  overflow-y: scroll;
 }
 
 .full-block {

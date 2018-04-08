@@ -2,56 +2,99 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Transition from 'react-transition-group/Transition'
+import IconButton from 'components/foundations/buttons/IconButton'
+import ProgressBar, {
+  ProgressBarWrapper
+} from 'components/foundations/ProgressBar'
+import ProgressIndicator from 'components/widgets/player/ProgressIndicator'
+import { TRANSITION_STATE } from 'constants/ApplicationConstants'
+
+import {
+  CONTROLS_BUTTON_DIMENSION,
+  CONTROLS_SPACING
+} from 'constants/UIConstants'
+
+import type { TransitionState } from 'types/ApplicationTypes'
+
+import volumeIcon from 'assets/img/volume-icon.svg'
+import muteIcon from 'assets/img/mute-icon.svg'
 
 type Props = {
   onVolumeChange: (percentage: number) => void,
+  onToggleMute: () => void,
   currentVolume: number
 }
 
 type State = {
+  open: boolean,
   userIsDragging: boolean,
   draggingVolumePercentage: number
 }
 
-const VOLUME_INDICATOR_DIMENSION: number = 20
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: ${CONTROLS_SPACING};
+  min-width: ${CONTROLS_BUTTON_DIMENSION};
+`
 
-const VolumeIndicator = styled.div`
-  position: absolute;
-  width: ${VOLUME_INDICATOR_DIMENSION}px;
-  height: ${VOLUME_INDICATOR_DIMENSION}px;
-  border-radius: 50%;
-  background-color: ${({ theme }) =>
-    theme.colors.VideoPlayer.progress.scrubber};
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex: 0 0 17px;
+  height: 17px;
+  cursor: pointer;
+  margin-right: 10px;
+`
+
+const VolumeBarBuffer = styled.div`
+  cursor: pointer;
+  height: 20px;
+  width: ${({ transitionState }) => {
+    switch (transitionState) {
+      case TRANSITION_STATE.ENTERING:
+      case TRANSITION_STATE.EXITING:
+        return 0
+      case TRANSITION_STATE.ENTERED:
+      default:
+        return '100px'
+    }
+  }};
+  transition: width 0.75s ${({ theme }) => theme.animation.ease.outexpo};
+  display: flex;
+  align-items: center;
 `
 
 /* prettier-ignore */
-const VolumeBar = styled.div`
-  width: 100;
-  height: 5px;
+const VolumeBar = styled.div.attrs({
+  style: ({ currentVolume, draggingVolumePercentage, transitionState }) => ({
+    transform: `scale(${
+      transitionState === TRANSITION_STATE.ENTERED ? 1.0 : 0.0
+    })`
+  })
+})`
+  height: 100%;
+  width: 100%;
+  border-radius: 3px;
   position: relative;
   display: flex;
   justify-content: flex-end;  
   align-items: center;
-  background: linear-gradient(to right, ${({ theme }) => `${theme.colors.VideoPlayer.progress.barFrom}, ${theme.colors.VideoPlayer.progress.barTo}`});
-  ${/* sc-selector */VolumeIndicator} {
-    left: ${({ currentVolume, draggingVolumePercentage }) => {
-    if (draggingVolumePercentage) {
-      return `calc(${Math.max(0, Math.min(100, draggingVolumePercentage))}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
-    }
-    return `calc(${Math.max(0, Math.min(100, currentVolume))}% - ${VOLUME_INDICATOR_DIMENSION / 2}px)`
-  }};
-  }
   `
 
 class PlayerControls extends Component<Props, State> {
   volumeBarRef: ?HTMLElement
+  remainOpenTimeoutMS: number = 2000
+  remainOpenTimeoutId: number = -1
+  lastUserInteractionTimestamp: number = 0
 
   constructor (props: Props) {
     super(props)
 
     this.state = {
-      userIsDragging: false,
-      draggingVolumePercentage: 0
+      draggingVolumePercentage: 0,
+      open: false,
+      userIsDragging: false
     }
 
     this.addMouseEventListeners()
@@ -61,10 +104,38 @@ class PlayerControls extends Component<Props, State> {
     this.removeMouseEventListeners()
   }
 
+  markLastUserInteraction = () => {
+    this.lastUserInteractionTimestamp = Date.now()
+
+    clearTimeout(this.remainOpenTimeoutId)
+    setTimeout(() => {
+      this.setState((prevState: State) => {
+        if (
+          Date.now() - this.lastUserInteractionTimestamp >
+          this.remainOpenTimeoutMS
+        ) {
+          return {
+            open: false
+          }
+        } else {
+          return { open: true }
+        }
+      })
+    }, this.remainOpenTimeoutMS)
+  }
+
+  onMouseEnter = (e: Object): void => {
+    this.markLastUserInteraction()
+    this.setState({
+      open: true
+    })
+  }
+
   onMouseUp = (e: Object): void => {
     this.setState((prevState: State) => {
       if (prevState.userIsDragging) {
         e.stopPropagation()
+        this.markLastUserInteraction()
         return {
           userIsDragging: false,
           draggingVolumePercentage: 0
@@ -78,6 +149,7 @@ class PlayerControls extends Component<Props, State> {
     const { volumeBarRef } = this
     this.setState((prevState: State) => {
       if (prevState.userIsDragging && volumeBarRef) {
+        this.markLastUserInteraction()
         const wrapperRect: Object = volumeBarRef.getBoundingClientRect()
         const draggingVolumePercentage: number =
           (e.clientX - wrapperRect.x) * 100 / wrapperRect.width
@@ -87,6 +159,10 @@ class PlayerControls extends Component<Props, State> {
         }
       }
     })
+  }
+
+  onMouseMoveWithinVolumeBar = () => {
+    this.markLastUserInteraction()
   }
 
   addMouseEventListeners (): void {
@@ -100,32 +176,63 @@ class PlayerControls extends Component<Props, State> {
   }
 
   render () {
-    const { onVolumeChange, currentVolume } = this.props
-    const { draggingVolumePercentage } = this.state
+    const { onVolumeChange, currentVolume, onToggleMute } = this.props
+    const { draggingVolumePercentage, open } = this.state
     return (
-      <VolumeBar
-        innerRef={(ref: HTMLElement) => {
-          this.volumeBarRef = ref
-        }}
-        onClick={(e: Object) => {
-          if (this.volumeBarRef) {
-            const wrapperRect: Object = this.volumeBarRef.getBoundingClientRect()
-            onVolumeChange(
-              (e.clientX - wrapperRect.x) * 100 / wrapperRect.width
-            )
-          }
-        }}
-        currentVolume={currentVolume}
-        draggingVolumePercentage={draggingVolumePercentage}
+      <Wrapper
+        onClick={this.markLastUserInteraction}
+        onMouseEnter={this.onMouseEnter}
+        onMouseMove={this.onMouseMoveWithinVolumeBar}
       >
-        <VolumeIndicator
-          onMouseDown={() => {
-            this.setState({
-              userIsDragging: true
-            })
-          }}
-        />
-      </VolumeBar>
+        <ButtonWrapper>
+          <IconButton
+            icon={currentVolume === 0 ? muteIcon : volumeIcon}
+            onClick={() => onToggleMute()}
+          />
+        </ButtonWrapper>
+        <Transition in={open} timeout={250} unmountOnExit>
+          {(transitionState: TransitionState) => (
+            <VolumeBarBuffer
+              onMouseDown={(e: Object) => {
+                if (this.volumeBarRef) {
+                  const wrapperRect: Object = this.volumeBarRef.getBoundingClientRect()
+                  onVolumeChange(
+                    (e.clientX - wrapperRect.x) * 100 / wrapperRect.width
+                  )
+                }
+                this.setState({
+                  userIsDragging: true
+                })
+              }}
+              transitionState={transitionState}
+              innerRef={(ref: HTMLElement) => {
+                this.volumeBarRef = ref
+              }}
+            >
+              <VolumeBar
+                currentVolume={currentVolume}
+                draggingVolumePercentage={draggingVolumePercentage}
+                onMouseDown={() => {
+                  this.setState({
+                    userIsDragging: true
+                  })
+                }}
+                transitionState={transitionState}
+              >
+                <ProgressBarWrapper>
+                  <ProgressBar current={currentVolume} total={100} colorful />
+                </ProgressBarWrapper>
+                <ProgressIndicator
+                  current={currentVolume}
+                  total={100}
+                  userIsScrubbing={this.state.userIsDragging}
+                  small
+                />
+              </VolumeBar>
+            </VolumeBarBuffer>
+          )}
+        </Transition>
+      </Wrapper>
     )
   }
 }

@@ -2,6 +2,7 @@ const webpack = require("webpack");
 const fs = require('fs');
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require("path");
 
 const srcDir = path.resolve(__dirname, "src");
@@ -17,8 +18,9 @@ const functionalTestsDir = testDir + "/functional-tests";
 
 const dev = process.env.NODE_ENV === "development";
 const test = process.env.NODE_ENV === "test";
-const prod = process.env.NODE_ENV === "production";
-const prodUnbuilt = process.env.NODE_ENV === "production-notugly";
+const prod = (process.env.NODE_ENV === "production" || process.env.NODE_ENV === 'staging')
+
+
 
 const definedVariables = {
   "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
@@ -34,7 +36,7 @@ if ((dev || test) && fs.existsSync(registryConfigPath)) {
 
 const config = {
   entry: {
-    bundle: (prod || prodUnbuilt)
+    bundle: (prod)
       ? [scriptsDir + "/index.js"]
 
       : [
@@ -100,6 +102,15 @@ const config = {
         ]
       },
       {
+        test: /\.(svg)$/,
+        include: assetsDir,
+        use: [
+          {
+            loader: 'svg-url-loader'
+          }
+        ]
+      },
+      {
         test: /\.scss$/,
         include: stylesDir,
         use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"]
@@ -134,8 +145,25 @@ const config = {
           compress: false
         }
       })
-    : new webpack.HotModuleReplacementPlugin()
+    : new webpack.HotModuleReplacementPlugin(),
+    // NOTE this still causes an issue when IPFS is starting.
+    // I'm debugging this :( :x
+    // prod
+    // ? new UglifyJsPlugin({
+    //     exclude: [/ipfs/i],
+    //     sourceMap: false, // this is an effor to save some memory
+    //     uglifyOptions: {
+    //       ecma: 6,
+    //       mangle: true,
+    //       compress: true
+    //     }
+    //   })
+    // : new webpack.HotModuleReplacementPlugin()
   ]
 };
+
+if (process.env.ANALYZE) {
+  config.plugins.push(new BundleAnalyzerPlugin())
+}
 
 module.exports = config;

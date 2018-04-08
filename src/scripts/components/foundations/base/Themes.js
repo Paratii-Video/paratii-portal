@@ -6,12 +6,13 @@ const Themes = {
   dark: {
     body: {
       background: Colors.grayDark,
-      color: Colors.grayLight
+      color: Colors.grayLight,
+      primary: Colors.purple
     },
     header: {
-      background: Colors.black,
-      iconsFill: Colors.grayLight,
-      logoFill: Colors.white
+      background: Colors.blackLight,
+      icon: Colors.grayLight,
+      logo: Colors.white
     },
     footer: {
       background: Colors.black,
@@ -33,10 +34,10 @@ const Themes = {
       hightlight: Colors.white,
       color: Colors.grayLight
     },
-    popover: {
-      border: Colors.gray,
-      background: Colors.blackTransparent,
-      color: Colors.white
+    Popover: {
+      background: Colors.blackLightTransparent,
+      color: Colors.white,
+      shadow: '0 3px 6px rgba(32, 35, 46, 0.7)'
     },
     TextField: {
       border: Colors.grayLight,
@@ -108,22 +109,33 @@ const Themes = {
         text: Colors.grayLight
       }
     },
+    bar: {
+      from: Colors.purpleGradientFrom,
+      to: Colors.purpleGradientTo,
+      scrubber: Colors.white,
+      base: Colors.gray,
+      buffer: Colors.grayLight
+    },
     VideoPlayer: {
       background: Colors.black,
       header: {
         title: Colors.white,
         icons: Colors.white
       },
-      progress: {
-        barFrom: Colors.purpleGradientFrom,
-        barTo: Colors.purpleGradientTo,
-        scrubber: Colors.white,
-        base: Colors.grayLight
-      },
       controls: {
-        background: Colors.black,
+        background: 'transparent',
         time: Colors.white
+      },
+      levels: {
+        color: Colors.white,
+        selectedBackground: Colors.blackDark
+      },
+      share: {
+        background: Colors.blackDarkTransparent
       }
+    },
+    VideoDescription: {
+      icon: Colors.grayLight
     }
   }
 }

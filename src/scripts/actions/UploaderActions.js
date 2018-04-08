@@ -14,7 +14,8 @@ import {
   TRANSCODING_REQUESTED,
   TRANSCODING_PROGRESS,
   TRANSCODING_SUCCESS,
-  TRANSCODING_FAILURE
+  TRANSCODING_FAILURE,
+  VIDEO_STAKED
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import { videoFetchSuccess } from 'actions/VideoActions'
@@ -34,11 +35,14 @@ const transcodingRequested = createAction(TRANSCODING_REQUESTED)
 const transcodingProgress = createAction(TRANSCODING_PROGRESS)
 const transcodingSuccess = createAction(TRANSCODING_SUCCESS)
 const transcodingFailure = createAction(TRANSCODING_FAILURE)
+const videoStaked = createAction(VIDEO_STAKED)
 
 function upsertVideo (videoId, dataToUpdate, state) {
   const v = state.videos.get(videoId)
   const updatedVideo = Object.assign({}, v.toJS(), dataToUpdate)
   delete updatedVideo.fetchStatus
+  delete updatedVideo.staked
+  delete updatedVideo.published
   if (!updatedVideo.filename) {
     updatedVideo.filename = ''
   }
@@ -59,7 +63,7 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
   dispatch(
     Notifications.success({
       title: 'Be Patient!',
-      message: 'We are working on your file'
+      message: 'We are preparing your file.'
     })
   )
   // create a new Id if none was given
@@ -87,14 +91,13 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
     dispatch(
       Notifications.error({
         title: 'Upload Error',
-        message: error,
+        message: 'Something went wrong with your file. May you retry?',
         autoDismiss: 0
       })
     )
     throw error
   })
   uploader.on('done', function (files) {
-    console.log('[UPLOAD done (local upload)]', files)
     dispatch(
       Notifications.success({
         title: 'Local upload',
@@ -102,7 +105,6 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
       })
     )
     const file = files[0]
-
     upsertVideo(
       videoId,
       {
@@ -164,7 +166,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
       dispatch(
         Notifications.error({
           title: 'Transcoder Error',
-          message: error,
+          message: 'The machines are not cooperating. Can you refresh?',
           autoDismiss: 0
         })
       )
@@ -172,23 +174,25 @@ export const transcodeVideo = (videoInfo: Object) => async (
     })
 
     transcoder.on('transcoding:started', function (hash, author) {
-      console.log('TRANSCODER STARTED', hash, author)
-      dispatch(
-        Notifications.success({
-          title: 'Transcoding',
-          message: 'The transcoder has started'
-        })
-      )
-    })
-
-    transcoder.once('transcoding:progress', function (hash, size, percent) {
       // Once we have this, the file is fully uploaded to the transcoder
       console.log('Remote upload done!')
       dispatch(uploadProgress({ id: videoInfo.id, progress: 100 }))
       dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
       // save the updaded state
       upsertVideo(videoInfo.id, {}, getState())
+
+      console.log('TRANSCODER STARTED', hash, author)
+      dispatch(
+        Notifications.success({
+          title: 'Transcoding',
+          message: 'The transcoding has started.'
+        })
+      )
     })
+
+    // transcoder.once('transcoding:progress', function (hash, size, percent) {
+    //
+    // })
 
     transcoder.on('transcoding:progress', function (hash, size, percent) {
       console.log('TRANSCODER PROGRESS', percent)
@@ -205,7 +209,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
       dispatch(
         Notifications.success({
           title: 'Transcoder done',
-          message: 'You video is ready to be published'
+          message: 'Your video is ready to be published!'
         })
       )
       dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
@@ -237,11 +241,9 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   getState: () => RootState
 ) => {
   // the owner is the user that is logged in
-  console.log('SAVING VIDEO DATA')
-
   dispatch(
     Notifications.warning({
-      title: 'We are saving your data'
+      title: 'We are saving your data.'
     })
   )
 
@@ -257,24 +259,30 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   dispatch(videoDataStart(videoInfo))
   upsertVideo(videoId, videoInfo, getState())
     .then(videoInfo => {
-      console.log('SAVED')
       dispatch(videoDataSaved(videoInfo))
       dispatch(
         Notifications.success({
           title: 'Saved',
-          message: 'Video data has been saved!!'
+          message: 'Data saved!!'
         })
       )
     })
     .catch(error => {
-      // console.log(error)
       dispatch(
         Notifications.error({
           title: 'Saving Error',
-          message: error,
+          message: error.message,
           autoDismiss: 0
         })
       )
       throw error
     })
+}
+
+export const saveVideoStaked = (videoInfo: Object) => async (
+  dispatch: Dispatch<*>,
+  getState: () => RootState
+) => {
+  console.log(videoInfo)
+  dispatch(videoStaked(videoInfo))
 }

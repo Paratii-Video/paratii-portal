@@ -1,15 +1,25 @@
 /* @flow */
 
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
-import Button from 'components/foundations/Button'
+
+import Button, { SVGIcon } from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
-import TruncatedText from 'components/foundations/TruncatedText'
 import PlayerControlsContainer from 'containers/PlayerControlsContainer'
 import VideoRecord from 'records/VideoRecords'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
-import type { TransitionState } from 'types/ApplicationTypes'
+import { List as ImmutableList } from 'immutable'
+
+import IconButton from 'components/foundations/buttons/IconButton'
+import PlaybackLevels from 'components/widgets/PlaybackLevels'
+import WalletInfoContainer from 'containers/widgets/WalletInfoContainer'
+import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
+import { PlaybackLevel } from 'records/PlayerRecords'
+import { OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
+import Colors from 'components/foundations/base/Colors'
+
+import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
 
 type Props = {
   video: ?VideoRecord,
@@ -22,17 +32,13 @@ type Props = {
   toggleFullscreen: (goToFullscreen: boolean) => void,
   onScrub: (percentage: number) => void,
   onVolumeChange: (percentage: number) => void,
-  onToggleMute: (mute: boolean) => void
+  onToggleMute: (mute: boolean) => void,
+  playbackLevels: ImmutableList<PlaybackLevel>,
+  onPlaybackLevelChange: (levelId: number) => void,
+  toggleActivePlugin: (plugin: PlayerPlugin) => void,
+  currentPlaybackLevel: ?PlaybackLevel,
+  activePlugin: ?PlayerPlugin
 }
-
-type State = {
-  openPopover: ?string,
-  buttons: {
-    profile: ?Class<React.Component<any>>
-  }
-}
-
-const CONTROLS_HEIGHT: string = '75px'
 
 const Wrapper = styled.div`
   height: 100%;
@@ -46,7 +52,7 @@ const overlayPadding: string = '20px 25px 0'
 
 const Overlay = styled.div`
   width: 100%;
-  flex: 0 0 calc(100% - ${CONTROLS_HEIGHT});
+  flex: 0 1 100%;
   display: flex;
   flex-direction: column;
   color: white;
@@ -64,12 +70,13 @@ const Overlay = styled.div`
   }};
   transition: all ${({ theme }) => theme.animation.time.repaint}
     ${({ theme }) => theme.animation.ease.smooth};
+  cursor: pointer;
 `
 
 const VideoInfo = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex: 1 0 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
   padding: ${overlayPadding};
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   transform: translateY(
@@ -85,178 +92,141 @@ const VideoInfo = styled.div`
     }
   }}
   );
-  transition: all ${({ theme }) => theme.animation.time.repaint}
+  transition: transform
+    ${({ transitionState }) => (TRANSITION_STATE.EXITED ? '0.6s' : '0.9s')}
     ${({ theme }) => theme.animation.ease.smooth};
 `
 
 const PlayerTitle = Title.extend`
   color: ${props => props.theme.colors.VideoPlayer.header.title};
-  flex: 0 0 75%;
+  font-size: ${props => props.theme.fonts.title.big};
   max-width: 75%;
-`
 
-const ButtonGroup = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  flex: 1 0 0;
-  justify-content: flex-end;
-  opacity: ${({ hide }) => (hide ? 0 : 1)};
+  @media (max-width: 1024px) {
+    font-size: ${props => props.theme.fonts.title.small};
+  }
 `
 
 const ButtonWrapper = styled.div`
-  width: 25px;
-  height: 25px;
+  position: absolute;
+  top: 30px;
+  right: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  opacity: ${({ hide }) => (hide ? 0 : 1)};
+  height: ${OVERLAY_BUTTONS_HEIGHT};
 `
 
 const ShareButton = Button.extend`
-  height: 18px;
-  position: absolute;
-  right: 25px;
-  top: 28px;
-  width: 30px;
-`
+  height: 20px;
+  margin-left: 10px;
+  width: 26px;
 
-const SVGButton = styled.svg`
-  fill: ${props => props.theme.colors.VideoPlayer.header.icons};
-  display: block;
-  height: 100%;
-  width: 100%;
-`
-
-const PopoverWrapper = styled.div`
-  position: absolute;
-  top: ${overlayPadding};
-  right: ${overlayPadding};
-  width: 230px;
-  height: 110px;
-  display: ${props => (props.open ? 'block' : 'none')};
-  cursor: default;
-`
-
-class VideoOverlay extends Component<Props, State> {
-  onProfileButtonClick: (e: Object) => void
-  popoverWrapperRefCallback: (ref: HTMLElement) => void
-  popoverWrapperRef: ?HTMLElement
-
-  constructor (props: Props) {
-    super(props)
-
-    this.state = {
-      openPopover: null,
-      buttons: {
-        profile: null
-      }
-    }
-
-    this.loadEmbedPlugins()
+  @media (max-width: 768px) {
+    width: 20px;
   }
+`
 
-  loadEmbedPlugins () {
-    // Disabled this as it is not working
-    // const { isEmbed } = this.props
-    // if (isEmbed) {
-    //   import(/* webpackChunkName: ProfileButton */ 'components/widgets/PlayerPlugins/ProfileButton').then(
-    //     ProfileButtonModule => {
-    //       const ProfileButton: Class<
-    //         React.Component<any>
-    //       > = ((ProfileButtonModule.default: any): Class<React.Component<any>>)
-    //       this.setState(prevState => ({
-    //         buttons: {
-    //           ...prevState.buttons,
-    //           profile: ProfileButton
-    //         }
-    //       }))
-    //     }
-    //   )
-    // }
+const ProfileButtonWrapper = styled.div`
+  height: 20px;
+  margin-left: 10px;
+  width: 26px;
+
+  @media (max-width: 768px) {
+    width: 20px;
   }
+`
 
+class VideoOverlay extends Component<Props> {
   getVideoTitle (): string {
     const { video } = this.props
 
     return (video && (video.get('title') || video.get('filename'))) || ''
   }
 
-  onProfileButtonClick = (e: Object): void => {
-    e.stopPropagation()
-    this.setState({
-      openPopover: 'profile'
-    })
-  }
+  renderPlugins () {
+    const {
+      activePlugin,
+      currentPlaybackLevel,
+      onPlaybackLevelChange,
+      playbackLevels,
+      toggleActivePlugin
+    } = this.props
 
-  closePopover = (e: Object): void => {
-    e.stopPropagation()
-    this.setState({
-      openPopover: null
-    })
-  }
-
-  popoverWrapperRefCallback = (ref: HTMLElement): void => {
-    this.popoverWrapperRef = ref
+    return (
+      <Fragment>
+        <PlaybackLevels
+          open={activePlugin === PLAYER_PLUGIN.PLAYBACK_LEVELS}
+          currentPlaybackLevel={currentPlaybackLevel}
+          playbackLevels={playbackLevels}
+          onPlaybackLevelChange={onPlaybackLevelChange}
+          onClose={() => toggleActivePlugin()}
+        />
+        <WalletInfoContainer
+          open={activePlugin === PLAYER_PLUGIN.WALLET}
+          onClose={() => toggleActivePlugin()}
+        />
+      </Fragment>
+    )
   }
 
   render () {
     const {
+      activePlugin,
+      isEmbed,
       onClick,
       onScrub,
       onVolumeChange,
       onToggleMute,
+      onPlaybackLevelChange,
       togglePlayPause,
       toggleShareModal,
       toggleFullscreen,
+      toggleActivePlugin,
       transitionState
     } = this.props
-    const { openPopover } = this.state
-    const ProfileButton: ?Class<React.Component<any>> = this.state.buttons
-      .profile
     return (
       <Wrapper>
+        {this.renderPlugins()}
         <Overlay
           data-test-id="video-overlay"
           onClick={onClick}
           transitionState={transitionState}
         >
           <VideoInfo transitionState={transitionState}>
-            <PlayerTitle small>
-              <TruncatedText>{this.getVideoTitle()}</TruncatedText>
-            </PlayerTitle>
-            <ButtonGroup hide={!!this.state.openPopover}>
-              {ProfileButton ? (
-                <ButtonWrapper>
-                  <ProfileButton
-                    onClick={this.onProfileButtonClick}
-                    onClose={this.closePopover}
-                    popoverPortal={this.popoverWrapperRef}
-                    popoverOpen={openPopover === 'profile'}
+            {isEmbed && <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>}
+            <ButtonWrapper>
+              {isEmbed && (
+                <ProfileButtonWrapper>
+                  <IconButton
+                    color={
+                      activePlugin === PLAYER_PLUGIN.WALLET ? Colors.purple : ''
+                    }
+                    icon="/assets/img/profile.svg"
+                    onClick={(e: Object) => {
+                      e.stopPropagation()
+                      toggleActivePlugin(PLAYER_PLUGIN.WALLET)
+                    }}
                   />
-                </ButtonWrapper>
-              ) : null}
-              <ButtonWrapper>
-                <ShareButton
-                  onClick={(e: Object) => {
-                    e.stopPropagation()
-                    toggleShareModal(e)
-                  }}
-                >
-                  {!this.props.showShareModal && (
-                    <SVGButton>
-                      <use xlinkHref="#icon-player-share" />
-                    </SVGButton>
-                  )}
-                </ShareButton>
-              </ButtonWrapper>
-            </ButtonGroup>
-            <PopoverWrapper
-              open={!!openPopover}
-              innerRef={this.popoverWrapperRefCallback}
-            />
+                </ProfileButtonWrapper>
+              )}
+              <ShareButton
+                onClick={(e: Object) => {
+                  e.stopPropagation()
+                  toggleShareModal(e)
+                }}
+              >
+                <SVGIcon icon="icon-player-share" color="white" />
+              </ShareButton>
+            </ButtonWrapper>
           </VideoInfo>
         </Overlay>
         <PlayerControlsContainer
           onScrub={onScrub}
           onVolumeChange={onVolumeChange}
           onToggleMute={onToggleMute}
+          onPlaybackLevelChange={onPlaybackLevelChange}
           togglePlayPause={togglePlayPause}
           toggleFullscreen={toggleFullscreen}
           transitionState={transitionState}

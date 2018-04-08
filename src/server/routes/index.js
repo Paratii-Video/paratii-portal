@@ -27,7 +27,11 @@ exports.player = async function player (req, res, next) {
     helpers: {
       title: function () {
         if (video !== null) {
-          return video.title
+          if (video.title === '') {
+            return video.filename
+          } else {
+            return video.title
+          }
         } else {
           return 'Video not found'
         }
@@ -40,7 +44,10 @@ exports.player = async function player (req, res, next) {
       },
       thumbnailUrl: function () {
         const ipfsHash = video.ipfsHash
-        const thumbName = video.transcodingStatus.data.result.screenshots[0]
+        let thumbName = ''
+        if (video.thumbnails && video.thumbnails.length > 0) {
+          thumbName = video.thumbnails[0]
+        }
         return (
           'https://gateway.paratii.video/ipfs/' + ipfsHash + '/' + thumbName
         )
@@ -53,6 +60,9 @@ exports.player = async function player (req, res, next) {
       },
       embedUrl: function () {
         return 'https://portal.paratii.video/embed/' + video._id
+      },
+      oembedUrl: function () {
+        return 'https://portal.paratii.video/oembed?url='
       }
     }
   })

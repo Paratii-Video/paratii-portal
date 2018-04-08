@@ -1,10 +1,6 @@
 /* @flow */
 
 import shortNumber from 'short-number'
-
-import devConfig from 'config/development.json'
-import testConfig from 'config/test.json'
-import prodConfig from 'config/production.json'
 import VideoRecord from 'records/VideoRecords'
 
 export const getRoot = (): Element => {
@@ -24,26 +20,26 @@ export const getParatiiConfig = (env: ?string = 'development'): Object => {
 
   switch (env) {
     case 'production':
-      config = prodConfig
+      config = require('config/production.json')
       break
     case 'test':
-      config = testConfig
+      config = require('config/test.json')
+      break
+    case 'staging':
+      config = require('config/staging.json')
       break
     case 'development':
     default:
-      config = devConfig
+      config = require('config/development.json')
       break
   }
 
   // If a registry address is not given in the config file, we read it from the environment
-  if (config.registryAddress === undefined) {
+  if (config.eth.registryAddress === undefined) {
     const registryAddress = process.env.REGISTRY_ADDRESS
-
     if (registryAddress) {
-      return {
-        ...config,
-        registryAddress
-      }
+      config.eth.registryAddress = registryAddress
+      return config
     }
   }
 
@@ -118,5 +114,40 @@ export const requestFullscreen = (element: HTMLElement): void => {
   } else if (element.webkitRequestFullscreen) {
     // $FlowFixMe
     element.webkitRequestFullscreen()
+  }
+}
+
+export function add0x (input: string) {
+  // const input = input.toUpperCase();
+  if (typeof input !== 'string') {
+    return input
+  } else if (input.length < 2 || input.slice(0, 2) !== '0x') {
+    return `0x${input}`
+  }
+  return input
+}
+
+export const getFullscreenEnabled = () =>
+  document.fullscreenEnabled ||
+  document.webkitFullscreenEnabled ||
+  document.mozFullScreenEnabled ||
+  // $FlowFixMe
+  document.msFullscreenEnabled
+
+export const copyTextToClipboard = (element: HTMLElement): void => {
+  const { body } = document
+
+  if (body) {
+    const dummyInput: HTMLInputElement = document.createElement('input')
+    dummyInput.setAttribute('style', 'height: 0;')
+    dummyInput.setAttribute('value', element.innerText)
+
+    body.appendChild(dummyInput)
+
+    dummyInput.select()
+
+    document.execCommand('copy')
+
+    body.removeChild(dummyInput)
   }
 }

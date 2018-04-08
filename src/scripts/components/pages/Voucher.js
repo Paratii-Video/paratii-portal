@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import RedeemVoucher from '../widgets/RedeemVoucher'
+import RedeemVoucher from 'containers/RedeemVoucherContainer'
 
 class Voucher extends Component {
   render () {

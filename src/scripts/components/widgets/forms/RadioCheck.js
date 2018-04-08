@@ -3,6 +3,7 @@
 // https://github.com/styled-components/stylelint-processor-styled-components/issues/34
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Colors from 'components/foundations/base/Colors'
 
 type Props = {
   name: String,
@@ -12,16 +13,23 @@ type Props = {
   defaultChecked: Boolean,
   checkbox: Boolean,
   nomargin: Boolean,
+  justifyContent: String,
+  margin: String,
+  white: Boolean,
   onChange: (e: Object) => void
 }
 
 export const RadioWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: ${({ justifyContent }) => justifyContent || null};
   width: 100%;
 `
 
 export const RadioTitle = styled.p`
-  font-size: ${props => props.theme.fonts.radio.title};
   color: ${props => props.theme.colors.Radio.title};
+  flex: 1 0 100%;
+  font-size: ${props => props.theme.fonts.radio.title};
   margin-bottom: 15px;
 `
 
@@ -44,7 +52,8 @@ const RadioInput = styled.label`
 
 const RadioInputBox = styled.span`
   background-color: transparent;
-  border: 2px solid ${props => props.theme.colors.Radio.border};
+  border: 2px solid
+    ${props => (props.white ? Colors.white : props.theme.colors.Radio.border)};
   border-radius: 2px;
   height: ${props => props.theme.sizes.radio};
   margin-right: 15px;
@@ -52,8 +61,10 @@ const RadioInputBox = styled.span`
   width: ${props => props.theme.sizes.radio};
 
   input:checked + & {
-    background-color: ${props => props.theme.colors.Radio.active};
-    border-color: ${props => props.theme.colors.Radio.active};
+    background-color: ${props => props =>
+    props.white ? Colors.white : props.theme.colors.Radio.active};
+    border-color: ${props => props =>
+    props.white ? Colors.white : props.theme.colors.Radio.active};
 
     svg {
       transform: scale(1);
@@ -87,8 +98,9 @@ class RadioCheck extends Component<Props, void> {
           value={this.props.value}
           disabled={this.props.disabled}
           defaultChecked={this.props.defaultChecked}
+          onChange={this.props.onChange}
         />
-        <RadioInputBox>
+        <RadioInputBox white={this.props.white}>
           <RadioInputIcon>
             <use xlinkHref="#icon-check" />
           </RadioInputIcon>

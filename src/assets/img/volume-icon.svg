@@ -1,16 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
-    <title>volume-icon</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="player_v01" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="mvp-paused-ad" transform="translate(-247.000000, -373.000000)" fill="#FFFFFF">
-            <g id="player-control" transform="translate(88.000000, 321.000000)">
-                <g id="slide">
-                    <path d="M159,58 L159,64 L163,64 L168,69 L168,53 L163,58 L159,58 L159,58 Z M172.5,61 C172.5,59.23 171.48,57.71 170,56.97 L170,65.02 C171.48,64.29 172.5,62.77 172.5,61 L172.5,61 Z M170,52.23 L170,54.29 C172.89,55.15 175,57.83 175,61 C175,64.17 172.89,66.85 170,67.71 L170,69.77 C174.01,68.86 177,65.28 177,61 C177,56.72 174.01,53.14 170,52.23 L170,52.23 Z" id="volume-icon"></path>
-                </g>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="9020 340 23 20"><defs><style>.a{fill:#fff;}</style></defs><g transform="translate(9020 340)"><path class="a" d="M10.857.191,5.565,5.979H1.733A1.854,1.854,0,0,0,0,7.877v4.27a1.854,1.854,0,0,0,1.733,1.9H5.565l5.2,5.788a1.05,1.05,0,0,0,1.642-.949V1.14A1,1,0,0,0,10.857.191Z" transform="translate(0 -0.019)"/><path class="a" d="M18.246.9a1.167,1.167,0,0,0-1.46.854,1.7,1.7,0,0,0,.091.949,1.086,1.086,0,0,0,.547.569A7.046,7.046,0,0,1,21.257,6.4c2.281,4.365.091,9.3-3.741,10.438a1.225,1.225,0,0,0-.821,1.518,1.255,1.255,0,0,0,1.095.949h.274a9.516,9.516,0,0,0,6.386-9.2A9.142,9.142,0,0,0,18.246.9Z" transform="translate(-1.459 -0.061)"/><path class="a" d="M17.846,13.382a2.986,2.986,0,0,0,2.007-2.942A2.986,2.986,0,0,0,17.846,7.5c-.274-.095-.547.19-.547.474v4.934C17.207,13.192,17.481,13.477,17.846,13.382Z" transform="translate(-1.515 -0.4)"/></g></svg>

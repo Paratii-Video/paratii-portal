@@ -9,8 +9,11 @@ import UploaderRecord from 'records/UploaderRecords'
 import NotificationRecord from 'records/NotificationRecord'
 import {
   REQUEST_STATUS,
-  TRANSITION_STATE
+  TRANSITION_STATE,
+  NOTIFICATION_LEVELS,
+  NOTIFICATION_POSITIONS
 } from 'constants/ApplicationConstants'
+import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 
 export type Location = {
   pathname: string,
@@ -54,26 +57,34 @@ type EventEmitter = {
 }
 
 // TODO move this into paratii-mediaplayer repo
-type ClapprCore = EventEmitter & {}
-
 type ClapprContainer = EventEmitter & {}
 
-export type ClapprPlayer = EventEmitter & {
-  core?: {
-    getCurrentPlayback: () => ClapprCore,
-    getCurrentContainer: () => ClapprContainer,
-    mediaControl: {
-      show: () => void,
-      hide: () => void,
-      setUserKeepVisible: () => void,
-      resetUserKeepVisible: () => void
-    }
+type ClapprPlayback = EventEmitter & {
+  _hls?: {
+    startLevel: number
   },
+  currentLevel: number
+}
+
+type ClapprCore = EventEmitter & {
+  getCurrentPlayback: () => ClapprPlayback,
+  getCurrentContainer: () => ClapprContainer,
+  mediaControl: {
+    show: () => void,
+    hide: () => void,
+    setUserKeepVisible: () => void,
+    resetUserKeepVisible: () => void
+  }
+}
+
+export type ClapprPlayer = EventEmitter & {
+  core: ClapprCore,
   isPlaying: () => boolean,
   play: () => void,
   pause: () => void,
   mute: () => void,
   unmute: () => void,
+  getVolume: () => number,
   setVolume: (percentage: number) => void,
   destroy: () => void,
   seek: (time: number) => void
@@ -88,6 +99,7 @@ export type ParatiiLib = {
     }
   },
   core: {
+    migrateAccount: (address: string) => Object,
     vids: {
       get: (id: string) => ?Object,
       create: Object => Object,
@@ -100,10 +112,11 @@ export type ParatiiLib = {
     wallet: {
       decrypt: (string, password: string) => Object,
       encrypt: (password: string) => Object,
-      // newMnemonic: () => string,
+      newMnemonic: () => string,
       getMnemonic: () => Promise<string>,
-      create: () => Object,
-      clear: () => void
+      create: (num: ?number, mnemonic: ?string) => Object,
+      clear: () => void,
+      length: number
     },
     vids: {
       get: (id: string) => ?Object,
@@ -112,7 +125,7 @@ export type ParatiiLib = {
     vouchers: {
       redeem: (value: string) => Promise<Object>
     },
-    setAccount: (string, string) => ?Object,
+    setAccount: (string, ?string) => ?Object,
     balanceOf: (address: string, token: ?string) => Promise<Object>,
     web3: {
       utils: {
@@ -216,8 +229,8 @@ type Colors = {
   },
   header: {
     background: string,
-    iconsFill: string,
-    logoFill: string
+    icon: string,
+    logo: string
   },
   footer: {
     background: string,
@@ -229,8 +242,7 @@ type Colors = {
     gray: string,
     purple: string
   },
-  popover: {
-    border: string,
+  Popover: {
     background: string,
     color: string
   },
@@ -305,3 +317,15 @@ export type Theme = Object & {
 export type RequestStatus = $Values<typeof REQUEST_STATUS>
 
 export type TransitionState = $Values<typeof TRANSITION_STATE>
+
+export type PlayerPlugin = $Values<typeof PLAYER_PLUGIN>
+
+export type NotificationPosition = $Values<typeof NOTIFICATION_POSITIONS>
+
+export type NotificationLevel = $Values<typeof NOTIFICATION_LEVELS>
+
+export type Notification = {
+  title: string,
+  message?: string,
+  position?: NotificationPosition
+}

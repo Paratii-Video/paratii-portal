@@ -116,7 +116,10 @@ const PublishLabel = styled.div`
 type Props = {
   selectedVideo: VideoRecord,
   progress: Number,
-  getTotalProgress: () => Number
+  totalProgress: Number,
+  isUploaded: Boolean,
+  isPublished: Boolean,
+  isPublishable: Boolean
 }
 
 class InfoBox extends Component<Props, Object> {
@@ -131,9 +134,10 @@ class InfoBox extends Component<Props, Object> {
     const duration = (video && video.get('duration')) || ''
     let durationBox = null
     if (duration) {
+      const durationNoMillis = duration.substring(0, duration.indexOf('.'))
       durationBox = (
         <VideoMediaTime>
-          <VideoMediaTimeText>{duration}</VideoMediaTimeText>
+          <VideoMediaTimeText>{durationNoMillis}</VideoMediaTimeText>
         </VideoMediaTime>
       )
     }
@@ -154,16 +158,14 @@ class InfoBox extends Component<Props, Object> {
       }
     }
 
-    // FIXME: use the selector for the status
-    // const progress = this.props.getTotalProgress()
-    const uploadProgress = video.uploadStatus.data.progress
-    const transcodingStatus = video.transcodingStatus.data.progress
-    const progress = Math.floor((uploadProgress + transcodingStatus) / 2)
-    const isUploaded = video.uploadStatus.name === 'success'
-    const isPublished = video.published === true || video.published === 'true'
-    const isPublishable =
-      video.transcodingStatus.name === 'success' && isPublished === false
+    const progress = String(this.props.totalProgress)
+    const isUploaded = this.props.isUploaded
+    const isPublished = this.props.isPublished
+    const isPublishable = this.props.isPublishable
 
+    const publishedMessages = {
+      success: 'Published'
+    }
     const transcoderMessages = {
       idle: 'Waiting',
       requested: 'Waiting for transcoding to start...',
@@ -181,44 +183,28 @@ class InfoBox extends Component<Props, Object> {
       error: 'Error'
     }
 
+    let videoMediaBox = null
     let videoProgressBox = null
-    if (isPublishable) {
-      videoProgressBox = (
-        <VideoProgress progress={progress + '%'} marginBottom marginTop>
-          <VideoProgressTitle success={isPublishable}>
-            {transcoderMessages[video.transcodingStatus.name] ||
-              video.transcodingStatus.name}
-          </VideoProgressTitle>
-        </VideoProgress>
-      )
-    } else {
-      if (isUploaded) {
-        videoProgressBox = (
-          <VideoProgress progress={progress + '%'} marginBottom marginTop>
-            <VideoProgressTitle success={isUploaded} marginRight>
-              {uploaderMessages[video.uploadStatus.name] ||
-                video.uploadStatus.name}
-            </VideoProgressTitle>
-            <VideoProgressTitle success={isPublishable}>
-              {transcoderMessages[video.transcodingStatus.name] ||
-                video.transcodingStatus.name}
-            </VideoProgressTitle>
-          </VideoProgress>
-        )
-      } else {
-        videoProgressBox = (
-          <VideoProgress progress={progress + '%'} marginBottom marginTop>
-            <VideoProgressTitle success={isUploaded} marginRight>
-              {uploaderMessages[video.uploadStatus.name] ||
-                video.uploadStatus.name}
-            </VideoProgressTitle>
-          </VideoProgress>
-        )
-      }
-    }
+    let videoShareInput = null
 
-    return (
-      <VideoFormInfoBox>
+    if (isPublished) {
+      videoProgressBox = (
+        <VideoProgressTitle success={isPublished}>
+          {publishedMessages['success']}
+        </VideoProgressTitle>
+      )
+      videoShareInput = (
+        <TextField
+          id="video-title"
+          type="text"
+          margin="0 0 25px"
+          value={urlForSharing}
+          label="Share this video"
+          onChange={() => null}
+          readonly
+        />
+      )
+      videoMediaBox = (
         <VideoMedia>
           <VideoMediaLink to={urlToPlay}>
             <VideoMediaOverlay>
@@ -230,7 +216,60 @@ class InfoBox extends Component<Props, Object> {
             <VideoImage source={thumbImage} />
           </VideoMediaLink>
         </VideoMedia>
-        {videoProgressBox}
+      )
+    } else if (isPublishable) {
+      videoProgressBox = (
+        <VideoProgressTitle success={isPublishable}>
+          {transcoderMessages[video.transcodingStatus.name] ||
+            video.transcodingStatus.name}
+        </VideoProgressTitle>
+      )
+      videoMediaBox = (
+        <VideoMedia>
+          <div>
+            <VideoMediaOverlay>{durationBox}</VideoMediaOverlay>
+            <VideoImage source={thumbImage} />
+          </div>
+        </VideoMedia>
+      )
+    } else {
+      videoMediaBox = (
+        <VideoMedia>
+          <div>
+            <VideoMediaOverlay>{durationBox}</VideoMediaOverlay>
+            <VideoImage source={thumbImage} />
+          </div>
+        </VideoMedia>
+      )
+      if (isUploaded) {
+        videoProgressBox = (
+          <div>
+            <VideoProgressTitle success={isUploaded} marginRight>
+              {uploaderMessages[video.uploadStatus.name] ||
+                video.uploadStatus.name}
+            </VideoProgressTitle>
+            <VideoProgressTitle success={isPublishable}>
+              {transcoderMessages[video.transcodingStatus.name] ||
+                video.transcodingStatus.name}
+            </VideoProgressTitle>
+          </div>
+        )
+      } else {
+        videoProgressBox = (
+          <VideoProgressTitle success={isUploaded} marginRight>
+            {uploaderMessages[video.uploadStatus.name] ||
+              video.uploadStatus.name}
+          </VideoProgressTitle>
+        )
+      }
+    }
+
+    return (
+      <VideoFormInfoBox>
+        {videoMediaBox}
+        <VideoProgress progress={progress + '%'} marginBottom marginTop>
+          {videoProgressBox}
+        </VideoProgress>
         <Hidden>
           <TextField
             id="video-title"
@@ -242,15 +281,7 @@ class InfoBox extends Component<Props, Object> {
             readonly
           />
         </Hidden>
-        <TextField
-          id="video-title"
-          type="text"
-          margin="0 0 25px"
-          value={urlForSharing}
-          label="Share this video"
-          onChange={() => null}
-          readonly
-        />
+        {videoShareInput}
         {!isPublishable && !isPublished ? (
           <PublishLabel>
             You can publish this video as soon as it is <strong>ready</strong>

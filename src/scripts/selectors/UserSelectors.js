@@ -22,6 +22,11 @@ export const getIsLoggedIn: (state: RootState) => boolean = createSelector(
     !!(user.get('email') && !isLoggingIn)
 )
 
+export const getUserAddress: (state: RootState) => string = createSelector(
+  [getUser],
+  (user: User): string => user.get('address')
+)
+
 const getEthBalance: (state: RootState) => string = createSelector(
   [getBalances],
   (balances: Balances): string => balances.get('ETH')
