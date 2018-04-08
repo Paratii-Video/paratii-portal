@@ -125,12 +125,12 @@ Rebuilding `node-sass` may help:
 
     yarn rebild node-sass
 ___
-If npm install doesn't work, maybe it's because you have a node version > 9.0.0  
+If `yarn` doesn't work, maybe it's because you have a node version > 9.0.0
 To fix it downgrade node to version 8.9.0:
 
   ```
-   $ sudo npm cache clean -f
-   $ sudo npm install -g n
+   $ sudo yarn cache clean -f
+   $ sudo yarn global add n
    $ sudo n 8.9.0
    ```
    or if you are using nvm:
@@ -140,7 +140,7 @@ To fix it downgrade node to version 8.9.0:
     ```
 This commands will set the default version that you will use to the 8.9.0
 
-Then run npm install again.
+Then run `yarn` again.
 ___
 If you get the following error:
 
