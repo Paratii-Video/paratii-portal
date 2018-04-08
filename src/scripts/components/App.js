@@ -17,7 +17,7 @@ import Notifications from 'containers/NotificationContainer'
 import type { Match } from 'react-router-dom'
 
 import MainTemplate from './templates/MainTemplate'
-import Modal from 'containers/ModalContainer'
+import Modal from 'containers/widgets/modals/ModalContainer'
 import MainHeader from './structures/header/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/footer/MainFooter'
@@ -34,7 +34,8 @@ type Props = {
   initializeApp: () => void,
   match: Match,
   setSelectedVideo: (id: string) => void,
-  videos: Map<string, VideoRecord>
+  videos: Map<string, VideoRecord>,
+  userAddress: String
 }
 
 type State = {
@@ -76,7 +77,7 @@ class App extends Component<Props, State> {
           <Modal />
           <Notifications />
 
-          <MainHeader />
+          <MainHeader userAddress={this.props.userAddress} />
           <Main>
             <Switch>
               <Route exact path="/" component={Home} />

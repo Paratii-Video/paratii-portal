@@ -90,7 +90,7 @@ export const getPlaybackLevelsSorted: (
       .unshift(
         new PlaybackLevel({
           id: -1,
-          label: 'Automatic'
+          label: 'Auto'
         })
       )
 )

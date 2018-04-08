@@ -17,6 +17,7 @@ export class Balances extends Immutable.Record({
 
 class User extends Immutable.Record({
   email: Cookies.get('email'),
+  address: '',
   name: '',
   keepUrl: true,
   walletKey: 'keystore-anon',
@@ -25,6 +26,7 @@ class User extends Immutable.Record({
   balances: new Balances()
 }) {
   email: string
+  address: string
   name: string
   keepUrl: boolean
   walletKey: string

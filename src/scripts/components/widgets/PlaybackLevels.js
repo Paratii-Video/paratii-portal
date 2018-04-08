@@ -3,68 +3,76 @@
 import React from 'react'
 import styled from 'styled-components'
 import { List as ImmutableList } from 'immutable'
-
+import Text from 'components/foundations/Text'
 import Popover from 'components/foundations/Popover'
 import CloseButton from 'components/foundations/buttons/CloseButton'
 import { CONTROLS_HEIGHT } from 'constants/UIConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
 
 const PADDING: string = '20px'
+const LevelHeight: string = '42px'
+
+const RESOLUTIONS = {
+  Auto: 'Auto',
+  '2760.7Kbps': '1080p',
+  '1327.1Kbps': '720p',
+  '763.9Kbps': '480p',
+  '423.9Kbps': '360p',
+  '155.6Kbps': '240p',
+  '64Kbps': '144p'
+}
 
 const Wrapper = styled.div`
   cursor: default;
   display: flex;
   flex-direction: column;
-  height: 200px;
-  width: 160px;
+  width: 180px;
 `
 
 const TopBar = styled.div`
   flex: 0 0 20%;
   display: flex;
   align-items: center;
-  padding: 10px ${PADDING};
+  padding: ${PADDING};
 `
 
-const Title = styled.div`
+const Title = Text.extend`
   display: flex;
   flex: 1 1 0;
   align-items: center;
-  font-size: 14px;
 `
 
 const LevelsList = styled.ul`
   flex: 1 1 0;
-  flex-direction: column;
-  align-items: right;
-  display: flex;
-  overflow-y: scroll;
 `
 
 const Level = styled.li`
+  height: ${LevelHeight};
+  line-height: ${LevelHeight};
+  width: 100%;
+  cursor: pointer;
   display: flex;
-  flex: 0 0 30px;
   align-items: center;
   justify-content: flex-end;
-  width: 100%;
-  font-size: 14px;
-  cursor: pointer;
-  margin-top: 5px;
   background-color: ${({ theme, selected }) =>
-    selected ? theme.colors.VideoPlayer.levels.selectedBackground : ''};
+    selected
+      ? theme.colors.VideoPlayer.levels.selectedBackground
+      : 'transparent'};
   padding: 0 ${PADDING};
-  text-align: right;
-
-  &:last-child {
-    margin-bottom: 5px;
-  }
+  transition: background ${({ theme }) => theme.animation.time.repaint};
 
   &::before {
     content: '•';
+    display: inline-block;
     font-size: 20px;
-    margin-right: 7px;
-    display: ${({ selected }) => (selected ? 'inline-block' : 'none')};
+    margin-right: 5px;
+    transform: scale(${({ selected }) => (selected ? 1 : 0)});
+    transition: transform 0.7s ${({ theme }) => theme.animation.ease.smooth};
   }
+`
+
+const LevelLabel = Text.extend`
+  display: inline-block;
 `
 
 type Props = {
@@ -120,7 +128,7 @@ class PlaybackLevels extends React.Component<Props> {
       >
         <Wrapper>
           <TopBar>
-            <Title>Video Quality</Title>
+            <Title small>Quality</Title>
             <CloseButton
               data-test-id="playback-levels-close-button"
               onClick={onClose}
@@ -137,7 +145,7 @@ class PlaybackLevels extends React.Component<Props> {
                   onPlaybackLevelChange(level.get('id'))
                 }}
               >
-                {level.get('label')}
+                <LevelLabel small>{RESOLUTIONS[level.get('label')]}</LevelLabel>
               </Level>
             ))}
           </LevelsList>

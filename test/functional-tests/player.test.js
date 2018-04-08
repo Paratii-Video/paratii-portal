@@ -24,9 +24,9 @@ describe('🎥 Player:', function () {
   const shareButtonSelector = '[data-test-id="share-button"]'
   const shareCloseButtonSelector = '[data-test-id="share-close-button"]'
   const shareAnchorLinkSelector = '[data-test-id="share-anchor-link"]'
-  const telegramShareLinkSelector = '[data-test-id="telegram-share-link"]'
-  const twitterShareLinkSelector = '[data-test-id="twitter-share-link"]'
-  const whatsAppShareLinkSelector = '[data-test-id="whatsapp-share-link"]'
+  const telegramShareLinkSelector = '[data-test-id="Telegram-share-link"]'
+  const twitterShareLinkSelector = '[data-test-id="Twitter-share-link"]'
+  const whatsAppShareLinkSelector = '[data-test-id="WhatsApp-share-link"]'
 
   const goToTestVideoUrl = ({ embed, overrideVideoId } = {}) => {
     browser.url(
@@ -93,10 +93,10 @@ describe('🎥 Player:', function () {
       () =>
         browser.execute(videoElementSelector => {
           const videoEl = document.querySelector(videoElementSelector)
-
-          return videoEl.getAttribute('volume') === 0
+          return !videoEl.getAttribute('volume')
         }, videoElementSelector).value,
-      true
+      undefined,
+      'Could not verify that volume is muted'
     )
 
   const assertVolumeIsNotMuted = () =>
@@ -106,11 +106,16 @@ describe('🎥 Player:', function () {
           const videoEl = document.querySelector(videoElementSelector)
           return videoEl.getAttribute('volume') >= 0
         }, videoElementSelector).value,
-      true
+      undefined,
+      'Could not verify that volume is not muted.'
     )
 
   const assertQualityPopoverIsNotVisible = () => {
-    browser.waitUntil(() => !browser.isVisible(qualityMenuSelector))
+    browser.waitUntil(
+      () => !browser.isVisible(qualityMenuSelector),
+      undefined,
+      'Could not verify that quality popover is not visible.'
+    )
   }
 
   const assertQualityPopoverIsVisible = () => {
@@ -125,22 +130,23 @@ describe('🎥 Player:', function () {
             const qualityEl = document.querySelector(qualityMenuSelector)
             const qualityRect = qualityEl.getBoundingClientRect()
 
-            const qualityIsVerticallyContained =
-              controlsRect.y > qualityRect.y + qualityRect.height &&
-              videoRect.y < qualityRect.y
+            const qualityIsVerticallyPositioned =
+              controlsRect.y > qualityRect.y + qualityRect.height
 
             const qualityIsHorizontallyContained =
               videoRect.x < qualityRect.x &&
               videoRect.x + videoRect.width > qualityRect.x + qualityRect.width
 
             return (
-              qualityIsVerticallyContained && qualityIsHorizontallyContained
+              qualityIsVerticallyPositioned && qualityIsHorizontallyContained
             )
           },
           qualityMenuSelector,
           controlsSelector,
           videoElementSelector
-        ).value
+        ).value,
+      undefined,
+      'Could not verify that the quality popover was visible'
     )
   }
 
@@ -334,9 +340,7 @@ describe('🎥 Player:', function () {
       assertVolumeIsNotMuted()
     })
 
-    // This is skipped until we fix the issue where volume and duration do not show up
-    // on many screen widths
-    it.skip('should mute the video when the volume button is clicked', () => {
+    it('should mute the video when the volume button is clicked', () => {
       goToTestVideoUrl({ embed })
       assertVolumeIsNotMuted()
       browser.moveToObject(overlaySelector)

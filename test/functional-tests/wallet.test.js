@@ -1,26 +1,10 @@
-//
-// Note for devs: WORK IN PROGRESS
-//
-//
-// MIGRATING FROM paratii-player/tests/
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 import {
-  assertUserIsLoggedIn,
+  paratii,
   web3,
-  createUserAndLogin,
-  getEthAccountFromApp
+  nukeLocalStorage,
+  nukeSessionStorage,
+  restoreMnemonic,
+  restoredAddress
 } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
@@ -28,11 +12,116 @@ describe('wallet:', function () {
   let userAccount
 
   beforeEach(function () {
-    browser.url('http://localhost:3000/')
-    createUserAndLogin(browser)
-    browser.url('http://localhost:3000/profile')
-    userAccount = getEthAccountFromApp()
-    assertUserIsLoggedIn(browser)
+    browser.url(`http://localhost:8080`)
+    browser.execute(nukeLocalStorage)
+    browser.execute(nukeSessionStorage)
+  })
+
+  it('If we have a secured wallet in localStorage, we open it with a Pin', function () {
+    browser.url(`http://localhost:8080`)
+    browser.execute(function () {
+      const password = '1234'
+      window.paratii.eth.wallet.clear()
+      window.paratii.eth.wallet
+        .create()
+        .then(
+          localStorage.setItem(
+            'keystore-secure',
+            JSON.stringify(window.paratii.eth.wallet.encrypt(password))
+          )
+        )
+    })
+    browser.url(`http://localhost:8080/wallet`)
+    // Set pin number: 1234
+    browser.waitAndClick('[data-test-id="button-1"]')
+    browser.waitAndClick('[data-test-id="button-2"]')
+    browser.waitAndClick('[data-test-id="button-3"]')
+    browser.waitAndClick('[data-test-id="button-4"]')
+    browser.waitAndClick('[data-test-id="pin-continue"]')
+    const balance = browser.getText('[data-test-id="pti-balance"]')
+    // We have a new account so the balance should be zero
+    assert.equal(balance, '0')
+  })
+
+  // it('If there is an anonymous wallet in localStorage we open it', function () {
+  //   const balance = browser.getText('[data-test-id="pti-balance"]')
+  //   // We check the default address balance
+  //   assert.equal(balance, '21M')
+  // })
+
+  it('restore your wallet using a seed', async function () {
+    browser.url(`http://localhost:8080/wallet`)
+    browser.waitUntil(() => {
+      return browser.getTitle() === 'Paratii'
+    })
+    browser.waitForClickable('[data-test-id="pti-balance"]')
+    browser.waitAndClick('[data-test-id="secure-wallet"]')
+    browser.pause(500)
+    browser.waitAndClick('[data-test-id="restore-account"]')
+    // Insert the seed
+    browser.waitForClickable('[name="mnemonic-restore"]')
+    browser.setValue('[name="mnemonic-restore"]', restoreMnemonic)
+    browser.waitAndClick('[data-test-id="restore-wallet"]')
+    // Set pin number: 1234
+    browser.waitAndClick('[data-test-id="button-1"]')
+    browser.waitAndClick('[data-test-id="button-2"]')
+    browser.waitAndClick('[data-test-id="button-3"]')
+    browser.waitAndClick('[data-test-id="button-4"]')
+    browser.waitAndClick('[data-test-id="pin-continue"]')
+    // Re-enter the same pin number: 1234
+    browser.waitAndClick('[data-test-id="button-1"]')
+    browser.waitAndClick('[data-test-id="button-2"]')
+    browser.waitAndClick('[data-test-id="button-3"]')
+    browser.waitAndClick('[data-test-id="button-4"]')
+    browser.waitAndClick('[data-test-id="pin-continue"]')
+    browser.waitForClickable('[data-test-id="user-address"]')
+    const newAddress = browser.getText('[data-test-id="user-address"]')
+    browser.waitForClickable('[data-test-id="pti-balance"]')
+    const balance = browser.getText('[data-test-id="pti-balance"]')
+    // Check the if the address is the restored one
+    assert.equal(newAddress, restoredAddress)
+    // We have a new account so the balance should be zero
+    assert.equal(balance, '0')
+  })
+
+  it('secure your wallet, transfer data to a new address', async function () {
+    browser.url(`http://localhost:8080/wallet`)
+    browser.waitUntil(() => {
+      return browser.getTitle() === 'Paratii'
+    })
+    browser.waitForClickable('[data-test-id="user-address"]')
+    const anonAddress = browser.getText('[data-test-id="user-address"]')
+    browser.waitForClickable('[data-test-id="pti-balance"]')
+    const balance = browser.getText('[data-test-id="pti-balance"]')
+    browser.waitAndClick('[data-test-id="secure-wallet"]')
+    browser.pause(500)
+    browser.waitAndClick('[data-test-id="new-here"]')
+    browser.waitForClickable('[data-test-id="new-mnemonic"]')
+    const newMnemonic = browser.getText('[data-test-id="new-mnemonic"]')
+    browser.waitAndClick('[data-test-id="rewrite-seed"]')
+    browser.waitForClickable('[name="rewrite-mnemonic"]')
+    browser.setValue('[name="rewrite-mnemonic"]', newMnemonic)
+    browser.waitAndClick('[data-test-id="check-seed"]')
+    // // Set pin number: 1234
+    browser.waitAndClick('[data-test-id="button-1"]')
+    browser.waitAndClick('[data-test-id="button-2"]')
+    browser.waitAndClick('[data-test-id="button-3"]')
+    browser.waitAndClick('[data-test-id="button-4"]')
+    browser.waitAndClick('[data-test-id="pin-continue"]')
+    // Re-enter the same pin number: 1234
+    browser.waitAndClick('[data-test-id="button-1"]')
+    browser.waitAndClick('[data-test-id="button-2"]')
+    browser.waitAndClick('[data-test-id="button-3"]')
+    browser.waitAndClick('[data-test-id="button-4"]')
+    browser.waitAndClick('[data-test-id="pin-continue"]')
+    const newBalance = browser.getText('[data-test-id="pti-balance"]')
+    // Check the if the restoredAddress is different than the anonAddress
+    assert.notEqual(anonAddress, restoredAddress)
+    // We have a new account so the balance should be zero
+    assert.equal(balance, newBalance)
+    // After the test we resend the money back to the default address
+    // await paratii.eth.transfer(anonAddress, 21000000000000000000000000, 'PTI')
+    await paratii.core.migrateAccount(anonAddress)
   })
 
   it.skip('should show ETH balance', function () {

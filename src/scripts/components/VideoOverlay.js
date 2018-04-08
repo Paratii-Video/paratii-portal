@@ -99,7 +99,12 @@ const VideoInfo = styled.div`
 
 const PlayerTitle = Title.extend`
   color: ${props => props.theme.colors.VideoPlayer.header.title};
+  font-size: ${props => props.theme.fonts.title.big};
   max-width: 75%;
+
+  @media (max-width: 1024px) {
+    font-size: ${props => props.theme.fonts.title.small};
+  }
 `
 
 const ButtonWrapper = styled.div`
@@ -114,6 +119,16 @@ const ButtonWrapper = styled.div`
 `
 
 const ShareButton = Button.extend`
+  height: 20px;
+  margin-left: 10px;
+  width: 26px;
+
+  @media (max-width: 768px) {
+    width: 20px;
+  }
+`
+
+const ProfileButtonWrapper = styled.div`
   height: 20px;
   margin-left: 10px;
   width: 26px;
@@ -179,29 +194,29 @@ class VideoOverlay extends Component<Props> {
             {isEmbed && <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>}
             <ButtonWrapper>
               {isEmbed && (
-                <IconButton
-                  color={
-                    activePlugin === PLAYER_PLUGIN.WALLET ? Colors.purple : ''
-                  }
-                  data-test-id="wallet-info-button"
-                  icon="/assets/img/profile.svg"
-                  onClick={(e: Object) => {
-                    e.stopPropagation()
-                    toggleActivePlugin(PLAYER_PLUGIN.WALLET)
-                  }}
-                />
+                <ProfileButtonWrapper>
+                  <IconButton
+                    color={
+                      activePlugin === PLAYER_PLUGIN.WALLET ? Colors.purple : ''
+                    }
+                    data-test-id="wallet-info-button"
+                    icon="/assets/img/profile.svg"
+                    onClick={(e: Object) => {
+                      e.stopPropagation()
+                      toggleActivePlugin(PLAYER_PLUGIN.WALLET)
+                    }}
+                  />
+                </ProfileButtonWrapper>
               )}
-              {!this.props.showShareModal && (
-                <ShareButton
-                  data-test-id="share-button"
-                  onClick={(e: Object) => {
-                    e.stopPropagation()
-                    toggleShareModal(e)
-                  }}
-                >
-                  <SVGIcon icon="icon-player-share" color="white" />
-                </ShareButton>
-              )}
+              <ShareButton
+                data-test-id="share-button"
+                onClick={(e: Object) => {
+                  e.stopPropagation()
+                  toggleShareModal(e)
+                }}
+              >
+                <SVGIcon icon="icon-player-share" color="white" />
+              </ShareButton>
             </ButtonWrapper>
           </VideoInfo>
         </Overlay>
