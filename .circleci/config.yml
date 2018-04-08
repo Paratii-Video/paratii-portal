@@ -22,10 +22,15 @@ jobs:
           command: yarn run parity
           background: true
       - run:
-          command: yarn run build:staging
+          command: yarn run build:dev
           background: true
       - run:
-          command: yarn run server
+          command: yarn run server:dev
+          background: true
+      - run:
+          command: mv /paratii-db/paratii-db db
+      - run:
+          command: cd db && npm run dev
           background: true
       - run: node src/scripts/waitForServer.js
       - run: yarn run chimp-circleci-test
