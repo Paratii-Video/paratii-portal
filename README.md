@@ -25,7 +25,7 @@ If you are on a Mac, you may need to set the path to parity:
     $ cd paratii-portal
     $ yarn
 
-☝️ add the `--pure-lockfile` argument to `yarn` to ensure you install all dependencies exactly as resolved in the current `yarn.lock` file.
+☝️ add the `--pure-lockfile` argument to `yarn` to ensure you install all dependencies exactly as specified in the current `yarn.lock` file.
 
 
 ## Testing
