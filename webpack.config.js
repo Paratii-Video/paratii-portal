@@ -141,7 +141,8 @@ const config = {
             // '_id', 'peerId._id', 'peerId._idB58String', 'peerId', 'id', 'multiaddr',
             // 'multiaddrs', 'buffer', 'Buffer',
           },
-          compress: false
+          compress: false,
+          safari10: true
         }
       })
     : new webpack.HotModuleReplacementPlugin(),
