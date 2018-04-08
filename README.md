@@ -23,13 +23,10 @@ If you are on a Mac, you may need to set the path to parity:
 
     $ git clone https://github.com/Paratii-Video/paratii-portal
     $ cd paratii-portal
-    $ yarn install
+    $ yarn
 
-### Workaround for web3 bug [perhaps not needed anymore]
+☝️ add the `--pure-lockfile` argument to `yarn` to ensure you install all dependencies exactly as resolved in the current `yarn.lock` file.
 
-Currently, instead of using `yarn` to install dependencies the following steps must be taken:
-
-    $ npm install
 
 ## Testing
 
