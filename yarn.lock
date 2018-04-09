@@ -1783,7 +1783,7 @@ bitsyntax@~0.0.4:
   dependencies:
     buffer-more-ints "0.0.2"
 
-bl@^1.0.0, bl@^1.2.1:
+bl@^1.0.0, bl@^1.2.1, bl@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/bl/-/bl-1.2.2.tgz#a160911717103c07410cef63ef51b397c025af9c"
   dependencies:
@@ -2440,6 +2440,10 @@ chai-as-promised@^6.0.0:
   dependencies:
     check-error "^1.0.2"
 
+chai-bignumber@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/chai-bignumber/-/chai-bignumber-2.0.2.tgz#de6c219c690b2d66b646ad6930096f9ba2199643"
+
 chai@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/chai/-/chai-4.1.2.tgz#0f64584ba642f0f2ace2806279f4f06ca23ad73c"
@@ -2639,6 +2643,10 @@ chromedriver@^2.28:
     mkdirp "^0.5.1"
     request "^2.83.0"
 
+chunky@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/chunky/-/chunky-0.0.0.tgz#1e7580a23c083897d2ad662459e7efd8465f608a"
+
 ci-info@^1.0.0:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-1.1.3.tgz#710193264bb05c77b8c90d02f5aaf22216a667b2"
@@ -2675,6 +2683,10 @@ clap@^1.0.9:
 clappr@^0.2.87:
   version "0.2.90"
   resolved "https://registry.yarnpkg.com/clappr/-/clappr-0.2.90.tgz#06501e47ef51f2be1d266a042ca7e499209b4225"
+
+class-is@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/class-is/-/class-is-1.1.0.tgz#9d3c0fba0440d211d843cec3dedfa48055005825"
 
 class-utils@^0.3.5:
   version "0.3.6"
@@ -5457,7 +5469,7 @@ filename-regex@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/filename-regex/-/filename-regex-2.0.1.tgz#c1c4b9bee3e09725ddb106b75c1e301fe2f18b26"
 
-filesize@^3.5.11, filesize@^3.6.0:
+filesize@^3.5.11, filesize@^3.6.1:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/filesize/-/filesize-3.6.1.tgz#090bb3ee01b6f801a8a8be99d31710b3422bb317"
 
@@ -7373,9 +7385,9 @@ ipfs-api@^17.2.4:
     streamifier "^0.1.1"
     tar-stream "^1.5.5"
 
-ipfs-api@^18.2.1:
-  version "18.2.1"
-  resolved "https://registry.yarnpkg.com/ipfs-api/-/ipfs-api-18.2.1.tgz#9df524f3b664a92fac74d753b62e02071594c98b"
+ipfs-api@^19.0.0:
+  version "19.0.0"
+  resolved "https://registry.yarnpkg.com/ipfs-api/-/ipfs-api-19.0.0.tgz#86921b954228758de3b2231d1e1894b22eb40947"
   dependencies:
     async "^2.6.0"
     big.js "^5.0.3"
@@ -7391,7 +7403,7 @@ ipfs-api@^18.2.1:
     is-ipfs "^0.3.2"
     is-stream "^1.1.0"
     lru-cache "^4.1.2"
-    multiaddr "^3.0.2"
+    multiaddr "^3.1.0"
     multihashes "~0.4.13"
     ndjson "^1.5.0"
     once "^1.4.0"
@@ -7535,7 +7547,7 @@ ipfs-repo@~0.18.2, ipfs-repo@~0.18.4, ipfs-repo@~0.18.5, ipfs-repo@~0.18.7:
     multiaddr "^3.0.1"
     pull-stream "^3.6.1"
 
-ipfs-unixfs-engine@~0.24.1, ipfs-unixfs-engine@~0.24.4:
+ipfs-unixfs-engine@~0.24.1:
   version "0.24.4"
   resolved "https://registry.yarnpkg.com/ipfs-unixfs-engine/-/ipfs-unixfs-engine-0.24.4.tgz#96d381b5a81ce74c03feac5c01f6c234a2bf106b"
   dependencies:
@@ -7562,27 +7574,55 @@ ipfs-unixfs-engine@~0.24.1, ipfs-unixfs-engine@~0.24.4:
     pull-write "^1.1.4"
     sparse-array "^1.3.1"
 
+ipfs-unixfs-engine@~0.27.0:
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/ipfs-unixfs-engine/-/ipfs-unixfs-engine-0.27.0.tgz#2ae50871187aeec5d2321643ffe12f4c13008608"
+  dependencies:
+    async "^2.6.0"
+    bs58 "^4.0.1"
+    cids "~0.5.3"
+    deep-extend "~0.5.0"
+    ipfs-unixfs "~0.1.14"
+    ipld "^0.15.0"
+    ipld-dag-pb "~0.13.1"
+    left-pad "^1.2.0"
+    lodash "^4.17.5"
+    multihashes "~0.4.13"
+    multihashing-async "~0.4.8"
+    pull-batch "^1.0.0"
+    pull-block "^1.4.0"
+    pull-cat "^1.1.11"
+    pull-pair "^1.1.0"
+    pull-paramap "^1.2.2"
+    pull-pause "0.0.2"
+    pull-pushable "^2.2.0"
+    pull-stream "^3.6.3"
+    pull-through "^1.0.18"
+    pull-traverse "^1.0.3"
+    pull-write "^1.1.4"
+    sparse-array "^1.3.1"
+
 ipfs-unixfs@~0.1.14:
   version "0.1.14"
   resolved "https://registry.yarnpkg.com/ipfs-unixfs/-/ipfs-unixfs-0.1.14.tgz#256437fcf642d8ab46b5185582ec4f21e908ef37"
   dependencies:
     protons "^1.0.0"
 
-"ipfs@github:Paratii-Video/js-ipfs#paratii/v0.28.2":
+"ipfs@github:Paratii-Video/js-ipfs#f02bfb4961eaf8fae077eb12e175cd518e602bc4":
   version "0.28.2"
-  resolved "https://codeload.github.com/Paratii-Video/js-ipfs/tar.gz/c56ca2bb2b20649a31d94186ba0b188edf009210"
+  resolved "https://codeload.github.com/Paratii-Video/js-ipfs/tar.gz/f02bfb4961eaf8fae077eb12e175cd518e602bc4"
   dependencies:
     async "^2.6.0"
     big.js "^5.0.3"
     binary-querystring "~0.1.2"
-    bl "^1.2.1"
+    bl "^1.2.2"
     boom "^7.2.0"
     bs58 "^4.0.1"
     byteman "^1.3.5"
     cids "~0.5.3"
     debug "^3.1.0"
     file-type "^7.6.0"
-    filesize "^3.6.0"
+    filesize "^3.6.1"
     fsm-event "^2.1.0"
     get-folder-size "^1.0.1"
     glob "^7.1.2"
@@ -7590,29 +7630,29 @@ ipfs-unixfs@~0.1.14:
     hapi-set-header "^1.0.2"
     hoek "^5.0.3"
     human-to-milliseconds "^1.0.0"
-    ipfs-api "^18.2.1"
+    ipfs-api "^19.0.0"
     ipfs-bitswap "github:ya7ya/js-ipfs-bitswap#paratii/v0.19.0-b"
     ipfs-block "~0.6.1"
     ipfs-block-service "~0.13.0"
     ipfs-multipart "~0.1.0"
     ipfs-repo "~0.18.7"
     ipfs-unixfs "~0.1.14"
-    ipfs-unixfs-engine "~0.24.4"
+    ipfs-unixfs-engine "~0.27.0"
     ipld "^0.15.0"
     is-ipfs "^0.3.2"
     is-stream "^1.1.0"
     joi "^13.1.2"
     joi-browser "^13.0.1"
-    joi-multiaddr "^1.0.1"
-    libp2p "~0.19.0"
+    joi-multiaddr "^2.0.0"
+    libp2p "~0.19.2"
     libp2p-circuit "~0.1.5"
     libp2p-floodsub "~0.14.1"
     libp2p-kad-dht "~0.9.0"
     libp2p-keychain "~0.3.1"
     libp2p-mdns "~0.9.2"
-    libp2p-multiplex "~0.5.1"
+    libp2p-mplex "^0.6.0"
     libp2p-railing "~0.7.1"
-    libp2p-secio "~0.9.3"
+    libp2p-secio "~0.9.4"
     libp2p-tcp "~0.11.6"
     libp2p-webrtc-star "~0.13.4"
     libp2p-websocket-star "~0.7.7"
@@ -7624,7 +7664,7 @@ ipfs-unixfs@~0.1.14:
     mafmt "^4.0.0"
     mime-types "^2.1.18"
     mkdirp "~0.5.1"
-    multiaddr "^3.0.2"
+    multiaddr "^3.1.0"
     multihashes "~0.4.13"
     once "^1.4.0"
     path-exists "^3.0.0"
@@ -7640,7 +7680,7 @@ ipfs-unixfs@~0.1.14:
     pull-paramap "^1.2.2"
     pull-pushable "^2.2.0"
     pull-sort "^1.0.1"
-    pull-stream "^3.6.2"
+    pull-stream "^3.6.7"
     pull-stream-to-stream "^1.3.4"
     pull-zip "^2.0.1"
     read-pkg-up "^3.0.0"
@@ -7650,7 +7690,7 @@ ipfs-unixfs@~0.1.14:
     tar-stream "^1.5.5"
     temp "~0.8.3"
     through2 "^2.0.3"
-    update-notifier "^2.3.0"
+    update-notifier "^2.4.0"
     yargs "^11.0.0"
     yargs-parser "^9.0.2"
   optionalDependencies:
@@ -8506,12 +8546,12 @@ joi-browser@^13.0.1:
   version "13.0.1"
   resolved "https://registry.yarnpkg.com/joi-browser/-/joi-browser-13.0.1.tgz#06a7b782d94bca6fa0f107138846ea16588b2e7b"
 
-joi-multiaddr@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/joi-multiaddr/-/joi-multiaddr-1.0.1.tgz#9392f0b2b85b1110663639c67266342283c1b91c"
+joi-multiaddr@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/joi-multiaddr/-/joi-multiaddr-2.0.0.tgz#4eaf5dd161a6f6e77a427b87ea92eab6d22c5652"
   dependencies:
-    mafmt "^4.0.0"
-    multiaddr "^3.0.2"
+    mafmt "^6.0.0"
+    multiaddr "^4.0.0"
 
 joi@10.x.x:
   version "10.6.0"
@@ -9233,6 +9273,24 @@ libp2p-mdns@~0.9.1, libp2p-mdns@~0.9.2:
     peer-id "~0.10.5"
     peer-info "~0.11.6"
 
+libp2p-mplex@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/libp2p-mplex/-/libp2p-mplex-0.6.0.tgz#fcd9fe652aad04a743a366d31983ab9a71658af6"
+  dependencies:
+    async "^2.6.0"
+    chunky "0.0.0"
+    concat-stream "^1.6.0"
+    debug "^3.1.0"
+    duplexify "^3.5.3"
+    pull-catch "^1.0.0"
+    pull-stream "^3.6.1"
+    pull-stream-to-stream "^1.3.4"
+    pump "^3.0.0"
+    readable-stream "^2.3.4"
+    stream-to-pull-stream "^1.7.2"
+    through2 "^2.0.3"
+    varint "^5.0.0"
+
 libp2p-multiplex@~0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/libp2p-multiplex/-/libp2p-multiplex-0.5.1.tgz#007282d5db6fb3d53d3766b81dabaf215707829d"
@@ -9276,7 +9334,7 @@ libp2p-record@~0.5.1:
     peer-id "~0.10.0"
     protons "^1.0.0"
 
-libp2p-secio@~0.9.0, libp2p-secio@~0.9.3:
+libp2p-secio@~0.9.0, libp2p-secio@~0.9.4:
   version "0.9.4"
   resolved "https://registry.yarnpkg.com/libp2p-secio/-/libp2p-secio-0.9.4.tgz#024f672bfced7d591a3d259958693518a2b96232"
   dependencies:
@@ -9412,7 +9470,7 @@ libp2p@~0.15.0:
     peer-id "~0.10.5"
     peer-info "~0.11.6"
 
-libp2p@~0.19.0:
+libp2p@~0.19.2:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/libp2p/-/libp2p-0.19.2.tgz#a123148686d046973c62a2badedc7775cbc9e846"
   dependencies:
@@ -10026,6 +10084,12 @@ mafmt@^4.0.0:
   dependencies:
     multiaddr "^3.0.2"
 
+mafmt@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/mafmt/-/mafmt-6.0.0.tgz#ec13f8761253354c23420ae3903c837b6649caa6"
+  dependencies:
+    multiaddr "^4.0.0"
+
 mailcomposer@4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/mailcomposer/-/mailcomposer-4.0.1.tgz#0e1c44b2a07cf740ee17dc149ba009f19cadfeb4"
@@ -10601,6 +10665,19 @@ multiaddr@^3.0.1, multiaddr@^3.0.2, multiaddr@^3.1.0:
   dependencies:
     bs58 "^4.0.1"
     ip "^1.1.5"
+    lodash.filter "^4.6.0"
+    lodash.map "^4.6.0"
+    varint "^5.0.0"
+    xtend "^4.0.1"
+
+multiaddr@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/multiaddr/-/multiaddr-4.0.0.tgz#70a8857c4f737350bc2c56914a70f1263889db33"
+  dependencies:
+    bs58 "^4.0.1"
+    class-is "^1.1.0"
+    ip "^1.1.5"
+    ip-address "^5.8.9"
     lodash.filter "^4.6.0"
     lodash.map "^4.6.0"
     varint "^5.0.0"
@@ -11480,21 +11557,28 @@ parallel-transform@^1.1.0:
     web3 "^1.0.0-beta.27"
     zeppelin-solidity "^1.3.0"
 
-"paratii-lib@github:Paratii-Video/paratii-lib#d7e20ee9319c1bf979e326b79859a760cb2b5fed":
-  version "0.0.1"
-  resolved "https://codeload.github.com/Paratii-Video/paratii-lib/tar.gz/d7e20ee9319c1bf979e326b79859a760cb2b5fed"
+"paratii-js@github:Paratii-Video/paratii-js#189889cc8dd95fcf4209835e64b6eecab7f8344c":
+  version "0.2.0"
+  resolved "https://codeload.github.com/Paratii-Video/paratii-js/tar.gz/189889cc8dd95fcf4209835e64b6eecab7f8344c"
   dependencies:
     async "^2.6.0"
     babel-plugin-transform-runtime "^6.23.0"
-    bitcore-lib "^0.15.0"
-    bitcore-mnemonic "^1.5.0"
-    default-options "^1.0.0"
-    ipfs "github:Paratii-Video/js-ipfs#paratii/v0.27.1"
+    babel-plugin-webpack-alias "^2.1.2"
+    babel-preset-react "^6.24.1"
+    bip39 "^2.5.0"
+    chai-bignumber "^2.0.2"
+    es6-promise "^4.2.4"
+    hdkey "^0.8.0"
+    ipfs "github:Paratii-Video/js-ipfs#f02bfb4961eaf8fae077eb12e175cd518e602bc4"
+    isomorphic-fetch "^2.2.1"
+    joi "^13.1.2"
+    multiaddr "^3.0.2"
     once "^1.4.0"
-    paratii-contracts "github:Paratii-Video/paratii-contracts#8db835572fb38f694dccf4268fb66ab69f346687"
-    paratii-protocol "github:Paratii-Video/paratii-protocol#master"
+    paratii-contracts "github:Paratii-Video/paratii-contracts#6651984d0bf7f2a905631087975c5a412d5e4cb7"
+    paratii-protocol "github:Paratii-Video/paratii-protocol#45aadcf300f1ad184d6d3db8f9c4b3d438b6f658"
     promisify-node "^0.4.0"
     pull-filereader "^1.0.1"
+    resumablejs "^1.1.0"
     stream-to-pull-stream "^1.7.2"
     web3 "^1.0.0-beta.29"
 
@@ -12859,7 +12943,7 @@ pull-stream-to-stream@^1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/pull-stream-to-stream/-/pull-stream-to-stream-1.3.4.tgz#3f81d8216bd18d2bfd1a198190471180e2738399"
 
-pull-stream@^3.2.3, pull-stream@^3.4.5, pull-stream@^3.6.0, pull-stream@^3.6.1, pull-stream@^3.6.2, pull-stream@^3.6.7:
+pull-stream@^3.2.3, pull-stream@^3.4.5, pull-stream@^3.6.0, pull-stream@^3.6.1, pull-stream@^3.6.2, pull-stream@^3.6.3, pull-stream@^3.6.7:
   version "3.6.7"
   resolved "https://registry.yarnpkg.com/pull-stream/-/pull-stream-3.6.7.tgz#fe4ae4f7cc3a9ee3ac82cd5be32729f2f0d5f02b"
 
@@ -16181,7 +16265,7 @@ upath@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/upath/-/upath-1.0.4.tgz#ee2321ba0a786c50973db043a50b7bcba822361d"
 
-update-notifier@^2.3.0:
+update-notifier@^2.3.0, update-notifier@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/update-notifier/-/update-notifier-2.4.0.tgz#f9b4c700fbfd4ec12c811587258777d563d8c866"
   dependencies:
