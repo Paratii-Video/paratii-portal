@@ -49,9 +49,9 @@ export const fetchOwnedVideos = () => async (
   getState: () => RootState
 ) => {
   const address: string = paratii.config.account.address
-  const ownedVideos: Array<Object> = await paratii.core.vids.search({
+  const ownedVideos: Array<Object> = (await paratii.core.vids.search({
     owner: address
-  })
+  })).results
   const filteredOwnedVideos = []
   for (let i = 0; i < ownedVideos.length; i++) {
     const video = ownedVideos[i]
