@@ -168,14 +168,14 @@ const ControlButtons = styled.div`
 `
 
 const LeftControls = styled.div`
-  flex: 1 1 0;
+  flex: 1;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 `
 
 const RightControls = styled.div`
-  flex: 1 1 0;
+  flex: 0;
   display: flex;
   justify-content: flex-end;
   align-items: center;

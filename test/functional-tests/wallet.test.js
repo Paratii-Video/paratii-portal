@@ -49,14 +49,12 @@ describe('wallet:', function () {
   //   assert.equal(balance, '21M')
   // })
 
-  it('restore your wallet using a seed', async function () {
+  it('restore your wallet using a seed @watch', async function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
     })
     browser.waitForClickable('[data-test-id="pti-balance"]')
-    let balance = browser.getText('[data-test-id="pti-balance"]')
-    assert.equal(balance, '21M')
     browser.waitAndClick('[data-test-id="secure-wallet"]')
     browser.pause(500)
     browser.waitAndClick('[data-test-id="restore-account"]')
@@ -79,7 +77,7 @@ describe('wallet:', function () {
     browser.waitForClickable('[data-test-id="user-address"]')
     const newAddress = browser.getText('[data-test-id="user-address"]')
     browser.waitForClickable('[data-test-id="pti-balance"]')
-    balance = browser.getText('[data-test-id="pti-balance"]')
+    const balance = browser.getText('[data-test-id="pti-balance"]')
     // Check the if the address is the restored one
     assert.equal(newAddress, restoredAddress)
     // We have a new account so the balance should be zero

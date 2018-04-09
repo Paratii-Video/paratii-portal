@@ -15,6 +15,7 @@ import Button from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
+import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
 import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
 
@@ -121,71 +122,6 @@ const OverlayWrapper = styled.div`
   width: 100%;
   height: 100%;
   z-index: 10;
-`
-
-const ShareOverlay = styled.div`
-  align-items: center;
-  background-color: ${props => props.theme.colors.VideoPlayer.share.background};
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  left: 0;
-  opacity: ${props => (props.show ? 1 : 0)};
-  position: absolute;
-  pointer-events: ${props => (!props.show ? 'none' : null)};
-  transition: opacity ${props => props.theme.animation.time.repaint};
-  top: 0;
-  width: 100%;
-  z-index: 15;
-`
-
-const CloseButton = Button.extend`
-  height: 20px;
-  position: absolute;
-  right: 30px;
-  top: 27px;
-  width: 20px;
-  z-index: 3;
-`
-
-const SVGButton = styled.svg`
-  fill: ${props => props.theme.colors.VideoPlayer.header.icons};
-  display: block;
-  height: 100%;
-  width: 100%;
-`
-
-const ShareTitle = Title.extend`
-  font-size: ${props => props.theme.fonts.video.share.title};
-  margin-bottom: 20px;
-`
-
-const Anchor = Button.withComponent('a')
-
-const AnchorLink = Anchor.extend`
-  font-size: ${props => props.theme.fonts.video.share.link};
-  padding: 0 10%;
-  text-align: center;
-  width: 100%;
-  word-wrap: break-word;
-`
-
-const ShareButtons = styled.div`
-  display: flex;
-  margin-top: 20px;
-`
-
-const ShareLink = Anchor.extend`
-  height: 30px;
-  margin: 0 5px;
-  width: 30px;
-`
-
-const ShareLinkIcon = styled.img`
-  display: block;
-  height: 100%;
-  width: 100%;
 `
 
 const PlayInfo = styled(Card)`
@@ -691,6 +627,24 @@ class Play extends Component<Props, State> {
   render () {
     const { activePlugin, isEmbed, video } = this.props
 
+    const shareOptions = [
+      {
+        href: this.getTelegramHref(),
+        icon: 'telegram',
+        label: 'Telegram'
+      },
+      {
+        href: this.getTwitterHref(),
+        icon: 'twitter',
+        label: 'Twitter'
+      },
+      {
+        href: this.getWhatsAppMobileHref(),
+        icon: 'whatsapp',
+        label: 'WhatsApp'
+      }
+    ]
+
     if (this.state.videoNotFound) {
       return <VideoNotFound />
     } else {
@@ -743,51 +697,16 @@ class Play extends Component<Props, State> {
                 }}
               />
               {this.props.video ? (
-                <ShareOverlay show={this.state.showShareModal}>
-                  <CloseButton onClick={this.toggleShareModal}>
-                    <SVGButton>
-                      <use xlinkHref="#icon-close" />
-                    </SVGButton>
-                  </CloseButton>
-                  <ShareTitle small />
-                  <AnchorLink
-                    href={
-                      this.getPortalUrl() +
-                      '/play/' +
-                      ((video && video.id) || '')
-                    }
-                    target="_blank"
-                    anchor
-                    white
-                  >
-                    {this.getPortalUrl() +
-                      '/play/' +
-                      ((video && video.id) || '')}
-                  </AnchorLink>
-                  <ShareButtons>
-                    <ShareLink
-                      href={this.getTelegramHref()}
-                      target="_blank"
-                      anchor
-                    >
-                      <ShareLinkIcon src="/assets/svg/icons-share-telegram.svg" />
-                    </ShareLink>
-                    <ShareLink
-                      href={this.getTwitterHref()}
-                      target="_blank"
-                      anchor
-                    >
-                      <ShareLinkIcon src="/assets/svg/icons-share-twitter.svg" />
-                    </ShareLink>
-                    <ShareLink
-                      href={this.getWhatsAppMobileHref()}
-                      target="_blank"
-                      anchor
-                    >
-                      <ShareLinkIcon src="/assets/svg/icons-share-whatsapp.svg" />
-                    </ShareLink>
-                  </ShareButtons>
-                </ShareOverlay>
+                <ShareOverlay
+                  show={this.state.showShareModal}
+                  onToggle={this.toggleShareModal}
+                  portalUrl={this.getPortalUrl()}
+                  videoId={video && video.id}
+                  videoLabelUrl={
+                    this.getPortalUrl() + '/play/' + ((video && video.id) || '')
+                  }
+                  shareOptions={shareOptions}
+                />
               ) : null}
             </PlayerWrapper>
           </VideoWrapper>

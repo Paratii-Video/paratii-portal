@@ -12,6 +12,16 @@ import { PlaybackLevel } from 'records/PlayerRecords'
 const PADDING: string = '20px'
 const LevelHeight: string = '42px'
 
+const RESOLUTIONS = {
+  Auto: 'Auto',
+  '2760.7Kbps': '1080p',
+  '1327.1Kbps': '720p',
+  '763.9Kbps': '480p',
+  '423.9Kbps': '360p',
+  '155.6Kbps': '240p',
+  '64Kbps': '144p'
+}
+
 const Wrapper = styled.div`
   cursor: default;
   display: flex;
@@ -126,7 +136,7 @@ class PlaybackLevels extends React.Component<Props> {
                   onPlaybackLevelChange(level.get('id'))
                 }}
               >
-                <LevelLabel small>{level.get('label')}</LevelLabel>
+                <LevelLabel small>{RESOLUTIONS[level.get('label')]}</LevelLabel>
               </Level>
             ))}
           </LevelsList>
