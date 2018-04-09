@@ -87,8 +87,13 @@ const Level = styled.li`
   }
 `
 
-const LevelLabel = Text.extend`
+const LevelLabel = styled.p`
   display: inline-block;
+  font-size: ${props => props.theme.fonts.video.quality.levelsDesktop};
+
+  @media (max-width: 1680px) {
+    font-size: ${props => props.theme.fonts.video.quality.levels};
+  }
 `
 
 type Props = {
