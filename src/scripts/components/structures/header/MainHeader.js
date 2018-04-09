@@ -206,7 +206,7 @@ class MainHeader extends Component<Props, void> {
           <MainHeaderLogo />
           <HeaderContent open={this.state.navOpen}>
             <HeaderButtons>
-              <MainNavigation />
+              <MainNavigation closeNav={this.closeNav} />
               {userAvatar}
             </HeaderButtons>
           </HeaderContent>
