@@ -141,7 +141,7 @@ class VideoForm extends Component<Props, Object> {
       this.props.notification(
         {
           title: 'Not enough tokens',
-          message: `You need at least ${stakeAmount}PTIs to make a stake.`
+          message: `You need at least ${stakeAmount} PTIs to make a stake.`
         },
         'error'
       )
