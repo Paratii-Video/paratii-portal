@@ -49,7 +49,8 @@ describe('wallet:', function () {
   //   assert.equal(balance, '21M')
   // })
 
-  it('restore your wallet using a seed @watch', async function () {
+  // FIXME: temporarily disabled in production
+  it.skip('restore your wallet using a seed @watch', async function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
