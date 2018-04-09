@@ -1,5 +1,5 @@
 const { getParatiiConfig } = require('utils/AppUtils')
-const { Paratii } = require('paratii-lib')
+const { Paratii } = require('paratii-js')
 const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 const paratii = new Paratii(paratiiConfig)
 

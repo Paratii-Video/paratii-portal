@@ -149,7 +149,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
     `Requesting to transcode video ${videoInfo.id} with hash ${videoInfo.hash}`
   )
   dispatch(transcodingRequested(videoInfo))
-  // FIXME: paratii-lib should hande the starting of the ipfs node if it is not started yet
+  // FIXME: paratii-js should hande the starting of the ipfs node if it is not started yet
   paratii.ipfs.getIPFSInstance().then(function () {
     const transcoder = paratii.ipfs.uploader.transcode(videoInfo.hash, {
       author: paratii.config.account.address,

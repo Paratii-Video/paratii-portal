@@ -1,6 +1,6 @@
 /* @flow */
 
-import { Paratii } from 'paratii-lib/lib/paratii'
+import { Paratii } from 'paratii-js/src/paratii'
 import { getParatiiConfig } from 'utils/AppUtils'
 
 import type { ParatiiLib } from 'types/ApplicationTypes'

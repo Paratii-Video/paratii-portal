@@ -1,7 +1,7 @@
 /* @flow */
 
 import type { $Request, $Response } from 'express'
-import { Paratii } from 'paratii-lib/dist/paratii'
+import { Paratii } from 'paratii-js/dist/paratii'
 import { getParatiiConfig } from 'utils/AppUtils'
 
 const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
