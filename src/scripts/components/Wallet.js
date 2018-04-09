@@ -5,6 +5,8 @@ import Button from './foundations/Button'
 import paratii from 'utils/ParatiiLib'
 import { MODAL } from 'constants/ModalConstants'
 
+const ACTIVATE_SECURE_WALLET = false // a flag for activating the secure wallet
+
 type Props = {
   user: Object,
   closeModal: () => void,
@@ -21,7 +23,6 @@ class Wallet extends Component<Props> {
   }
 
   secureWallet () {
-    console.log('secure')
     this.props.openModal(MODAL.SECURE)
   }
 
@@ -38,9 +39,15 @@ class Wallet extends Component<Props> {
           PTI
         </Text>
         <br />
-        <Button data-test-id="secure-wallet" onClick={this.secureWallet} purple>
-          Secure Wallet
-        </Button>
+        {ACTIVATE_SECURE_WALLET && (
+          <Button
+            data-test-id="secure-wallet"
+            onClick={this.secureWallet}
+            purple
+          >
+            Secure Wallet
+          </Button>
+        )}
       </Card>
     )
   }
