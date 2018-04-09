@@ -150,7 +150,7 @@
     "lodash.debounce": "^4.0.8",
     "mux-embed": "^2.3.2",
     "paratii-lib": "github:Paratii-Video/paratii-lib#d7e20ee9319c1bf979e326b79859a760cb2b5fed",
-    "paratii-mediaplayer": "^3.0.2",
+    "paratii-mediaplayer": "^3.0.3",
     "player.js": "^0.1.0",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
