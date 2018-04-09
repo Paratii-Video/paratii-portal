@@ -23,13 +23,10 @@ If you are on a Mac, you may need to set the path to parity:
 
     $ git clone https://github.com/Paratii-Video/paratii-portal
     $ cd paratii-portal
-    $ yarn install
+    $ yarn
 
-### Workaround for web3 bug [perhaps not needed anymore]
+☝️ add the `--pure-lockfile` argument to `yarn` to ensure you install all dependencies exactly as specified in the current `yarn.lock` file.
 
-Currently, instead of using `yarn` to install dependencies the following steps must be taken:
-
-    $ npm install
 
 ## Testing
 
@@ -128,12 +125,12 @@ Rebuilding `node-sass` may help:
 
     yarn rebild node-sass
 ___
-If npm install doesn't work, maybe it's because you have a node version > 9.0.0  
+If `yarn` doesn't work, maybe it's because you have a node version > 9.0.0
 To fix it downgrade node to version 8.9.0:
 
   ```
-   $ sudo npm cache clean -f
-   $ sudo npm install -g n
+   $ sudo yarn cache clean -f
+   $ sudo yarn global add n
    $ sudo n 8.9.0
    ```
    or if you are using nvm:
@@ -143,7 +140,7 @@ To fix it downgrade node to version 8.9.0:
     ```
 This commands will set the default version that you will use to the 8.9.0
 
-Then run npm install again.
+Then run `yarn` again.
 ___
 If you get the following error:
 

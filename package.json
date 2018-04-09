@@ -135,6 +135,7 @@
     "webpack-hot-middleware": "^2.21.0"
   },
   "dependencies": {
+    "bip39": "^2.5.0",
     "bluebird": "^3.5.1",
     "clappr": "^0.2.87",
     "compression": "^1.7.2",
@@ -149,7 +150,7 @@
     "lodash.debounce": "^4.0.8",
     "mux-embed": "^2.3.2",
     "paratii-js": "github:Paratii-Video/paratii-js#bfb730a669f462c2c0ef946924551a9fb245ea5d",
-    "paratii-mediaplayer": "^3.0.2",
+    "paratii-mediaplayer": "^3.0.3",
     "player.js": "^0.1.0",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
