@@ -2,7 +2,7 @@ import { assert } from 'chai'
 import { paratii } from './test-utils/helpers'
 
 describe('🦄 Uploader Tool', function () {
-  it.skip('should have basic flow in place', async function () {
+  it('should have basic flow in place @watch', async function () {
     // THIS TEST is SKiPPED BECAUSE IT EXPECTS TO FIND A PARATII-DB INSTANCE LISTENING ON LOCALHOST:348539b9cd58fe0344dfa029cbfd601bfd3d8745
     // AND THIS IS NOT THE CASE IN CIRCLECI
 
@@ -38,7 +38,7 @@ describe('🦄 Uploader Tool', function () {
     browser.setValue('#input-video-title', video.title)
     browser.setValue('#input-video-description', video.description)
     // submit the form
-    browser.waitAndClick('#video-submit')
+    browser.waitAndClick('[data-test-id="video-submit-save"]')
     // we now should be on the status screen
 
     // wait until the video is saved on the blockchain
@@ -59,8 +59,10 @@ describe('🦄 Uploader Tool', function () {
     assert.isOk(videoInfoFromBlockchain)
     assert.equal(videoInfoFromBlockchain.owner, paratii.config.account.address)
 
-    // now wait until the transcoder is done - we should see a "play" link at this point
-    // TODO: this often times out on circleci because it depends on the (external) response of the transcoder
+    // when the transcoder is done, we should be ready to publish the video
+    console.log('publishing yr vid')
+    await browser.waitAndClick(`[data-test-id="video-submit-publish"]`)
+    await browser.waitAndClick(`[data-test-id="button-stake"]`)
     await browser.waitAndClick(`a[href="/play/${videoId}"]`)
   })
 
@@ -73,7 +75,4 @@ describe('🦄 Uploader Tool', function () {
     // (the file is small so is immediately done uploading, but the cancel button should be avaiblabel in any case)
     browser.waitForExist('#cancel-upload')
   })
-  it.skip('Upload file should have decent error handling', function () {})
-
-  it.skip('Edit  video should have decent error handling', function () {})
 })

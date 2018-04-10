@@ -167,7 +167,11 @@ class ModalStake extends Component<Props, Object> {
             </MainText>
           ) : (
             <Footer>
-              <Button purple onClick={this.onSubmit}>
+              <Button
+                purple
+                onClick={this.onSubmit}
+                data-test-id="button-stake"
+              >
                 Continue
               </Button>
             </Footer>
