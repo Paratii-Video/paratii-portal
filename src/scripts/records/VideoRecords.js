@@ -13,7 +13,7 @@ class Video extends ImmutableRecord({
   ipfsHashOrig: '',
   ipfsHash: '',
   owner: '',
-  price: '',
+  price: 0,
   thumbnails: ImmutableList(),
   title: '',
   author: '',
@@ -33,7 +33,7 @@ class Video extends ImmutableRecord({
   ipfsHashOrig: string
   ipfsHash: string
   owner: string
-  price: string
+  price: number
   thumbnails: ImmutableList<string>
   title: string
   author: string

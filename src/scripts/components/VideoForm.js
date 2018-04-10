@@ -208,7 +208,7 @@ class VideoForm extends Component<Props, Object> {
       publishButton = (
         <ButtonWrapper>
           <Button
-            id="video-submit"
+            data-test-id="video-submit-publish"
             type="submit"
             onClick={this.onPublishVideo}
             disabled={!isPublishable}
@@ -223,7 +223,7 @@ class VideoForm extends Component<Props, Object> {
     const saveButton = (
       <ButtonWrapper>
         <Button
-          id="video-submit"
+          data-test-id="video-submit-save"
           type="submit"
           onClick={this.onSaveData}
           purple
