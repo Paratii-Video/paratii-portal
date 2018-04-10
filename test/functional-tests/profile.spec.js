@@ -1,10 +1,3 @@
-//
-//
-// Note for devs: WORK IN PROGRESS
-// Check https://github.com/Paratii-Video/paratii-portal/issues/24 for progress
-//
-//
-
 import {
   add0x,
   SEED,
