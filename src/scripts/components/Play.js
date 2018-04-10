@@ -609,10 +609,14 @@ class Play extends Component<Props, State> {
     )
 
     if (!hasAutoPlayParam) {
-      return true
+      return false
     }
 
     const paramValue: string = parsedQueryString[PLAYER_PARAMS.AUTOPLAY]
+
+    if (!paramValue) {
+      return true
+    }
 
     const parsedNumberValue: number = parseInt(paramValue, 10)
 
