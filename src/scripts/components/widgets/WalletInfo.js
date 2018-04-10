@@ -23,6 +23,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   width: 250px;
   padding: ${POPOVER_PADDING};
+
+  @media (max-height: 400px) {
+    width: 100%;
+  }
 `
 
 const TopBar = styled.div`

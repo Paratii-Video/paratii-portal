@@ -9,13 +9,12 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package-lock.json" }}
-      - run: npm install
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+      - run: yarn --pure-lockfile
       - save_cache:
           paths:
             - node_modules
-          # key: v1-dependencies-{{ checksum "yarn.lock" }}
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
       - run: yarn run quality
       - run: yarn run unit-test-circleci
       - run:

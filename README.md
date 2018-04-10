@@ -1,7 +1,7 @@
 <img src="https://github.com/Paratii-Video/paratiisite/blob/master/public/svgs/paratii-logo.svg" width="200">
 
 # paratii-portal
-A modular web-interface for uploading content into the peer-to-peer network behind Paratii, and to browse or organize it. It's purpose is to **1)** help populate Paratii's registries with real world data and files from creators; **2)** expose widgets and forms of interaction with the paratii-library that other developers can leverage, or platform owners can implement; **3)** battletest distributed curation concepts, whenever mature for account management. First iteration will randomize account info. and focus on the experience of uploading videos.
+A modular web-interface for uploading content into the peer-to-peer network behind Paratii, and to browse or organize it. It's purpose is to **1)** help populate Paratii's registries with real world data and files from creators; **2)** expose widgets and forms of interaction with the paratii-jsrary that other developers can leverage, or platform owners can implement; **3)** battletest distributed curation concepts, whenever mature for account management. First iteration will randomize account info. and focus on the experience of uploading videos.
 
 ## Prerequisites
 
@@ -23,13 +23,15 @@ If you are on a Mac, you may need to set the path to parity:
 
     $ git clone https://github.com/Paratii-Video/paratii-portal
     $ cd paratii-portal
-    $ yarn install
+    $ yarn
+    
+⚠️ If `yarn` is installing the wrong versions of any dependencies, run the following:
 
-### Workaround for web3 bug [perhaps not needed anymore]
+    $ yarn cache clean
+    $ yarn
 
-Currently, instead of using `yarn` to install dependencies the following steps must be taken:
+☝️ add the `--pure-lockfile` argument to `yarn` to ensure you install all dependencies exactly as specified in the current `yarn.lock` file.
 
-    $ npm install
 
 ## Testing
 
@@ -128,12 +130,12 @@ Rebuilding `node-sass` may help:
 
     yarn rebild node-sass
 ___
-If npm install doesn't work, maybe it's because you have a node version > 9.0.0  
+If `yarn` doesn't work, maybe it's because you have a node version > 9.0.0
 To fix it downgrade node to version 8.9.0:
 
   ```
-   $ sudo npm cache clean -f
-   $ sudo npm install -g n
+   $ sudo yarn cache clean -f
+   $ sudo yarn global add n
    $ sudo n 8.9.0
    ```
    or if you are using nvm:
@@ -143,7 +145,7 @@ To fix it downgrade node to version 8.9.0:
     ```
 This commands will set the default version that you will use to the 8.9.0
 
-Then run npm install again.
+Then run `yarn` again.
 ___
 If you get the following error:
 
