@@ -7,6 +7,7 @@ import debounce from 'lodash.debounce'
 import Transition from 'react-transition-group/Transition'
 import TimeFormat from 'hh-mm-ss'
 import playerjs from 'player.js'
+import queryString from 'query-string'
 
 import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
@@ -18,6 +19,7 @@ import Card from 'components/structures/Card'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
 import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
+import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 
 import type { ClapprPlayer, PlayerPlugin } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
@@ -53,8 +55,9 @@ type State = {
   isEmbed: boolean,
   mouseInOverlay: boolean,
   shouldShowVideoOverlay: boolean,
-  videoNotFound: boolean,
-  showShareModal: boolean
+  showShareModal: boolean,
+  videoHasNeverPlayed: boolean,
+  videoNotFound: boolean
 }
 
 const Wrapper = styled.div`
@@ -173,7 +176,8 @@ class Play extends Component<Props, State> {
       videoNotFound: false,
       playerCreated: '',
       isEmbed: this.props.isEmbed || false,
-      showShareModal: false
+      showShareModal: false,
+      videoHasNeverPlayed: true
     }
 
     this.lastMouseMove = 0
@@ -471,8 +475,8 @@ class Play extends Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    const { video } = this.props
-    const { video: nextVideo } = nextProps
+    const { video, isPlaying } = this.props
+    const { video: nextVideo, isPlaying: nextIsPlaying } = nextProps
     if (nextVideo) {
       const fetchStatus = nextVideo.getIn(['fetchStatus', 'name'])
       if (nextProps.video && fetchStatus === 'success') {
@@ -487,6 +491,15 @@ class Play extends Component<Props, State> {
         // If video not exist we set in the component state
         this.setState({ videoNotFound: true })
       }
+    }
+    if (isPlaying !== nextIsPlaying) {
+      this.setState((prevState: State): ?Object => {
+        if (prevState.videoHasNeverPlayed) {
+          return {
+            videoHasNeverPlayed: false
+          }
+        }
+      })
     }
   }
 
@@ -516,6 +529,8 @@ class Play extends Component<Props, State> {
         this.player.destroy()
       }
 
+      const autoPlay: boolean = this.getAutoPlaySetting()
+
       this.player = CreatePlayer({
         selector: `#${PLAYER_ID}`,
         source: `https://gateway.paratii.video/ipfs/${
@@ -526,7 +541,7 @@ class Play extends Component<Props, State> {
         }/${poster}`,
         mimeType: 'application/x-mpegURL',
         ipfsHash: video.ipfsHash,
-        autoPlay: true
+        autoPlay
       })
 
       this.bindClapprEvents()
@@ -574,7 +589,44 @@ class Play extends Component<Props, State> {
   }
 
   shouldShowVideoOverlay (): boolean {
-    return this.state.mouseInOverlay
+    const { activePlugin } = this.props
+    const { shouldShowVideoOverlay, videoHasNeverPlayed } = this.state
+    return shouldShowVideoOverlay || videoHasNeverPlayed || !!activePlugin
+  }
+
+  getAutoPlaySetting (): boolean {
+    const { isEmbed } = this.props
+
+    if (!isEmbed) {
+      return true
+    }
+
+    const parsedQueryString = queryString.parse(location.search)
+
+    const hasAutoPlayParam: boolean = Object.prototype.hasOwnProperty.call(
+      parsedQueryString,
+      PLAYER_PARAMS.AUTOPLAY
+    )
+
+    if (!hasAutoPlayParam) {
+      return false
+    }
+
+    const paramValue: string = parsedQueryString[PLAYER_PARAMS.AUTOPLAY]
+
+    if (!paramValue) {
+      return true
+    }
+
+    const parsedNumberValue: number = parseInt(paramValue, 10)
+
+    if (!isNaN(parsedNumberValue)) {
+      return !!parsedNumberValue
+    }
+
+    const valueIsFalse: boolean = paramValue.toLowerCase() === 'false'
+
+    return !valueIsFalse
   }
 
   getPortalUrl () {
@@ -625,7 +677,7 @@ class Play extends Component<Props, State> {
     }
   }
   render () {
-    const { activePlugin, isEmbed, video } = this.props
+    const { isEmbed, video } = this.props
 
     const shareOptions = [
       {
@@ -658,10 +710,7 @@ class Play extends Component<Props, State> {
                 this.wrapperRef = ref
               }}
             >
-              <Transition
-                in={this.state.shouldShowVideoOverlay || !!activePlugin}
-                timeout={0}
-              >
+              <Transition in={this.shouldShowVideoOverlay()} timeout={0}>
                 {(transitionState: ?string) => (
                   <OverlayWrapper
                     onMouseLeave={this.onMouseLeave}
