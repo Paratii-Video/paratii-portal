@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import NumPad from 'components/widgets/NumPad'
+// import { MNEMONIC_KEY_TEMP } from 'constants/ParatiiLibConstants'
 
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
@@ -110,14 +111,31 @@ class ModalSetPin extends Component<Props, Object> {
   }
 
   render () {
-    return (
-      <ModalContentWrapper>
-        <ModalScrollContent>
+    let header = ''
+    // The first pin has not yet been set
+    if (!this.state.pin) {
+      header = (
+        <div>
           <Title>Create a security PIN.</Title>
           <MainText small gray>
             It will work like a password for your account, in this browser.
           </MainText>
-
+        </div>
+      )
+    } else {
+      header = (
+        <div>
+          <Title>Check your security PIN.</Title>
+          <MainText small gray>
+            Please insert again you PIN
+          </MainText>
+        </div>
+      )
+    }
+    return (
+      <ModalContentWrapper>
+        <ModalScrollContent>
+          {header}
           <NumPad
             onSetPin={this.handlePinChange}
             reset={this.state.resetPinField}
