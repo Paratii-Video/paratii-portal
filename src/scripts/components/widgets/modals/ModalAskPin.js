@@ -5,7 +5,10 @@ import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import NumPad from 'components/widgets/NumPad'
-import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
+import {
+  WALLET_KEY_SECURE,
+  MNEMONIC_KEY_TEMP
+} from 'constants/ParatiiLibConstants'
 
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
@@ -65,6 +68,7 @@ class ModalAskPin extends Component<Props, Object> {
   }
 
   setPin () {
+    sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
     // Decrypt Keystore
     const pin = this.state.pin
     const walletString = localStorage.getItem(WALLET_KEY_SECURE) || ''
@@ -72,7 +76,6 @@ class ModalAskPin extends Component<Props, Object> {
       { title: 'Trying to unlock your keystore...' },
       'warning'
     )
-    this.props.closeModal()
     try {
       paratii.eth.wallet.clear()
       paratii.eth.wallet.decrypt(JSON.parse(walletString), pin)
@@ -88,6 +91,7 @@ class ModalAskPin extends Component<Props, Object> {
       )
       // Set the balance
       this.props.setAddressAndBalance()
+      this.props.closeModal()
     } catch (err) {
       // wallet is not valid
       this.setState({
