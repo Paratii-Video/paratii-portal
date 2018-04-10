@@ -39,7 +39,7 @@ export const getDefaultVideo = () => ({
   ipfsHashOrig: '',
   ipfsHash: '',
   owner: '',
-  price: '',
+  price: 0,
   thumbnails: [],
   title: '',
   staked: getDefaultStakingStatus(),
