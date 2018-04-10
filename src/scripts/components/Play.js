@@ -55,8 +55,9 @@ type State = {
   isEmbed: boolean,
   mouseInOverlay: boolean,
   shouldShowVideoOverlay: boolean,
-  videoNotFound: boolean,
-  showShareModal: boolean
+  showShareModal: boolean,
+  videoHasNeverPlayed: boolean,
+  videoNotFound: boolean
 }
 
 const Wrapper = styled.div`
@@ -175,7 +176,8 @@ class Play extends Component<Props, State> {
       videoNotFound: false,
       playerCreated: '',
       isEmbed: this.props.isEmbed || false,
-      showShareModal: false
+      showShareModal: false,
+      videoHasNeverPlayed: true
     }
 
     this.lastMouseMove = 0
@@ -473,8 +475,8 @@ class Play extends Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    const { video } = this.props
-    const { video: nextVideo } = nextProps
+    const { video, isPlaying } = this.props
+    const { video: nextVideo, isPlaying: nextIsPlaying } = nextProps
     if (nextVideo) {
       const fetchStatus = nextVideo.getIn(['fetchStatus', 'name'])
       if (nextProps.video && fetchStatus === 'success') {
@@ -489,6 +491,15 @@ class Play extends Component<Props, State> {
         // If video not exist we set in the component state
         this.setState({ videoNotFound: true })
       }
+    }
+    if (isPlaying !== nextIsPlaying) {
+      this.setState((prevState: State): ?Object => {
+        if (prevState.videoHasNeverPlayed) {
+          return {
+            videoHasNeverPlayed: false
+          }
+        }
+      })
     }
   }
 
@@ -518,6 +529,8 @@ class Play extends Component<Props, State> {
         this.player.destroy()
       }
 
+      const autoPlay: boolean = this.getAutoPlaySetting()
+
       this.player = CreatePlayer({
         selector: `#${PLAYER_ID}`,
         source: `https://gateway.paratii.video/ipfs/${
@@ -528,7 +541,7 @@ class Play extends Component<Props, State> {
         }/${poster}`,
         mimeType: 'application/x-mpegURL',
         ipfsHash: video.ipfsHash,
-        autoPlay: this.getAutoPlaySetting()
+        autoPlay
       })
 
       this.bindClapprEvents()
@@ -576,10 +589,18 @@ class Play extends Component<Props, State> {
   }
 
   shouldShowVideoOverlay (): boolean {
-    return this.state.mouseInOverlay
+    const { activePlugin } = this.props
+    const { shouldShowVideoOverlay, videoHasNeverPlayed } = this.state
+    return shouldShowVideoOverlay || videoHasNeverPlayed || !!activePlugin
   }
 
   getAutoPlaySetting (): boolean {
+    const { isEmbed } = this.props
+
+    if (!isEmbed) {
+      return true
+    }
+
     const parsedQueryString = queryString.parse(location.search)
 
     const hasAutoPlayParam: boolean = Object.prototype.hasOwnProperty.call(
@@ -652,7 +673,7 @@ class Play extends Component<Props, State> {
     }
   }
   render () {
-    const { activePlugin, isEmbed, video } = this.props
+    const { isEmbed, video } = this.props
 
     const shareOptions = [
       {
@@ -685,10 +706,7 @@ class Play extends Component<Props, State> {
                 this.wrapperRef = ref
               }}
             >
-              <Transition
-                in={this.state.shouldShowVideoOverlay || !!activePlugin}
-                timeout={0}
-              >
+              <Transition in={this.shouldShowVideoOverlay()} timeout={0}>
                 {(transitionState: ?string) => (
                   <OverlayWrapper
                     onMouseLeave={this.onMouseLeave}
