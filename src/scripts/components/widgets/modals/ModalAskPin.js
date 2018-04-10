@@ -17,7 +17,8 @@ type Props = {
   closeModal: () => void,
   notification: (Object, string) => void,
   setWalletAddress: Object => void,
-  setAddressAndBalance: () => void
+  setAddressAndBalance: () => void,
+  fetchOwnedVideos: () => void
 }
 
 const Title = styled.h2`
@@ -91,6 +92,8 @@ class ModalAskPin extends Component<Props, Object> {
       )
       // Set the balance
       this.props.setAddressAndBalance()
+      // Retrieve your videos
+      this.props.fetchOwnedVideos()
       this.props.closeModal()
     } catch (err) {
       // wallet is not valid
