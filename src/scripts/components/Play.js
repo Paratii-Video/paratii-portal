@@ -7,6 +7,7 @@ import debounce from 'lodash.debounce'
 import Transition from 'react-transition-group/Transition'
 import TimeFormat from 'hh-mm-ss'
 import playerjs from 'player.js'
+import queryString from 'query-string'
 
 import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
@@ -18,6 +19,7 @@ import Card from 'components/structures/Card'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
 import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
+import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 
 import type { ClapprPlayer, PlayerPlugin } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
@@ -526,7 +528,7 @@ class Play extends Component<Props, State> {
         }/${poster}`,
         mimeType: 'application/x-mpegURL',
         ipfsHash: video.ipfsHash,
-        autoPlay: true
+        autoPlay: this.getAutoPlaySetting()
       })
 
       this.bindClapprEvents()
@@ -575,6 +577,31 @@ class Play extends Component<Props, State> {
 
   shouldShowVideoOverlay (): boolean {
     return this.state.mouseInOverlay
+  }
+
+  getAutoPlaySetting (): boolean {
+    const parsedQueryString = queryString.parse(location.search)
+
+    const hasAutoPlayParam: boolean = Object.prototype.hasOwnProperty.call(
+      parsedQueryString,
+      PLAYER_PARAMS.AUTOPLAY
+    )
+
+    if (!hasAutoPlayParam) {
+      return true
+    }
+
+    const paramValue: string = parsedQueryString[PLAYER_PARAMS.AUTOPLAY]
+
+    const parsedNumberValue: number = parseInt(paramValue, 10)
+
+    if (!isNaN(parsedNumberValue)) {
+      return !!parsedNumberValue
+    }
+
+    const valueIsFalse: boolean = paramValue.toLowerCase() === 'false'
+
+    return !valueIsFalse
   }
 
   getPortalUrl () {

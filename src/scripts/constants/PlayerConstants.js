@@ -6,3 +6,7 @@ export const PLAYER_PLUGIN: Object = {
   PLAYBACK_LEVELS: makePluginConstant('PLAYBACK_LEVEL'),
   WALLET: makePluginConstant('WALLET')
 }
+
+export const PLAYER_PARAMS: Object = {
+  AUTOPLAY: 'autoplay'
+}
