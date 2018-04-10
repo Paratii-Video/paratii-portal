@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 import queryString from 'query-string'
 
-describe('🎥 Player: @watch', function () {
+describe('🎥 Player:', function () {
   const videoId = '1mQRk9d7wgOJ'
   const videoTitle = 'Great title'
   const videoElementSelector = '[data-test-id="player"] video'
@@ -13,7 +13,7 @@ describe('🎥 Player: @watch', function () {
     browser.addCommand(
       'goToTestVideoUrl',
       ({ embed, overrideVideoId, queryParams }) => {
-        const finalQueryParams = queryParams || {}
+        const finalQueryParams = queryParams || { autoplay: true }
         const query = queryString.stringify(finalQueryParams)
         browser.url(
           `http://localhost:8080/${
@@ -134,12 +134,13 @@ describe('🎥 Player: @watch', function () {
 
   const runPlayerExpectations = ({ embed } = {}) => {
     describe('video play/pause', () => {
-      it('plays a video automatically by default', () => {
-        browser.goToTestVideoUrl({ embed })
-        browser.waitUntilVideoIsPlaying()
-      })
-
       if (embed) {
+        it('does not play a video automatically by default', () => {
+          browser.goToTestVideoUrl({ embed })
+          browser.pause(1000)
+          browser.assertVideoNeverPlayed()
+        })
+
         it('does not play a video automatically if autoplay is 0', () => {
           const queryParams = { autoplay: 0 }
 
@@ -148,7 +149,7 @@ describe('🎥 Player: @watch', function () {
           browser.assertVideoNeverPlayed()
         })
 
-        it('does not play a video automatically if autoplay is 0', () => {
+        it('does not play a video automatically if autoplay is false', () => {
           const queryParams = { autoplay: false }
 
           browser.goToTestVideoUrl({ embed, queryParams })
@@ -156,6 +157,11 @@ describe('🎥 Player: @watch', function () {
           browser.assertVideoNeverPlayed()
         })
       } else {
+        it('plays a video automatically by default', () => {
+          browser.goToTestVideoUrl({ embed })
+          browser.waitUntilVideoIsPlaying()
+        })
+
         it('plays a video automatically even if autoplay is false', () => {
           const queryParams = { autoplay: false }
           browser.goToTestVideoUrl({ embed, queryParams })
@@ -183,6 +189,13 @@ describe('🎥 Player: @watch', function () {
         browser.waitUntilVideoIsPlaying()
       })
 
+      it('plays a video automatically if autoplay is present with no explicit value', () => {
+        const queryParams = { autoplay: '' }
+
+        browser.goToTestVideoUrl({ embed, queryParams })
+        browser.waitUntilVideoIsPlaying()
+      })
+
       it('plays a video automatically if autoplay is some random value', () => {
         const queryParams = { autoplay: 'foobarbaz' }
 
@@ -191,7 +204,6 @@ describe('🎥 Player: @watch', function () {
       })
 
       it('pauses a video when the video overlay is clicked', () => {
-        browser.goToTestVideoUrl({ embed })
         browser.waitUntilVideoIsPlaying()
         browser.waitAndClick(overlaySelector)
         browser.waitUntilVideoIsPaused()
@@ -795,9 +807,9 @@ describe('🎥 Player: @watch', function () {
     })
   }
 
-  describe('portal player', () => {
-    runPlayerExpectations({ embed: false })
-  })
+  // describe('portal player', () => {
+  //   runPlayerExpectations({ embed: false })
+  // })
 
   describe('embed player', () => {
     runPlayerExpectations({ embed: true })
