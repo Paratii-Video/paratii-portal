@@ -89,8 +89,8 @@
   resolved "https://registry.yarnpkg.com/@sheerun/eslint-config-standard/-/eslint-config-standard-10.2.1.tgz#7d73397369c396b3625cab6ec313f6d4208300ef"
 
 "@types/node@*":
-  version "9.6.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.2.tgz#e49ac1adb458835e95ca6487bc20f916b37aff23"
+  version "7.0.60"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.60.tgz#5406c35961e4f9e2d5a1b9482daa14501754ecda"
 
 JSONStream@^1.0.3, JSONStream@^1.0.4:
   version "1.3.2"
@@ -815,7 +815,7 @@ b64@3.x.x:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/b64/-/b64-3.0.3.tgz#36afeee0d9345f046387ce6de8a6702afe5bb56e"
 
-babel-cli@^6.26.0:
+babel-cli@^6.24.0, babel-cli@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-cli/-/babel-cli-6.26.0.tgz#502ab54874d7db88ad00b887a06383ce03d002f1"
   dependencies:
@@ -844,7 +844,7 @@ babel-code-frame@^6.16.0, babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
     esutils "^2.0.2"
     js-tokens "^3.0.2"
 
-babel-core@^6.0.14, babel-core@^6.17.0, babel-core@^6.26.0, babel-core@^6.4.5:
+babel-core@^6.0.14, babel-core@^6.17.0, babel-core@^6.24.0, babel-core@^6.26.0, babel-core@^6.4.5:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.26.0.tgz#af32f78b31a6fcef119c87b0fd8d9753f03a0bb8"
   dependencies:
@@ -1044,6 +1044,10 @@ babel-messages@^6.23.0:
   resolved "https://registry.yarnpkg.com/babel-messages/-/babel-messages-6.23.0.tgz#f3cdf4703858035b2a2951c6ec5edf6c62f2630e"
   dependencies:
     babel-runtime "^6.22.0"
+
+babel-plugin-add-module-exports@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-add-module-exports/-/babel-plugin-add-module-exports-0.2.1.tgz#9ae9a1f4a8dc67f0cdec4f4aeda1e43a5ff65e25"
 
 babel-plugin-check-es2015-constants@^6.22.0:
   version "6.22.0"
@@ -1273,7 +1277,7 @@ babel-plugin-transform-es2015-modules-amd@^6.24.1:
     babel-runtime "^6.22.0"
     babel-template "^6.24.1"
 
-babel-plugin-transform-es2015-modules-commonjs@^6.24.1:
+babel-plugin-transform-es2015-modules-commonjs@^6.24.0, babel-plugin-transform-es2015-modules-commonjs@^6.24.1:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-modules-commonjs/-/babel-plugin-transform-es2015-modules-commonjs-6.26.0.tgz#0d8394029b7dc6abe1a97ef181e00758dd2e5d8a"
   dependencies:
@@ -1464,7 +1468,7 @@ babel-polyfill@^6.26.0, babel-polyfill@^6.3.14:
     core-js "^2.5.0"
     regenerator-runtime "^0.10.5"
 
-babel-preset-es2015@6.x.x, babel-preset-es2015@^6.16.0:
+babel-preset-es2015@6.x.x, babel-preset-es2015@^6.16.0, babel-preset-es2015@^6.24.0:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-preset-es2015/-/babel-preset-es2015-6.24.1.tgz#d44050d6bc2c9feea702aaf38d727a0210538939"
   dependencies:
@@ -1499,7 +1503,7 @@ babel-preset-flow@^6.23.0:
   dependencies:
     babel-plugin-transform-flow-strip-types "^6.22.0"
 
-babel-preset-react@^6.16.0, babel-preset-react@^6.24.1:
+babel-preset-react@^6.16.0, babel-preset-react@^6.23.0, babel-preset-react@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-preset-react/-/babel-preset-react-6.24.1.tgz#ba69dfaea45fc3ec639b6a4ecea6e17702c91380"
   dependencies:
@@ -1518,7 +1522,7 @@ babel-preset-stage-0@^6.16.0:
     babel-plugin-transform-function-bind "^6.22.0"
     babel-preset-stage-1 "^6.24.1"
 
-babel-preset-stage-1@^6.24.1:
+babel-preset-stage-1@^6.22.0, babel-preset-stage-1@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-preset-stage-1/-/babel-preset-stage-1-6.24.1.tgz#7692cd7dcd6849907e6ae4a0a85589cfb9e2bfb0"
   dependencies:
@@ -1783,7 +1787,7 @@ bitsyntax@~0.0.4:
   dependencies:
     buffer-more-ints "0.0.2"
 
-bl@^1.0.0, bl@^1.2.1:
+bl@^1.0.0, bl@^1.2.1, bl@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/bl/-/bl-1.2.2.tgz#a160911717103c07410cef63ef51b397c025af9c"
   dependencies:
@@ -2372,12 +2376,12 @@ caniuse-api@^2.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000824"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000824.tgz#bba3ff425296e04caa37fe426259206a7056551b"
+  version "1.0.30000827"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000827.tgz#bd2839dd196093b44c28c17f93513140c9d92588"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000792, caniuse-lite@^1.0.30000805:
-  version "1.0.30000824"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000824.tgz#de3bc1ba0bff4937302f8cb2a8632a8cc1c07f9a"
+  version "1.0.30000827"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000827.tgz#2dad2354e4810c3c9bb1cfc57f655c270c25fa52"
 
 capture-stack-trace@^1.0.0:
   version "1.0.0"
@@ -2439,6 +2443,10 @@ chai-as-promised@^6.0.0:
   resolved "https://registry.yarnpkg.com/chai-as-promised/-/chai-as-promised-6.0.0.tgz#1a02a433a6f24dafac63b9c96fa1684db1aa8da6"
   dependencies:
     check-error "^1.0.2"
+
+chai-bignumber@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/chai-bignumber/-/chai-bignumber-2.0.2.tgz#de6c219c690b2d66b646ad6930096f9ba2199643"
 
 chai@^4.1.2:
   version "4.1.2"
@@ -2639,6 +2647,10 @@ chromedriver@^2.28:
     mkdirp "^0.5.1"
     request "^2.83.0"
 
+chunky@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/chunky/-/chunky-0.0.0.tgz#1e7580a23c083897d2ad662459e7efd8465f608a"
+
 ci-info@^1.0.0:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-1.1.3.tgz#710193264bb05c77b8c90d02f5aaf22216a667b2"
@@ -2675,6 +2687,10 @@ clap@^1.0.9:
 clappr@^0.2.87:
   version "0.2.90"
   resolved "https://registry.yarnpkg.com/clappr/-/clappr-0.2.90.tgz#06501e47ef51f2be1d266a042ca7e499209b4225"
+
+class-is@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/class-is/-/class-is-1.1.0.tgz#9d3c0fba0440d211d843cec3dedfa48055005825"
 
 class-utils@^0.3.5:
   version "0.3.6"
@@ -3344,8 +3360,8 @@ core-js@^1.0.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
 core-js@^2.2.0, core-js@^2.4.0, core-js@^2.5.0, core-js@^2.5.3:
-  version "2.5.4"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.4.tgz#f2c8bf181f2a80b92f360121429ce63a2f0aeae0"
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.5.tgz#b14dde936c640c0579a6b50cabcc132dd6127e3b"
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -3647,7 +3663,7 @@ ctype@0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/ctype/-/ctype-0.5.3.tgz#82c18c2461f74114ef16c135224ad0b9144ca12f"
 
-cucumber@xolvio/cucumber-js#v1.3.0-chimp.6:
+"cucumber@github:xolvio/cucumber-js#v1.3.0-chimp.6":
   version "1.3.0"
   resolved "https://codeload.github.com/xolvio/cucumber-js/tar.gz/cf953cb5b5de30dbcc279f59e4ebff3aa040071c"
   dependencies:
@@ -5457,7 +5473,7 @@ filename-regex@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/filename-regex/-/filename-regex-2.0.1.tgz#c1c4b9bee3e09725ddb106b75c1e301fe2f18b26"
 
-filesize@^3.5.11, filesize@^3.6.0:
+filesize@^3.5.11, filesize@^3.6.1:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/filesize/-/filesize-3.6.1.tgz#090bb3ee01b6f801a8a8be99d31710b3422bb317"
 
@@ -6146,7 +6162,7 @@ glob@^6.0.4:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@lucetius/node-glob#chimp:
+"glob@github:lucetius/node-glob#chimp":
   version "7.1.1"
   resolved "https://codeload.github.com/lucetius/node-glob/tar.gz/51c7ca6e69bfbd17db5f1ea710e3f2a7a457d9ce"
   dependencies:
@@ -7373,9 +7389,9 @@ ipfs-api@^17.2.4:
     streamifier "^0.1.1"
     tar-stream "^1.5.5"
 
-ipfs-api@^18.2.1:
-  version "18.2.1"
-  resolved "https://registry.yarnpkg.com/ipfs-api/-/ipfs-api-18.2.1.tgz#9df524f3b664a92fac74d753b62e02071594c98b"
+ipfs-api@^19.0.0:
+  version "19.0.0"
+  resolved "https://registry.yarnpkg.com/ipfs-api/-/ipfs-api-19.0.0.tgz#86921b954228758de3b2231d1e1894b22eb40947"
   dependencies:
     async "^2.6.0"
     big.js "^5.0.3"
@@ -7391,7 +7407,7 @@ ipfs-api@^18.2.1:
     is-ipfs "^0.3.2"
     is-stream "^1.1.0"
     lru-cache "^4.1.2"
-    multiaddr "^3.0.2"
+    multiaddr "^3.1.0"
     multihashes "~0.4.13"
     ndjson "^1.5.0"
     once "^1.4.0"
@@ -7535,7 +7551,7 @@ ipfs-repo@~0.18.2, ipfs-repo@~0.18.4, ipfs-repo@~0.18.5, ipfs-repo@~0.18.7:
     multiaddr "^3.0.1"
     pull-stream "^3.6.1"
 
-ipfs-unixfs-engine@~0.24.1, ipfs-unixfs-engine@~0.24.4:
+ipfs-unixfs-engine@~0.24.1:
   version "0.24.4"
   resolved "https://registry.yarnpkg.com/ipfs-unixfs-engine/-/ipfs-unixfs-engine-0.24.4.tgz#96d381b5a81ce74c03feac5c01f6c234a2bf106b"
   dependencies:
@@ -7562,27 +7578,55 @@ ipfs-unixfs-engine@~0.24.1, ipfs-unixfs-engine@~0.24.4:
     pull-write "^1.1.4"
     sparse-array "^1.3.1"
 
+ipfs-unixfs-engine@~0.27.0:
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/ipfs-unixfs-engine/-/ipfs-unixfs-engine-0.27.0.tgz#2ae50871187aeec5d2321643ffe12f4c13008608"
+  dependencies:
+    async "^2.6.0"
+    bs58 "^4.0.1"
+    cids "~0.5.3"
+    deep-extend "~0.5.0"
+    ipfs-unixfs "~0.1.14"
+    ipld "^0.15.0"
+    ipld-dag-pb "~0.13.1"
+    left-pad "^1.2.0"
+    lodash "^4.17.5"
+    multihashes "~0.4.13"
+    multihashing-async "~0.4.8"
+    pull-batch "^1.0.0"
+    pull-block "^1.4.0"
+    pull-cat "^1.1.11"
+    pull-pair "^1.1.0"
+    pull-paramap "^1.2.2"
+    pull-pause "0.0.2"
+    pull-pushable "^2.2.0"
+    pull-stream "^3.6.3"
+    pull-through "^1.0.18"
+    pull-traverse "^1.0.3"
+    pull-write "^1.1.4"
+    sparse-array "^1.3.1"
+
 ipfs-unixfs@~0.1.14:
   version "0.1.14"
   resolved "https://registry.yarnpkg.com/ipfs-unixfs/-/ipfs-unixfs-0.1.14.tgz#256437fcf642d8ab46b5185582ec4f21e908ef37"
   dependencies:
     protons "^1.0.0"
 
-"ipfs@github:Paratii-Video/js-ipfs#paratii/v0.28.2":
+"ipfs@github:Paratii-Video/js-ipfs#f02bfb4961eaf8fae077eb12e175cd518e602bc4":
   version "0.28.2"
-  resolved "https://codeload.github.com/Paratii-Video/js-ipfs/tar.gz/c56ca2bb2b20649a31d94186ba0b188edf009210"
+  resolved "https://codeload.github.com/Paratii-Video/js-ipfs/tar.gz/f02bfb4961eaf8fae077eb12e175cd518e602bc4"
   dependencies:
     async "^2.6.0"
     big.js "^5.0.3"
     binary-querystring "~0.1.2"
-    bl "^1.2.1"
+    bl "^1.2.2"
     boom "^7.2.0"
     bs58 "^4.0.1"
     byteman "^1.3.5"
     cids "~0.5.3"
     debug "^3.1.0"
     file-type "^7.6.0"
-    filesize "^3.6.0"
+    filesize "^3.6.1"
     fsm-event "^2.1.0"
     get-folder-size "^1.0.1"
     glob "^7.1.2"
@@ -7590,29 +7634,29 @@ ipfs-unixfs@~0.1.14:
     hapi-set-header "^1.0.2"
     hoek "^5.0.3"
     human-to-milliseconds "^1.0.0"
-    ipfs-api "^18.2.1"
+    ipfs-api "^19.0.0"
     ipfs-bitswap "github:ya7ya/js-ipfs-bitswap#paratii/v0.19.0-b"
     ipfs-block "~0.6.1"
     ipfs-block-service "~0.13.0"
     ipfs-multipart "~0.1.0"
     ipfs-repo "~0.18.7"
     ipfs-unixfs "~0.1.14"
-    ipfs-unixfs-engine "~0.24.4"
+    ipfs-unixfs-engine "~0.27.0"
     ipld "^0.15.0"
     is-ipfs "^0.3.2"
     is-stream "^1.1.0"
     joi "^13.1.2"
     joi-browser "^13.0.1"
-    joi-multiaddr "^1.0.1"
-    libp2p "~0.19.0"
+    joi-multiaddr "^2.0.0"
+    libp2p "~0.19.2"
     libp2p-circuit "~0.1.5"
     libp2p-floodsub "~0.14.1"
     libp2p-kad-dht "~0.9.0"
     libp2p-keychain "~0.3.1"
     libp2p-mdns "~0.9.2"
-    libp2p-multiplex "~0.5.1"
+    libp2p-mplex "^0.6.0"
     libp2p-railing "~0.7.1"
-    libp2p-secio "~0.9.3"
+    libp2p-secio "~0.9.4"
     libp2p-tcp "~0.11.6"
     libp2p-webrtc-star "~0.13.4"
     libp2p-websocket-star "~0.7.7"
@@ -7624,7 +7668,7 @@ ipfs-unixfs@~0.1.14:
     mafmt "^4.0.0"
     mime-types "^2.1.18"
     mkdirp "~0.5.1"
-    multiaddr "^3.0.2"
+    multiaddr "^3.1.0"
     multihashes "~0.4.13"
     once "^1.4.0"
     path-exists "^3.0.0"
@@ -7640,7 +7684,7 @@ ipfs-unixfs@~0.1.14:
     pull-paramap "^1.2.2"
     pull-pushable "^2.2.0"
     pull-sort "^1.0.1"
-    pull-stream "^3.6.2"
+    pull-stream "^3.6.7"
     pull-stream-to-stream "^1.3.4"
     pull-zip "^2.0.1"
     read-pkg-up "^3.0.0"
@@ -7650,7 +7694,7 @@ ipfs-unixfs@~0.1.14:
     tar-stream "^1.5.5"
     temp "~0.8.3"
     through2 "^2.0.3"
-    update-notifier "^2.3.0"
+    update-notifier "^2.4.0"
     yargs "^11.0.0"
     yargs-parser "^9.0.2"
   optionalDependencies:
@@ -8506,12 +8550,12 @@ joi-browser@^13.0.1:
   version "13.0.1"
   resolved "https://registry.yarnpkg.com/joi-browser/-/joi-browser-13.0.1.tgz#06a7b782d94bca6fa0f107138846ea16588b2e7b"
 
-joi-multiaddr@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/joi-multiaddr/-/joi-multiaddr-1.0.1.tgz#9392f0b2b85b1110663639c67266342283c1b91c"
+joi-multiaddr@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/joi-multiaddr/-/joi-multiaddr-2.0.0.tgz#4eaf5dd161a6f6e77a427b87ea92eab6d22c5652"
   dependencies:
-    mafmt "^4.0.0"
-    multiaddr "^3.0.2"
+    mafmt "^6.0.0"
+    multiaddr "^4.0.0"
 
 joi@10.x.x:
   version "10.6.0"
@@ -8945,8 +8989,8 @@ lcov-parse@0.0.10:
   resolved "https://registry.yarnpkg.com/lcov-parse/-/lcov-parse-0.0.10.tgz#1b0b8ff9ac9c7889250582b70b71315d9da6d9a3"
 
 left-pad@^1.1.3, left-pad@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/left-pad/-/left-pad-1.2.0.tgz#d30a73c6b8201d8f7d8e7956ba9616087a68e0ee"
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/left-pad/-/left-pad-1.3.0.tgz#5b8a3a7765dfe001261dde915589e782f8c94d1e"
 
 length-prefixed-stream@^1.5.1:
   version "1.5.2"
@@ -8992,7 +9036,7 @@ level-js@^2.2.4:
     typedarray-to-buffer "~1.0.0"
     xtend "~2.1.2"
 
-level-js@timkuijsten/level.js#idbunwrapper:
+"level-js@github:timkuijsten/level.js#idbunwrapper":
   version "2.2.3"
   resolved "https://codeload.github.com/timkuijsten/level.js/tar.gz/18e03adab34c49523be7d3d58fafb0c632f61303"
   dependencies:
@@ -9233,6 +9277,24 @@ libp2p-mdns@~0.9.1, libp2p-mdns@~0.9.2:
     peer-id "~0.10.5"
     peer-info "~0.11.6"
 
+libp2p-mplex@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/libp2p-mplex/-/libp2p-mplex-0.6.0.tgz#fcd9fe652aad04a743a366d31983ab9a71658af6"
+  dependencies:
+    async "^2.6.0"
+    chunky "0.0.0"
+    concat-stream "^1.6.0"
+    debug "^3.1.0"
+    duplexify "^3.5.3"
+    pull-catch "^1.0.0"
+    pull-stream "^3.6.1"
+    pull-stream-to-stream "^1.3.4"
+    pump "^3.0.0"
+    readable-stream "^2.3.4"
+    stream-to-pull-stream "^1.7.2"
+    through2 "^2.0.3"
+    varint "^5.0.0"
+
 libp2p-multiplex@~0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/libp2p-multiplex/-/libp2p-multiplex-0.5.1.tgz#007282d5db6fb3d53d3766b81dabaf215707829d"
@@ -9276,7 +9338,7 @@ libp2p-record@~0.5.1:
     peer-id "~0.10.0"
     protons "^1.0.0"
 
-libp2p-secio@~0.9.0, libp2p-secio@~0.9.3:
+libp2p-secio@~0.9.0, libp2p-secio@~0.9.4:
   version "0.9.4"
   resolved "https://registry.yarnpkg.com/libp2p-secio/-/libp2p-secio-0.9.4.tgz#024f672bfced7d591a3d259958693518a2b96232"
   dependencies:
@@ -9412,7 +9474,7 @@ libp2p@~0.15.0:
     peer-id "~0.10.5"
     peer-info "~0.11.6"
 
-libp2p@~0.19.0:
+libp2p@~0.19.2:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/libp2p/-/libp2p-0.19.2.tgz#a123148686d046973c62a2badedc7775cbc9e846"
   dependencies:
@@ -9951,8 +10013,8 @@ loglevel@~1.4.0:
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.4.1.tgz#95b383f91a3c2756fd4ab093667e4309161f2bcd"
 
 loglevelnext@^1.0.1:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/loglevelnext/-/loglevelnext-1.0.3.tgz#0f69277e73bbbf2cd61b94d82313216bf87ac66e"
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/loglevelnext/-/loglevelnext-1.0.4.tgz#0d991d9998180991dac8bd81e73a596a8720a645"
 
 longest-streak@^2.0.1:
   version "2.0.2"
@@ -10025,6 +10087,12 @@ mafmt@^4.0.0:
   resolved "https://registry.yarnpkg.com/mafmt/-/mafmt-4.0.0.tgz#c31353395bad15914a342fa57d23a541f44313b2"
   dependencies:
     multiaddr "^3.0.2"
+
+mafmt@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/mafmt/-/mafmt-6.0.0.tgz#ec13f8761253354c23420ae3903c837b6649caa6"
+  dependencies:
+    multiaddr "^4.0.0"
 
 mailcomposer@4.0.1:
   version "4.0.1"
@@ -10606,6 +10674,19 @@ multiaddr@^3.0.1, multiaddr@^3.0.2, multiaddr@^3.1.0:
     varint "^5.0.0"
     xtend "^4.0.1"
 
+multiaddr@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/multiaddr/-/multiaddr-4.0.0.tgz#70a8857c4f737350bc2c56914a70f1263889db33"
+  dependencies:
+    bs58 "^4.0.1"
+    class-is "^1.1.0"
+    ip "^1.1.5"
+    ip-address "^5.8.9"
+    lodash.filter "^4.6.0"
+    lodash.map "^4.6.0"
+    varint "^5.0.0"
+    xtend "^4.0.1"
+
 multibase@~0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/multibase/-/multibase-0.4.0.tgz#1bdb62c82de0114f822a1d8751bcbee91cd2efba"
@@ -10658,7 +10739,7 @@ multipipe@^0.1.2:
   dependencies:
     duplexer2 "0.0.2"
 
-multiplex@dignifiedquire/multiplex:
+"multiplex@github:dignifiedquire/multiplex":
   version "6.7.0"
   resolved "https://codeload.github.com/dignifiedquire/multiplex/tar.gz/b5d5edd30454e2c978ee8c52df86f5f4840d2eab"
   dependencies:
@@ -11480,21 +11561,28 @@ parallel-transform@^1.1.0:
     web3 "^1.0.0-beta.27"
     zeppelin-solidity "^1.3.0"
 
-"paratii-lib@github:Paratii-Video/paratii-lib#d7e20ee9319c1bf979e326b79859a760cb2b5fed":
-  version "0.0.1"
-  resolved "https://codeload.github.com/Paratii-Video/paratii-lib/tar.gz/d7e20ee9319c1bf979e326b79859a760cb2b5fed"
+"paratii-js@github:Paratii-Video/paratii-js#fd93d4dc3975dbc7691bf15800b788f72fdd52c6":
+  version "0.2.0"
+  resolved "https://codeload.github.com/Paratii-Video/paratii-js/tar.gz/fd93d4dc3975dbc7691bf15800b788f72fdd52c6"
   dependencies:
     async "^2.6.0"
     babel-plugin-transform-runtime "^6.23.0"
-    bitcore-lib "^0.15.0"
-    bitcore-mnemonic "^1.5.0"
-    default-options "^1.0.0"
-    ipfs "github:Paratii-Video/js-ipfs#paratii/v0.27.1"
+    babel-plugin-webpack-alias "^2.1.2"
+    babel-preset-react "^6.24.1"
+    bip39 "^2.5.0"
+    chai-bignumber "^2.0.2"
+    es6-promise "^4.2.4"
+    hdkey "^0.8.0"
+    ipfs "github:Paratii-Video/js-ipfs#f02bfb4961eaf8fae077eb12e175cd518e602bc4"
+    isomorphic-fetch "^2.2.1"
+    joi "^13.1.2"
+    multiaddr "^3.0.2"
     once "^1.4.0"
-    paratii-contracts "github:Paratii-Video/paratii-contracts#8db835572fb38f694dccf4268fb66ab69f346687"
-    paratii-protocol "github:Paratii-Video/paratii-protocol#master"
+    paratii-contracts "github:Paratii-Video/paratii-contracts#6651984d0bf7f2a905631087975c5a412d5e4cb7"
+    paratii-protocol "github:Paratii-Video/paratii-protocol#45aadcf300f1ad184d6d3db8f9c4b3d438b6f658"
     promisify-node "^0.4.0"
     pull-filereader "^1.0.1"
+    resumablejs "^1.1.0"
     stream-to-pull-stream "^1.7.2"
     web3 "^1.0.0-beta.29"
 
@@ -12859,7 +12947,7 @@ pull-stream-to-stream@^1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/pull-stream-to-stream/-/pull-stream-to-stream-1.3.4.tgz#3f81d8216bd18d2bfd1a198190471180e2738399"
 
-pull-stream@^3.2.3, pull-stream@^3.4.5, pull-stream@^3.6.0, pull-stream@^3.6.1, pull-stream@^3.6.2, pull-stream@^3.6.7:
+pull-stream@^3.2.3, pull-stream@^3.4.5, pull-stream@^3.6.0, pull-stream@^3.6.1, pull-stream@^3.6.2, pull-stream@^3.6.3, pull-stream@^3.6.7:
   version "3.6.7"
   resolved "https://registry.yarnpkg.com/pull-stream/-/pull-stream-3.6.7.tgz#fe4ae4f7cc3a9ee3ac82cd5be32729f2f0d5f02b"
 
@@ -12890,8 +12978,8 @@ pull-write@^1.1.4:
     pull-stream "^3.4.5"
 
 pull-ws@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/pull-ws/-/pull-ws-3.3.0.tgz#e1c43ef40332167dd8120ef59edf7e892bea4aae"
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/pull-ws/-/pull-ws-3.3.1.tgz#a7a659c3144c29d3ad2a66969b943ec69c465768"
   dependencies:
     relative-url "^1.0.2"
     safe-buffer "^5.1.1"
@@ -12998,6 +13086,13 @@ query-string@^5.0.1:
     decode-uri-component "^0.2.0"
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
+
+query-string@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.0.0.tgz#8b8f39447b73e8290d6f5e3581779218e9171142"
+  dependencies:
+    decode-uri-component "^0.2.0"
+    strict-uri-encode "^2.0.0"
 
 querystring-es3@^0.2.0, querystring-es3@~0.2.0:
   version "0.2.1"
@@ -13916,8 +14011,8 @@ require-from-string@^1.1.0:
   resolved "https://registry.yarnpkg.com/require-from-string/-/require-from-string-1.2.1.tgz#529c9ccef27380adfec9a2f965b649bbee636418"
 
 require-from-string@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/require-from-string/-/require-from-string-2.0.1.tgz#c545233e9d7da6616e9d59adfb39fc9f588676ff"
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/require-from-string/-/require-from-string-2.0.2.tgz#89a7fdd938261267318eafe14f9c32e598c36909"
 
 require-main-filename@^1.0.1:
   version "1.0.1"
@@ -15088,6 +15183,10 @@ strict-uri-encode@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
 
+strict-uri-encode@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"
+
 string-template@~0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/string-template/-/string-template-0.2.1.tgz#42932e598a352d01fc22ec3367d9d84eec6c9add"
@@ -16181,7 +16280,7 @@ upath@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/upath/-/upath-1.0.4.tgz#ee2321ba0a786c50973db043a50b7bcba822361d"
 
-update-notifier@^2.3.0:
+update-notifier@^2.3.0, update-notifier@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/update-notifier/-/update-notifier-2.4.0.tgz#f9b4c700fbfd4ec12c811587258777d563d8c866"
   dependencies:
@@ -16816,8 +16915,8 @@ webpack-dev-middleware@^2.0.2:
     webpack-log "^1.0.1"
 
 webpack-hot-middleware@^2.21.0:
-  version "2.21.2"
-  resolved "https://registry.yarnpkg.com/webpack-hot-middleware/-/webpack-hot-middleware-2.21.2.tgz#2e2aa65563b8b32546b67e53b5a9667dcd80f327"
+  version "2.22.0"
+  resolved "https://registry.yarnpkg.com/webpack-hot-middleware/-/webpack-hot-middleware-2.22.0.tgz#db58c9dd2bd78e7f3868cccb42a20d24b00a7ade"
   dependencies:
     ansi-html "0.0.7"
     html-entities "^1.2.0"
