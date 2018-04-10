@@ -10,7 +10,8 @@ import { CONTROLS_HEIGHT } from 'constants/UIConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
 
 const PADDING: string = '20px'
-const LevelHeight: string = '42px'
+const LevelHeight: number = 42
+const WrapperBottomSpace: number = 100
 
 const RESOLUTIONS = {
   Auto: 'Auto',
@@ -44,11 +45,12 @@ const Title = Text.extend`
 
 const LevelsList = styled.ul`
   flex: 1 1 0;
+  height: ${({ height }) => (height ? height + 'px' : null)};
 `
 
 const Level = styled.li`
-  height: ${LevelHeight};
-  line-height: ${LevelHeight};
+  height: ${LevelHeight + 'px'};
+  line-height: ${LevelHeight + 'px'};
   width: 100%;
   cursor: pointer;
   display: flex;
@@ -89,6 +91,10 @@ type Props = {
 }
 
 class PlaybackLevels extends React.Component<Props> {
+  constructor (props: Props) {
+    super(props)
+    this.getMaxHeight = this.getMaxHeight.bind(this)
+  }
   getSelectedLevelIndex (): number {
     const { currentPlaybackLevel, playbackLevels } = this.props
     if (!currentPlaybackLevel) {
@@ -118,10 +124,25 @@ class PlaybackLevels extends React.Component<Props> {
     return offsetXPercentage
   }
 
+  getMaxHeight () {
+    let numLevels: number = this.props.playbackLevels.size
+    const elementHeight: number =
+      (numLevels + 1) * LevelHeight + WrapperBottomSpace
+    const documentHeight: number = document.body.clientHeight
+    const difference: number = elementHeight - documentHeight
+
+    if (difference > 0) {
+      numLevels = numLevels - Math.round(difference / LevelHeight)
+    }
+
+    return numLevels
+  }
+
   render () {
     const { playbackLevels, onPlaybackLevelChange, open, onClose } = this.props
     const offsetXPercentage: number = this.getLevelsListOffsetPercentage()
     const selectedIndex: number = this.getSelectedLevelIndex()
+    const getMaxHeight = this.getMaxHeight
     const numLevels: number = playbackLevels.size
 
     return (
@@ -132,18 +153,24 @@ class PlaybackLevels extends React.Component<Props> {
             <CloseButton onClick={onClose} />
           </TopBar>
           <LevelsList offsetXPercentage={offsetXPercentage}>
-            {playbackLevels.map((level: PlaybackLevel, index: number) => (
-              <Level
-                numLevels={numLevels}
-                selected={selectedIndex === index}
-                key={level.get('id')}
-                onClick={() => {
-                  onPlaybackLevelChange(level.get('id'))
-                }}
-              >
-                <LevelLabel small>{RESOLUTIONS[level.get('label')]}</LevelLabel>
-              </Level>
-            ))}
+            {playbackLevels.map((level: PlaybackLevel, index: number) => {
+              if (index < getMaxHeight()) {
+                return (
+                  <Level
+                    numLevels={numLevels}
+                    selected={selectedIndex === index}
+                    key={level.get('id')}
+                    onClick={() => {
+                      onPlaybackLevelChange(level.get('id'))
+                    }}
+                  >
+                    <LevelLabel small>
+                      {RESOLUTIONS[level.get('label')]}
+                    </LevelLabel>
+                  </Level>
+                )
+              }
+            })}
           </LevelsList>
         </Wrapper>
       </Popover>
