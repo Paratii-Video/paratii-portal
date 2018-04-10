@@ -27,10 +27,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 180px;
-
-  @media (max-height: 400px) {
-    width: 100%;
-  }
 `
 
 const TopBar = styled.div`
@@ -48,11 +44,6 @@ const Title = Text.extend`
 
 const LevelsList = styled.ul`
   flex: 1 1 0;
-
-  @media (max-height: 400px) {
-    display: flex;
-    flex-wrap: wrap;
-  }
 `
 
 const Level = styled.li`
@@ -77,13 +68,6 @@ const Level = styled.li`
     margin-right: 5px;
     transform: scale(${({ selected }) => (selected ? 1 : 0)}) translateY(2px);
     transition: transform 0.7s ${({ theme }) => theme.animation.ease.smooth};
-  }
-
-  @media (max-height: 400px) {
-    display: inline-block;
-    flex: 1 1 50%;
-    text-align: center;
-    width: initial;
   }
 `
 
