@@ -10,7 +10,7 @@ describe('🎥 Player:', function () {
   const videoId = 'foo'
 
   before(async function () {
-    await paratii.core.vids.create({
+    await paratii.vids.create({
       id: videoId,
       owner: address1,
       title: 'Test 1',

@@ -31,7 +31,7 @@ module.exports = async (req: $Request, res: $Response) => {
     )
   }
   const { id } = req.params
-  const video = await paratii.core.vids.get(id)
+  const video = await paratii.vids.get(id)
   // TODO: reaise a 404 at this point
 
   if (!video) {
@@ -94,7 +94,7 @@ module.exports = async (req: $Request, res: $Response) => {
 
 
         <style>
-  
+
         </style>
       </head>
       <body>

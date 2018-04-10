@@ -26,7 +26,7 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
   console.log('FETCH VIDEO: ' + id)
   let videoInfo
   try {
-    videoInfo = await paratii.core.vids.get(id)
+    videoInfo = await paratii.vids.get(id)
 
     if (videoInfo) {
       videoInfo.id = videoInfo._id
@@ -49,7 +49,7 @@ export const fetchOwnedVideos = () => async (
   getState: () => RootState
 ) => {
   const address: string = paratii.config.account.address
-  const ownedVideos: Array<Object> = (await paratii.core.vids.search({
+  const ownedVideos: Array<Object> = (await paratii.vids.search({
     owner: address
   })).results
   const filteredOwnedVideos = []

@@ -18,7 +18,7 @@ exports.default = function (req, res, next) {
 exports.player = async function player (req, res, next) {
   const { id } = req.params
   const path = req.route.path
-  const video = await paratii.core.vids.get(id)
+  const video = await paratii.vids.get(id)
 
   res.render('index', {
     player: true,

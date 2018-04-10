@@ -191,7 +191,7 @@ export const secureKeystore = (password: string) => async (
           DEFAULT_PASSWORD
         )
         console.log('migrate account')
-        await paratii.core.migrateAccount(newWalletAddress)
+        await paratii.users.migrateAccount(newWalletAddress)
         paratii.eth.wallet.clear()
       } catch (error) {
         // error opening the anonymous wallet
