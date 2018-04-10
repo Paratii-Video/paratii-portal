@@ -91,10 +91,12 @@ type Props = {
 }
 
 class PlaybackLevels extends React.Component<Props> {
+  getMaxHeight: () => number
   constructor (props: Props) {
     super(props)
     this.getMaxHeight = this.getMaxHeight.bind(this)
   }
+
   getSelectedLevelIndex (): number {
     const { currentPlaybackLevel, playbackLevels } = this.props
     if (!currentPlaybackLevel) {
@@ -124,11 +126,13 @@ class PlaybackLevels extends React.Component<Props> {
     return offsetXPercentage
   }
 
-  getMaxHeight () {
+  getMaxHeight (): number {
     let numLevels: number = this.props.playbackLevels.size
     const elementHeight: number =
       (numLevels + 1) * LevelHeight + WrapperBottomSpace
-    const documentHeight: number = document.body.clientHeight
+    const documentHeight: number = document.body
+      ? document.body.clientHeight
+      : elementHeight + 1
     const difference: number = elementHeight - documentHeight
 
     if (difference > 0) {
