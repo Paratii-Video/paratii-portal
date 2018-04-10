@@ -1,4 +1,5 @@
 import { assert } from 'chai'
+import queryString from 'query-string'
 
 describe('🎥 Player: @watch', function () {
   const videoId = '1mQRk9d7wgOJ'
@@ -9,49 +10,69 @@ describe('🎥 Player: @watch', function () {
   const playpauseButtonSelector = '[data-test-id="playpause-button"]'
 
   before(() => {
-    browser.addCommand('goToTestVideoUrl', ({ embed, overrideVideoId }) => {
-      browser.url(
-        `http://localhost:8080/${embed ? 'embed' : 'play'}/${overrideVideoId ||
-          videoId}`
-      )
-      browser.execute(() => {
-        window.PLAYER_TEST_DATA = {
-          playing: false,
-          paused: false
-        }
-      })
-      browser.waitUntil(
-        () =>
-          browser.execute(videoElementSelector => {
-            const videoEl = window.document.querySelector(videoElementSelector)
-            if (videoEl) {
-              videoEl.addEventListener('playing', () => {
-                window.PLAYER_TEST_DATA.playing = true
-                window.PLAYER_TEST_DATA.paused = false
-              })
-              videoEl.addEventListener('pause', () => {
-                window.PLAYER_TEST_DATA.paused = true
-                window.PLAYER_TEST_DATA.playing = true
-              })
+    browser.addCommand(
+      'goToTestVideoUrl',
+      ({ embed, overrideVideoId, queryParams }) => {
+        const finalQueryParams = queryParams || {}
+        const query = queryString.stringify(finalQueryParams)
+        browser.url(
+          `http://localhost:8080/${
+            embed ? 'embed' : 'play'
+          }/${overrideVideoId || videoId}?${query}`
+        )
+        browser.execute(() => {
+          window.PLAYER_TEST_DATA = {
+            playing: false,
+            paused: false
+          }
+        })
+        browser.waitUntil(
+          () =>
+            browser.execute(videoElementSelector => {
+              const videoEl = window.document.querySelector(
+                videoElementSelector
+              )
+              if (videoEl) {
+                videoEl.addEventListener('playing', () => {
+                  window.PLAYER_TEST_DATA.playing = true
+                  window.PLAYER_TEST_DATA.paused = false
+                })
+                videoEl.addEventListener('pause', () => {
+                  window.PLAYER_TEST_DATA.paused = true
+                  window.PLAYER_TEST_DATA.playing = true
+                })
 
-              window.PLAYER_TEST_DATA = {
-                playing: false,
-                paused: false
+                window.PLAYER_TEST_DATA = {
+                  playing: false,
+                  paused: false
+                }
+
+                return true
               }
 
-              return true
-            }
-
-            return false
-          }, videoElementSelector).value
-      )
-    })
+              return false
+            }, videoElementSelector).value
+        )
+      }
+    )
 
     browser.addCommand('waitUntilVideoIsPlaying', function (timeout = 20000) {
       this.waitUntil(
         () =>
           browser.execute(
             () => !!(window.PLAYER_TEST_DATA && window.PLAYER_TEST_DATA.playing)
+          ).value,
+        timeout,
+        `Video did not play after ${timeout}ms`
+      )
+    })
+
+    browser.addCommand('assertVideoNeverPlayed', function (timeout = 20000) {
+      this.waitUntil(
+        () =>
+          browser.execute(
+            () =>
+              !!(window.PLAYER_TEST_DATA && !window.PLAYER_TEST_DATA.playing)
           ).value,
         timeout,
         `Video did not play after ${timeout}ms`
@@ -113,8 +134,59 @@ describe('🎥 Player: @watch', function () {
 
   const runPlayerExpectations = ({ embed } = {}) => {
     describe('video play/pause', () => {
-      it('plays a video automatically', () => {
+      it('plays a video automatically by default', () => {
         browser.goToTestVideoUrl({ embed })
+        browser.waitUntilVideoIsPlaying()
+      })
+
+      if (embed) {
+        it('does not play a video automatically if autoplay is 0', () => {
+          const queryParams = { autoplay: 0 }
+
+          browser.goToTestVideoUrl({ embed, queryParams })
+          browser.pause(10000)
+          browser.assertVideoNeverPlayed()
+        })
+
+        it('does not play a video automatically if autoplay is 0', () => {
+          const queryParams = { autoplay: false }
+
+          browser.goToTestVideoUrl({ embed, queryParams })
+          browser.pause(10000)
+          browser.assertVideoNeverPlayed()
+        })
+      } else {
+        it('plays a video automatically even if autoplay is false', () => {
+          const queryParams = { autoplay: false }
+          browser.goToTestVideoUrl({ embed, queryParams })
+          browser.waitUntilVideoIsPlaying()
+        })
+
+        it('plays a video automatically even if autoplay is 0', () => {
+          const queryParams = { autoplay: 0 }
+
+          browser.goToTestVideoUrl({ embed, queryParams })
+          browser.waitUntilVideoIsPlaying()
+        })
+      }
+
+      it('plays a video automatically if autoplay is true', () => {
+        const queryParams = { autoplay: true }
+        browser.goToTestVideoUrl({ embed, queryParams })
+        browser.waitUntilVideoIsPlaying()
+      })
+
+      it('plays a video automatically if autoplay is 1', () => {
+        const queryParams = { autoplay: 1 }
+
+        browser.goToTestVideoUrl({ embed, queryParams })
+        browser.waitUntilVideoIsPlaying()
+      })
+
+      it('plays a video automatically if autoplay is some random value', () => {
+        const queryParams = { autoplay: 'foobarbaz' }
+
+        browser.goToTestVideoUrl({ embed, queryParams })
         browser.waitUntilVideoIsPlaying()
       })
 
@@ -141,8 +213,9 @@ describe('🎥 Player: @watch', function () {
     })
 
     describe('controls show/hide', () => {
-      it('does not show the controls by default', () => {
+      it('shows the controls until the video is playing', () => {
         browser.goToTestVideoUrl({ embed })
+        browser.waitUntilControlsAreVisible()
         browser.waitUntilVideoIsPlaying()
         browser.waitUntilControlsAreHidden()
         browser.pause(3000)
