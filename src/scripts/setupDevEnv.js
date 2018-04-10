@@ -34,7 +34,7 @@ async function deployContracts () {
 }
 
 async function seedVideos () {
-  await paratii.core.vids.create({
+  await paratii.vids.create({
     id: '999',
     owner: address1,
     title: 'Paratii Test Video',

@@ -47,6 +47,7 @@ describe('🦄 Uploader Tool', function () {
         const videoInfoFromBlockchain = await paratii.eth.vids.get(videoId)
         return videoInfoFromBlockchain
       } catch (err) {
+        throw err
         // console.log(err)
       }
     }
@@ -60,7 +61,6 @@ describe('🦄 Uploader Tool', function () {
     assert.equal(videoInfoFromBlockchain.owner, paratii.config.account.address)
 
     // when the transcoder is done, we should be ready to publish the video
-    console.log('publishing yr vid')
     await browser.waitAndClick(`[data-test-id="video-submit-publish"]`)
     await browser.waitAndClick(`[data-test-id="button-stake"]`)
     await browser.waitAndClick(`a[href="/play/${videoId}"]`)
