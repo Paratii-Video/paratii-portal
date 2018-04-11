@@ -105,6 +105,10 @@ const PlayerTitle = Title.extend`
   @media (max-width: 1024px) {
     font-size: ${props => props.theme.fonts.title.small};
   }
+
+  @media (max-width: 768px) {
+    font-size: ${props => props.theme.fonts.text.big};
+  }
 `
 
 const ButtonWrapper = styled.div`

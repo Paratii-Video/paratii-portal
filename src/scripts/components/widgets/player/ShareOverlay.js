@@ -104,7 +104,7 @@ const ShareTitle = Title.extend`
 `
 
 const ShareContent = styled.div`
-  margin: 0 auto 7vw;
+  margin: 0 auto 3vw;
   max-width: 480px;
   padding: 0 20px;
   text-align: center;
