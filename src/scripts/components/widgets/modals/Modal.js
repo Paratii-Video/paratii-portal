@@ -75,6 +75,10 @@ const CloseButton = styled(Button)`
   top: 30px;
   width: 20px;
   z-index: 3;
+
+  @media (max-width: 767px) {
+    top: 39px;
+  }
 `
 
 const SVG = styled.svg`
@@ -88,6 +92,10 @@ const Content = styled.div`
   height: 100%;
   padding: 44px 48px;
   width: 100%;
+
+  @media (max-width: 767px) {
+    padding: 30px 34px;
+  }
 `
 
 export const ModalContentWrapper = styled.div`
