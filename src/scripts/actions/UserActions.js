@@ -128,7 +128,6 @@ export const setupKeystore = () => async (
   ) {
     console.log('Create a new wallet')
     mnemonic = bip39.generateMnemonic()
-    console.log(mnemonic)
     await paratii.eth.wallet.create(1, mnemonic)
     const encryptedWallet = paratii.eth.wallet.encrypt(DEFAULT_PASSWORD)
     localStorage.setItem(WALLET_KEY_ANON, JSON.stringify(encryptedWallet))
@@ -145,7 +144,6 @@ export const secureKeystore = (password: string) => async (
   let encryptedSecuredWallet: ?Object
   const walletStringAnon: ?string = localStorage.getItem(WALLET_KEY_ANON)
   const mnemonic = sessionStorage.getItem(MNEMONIC_KEY_TEMP)
-  console.log(mnemonic)
 
   dispatch(
     Notifications.warning({
