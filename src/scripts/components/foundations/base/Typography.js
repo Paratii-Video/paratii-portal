@@ -44,6 +44,10 @@ const Typography = {
     share: {
       title: '1.5rem',
       link: '1.3rem'
+    },
+    quality: {
+      levels: '0.9rem',
+      levelsDesktop: '1rem'
     }
   },
   radio: {
