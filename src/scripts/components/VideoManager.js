@@ -30,6 +30,10 @@ const Wrapper = CardContainer.extend`
     justify-content: ${props => (props.padding ? 'space-between' : 'center')};
     padding: ${props => (props.padding ? '0 5%' : '0')};
   }
+
+  @media (max-width: 767px) {
+    padding: 0;
+  }
 `
 
 class VideoManager extends Component<Props, void> {
