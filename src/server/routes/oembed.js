@@ -28,7 +28,7 @@ module.exports = async (req: $Request, res: $Response) => {
 
     // Get video id from the path
     const videoId = parsedExternalUrl.path.split('/')[2]
-    const video = await paratii.core.vids.get(videoId)
+    const video = await paratii.vids.get(videoId)
 
     // console.log(video)
     // If video exist build response

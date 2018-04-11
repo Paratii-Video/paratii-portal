@@ -98,15 +98,15 @@ export type ParatiiLib = {
       privateKey: string
     }
   },
-  core: {
-    migrateAccount: (address: string) => Object,
-    vids: {
-      get: (id: string) => ?Object,
-      create: Object => Object,
-      upsert: Object => Object,
-      update: (id: string, Object) => Object,
-      search: Object => Array<Object>
-    }
+  vids: {
+    get: (id: string) => ?Object,
+    create: Object => Object,
+    upsert: Object => Object,
+    update: (id: string, Object) => Object,
+    search: Object => Object
+  },
+  users: {
+    migrateAccount: (address: string) => Object
   },
   eth: {
     wallet: {

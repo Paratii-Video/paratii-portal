@@ -41,7 +41,7 @@ class VideoStatus extends Component<Props, void> {
           <br />
           description: {video.get('description')}
           <br />
-          Click to edit yr vid [Insert link here]
+          Click to edit your video [Insert link here]
           <br />
           --------------------------------------------------------
           <br />
