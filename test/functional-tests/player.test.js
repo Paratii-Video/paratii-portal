@@ -2,7 +2,7 @@ import { assert } from 'chai'
 import queryString from 'query-string'
 
 describe('🎥 Player:', function () {
-  const videoId = '1mQRk9d7wgOJ'
+  const videoId = 'TXWzBRXgWytP'
   const videoTitle = 'Great title'
   const videoElementSelector = '[data-test-id="player"] video'
   const overlaySelector = '[data-test-id="video-overlay"]'
