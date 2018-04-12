@@ -84,7 +84,7 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
   )
   // this will upload the file to the local IPFS node and report on progress
   // this wll ALSO start the XHR upload
-  const uploader = paratii.ipfs.uploader.add(file)
+  const uploader = paratii.ipfs.local.add(file)
 
   uploader.on('error', function (error) {
     console.log('[UPLOAD error]', error)
@@ -151,7 +151,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
   dispatch(transcodingRequested(videoInfo))
   // FIXME: paratii-js should hande the starting of the ipfs node if it is not started yet
   paratii.ipfs.getIPFSInstance().then(function () {
-    const transcoder = paratii.ipfs.uploader.transcode(videoInfo.hash, {
+    const transcoder = paratii.transcoder.transcode(videoInfo.hash, {
       author: paratii.config.account.address,
       size: videoInfo.size
     })
