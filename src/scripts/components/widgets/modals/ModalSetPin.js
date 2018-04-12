@@ -1,12 +1,9 @@
 /* @flow */
-// import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import NumPad from 'components/widgets/NumPad'
-// import { MNEMONIC_KEY_TEMP } from 'constants/ParatiiLibConstants'
-
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
 type Props = {
@@ -47,6 +44,7 @@ class ModalSetPin extends Component<Props, Object> {
       pin: '',
       newPin: '',
       isPin: false,
+      checkPin: false,
       resetPinField: false,
       error: ''
     }
@@ -56,17 +54,15 @@ class ModalSetPin extends Component<Props, Object> {
   }
 
   clearPin () {
-    if (this.state.isPin) {
-      this.setState({
-        newPin: '',
-        resetPinField: true
-      })
-    } else {
-      this.setState({
-        pin: '',
-        resetPinField: true
-      })
-    }
+    // Totally reset the PIN
+    this.setState({
+      pin: '',
+      newPin: '',
+      isPin: false,
+      checkPin: false,
+      error: '',
+      resetPinField: true
+    })
   }
 
   setPin () {
@@ -86,7 +82,8 @@ class ModalSetPin extends Component<Props, Object> {
       }
     } else {
       this.setState({
-        resetPinField: true
+        resetPinField: true,
+        checkPin: true
       })
     }
   }
@@ -113,7 +110,7 @@ class ModalSetPin extends Component<Props, Object> {
   render () {
     let header = ''
     // The first pin has not yet been set
-    if (!this.state.pin) {
+    if (!this.state.checkPin) {
       header = (
         <div>
           <Title>Create a security PIN.</Title>
