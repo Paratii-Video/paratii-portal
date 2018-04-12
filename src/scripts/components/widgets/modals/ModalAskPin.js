@@ -81,7 +81,7 @@ class ModalAskPin extends Component<Props, Object> {
       this.setPin()
     }
     if (this.state.isPin && event.keyCode === 8 /* backspace */) {
-      this.clerPin()
+      this.clearPin()
     }
   }
 
