@@ -111,14 +111,14 @@ export const setupKeystore = () => async (
   }
 
   // Case 3: (dev) wallet in paratii.eth.wallet but not on localStorage
-  // if (
-  //   paratii.eth.wallet.length > 0 &&
-  //   !walletStringSecure &&
-  //   !walletStringAnon
-  // ) {
-  //   const encryptedWallet = paratii.eth.wallet.encrypt(DEFAULT_PASSWORD)
-  //   localStorage.setItem(WALLET_KEY_ANON, JSON.stringify(encryptedWallet))
-  // }
+  if (
+    paratii.eth.wallet.length > 0 &&
+    !walletStringSecure &&
+    !walletStringAnon
+  ) {
+    const encryptedWallet = paratii.eth.wallet.encrypt(DEFAULT_PASSWORD)
+    localStorage.setItem(WALLET_KEY_ANON, JSON.stringify(encryptedWallet))
+  }
 
   // Case 4: we need to create a new Wallet
   if (

@@ -60,6 +60,31 @@ class ModalAskPin extends Component<Props, Object> {
     this.handlePinChange = this.handlePinChange.bind(this)
   }
 
+  componentDidMount (): void {
+    this.addKeyDownEventListeners()
+  }
+
+  componentWillUnmount (): void {
+    this.removeKeyDownEventListeners()
+  }
+
+  addKeyDownEventListeners () {
+    window.addEventListener('keydown', this.handleKeyDown.bind(this))
+  }
+
+  removeKeyDownEventListeners () {
+    window.removeEventListener('keydown', this.handleKeyDown.bind(this))
+  }
+
+  handleKeyDown (event: Object) {
+    if (event.keyCode === 13 /* enter */) {
+      this.setPin()
+    }
+    if (this.state.isPin && event.keyCode === 8 /* backspace */) {
+      this.clerPin()
+    }
+  }
+
   clearPin () {
     this.setState({
       pin: '',
