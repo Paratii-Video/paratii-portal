@@ -58,15 +58,6 @@ const Wrapper = styled.div`
   transition: all 0.45s ${({ theme }) => theme.animation.ease.smooth};
   z-index: ${Z_INDEX_POPUPS};
   user-select: none;
-
-  @media (max-height: 400px) {
-    bottom: 0;
-    height: calc(100% - 10px);
-    margin: 5px;
-    top: 0;
-    transform: translateY(0);
-    width: calc(100% - 10px);
-  }
 `
 
 class Popover extends React.Component<Props, void> {
