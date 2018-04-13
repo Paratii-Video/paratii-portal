@@ -17,6 +17,7 @@ import { MODAL } from 'constants/ModalConstants'
 type Props = {
   modalContent: string,
   showModal: boolean,
+  width: string,
   closeModal: () => null
 }
 
@@ -53,12 +54,12 @@ const Container = styled.div`
   margin: 0 40px;
   opacity: ${props => (props.show ? '1' : '0')};
   transform: translate3d(0, ${props => (props.show ? '' : '100px')}, 0);
-  transition: transform ${props => (props.show ? '0.7s' : '0.5s')}
+  transition: transform ${props => (props.show ? '0.7s' : '0.4s')}
       ${props => props.theme.animation.ease.smooth}
       ${props => (props.show ? '0.2s' : null)},
     opacity ${props => (props.show ? '0.25s' : '0.2s')} linear
       ${props => (props.show ? '0.3s' : null)};
-  width: 490px;
+  width: ${props => props.width};
   z-index: 2;
 
   @media (max-width: 767px) {
@@ -127,6 +128,28 @@ class Modal extends Component<Props, void> {
     }
   }
 
+  getModalWidth () {
+    const { modalContent } = this.props
+    switch (modalContent) {
+      case MODAL.STAKET:
+        return '490px'
+      case MODAL.SECURE:
+        return '900px'
+      case MODAL.SHOW_SEED:
+        return '900px'
+      case MODAL.REWRITE_SEED:
+        return '900px'
+      case MODAL.RESTORE_ACCOUNT:
+        return '900px'
+      case MODAL.SET_PIN:
+        return '900px'
+      case MODAL.ASK_PIN:
+        return '480px'
+      default:
+        return '490px'
+    }
+  }
+
   handleKeydown = (e: Event): void => {
     if (event.keyCode === 27) {
       this.props.closeModal()
@@ -145,7 +168,7 @@ class Modal extends Component<Props, void> {
     const isVisible = this.props.showModal
     return (
       <Wrapper show={isVisible}>
-        <Container show={isVisible}>
+        <Container show={isVisible} width={this.getModalWidth()}>
           <CloseButton onClick={this.props.closeModal}>
             <SVG>
               <use xlinkHref="#icon-close" />

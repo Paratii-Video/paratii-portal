@@ -2,6 +2,7 @@
 import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import NumPad from 'components/widgets/NumPad'
@@ -17,14 +18,12 @@ type Props = {
   setAddressAndBalance: () => void
 }
 
-const Title = styled.h2`
-  color: ${props => props.theme.colors.Modal.title};
-  font-size: ${props => props.theme.fonts.modal.title};
-  margin-bottom: 25px;
-`
+const PadWrapper = styled.div`
+  margin: 66px 0 96px;
 
-const MainText = styled(Text)`
-  margin-bottom: 35px;
+  @media (max-width: 767px) {
+    margin-bottom: 0;
+  }
 `
 
 const Footer = styled.div`
@@ -123,15 +122,13 @@ class ModalAskPin extends Component<Props, Object> {
       <ModalContentWrapper>
         <ModalScrollContent>
           <Title>Insert your PIN.</Title>
-          <MainText small gray>
-            Insert your PIN to unlock the keystore.
-          </MainText>
-
-          <NumPad
-            onSetPin={this.handlePinChange}
-            reset={this.state.resetPinField}
-            error={this.state.error.length > 0}
-          />
+          <PadWrapper>
+            <NumPad
+              onSetPin={this.handlePinChange}
+              reset={this.state.resetPinField}
+              error={this.state.error.length > 0}
+            />
+          </PadWrapper>
 
           {this.state.error && (
             <Text pink small>
