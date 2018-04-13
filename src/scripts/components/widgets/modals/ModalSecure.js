@@ -1,5 +1,4 @@
 /* @flow */
-// import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Title from 'components/foundations/Title'
@@ -14,8 +13,8 @@ type Props = {
 }
 
 const Icon = styled.div`
-  height: 240px;
-  margin: 60px 0 78px;
+  height: 250px;
+  margin: 75px 0 96px;
   width: 100%;
 `
 
@@ -32,22 +31,20 @@ const ButtonContainer = styled.div`
 
 class ModalSecure extends Component<Props, Object> {
   restoreAccount: (e: Object) => void
-  showSeed: (e: Object) => void
+  showGreatPower: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
     this.restoreAccount = this.restoreAccount.bind(this)
-    this.showSeed = this.showSeed.bind(this)
+    this.showGreatPower = this.showGreatPower.bind(this)
   }
 
   restoreAccount () {
-    console.log('Restore Account')
     this.props.openModal(MODAL.RESTORE_ACCOUNT)
   }
 
-  showSeed () {
-    console.log('Show Seed')
-    this.props.openModal(MODAL.SHOW_SEED)
+  showGreatPower () {
+    this.props.openModal(MODAL.GREAT_POWER)
   }
 
   render () {
@@ -69,7 +66,11 @@ class ModalSecure extends Component<Props, Object> {
               </Button>
             </ButtonContainer>
             <ButtonContainer>
-              <Button data-test-id="new-here" purple onClick={this.showSeed}>
+              <Button
+                data-test-id="new-here"
+                purple
+                onClick={this.showGreatPower}
+              >
                 I am new here
               </Button>
             </ButtonContainer>

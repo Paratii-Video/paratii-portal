@@ -27,7 +27,7 @@ const WORDPADDING: string = '14px'
 
 const WordsWrapper = styled.div`
   cursor: pointer;
-  margin: 71px 0 100px;
+  margin: 80px 0 104px;
 
   @media (max-width: 767px) {
     margin-bottom: 0;
@@ -55,7 +55,7 @@ const Word = styled.li`
   border-radius: 2px;
   display: flex;
   flex: 0 1 23%;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   padding-right: ${WORDPADDING};
   user-select: none;
 

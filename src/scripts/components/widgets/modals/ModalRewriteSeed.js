@@ -16,7 +16,7 @@ type Props = {
 }
 
 const FieldContainer = styled.div`
-  margin: 150px 0 190px;
+  margin: 164px 0 220px;
 
   @media (max-width: 767px) {
     margin: 50px 0 0;

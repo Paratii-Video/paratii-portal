@@ -6,6 +6,7 @@ import Button from 'components/foundations/Button'
 
 import ModalStake from 'containers/widgets/modals/ModalStakeContainer' // need to receive any content
 import ModalSecure from 'containers/widgets/modals/ModalSecureContainer'
+import ModalGreatPower from 'containers/widgets/modals/ModalGreatPowerContainer'
 import ModalShowSeed from 'containers/widgets/modals/ModalShowSeedContainer'
 import ModalRewriteSeed from 'containers/widgets/modals/ModalRewriteSeedContainer'
 import ModalRestoreAccount from 'containers/widgets/modals/ModalRestoreAccountContainer'
@@ -115,6 +116,8 @@ class Modal extends Component<Props, void> {
         return <ModalStake />
       case MODAL.SECURE:
         return <ModalSecure />
+      case MODAL.GREAT_POWER:
+        return <ModalGreatPower />
       case MODAL.SHOW_SEED:
         return <ModalShowSeed />
       case MODAL.REWRITE_SEED:
@@ -136,6 +139,8 @@ class Modal extends Component<Props, void> {
       case MODAL.SECURE:
         return '900px'
       case MODAL.SHOW_SEED:
+        return '900px'
+      case MODAL.GREAT_POWER:
         return '900px'
       case MODAL.REWRITE_SEED:
         return '900px'
