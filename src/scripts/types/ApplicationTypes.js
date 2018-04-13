@@ -139,11 +139,16 @@ export type ParatiiLib = {
     }
   },
   ipfs: {
-    uploader: {
-      add: Object => Object,
-      transcode: (string, Object) => Object
+    local: {
+      add: Object => Object
     },
-    getIPFSInstance: () => Promise<Object>
+    remote: {},
+    getIPFSInstance: () => Promise<Object>,
+    start: () => Promise<Object>,
+    stop: () => Promise<>
+  },
+  transcoder: {
+    transcode: (string, Object) => Object
   }
 }
 
