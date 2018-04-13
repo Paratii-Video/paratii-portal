@@ -56,9 +56,11 @@ const HashPin = styled.div`
 `
 
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+const keyboard = [49, 50, 51, 52, 53, 54, 55, 56, 57, 48]
 
 class NumPad extends Component<Props, Object> {
   handleClick: (e: Object) => void
+  handleKeyDown: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
@@ -66,8 +68,24 @@ class NumPad extends Component<Props, Object> {
       pin: [],
       hidePin: ''
     }
-
     this.handleClick = this.handleClick.bind(this)
+  }
+
+  componentDidMount (): void {
+    this.addKeyDownEventListeners()
+  }
+
+  componentWillUnmount (): void {
+    console.log('unmount')
+    this.removeKeyDownEventListeners()
+  }
+
+  addKeyDownEventListeners () {
+    window.addEventListener('keydown', this.handleKeyDown.bind(this))
+  }
+
+  removeKeyDownEventListeners () {
+    window.removeEventListener('keydown', this.handleKeyDown.bind(this))
   }
 
   componentWillReceiveProps (nextProps: Props): void {
@@ -95,6 +113,20 @@ class NumPad extends Component<Props, Object> {
     } else {
       console.log(`you've already insert 4 numbers`)
     }
+  }
+
+  handleKeyDown (event: Object) {
+    if (keyboard.includes(event.keyCode)) {
+      const index = keyboard.indexOf(event.keyCode)
+      const numberClicked = numbers[index]
+      this.handleClick(numberClicked)
+    }
+    // if (event.keyCode === 8 /* backspace */) {
+    //   this.setState({
+    //     pin: [],
+    //     hidePin: ''
+    //   })
+    // }
   }
 
   render () {

@@ -7,6 +7,7 @@ export const MODAL: Object = {
   RESTORE_ACCOUNT: makeModalConstant('RestoreAccount'),
   REWRITE_SEED: makeModalConstant('RewriteSeed'),
   SECURE: makeModalConstant('Secure'),
+  GREAT_POWER: makeModalConstant('GreatPower'),
   SET_PIN: makeModalConstant('SetPin'),
   SHOW_SEED: makeModalConstant('ShowSeed'),
   STAKE: makeModalConstant('Stake')

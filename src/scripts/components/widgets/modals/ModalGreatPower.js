@@ -37,28 +37,28 @@ const ButtonContainer = styled.div`
 `
 
 class ModalSecure extends Component<Props, Object> {
-  restoreAccount: (e: Object) => void
-  showGreatPower: (e: Object) => void
+  secureAccount: (e: Object) => void
+  showSeed: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
-    this.restoreAccount = this.restoreAccount.bind(this)
-    this.showGreatPower = this.showGreatPower.bind(this)
+    this.secureAccount = this.secureAccount.bind(this)
+    this.showSeed = this.showSeed.bind(this)
   }
 
-  restoreAccount () {
-    this.props.openModal(MODAL.RESTORE_ACCOUNT)
+  secureAccount () {
+    this.props.openModal(MODAL.SECURE)
   }
 
-  showGreatPower () {
-    this.props.openModal(MODAL.GREAT_POWER)
+  showSeed () {
+    this.props.openModal(MODAL.SHOW_SEED)
   }
 
   render () {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Secure you wallet</Title>
+          <Title>With great powers, comes great responsability</Title>
           <Highlight>
             Vestibulum turpis ex, sagittis non libero sed, tincidunt egestas
             augue.
@@ -70,20 +70,13 @@ class ModalSecure extends Component<Props, Object> {
           </MainText>
           <Footer>
             <ButtonContainer>
-              <Button
-                data-test-id="restore-account"
-                onClick={this.restoreAccount}
-              >
-                I already have an account
+              <Button data-test-id="go-back" onClick={this.secureAccount}>
+                Go Back
               </Button>
             </ButtonContainer>
             <ButtonContainer>
-              <Button
-                data-test-id="new-here"
-                purple
-                onClick={this.showGreatPower}
-              >
-                I am new here
+              <Button data-test-id="continue" purple onClick={this.showSeed}>
+                Continue
               </Button>
             </ButtonContainer>
           </Footer>

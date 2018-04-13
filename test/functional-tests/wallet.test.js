@@ -50,7 +50,7 @@ describe('wallet:', function () {
   // })
 
   // FIXME: temporarily disabled in production
-  it.skip('restore your wallet using a seed @watch', async function () {
+  it('restore your wallet using a seed', async function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
@@ -86,7 +86,7 @@ describe('wallet:', function () {
   })
 
   // FIXME: temporarily disabled in production
-  it.skip('secure your wallet, transfer data to a new address @watch', async function () {
+  it('secure your wallet, transfer data to a new address @watch', async function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
@@ -98,6 +98,7 @@ describe('wallet:', function () {
     browser.waitAndClick('[data-test-id="secure-wallet"]')
     browser.pause(500)
     browser.waitAndClick('[data-test-id="new-here"]')
+    browser.waitAndClick('[data-test-id="continue"]')
     browser.waitForClickable('[data-test-id="new-mnemonic"]')
     const newMnemonic = browser.getText('[data-test-id="new-mnemonic"]')
     browser.waitAndClick('[data-test-id="rewrite-seed"]')
@@ -122,8 +123,9 @@ describe('wallet:', function () {
     // We have a new account so the balance should be zero
     assert.equal(balance, newBalance)
     // After the test we resend the money back to the default address
-    // await paratii.eth.transfer(anonAddress, 21000000000000000000000000, 'PTI')
-    await paratii.migrateAccount(anonAddress)
+    const balanceInWei = await paratii.eth.balanceOf(restoredAddress, 'PTI')
+    await paratii.eth.transfer(anonAddress, balanceInWei, 'PTI')
+    // await paratii.users.migrateAccount(anonAddress)
   })
 
   it.skip('should show ETH balance', function () {
