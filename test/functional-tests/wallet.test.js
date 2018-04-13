@@ -123,7 +123,9 @@ describe('wallet:', function () {
     // We have a new account so the balance should be zero
     assert.equal(balance, newBalance)
     // After the test we resend the money back to the default address
-    await paratii.users.migrateAccount(anonAddress)
+    const balanceInWei = await paratii.eth.balanceOf(restoredAddress, 'PTI')
+    await paratii.eth.transfer(anonAddress, balanceInWei, 'PTI')
+    // await paratii.users.migrateAccount(anonAddress)
   })
 
   it.skip('should show ETH balance', function () {
