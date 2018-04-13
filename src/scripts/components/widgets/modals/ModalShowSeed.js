@@ -6,7 +6,6 @@ import Colors from 'components/foundations/base/Colors'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
-import Hidden from 'components/foundations/Hidden'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MNEMONIC_KEY_TEMP } from 'constants/ParatiiLibConstants'
 import { MODAL } from 'constants/ModalConstants'
@@ -24,6 +23,11 @@ type Props = {
 }
 
 const WORDPADDING: string = '14px'
+
+const TextHidden = styled.p`
+  opacity: 0.01;
+  position: absolute;
+`
 
 const WordsWrapper = styled.div`
   cursor: pointer;
@@ -155,13 +159,14 @@ class ModalShowSeed extends Component<Props, Object> {
             This is the key of your account, write in the correct order and keep
             it in a safe place
           </Text>
-          <Hidden
+          <TextHidden
+            data-test-id="new-mnemonic"
             innerRef={(ref: HTMLElement) => {
               this.KeyWords = ref
             }}
           >
             {mnemonic}
-          </Hidden>
+          </TextHidden>
           <WordsWrapper>
             <WordsList onClick={this.copyWordsToClipboard}>
               {mnemonic.split(' ').map((word: string, index: number) => (
@@ -173,7 +178,11 @@ class ModalShowSeed extends Component<Props, Object> {
                 </Word>
               ))}
             </WordsList>
-            <Button onClick={this.copyWordsToClipboard} gray>
+            <Button
+              data-test-id="new-mnemonic-button"
+              onClick={this.copyWordsToClipboard}
+              gray
+            >
               <CopyButtonIcon>
                 <use xlinkHref="#icon-copy" />
               </CopyButtonIcon>

@@ -99,7 +99,7 @@ describe('wallet:', function () {
     browser.pause(500)
     browser.waitAndClick('[data-test-id="new-here"]')
     browser.waitAndClick('[data-test-id="continue"]')
-    browser.waitForClickable('[data-test-id="new-mnemonic"]')
+    browser.waitForClickable('[data-test-id="new-mnemonic-button"]')
     const newMnemonic = browser.getText('[data-test-id="new-mnemonic"]')
     browser.waitAndClick('[data-test-id="rewrite-seed"]')
     browser.waitForClickable('[name="rewrite-mnemonic"]')
