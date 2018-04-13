@@ -1434,7 +1434,7 @@ babel-plugin-transform-regenerator@^6.24.1, babel-plugin-transform-regenerator@^
   dependencies:
     regenerator-transform "^0.10.0"
 
-babel-plugin-transform-runtime@6.x.x:
+babel-plugin-transform-runtime@6.x.x, babel-plugin-transform-runtime@^6.23.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-runtime/-/babel-plugin-transform-runtime-6.23.0.tgz#88490d446502ea9b8e7efb0fe09ec4d99479b1ee"
   dependencies:
@@ -2439,10 +2439,6 @@ chai-as-promised@^6.0.0:
   resolved "https://registry.yarnpkg.com/chai-as-promised/-/chai-as-promised-6.0.0.tgz#1a02a433a6f24dafac63b9c96fa1684db1aa8da6"
   dependencies:
     check-error "^1.0.2"
-
-chai-bignumber@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/chai-bignumber/-/chai-bignumber-2.0.2.tgz#de6c219c690b2d66b646ad6930096f9ba2199643"
 
 chai@^4.1.2:
   version "4.1.2"
@@ -7608,21 +7604,21 @@ ipfs-unixfs@~0.1.14:
   dependencies:
     protons "^1.0.0"
 
-"ipfs@github:Paratii-Video/js-ipfs#f02bfb4961eaf8fae077eb12e175cd518e602bc4":
+"ipfs@github:Paratii-Video/js-ipfs#paratii/v0.28.2":
   version "0.28.2"
   resolved "https://codeload.github.com/Paratii-Video/js-ipfs/tar.gz/f02bfb4961eaf8fae077eb12e175cd518e602bc4"
   dependencies:
     async "^2.6.0"
     big.js "^5.0.3"
     binary-querystring "~0.1.2"
-    bl "^1.2.1"
+    bl "^1.2.2"
     boom "^7.2.0"
     bs58 "^4.0.1"
     byteman "^1.3.5"
     cids "~0.5.3"
     debug "^3.1.0"
     file-type "^7.6.0"
-    filesize "^3.6.0"
+    filesize "^3.6.1"
     fsm-event "^2.1.0"
     get-folder-size "^1.0.1"
     glob "^7.1.2"
@@ -7630,29 +7626,29 @@ ipfs-unixfs@~0.1.14:
     hapi-set-header "^1.0.2"
     hoek "^5.0.3"
     human-to-milliseconds "^1.0.0"
-    ipfs-api "^18.2.1"
+    ipfs-api "^19.0.0"
     ipfs-bitswap "github:ya7ya/js-ipfs-bitswap#paratii/v0.19.0-b"
     ipfs-block "~0.6.1"
     ipfs-block-service "~0.13.0"
     ipfs-multipart "~0.1.0"
     ipfs-repo "~0.18.7"
     ipfs-unixfs "~0.1.14"
-    ipfs-unixfs-engine "~0.24.4"
+    ipfs-unixfs-engine "~0.27.0"
     ipld "^0.15.0"
     is-ipfs "^0.3.2"
     is-stream "^1.1.0"
     joi "^13.1.2"
     joi-browser "^13.0.1"
-    joi-multiaddr "^1.0.1"
-    libp2p "~0.19.0"
+    joi-multiaddr "^2.0.0"
+    libp2p "~0.19.2"
     libp2p-circuit "~0.1.5"
     libp2p-floodsub "~0.14.1"
     libp2p-kad-dht "~0.9.0"
     libp2p-keychain "~0.3.1"
     libp2p-mdns "~0.9.2"
-    libp2p-multiplex "~0.5.1"
+    libp2p-mplex "^0.6.0"
     libp2p-railing "~0.7.1"
-    libp2p-secio "~0.9.3"
+    libp2p-secio "~0.9.4"
     libp2p-tcp "~0.11.6"
     libp2p-webrtc-star "~0.13.4"
     libp2p-websocket-star "~0.7.7"
@@ -7664,7 +7660,7 @@ ipfs-unixfs@~0.1.14:
     mafmt "^4.0.0"
     mime-types "^2.1.18"
     mkdirp "~0.5.1"
-    multiaddr "^3.0.2"
+    multiaddr "^3.1.0"
     multihashes "~0.4.13"
     once "^1.4.0"
     path-exists "^3.0.0"
@@ -7680,7 +7676,7 @@ ipfs-unixfs@~0.1.14:
     pull-paramap "^1.2.2"
     pull-pushable "^2.2.0"
     pull-sort "^1.0.1"
-    pull-stream "^3.6.2"
+    pull-stream "^3.6.7"
     pull-stream-to-stream "^1.3.4"
     pull-zip "^2.0.1"
     read-pkg-up "^3.0.0"
@@ -7690,7 +7686,7 @@ ipfs-unixfs@~0.1.14:
     tar-stream "^1.5.5"
     temp "~0.8.3"
     through2 "^2.0.3"
-    update-notifier "^2.3.0"
+    update-notifier "^2.4.0"
     yargs "^11.0.0"
     yargs-parser "^9.0.2"
   optionalDependencies:
@@ -11557,16 +11553,18 @@ parallel-transform@^1.1.0:
     web3 "^1.0.0-beta.27"
     zeppelin-solidity "^1.3.0"
 
-"paratii-js@github:Paratii-Video/paratii-js#684fbb80efec78ca9b80113b92b3720c3029d2d0":
+paratii-js@^0.2.0:
   version "0.2.0"
-  resolved "https://codeload.github.com/Paratii-Video/paratii-js/tar.gz/684fbb80efec78ca9b80113b92b3720c3029d2d0"
+  resolved "https://registry.yarnpkg.com/paratii-js/-/paratii-js-0.2.0.tgz#ec299d2fcc197831dc4342db17698ae8946cc718"
   dependencies:
     async "^2.6.0"
+    babel-plugin-transform-runtime "^6.23.0"
+    babel-plugin-webpack-alias "^2.1.2"
+    babel-preset-react "^6.24.1"
     bip39 "^2.5.0"
-    chai-bignumber "^2.0.2"
     es6-promise "^4.2.4"
     hdkey "^0.8.0"
-    ipfs "github:Paratii-Video/js-ipfs#f02bfb4961eaf8fae077eb12e175cd518e602bc4"
+    ipfs "github:Paratii-Video/js-ipfs#paratii/v0.28.2"
     isomorphic-fetch "^2.2.1"
     joi "^13.1.2"
     multiaddr "^3.0.2"
