@@ -65,16 +65,23 @@ class RedeemVoucher extends Component<Props, Object> {
     paratii.eth.vouchers
       .redeem(voucherCode)
       .then(resp => {
-        loadBalances()
-        const amount = String(resp)
-        this.props.notification(
-          { title: 'Success', message: `You have received ${amount} PTI.` },
-          'success'
-        )
-        this.setState({
-          disableInput: false,
-          voucher: ''
-        })
+        if (resp) {
+          loadBalances()
+          const amount = paratii.eth.web3.utils.fromWei(String(resp))
+          this.props.notification(
+            { title: 'Success', message: `You have received ${amount} PTI.` },
+            'success'
+          )
+          this.setState({
+            disableInput: false,
+            voucher: ''
+          })
+        } else {
+          this.props.notification(
+            { title: 'Ops!', message: `Something went wrong` },
+            'error'
+          )
+        }
       })
       .catch(error => {
         if (error) {
@@ -151,10 +158,13 @@ class RedeemVoucher extends Component<Props, Object> {
             label="Enter code here to receive test PTI"
             disabled={this.state.disableInput}
             value={this.state.voucher}
+            id="voucher-code"
+            name="voucher-code"
           />
           <SubmitButton
             onClick={this.redeemVoucher}
             disabled={this.state.disableInput}
+            data-test-id="redeem-voucher"
           >
             {' '}
             Submit
