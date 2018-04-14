@@ -15,6 +15,20 @@ export const getRoot = (): Element => {
   return root
 }
 
+export const getAppRootUrl = (env: ?string = 'development'): string => {
+  switch (env) {
+    case 'production':
+      return 'https://portal.paratii.video'
+    case 'test':
+      return 'https://staging.paratii.video'
+    case 'staging':
+      return 'https://staging.paratii.video'
+    case 'development':
+    default:
+      return 'http://localhost:8080'
+  }
+}
+
 export const getParatiiConfig = (env: ?string = 'development'): Object => {
   let config = {}
 
