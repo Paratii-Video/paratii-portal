@@ -5,7 +5,7 @@ import Button from './foundations/Button'
 import paratii from 'utils/ParatiiLib'
 import { MODAL } from 'constants/ModalConstants'
 
-const ACTIVATE_SECURE_WALLET = false // a flag for activating the secure wallet
+const ACTIVATE_SECURE_WALLET = true // a flag for activating the secure wallet
 
 type Props = {
   user: Object,
