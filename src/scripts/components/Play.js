@@ -18,7 +18,11 @@ import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
-import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
+import {
+  requestFullscreen,
+  requestCancelFullscreen,
+  getAppRootUrl
+} from 'utils/AppUtils'
 import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 
 import type { ClapprPlayer, PlayerPlugin } from 'types/ApplicationTypes'
@@ -629,49 +633,54 @@ class Play extends Component<Props, State> {
     return !valueIsFalse
   }
 
-  getPortalUrl () {
-    // FIXME: do not hardcode this here
-    return 'https://portal.paratii.video'
-  }
   getFacebookHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
     if (video) {
       var baseurl = 'https://www.facebook.com/sharer/sharer.php?u='
-      return baseurl + this.getPortalUrl() + '/play/' + video.id
+      return baseurl + appRootUrl + '/play/' + video.id
     }
   }
   getTwitterHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
+
     if (video) {
       const baseurl = 'https://twitter.com/intent/tweet'
-      const url = '?url=' + this.getPortalUrl() + '/play/' + video.id
+      const url = '?url=' + appRootUrl + '/play/' + video.id
       const text = '&text=🎬 Worth a watch: ' + video.title
       return baseurl + url + text
     }
   }
   getWhatsAppMobileHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
+
     if (video) {
       const baseurl = 'whatsapp://send?text='
-      const url = this.getPortalUrl() + '/play/' + video.id
+      const url = appRootUrl + '/play/' + video.id
       const text = '🎬 Worth a watch: ' + video.title + ' '
       return baseurl + text + url
     }
   }
   getWhatsAppDesktopHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
+
     if (video) {
       const baseurl = 'https://web.whatsapp.com/send?text='
-      const url = this.getPortalUrl() + '/play/' + video.id
+      const url = appRootUrl + '/play/' + video.id
       const text = '🎬 Worth a watch: ' + video.title + ' '
       return baseurl + text + url
     }
   }
   getTelegramHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
+
     if (video) {
       const baseurl = 'https://t.me/share/url'
-      const url = '?url=' + this.getPortalUrl() + '/play/' + video.id
+      const url = '?url=' + appRootUrl + '/play/' + video.id
       const text = '&text=🎬 Worth a watch: ' + video.title
       return baseurl + url + text
     }
@@ -749,10 +758,12 @@ class Play extends Component<Props, State> {
                 <ShareOverlay
                   show={this.state.showShareModal}
                   onToggle={this.toggleShareModal}
-                  portalUrl={this.getPortalUrl()}
+                  portalUrl={getAppRootUrl(process.env.NODE_ENV)}
                   videoId={video && video.id}
                   videoLabelUrl={
-                    this.getPortalUrl() + '/play/' + ((video && video.id) || '')
+                    getAppRootUrl(process.env.NODE_ENV) +
+                    '/play/' +
+                    ((video && video.id) || '')
                   }
                   shareOptions={shareOptions}
                 />

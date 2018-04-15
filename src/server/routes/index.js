@@ -1,4 +1,4 @@
-const { getParatiiConfig } = require('utils/AppUtils')
+const { getParatiiConfig, getAppRootUrl } = require('utils/AppUtils')
 const { Paratii } = require('paratii-js')
 const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 const paratii = new Paratii(paratiiConfig)
@@ -19,6 +19,7 @@ exports.player = async function player (req, res, next) {
   const { id } = req.params
   const path = req.route.path
   const video = await paratii.vids.get(id)
+  const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
 
   res.render('index', {
     player: true,
@@ -53,16 +54,16 @@ exports.player = async function player (req, res, next) {
         )
       },
       videoUrl: function () {
-        return 'https://portal.paratii.video/play/' + video._id
+        return `${appRootUrl}/${video.id}`
       },
       ipfsSource: function () {
         return `https://gateway.paratii.video/ipfs/` + video.ipfsHashOrig
       },
       embedUrl: function () {
-        return 'https://portal.paratii.video/embed/' + video._id
+        return `${appRootUrl}/embed/${video}`
       },
       oembedUrl: function () {
-        return 'https://portal.paratii.video/oembed?url='
+        return `${appRootUrl}/oembed?url=`
       }
     }
   })
