@@ -92,6 +92,12 @@ export function add0x (input) {
   return input
 }
 
+// a voucher code and an amount
+export const voucherCode11 = 'ZJLUaMqLR1'
+export const voucherAmount11 = 0.3141 * 10 ** 18
+export const voucherAmountInitial11 = 2 * 10 ** 18
+export const hashedVoucherCode11 =
+  '0x182b41b125c1c14efaf188d95b6a7e2074d8b746237fc47b48beb63551d742f9'
 //
 // export function getProvider () {
 //   return Meteor.settings.public.http_provider

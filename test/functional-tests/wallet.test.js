@@ -4,11 +4,14 @@ import {
   nukeLocalStorage,
   nukeSessionStorage,
   restoreMnemonic,
-  restoredAddress
+  restoredAddress,
+  voucherCode11,
+  voucherAmount11,
+  voucherAmountInitial11
 } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
-describe('wallet:', function () {
+describe('Wallet:', function () {
   let userAccount
 
   beforeEach(function () {
@@ -49,7 +52,6 @@ describe('wallet:', function () {
   //   assert.equal(balance, '21M')
   // })
 
-  // FIXME: temporarily disabled in production
   it('restore your wallet using a seed', async function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
@@ -85,8 +87,7 @@ describe('wallet:', function () {
     assert.equal(balance, '0')
   })
 
-  // FIXME: temporarily disabled in production
-  it('secure your wallet, transfer data to a new address @watch', async function () {
+  it('secure your wallet, transfer data to a new address', async function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
@@ -222,5 +223,26 @@ describe('wallet:', function () {
     assert.equal(browser.getText('.transaction-description'), description)
 
     done()
+  })
+})
+
+describe('Voucher:', function () {
+  it('redeem a voucher @watch', async function () {
+    browser.url(`http://localhost:8080/voucher`)
+    browser.waitUntil(() => {
+      return browser.getTitle() === 'Paratii'
+    })
+    const vouchers = await paratii.eth.getContract('Vouchers')
+    const token = await paratii.eth.getContract('ParatiiToken')
+    await token.methods
+      .transfer(vouchers.options.address, voucherAmountInitial11)
+      .send()
+    await paratii.eth.vouchers.create({
+      voucherCode: voucherCode11,
+      amount: voucherAmount11
+    })
+    browser.waitForExist('[name="voucher-code"]')
+    browser.setValue('[name="voucher-code"]', voucherCode11)
+    browser.waitAndClick('[data-test-id="redeem-voucher"]')
   })
 })
