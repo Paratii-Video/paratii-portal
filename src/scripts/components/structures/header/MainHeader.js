@@ -20,7 +20,7 @@ const Header = styled.header`
   box-shadow: ${({ displayShadow }) =>
     displayShadow ? '0 3px 5px rgba(0,0,0,0.16)' : ''};
   display: flex;
-  padding: 20px 80px;
+  padding: 0 80px;
   position: fixed;
   transition: box-shadow 0.3s;
   width: 100%;
@@ -28,7 +28,7 @@ const Header = styled.header`
 
   @media (max-width: 768px) {
     height: ${props => (props.open ? '100vh' : null)};
-    padding: 20px 40px;
+    padding: 0 40px;
   }
 `
 
