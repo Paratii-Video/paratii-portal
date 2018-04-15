@@ -2,6 +2,7 @@
 // import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import TextField from 'components/widgets/forms/TextField'
@@ -14,19 +15,12 @@ type Props = {
   openModal: String => void
 }
 
-const Title = styled.h2`
-  color: ${props => props.theme.colors.Modal.title};
-  font-size: ${props => props.theme.fonts.modal.title};
-  margin-bottom: 25px;
-`
-//
-// const Highlight = styled(Text)`
-//   color: ${props => props.theme.colors.Modal.hightlight};
-//   margin-bottom: 14px;
-// `
+const FieldContainer = styled.div`
+  margin: 164px 0 220px;
 
-const MainText = styled(Text)`
-  margin-bottom: 35px;
+  @media (max-width: 767px) {
+    margin: 50px 0 0;
+  }
 `
 
 const Footer = styled.div`
@@ -84,20 +78,23 @@ class ModalRewriteSeed extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Rewrite your account seed</Title>
-          <MainText small gray>
-            Rewrite your 12 words
-          </MainText>
-          <TextField
-            label="Mnemonic"
-            id="mnemonic"
-            name="rewrite-mnemonic"
-            type="text"
-            value={this.state.mnemonic}
-            onChange={e => this.handleMnemonicChange(e)}
-            error={this.state.error.length > 0}
-            margin="0 0 30px"
-          />
+          <Title>Rewrite your account recovery key</Title>
+          <Text small gray>
+            Rewrite the 12 words set to continue the process
+          </Text>
+          <FieldContainer>
+            <TextField
+              label="Rewrite the 12 words phrase"
+              id="mnemonic"
+              name="rewrite-mnemonic"
+              type="text"
+              value={this.state.mnemonic}
+              onChange={e => this.handleMnemonicChange(e)}
+              error={this.state.error.length > 0}
+              margin="0 0 30px"
+            />
+          </FieldContainer>
+
           {this.state.error && (
             <Text pink small>
               {this.state.error}

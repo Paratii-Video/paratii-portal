@@ -2,29 +2,101 @@
 import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Colors from 'components/foundations/base/Colors'
+import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MNEMONIC_KEY_TEMP } from 'constants/ParatiiLibConstants'
 import { MODAL } from 'constants/ModalConstants'
 
+import {
+  NOTIFICATION_LEVELS,
+  NOTIFICATION_POSITIONS
+} from 'constants/ApplicationConstants'
+import { copyTextToClipboard } from 'utils/AppUtils'
+import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
+
 type Props = {
-  openModal: String => void
+  openModal: String => void,
+  showNotification: (Notification, NotificationLevel) => void
 }
 
-const Title = styled.h2`
-  color: ${props => props.theme.colors.Modal.title};
-  font-size: ${props => props.theme.fonts.modal.title};
-  margin-bottom: 25px;
+const WORDPADDING: string = '14px'
+
+const TextHidden = styled.p`
+  opacity: 0.01;
+  position: absolute;
 `
 
-const Highlight = styled(Text)`
-  color: ${props => props.theme.colors.Modal.hightlight};
-  margin-bottom: 14px;
+const WordsWrapper = styled.div`
+  cursor: pointer;
+  margin: 80px 0 104px;
+
+  @media (max-width: 767px) {
+    margin-bottom: 0;
+  }
 `
 
-const MainText = styled(Text)`
-  margin-bottom: 35px;
+const WordsList = styled.ol`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  transition: opacity ${props => props.theme.animation.time.repaint};
+
+  &:hover {
+    opacity: ${props => props.theme.animation.opacity.hover};
+  }
+
+  @media (max-width: 450px) {
+    justify-content: baseline;
+  }
+`
+
+const Word = styled.li`
+  border: 2px solid ${Colors.purple};
+  border-radius: 2px;
+  display: flex;
+  flex: 0 1 23%;
+  margin-bottom: 20px;
+  padding-right: ${WORDPADDING};
+  user-select: none;
+
+  @media (max-width: 768px) {
+    flex-basis: 32%;
+  }
+
+  @media (max-width: 650px) {
+    flex-basis: 48%;
+  }
+
+  @media (max-width: 460px) {
+    flex-basis: 100%;
+  }
+`
+
+const WordText = styled(Text)`
+  display: flex;
+  height: 40px;
+  line-height: 40px;
+`
+
+const WordIndex = styled.span`
+  border-right: 2px solid ${Colors.purple};
+  flex: 0 0 40px;
+  display: inline-block;
+  height: 100%;
+  margin: 0 ${WORDPADDING} 0 0;
+  text-align: center;
+`
+
+const CopyButtonIcon = styled.svg`
+  fill: ${Colors.purple};
+  display: inline-block;
+  height: 24px;
+  margin-right: 10px;
+  width: 20px;
 `
 
 const Footer = styled.div`
@@ -39,13 +111,16 @@ const ButtonContainer = styled.div`
 `
 
 class ModalShowSeed extends Component<Props, Object> {
+  KeyWords: HTMLElement
   secureWallet: (e: Object) => void
   rewriteSeed: (e: Object) => void
+  copyWordsToClipboard: (event: Object) => void
 
   constructor (props: Props) {
     super(props)
     this.secureWallet = this.secureWallet.bind(this)
     this.rewriteSeed = this.rewriteSeed.bind(this)
+    this.copyWordsToClipboard = this.copyWordsToClipboard.bind(this)
   }
 
   secureWallet () {
@@ -54,6 +129,18 @@ class ModalShowSeed extends Component<Props, Object> {
 
   rewriteSeed () {
     this.props.openModal(MODAL.REWRITE_SEED)
+  }
+
+  copyWordsToClipboard (event: Object) {
+    copyTextToClipboard(this.KeyWords)
+    this.props.showNotification(
+      {
+        title: 'Copied!',
+        message: 'Your key has been copied to the clipboard',
+        position: NOTIFICATION_POSITIONS.TOP_RIGHT
+      },
+      NOTIFICATION_LEVELS.SUCCESS
+    )
   }
 
   render () {
@@ -67,11 +154,41 @@ class ModalShowSeed extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Your account seed</Title>
-          <MainText small gray>
-            This is you seed
-          </MainText>
-          <Highlight data-test-id="new-mnemonic">{mnemonic}</Highlight>
+          <Title>Your account recovery key</Title>
+          <Text small gray>
+            This is the key of your account, write in the correct order and keep
+            it in a safe place
+          </Text>
+          <TextHidden
+            data-test-id="new-mnemonic"
+            innerRef={(ref: HTMLElement) => {
+              this.KeyWords = ref
+            }}
+          >
+            {mnemonic}
+          </TextHidden>
+          <WordsWrapper>
+            <WordsList onClick={this.copyWordsToClipboard}>
+              {mnemonic.split(' ').map((word: string, index: number) => (
+                <Word key={index}>
+                  <WordText purple>
+                    <WordIndex>{index + 1}</WordIndex>
+                    {word}
+                  </WordText>
+                </Word>
+              ))}
+            </WordsList>
+            <Button
+              data-test-id="new-mnemonic-button"
+              onClick={this.copyWordsToClipboard}
+              gray
+            >
+              <CopyButtonIcon>
+                <use xlinkHref="#icon-copy" />
+              </CopyButtonIcon>
+              Copy
+            </Button>
+          </WordsWrapper>
 
           <Footer>
             <ButtonContainer>

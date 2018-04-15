@@ -1,8 +1,11 @@
 /* @flow */
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Colors from 'components/foundations/base/Colors'
+import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
+import NotepadLockSvg from 'components/foundations/svgs/NotepadLockSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
 
@@ -10,19 +13,18 @@ type Props = {
   openModal: String => void
 }
 
-const Title = styled.h2`
-  color: ${props => props.theme.colors.Modal.title};
-  font-size: ${props => props.theme.fonts.modal.title};
-  margin-bottom: 25px;
-`
-
-const Highlight = styled(Text)`
-  color: ${props => props.theme.colors.Modal.hightlight};
-  margin-bottom: 14px;
+const Icon = styled.div`
+  height: 180px;
+  margin: 40px 0 54px;
+  width: 100%;
 `
 
 const MainText = styled(Text)`
-  margin-bottom: 35px;
+  margin-bottom: 20px;
+`
+
+const HighlightText = styled.strong`
+  color: ${Colors.purple};
 `
 
 const Footer = styled.div`
@@ -58,16 +60,27 @@ class ModalSecure extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>With great powers, comes great responsability</Title>
-          <Highlight>
-            Vestibulum turpis ex, sagittis non libero sed, tincidunt egestas
-            augue.
-          </Highlight>
+          <Title>“With great powers, come great responsibilities”</Title>
+          <Text small gray>
+            by Uncle Ben
+          </Text>
+          <Icon>
+            <NotepadLockSvg />
+          </Icon>
           <MainText small gray>
-            Donec eleifend vitae felis nec laoreet. Nam ullamcorper justo et
-            ante malesuada iaculis. Aliquam lacus quam, condimentum eget massa
-            vitae, ultrices porta ligula.
+            On the decentralised internet, no company owns your stuff. Paratii
+            cannot hold or hide the data you produce or the money you come to
+            earn. It is a network, instead of a corporation.{' '}
+            <HighlightText>
+              This means you must take care of your belongings here!
+            </HighlightText>
           </MainText>
+          <Text small gray>
+            Click “proceed” and watch as crypto-magic gives you an exclusive set
+            of twelve keywords. They are a confidential sequence that works as a
+            key to your tokens and digital goods. Like a super-duper secret
+            password for another devices. Keep it safe.
+          </Text>
           <Footer>
             <ButtonContainer>
               <Button data-test-id="go-back" onClick={this.secureAccount}>
