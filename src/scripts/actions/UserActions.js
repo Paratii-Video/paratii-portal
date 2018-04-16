@@ -110,7 +110,8 @@ export const setupKeystore = () => async (
     dispatch(openModal(MODAL.ASK_PIN))
   }
 
-  // Case 3: (dev) wallet in paratii.eth.wallet but not on localStorage
+  // Case 3: there is an account in paratii.eth.wallet but not on localStorage
+  // we save the paratii.eth.wallet[0] account in local storage
   if (
     paratii.eth.wallet.length > 0 &&
     !walletStringSecure &&
@@ -120,13 +121,14 @@ export const setupKeystore = () => async (
     localStorage.setItem(WALLET_KEY_ANON, JSON.stringify(encryptedWallet))
   }
 
-  // Case 4: we need to create a new Wallet
+  // Case 4: we have no wallet in localstorage, and neither do we have one in paratii.eth.wallet:
+  // we need to create a new Wallet
   if (
     paratii.eth.wallet.length === 0 &&
     !walletStringSecure &&
     !walletStringAnon
   ) {
-    console.log('Create a new wallet')
+    // console.log('Create a new wallet')
     mnemonic = bip39.generateMnemonic()
     await paratii.eth.wallet.create(1, mnemonic)
     const encryptedWallet = paratii.eth.wallet.encrypt(DEFAULT_PASSWORD)
@@ -139,11 +141,12 @@ export const secureKeystore = (password: string) => async (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {
-  console.log('Securing wallet')
+  // save paratii.eth.wallet in localstorage, encrypted with password
+  // console.log('Securing wallet')
   let newWalletAddress: ?string
   let encryptedSecuredWallet: ?Object
   const walletStringAnon: ?string = localStorage.getItem(WALLET_KEY_ANON)
-  const mnemonic = sessionStorage.getItem(MNEMONIC_KEY_TEMP)
+  const mnemonicFromSession = sessionStorage.getItem(MNEMONIC_KEY_TEMP)
 
   dispatch(
     Notifications.warning({
@@ -151,8 +154,8 @@ export const secureKeystore = (password: string) => async (
     })
   )
 
-  // There is non mnemonic means we arrive from restoreKeystore
-  if (!mnemonic) {
+  // There is no mnemonic means we arrive from restoreKeystore
+  if (!mnemonicFromSession) {
     encryptedSecuredWallet = await paratii.eth.wallet.encrypt(password)
     if (encryptedSecuredWallet) {
       localStorage.setItem(
@@ -165,7 +168,7 @@ export const secureKeystore = (password: string) => async (
     try {
       // Create the new wallet based on the generated mnemonic
       paratii.eth.wallet.clear()
-      await paratii.eth.wallet.create(1, mnemonic)
+      await paratii.eth.wallet.create(1, mnemonicFromSession)
       newWalletAddress = paratii.eth.wallet[0].address
       encryptedSecuredWallet = await paratii.eth.wallet.encrypt(password)
       if (encryptedSecuredWallet) {
@@ -174,6 +177,7 @@ export const secureKeystore = (password: string) => async (
           JSON.stringify(encryptedSecuredWallet)
         )
       }
+      // FIXME: why do we clear the wallet here?
       paratii.eth.wallet.clear()
     } catch (error) {
       dispatch(
