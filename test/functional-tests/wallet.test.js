@@ -227,7 +227,7 @@ describe('Wallet:', function () {
 })
 
 describe('Voucher:', function () {
-  it('redeem a voucher @watch', async function () {
+  it('redeem a voucher', async function () {
     browser.url(`http://localhost:8080/voucher`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
