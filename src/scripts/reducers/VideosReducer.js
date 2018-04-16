@@ -308,11 +308,11 @@ const reducer = {
   ): VideoRecordMap =>
     state.merge(
       payload.reduce(
-        (mergingVideos: Object, { _id, ...videoPayload }: Object): Object => {
-          videoPayload.id = _id
+        (mergingVideos: Object, { id, ...videoPayload }: Object): Object => {
+          videoPayload.id = id
           let fetchedVideo = new VideoRecord(videoPayload)
           fetchedVideo = fixFetchedVideo(fetchedVideo, videoPayload)
-          mergingVideos[_id] = fetchedVideo
+          mergingVideos[id] = fetchedVideo
           return mergingVideos
         },
         {}
