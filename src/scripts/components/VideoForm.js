@@ -290,7 +290,7 @@ class VideoForm extends Component<Props, Object> {
               value={this.state.author}
               onChange={e => this.handleInputChange('author', e)}
               margin="0 0 30px"
-              maxLength="30"
+              maxLength="50"
               tabIndex="3"
             />
             <RadioWrapper>
