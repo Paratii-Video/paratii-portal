@@ -1,12 +1,15 @@
 // import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
+
+import { Link } from 'react-router-dom'
+import Blockies from 'react-blockies'
+
+import SearchInput from 'components/widgets/SearchInput'
 import Button from 'components/foundations/Button'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
 import MainNavigation from 'components/structures/header/MainNavigation'
-import { Link } from 'react-router-dom'
 import { add0x } from 'utils/AppUtils'
-import Blockies from 'react-blockies'
 
 import { Z_INDEX_HEADER } from 'constants/UIConstants'
 
@@ -44,6 +47,15 @@ const HeaderWrapper = styled.div`
   }
 `
 
+const LogoWrapper = styled.div`
+  margin-right: 40px;
+  flex: 0 0
+    ${props =>
+    props.theme.sizes ? props.theme.sizes.mainHeaderLogo.width : ''};
+  height: ${props =>
+    props.theme.sizes ? props.theme.sizes.mainHeaderLogo.height : ''};
+`
+
 const HeaderContent = styled.div`
   align-items: center;
   display: flex;
@@ -54,14 +66,14 @@ const HeaderContent = styled.div`
     display: ${props => (props.open ? 'block' : 'none')};
     flex: 1 1 100%;
   }
+`
 
-  form {
-    flex: 0 0 207px;
-    transform: translate3d(82px, -5px, 0);
-  }
+const SearchWrapper = styled.div`
+  flex: 0 1 auto;
 `
 
 const HeaderButtons = styled.div`
+  flex: 1 1 auto;
   align-items: center;
   display: flex;
   justify-content: flex-end;
@@ -73,8 +85,6 @@ const HeaderButtons = styled.div`
     margin-top: 30px;
   }
 `
-
-// foundation/widgets(move?)
 
 const ProfileAvatarLink = styled(Link)`
   background-color: ${props => props.theme.colors.header.color};
@@ -205,8 +215,13 @@ class MainHeader extends Component<Props, void> {
       >
         {this.props.children}
         <HeaderWrapper open={this.state.navOpen}>
-          <MainHeaderLogo />
+          <LogoWrapper>
+            <MainHeaderLogo />
+          </LogoWrapper>
           <HeaderContent open={this.state.navOpen}>
+            <SearchWrapper>
+              <SearchInput />
+            </SearchWrapper>
             <HeaderButtons>
               <MainNavigation closeNav={this.closeNav} />
               {userAvatar}

@@ -136,6 +136,11 @@ const Themes = {
     },
     VideoDescription: {
       icon: Colors.grayLight
+    },
+    Nav: {
+      search: {
+        background: Colors.grayDark
+      }
     }
   }
 }

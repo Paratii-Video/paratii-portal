@@ -9,6 +9,7 @@ const SearchInputForm = styled.form`
   display: inline-flex;
   flex-direction: row-reverse;
   width: 100%;
+  background-color: ${props => props.theme.colors.Nav.search.background};
 `
 
 const SearchInputField = styled.input`
@@ -21,9 +22,12 @@ const SearchInputField = styled.input`
   width: 100%;
 `
 
+const SEARCH_BUTTON_DIMENSION: string = '27px'
+
 const SearchInputButton = styled(Button)`
-  flex-basis: ${props => props.theme.sizes.searchInputButton};
-  height: ${props => props.theme.sizes.searchInputButton};
+  flex: 0 0 ${SEARCH_BUTTON_DIMENSION};
+  height: ${SEARCH_BUTTON_DIMENSION};
+  padding-left: 10px;
   margin-right: 10px;
 `
 
