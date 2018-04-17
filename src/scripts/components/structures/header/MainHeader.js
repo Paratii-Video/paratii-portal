@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
 
-import SearchInput from 'components/widgets/SearchInput'
+import SearchInputContainer from 'containers/widgets/SearchInputContainer'
 import Button from 'components/foundations/Button'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
 import MainNavigation from 'components/structures/header/MainNavigation'
@@ -220,7 +220,7 @@ class MainHeader extends Component<Props, void> {
           </LogoWrapper>
           <HeaderContent open={this.state.navOpen}>
             <SearchWrapper>
-              <SearchInput />
+              <SearchInputContainer />
             </SearchWrapper>
             <HeaderButtons>
               <MainNavigation closeNav={this.closeNav} />
