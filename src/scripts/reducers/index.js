@@ -7,6 +7,7 @@ import { reducer as notifications } from 'react-notification-system-redux'
 import uploader from 'reducers/UploaderReducer'
 import user from 'reducers/UserReducer'
 import videos from 'reducers/VideosReducer'
+import search from 'reducers/SearchReducer'
 
 export default combineReducers({
   uploader,
@@ -14,5 +15,6 @@ export default combineReducers({
   videos,
   player,
   modal,
-  notifications
+  notifications,
+  search
 })
