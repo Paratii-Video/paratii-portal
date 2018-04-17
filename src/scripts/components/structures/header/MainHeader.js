@@ -47,6 +47,8 @@ const HeaderWrapper = styled.div`
 const HeaderContent = styled.div`
   align-items: center;
   display: flex;
+  flex: 0 1 100%;
+  justify-content: flex-end;
 
   @media (max-width: 768px) {
     display: ${props => (props.open ? 'block' : 'none')};
