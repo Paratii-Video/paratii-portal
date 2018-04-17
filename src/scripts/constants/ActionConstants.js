@@ -73,3 +73,6 @@ export const TRANSCODING_FAILURE = createActionConstant('TRANSCODING_FAILURE')
 
 export const OPEN_MODAL = createActionConstant('OPEN_MODAL')
 export const CLOSE_MODAL = createActionConstant('CLOSE_MODAL')
+
+/* Search actions */
+export const SEARCH_INPUT_CHANGED = createActionConstant('SEARCH_INPUT_CHANGED')

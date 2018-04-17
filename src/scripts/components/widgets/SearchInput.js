@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 
-type Props = {}
+type Props = {
+  currentSearchText: string,
+  onSearchInputChange: (e: Object) => void
+}
 
 const SearchInputForm = styled.form`
   align-items: center;
@@ -39,10 +42,17 @@ const SearchInputSVG = styled.svg`
 
 class SearchInput extends Component<Props, void> {
   render () {
+    const { currentSearchText, onSearchInputChange } = this.props
+
     return (
       <SearchInputForm>
-        <SearchInputField placeholder="Search" />
-
+        <SearchInputField
+          onChange={(e: Object) => {
+            onSearchInputChange({ value: e.target.value })
+          }}
+          placeholder="Search"
+          value={currentSearchText}
+        />
         <SearchInputButton>
           <SearchInputSVG>
             <use xlinkHref="#icon-search" />

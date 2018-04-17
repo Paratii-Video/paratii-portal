@@ -23,6 +23,7 @@ import {
   PlaybackLevel
 } from 'records/PlayerRecords'
 import { _getSelectedUploaderVideoId } from 'records/UploaderRecords'
+import { _getCurrentSearchText } from 'records/SearchRecords'
 
 import type {
   RootState,
@@ -77,3 +78,7 @@ export const getVideos = (state: RootState): VideoRecordMap => {
 /* Uploader */
 export const getSelectedUploaderVideoId = (state: RootState): string =>
   _getSelectedUploaderVideoId(state.uploader)
+
+/* Search */
+export const getCurrentSearchText = (state: RootState): string =>
+  _getCurrentSearchText(state.search)
