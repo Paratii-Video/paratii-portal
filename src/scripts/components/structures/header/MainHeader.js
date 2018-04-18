@@ -1,7 +1,6 @@
 // import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
 import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
 
