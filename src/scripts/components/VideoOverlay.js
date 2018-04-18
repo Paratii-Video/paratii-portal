@@ -57,16 +57,10 @@ const Overlay = styled.div`
   flex-direction: column;
   color: white;
   box-sizing: border-box;
-  opacity: ${({ transitionState }) => {
-    switch (transitionState) {
-      case TRANSITION_STATE.ENTERING:
-      case TRANSITION_STATE.EXITED:
-        return '0'
-      case TRANSITION_STATE.EXITING:
-      case TRANSITION_STATE.ENTERED:
-      default:
-        return '1.0'
-    }
+  opacity: ${({ transitionState, showShareModal }) => {
+    return transitionState === TRANSITION_STATE.ENTERED && !showShareModal
+      ? 1
+      : 0
   }};
   transition: all ${({ theme }) => theme.animation.time.repaint}
     ${({ theme }) => theme.animation.ease.smooth};
@@ -80,16 +74,10 @@ const VideoInfo = styled.div`
   padding: ${overlayPadding};
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   transform: translateY(
-    ${({ transitionState }) => {
-    switch (transitionState) {
-      case TRANSITION_STATE.ENTERING:
-      case TRANSITION_STATE.EXITED:
-        return '-75px'
-      case TRANSITION_STATE.EXITING:
-      case TRANSITION_STATE.ENTERED:
-      default:
-        return 0
-    }
+    ${({ transitionState, showShareModal }) => {
+    return transitionState === TRANSITION_STATE.ENTERED && !showShareModal
+      ? '0'
+      : '-75px'
   }}
   );
   transition: transform
@@ -188,7 +176,8 @@ class VideoOverlay extends Component<Props> {
       toggleShareModal,
       toggleFullscreen,
       toggleActivePlugin,
-      transitionState
+      transitionState,
+      showShareModal
     } = this.props
     return (
       <Wrapper>
@@ -197,8 +186,12 @@ class VideoOverlay extends Component<Props> {
           data-test-id="video-overlay"
           onClick={onClick}
           transitionState={transitionState}
+          showShareModal={showShareModal}
         >
-          <VideoInfo transitionState={transitionState}>
+          <VideoInfo
+            transitionState={transitionState}
+            showShareModal={showShareModal}
+          >
             {isEmbed && <PlayerTitle small>{this.getVideoTitle()}</PlayerTitle>}
             <ButtonWrapper>
               {isEmbed && (
@@ -234,6 +227,7 @@ class VideoOverlay extends Component<Props> {
           togglePlayPause={togglePlayPause}
           toggleFullscreen={toggleFullscreen}
           transitionState={transitionState}
+          showShareModal={showShareModal}
         />
       </Wrapper>
     )

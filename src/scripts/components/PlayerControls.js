@@ -44,6 +44,7 @@ type Props = {
   isFullscreen: boolean,
   togglePlayPause: () => void,
   transitionState: TransitionState,
+  showShareModal?: boolean,
   currentTimeSeconds: number,
   currentBufferedTimeSeconds: number,
   currentVolume: number,
@@ -93,16 +94,10 @@ const Shadow = styled.span`
     rgba(0, 0, 0, 0.55) 70%,
     rgba(0, 0, 0, 0.7) 95%
   );
-  opacity: ${({ transitionState }) => {
-    switch (transitionState) {
-      case TRANSITION_STATE.ENTERING:
-      case TRANSITION_STATE.EXITED:
-        return 0
-      case TRANSITION_STATE.EXITING:
-      case TRANSITION_STATE.ENTERED:
-      default:
-        return 1
-    }
+  opacity: ${({ transitionState, showShareModal }) => {
+    return transitionState === TRANSITION_STATE.ENTERED && !showShareModal
+      ? 1
+      : 0
   }};
   transition: opacity
     ${({ transitionState }) => {
@@ -129,16 +124,10 @@ const Controls = styled.div`
   background: ${({ theme }) => theme.colors.VideoPlayer.controls.background};
   transform: translate3d(
     0,
-    ${({ transitionState }) => {
-    switch (transitionState) {
-      case TRANSITION_STATE.ENTERING:
-      case TRANSITION_STATE.EXITED:
-        return 'calc(100% + 10px)'
-      case TRANSITION_STATE.EXITING:
-      case TRANSITION_STATE.ENTERED:
-      default:
-        return 0
-    }
+    ${({ transitionState, showShareModal }) => {
+    return transitionState === TRANSITION_STATE.ENTERED && !showShareModal
+      ? 0
+      : 'calc(100% + 10px)'
   }},
     0
   );
@@ -294,6 +283,7 @@ class PlayerControls extends Component<Props, State> {
       togglePlayPause,
       toggleFullscreen,
       transitionState,
+      showShareModal,
       currentTimeSeconds,
       currentBufferedTimeSeconds,
       formattedCurrentTime,
@@ -305,8 +295,14 @@ class PlayerControls extends Component<Props, State> {
 
     return (
       <Wrapper>
-        <Shadow transitionState={transitionState} />
-        <Controls transitionState={transitionState}>
+        <Shadow
+          transitionState={transitionState}
+          showShareModal={showShareModal}
+        />
+        <Controls
+          transitionState={transitionState}
+          showShareModal={showShareModal}
+        >
           <ProgressWrapper
             onMouseDown={(e: Object) => {
               if (this.progressBarRef) {
