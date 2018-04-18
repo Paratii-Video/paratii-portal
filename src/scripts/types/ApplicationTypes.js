@@ -24,9 +24,33 @@ export type Location = {
 
 export type AsyncTaskStatusName = 'idle' | 'running' | 'success' | 'error'
 
+export type Stats = {
+  likers: Array<any>,
+  dislikers: Array<any>
+}
+
 export type VideoInfo = {
-  title: ?string,
-  description: ?string
+  author: string,
+  blockNumber: number,
+  createBlockNumber: number,
+  description: string,
+  duration: string,
+  filename: string,
+  filesize: string,
+  id: string,
+  ipfsData: string,
+  ipfsHash: string,
+  ipfsHashOrig: string,
+  owner: string,
+  price: number,
+  published: string,
+  stats: Stats,
+  tags: Array<string>,
+  thumbnails: Array<string>,
+  title: string,
+  uploader: {
+    address: string
+  }
 }
 
 export type Action<T> = {

@@ -76,3 +76,8 @@ export const CLOSE_MODAL = createActionConstant('CLOSE_MODAL')
 
 /* Search actions */
 export const SEARCH_INPUT_CHANGED = createActionConstant('SEARCH_INPUT_CHANGED')
+export const SEARCH_STARTED = createActionConstant('SEARCH_STARTED')
+export const SEARCH_RESULTS_LOADED = createActionConstant(
+  'SEARCH_RESULTS_LOADED'
+)
+export const SEARCH_FAILED = createActionConstant('SEARCH_FAILED')

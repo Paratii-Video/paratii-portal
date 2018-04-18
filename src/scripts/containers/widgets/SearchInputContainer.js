@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux'
 
-import { searchInputChanged } from 'actions/SearchActions'
+import { searchInputChanged, searchForVideos } from 'actions/SearchActions'
 import { getCurrentSearchText } from 'selectors/index'
 import SearchInput from 'components/widgets/SearchInput'
 
@@ -13,6 +13,7 @@ const mapStateToProps = (state: RootState): Object => ({
 })
 
 const mapDispatchToProps: Object = {
+  search: searchForVideos,
   onSearchInputChange: searchInputChanged
 }
 

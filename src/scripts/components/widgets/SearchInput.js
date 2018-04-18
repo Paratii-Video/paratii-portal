@@ -4,7 +4,8 @@ import Button from 'components/foundations/Button'
 
 type Props = {
   currentSearchText: string,
-  onSearchInputChange: (e: Object) => void
+  onSearchInputChange: (value: string) => void,
+  search: (value: string) => void
 }
 
 const SearchInputForm = styled.form`
@@ -41,11 +42,19 @@ const SearchInputSVG = styled.svg`
 `
 
 class SearchInput extends Component<Props, void> {
+  onSubmitForm = (e: Object): void => {
+    const { currentSearchText, search } = this.props
+
+    e.preventDefault()
+
+    search({ keyword: currentSearchText })
+  }
+
   render () {
     const { currentSearchText, onSearchInputChange } = this.props
 
     return (
-      <SearchInputForm>
+      <SearchInputForm onSubmit={this.onSubmitForm}>
         <SearchInputField
           onChange={(e: Object) => {
             onSearchInputChange({ value: e.target.value })
