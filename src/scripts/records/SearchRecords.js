@@ -22,7 +22,7 @@ class Search extends ImmutableRecord({
 export const _getCurrentSearchText = (search: Search): string =>
   search.get('currentSearchText')
 
-export const _hasNext = (search: Search): boolean => search.get('hasNext')
+export const _getHasNext = (search: Search): boolean => search.get('hasNext')
 
 export const _getSearchResults = (search: Search): ImmutableList<Video> =>
   search.get('results')
