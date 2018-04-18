@@ -23,7 +23,7 @@ import {
   PlaybackLevel
 } from 'records/PlayerRecords'
 import { _getSelectedUploaderVideoId } from 'records/UploaderRecords'
-import { _getCurrentSearchText, _getResults } from 'records/SearchRecords'
+import { _getCurrentSearchText, _getSearchResults } from 'records/SearchRecords'
 import Video from 'records/VideoRecords'
 
 import type {
@@ -83,5 +83,5 @@ export const getSelectedUploaderVideoId = (state: RootState): string =>
 /* Search */
 export const getCurrentSearchText = (state: RootState): string =>
   _getCurrentSearchText(state.search)
-export const getResults = (state: RootState): ImmutableList<Video> =>
-  _getResults(state.search)
+export const getSearchResults = (state: RootState): ImmutableList<Video> =>
+  _getSearchResults(state.search)

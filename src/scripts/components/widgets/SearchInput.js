@@ -1,9 +1,15 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
+
 import Button from 'components/foundations/Button'
+import { SEARCH_PATH } from 'constants/UrlConstants'
+
+import type { RouterHistory } from 'react-router-dom'
 
 type Props = {
   currentSearchText: string,
+  history: RouterHistory,
   onSearchInputChange: (value: string) => void,
   search: (value: string) => void
 }
@@ -43,9 +49,12 @@ const SearchInputSVG = styled.svg`
 
 class SearchInput extends Component<Props, void> {
   onSubmitForm = (e: Object): void => {
+    const { history } = this.props
     const { currentSearchText, search } = this.props
 
     e.preventDefault()
+
+    history.push(SEARCH_PATH)
 
     search({ keyword: currentSearchText })
   }
@@ -72,4 +81,4 @@ class SearchInput extends Component<Props, void> {
   }
 }
 
-export default SearchInput
+export default withRouter(SearchInput)

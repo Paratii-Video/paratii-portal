@@ -11,6 +11,7 @@ import PlayContainer from 'containers/PlayContainer'
 import VideoManager from 'containers/VideoManagerContainer'
 import DebugContainer from 'containers/DebugContainer'
 import WalletContainer from 'containers/WalletContainer'
+import SearchResultsContainer from 'containers/pages/SearchResultsContainer'
 
 import Notifications from 'containers/NotificationContainer'
 
@@ -94,6 +95,10 @@ class App extends Component<Props, State> {
               <Route path={`${match.url}wallet`} component={WalletContainer} />
               <Route path={`${match.url}play/:id`} component={PlayContainer} />
               <Route path={`${match.url}embed/:id`} component={PlayContainer} />
+              <Route
+                path={`${match.url}search`}
+                component={SearchResultsContainer}
+              />
               <Route component={NotFound} />
             </Switch>
           </Main>

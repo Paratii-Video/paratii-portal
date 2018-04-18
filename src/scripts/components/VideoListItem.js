@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import type { VideoRecord } from 'records/VideoRecords'
 import { Link } from 'react-router-dom'
+
+import type { VideoRecord } from 'records/VideoRecords'
 import VideoProgressBar from 'components/widgets/VideoForm/VideoProgressBar'
+import { getVideoThumbnailUrl } from 'utils/UrlUtils'
 
 type Props = {
   video: VideoRecord,
@@ -117,16 +119,6 @@ class VideoListItem extends Component<Props, void> {
     let isReady = false
 
     const title = video.title || video.filename
-    const ipfsHash = (video && video.get('ipfsHash')) || ''
-    const thumbImages = video && video.getIn(['thumbnails'])
-
-    let thumbImage = 'https://paratii.video/public/images/paratii-src.png'
-    if (thumbImages && ipfsHash) {
-      const firstThumb = thumbImages.get(0)
-      if (firstThumb !== undefined) {
-        thumbImage = `https://gateway.paratii.video/ipfs/${ipfsHash}/${firstThumb}`
-      }
-    }
 
     if (!video || !video.id) {
       return <ListItem>Something went wrong - no video known</ListItem>
@@ -170,7 +162,7 @@ class VideoListItem extends Component<Props, void> {
         <ListItemLink to={uploaderVideoUrl}>
           <ListItemWrapper>
             <ListItemContent>
-              <VideoImage source={thumbImage} />
+              <VideoImage source={getVideoThumbnailUrl(video)} />
               <ListItemInfo>
                 <ListItemHeader>{title}</ListItemHeader>
                 <ListItemStatus done={isReady}>{statusMessage}</ListItemStatus>
