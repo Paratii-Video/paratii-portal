@@ -5,19 +5,19 @@ import styled from 'styled-components'
 
 import Video from 'records/VideoRecords'
 import { getVideoThumbnailUrl } from 'utils/UrlUtils'
+import TruncatedText from 'components/foundations/TruncatedText'
 
 const Wrapper = styled.div`
   width: 100%;
   height: 125px;
   display: flex;
-  background: white;
+  background: ${({ theme }) => theme.colors.Search.results.background};
   align-items: center;
   padding: 10px 20px;
 `
 
 const ThumbnailWrapper = styled.div`
-  flex: 0 0 25%;
-  max-width: 25%;
+  flex: 1 0 0;
   height: 100%;
   margin-right: 10px;
   position: relative;
@@ -37,24 +37,30 @@ const ThumbnailData = styled.div`
 `
 
 const Info = styled.div`
-  flex: 1 1 0;
+  flex: 0 0 75%;
+  max-width: 75%;
   height: 100%;
   display: flex;
   flex-direction: column;
 `
 
 const TopBar = styled.div`
+  width: 100%;
   flex: 0 0 auto;
   display: flex;
 `
 
 const Title = styled.div`
-  flex: 0 0 auto;
+  flex: 0 1 100%;
+  max-width: 100%;
+  color: ${({ theme }) => theme.colors.Search.results.titleColor};
 `
 
 const BottomBar = styled.div`
   flex: 1 1 0;
   display: flex;
+  align-items: flex-end;
+  color: ${({ theme }) => theme.colors.Search.results.descriptionColor};
 `
 
 const Description = styled.p``
@@ -74,7 +80,9 @@ class SearchResult extends React.Component<Props, void> {
         </ThumbnailWrapper>
         <Info>
           <TopBar>
-            <Title>{video.get('title')}</Title>
+            <Title>
+              <TruncatedText>{video.get('title')}</TruncatedText>
+            </Title>
           </TopBar>
           <BottomBar>
             <Description>{video.get('description')}</Description>

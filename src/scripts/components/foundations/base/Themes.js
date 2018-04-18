@@ -141,6 +141,13 @@ const Themes = {
       search: {
         background: Colors.grayDark
       }
+    },
+    Search: {
+      results: {
+        background: Colors.blackLight,
+        titleColor: Colors.white,
+        descriptionColor: Colors.gray
+      }
     }
   }
 }
