@@ -4,10 +4,11 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Video from 'records/VideoRecords'
-import { getVideoThumbnailUrl } from 'utils/UrlUtils'
+import { getVideoThumbnailUrl, getVideoPlayUrl } from 'utils/UrlUtils'
 import TruncatedText from 'components/foundations/TruncatedText'
 
-const Wrapper = styled.div`
+const Wrapper = styled.a`
+  display: block;
   width: 100%;
   height: 125px;
   display: flex;
@@ -73,7 +74,7 @@ class SearchResult extends React.Component<Props, void> {
   render () {
     const { video } = this.props
     return (
-      <Wrapper>
+      <Wrapper href={getVideoPlayUrl(video)}>
         <ThumbnailWrapper>
           <ThumbnailImage src={getVideoThumbnailUrl(video)} />
           <ThumbnailData />

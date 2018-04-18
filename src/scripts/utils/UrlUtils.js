@@ -5,7 +5,7 @@ import Video from 'records/VideoRecords'
 const defaultThumbnailUrl: string =
   'https://paratii.video/public/images/paratii-src.png'
 
-export const getVideoThumbnailUrl = (video: Video = new Video()): string => {
+export const getVideoThumbnailUrl = (video: Video): string => {
   const thumbnails = video.get('thumbnails')
   const ipfsHash = video.get('ipfsHash')
   if (thumbnails && ipfsHash) {
@@ -17,3 +17,6 @@ export const getVideoThumbnailUrl = (video: Video = new Video()): string => {
 
   return defaultThumbnailUrl
 }
+
+export const getVideoPlayUrl = (video: Video): string =>
+  `/play/${video.get('id')}`
