@@ -15,6 +15,10 @@ const Wrapper = styled.a`
   background: ${({ theme }) => theme.colors.Search.results.background};
   align-items: center;
   padding: 10px 20px;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.Search.results.hoverBackground};
+  }
 `
 
 const ThumbnailWrapper = styled.div`

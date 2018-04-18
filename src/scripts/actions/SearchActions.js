@@ -32,7 +32,12 @@ export const searchForVideos = ({ keyword }: Object = {}) => async (
       const searchResults: SearchResults = await paratii.vids.search({
         keyword
       })
-      dispatch(searchResultsLoaded({ results: searchResults.results }))
+      dispatch(
+        searchResultsLoaded({
+          hasNext: searchResults.hasNext,
+          results: searchResults.results
+        })
+      )
     } catch (e) {
       dispatch(searchFailed())
     }

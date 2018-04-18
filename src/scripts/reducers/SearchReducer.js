@@ -24,15 +24,16 @@ const reducer = {
     state.set('searchRequestStatus', REQUEST_STATUS.PENDING),
   [SEARCH_RESULTS_LOADED]: (
     state: Search,
-    action: Action<{ results: Array<VideoInfo> }>
+    action: Action<{ hasNext: boolean, results: Array<VideoInfo> }>
   ): Search =>
     state.merge({
-      searchRequestStatus: REQUEST_STATUS.SUCCEEDED,
+      hasNext: action.payload.hasNext,
       results: ImmutableList(
         action.payload.results.map(
           (video: VideoInfo): Video => new Video(video)
         )
-      )
+      ),
+      searchRequestStatus: REQUEST_STATUS.SUCCEEDED
     }),
   [SEARCH_FAILED]: (state: Search): Search =>
     state.set('searchRequestStatus', REQUEST_STATUS.FAILED)

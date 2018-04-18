@@ -8,11 +8,12 @@ import SearchResult from 'components/widgets/SearchResult'
 import Video from 'records/VideoRecords'
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 75%;
   height: 100%;
   display: flex;
   flex-direction: column;
   background: blue;
+  margin: 0 auto;
 `
 
 type Props = {
