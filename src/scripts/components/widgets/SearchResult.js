@@ -8,10 +8,9 @@ import { getVideoThumbnailUrl, getVideoPlayUrl } from 'utils/UrlUtils'
 import TruncatedText from 'components/foundations/TruncatedText'
 
 const Wrapper = styled.a`
-  display: block;
+  display: flex;
   width: 100%;
   height: 125px;
-  display: flex;
   background: ${({ theme }) => theme.colors.Search.results.background};
   align-items: center;
   padding: 10px 20px;
@@ -68,7 +67,9 @@ const BottomBar = styled.div`
   color: ${({ theme }) => theme.colors.Search.results.descriptionColor};
 `
 
-const Description = styled.p``
+const Description = styled.p`
+  display: block;
+`
 
 type Props = {
   video: Video
