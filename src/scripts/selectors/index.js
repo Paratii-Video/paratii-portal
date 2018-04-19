@@ -28,7 +28,8 @@ import {
   _getHasNext,
   _getNextSearchOffset,
   _getSearchResults,
-  _getSearchRequestStatus
+  _getSearchRequestStatus,
+  _getAdditionalSearchRequestStatus
 } from 'records/SearchRecords'
 import Video from 'records/VideoRecords'
 
@@ -97,3 +98,6 @@ export const getSearchResults = (state: RootState): ImmutableList<Video> =>
   _getSearchResults(state.search)
 export const getSearchRequestStatus = (state: RootState): RequestStatus =>
   _getSearchRequestStatus(state.search)
+export const getAdditionalSearchRequestStatus = (
+  state: RootState
+): RequestStatus => _getAdditionalSearchRequestStatus(state.search)

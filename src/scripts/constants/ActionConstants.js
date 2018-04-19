@@ -81,3 +81,12 @@ export const SEARCH_RESULTS_LOADED = createActionConstant(
   'SEARCH_RESULTS_LOADED'
 )
 export const SEARCH_FAILED = createActionConstant('SEARCH_FAILED')
+export const ADDITIONAL_SEARCH_STARTED = createActionConstant(
+  'ADDITIONAL_SEARCH_STARTED'
+)
+export const ADDITIONAL_SEARCH_RESULTS_LOADED = createActionConstant(
+  'ADDITIONAL_SEARCH_RESULTS_LOADED'
+)
+export const ADDITIONAL_SEARCH_FAILED = createActionConstant(
+  'ADDITIONAL_SEARCH_FAILED'
+)

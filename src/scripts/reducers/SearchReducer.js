@@ -8,7 +8,10 @@ import {
   SEARCH_INPUT_CHANGED,
   SEARCH_STARTED,
   SEARCH_RESULTS_LOADED,
-  SEARCH_FAILED
+  SEARCH_FAILED,
+  ADDITIONAL_SEARCH_STARTED,
+  ADDITIONAL_SEARCH_RESULTS_LOADED,
+  ADDITIONAL_SEARCH_FAILED
 } from 'constants/ActionConstants'
 import Video from 'records/VideoRecords'
 import Search from 'records/SearchRecords'
@@ -21,7 +24,12 @@ const reducer = {
     action: Action<{ value: string }>
   ): Search => state.set('currentSearchText', action.payload.value),
   [SEARCH_STARTED]: (state: Search): Search =>
-    state.set('searchRequestStatus', REQUEST_STATUS.PENDING),
+    state.merge({
+      hasNext: false,
+      nextSearchOffset: 0,
+      results: ImmutableList(),
+      searchRequestStatus: REQUEST_STATUS.PENDING
+    }),
   [SEARCH_RESULTS_LOADED]: (
     state: Search,
     action: Action<{ hasNext: boolean, results: Array<VideoInfo> }>
@@ -36,7 +44,30 @@ const reducer = {
       searchRequestStatus: REQUEST_STATUS.SUCCEEDED
     }),
   [SEARCH_FAILED]: (state: Search): Search =>
-    state.set('searchRequestStatus', REQUEST_STATUS.FAILED)
+    state.set('searchRequestStatus', REQUEST_STATUS.FAILED),
+  [ADDITIONAL_SEARCH_STARTED]: (state: Search): Search =>
+    state.set('additionalSearchRequestStatus', REQUEST_STATUS.PENDING),
+  [ADDITIONAL_SEARCH_RESULTS_LOADED]: (
+    state: Search,
+    action: Action<{
+      hasNext: boolean,
+      nextSearchOffset: number,
+      results: Array<VideoInfo>
+    }>
+  ): Search =>
+    state.merge({
+      hasNext: action.payload.hasNext,
+      nextSearchOffset: action.payload.nextSearchOffset,
+      results: state
+        .get('searchResults')
+        .concat(
+          action.payload.results.map(
+            (video: VideoInfo): Video => new Video(video)
+          )
+        )
+    }),
+  [ADDITIONAL_SEARCH_FAILED]: (state: Search): Search =>
+    state.set('additionalSearchRequestStatus', REQUEST_STATUS.FAILED)
 }
 
 export default handleActions(reducer, new Search())
