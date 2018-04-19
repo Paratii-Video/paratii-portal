@@ -157,8 +157,7 @@ const CentralizedContent = styled.div`
   z-index: ${Z_INDEX_CENTRALIZEDCONTENT};
 `
 
-const StartScreenIcon = styled.svg`
-  fill: ${Colors.white};
+const StartScreenIcon = styled.span`
   height: 20%;
   opacity: ${props => (props.isStartScreen ? 1 : 0)};
   transition: transform 0.3s ${props => props.theme.animation.ease.smooth};
@@ -166,6 +165,12 @@ const StartScreenIcon = styled.svg`
   ${Overlay}:hover & {
     transform: scale(0.9);
   }
+`
+
+const StartScreenSVG = styled.svg`
+  fill: ${Colors.white};
+  height: 100%;
+  width: 100%;
 `
 
 class VideoOverlay extends Component<Props> {
@@ -273,7 +278,9 @@ class VideoOverlay extends Component<Props> {
           >
             {isEmbed && (
               <StartScreenIcon isStartScreen={isStartScreen}>
-                <use xlinkHref="#icon-player-play" />
+                <StartScreenSVG>
+                  <use xlinkHref="#icon-player-play" />
+                </StartScreenSVG>
               </StartScreenIcon>
             )}
           </CentralizedContent>
