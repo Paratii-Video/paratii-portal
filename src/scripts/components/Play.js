@@ -30,6 +30,8 @@ import type { Match } from 'react-router-dom'
 import mux from 'mux-embed'
 
 const PLAYER_ID = 'player'
+const Z_INDEX_PLAYER: string = '1'
+const Z_INDEX_OVERLAY: string = '2'
 
 type Props = {
   match: Match,
@@ -57,6 +59,7 @@ type Props = {
 
 type State = {
   isEmbed: boolean,
+  isStartScreen: boolean,
   mouseInOverlay: boolean,
   shouldShowVideoOverlay: boolean,
   showShareModal: boolean,
@@ -119,7 +122,7 @@ const PlayerWrapper = styled.div`
 const Player = styled.div`
   width: 100%;
   height: 100%;
-  z-index: 5;
+  z-index: ${Z_INDEX_PLAYER};
 `
 
 const OverlayWrapper = styled.div`
@@ -128,7 +131,7 @@ const OverlayWrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  z-index: ${Z_INDEX_OVERLAY};
 `
 
 const PlayInfo = styled(Card)`
@@ -180,6 +183,7 @@ class Play extends Component<Props, State> {
       videoNotFound: false,
       playerCreated: '',
       isEmbed: this.props.isEmbed || false,
+      isStartScreen: this.props.isEmbed || false,
       showShareModal: false,
       videoHasNeverPlayed: true
     }
@@ -584,6 +588,12 @@ class Play extends Component<Props, State> {
       } else {
         player.play()
       }
+
+      if (this.state.isStartScreen) {
+        this.setState({
+          isStartScreen: false
+        })
+      }
     }
   }
 
@@ -729,6 +739,7 @@ class Play extends Component<Props, State> {
                       onClick={this.onOverlayClick}
                       video={video}
                       isEmbed={isEmbed}
+                      isStartScreen={this.state.isStartScreen}
                       toggleShareModal={this.toggleShareModal}
                       showShareModal={this.state.showShareModal}
                       onScrub={this.scrubVideo}
