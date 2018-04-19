@@ -154,10 +154,11 @@ class ModalShowSeed extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Your account recovery key</Title>
+          <Title>Your recovery phrase</Title>
           <Text small gray>
-            This is the key of your account, write in the correct order and keep
-            it in a safe place
+            You will need these 12 words later to restore your account, or to
+            use it on other device. Write this phrase down and keep it in a safe
+            place.
           </Text>
           <TextHidden
             data-test-id="new-mnemonic"

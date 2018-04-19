@@ -71,9 +71,9 @@ class ModalRewriteSeed extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Rewrite your account recovery key</Title>
+          <Title>Rewrite your account recovery phrase</Title>
           <Text small gray>
-            Rewrite the 12 words set to continue the process
+            Rewrite the 12 words of your recovery phrase to continue the process
           </Text>
           <FieldContainer>
             <TextField

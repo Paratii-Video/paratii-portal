@@ -55,11 +55,11 @@ class ModalRewriteSeed extends Component<Props, Object> {
   }
 
   checkSeed () {
-    console.log('Check Seed and chose pin')
+    console.log('Check recovery phrase and choose pin')
     const mnemonic = sessionStorage.getItem(MNEMONIC_KEY_TEMP)
     if (this.state.mnemonic !== mnemonic) {
       this.setState({
-        error: 'The mnemonic you insert is uncorrect'
+        error: 'The recovery phrase you inserted is not correct'
       })
     } else {
       this.setState({ error: '' })
@@ -78,13 +78,14 @@ class ModalRewriteSeed extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Rewrite your account recovery key</Title>
+          <Title>Rewrite your account recovery phrase</Title>
           <Text small gray>
-            Rewrite the 12 words set to continue the process
+            Rewrite the 12 words to continue the process. You may need them
+            later to restore your account or to use it on other devices.
           </Text>
           <FieldContainer>
             <TextField
-              label="Rewrite the 12 words phrase"
+              label="Your recovery phrase"
               id="mnemonic"
               name="rewrite-mnemonic"
               type="text"
