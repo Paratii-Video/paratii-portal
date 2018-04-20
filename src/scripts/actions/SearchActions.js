@@ -76,8 +76,8 @@ export const searchForMoreVideos = () => async (
     try {
       const searchResults: SearchResults = await paratii.vids.search({
         keyword,
-        offset: `${nextSearchOffset}`,
-        limit: `${SEARCH_BATCH_SIZE}`
+        limit: `${SEARCH_BATCH_SIZE}`,
+        offset: `${nextSearchOffset}`
       })
 
       const results: Array<VideoInfo> = searchResults.results || []

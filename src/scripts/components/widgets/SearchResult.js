@@ -10,7 +10,7 @@ import TruncatedText from 'components/foundations/TruncatedText'
 const Wrapper = styled.a`
   display: flex;
   width: 100%;
-  height: 125px;
+  flex: 0 0 125px;
   background: ${({ theme }) => theme.colors.Search.results.background};
   align-items: center;
   padding: 10px 20px;
@@ -46,6 +46,8 @@ const Info = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding-bottom: 10px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.Search.results.border};
 `
 
 const TopBar = styled.div`
@@ -69,6 +71,7 @@ const BottomBar = styled.div`
 
 const Description = styled.p`
   display: block;
+  font-size: 12px;
 `
 
 type Props = {

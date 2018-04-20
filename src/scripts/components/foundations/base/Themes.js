@@ -147,8 +147,10 @@ const Themes = {
         background: Colors.blackLight,
         hoverBackground: Colors.grayMedium,
         titleColor: Colors.white,
-        descriptionColor: Colors.gray
-      }
+        descriptionColor: Colors.gray,
+        border: Colors.grayDark
+      },
+      nextButton: Colors.gray
     }
   }
 }

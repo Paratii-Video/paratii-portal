@@ -21,6 +21,7 @@ const Wrapper = styled.div`
   background-color: ${props => props.theme.colors.body.background};
   display: flex;
   min-height: 100vh;
+  height: 100vh;
   flex-direction: column;
 `
 

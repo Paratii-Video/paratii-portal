@@ -56,10 +56,11 @@ const reducer = {
     }>
   ): Search =>
     state.merge({
+      additionalSearchRequestStatus: REQUEST_STATUS.SUCCEEDED,
       hasNext: action.payload.hasNext,
       nextSearchOffset: action.payload.nextSearchOffset,
       results: state
-        .get('searchResults')
+        .get('results')
         .concat(
           action.payload.results.map(
             (video: VideoInfo): Video => new Video(video)
