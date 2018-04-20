@@ -11,6 +11,7 @@ import {
   getPlaybackLevels,
   getCurrentPlaybackLevelId
 } from 'selectors/index'
+import { formatDuration } from 'utils/VideoUtils'
 
 import type { RootState, VideoRecordMap } from 'types/ApplicationTypes'
 import type VideoRecord from 'records/VideoRecords'
@@ -50,17 +51,8 @@ export const getFormattedDuration: (
 ) => string = createSelector(
   [getPlayingVideo],
   (playingVideo: ?VideoRecord): string => {
-    const roundedTime: number = Math.floor(
-      TimeFormat.toS(
-        (playingVideo && playingVideo.get('duration')) || '00:00:00.00',
-        'hh:mm:ss.sss'
-      )
-    )
-
-    return TimeFormat.fromS(
-      roundedTime,
-      roundedTime >= 3600 ? 'hh:mm:ss' : 'mm:ss'
-    )
+    const duration: ?string = playingVideo && playingVideo.get('duration')
+    return formatDuration(duration)
   }
 )
 

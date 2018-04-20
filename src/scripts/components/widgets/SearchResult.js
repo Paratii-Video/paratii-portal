@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import Video from 'records/VideoRecords'
 import { getVideoThumbnailUrl, getVideoPlayUrl } from 'utils/UrlUtils'
+import { formatDuration } from 'utils/VideoUtils'
 import TruncatedText from 'components/foundations/TruncatedText'
 
 const Wrapper = styled.a`
@@ -32,12 +33,26 @@ const ThumbnailImage = styled.img`
   width: 100%;
 `
 
+const THUMBNAIL_DATA_PADDING = '4px'
+
 const ThumbnailData = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
+  padding: ${THUMBNAIL_DATA_PADDING};
+`
+
+const Duration = styled.div`
+  position: absolute;
+  bottom: ${THUMBNAIL_DATA_PADDING};
+  right: ${THUMBNAIL_DATA_PADDING};
+  color: ${({ theme }) => theme.colors.Search.results.duration.text};
+  background: ${({ theme }) => theme.colors.Search.results.duration.background};
+  padding: 4px;
+  font-size: 10px;
+  text-align: center;
 `
 
 const Info = styled.div`
@@ -85,7 +100,9 @@ class SearchResult extends React.Component<Props, void> {
       <Wrapper href={getVideoPlayUrl(video)}>
         <ThumbnailWrapper>
           <ThumbnailImage src={getVideoThumbnailUrl(video)} />
-          <ThumbnailData />
+          <ThumbnailData>
+            <Duration>{formatDuration(video.get('duration'))}</Duration>
+          </ThumbnailData>
         </ThumbnailWrapper>
         <Info>
           <TopBar>

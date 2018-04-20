@@ -148,7 +148,11 @@ const Themes = {
         hoverBackground: Colors.grayMedium,
         titleColor: Colors.white,
         descriptionColor: Colors.gray,
-        border: Colors.grayDark
+        border: Colors.grayDark,
+        duration: {
+          text: Colors.white,
+          background: Colors.blackDarkTransparent
+        }
       },
       nextButton: Colors.gray
     }
