@@ -271,6 +271,8 @@ class VideoForm extends Component<Props, Object> {
               value={this.state.title}
               onChange={e => this.handleInputChange('title', e)}
               margin="0 0 30px"
+              maxLength="100"
+              tabIndex="1"
             />
             <Textarea
               id="input-video-description"
@@ -279,6 +281,7 @@ class VideoForm extends Component<Props, Object> {
               label="Description"
               rows="1"
               margin="0 0 30px"
+              tabIndex="2"
             />
             <TextField
               label="Video Owner"
@@ -287,6 +290,8 @@ class VideoForm extends Component<Props, Object> {
               value={this.state.author}
               onChange={e => this.handleInputChange('author', e)}
               margin="0 0 30px"
+              maxLength="50"
+              tabIndex="3"
             />
             <RadioWrapper>
               <RadioTitle>What kind of content?</RadioTitle>
