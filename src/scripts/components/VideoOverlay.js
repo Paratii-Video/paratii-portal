@@ -48,7 +48,7 @@ const Z_INDEX_CENTRALIZEDCONTENT: string = '2'
 const Z_INDEX_TITLE: string = '3'
 const Z_INDEX_BUTTONS: string = '4'
 
-const UpDownElements = css`
+const ShowHideTopElements = css`
   transform: translate3d(
     0,
     ${({ transitionState, showShareModal }) =>
@@ -97,7 +97,7 @@ const OverlayShadow = styled.span`
 `
 
 const PlayerTitle = Title.extend`
-  ${UpDownElements} align-self: flex-start;
+  ${ShowHideTopElements} align-self: flex-start;
   color: ${props => props.theme.colors.VideoPlayer.header.title};
   flex: 1 0;
   font-size: ${props => props.theme.fonts.title.big};
@@ -115,7 +115,7 @@ const PlayerTitle = Title.extend`
 `
 
 const ButtonWrapper = styled.div`
-  ${UpDownElements} align-self: flex-start;
+  ${ShowHideTopElements} align-self: flex-start;
   display: flex;
   flex: 0;
   flex-direction: row;
