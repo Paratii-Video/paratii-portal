@@ -9,7 +9,7 @@ import Video from 'records/VideoRecords'
 
 const Wrapper = styled.div`
   width: 75%;
-  flex: 0 0 100%;
+  height: 500px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
