@@ -161,7 +161,6 @@ const StartScreenIcon = styled.span`
   height: 20%;
   opacity: ${props => (props.isStartScreen ? 1 : 0)};
   transition: transform 0.3s ${props => props.theme.animation.ease.smooth};
-  width: 20%;
   ${Overlay}:hover & {
     transform: scale(0.9);
   }
