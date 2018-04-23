@@ -62,6 +62,7 @@ describe('🦄 Uploader Tool', function () {
 
     // when the transcoder is done, we should be ready to publish the video
     await browser.waitAndClick(`[data-test-id="video-submit-publish"]`)
+    browser.pause(500)
     await browser.waitAndClick(`[data-test-id="button-stake"]`)
     await browser.waitAndClick(`a[href="/play/${videoId}"]`)
   })

@@ -46,7 +46,7 @@ export const fetchOwnedVideos = () => async (
   dispatch: Dispatch<*>,
   getState: () => RootState
 ) => {
-  const address: string = paratii.eth.getAccount()
+  const address: string = paratii.config.account.address
   const ownedVideos: Object = (await paratii.vids.search({
     owner: address
   })).results
