@@ -129,7 +129,7 @@ export type ParatiiLib = {
     vouchers: {
       redeem: (value: string) => Promise<Object>
     },
-    setAccount: (string, ?string) => ?Object,
+    setAccount: (string) => void,
     balanceOf: (address: string, token: ?string) => Promise<Object>,
     web3: {
       utils: {
