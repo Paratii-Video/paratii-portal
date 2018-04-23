@@ -6,8 +6,11 @@ import TextField from './forms/TextField'
 import Button from '../foundations/Button'
 import Text from '../foundations/Text'
 import Card from '../structures/Card'
+import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
+  isWalletSecured: Boolean,
+  openModal: string => void,
   loadBalances: () => void,
   notification: (Object, string) => void
 }
@@ -53,7 +56,11 @@ class RedeemVoucher extends Component<Props, Object> {
   }
 
   handleChange (event: Object) {
-    this.setState({ voucher: event.target.value })
+    if (this.props.isWalletSecured) {
+      this.setState({ voucher: event.target.value })
+    } else {
+      this.props.openModal(MODAL.SECURE)
+    }
   }
 
   redeemVoucher (event: Object) {
