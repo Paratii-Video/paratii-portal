@@ -23,6 +23,7 @@ import {
   PlaybackLevel
 } from 'records/PlayerRecords'
 import { _getSelectedUploaderVideoId } from 'records/UploaderRecords'
+// import GlobalRecord from 'records/GlobalRecord'
 
 import type {
   RootState,
@@ -30,6 +31,9 @@ import type {
   VideoRecordMap,
   PlayerPlugin
 } from 'types/ApplicationTypes'
+
+/* Global */
+export const getContext = (state: RootState): string => state.global.context
 
 /* Users */
 export const getUser = (state: RootState): UserRecord => state.user

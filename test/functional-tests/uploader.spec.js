@@ -2,7 +2,7 @@ import { assert } from 'chai'
 import { paratii } from './test-utils/helpers'
 
 describe('🦄 Uploader Tool', function () {
-  it('should have basic flow in place @watch', async function () {
+  it('should have basic flow in place', async function () {
     // THIS TEST is SKiPPED BECAUSE IT EXPECTS TO FIND A PARATII-DB INSTANCE LISTENING ON LOCALHOST:348539b9cd58fe0344dfa029cbfd601bfd3d8745
     // AND THIS IS NOT THE CASE IN CIRCLECI
 
@@ -62,6 +62,7 @@ describe('🦄 Uploader Tool', function () {
 
     // when the transcoder is done, we should be ready to publish the video
     await browser.waitAndClick(`[data-test-id="video-submit-publish"]`)
+    browser.pause(500)
     await browser.waitAndClick(`[data-test-id="button-stake"]`)
     await browser.waitAndClick(`a[href="/play/${videoId}"]`)
   })

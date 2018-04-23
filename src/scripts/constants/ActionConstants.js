@@ -5,6 +5,9 @@ const createActionConstant = constant => `@@PARATII_PORTAL_${constant}`
 /* App Actions */
 export const INITIALIZE = createActionConstant('INITIALIZE')
 
+/* Global Actions */
+export const SET_CONTEXT = createActionConstant('SET_CONTEXT')
+
 /* Video actions */
 export const PLAYER_VIDEO_SELECT = createActionConstant('PLAYER_VIDEO_SELECT')
 export const VIDEOFETCH_ERROR = createActionConstant('VIDEOFETCH_ERROR')
