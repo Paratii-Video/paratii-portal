@@ -3,7 +3,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { openModal, closeModal } from 'actions/ModalActions'
-import { setWalletAddress, setAddressAndBalance } from 'actions/UserActions'
+import { setWalletData, setAddressAndBalance } from 'actions/UserActions'
 import { fetchOwnedVideos } from 'actions/VideoActions'
 import { show } from 'react-notification-system-redux'
 import ModalAskPassword from 'components/widgets/modals/ModalAskPassword'
@@ -16,7 +16,7 @@ const mapDispatchToProps = dispatch => ({
   openModal: bindActionCreators(openModal, dispatch),
   closeModal: bindActionCreators(closeModal, dispatch),
   notification: bindActionCreators(show, dispatch),
-  setWalletAddress: bindActionCreators(setWalletAddress, dispatch),
+  setWalletData: bindActionCreators(setWalletData, dispatch),
   setAddressAndBalance: bindActionCreators(setAddressAndBalance, dispatch),
   fetchOwnedVideos: bindActionCreators(fetchOwnedVideos, dispatch)
 })
