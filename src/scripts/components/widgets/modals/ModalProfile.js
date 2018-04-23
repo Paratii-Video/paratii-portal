@@ -76,9 +76,9 @@ class ModalSetPassword extends Component<Props, Object> {
         <ModalScrollContent>
           <Title>Profile</Title>
           <Text small gray>
-            This is how you be known on the Paratii network. Enter your email if
-            you like to receive updates and email about the community and your
-            actions.
+            {
+              "This is how you'll be known on the Paratii network. Enter your email if you'd like to receive updates about the community and your activity."
+            }
           </Text>
           <Icon>
             <NotepadLockSvg />

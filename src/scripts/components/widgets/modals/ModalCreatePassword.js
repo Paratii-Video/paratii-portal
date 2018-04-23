@@ -72,7 +72,7 @@ class ModalSetPassword extends Component<Props, Object> {
     } else {
       // Error, the two Passwords are different
       this.setState({
-        error: `Hey, you have insert two different Passwords`
+        error: `Hey, your passwords do not match`
       })
     }
   }

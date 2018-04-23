@@ -93,14 +93,6 @@ const WordIndex = styled.span`
   text-align: center;
 `
 
-// const CopyButtonIcon = styled.svg`
-//   fill: ${Colors.purple};
-//   display: inline-block;
-//   height: 24px;
-//   margin-right: 10px;
-//   width: 20px;
-// `
-
 const Footer = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -206,18 +198,6 @@ class ModalShowSeed extends Component<Props, Object> {
             >
               I have copied the 12 words, they are secret, safe and sound
             </RadioCheck>
-            {
-              // <Button
-              //   data-test-id="new-mnemonic-button"
-              //   onClick={this.copyWordsToClipboard}
-              //   gray
-              // >
-              //   <CopyButtonIcon>
-              //     <use xlinkHref="#icon-copy" />
-              //   </CopyButtonIcon>
-              //   Copy
-              // </Button>
-            }
           </WordsWrapper>
 
           <Footer>

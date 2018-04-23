@@ -3,7 +3,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { openModal } from 'actions/ModalActions'
-import { setContext } from 'actions/GlobalActions'
+import { setContext } from 'actions/AppActions'
 import ModalSecure from 'components/widgets/modals/ModalSecure'
 
 import type { RootState } from 'types/ApplicationTypes'

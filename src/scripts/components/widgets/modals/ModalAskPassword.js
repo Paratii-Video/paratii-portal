@@ -115,21 +115,6 @@ class ModalAskPassword extends Component<Props, Object> {
     })
   }
 
-  // handlePasswordChange (password: String) {
-  //   this.setState({
-  //     resetPasswordField: false,
-  //     error: ''
-  //   })
-  //   if (password && password.length === 4) {
-  //     if (!this.state.isPassword) {
-  //       this.setState({
-  //         password: password,
-  //         isPassword: true
-  //       })
-  //     }
-  //   }
-  // }
-
   render () {
     return (
       <ModalContentWrapper>
