@@ -173,6 +173,7 @@ class Play extends Component<Props, State> {
   wrapperRef: ?HTMLElement
   playerWrapperRef: ?HTMLElement
   stagedPlaybackLevel: number
+  shouldShowStartScreen: () => boolean
 
   constructor (props: Props) {
     super(props)
@@ -589,11 +590,11 @@ class Play extends Component<Props, State> {
         player.play()
       }
 
-      if (this.state.isStartScreen) {
-        this.setState({
-          isStartScreen: false
-        })
-      }
+      this.setState(prevState => {
+        if (prevState.isStartScreen) {
+          return { isStartScreen: false }
+        }
+      })
     }
   }
 
@@ -695,6 +696,11 @@ class Play extends Component<Props, State> {
       return baseurl + url + text
     }
   }
+
+  shouldShowStartScreen () {
+    return this.props.isEmbed && this.props.isPlaying
+  }
+
   render () {
     const { isEmbed, video } = this.props
 
