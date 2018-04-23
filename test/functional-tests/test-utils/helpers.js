@@ -18,6 +18,7 @@ export const DEFAULT_PASSWORD = ''
 export const WALLET_KEY_ANON = 'keystore-anon'
 export const MNEMONIC_KEY_ANON = 'mnemonic-anon'
 export const WALLET_KEY_SECURE = 'keystore-secure'
+export const password = 'newpassword'
 
 // this address will be used as the owner address for all paratii contracts in the tests
 const address = '0xCbe4f07b343171ac37055B25a5266f48f6945b7d'
