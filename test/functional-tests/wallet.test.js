@@ -25,14 +25,14 @@ describe('Wallet:', function () {
     browser.url(`http://localhost:8080`)
     browser.execute(function () {
       window.paratii.eth.wallet.clear()
-      window.paratii.eth.wallet
-        .create()
-        .then(
-          localStorage.setItem(
-            'keystore-secure',
-            JSON.stringify(window.paratii.eth.wallet.encrypt(password))
-          )
+      window.paratii.eth.wallet.create().then(
+        // FIXME don't knwo why passing password as variabele break tests
+        // window.paratii.eth.wallet.encrypt(password)
+        localStorage.setItem(
+          'keystore-secure',
+          JSON.stringify(window.paratii.eth.wallet.encrypt('newpassword'))
         )
+      )
     })
     browser.url(`http://localhost:8080/wallet`)
     // Insert the password
@@ -50,7 +50,7 @@ describe('Wallet:', function () {
   //   assert.equal(balance, '21M')
   // })
 
-  it('restore your wallet using a seed @watch', async function () {
+  it('restore your wallet using a seed', async function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
@@ -88,12 +88,12 @@ describe('Wallet:', function () {
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
     })
+    browser.pause(500)
     browser.waitForClickable('[data-test-id="user-address"]')
     const anonAddress = browser.getText('[data-test-id="user-address"]')
     browser.waitForClickable('[data-test-id="pti-balance"]')
     const balance = browser.getText('[data-test-id="pti-balance"]')
     browser.waitAndClick('[data-test-id="secure-wallet"]')
-    browser.pause(500)
     // Click on - new here
     browser.waitAndClick('[data-test-id="new-here"]')
     // Insert the password
