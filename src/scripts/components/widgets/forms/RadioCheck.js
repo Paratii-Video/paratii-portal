@@ -91,7 +91,11 @@ const RadioInputLabel = styled.span`
 class RadioCheck extends Component<Props, void> {
   render () {
     return (
-      <RadioInput disabled={this.props.disabled} nomargin={this.props.nomargin}>
+      <RadioInput
+        data-test-id={this.props.name}
+        disabled={this.props.disabled}
+        nomargin={this.props.nomargin}
+      >
         <input
           type={this.props.checkbox ? 'checkbox' : 'radio'}
           name={this.props.name}

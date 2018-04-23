@@ -7,11 +7,12 @@ import Button from 'components/foundations/Button'
 import ModalStake from 'containers/widgets/modals/ModalStakeContainer' // need to receive any content
 import ModalSecure from 'containers/widgets/modals/ModalSecureContainer'
 import ModalGreatPower from 'containers/widgets/modals/ModalGreatPowerContainer'
+import ModalCreatePassword from 'containers/widgets/modals/ModalCreatePasswordContainer'
+import ModalAskPassword from 'containers/widgets/modals/ModalAskPasswordContainer'
 import ModalShowSeed from 'containers/widgets/modals/ModalShowSeedContainer'
+import ModalProfile from 'containers/widgets/modals/ModalProfileContainer'
 import ModalRewriteSeed from 'containers/widgets/modals/ModalRewriteSeedContainer'
 import ModalRestoreAccount from 'containers/widgets/modals/ModalRestoreAccountContainer'
-import ModalSetPin from 'containers/widgets/modals/ModalSetPinContainer'
-import ModalAskPin from 'containers/widgets/modals/ModalAskPinContainer'
 
 import { MODAL } from 'constants/ModalConstants'
 
@@ -126,23 +127,25 @@ class Modal extends Component<Props, void> {
         return <ModalSecure />
       case MODAL.GREAT_POWER:
         return <ModalGreatPower />
+      case MODAL.CREATE_PASSWORD:
+        return <ModalCreatePassword />
+      case MODAL.ASK_PASSWORD:
+        return <ModalAskPassword />
       case MODAL.SHOW_SEED:
         return <ModalShowSeed />
+      case MODAL.PROFILE:
+        return <ModalProfile />
       case MODAL.REWRITE_SEED:
         return <ModalRewriteSeed />
       case MODAL.RESTORE_ACCOUNT:
         return <ModalRestoreAccount />
-      case MODAL.SET_PIN:
-        return <ModalSetPin />
-      case MODAL.ASK_PIN:
-        return <ModalAskPin />
     }
   }
 
   getModalWidth () {
     const { modalContent } = this.props
     switch (modalContent) {
-      case MODAL.STAKET:
+      case MODAL.STAKE:
         return '490px'
       case MODAL.SECURE:
         return '900px'
@@ -154,10 +157,12 @@ class Modal extends Component<Props, void> {
         return '900px'
       case MODAL.RESTORE_ACCOUNT:
         return '900px'
-      case MODAL.SET_PIN:
+      case MODAL.CREATE_PASSWORD:
         return '900px'
-      case MODAL.ASK_PIN:
-        return '480px'
+      case MODAL.ASK_PASSWORD:
+        return '900px'
+      case MODAL.PROFILE:
+        return '900px'
       default:
         return '490px'
     }
