@@ -21,19 +21,21 @@ describe('Wallet:', function () {
     browser.execute(nukeSessionStorage)
   })
 
-  it('If we have a secured wallet in localStorage, we open it with a password', function () {
+  it('If we have a secured wallet in localStorage, we open it with a password @watch', function () {
     browser.url(`http://localhost:8080`)
-    browser.execute(function () {
+    browser.execute(function (password) {
       window.paratii.eth.wallet.clear()
-      window.paratii.eth.wallet.create().then(
-        // FIXME don't knwo why passing password as variabele break tests
-        // window.paratii.eth.wallet.encrypt(password)
-        localStorage.setItem(
-          'keystore-secure',
-          JSON.stringify(window.paratii.eth.wallet.encrypt('newpassword'))
+      console.log(password)
+      window.paratii.eth.wallet
+        .create()
+        .then(
+          localStorage.setItem(
+            'keystore-secure',
+            JSON.stringify(window.paratii.eth.wallet.encrypt(password))
+          )
         )
-      )
-    })
+    }, password)
+
     browser.url(`http://localhost:8080/wallet`)
     // Insert the password
     browser.waitAndClick('[name="input-new-password"]')

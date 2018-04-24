@@ -3,6 +3,37 @@
 import shortNumber from 'short-number'
 import VideoRecord from 'records/VideoRecords'
 
+export const passwordStrength = (password: ?string): string => {
+  const longRegex = new RegExp('^(?=.{8,})')
+  const numberRegex = new RegExp('^(?=.*[0-9])')
+  const uppercaseRegex = new RegExp('^(?=.*[A-Z])')
+  // const specialCharRegex = new RegExp('^(?=.*[!@#\$%\^&\*])')
+
+  let error = ''
+
+  if (password) {
+    if (!longRegex.test(password)) {
+      error = 'The password must be eight characters or longer'
+      return error
+    }
+    if (!numberRegex.test(password)) {
+      error = 'The password must contain at least 1 numeric character'
+      return error
+    }
+    if (!uppercaseRegex.test(password)) {
+      error =
+        'The password must contain at least 1 uppercase alphabetical character'
+      return error
+    }
+  }
+
+  return ''
+  // if (!specialCharRegex.test(password)) {
+  //   error = 'The password must contain at least one special character'
+  //   return error
+  // }
+}
+
 export const getRoot = (): Element => {
   let root: ?Element = document.getElementById('root')
 

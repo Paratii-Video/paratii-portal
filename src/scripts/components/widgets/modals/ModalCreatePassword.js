@@ -6,6 +6,7 @@ import Title from 'components/foundations/Title'
 import TextField from 'components/widgets/forms/TextField'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
+import { passwordStrength } from 'utils/AppUtils'
 import NotepadLockSvg from 'components/foundations/svgs/NotepadLockSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import {
@@ -61,19 +62,26 @@ class ModalSetPassword extends Component<Props, Object> {
   }
 
   setPassword () {
-    if (this.state.password === this.state.confirm) {
-      if (this.props.getContext === NEW_ACCOUNT) {
-        sessionStorage.setItem(PASSWORD_TEMP, this.state.password)
-        this.props.openModal(MODAL.SHOW_SEED)
-      } else if (this.props.getContext === RESTORE_ACCOUNT) {
-        this.props.secureKeystore(this.state.password)
-        this.props.closeModal()
-      }
-    } else {
-      // Error, the two Passwords are different
+    const error = passwordStrength(this.state.password)
+    if (error) {
       this.setState({
-        error: `Hey, your passwords do not match`
+        error
       })
+    } else {
+      if (this.state.password === this.state.confirm) {
+        if (this.props.getContext === NEW_ACCOUNT) {
+          sessionStorage.setItem(PASSWORD_TEMP, this.state.password)
+          this.props.openModal(MODAL.SHOW_SEED)
+        } else if (this.props.getContext === RESTORE_ACCOUNT) {
+          this.props.secureKeystore(this.state.password)
+          this.props.closeModal()
+        }
+      } else {
+        // Error, the two Passwords are different
+        this.setState({
+          error: `Hey, your passwords do not match`
+        })
+      }
     }
   }
 
