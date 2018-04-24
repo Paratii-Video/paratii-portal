@@ -15,7 +15,7 @@ export const getUploaderVideos: (
   (videos: VideoRecordMap): VideoRecordMap =>
     videos.filter(
       (video: VideoRecord): boolean =>
-        video.get('owner') === paratii.config.account.address
+        video.get('owner') === paratii.eth.getAccount()
     )
 )
 
@@ -26,7 +26,7 @@ export const getUploaderBusyVideos: (
   (videos: VideoRecordMap): VideoRecordMap =>
     videos.filter(
       (video: VideoRecord): boolean =>
-        video.get('owner') === paratii.config.account.address &&
+        video.get('owner') === paratii.eth.getAccount() &&
         video.getIn(['uploadStatus', 'name']) === 'running'
     )
 )

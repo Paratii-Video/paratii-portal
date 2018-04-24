@@ -104,8 +104,7 @@ class ModalAskPin extends Component<Props, Object> {
     try {
       paratii.eth.wallet.clear()
       paratii.eth.wallet.decrypt(JSON.parse(walletString), pin)
-      const address = paratii.config.account.address
-      console.log(address)
+      const address = paratii.eth.getAccount()
       this.props.setWalletAddress({ address })
       this.props.notification(
         {

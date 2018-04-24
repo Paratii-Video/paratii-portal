@@ -70,7 +70,7 @@ export const checkUserWallet = () => (dispatch: Dispatch) => {
 }
 
 export const loadBalances = () => (dispatch: Dispatch) => {
-  const address: string = paratii.config.account.address
+  const address: string = paratii.eth.getAccount()
   if (address) {
     paratii.eth.balanceOf(address).then(({ ETH, PTI }) => {
       dispatch(
