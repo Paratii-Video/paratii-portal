@@ -9,3 +9,4 @@ export const PASSWORD_TEMP = 'password-temp'
 export const WALLET_KEY_SECURE = 'keystore-secure'
 export const RESTORE_ACCOUNT = 'restore account flow'
 export const NEW_ACCOUNT = 'new account flow'
+export const ACTIVATE_SECURE_WALLET = true // a flag for activating the secure wallet
