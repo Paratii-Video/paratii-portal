@@ -4,6 +4,7 @@ const makeModalConstant = (ModalName: string): string => `Modal${ModalName}`
 
 export const MODAL: Object = {
   ASK_PIN: makeModalConstant('AskPin'),
+  ASK_PASSWORD: makeModalConstant('AskPassword'),
   RESTORE_ACCOUNT: makeModalConstant('RestoreAccount'),
   REWRITE_SEED: makeModalConstant('RewriteSeed'),
   CREATE_PASSWORD: makeModalConstant('ModalCreatePassword'),

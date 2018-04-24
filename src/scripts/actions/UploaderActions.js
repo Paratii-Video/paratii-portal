@@ -70,16 +70,14 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
   if (!videoId) {
     videoId = paratii.eth.vids.makeId()
   }
-  dispatch(
-    videoFetchSuccess({ id: videoId, owner: paratii.config.account.address })
-  )
+  dispatch(videoFetchSuccess({ id: videoId, owner: paratii.eth.getAccount() }))
   dispatch(selectUploaderVideo(videoId))
   dispatch(
     uploadRequested({
       id: videoId,
       filename: file.name,
       filesize: file.size,
-      owner: paratii.config.account.address
+      owner: paratii.eth.getAccount()
     })
   )
   // this will upload the file to the local IPFS node and report on progress
@@ -108,7 +106,7 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
     upsertVideo(
       videoId,
       {
-        owner: paratii.config.account.address,
+        owner: paratii.eth.getAccount(),
         ipfsHashOrig: file.hash,
         filename: file.path,
         filesize: file.size
@@ -152,7 +150,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
   // FIXME: paratii-js should hande the starting of the ipfs node if it is not started yet
   paratii.ipfs.getIPFSInstance().then(function () {
     const transcoder = paratii.transcoder.transcode(videoInfo.hash, {
-      author: paratii.config.account.address,
+      author: paratii.eth.getAccount(),
       size: videoInfo.size
     })
 
@@ -226,7 +224,7 @@ export const transcodeVideo = (videoInfo: Object) => async (
         videoInfo.id,
         {
           ipfsHash: result.master.hash,
-          owner: paratii.config.account.address,
+          owner: paratii.eth.getAccount(),
           duration: result.duration,
           thumbnails: result.screenshots
         },
@@ -248,7 +246,7 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   )
 
   let videoId
-  videoInfo.owner = paratii.config.account.address
+  videoInfo.owner = paratii.eth.getAccount()
   if (videoInfo.id) {
     videoId = videoInfo.id
   } else {

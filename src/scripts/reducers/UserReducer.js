@@ -42,11 +42,10 @@ const reducer = {
   },
   [SET_WALLET_DATA]: (
     state: UserRecord,
-    { payload: { walletKey, mnemonicKey } }
+    { payload: { walletKey } }
   ): UserRecord =>
     state.merge({
-      walletKey,
-      mnemonicKey
+      walletKey
     }),
   [SET_WALLET_ADDRESS]: (
     state: UserRecord,

@@ -131,9 +131,9 @@ class ModalShowSeed extends Component<Props, Object> {
     // Create new wallet and encrypt with this Password
     console.log('Create new wallet and encrypt with password')
     if (password) {
-      this.props.secureKeystore(password)
       // Open the profile modal
       this.props.openModal(MODAL.PROFILE)
+      this.props.secureKeystore(password)
     }
   }
 

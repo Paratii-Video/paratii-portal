@@ -8,8 +8,11 @@ import Text from '../foundations/Text'
 import Card from '../structures/Card'
 
 type Props = {
+  isWalletSecured: Boolean,
+  openModal: string => void,
   loadBalances: () => void,
-  notification: (Object, string) => void
+  notification: (Object, string) => void,
+  checkUserWallet: () => void
 }
 
 const Icon = styled.svg`
@@ -53,7 +56,12 @@ class RedeemVoucher extends Component<Props, Object> {
   }
 
   handleChange (event: Object) {
-    this.setState({ voucher: event.target.value })
+    // If wallet not secure open the modal
+    if (this.props.isWalletSecured) {
+      this.setState({ voucher: event.target.value })
+    } else {
+      this.props.checkUserWallet()
+    }
   }
 
   redeemVoucher (event: Object) {
