@@ -121,6 +121,11 @@ class ModalAskPassword extends Component<Props, Object> {
       <ModalContentWrapper>
         <ModalScrollContent>
           <Title>Insert your Passwrord</Title>
+          <Text small gray>
+            We found a private wallet on your localStorage, insert the password
+            to <strong>decrypt</strong> it, and be able to use all the features
+            of Paratii
+          </Text>
           <FieldContainer>
             <TextField
               error={this.state.error.length > 0}
