@@ -109,9 +109,6 @@ class ModalSetPassword extends Component<Props, Object> {
           )}
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.goBack}>Back</Button>
-            </ButtonContainer>
-            <ButtonContainer>
               <Button
                 data-test-id="continue"
                 purple
