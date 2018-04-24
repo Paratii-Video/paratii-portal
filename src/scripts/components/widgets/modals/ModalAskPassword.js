@@ -79,8 +79,6 @@ class ModalAskPassword extends Component<Props, Object> {
     try {
       paratii.eth.wallet.clear()
       paratii.eth.wallet.decrypt(JSON.parse(walletString), password)
-      // const address = paratii.config.account.address
-      // this.props.setWalletAddress({ address })
       this.props.notification(
         {
           title: 'Success!',

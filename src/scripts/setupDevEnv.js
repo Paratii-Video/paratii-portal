@@ -15,9 +15,6 @@ const paratii = new Paratii(config)
 const address1 = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
 
 async function deployContracts () {
-  // await paratii.eth.wallet.create(1)
-  // console.log(paratii.eth.wallet[0].address)
-  // console.log(paratii.config.account.address)
   await paratii.eth.deployContracts()
   const registryAddress = await paratii.eth.getRegistryAddress()
   console.log(`Paratii registry address: ${registryAddress}`)
