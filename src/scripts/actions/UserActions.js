@@ -20,7 +20,8 @@ import {
   MNEMONIC_KEY_TEMP,
   PASSWORD_TEMP,
   MNEMONIC_KEY_ANON,
-  WALLET_KEY_SECURE
+  WALLET_KEY_SECURE,
+  ACTIVATE_SECURE_WALLET
 } from 'constants/ParatiiLibConstants'
 
 import paratii from 'utils/ParatiiLib'
@@ -53,6 +54,19 @@ export const login = (email: string, password: string) => (
 export const logout = () => (dispatch: Dispatch) => {
   Cookies.remove('email')
   dispatch(logoutAction())
+}
+
+export const checkUserWallet = () => (dispatch: Dispatch) => {
+  if (ACTIVATE_SECURE_WALLET) {
+    const walletStringSecure: ?string = localStorage.getItem(WALLET_KEY_SECURE)
+    if (walletStringSecure) {
+      console.log('Try to open encrypted keystore')
+      // Need to ask the PIN
+      dispatch(openModal(MODAL.ASK_PASSWORD))
+    } else {
+      dispatch(openModal(MODAL.SECURE))
+    }
+  }
 }
 
 export const loadBalances = () => (dispatch: Dispatch) => {
@@ -102,7 +116,7 @@ export const setupKeystore = () => async (
   }
 
   // Case 2: we have a secured wallet is localStorage
-  if (walletStringSecure) {
+  if (walletStringSecure && ACTIVATE_SECURE_WALLET) {
     console.log('Try to open encrypted keystore')
     // Need to ask the PIN
     dispatch(openModal(MODAL.ASK_PASSWORD))
