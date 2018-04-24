@@ -4,13 +4,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { openModal } from 'actions/ModalActions'
 import Wallet from 'components/Wallet'
-import { getUserAddress } from 'selectors/UserSelectors'
+import { getUserAddress, getIsSecure } from 'selectors/UserSelectors'
 
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState) => ({
   user: state.user,
-  userAddress: getUserAddress(state)
+  userAddress: getUserAddress(state),
+  isWalletSecured: getIsSecure(state)
 })
 
 const mapDispatchToProps = dispatch => ({
