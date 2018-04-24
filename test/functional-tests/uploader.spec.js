@@ -16,17 +16,17 @@ describe('🦄 Uploader Tool', function () {
   it('should have basic flow in place', async function () {
     // Create a secure wallet
     browser.url(`http://localhost:8080`)
-    browser.execute(function () {
+    browser.execute(function (password) {
       window.paratii.eth.wallet.clear()
       window.paratii.eth.wallet
         .create()
         .then(
           localStorage.setItem(
             'keystore-secure',
-            JSON.stringify(window.paratii.eth.wallet.encrypt('newpassword'))
+            JSON.stringify(window.paratii.eth.wallet.encrypt(password))
           )
         )
-    })
+    }, password)
 
     // Get address from browser
     const address = browser.execute(function () {
