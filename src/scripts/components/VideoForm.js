@@ -81,19 +81,19 @@ type Props = {
   selectedVideo: VideoRecord,
   canSubmit: boolean,
   progress: Number,
-  saveVideoInfo: Object => Object,
-  transcodeVideo: Object => Object,
-  uploadAndTranscode: Object => Object,
-  // showModal: (View: Object) => void,
-  // closeModal: () => void,
-  openModal: () => void,
-  notification: (Object, string) => void,
+  isWalletSecured: Boolean,
   isUploaded: Boolean,
   isPublished: Boolean,
   isPublishable: Boolean,
   user: UserRecord,
   balance: String,
-  innerRef: Object
+  innerRef: Object,
+  saveVideoInfo: Object => Object,
+  transcodeVideo: Object => Object,
+  uploadAndTranscode: Object => Object,
+  openModal: () => void,
+  notification: (Object, string) => void,
+  checkUserWallet: () => void
 }
 
 class VideoForm extends Component<Props, Object> {
@@ -146,7 +146,12 @@ class VideoForm extends Component<Props, Object> {
         'error'
       )
     } else {
-      this.publishVideo(true)
+      if (this.props.isWalletSecured) {
+        this.publishVideo(true)
+      } else {
+        // If wallet not secure open the modal
+        this.props.checkUserWallet()
+      }
     }
   }
 
@@ -157,7 +162,12 @@ class VideoForm extends Component<Props, Object> {
 
   onSaveData (e: Object) {
     e.preventDefault()
-    this.saveData(false)
+    if (this.props.isWalletSecured) {
+      this.saveData(false)
+    } else {
+      // If wallet not secure open the modal
+      this.props.checkUserWallet()
+    }
   }
 
   publishVideo (publish: false) {
