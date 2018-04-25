@@ -218,9 +218,11 @@ class MainHeader extends Component<Props, void> {
             <MainHeaderLogo />
           </LogoWrapper>
           <HeaderContent open={this.state.navOpen}>
-            <SearchWrapper>
-              <SearchInputContainer />
-            </SearchWrapper>
+            {process.env.NODE_ENV !== 'production' && (
+              <SearchWrapper>
+                <SearchInputContainer />
+              </SearchWrapper>
+            )}
             <HeaderButtons>
               <MainNavigation closeNav={this.closeNav} />
               {userAvatar}
