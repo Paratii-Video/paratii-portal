@@ -9,7 +9,6 @@ import Video from 'records/VideoRecords'
 
 const Wrapper = styled.div`
   width: 75%;
-  height: 500px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -18,15 +17,13 @@ const Wrapper = styled.div`
 
 const Results = styled.div`
   width: 100%;
-  flex: 0 0 90%;
-  display: flex;
-  flex-direction: column;
+  flex: 1 0 auto;
   overflow-y: auto;
 `
 
 const HasNextLink = styled.button`
   width: 100%;
-  flex: 1 1 0;
+  flex: 0 0 20px;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.Search.nextButton};
 `

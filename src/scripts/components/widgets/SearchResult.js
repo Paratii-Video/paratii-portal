@@ -11,7 +11,7 @@ import TruncatedText from 'components/foundations/TruncatedText'
 const Wrapper = styled.a`
   display: flex;
   width: 100%;
-  flex: 0 0 160px;
+  height: 160px;
   background: ${({ theme }) => theme.colors.Search.results.background};
   align-items: center;
   padding: 10px 20px;
