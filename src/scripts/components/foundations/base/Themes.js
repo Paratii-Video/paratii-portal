@@ -145,7 +145,7 @@ const Themes = {
     Search: {
       results: {
         background: Colors.blackLight,
-        hoverBackground: Colors.grayMedium,
+        hoverBackground: Colors.blackDarkTransparent,
         titleColor: Colors.white,
         descriptionColor: Colors.gray,
         border: Colors.grayDark,
