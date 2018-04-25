@@ -11557,9 +11557,9 @@ parallel-transform@^1.1.0:
     web3 "^1.0.0-beta.27"
     zeppelin-solidity "^1.3.0"
 
-"paratii-js@github:Paratii-Video/paratii-js#da3a74850a398d3f8fe44983304fe389fe3756fd":
-  version "0.2.0"
-  resolved "https://codeload.github.com/Paratii-Video/paratii-js/tar.gz/da3a74850a398d3f8fe44983304fe389fe3756fd"
+paratii-js@0.2.5:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/paratii-js/-/paratii-js-0.2.5.tgz#7839d7938659013f7b9f455be2b00c3b91ce876b"
   dependencies:
     async "^2.6.0"
     bip39 "^2.5.0"
