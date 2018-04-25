@@ -11,7 +11,7 @@ import TruncatedText from 'components/foundations/TruncatedText'
 const Wrapper = styled.a`
   display: flex;
   width: 100%;
-  flex: 0 0 125px;
+  flex: 0 0 160px;
   background: ${({ theme }) => theme.colors.Search.results.background};
   align-items: center;
   padding: 10px 20px;
@@ -22,7 +22,7 @@ const Wrapper = styled.a`
 `
 
 const ThumbnailWrapper = styled.div`
-  flex: 1 0 0;
+  flex: 0 0 260px;
   height: 100%;
   margin-right: 10px;
   position: relative;
@@ -56,12 +56,13 @@ const Duration = styled.div`
 `
 
 const Info = styled.div`
-  flex: 0 0 75%;
+  flex: 1 1 0;
   max-width: 75%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding-bottom: 10px;
+  padding: 10px;
+  padding-bottom: 20px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.Search.results.border};
 `
 
@@ -75,6 +76,8 @@ const Title = styled.div`
   flex: 0 1 100%;
   max-width: 100%;
   color: ${({ theme }) => theme.colors.Search.results.titleColor};
+  font-weight: bold;
+  font-size: 18px;
 `
 
 const BottomBar = styled.div`
@@ -86,7 +89,9 @@ const BottomBar = styled.div`
 
 const Description = styled.p`
   display: block;
-  font-size: 12px;
+  font-size: 16px;
+  max-height: 100%;
+  overflow-y: auto;
 `
 
 type Props = {
