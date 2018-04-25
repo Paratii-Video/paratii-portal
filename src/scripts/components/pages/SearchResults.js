@@ -8,7 +8,8 @@ import SearchResult from 'components/widgets/SearchResult'
 import Video from 'records/VideoRecords'
 
 const Wrapper = styled.div`
-  width: 615px;
+  width: 1180px;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
