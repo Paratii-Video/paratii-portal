@@ -95,10 +95,6 @@ const Content = styled.div`
     ${({ show }) => (show ? '0.2s' : null)};
   width: 100%;
   z-index: ${Z_INDEX_CONTENT};
-
-  @media (max-width: 767px) {
-    justify-content: baseline;
-  }
 `
 
 const ShareTitle = Title.extend`
