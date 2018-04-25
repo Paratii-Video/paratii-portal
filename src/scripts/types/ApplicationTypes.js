@@ -8,6 +8,7 @@ import UserRecord from 'records/UserRecords'
 import PlayerRecord from 'records/PlayerRecords'
 import UploaderRecord from 'records/UploaderRecords'
 import NotificationRecord from 'records/NotificationRecord'
+import SearchRecord from 'records/SearchRecords'
 import {
   REQUEST_STATUS,
   TRANSITION_STATE,
@@ -24,9 +25,33 @@ export type Location = {
 
 export type AsyncTaskStatusName = 'idle' | 'running' | 'success' | 'error'
 
+export type Stats = {
+  likers: Array<any>,
+  dislikers: Array<any>
+}
+
 export type VideoInfo = {
-  title: ?string,
-  description: ?string
+  author: string,
+  blockNumber: number,
+  createBlockNumber: number,
+  description: string,
+  duration: string,
+  filename: string,
+  filesize: string,
+  id: string,
+  ipfsData: string,
+  ipfsHash: string,
+  ipfsHashOrig: string,
+  owner: string,
+  price: number,
+  published: string,
+  stats: Stats,
+  tags: Array<string>,
+  thumbnails: Array<string>,
+  title: string,
+  uploader: {
+    address: string
+  }
 }
 
 export type Action<T> = {
@@ -43,7 +68,8 @@ export type RootState = {
   user: UserRecord,
   videos: VideoRecordMap,
   player: PlayerRecord,
-  notifications: NotificationsArray
+  notifications: NotificationsArray,
+  search: SearchRecord
 }
 
 type _ThunkAction<R> = (dispatch: Dispatch, getState?: () => RootState) => R
@@ -129,7 +155,7 @@ export type ParatiiLib = {
     vouchers: {
       redeem: (value: string) => Promise<Object>
     },
-    setAccount: (string) => void,
+    setAccount: string => void,
     balanceOf: (address: string, token: ?string) => Promise<Object>,
     web3: {
       utils: {

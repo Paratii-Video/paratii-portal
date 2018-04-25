@@ -6,11 +6,8 @@ type Props = {}
 
 const MainLogo = styled.h1`
   display: block;
-  flex: 0 0
-    ${props =>
-    props.theme.sizes ? props.theme.sizes.mainHeaderLogo.width : ''};
-  height: ${props =>
-    props.theme.sizes ? props.theme.sizes.mainHeaderLogo.height : ''};
+  height: 100%;
+  width: 100%;
 `
 
 const MainLogoAnchor = styled(Link)`

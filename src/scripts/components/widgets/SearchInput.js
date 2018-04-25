@@ -1,14 +1,25 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import Button from 'components/foundations/Button'
 
-type Props = {}
+import Button from 'components/foundations/Button'
+import { SEARCH_PATH } from 'constants/UrlConstants'
+
+import type { RouterHistory } from 'react-router-dom'
+
+type Props = {
+  currentSearchText: string,
+  history: RouterHistory,
+  onSearchInputChange: (value: string) => void,
+  search: (value: string) => void
+}
 
 const SearchInputForm = styled.form`
   align-items: center;
   display: inline-flex;
   flex-direction: row-reverse;
   width: 100%;
+  background-color: ${props => props.theme.colors.Nav.search.background};
 `
 
 const SearchInputField = styled.input`
@@ -21,9 +32,12 @@ const SearchInputField = styled.input`
   width: 100%;
 `
 
+const SEARCH_BUTTON_DIMENSION: string = '27px'
+
 const SearchInputButton = styled(Button)`
-  flex-basis: ${props => props.theme.sizes.searchInputButton};
-  height: ${props => props.theme.sizes.searchInputButton};
+  flex: 0 0 ${SEARCH_BUTTON_DIMENSION};
+  height: ${SEARCH_BUTTON_DIMENSION};
+  padding-left: 10px;
   margin-right: 10px;
 `
 
@@ -34,11 +48,29 @@ const SearchInputSVG = styled.svg`
 `
 
 class SearchInput extends Component<Props, void> {
-  render () {
-    return (
-      <SearchInputForm>
-        <SearchInputField placeholder="Search" />
+  onSubmitForm = (e: Object): void => {
+    const { history } = this.props
+    const { currentSearchText, search } = this.props
 
+    e.preventDefault()
+
+    history.push(SEARCH_PATH)
+
+    search({ keyword: currentSearchText })
+  }
+
+  render () {
+    const { currentSearchText, onSearchInputChange } = this.props
+
+    return (
+      <SearchInputForm onSubmit={this.onSubmitForm}>
+        <SearchInputField
+          onChange={(e: Object) => {
+            onSearchInputChange({ value: e.target.value })
+          }}
+          placeholder="Search"
+          value={currentSearchText}
+        />
         <SearchInputButton>
           <SearchInputSVG>
             <use xlinkHref="#icon-search" />
@@ -49,4 +81,4 @@ class SearchInput extends Component<Props, void> {
   }
 }
 
-export default SearchInput
+export default withRouter(SearchInput)
