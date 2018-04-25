@@ -21,8 +21,10 @@ const Wrapper = styled.a`
   }
 `
 
+const THUMBNAIL_WIDTH: string = '260px'
+
 const ThumbnailWrapper = styled.div`
-  flex: 0 0 260px;
+  flex: 0 0 ${THUMBNAIL_WIDTH};
   height: 100%;
   margin-right: 10px;
   position: relative;
@@ -57,7 +59,7 @@ const Duration = styled.div`
 
 const Info = styled.div`
   flex: 1 1 0;
-  max-width: 75%;
+  max-width: calc(100% - ${THUMBNAIL_WIDTH});
   height: 100%;
   display: flex;
   flex-direction: column;
