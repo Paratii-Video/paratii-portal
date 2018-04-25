@@ -118,7 +118,7 @@ class ModalAskPassword extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Insert your Passwrord</Title>
+          <Title>Insert your Password</Title>
           <Text small gray>
             We found a private wallet on your localStorage, insert the password
             to <strong>decrypt</strong> it, and be able to use all the features
