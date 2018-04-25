@@ -2,9 +2,8 @@
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { openModal } from 'actions/ModalActions'
-import { setContext } from 'actions/AppActions'
-import ModalSecure from 'components/widgets/modals/ModalSecure'
+import { openModal, closeModal } from 'actions/ModalActions'
+import ModalProfile from 'components/widgets/modals/ModalProfile'
 
 import type { RootState } from 'types/ApplicationTypes'
 
@@ -12,7 +11,7 @@ const mapStateToProps = (state: RootState) => ({})
 
 const mapDispatchToProps = dispatch => ({
   openModal: bindActionCreators(openModal, dispatch),
-  setContext: bindActionCreators(setContext, dispatch)
+  closeModal: bindActionCreators(closeModal, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalSecure)
+export default connect(mapStateToProps, mapDispatchToProps)(ModalProfile)

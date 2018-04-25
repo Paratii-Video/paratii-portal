@@ -2,6 +2,7 @@
 
 import Immutable from 'immutable'
 
+import GlobalRecord from 'records/GlobalRecord'
 import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
 import PlayerRecord from 'records/PlayerRecords'
@@ -62,6 +63,7 @@ export type VideoRecordMap = Immutable.Map<string, VideoRecord>
 export type NotificationsArray = Array<NotificationRecord>
 
 export type RootState = {
+  global: GlobalRecord,
   uploader: UploaderRecord,
   user: UserRecord,
   videos: VideoRecordMap,
@@ -132,9 +134,11 @@ export type ParatiiLib = {
     search: Object => Object
   },
   users: {
-    migrateAccount: (address: string) => Object
+    migrateAccount: (address: string) => Object,
+    create: Object => Object
   },
   eth: {
+    getAccount: () => string,
     wallet: {
       decrypt: (string, password: string) => Object,
       encrypt: (password: string) => Object,
@@ -151,7 +155,7 @@ export type ParatiiLib = {
     vouchers: {
       redeem: (value: string) => Promise<Object>
     },
-    setAccount: (string, ?string) => ?Object,
+    setAccount: string => void,
     balanceOf: (address: string, token: ?string) => Promise<Object>,
     web3: {
       utils: {

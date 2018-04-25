@@ -40,6 +40,9 @@ import type {
   PlayerPlugin
 } from 'types/ApplicationTypes'
 
+/* Global */
+export const getContext = (state: RootState): string => state.global.context
+
 /* Users */
 export const getUser = (state: RootState): UserRecord => state.user
 export const getWalletKey = (state: RootState): string =>

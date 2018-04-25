@@ -81,19 +81,19 @@ type Props = {
   selectedVideo: VideoRecord,
   canSubmit: boolean,
   progress: Number,
-  saveVideoInfo: Object => Object,
-  transcodeVideo: Object => Object,
-  uploadAndTranscode: Object => Object,
-  // showModal: (View: Object) => void,
-  // closeModal: () => void,
-  openModal: () => void,
-  notification: (Object, string) => void,
+  isWalletSecured: Boolean,
   isUploaded: Boolean,
   isPublished: Boolean,
   isPublishable: Boolean,
   user: UserRecord,
   balance: String,
-  innerRef: Object
+  innerRef: Object,
+  saveVideoInfo: Object => Object,
+  transcodeVideo: Object => Object,
+  uploadAndTranscode: Object => Object,
+  openModal: () => void,
+  notification: (Object, string) => void,
+  checkUserWallet: () => void
 }
 
 class VideoForm extends Component<Props, Object> {
@@ -146,7 +146,12 @@ class VideoForm extends Component<Props, Object> {
         'error'
       )
     } else {
-      this.publishVideo(true)
+      if (this.props.isWalletSecured) {
+        this.publishVideo(true)
+      } else {
+        // If wallet not secure open the modal
+        this.props.checkUserWallet()
+      }
     }
   }
 
@@ -157,7 +162,12 @@ class VideoForm extends Component<Props, Object> {
 
   onSaveData (e: Object) {
     e.preventDefault()
-    this.saveData(false)
+    if (this.props.isWalletSecured) {
+      this.saveData(false)
+    } else {
+      // If wallet not secure open the modal
+      this.props.checkUserWallet()
+    }
   }
 
   publishVideo (publish: false) {
@@ -271,6 +281,8 @@ class VideoForm extends Component<Props, Object> {
               value={this.state.title}
               onChange={e => this.handleInputChange('title', e)}
               margin="0 0 30px"
+              maxLength="100"
+              tabIndex="1"
             />
             <Textarea
               id="input-video-description"
@@ -279,6 +291,7 @@ class VideoForm extends Component<Props, Object> {
               label="Description"
               rows="1"
               margin="0 0 30px"
+              tabIndex="2"
             />
             <TextField
               label="Video Owner"
@@ -287,6 +300,8 @@ class VideoForm extends Component<Props, Object> {
               value={this.state.author}
               onChange={e => this.handleInputChange('author', e)}
               margin="0 0 30px"
+              maxLength="50"
+              tabIndex="3"
             />
             <RadioWrapper>
               <RadioTitle>What kind of content?</RadioTitle>

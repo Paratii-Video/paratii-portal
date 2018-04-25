@@ -19,12 +19,14 @@ type Props = {
   disabled: Boolean,
   readonly: Boolean,
   value: String,
-  id: 'String',
-  name: 'String',
-  type: 'String',
+  id: String,
+  name: String,
+  type: String,
   onChange: (e: Object) => void,
   cols: String,
-  rows: String
+  rows: String,
+  maxLength: String,
+  tabIndex: String
 }
 
 const LabelField = styled.label`
@@ -140,6 +142,8 @@ class TextareaField extends Component<Props, void> {
           id={this.props.id}
           name={this.props.name}
           value={this.state.value}
+          maxLength={this.props.maxLength}
+          tabIndex={this.props.tabIndex}
           innerRef={ref => (this.textField = ref)}
         />
         {this.props.label && (

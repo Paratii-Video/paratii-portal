@@ -6,8 +6,9 @@ import Colors from 'components/foundations/base/Colors'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
+import RadioCheck from 'components/widgets/forms/RadioCheck'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
-import { MNEMONIC_KEY_TEMP } from 'constants/ParatiiLibConstants'
+import { MNEMONIC_KEY_TEMP, PASSWORD_TEMP } from 'constants/ParatiiLibConstants'
 import { MODAL } from 'constants/ModalConstants'
 
 import {
@@ -18,8 +19,9 @@ import { copyTextToClipboard } from 'utils/AppUtils'
 import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
 
 type Props = {
-  openModal: String => void,
-  showNotification: (Notification, NotificationLevel) => void
+  openModal: string => void,
+  showNotification: (Notification, NotificationLevel) => void,
+  secureKeystore: string => void
 }
 
 const WORDPADDING: string = '14px'
@@ -91,14 +93,6 @@ const WordIndex = styled.span`
   text-align: center;
 `
 
-const CopyButtonIcon = styled.svg`
-  fill: ${Colors.purple};
-  display: inline-block;
-  height: 24px;
-  margin-right: 10px;
-  width: 20px;
-`
-
 const Footer = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -112,23 +106,39 @@ const ButtonContainer = styled.div`
 
 class ModalShowSeed extends Component<Props, Object> {
   KeyWords: HTMLElement
-  secureWallet: (e: Object) => void
-  rewriteSeed: (e: Object) => void
+  goBack: (e: Object) => void
+  modalContinue: (e: Object) => void
+  toggleOption: (e: Object) => void
   copyWordsToClipboard: (event: Object) => void
 
   constructor (props: Props) {
     super(props)
-    this.secureWallet = this.secureWallet.bind(this)
-    this.rewriteSeed = this.rewriteSeed.bind(this)
+    this.state = {
+      seedCheck: false
+    }
+    this.goBack = this.goBack.bind(this)
+    this.modalContinue = this.modalContinue.bind(this)
+    this.toggleOption = this.toggleOption.bind(this)
     this.copyWordsToClipboard = this.copyWordsToClipboard.bind(this)
   }
 
-  secureWallet () {
-    this.props.openModal(MODAL.SECURE)
+  goBack () {
+    this.props.openModal(MODAL.CREATE_PASSWORD)
   }
 
-  rewriteSeed () {
-    this.props.openModal(MODAL.REWRITE_SEED)
+  modalContinue () {
+    const password = sessionStorage.getItem(PASSWORD_TEMP)
+    // Create new wallet and encrypt with this Password
+    console.log('Create new wallet and encrypt with password')
+    if (password) {
+      // Open the profile modal
+      this.props.openModal(MODAL.PROFILE)
+      this.props.secureKeystore(password)
+    }
+  }
+
+  toggleOption () {
+    this.setState({ seedCheck: !this.state.seedCheck })
   }
 
   copyWordsToClipboard (event: Object) {
@@ -154,10 +164,11 @@ class ModalShowSeed extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Your account recovery key</Title>
+          <Title>Your recovery phrase</Title>
           <Text small gray>
-            This is the key of your account, write in the correct order and keep
-            it in a safe place
+            You will need these 12 words later to restore your account, or to
+            use it on other device. Write this phrase down and keep it in a safe
+            place.
           </Text>
           <TextHidden
             data-test-id="new-mnemonic"
@@ -178,27 +189,27 @@ class ModalShowSeed extends Component<Props, Object> {
                 </Word>
               ))}
             </WordsList>
-            <Button
-              data-test-id="new-mnemonic-button"
-              onClick={this.copyWordsToClipboard}
-              gray
+            <RadioCheck
+              checkbox
+              white
+              name="check-seed"
+              value={this.state.checkSeed}
+              onChange={this.toggleOption}
             >
-              <CopyButtonIcon>
-                <use xlinkHref="#icon-copy" />
-              </CopyButtonIcon>
-              Copy
-            </Button>
+              I have copied the 12 words, they are secret, safe and sound
+            </RadioCheck>
           </WordsWrapper>
 
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.secureWallet}>Go Back</Button>
+              <Button onClick={this.goBack}>Back</Button>
             </ButtonContainer>
             <ButtonContainer>
               <Button
-                data-test-id="rewrite-seed"
+                data-test-id="continue"
                 purple
-                onClick={this.rewriteSeed}
+                onClick={this.modalContinue}
+                disabled={!this.state.seedCheck}
               >
                 Continue
               </Button>

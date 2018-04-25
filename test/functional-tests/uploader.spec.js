@@ -1,19 +1,54 @@
 import { assert } from 'chai'
-import { paratii } from './test-utils/helpers'
+import {
+  paratii,
+  password,
+  nukeLocalStorage,
+  nukeSessionStorage
+} from './test-utils/helpers'
 
 describe('🦄 Uploader Tool', function () {
-  it('should have basic flow in place', async function () {
-    // THIS TEST is SKiPPED BECAUSE IT EXPECTS TO FIND A PARATII-DB INSTANCE LISTENING ON LOCALHOST:348539b9cd58fe0344dfa029cbfd601bfd3d8745
-    // AND THIS IS NOT THE CASE IN CIRCLECI
+  beforeEach(function () {
+    browser.url(`http://localhost:8080`)
+    browser.execute(nukeLocalStorage)
+    browser.execute(nukeSessionStorage)
+  })
 
-    // see https://github.com/Paratii-Video/paratii-portal/issues/8
+  it('should have basic flow in place', async function () {
+    // Create a secure wallet
+    browser.url(`http://localhost:8080`)
+    browser.execute(function (password) {
+      window.paratii.eth.wallet.clear()
+      window.paratii.eth.wallet
+        .create()
+        .then(
+          localStorage.setItem(
+            'keystore-secure',
+            JSON.stringify(window.paratii.eth.wallet.encrypt(password))
+          )
+        )
+    }, password)
+
+    // Get address from browser
+    const address = browser.execute(function () {
+      return window.paratii.eth.getAccount()
+    })
+    const newAddress = address.value
+    // Send some PTI to new address
+    const value = paratii.eth.web3.utils.toWei('20')
+    paratii.eth.transfer(newAddress, value, 'PTI')
+
     const video = {
       title: 'Some title',
       description:
         'Description of the video which can be pretty long and may contain dïàcrítics'
     }
-    browser.url('http://localhost:8080/upload')
 
+    browser.url('http://localhost:8080/upload')
+    browser.waitAndClick('[name="input-new-password"]')
+    browser.setValue('[name="input-new-password"]', password)
+    browser.waitAndClick('[data-test-id="continue"]')
+
+    // Upload file
     const fileToUpload = `${__dirname}/data/pti-logo.mp4`
     browser.waitForExist('input[type="file"]')
     browser.chooseFile('input[type="file"]', fileToUpload)
@@ -58,12 +93,15 @@ describe('🦄 Uploader Tool', function () {
     })
     const videoInfoFromBlockchain = await getVideoInfoFromBlockchain()
     assert.isOk(videoInfoFromBlockchain)
-    assert.equal(videoInfoFromBlockchain.owner, paratii.config.account.address)
+    assert.equal(videoInfoFromBlockchain.owner, newAddress)
 
     // when the transcoder is done, we should be ready to publish the video
-    await browser.waitAndClick(`[data-test-id="video-submit-publish"]`)
-    await browser.waitAndClick(`[data-test-id="button-stake"]`)
-    await browser.waitAndClick(`a[href="/play/${videoId}"]`)
+    browser.waitAndClick(`[data-test-id="video-submit-publish"]`)
+    browser.pause(500)
+    browser.waitAndClick(`[data-test-id="button-stake"]`)
+    browser.waitAndClick(`a[href="/play/${videoId}"]`)
+    browser.url('http://localhost:8080')
+    browser.alertAccept()
   })
 
   it.skip('cancel upload should work [but is not yet]', function () {

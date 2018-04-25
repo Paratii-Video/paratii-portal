@@ -4,8 +4,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
+import TextField from 'components/widgets/forms/TextField'
 import Button from 'components/foundations/Button'
-import NumPad from 'components/widgets/NumPad'
 import {
   WALLET_KEY_SECURE,
   MNEMONIC_KEY_TEMP
@@ -17,18 +17,10 @@ type Props = {
   openModal: string => void,
   closeModal: () => void,
   notification: (Object, string) => void,
-  setWalletAddress: Object => void,
+  setWalletData: Object => void,
   setAddressAndBalance: () => void,
   fetchOwnedVideos: () => void
 }
-
-const PadWrapper = styled.div`
-  margin: 66px 0 96px;
-
-  @media (max-width: 767px) {
-    margin-bottom: 0;
-  }
-`
 
 const Footer = styled.div`
   display: flex;
@@ -37,65 +29,48 @@ const Footer = styled.div`
   width: 100%;
 `
 
+const FieldContainer = styled.div`
+  margin: 164px 0 220px;
+
+  @media (max-width: 767px) {
+    margin: 50px 0 0;
+  }
+`
+
 const ButtonContainer = styled.div`
   margin-left: 10px;
 `
 
-class ModalAskPin extends Component<Props, Object> {
-  clearPin: () => void
-  setPin: () => void
-  handlePinChange: (e: Object) => void
+class ModalAskPassword extends Component<Props, Object> {
+  clearPassword: () => void
+  setPassword: () => void
+  handleInputChange: (input: string, e: Object) => void
 
   constructor (props: Props) {
     super(props)
     this.state = {
-      pin: '',
-      isPin: false,
-      resetPinField: false,
+      password: '',
+      isPassword: false,
+      resetPasswordField: false,
       error: ''
     }
-    this.clearPin = this.clearPin.bind(this)
-    this.setPin = this.setPin.bind(this)
-    this.handlePinChange = this.handlePinChange.bind(this)
+    this.clearPassword = this.clearPassword.bind(this)
+    this.setPassword = this.setPassword.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
   }
 
-  componentDidMount (): void {
-    this.addKeyDownEventListeners()
-  }
-
-  componentWillUnmount (): void {
-    this.removeKeyDownEventListeners()
-  }
-
-  addKeyDownEventListeners () {
-    window.addEventListener('keydown', this.handleKeyDown.bind(this))
-  }
-
-  removeKeyDownEventListeners () {
-    window.removeEventListener('keydown', this.handleKeyDown.bind(this))
-  }
-
-  handleKeyDown (event: Object) {
-    if (event.keyCode === 13 /* enter */) {
-      this.setPin()
-    }
-    if (this.state.isPin && event.keyCode === 8 /* backspace */) {
-      this.clearPin()
-    }
-  }
-
-  clearPin () {
+  clearPassword () {
     this.setState({
-      pin: '',
-      resetPinField: true,
+      assword: '',
+      resetPasswordField: true,
       error: ''
     })
   }
 
-  setPin () {
+  setPassword () {
     sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
     // Decrypt Keystore
-    const pin = this.state.pin
+    const password = this.state.password
     const walletString = localStorage.getItem(WALLET_KEY_SECURE) || ''
     this.props.notification(
       { title: 'Trying to unlock your keystore...' },
@@ -103,9 +78,7 @@ class ModalAskPin extends Component<Props, Object> {
     )
     try {
       paratii.eth.wallet.clear()
-      paratii.eth.wallet.decrypt(JSON.parse(walletString), pin)
-      const address = paratii.eth.getAccount()
-      this.props.setWalletAddress({ address })
+      paratii.eth.wallet.decrypt(JSON.parse(walletString), password)
       this.props.notification(
         {
           title: 'Success!',
@@ -115,6 +88,7 @@ class ModalAskPin extends Component<Props, Object> {
       )
       // Set the balance
       this.props.setAddressAndBalance()
+      this.props.setWalletData({ walletKey: 'keystore' })
       // Retrieve your videos
       this.props.fetchOwnedVideos()
       this.props.closeModal()
@@ -133,49 +107,50 @@ class ModalAskPin extends Component<Props, Object> {
     }
   }
 
-  handlePinChange (pin: String) {
+  handleInputChange (input: string, e: Object) {
     this.setState({
-      resetPinField: false,
+      [input]: e.target.value,
       error: ''
     })
-    if (pin && pin.length === 4) {
-      if (!this.state.isPin) {
-        this.setState({
-          pin: pin,
-          isPin: true
-        })
-      }
-    }
   }
 
   render () {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Insert your PIN.</Title>
-          <PadWrapper>
-            <NumPad
-              onSetPin={this.handlePinChange}
-              reset={this.state.resetPinField}
+          <Title>Insert your Passwrord</Title>
+          <Text small gray>
+            We found a private wallet on your localStorage, insert the password
+            to <strong>decrypt</strong> it, and be able to use all the features
+            of Paratii
+          </Text>
+          <FieldContainer>
+            <TextField
               error={this.state.error.length > 0}
+              label="New Password"
+              id="input-new-password"
+              name="input-new-password"
+              type="password"
+              value={this.state.password}
+              onChange={e => this.handleInputChange('password', e)}
+              margin="0 0 30px"
             />
-          </PadWrapper>
-
-          {this.state.error && (
-            <Text pink small>
-              {this.state.error}
-            </Text>
-          )}
+            {this.state.error && (
+              <Text pink small>
+                {this.state.error}
+              </Text>
+            )}
+          </FieldContainer>
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.clearPin}>Clear</Button>
+              <Button onClick={this.clearPassword}>Clear</Button>
             </ButtonContainer>
             <ButtonContainer>
               <Button
-                data-test-id="pin-continue"
+                data-test-id="continue"
                 purple
-                onClick={this.setPin}
-                disabled={!this.state.isPin}
+                onClick={this.setPassword}
+                disabled={!this.state.password}
               >
                 Continue
               </Button>
@@ -187,4 +162,4 @@ class ModalAskPin extends Component<Props, Object> {
   }
 }
 
-export default ModalAskPin
+export default ModalAskPassword

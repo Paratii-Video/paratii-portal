@@ -7,9 +7,11 @@ import Button from 'components/foundations/Button'
 import NotepadSvg from 'components/foundations/svgs/NotepadSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
+import { RESTORE_ACCOUNT, NEW_ACCOUNT } from 'constants/ParatiiLibConstants'
 
 type Props = {
-  openModal: String => void
+  openModal: string => void,
+  setContext: string => void
 }
 
 const Icon = styled.div`
@@ -31,20 +33,22 @@ const ButtonContainer = styled.div`
 
 class ModalSecure extends Component<Props, Object> {
   restoreAccount: (e: Object) => void
-  showGreatPower: (e: Object) => void
+  createPassword: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
     this.restoreAccount = this.restoreAccount.bind(this)
-    this.showGreatPower = this.showGreatPower.bind(this)
+    this.createPassword = this.createPassword.bind(this)
   }
 
   restoreAccount () {
+    this.props.setContext(RESTORE_ACCOUNT)
     this.props.openModal(MODAL.RESTORE_ACCOUNT)
   }
 
-  showGreatPower () {
-    this.props.openModal(MODAL.GREAT_POWER)
+  createPassword () {
+    this.props.setContext(NEW_ACCOUNT)
+    this.props.openModal(MODAL.CREATE_PASSWORD)
   }
 
   render () {
@@ -69,7 +73,7 @@ class ModalSecure extends Component<Props, Object> {
               <Button
                 data-test-id="new-here"
                 purple
-                onClick={this.showGreatPower}
+                onClick={this.createPassword}
               >
                 I am new here
               </Button>

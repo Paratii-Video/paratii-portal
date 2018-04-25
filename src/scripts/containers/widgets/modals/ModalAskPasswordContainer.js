@@ -3,10 +3,10 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { openModal, closeModal } from 'actions/ModalActions'
-import { setAddressAndBalance, setWalletData } from 'actions/UserActions'
+import { setWalletData, setAddressAndBalance } from 'actions/UserActions'
 import { fetchOwnedVideos } from 'actions/VideoActions'
 import { show } from 'react-notification-system-redux'
-import ModalAskPin from 'components/widgets/modals/ModalAskPin'
+import ModalAskPassword from 'components/widgets/modals/ModalAskPassword'
 
 import type { RootState } from 'types/ApplicationTypes'
 
@@ -21,4 +21,4 @@ const mapDispatchToProps = dispatch => ({
   fetchOwnedVideos: bindActionCreators(fetchOwnedVideos, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalAskPin)
+export default connect(mapStateToProps, mapDispatchToProps)(ModalAskPassword)

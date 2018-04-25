@@ -112,18 +112,18 @@ class ModalSetPin extends Component<Props, Object> {
     if (!this.state.checkPin) {
       header = (
         <div>
-          <Title>Create a security PIN.</Title>
+          <Title>Create a PIN.</Title>
           <Text small gray>
-            It will work like a password for your account, in this browser.
+            This is the password for you account in this browser.
           </Text>
         </div>
       )
     } else {
       header = (
         <div>
-          <Title>Check your security PIN.</Title>
+          <Title>Check your PIN.</Title>
           <Text small gray>
-            Please insert again you PIN
+            Please insert your PIN again
           </Text>
         </div>
       )

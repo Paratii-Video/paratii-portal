@@ -64,9 +64,11 @@ type Props = {
   disabled: Boolean,
   readonly: Boolean,
   value: String,
-  id: 'String',
-  name: 'String',
-  type: 'String',
+  id: String,
+  name: String,
+  type: String,
+  maxLength: String,
+  tabIndex: String,
   onChange: (e: Object) => void
 }
 
@@ -140,6 +142,8 @@ class TextField extends Component<Props, void> {
           id={this.props.id}
           name={this.props.name}
           value={this.props.value}
+          maxLength={this.props.maxLength}
+          tabIndex={this.props.tabIndex}
           innerRef={ref => (this.FormField = ref)}
         />
         {this.props.label && (
