@@ -88,7 +88,7 @@ class ModalAskPassword extends Component<Props, Object> {
       )
       // Set the balance
       this.props.setAddressAndBalance()
-      this.props.setWalletData({ walletKey: 'keystore' })
+      this.props.setWalletData({ walletKey: WALLET_KEY_SECURE })
       // Retrieve your videos
       this.props.fetchOwnedVideos()
       this.props.closeModal()
