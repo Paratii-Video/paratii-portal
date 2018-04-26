@@ -7,7 +7,7 @@ import TextField from 'components/widgets/forms/TextField'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import { passwordStrength } from 'utils/AppUtils'
-import NotepadLockSvg from 'components/foundations/svgs/NotepadLockSvg'
+import BigLockSvg from 'components/foundations/svgs/BigLockSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import {
   PASSWORD_TEMP,
@@ -103,7 +103,7 @@ class ModalSetPassword extends Component<Props, Object> {
             letter and on <strong>number</strong>
           </Text>
           <Icon>
-            <NotepadLockSvg />
+            <BigLockSvg />
           </Icon>
           <TextField
             error={this.state.error.length > 0}
