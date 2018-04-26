@@ -53,12 +53,11 @@ describe('Wallet:', function () {
   // })
 
   it('restore your wallet using a seed', async function () {
-    browser.url(`http://localhost:8080/wallet`)
+    browser.url(`http://localhost:8080`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
     })
-    browser.waitForClickable('[data-test-id="pti-balance"]')
-    browser.waitAndClick('[data-test-id="secure-wallet"]')
+    browser.waitAndClick('[data-test-id="address-avatar"]')
     browser.pause(500)
     browser.waitAndClick('[data-test-id="restore-account"]')
     // Insert the seed
@@ -72,8 +71,11 @@ describe('Wallet:', function () {
     browser.setValue('[name="input-confirm-password"]', password)
     browser.waitAndClick('[data-test-id="continue"]')
 
-    browser.waitForClickable('[data-test-id="user-address"]')
-    const newAddress = browser.getText('[data-test-id="user-address"]')
+    // Get address from browser
+    const newAddress = browser.execute(function () {
+      return window.paratii.eth.getAccount()
+    }).value
+
     browser.waitForClickable('[data-test-id="pti-balance"]')
     const balance = browser.getText('[data-test-id="pti-balance"]')
     // Check the if the address is the restored one

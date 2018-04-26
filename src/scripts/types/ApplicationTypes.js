@@ -8,6 +8,7 @@ import UserRecord from 'records/UserRecords'
 import PlayerRecord from 'records/PlayerRecords'
 import UploaderRecord from 'records/UploaderRecords'
 import NotificationRecord from 'records/NotificationRecord'
+import ModalRecord from 'records/ModalRecord'
 import SearchRecord from 'records/SearchRecords'
 import {
   REQUEST_STATUS,
@@ -69,6 +70,7 @@ export type RootState = {
   videos: VideoRecordMap,
   player: PlayerRecord,
   notifications: NotificationsArray,
+  modal: ModalRecord,
   search: SearchRecord
 }
 
