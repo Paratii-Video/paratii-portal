@@ -96,10 +96,11 @@ class ModalSetPassword extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Create a password for securing your account</Title>
+          <Title>Choose a password</Title>
           <Text small gray>
-            It will work for a password for fast transactions,{' '}
-            <strong>but only if you are logged in</strong>
+            Please insert a password of <strong>eight</strong> characters or
+            longer, and it must contain at least on <strong>uppercase</strong>
+            letter and on <strong>number</strong>
           </Text>
           <Icon>
             <NotepadLockSvg />

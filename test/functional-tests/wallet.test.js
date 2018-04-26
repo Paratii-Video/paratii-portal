@@ -38,8 +38,8 @@ describe('Wallet:', function () {
 
     browser.url(`http://localhost:8080/wallet`)
     // Insert the password
-    browser.waitAndClick('[name="input-new-password"]')
-    browser.setValue('[name="input-new-password"]', password)
+    browser.waitAndClick('[name="wallet-password"]')
+    browser.setValue('[name="wallet-password"]', password)
     browser.waitAndClick('[data-test-id="continue"]')
     const balance = browser.getText('[data-test-id="pti-balance"]')
     // We have a new account so the balance should be zero

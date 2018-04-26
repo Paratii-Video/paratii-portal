@@ -93,13 +93,14 @@ class ModalAskPassword extends Component<Props, Object> {
       this.props.fetchOwnedVideos()
       this.props.closeModal()
     } catch (err) {
-      // wallet is not valid
+      // Password is not valid
       this.setState({
-        error: err.message
+        error: 'The password is not valid, please retype the password'
       })
       this.props.notification(
         {
-          title: err.message
+          title: 'The password is not valid',
+          message: 'Please retype the password.'
         },
         'error'
       )
@@ -120,16 +121,14 @@ class ModalAskPassword extends Component<Props, Object> {
         <ModalScrollContent>
           <Title>Insert your Password</Title>
           <Text small gray>
-            We found a private wallet on your localStorage, insert the password
-            to <strong>decrypt</strong> it, and be able to use all the features
-            of Paratii
+            Please insert your password to use all the features of Paratii
           </Text>
           <FieldContainer>
             <TextField
               error={this.state.error.length > 0}
-              label="New Password"
-              id="input-new-password"
-              name="input-new-password"
+              label="Insert your Password"
+              id="wallet-password"
+              name="wallet-password"
               type="password"
               value={this.state.password}
               onChange={e => this.handleInputChange('password', e)}
