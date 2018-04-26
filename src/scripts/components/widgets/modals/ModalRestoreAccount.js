@@ -11,8 +11,8 @@ import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
-  openModal: String => void,
-  restoreKeystore: String => void,
+  openModal: string => void,
+  restoreKeystore: string => void,
   previousModal: string
 }
 
