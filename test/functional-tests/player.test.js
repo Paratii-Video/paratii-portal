@@ -1,8 +1,8 @@
 import { assert } from 'chai'
 import queryString from 'query-string'
 
-describe('🎥 Player:', function () {
-  const videoId = 'TXWzBRXgWytP'
+describe('🎥 Player: @watch', function () {
+  const videoId = 'FdLPHh8kmNLY'
   const videoTitle = 'Great title'
   const videoElementSelector = '[data-test-id="player"] video'
   const overlaySelector = '[data-test-id="video-overlay"]'
@@ -75,7 +75,7 @@ describe('🎥 Player:', function () {
               !!(window.PLAYER_TEST_DATA && !window.PLAYER_TEST_DATA.playing)
           ).value,
         timeout,
-        `Video did not play after ${timeout}ms`
+        `Video played when it should not have`
       )
     })
 
@@ -128,16 +128,12 @@ describe('🎥 Player:', function () {
     )
   })
 
-  beforeEach(() => {
-    browser.execute(() => {})
-  })
-
   const runPlayerExpectations = ({ embed } = {}) => {
     describe('video play/pause', () => {
       if (embed) {
         it('does not play a video automatically by default', () => {
-          browser.goToTestVideoUrl({ embed })
-          browser.pause(1000)
+          browser.goToTestVideoUrl({ embed, queryParams: {} })
+          browser.pause(10000)
           browser.assertVideoNeverPlayed()
         })
 
