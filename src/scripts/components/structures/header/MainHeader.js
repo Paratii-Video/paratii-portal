@@ -11,14 +11,13 @@ import MainNavigation from 'components/structures/header/MainNavigation'
 import { add0x } from 'utils/AppUtils'
 
 import { Z_INDEX_HEADER } from 'constants/UIConstants'
-import { MODAL } from 'constants/ModalConstants'
 import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 
 type Props = {
   children: Object,
   userAddress: String,
   isWalletSecured: String,
-  openModal: string => void
+  checkUserWallet: () => void
 }
 
 const Header = styled.header`
@@ -205,7 +204,7 @@ class MainHeader extends Component<Props, void> {
 
   secureWallet () {
     console.log('click')
-    this.props.openModal(MODAL.SECURE)
+    this.props.checkUserWallet()
   }
 
   render () {

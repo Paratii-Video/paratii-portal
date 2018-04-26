@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { openModal } from 'actions/ModalActions'
+import { checkUserWallet } from 'actions/UserActions'
 import { getUserAddress, getIsSecure } from 'selectors/UserSelectors'
 import MainHeader from 'components/structures/header/MainHeader'
 
@@ -14,7 +14,7 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  openModal: bindActionCreators(openModal, dispatch)
+  checkUserWallet: bindActionCreators(checkUserWallet, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainHeader)
