@@ -2,13 +2,14 @@
 
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 import Video from 'records/VideoRecords'
 import { getVideoThumbnailUrl, getVideoPlayUrl } from 'utils/UrlUtils'
 import { formatDuration } from 'utils/VideoUtils'
 import TruncatedText from 'components/foundations/TruncatedText'
 
-const Wrapper = styled.a`
+const Wrapper = styled.div`
   display: flex;
   width: 100%;
   height: 160px;
@@ -104,24 +105,26 @@ class SearchResult extends React.Component<Props, void> {
   render () {
     const { video } = this.props
     return (
-      <Wrapper href={getVideoPlayUrl(video)}>
-        <ThumbnailWrapper>
-          <ThumbnailImage src={getVideoThumbnailUrl(video)} />
-          <ThumbnailData>
-            <Duration>{formatDuration(video.get('duration'))}</Duration>
-          </ThumbnailData>
-        </ThumbnailWrapper>
-        <Info>
-          <TopBar>
-            <Title>
-              <TruncatedText>{video.get('title')}</TruncatedText>
-            </Title>
-          </TopBar>
-          <BottomBar>
-            <Description>{video.get('description')}</Description>
-          </BottomBar>
-        </Info>
-      </Wrapper>
+      <Link to={getVideoPlayUrl(video)}>
+        <Wrapper>
+          <ThumbnailWrapper>
+            <ThumbnailImage src={getVideoThumbnailUrl(video)} />
+            <ThumbnailData>
+              <Duration>{formatDuration(video.get('duration'))}</Duration>
+            </ThumbnailData>
+          </ThumbnailWrapper>
+          <Info>
+            <TopBar>
+              <Title>
+                <TruncatedText>{video.get('title')}</TruncatedText>
+              </Title>
+            </TopBar>
+            <BottomBar>
+              <Description>{video.get('description')}</Description>
+            </BottomBar>
+          </Info>
+        </Wrapper>
+      </Link>
     )
   }
 }
