@@ -23,6 +23,15 @@ import {
   PlaybackLevel
 } from 'records/PlayerRecords'
 import { _getSelectedUploaderVideoId } from 'records/UploaderRecords'
+import {
+  _getCurrentSearchText,
+  _getHasNext,
+  _getNextSearchOffset,
+  _getSearchResults,
+  _getSearchRequestStatus,
+  _getAdditionalSearchRequestStatus
+} from 'records/SearchRecords'
+import Video from 'records/VideoRecords'
 
 import type {
   RootState,
@@ -30,6 +39,9 @@ import type {
   VideoRecordMap,
   PlayerPlugin
 } from 'types/ApplicationTypes'
+
+/* Global */
+export const getContext = (state: RootState): string => state.global.context
 
 /* Users */
 export const getUser = (state: RootState): UserRecord => state.user
@@ -77,3 +89,18 @@ export const getVideos = (state: RootState): VideoRecordMap => {
 /* Uploader */
 export const getSelectedUploaderVideoId = (state: RootState): string =>
   _getSelectedUploaderVideoId(state.uploader)
+
+/* Search */
+export const getCurrentSearchText = (state: RootState): string =>
+  _getCurrentSearchText(state.search)
+export const getHasNext = (state: RootState): boolean =>
+  _getHasNext(state.search)
+export const getNextSearchOffset = (state: RootState): number =>
+  _getNextSearchOffset(state.search)
+export const getSearchResults = (state: RootState): ImmutableList<Video> =>
+  _getSearchResults(state.search)
+export const getSearchRequestStatus = (state: RootState): RequestStatus =>
+  _getSearchRequestStatus(state.search)
+export const getAdditionalSearchRequestStatus = (
+  state: RootState
+): RequestStatus => _getAdditionalSearchRequestStatus(state.search)

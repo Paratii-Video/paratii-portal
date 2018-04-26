@@ -53,7 +53,7 @@ class ModalSecure extends Component<Props, Object> {
   }
 
   showSeed () {
-    this.props.openModal(MODAL.SHOW_SEED)
+    this.props.openModal(MODAL.CREATE_PASSWORD)
   }
 
   render () {

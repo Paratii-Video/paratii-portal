@@ -1,3 +1,4 @@
+/* @flow */
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
@@ -5,10 +6,11 @@ import TextField from '../widgets/forms/TextField'
 import Card, { CardTitle } from 'components/structures/Card'
 
 type Props = {
-  onFileChosen: (file: Object) => void,
-  onUploadRequested: (e: Object) => void,
+  isWalletSecured: Boolean,
   onError: Boolean,
-  margin: String
+  margin: string,
+  onFileChosen: (file: Object) => void,
+  checkUserWallet: () => void
 }
 const StyleInput = css`
   height: 100%;
@@ -79,8 +81,12 @@ const InputText = styled(TextField)`
   margin: 0 0 30px;
 `
 
-class FilesUploader extends Component<Props, void> {
-  constructor (props) {
+class FilesUploader extends Component<Props, Object> {
+  onFileChosen: (e: Object) => void
+  onDrag: (e: Object) => void
+  onCheck: (e: Object) => void
+
+  constructor (props: Props) {
     super(props)
 
     this.state = {
@@ -91,32 +97,48 @@ class FilesUploader extends Component<Props, void> {
 
     this.onFileChosen = this.onFileChosen.bind(this)
     this.onDrag = this.onDrag.bind(this)
+    this.onCheck = this.onCheck.bind(this)
   }
 
-  onFileChosen (e) {
-    const file = e.target.files[0]
-    this.props.onFileChosen(file)
-    this.setState({
-      file: file,
-      fileName: file.name + ' | ' + file.size + 'bytes'
-    })
-  }
-
-  onDrag (e) {
-    const status = e.type
-    let klass = ''
-
-    if (status === 'dragenter' || status === 'mouseover') {
-      klass = 'dragenter'
-    } else if (status === 'drop') {
-      klass = 'drop'
-    } else {
-      klass = ''
+  onCheck (e: Object) {
+    if (!this.props.isWalletSecured) {
+      e.preventDefault()
+      this.props.checkUserWallet()
     }
+  }
 
-    this.setState({
-      dragClass: klass
-    })
+  onFileChosen (e: Object) {
+    // If wallet not secure open the modal
+    if (this.props.isWalletSecured) {
+      const file = e.target.files[0]
+      this.props.onFileChosen(file)
+      this.setState({
+        file: file,
+        fileName: file.name + ' | ' + file.size + 'bytes'
+      })
+    } else {
+      this.props.checkUserWallet()
+    }
+  }
+
+  onDrag (e: Object) {
+    // If wallet not secure open the modal
+    if (this.props.isWalletSecured) {
+      const status = e.type
+      let klass = ''
+      if (status === 'dragenter' || status === 'mouseover') {
+        klass = 'dragenter'
+      } else if (status === 'drop') {
+        klass = 'drop'
+      } else {
+        klass = ''
+      }
+      this.setState({
+        dragClass: klass
+      })
+    } else {
+      this.props.checkUserWallet()
+    }
   }
 
   render () {
@@ -138,14 +160,9 @@ class FilesUploader extends Component<Props, void> {
       >
         <InputFile
           type="file"
+          onClick={this.onCheck}
           onChange={this.onFileChosen}
-          onDrag={this.onDrag}
-          onDragEnter={this.onDrag}
-          onDragExit={this.onDrag}
-          onDragLeave={this.onDrag}
-          onDrop={this.onDrag}
-          onMouseOver={this.onDrag}
-          onMouseOut={this.onDrag}
+          onDragEnd={this.onDrag}
         />
 
         <UploadCover>

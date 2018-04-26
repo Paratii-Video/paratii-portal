@@ -18,8 +18,10 @@ import {
   DEFAULT_PASSWORD,
   WALLET_KEY_ANON,
   MNEMONIC_KEY_TEMP,
+  PASSWORD_TEMP,
   MNEMONIC_KEY_ANON,
-  WALLET_KEY_SECURE
+  WALLET_KEY_SECURE,
+  ACTIVATE_SECURE_WALLET
 } from 'constants/ParatiiLibConstants'
 
 import paratii from 'utils/ParatiiLib'
@@ -54,8 +56,21 @@ export const logout = () => (dispatch: Dispatch) => {
   dispatch(logoutAction())
 }
 
+export const checkUserWallet = () => (dispatch: Dispatch) => {
+  if (ACTIVATE_SECURE_WALLET) {
+    const walletStringSecure: ?string = localStorage.getItem(WALLET_KEY_SECURE)
+    if (walletStringSecure) {
+      console.log('Try to open encrypted keystore')
+      // Need to ask the PIN
+      dispatch(openModal(MODAL.ASK_PASSWORD))
+    } else {
+      dispatch(openModal(MODAL.SECURE))
+    }
+  }
+}
+
 export const loadBalances = () => (dispatch: Dispatch) => {
-  const address: string = paratii.config.account.address
+  const address: string = paratii.eth.getAccount()
   if (address) {
     paratii.eth.balanceOf(address).then(({ ETH, PTI }) => {
       dispatch(
@@ -69,14 +84,11 @@ export const loadBalances = () => (dispatch: Dispatch) => {
 }
 
 export const setAddressAndBalance = () => (dispatch: Dispatch) => {
-  // FIXME this is a temporary fix because paratii lib not sync eth.wallet and config.address
-  if (paratii.eth.wallet[0]) {
-    const address: string = paratii.eth.wallet[0].address
-    paratii.eth.setAccount(address)
-    dispatch(setWalletAddress({ address: address }))
-  }
+  const address: string = paratii.eth.getAccount()
+  dispatch(setWalletAddress({ address: address }))
   dispatch(loadBalances())
   sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
+  sessionStorage.removeItem(PASSWORD_TEMP)
 }
 
 export const setupKeystore = () => async (
@@ -104,10 +116,10 @@ export const setupKeystore = () => async (
   }
 
   // Case 2: we have a secured wallet is localStorage
-  if (walletStringSecure) {
+  if (walletStringSecure && ACTIVATE_SECURE_WALLET) {
     console.log('Try to open encrypted keystore')
     // Need to ask the PIN
-    dispatch(openModal(MODAL.ASK_PIN))
+    dispatch(openModal(MODAL.ASK_PASSWORD))
   }
 
   // Case 3: there is an account in paratii.eth.wallet but not on localStorage
@@ -162,6 +174,12 @@ export const secureKeystore = (password: string) => async (
         WALLET_KEY_SECURE,
         JSON.stringify(encryptedSecuredWallet)
       )
+      console.log('restore secure wallet')
+      dispatch(
+        Notifications.success({
+          title: 'Your wallet is now secured'
+        })
+      )
     }
   } else {
     // Here we want to secure and migrate
@@ -209,6 +227,7 @@ export const secureKeystore = (password: string) => async (
       }
     }
 
+    console.log(encryptedSecuredWallet)
     if (encryptedSecuredWallet) {
       try {
         // Reload the new secure wallet from localStorage
