@@ -7,7 +7,7 @@ import TextField from 'components/widgets/forms/TextField'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import { passwordStrength } from 'utils/AppUtils'
-import NotepadLockSvg from 'components/foundations/svgs/NotepadLockSvg'
+import BigLockSvg from 'components/foundations/svgs/BigLockSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import {
   PASSWORD_TEMP,
@@ -96,13 +96,14 @@ class ModalSetPassword extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Create a password for securing your account</Title>
+          <Title>Choose a password</Title>
           <Text small gray>
-            It will work for a password for fast transactions,{' '}
-            <strong>but only if you are logged in</strong>
+            Please insert a password of <strong>eight</strong> characters or
+            longer, and it must contain at least on <strong>uppercase</strong>
+            letter and on <strong>number</strong>
           </Text>
           <Icon>
-            <NotepadLockSvg />
+            <BigLockSvg />
           </Icon>
           <TextField
             error={this.state.error.length > 0}

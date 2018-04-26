@@ -6,6 +6,7 @@ import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import TextField from 'components/widgets/forms/TextField'
 import Button from 'components/foundations/Button'
+import { MODAL } from 'constants/ModalConstants'
 import {
   WALLET_KEY_SECURE,
   MNEMONIC_KEY_TEMP
@@ -42,7 +43,7 @@ const ButtonContainer = styled.div`
 `
 
 class ModalAskPassword extends Component<Props, Object> {
-  clearPassword: () => void
+  forgotPassword: () => void
   setPassword: () => void
   handleInputChange: (input: string, e: Object) => void
 
@@ -54,17 +55,13 @@ class ModalAskPassword extends Component<Props, Object> {
       resetPasswordField: false,
       error: ''
     }
-    this.clearPassword = this.clearPassword.bind(this)
+    this.forgotPassword = this.forgotPassword.bind(this)
     this.setPassword = this.setPassword.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
   }
 
-  clearPassword () {
-    this.setState({
-      assword: '',
-      resetPasswordField: true,
-      error: ''
-    })
+  forgotPassword () {
+    this.props.openModal(MODAL.RESTORE_ACCOUNT)
   }
 
   setPassword () {
@@ -88,18 +85,19 @@ class ModalAskPassword extends Component<Props, Object> {
       )
       // Set the balance
       this.props.setAddressAndBalance()
-      this.props.setWalletData({ walletKey: 'keystore' })
+      this.props.setWalletData({ walletKey: WALLET_KEY_SECURE })
       // Retrieve your videos
       this.props.fetchOwnedVideos()
       this.props.closeModal()
     } catch (err) {
-      // wallet is not valid
+      // Password is not valid
       this.setState({
-        error: err.message
+        error: 'The password is not valid, please retype the password'
       })
       this.props.notification(
         {
-          title: err.message
+          title: 'The password is not valid',
+          message: 'Please retype the password.'
         },
         'error'
       )
@@ -120,16 +118,14 @@ class ModalAskPassword extends Component<Props, Object> {
         <ModalScrollContent>
           <Title>Insert your Password</Title>
           <Text small gray>
-            We found a private wallet on your localStorage, insert the password
-            to <strong>decrypt</strong> it, and be able to use all the features
-            of Paratii
+            Please insert your password to use all the features of Paratii
           </Text>
           <FieldContainer>
             <TextField
               error={this.state.error.length > 0}
-              label="New Password"
-              id="input-new-password"
-              name="input-new-password"
+              label="Insert your Password"
+              id="wallet-password"
+              name="wallet-password"
               type="password"
               value={this.state.password}
               onChange={e => this.handleInputChange('password', e)}
@@ -143,7 +139,7 @@ class ModalAskPassword extends Component<Props, Object> {
           </FieldContainer>
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.clearPassword}>Clear</Button>
+              <Button onClick={this.forgotPassword}>Forgot Password</Button>
             </ButtonContainer>
             <ButtonContainer>
               <Button

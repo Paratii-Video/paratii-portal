@@ -29,10 +29,10 @@ describe('🦄 Uploader Tool', function () {
     }, password)
 
     // Get address from browser
-    const address = browser.execute(function () {
+    const newAddress = browser.execute(function () {
       return window.paratii.eth.getAccount()
-    })
-    const newAddress = address.value
+    }).value
+
     // Send some PTI to new address
     const value = paratii.eth.web3.utils.toWei('20')
     paratii.eth.transfer(newAddress, value, 'PTI')
@@ -44,8 +44,8 @@ describe('🦄 Uploader Tool', function () {
     }
 
     browser.url('http://localhost:8080/upload')
-    browser.waitAndClick('[name="input-new-password"]')
-    browser.setValue('[name="input-new-password"]', password)
+    browser.waitAndClick('[name="wallet-password"]')
+    browser.setValue('[name="wallet-password"]', password)
     browser.waitAndClick('[data-test-id="continue"]')
 
     // Upload file

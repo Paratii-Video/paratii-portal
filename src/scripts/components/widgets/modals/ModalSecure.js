@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
-import NotepadSvg from 'components/foundations/svgs/NotepadSvg'
+import NotepadLockSvg from 'components/foundations/svgs/NotepadLockSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
 import { RESTORE_ACCOUNT, NEW_ACCOUNT } from 'constants/ParatiiLibConstants'
@@ -58,7 +58,7 @@ class ModalSecure extends Component<Props, Object> {
           <Title>Before you proceed your account needs to be secure</Title>
           <Text gray>It won’t take more than a minute</Text>
           <Icon>
-            <NotepadSvg />
+            <NotepadLockSvg />
           </Icon>
           <Footer>
             <ButtonContainer>
@@ -75,7 +75,7 @@ class ModalSecure extends Component<Props, Object> {
                 purple
                 onClick={this.createPassword}
               >
-                I am new here
+                Secure this account
               </Button>
             </ButtonContainer>
           </Footer>

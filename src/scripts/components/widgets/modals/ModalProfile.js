@@ -6,7 +6,7 @@ import Title from 'components/foundations/Title'
 import TextField from 'components/widgets/forms/TextField'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
-import NotepadLockSvg from 'components/foundations/svgs/NotepadLockSvg'
+import UsernameSvg from 'components/foundations/svgs/UsernameSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
 
@@ -81,7 +81,7 @@ class ModalSetPassword extends Component<Props, Object> {
             }
           </Text>
           <Icon>
-            <NotepadLockSvg />
+            <UsernameSvg />
           </Icon>
           <TextField
             error={this.state.error.length > 0}

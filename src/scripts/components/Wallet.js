@@ -1,3 +1,4 @@
+/* @flow */
 import React, { Component } from 'react'
 import Card from 'components/structures/Card'
 import Text from 'components/foundations/Text'
@@ -9,9 +10,9 @@ import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 type Props = {
   user: Object,
   userAddress: string,
-  isWalletSecured: string,
+  isWalletSecured: boolean,
   closeModal: () => void,
-  openModal: () => void
+  openModal: string => void
 }
 
 class Wallet extends Component<Props> {

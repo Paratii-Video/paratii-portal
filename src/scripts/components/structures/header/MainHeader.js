@@ -1,4 +1,3 @@
-// import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -11,10 +10,13 @@ import MainNavigation from 'components/structures/header/MainNavigation'
 import { add0x } from 'utils/AppUtils'
 
 import { Z_INDEX_HEADER } from 'constants/UIConstants'
+import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 
 type Props = {
   children: Object,
-  userAddress: String
+  userAddress: string,
+  isWalletSecured: boolean,
+  checkUserWallet: () => void
 }
 
 const Header = styled.header`
@@ -119,7 +121,13 @@ const SVG = styled.svg`
   width: 100%;
 `
 
-class MainHeader extends Component<Props, void> {
+class MainHeader extends Component<Props, Object> {
+  secureWallet: () => void
+  openNav: () => void
+  closeNav: () => void
+  toggleNav: () => void
+  secureWallet: () => void
+
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -130,6 +138,7 @@ class MainHeader extends Component<Props, void> {
     this.openNav = this.openNav.bind(this)
     this.closeNav = this.closeNav.bind(this)
     this.toggleNav = this.toggleNav.bind(this)
+    this.secureWallet = this.secureWallet.bind(this)
   }
 
   componentDidMount () {
@@ -165,7 +174,7 @@ class MainHeader extends Component<Props, void> {
 
   handleScroll = () => {
     // Ugly cross-browser compatibility
-    const top =
+    const top: number =
       document.documentElement.scrollTop ||
       document.body.parentNode.scrollTop ||
       document.body.scrollTop
@@ -196,15 +205,32 @@ class MainHeader extends Component<Props, void> {
     })
   }
 
+  secureWallet () {
+    console.log('click')
+    this.props.checkUserWallet()
+  }
+
   render () {
     let userAvatar = ''
     if (this.props.userAddress) {
       const lowerAddress = add0x(this.props.userAddress)
-      userAvatar = (
-        <ProfileAvatarLink to="/wallet">
-          <Blockies seed={lowerAddress} size={10} scale={4} />
-        </ProfileAvatarLink>
-      )
+      if (ACTIVATE_SECURE_WALLET && !this.props.isWalletSecured) {
+        userAvatar = (
+          <ProfileAvatarLink
+            data-test-id="address-avatar"
+            to="/#"
+            onClick={this.secureWallet}
+          >
+            <Blockies seed={lowerAddress} size={10} scale={4} />
+          </ProfileAvatarLink>
+        )
+      } else {
+        userAvatar = (
+          <ProfileAvatarLink data-test-id="address-avatar" to="/wallet">
+            <Blockies seed={lowerAddress} size={10} scale={4} />
+          </ProfileAvatarLink>
+        )
+      }
     }
 
     return (

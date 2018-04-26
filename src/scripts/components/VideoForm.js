@@ -1,3 +1,5 @@
+/* @flow */
+
 import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
@@ -81,17 +83,17 @@ type Props = {
   selectedVideo: VideoRecord,
   canSubmit: boolean,
   progress: Number,
-  isWalletSecured: Boolean,
-  isUploaded: Boolean,
-  isPublished: Boolean,
-  isPublishable: Boolean,
+  isWalletSecured: boolean,
+  isUploaded: boolean,
+  isPublished: boolean,
+  isPublishable: boolean,
   user: UserRecord,
   balance: String,
   innerRef: Object,
   saveVideoInfo: Object => Object,
   transcodeVideo: Object => Object,
-  uploadAndTranscode: Object => Object,
-  openModal: () => void,
+  uploadAndTranscode: (file: Object, videoId: string) => Object,
+  openModal: string => void,
   notification: (Object, string) => void,
   checkUserWallet: () => void
 }
@@ -102,6 +104,7 @@ class VideoForm extends Component<Props, Object> {
   onSaveData: (e: Object) => void
   publishVideo: (publish: boolean) => void
   saveData: (publish: boolean) => void
+  onFileChosen: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
@@ -155,7 +158,7 @@ class VideoForm extends Component<Props, Object> {
     }
   }
 
-  onFileChosen (e) {
+  onFileChosen (e: Object) {
     const file = e.target.files[0]
     this.props.uploadAndTranscode(file, this.props.selectedVideo.id)
   }

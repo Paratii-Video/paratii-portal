@@ -43,6 +43,14 @@ import type {
 /* Global */
 export const getContext = (state: RootState): string => state.global.context
 
+/* Modal */
+export const getModalStatus = (state: RootState): boolean =>
+  state.modal.showModal
+export const getModalContent = (state: RootState): string =>
+  state.modal.modalContent
+export const getPreviousModal = (state: RootState): string =>
+  state.modal.previousModalContent
+
 /* Users */
 export const getUser = (state: RootState): UserRecord => state.user
 export const getWalletKey = (state: RootState): string =>
