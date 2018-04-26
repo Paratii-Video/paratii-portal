@@ -10,7 +10,7 @@ import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 type Props = {
   user: Object,
   userAddress: string,
-  isWalletSecured: string,
+  isWalletSecured: boolean,
   closeModal: () => void,
   openModal: string => void
 }

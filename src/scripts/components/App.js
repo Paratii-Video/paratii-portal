@@ -34,7 +34,7 @@ type Props = {
   setSelectedVideo: (id: string) => void,
   match: Match,
   videos: Map<string, VideoRecord>,
-  isWalletSecured: Boolean
+  isWalletSecured: boolean
 }
 
 type State = {

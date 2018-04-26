@@ -1,4 +1,3 @@
-// import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -15,8 +14,8 @@ import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 
 type Props = {
   children: Object,
-  userAddress: String,
-  isWalletSecured: String,
+  userAddress: string,
+  isWalletSecured: boolean,
   checkUserWallet: () => void
 }
 
@@ -122,7 +121,11 @@ const SVG = styled.svg`
   width: 100%;
 `
 
-class MainHeader extends Component<Props, void> {
+class MainHeader extends Component<Props, Object> {
+  secureWallet: () => void
+  openNav: () => void
+  closeNav: () => void
+  toggleNav: () => void
   secureWallet: () => void
 
   constructor (props: Props) {
@@ -171,7 +174,7 @@ class MainHeader extends Component<Props, void> {
 
   handleScroll = () => {
     // Ugly cross-browser compatibility
-    const top =
+    const top: number =
       document.documentElement.scrollTop ||
       document.body.parentNode.scrollTop ||
       document.body.scrollTop
