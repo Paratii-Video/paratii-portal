@@ -21,7 +21,7 @@ describe('Wallet:', function () {
     browser.execute(nukeSessionStorage)
   })
 
-  it('If we have a secured wallet in localStorage, we open it with a password @watch', function () {
+  it('If we have a secured wallet in localStorage, we open it with a password', function () {
     browser.url(`http://localhost:8080`)
     browser.execute(function (password) {
       window.paratii.eth.wallet.clear()
