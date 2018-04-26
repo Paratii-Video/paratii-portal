@@ -211,23 +211,19 @@ class MainHeader extends Component<Props, void> {
     let userAvatar = ''
     if (this.props.userAddress) {
       const lowerAddress = add0x(this.props.userAddress)
-      if (ACTIVATE_SECURE_WALLET) {
-        if (this.props.isWalletSecured) {
-          userAvatar = (
-            <ProfileAvatarLink to="/wallet">
-              <Blockies seed={lowerAddress} size={10} scale={4} />
-            </ProfileAvatarLink>
-          )
-        } else {
-          userAvatar = (
-            <ProfileAvatarLink to="/#" onClick={this.secureWallet}>
-              <Blockies seed={lowerAddress} size={10} scale={4} />
-            </ProfileAvatarLink>
-          )
-        }
+      if (ACTIVATE_SECURE_WALLET && !this.props.isWalletSecured) {
+        userAvatar = (
+          <ProfileAvatarLink
+            data-test-id="address-avatar"
+            to="/#"
+            onClick={this.secureWallet}
+          >
+            <Blockies seed={lowerAddress} size={10} scale={4} />
+          </ProfileAvatarLink>
+        )
       } else {
         userAvatar = (
-          <ProfileAvatarLink to="/wallet">
+          <ProfileAvatarLink data-test-id="address-avatar" to="/wallet">
             <Blockies seed={lowerAddress} size={10} scale={4} />
           </ProfileAvatarLink>
         )

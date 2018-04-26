@@ -1,13 +1,14 @@
+/* @flow */
 import { connect } from 'react-redux'
-import { closeModal } from 'actions/ModalActions'
 import { bindActionCreators } from 'redux'
-
+import { getModalContent, getModalStatus } from 'selectors/index'
+import { closeModal } from 'actions/ModalActions'
 import Modal from 'components/widgets/modals/Modal'
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState) => ({
-  modalContent: state.modal.modalContent,
-  showModal: state.modal.showModal
+  modalContent: getModalContent(state),
+  showModal: getModalStatus(state)
 })
 
 const mapDispatchToProps = dispatch => ({
