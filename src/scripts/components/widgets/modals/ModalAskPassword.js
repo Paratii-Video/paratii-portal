@@ -6,6 +6,7 @@ import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import TextField from 'components/widgets/forms/TextField'
 import Button from 'components/foundations/Button'
+import { MODAL } from 'constants/ModalConstants'
 import {
   WALLET_KEY_SECURE,
   MNEMONIC_KEY_TEMP
@@ -42,7 +43,7 @@ const ButtonContainer = styled.div`
 `
 
 class ModalAskPassword extends Component<Props, Object> {
-  clearPassword: () => void
+  forgotPassword: () => void
   setPassword: () => void
   handleInputChange: (input: string, e: Object) => void
 
@@ -54,17 +55,13 @@ class ModalAskPassword extends Component<Props, Object> {
       resetPasswordField: false,
       error: ''
     }
-    this.clearPassword = this.clearPassword.bind(this)
+    this.forgotPassword = this.forgotPassword.bind(this)
     this.setPassword = this.setPassword.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
   }
 
-  clearPassword () {
-    this.setState({
-      assword: '',
-      resetPasswordField: true,
-      error: ''
-    })
+  forgotPassword () {
+    this.props.openModal(MODAL.RESTORE_ACCOUNT)
   }
 
   setPassword () {
@@ -142,7 +139,7 @@ class ModalAskPassword extends Component<Props, Object> {
           </FieldContainer>
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.clearPassword}>Clear</Button>
+              <Button onClick={this.forgotPassword}>Forgot Password</Button>
             </ButtonContainer>
             <ButtonContainer>
               <Button

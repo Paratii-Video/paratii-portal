@@ -8,7 +8,9 @@ import ModalRestoreAccount from 'components/widgets/modals/ModalRestoreAccount'
 
 import type { RootState } from 'types/ApplicationTypes'
 
-const mapStateToProps = (state: RootState) => ({})
+const mapStateToProps = (state: RootState) => ({
+  previousModal: state.modal.previousModalContent
+})
 
 const mapDispatchToProps = dispatch => ({
   openModal: bindActionCreators(openModal, dispatch),
