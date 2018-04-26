@@ -11,10 +11,14 @@ import MainNavigation from 'components/structures/header/MainNavigation'
 import { add0x } from 'utils/AppUtils'
 
 import { Z_INDEX_HEADER } from 'constants/UIConstants'
+import { MODAL } from 'constants/ModalConstants'
+import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 
 type Props = {
   children: Object,
-  userAddress: String
+  userAddress: String,
+  isWalletSecured: String,
+  openModal: string => void
 }
 
 const Header = styled.header`
@@ -120,6 +124,8 @@ const SVG = styled.svg`
 `
 
 class MainHeader extends Component<Props, void> {
+  secureWallet: () => void
+
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -130,6 +136,7 @@ class MainHeader extends Component<Props, void> {
     this.openNav = this.openNav.bind(this)
     this.closeNav = this.closeNav.bind(this)
     this.toggleNav = this.toggleNav.bind(this)
+    this.secureWallet = this.secureWallet.bind(this)
   }
 
   componentDidMount () {
@@ -196,15 +203,36 @@ class MainHeader extends Component<Props, void> {
     })
   }
 
+  secureWallet () {
+    console.log('click')
+    this.props.openModal(MODAL.SECURE)
+  }
+
   render () {
     let userAvatar = ''
     if (this.props.userAddress) {
       const lowerAddress = add0x(this.props.userAddress)
-      userAvatar = (
-        <ProfileAvatarLink to="/wallet">
-          <Blockies seed={lowerAddress} size={10} scale={4} />
-        </ProfileAvatarLink>
-      )
+      if (ACTIVATE_SECURE_WALLET) {
+        if (this.props.isWalletSecured) {
+          userAvatar = (
+            <ProfileAvatarLink to="/wallet">
+              <Blockies seed={lowerAddress} size={10} scale={4} />
+            </ProfileAvatarLink>
+          )
+        } else {
+          userAvatar = (
+            <ProfileAvatarLink to="/#" onClick={this.secureWallet}>
+              <Blockies seed={lowerAddress} size={10} scale={4} />
+            </ProfileAvatarLink>
+          )
+        }
+      } else {
+        userAvatar = (
+          <ProfileAvatarLink to="/wallet">
+            <Blockies seed={lowerAddress} size={10} scale={4} />
+          </ProfileAvatarLink>
+        )
+      }
     }
 
     return (
