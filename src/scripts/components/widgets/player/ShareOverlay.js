@@ -101,6 +101,10 @@ const ShareTitle = Title.extend`
   font-size: ${props => props.theme.fonts.video.share.title};
   font-weight: bold;
   margin-bottom: 10px;
+
+  @media (max-width: 767px) {
+    margin: 18px 0 24px;
+  }
 `
 
 const ShareContent = styled.div`
@@ -108,6 +112,7 @@ const ShareContent = styled.div`
   max-width: 480px;
   padding: 0 20px;
   text-align: center;
+  width: 100%;
 `
 
 const CopyEmbed = Button.extend`
@@ -117,11 +122,22 @@ const CopyEmbed = Button.extend`
   white-space: pre-wrap;
   word-wrap: break-word;
   width: 100%;
+
+  @media (max-width: 767px) {
+    font-size: ${props => props.theme.fonts.text.big};
+    height: 43px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
 `
 
 const ShareButtons = styled.div`
   display: flex;
   margin-top: 20px;
+
+  @media (max-width: 767px) {
+    margin-top: 50px;
+  }
 `
 
 const ShareLink = Button.extend`
@@ -138,6 +154,10 @@ const AnchorLink = Anchor.extend`
   text-align: center;
   width: 100%;
   word-wrap: break-word;
+
+  @media (max-width: 767px) {
+    margin: 0;
+  }
 `
 
 const ShareLinkIcon = styled.img`

@@ -1,6 +1,6 @@
 {
   "eth": {
-    "provider": "https://db-chain-staging.paratii.video",
+    "provider": "https://chain-staging.paratii.video",
     "registryAddress": "0xaa4A9f5FB33aD7E1a1bA77Ee536977Dd0eFE7034"
   },
   "db": {

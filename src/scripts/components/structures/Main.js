@@ -18,6 +18,10 @@ const MainWrapper = styled.main`
   @media (max-width: 1024px) {
     padding: 40px;
   }
+
+  @media (max-width: 767px) {
+    padding: 16px 20px 0;
+  }
 `
 
 class Main extends Component<Props, void> {

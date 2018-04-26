@@ -18,7 +18,11 @@ import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
-import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
+import {
+  requestFullscreen,
+  requestCancelFullscreen,
+  getAppRootUrl
+} from 'utils/AppUtils'
 import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 
 import type { ClapprPlayer, PlayerPlugin } from 'types/ApplicationTypes'
@@ -26,6 +30,8 @@ import type { Match } from 'react-router-dom'
 import mux from 'mux-embed'
 
 const PLAYER_ID = 'player'
+const Z_INDEX_PLAYER: string = '1'
+const Z_INDEX_OVERLAY: string = '2'
 
 type Props = {
   match: Match,
@@ -53,6 +59,7 @@ type Props = {
 
 type State = {
   isEmbed: boolean,
+  isStartScreen: boolean,
   mouseInOverlay: boolean,
   shouldShowVideoOverlay: boolean,
   showShareModal: boolean,
@@ -115,7 +122,7 @@ const PlayerWrapper = styled.div`
 const Player = styled.div`
   width: 100%;
   height: 100%;
-  z-index: 5;
+  z-index: ${Z_INDEX_PLAYER};
 `
 
 const OverlayWrapper = styled.div`
@@ -124,7 +131,7 @@ const OverlayWrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  z-index: ${Z_INDEX_OVERLAY};
 `
 
 const PlayInfo = styled(Card)`
@@ -166,6 +173,7 @@ class Play extends Component<Props, State> {
   wrapperRef: ?HTMLElement
   playerWrapperRef: ?HTMLElement
   stagedPlaybackLevel: number
+  shouldShowStartScreen: () => boolean
 
   constructor (props: Props) {
     super(props)
@@ -176,6 +184,7 @@ class Play extends Component<Props, State> {
       videoNotFound: false,
       playerCreated: '',
       isEmbed: this.props.isEmbed || false,
+      isStartScreen: this.props.isEmbed || false,
       showShareModal: false,
       videoHasNeverPlayed: true
     }
@@ -580,6 +589,12 @@ class Play extends Component<Props, State> {
       } else {
         player.play()
       }
+
+      this.setState(prevState => {
+        if (prevState.isStartScreen) {
+          return { isStartScreen: false }
+        }
+      })
     }
   }
 
@@ -629,53 +644,63 @@ class Play extends Component<Props, State> {
     return !valueIsFalse
   }
 
-  getPortalUrl () {
-    // FIXME: do not hardcode this here
-    return 'https://portal.paratii.video'
-  }
   getFacebookHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
     if (video) {
       var baseurl = 'https://www.facebook.com/sharer/sharer.php?u='
-      return baseurl + this.getPortalUrl() + '/play/' + video.id
+      return baseurl + appRootUrl + '/play/' + video.id
     }
   }
   getTwitterHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
+
     if (video) {
       const baseurl = 'https://twitter.com/intent/tweet'
-      const url = '?url=' + this.getPortalUrl() + '/play/' + video.id
+      const url = '?url=' + appRootUrl + '/play/' + video.id
       const text = '&text=🎬 Worth a watch: ' + video.title
       return baseurl + url + text
     }
   }
   getWhatsAppMobileHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
+
     if (video) {
       const baseurl = 'whatsapp://send?text='
-      const url = this.getPortalUrl() + '/play/' + video.id
+      const url = appRootUrl + '/play/' + video.id
       const text = '🎬 Worth a watch: ' + video.title + ' '
       return baseurl + text + url
     }
   }
   getWhatsAppDesktopHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
+
     if (video) {
       const baseurl = 'https://web.whatsapp.com/send?text='
-      const url = this.getPortalUrl() + '/play/' + video.id
+      const url = appRootUrl + '/play/' + video.id
       const text = '🎬 Worth a watch: ' + video.title + ' '
       return baseurl + text + url
     }
   }
   getTelegramHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
+
     if (video) {
       const baseurl = 'https://t.me/share/url'
-      const url = '?url=' + this.getPortalUrl() + '/play/' + video.id
+      const url = '?url=' + appRootUrl + '/play/' + video.id
       const text = '&text=🎬 Worth a watch: ' + video.title
       return baseurl + url + text
     }
   }
+
+  shouldShowStartScreen () {
+    return this.props.isEmbed && this.props.isPlaying
+  }
+
   render () {
     const { isEmbed, video } = this.props
 
@@ -720,6 +745,7 @@ class Play extends Component<Props, State> {
                       onClick={this.onOverlayClick}
                       video={video}
                       isEmbed={isEmbed}
+                      isStartScreen={this.state.isStartScreen}
                       toggleShareModal={this.toggleShareModal}
                       showShareModal={this.state.showShareModal}
                       onScrub={this.scrubVideo}
@@ -750,10 +776,12 @@ class Play extends Component<Props, State> {
                 <ShareOverlay
                   show={this.state.showShareModal}
                   onToggle={this.toggleShareModal}
-                  portalUrl={this.getPortalUrl()}
+                  portalUrl={getAppRootUrl(process.env.NODE_ENV)}
                   videoId={video && video.id}
                   videoLabelUrl={
-                    this.getPortalUrl() + '/play/' + ((video && video.id) || '')
+                    getAppRootUrl(process.env.NODE_ENV) +
+                    '/play/' +
+                    ((video && video.id) || '')
                   }
                   shareOptions={shareOptions}
                 />

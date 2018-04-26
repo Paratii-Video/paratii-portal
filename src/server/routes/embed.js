@@ -2,7 +2,7 @@
 
 import type { $Request, $Response } from 'express'
 import { Paratii } from 'paratii-js/dist/paratii'
-import { getParatiiConfig } from 'utils/AppUtils'
+import { getParatiiConfig, getAppRootUrl } from 'utils/AppUtils'
 
 const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 
@@ -44,9 +44,10 @@ module.exports = async (req: $Request, res: $Response) => {
   const thumbName = video.transcodingStatus.data.result.screenshots[0]
   const thumbnailUrl =
     'https://gateway.paratii.video/ipfs/' + ipfsHash + '/' + thumbName
+  const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
 
-  const url = `https://portal.paratii.video/play/${id}`
-  const embedUrl = `https://portal.paratii.video/embed/${id}`
+  const url = `${appRootUrl}/play/${id}`
+  const embedUrl = `${appRootUrl}/embed/${id}`
   const height = `1080`
   const width = `1920`
   // this needs to be the has of a video - just as the thumbnail, we need to save these data from paratii-db

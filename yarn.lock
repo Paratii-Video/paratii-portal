@@ -89,8 +89,8 @@
   resolved "https://registry.yarnpkg.com/@sheerun/eslint-config-standard/-/eslint-config-standard-10.2.1.tgz#7d73397369c396b3625cab6ec313f6d4208300ef"
 
 "@types/node@*":
-  version "7.0.60"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.60.tgz#5406c35961e4f9e2d5a1b9482daa14501754ecda"
+  version "9.6.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.4.tgz#0ef7b4cfc3499881c81e0ea1ce61a23f6f4f5b42"
 
 JSONStream@^1.0.3, JSONStream@^1.0.4:
   version "1.3.2"
@@ -10773,8 +10773,8 @@ mute-stream@0.0.7:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
 mux-embed@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/mux-embed/-/mux-embed-2.3.2.tgz#c3caa5070a06614c559971f4ce8fcf94dfa4a104"
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/mux-embed/-/mux-embed-2.4.1.tgz#ebd5cd3ae3334a3b46dd9ea40b454879c5f3c964"
 
 mz@^2.6.0:
   version "2.7.0"
@@ -11557,9 +11557,9 @@ parallel-transform@^1.1.0:
     web3 "^1.0.0-beta.27"
     zeppelin-solidity "^1.3.0"
 
-"paratii-js@github:Paratii-Video/paratii-js#3e4eef4cff3e3b69d1bcc48bf27199f670a6e3ac":
-  version "0.2.0"
-  resolved "https://codeload.github.com/Paratii-Video/paratii-js/tar.gz/3e4eef4cff3e3b69d1bcc48bf27199f670a6e3ac"
+paratii-js@0.2.5:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/paratii-js/-/paratii-js-0.2.5.tgz#7839d7938659013f7b9f455be2b00c3b91ce876b"
   dependencies:
     async "^2.6.0"
     bip39 "^2.5.0"
@@ -13770,7 +13770,7 @@ request-progress@~2.0.1:
   dependencies:
     throttleit "^1.0.0"
 
-request@2, request@^2.0.0, request@^2.62.x, request@^2.74.0, request@^2.79.0, request@^2.83.0:
+request@2, request@2.85.0, request@^2.0.0, request@^2.62.x, request@^2.74.0, request@^2.79.0, request@^2.83.0:
   version "2.85.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.85.0.tgz#5a03615a47c61420b3eb99b7dba204f83603e1fa"
   dependencies:
@@ -16619,15 +16619,15 @@ watchpack@^1.3.1, watchpack@^1.4.0:
     neo-async "^2.5.0"
 
 wd@^1.4.0:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/wd/-/wd-1.6.1.tgz#404fbf7823fb6e0d5e978eebf575a71d3b71fdc7"
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/wd/-/wd-1.6.2.tgz#92576ee11a5c792aa0249ea097e020ece1ed740e"
   dependencies:
     archiver "1.3.0"
     async "2.0.1"
     lodash "4.16.2"
     mkdirp "^0.5.1"
     q "1.4.1"
-    request "2.79.0"
+    request "2.85.0"
     underscore.string "3.3.4"
     vargs "0.1.0"
 

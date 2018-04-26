@@ -8,8 +8,11 @@ import Text from '../foundations/Text'
 import Card from '../structures/Card'
 
 type Props = {
+  isWalletSecured: Boolean,
+  openModal: string => void,
   loadBalances: () => void,
-  notification: (Object, string) => void
+  notification: (Object, string) => void,
+  checkUserWallet: () => void
 }
 
 const Icon = styled.svg`
@@ -53,7 +56,12 @@ class RedeemVoucher extends Component<Props, Object> {
   }
 
   handleChange (event: Object) {
-    this.setState({ voucher: event.target.value })
+    // If wallet not secure open the modal
+    if (this.props.isWalletSecured) {
+      this.setState({ voucher: event.target.value })
+    } else {
+      this.props.checkUserWallet()
+    }
   }
 
   redeemVoucher (event: Object) {
@@ -65,16 +73,23 @@ class RedeemVoucher extends Component<Props, Object> {
     paratii.eth.vouchers
       .redeem(voucherCode)
       .then(resp => {
-        loadBalances()
-        const amount = String(resp)
-        this.props.notification(
-          { title: 'Success', message: `You have received ${amount} PTI.` },
-          'success'
-        )
-        this.setState({
-          disableInput: false,
-          voucher: ''
-        })
+        if (resp) {
+          loadBalances()
+          const amount = paratii.eth.web3.utils.fromWei(String(resp))
+          this.props.notification(
+            { title: 'Success', message: `You have received ${amount} PTI.` },
+            'success'
+          )
+          this.setState({
+            disableInput: false,
+            voucher: ''
+          })
+        } else {
+          this.props.notification(
+            { title: 'Ops!', message: `Something went wrong` },
+            'error'
+          )
+        }
       })
       .catch(error => {
         if (error) {
@@ -151,10 +166,13 @@ class RedeemVoucher extends Component<Props, Object> {
             label="Enter code here to receive test PTI"
             disabled={this.state.disableInput}
             value={this.state.voucher}
+            id="voucher-code"
+            name="voucher-code"
           />
           <SubmitButton
             onClick={this.redeemVoucher}
             disabled={this.state.disableInput}
+            data-test-id="redeem-voucher"
           >
             {' '}
             Submit

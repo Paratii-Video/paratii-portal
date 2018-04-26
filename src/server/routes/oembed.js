@@ -1,6 +1,6 @@
 import type { $Request, $Response } from 'express'
 import { Paratii } from 'paratii-js/dist/paratii'
-import { getParatiiConfig } from 'utils/AppUtils'
+import { getParatiiConfig, getAppRootUrl } from 'utils/AppUtils'
 
 const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 const paratii = new Paratii(paratiiConfig)
@@ -12,7 +12,7 @@ module.exports = async (req: $Request, res: $Response) => {
     res.end(JSON.stringify(oembedresponse))
   }
 
-  const baseUrl = 'https://portal.paratii.video'
+  const baseUrl = getAppRootUrl(process.env.NODE_ENV)
   const parsedExternalUrl = parseUrl(req.query.url)
   const parsedInternalUrl = parseUrl(baseUrl)
   console.log(parsedInternalUrl)

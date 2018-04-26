@@ -1,3 +1,5 @@
+/* @flow */
+
 import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
@@ -81,19 +83,19 @@ type Props = {
   selectedVideo: VideoRecord,
   canSubmit: boolean,
   progress: Number,
-  saveVideoInfo: Object => Object,
-  transcodeVideo: Object => Object,
-  uploadAndTranscode: Object => Object,
-  // showModal: (View: Object) => void,
-  // closeModal: () => void,
-  openModal: () => void,
-  notification: (Object, string) => void,
-  isUploaded: Boolean,
-  isPublished: Boolean,
-  isPublishable: Boolean,
+  isWalletSecured: boolean,
+  isUploaded: boolean,
+  isPublished: boolean,
+  isPublishable: boolean,
   user: UserRecord,
   balance: String,
-  innerRef: Object
+  innerRef: Object,
+  saveVideoInfo: Object => Object,
+  transcodeVideo: Object => Object,
+  uploadAndTranscode: (file: Object, videoId: string) => Object,
+  openModal: string => void,
+  notification: (Object, string) => void,
+  checkUserWallet: () => void
 }
 
 class VideoForm extends Component<Props, Object> {
@@ -102,6 +104,7 @@ class VideoForm extends Component<Props, Object> {
   onSaveData: (e: Object) => void
   publishVideo: (publish: boolean) => void
   saveData: (publish: boolean) => void
+  onFileChosen: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
@@ -146,18 +149,28 @@ class VideoForm extends Component<Props, Object> {
         'error'
       )
     } else {
-      this.publishVideo(true)
+      if (this.props.isWalletSecured) {
+        this.publishVideo(true)
+      } else {
+        // If wallet not secure open the modal
+        this.props.checkUserWallet()
+      }
     }
   }
 
-  onFileChosen (e) {
+  onFileChosen (e: Object) {
     const file = e.target.files[0]
     this.props.uploadAndTranscode(file, this.props.selectedVideo.id)
   }
 
   onSaveData (e: Object) {
     e.preventDefault()
-    this.saveData(false)
+    if (this.props.isWalletSecured) {
+      this.saveData(false)
+    } else {
+      // If wallet not secure open the modal
+      this.props.checkUserWallet()
+    }
   }
 
   publishVideo (publish: false) {
@@ -271,6 +284,8 @@ class VideoForm extends Component<Props, Object> {
               value={this.state.title}
               onChange={e => this.handleInputChange('title', e)}
               margin="0 0 30px"
+              maxLength="100"
+              tabIndex="1"
             />
             <Textarea
               id="input-video-description"
@@ -279,6 +294,7 @@ class VideoForm extends Component<Props, Object> {
               label="Description"
               rows="1"
               margin="0 0 30px"
+              tabIndex="2"
             />
             <TextField
               label="Video Owner"
@@ -287,6 +303,8 @@ class VideoForm extends Component<Props, Object> {
               value={this.state.author}
               onChange={e => this.handleInputChange('author', e)}
               margin="0 0 30px"
+              maxLength="50"
+              tabIndex="3"
             />
             <RadioWrapper>
               <RadioTitle>What kind of content?</RadioTitle>

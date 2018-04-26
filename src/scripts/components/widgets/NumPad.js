@@ -9,7 +9,7 @@ type Props = {
 }
 
 const NumPadWrapper = styled.div`
-  max-width: 260px;
+  max-width: 270px;
   margin: auto;
 `
 const ButtonsWrapper = styled.div`
@@ -19,23 +19,25 @@ const ButtonsWrapper = styled.div`
 `
 const NumberBtn = styled.div`
   user-select: none;
-  padding: 10px;
-  border: 1px solid ${Colors.purple};
+  border: 2px solid ${Colors.purple};
   color: ${Colors.purple};
-  margin: 3px;
+  margin: 0 6px 12px;
   cursor: pointer;
-  flex: 1 0 calc(33.333% - 20px);
-  max-width: calc(33.333% - 20px);
+  flex: 1 0 68px;
+  max-width: 68px;
+  height: 60px;
+  line-height: 60px;
   text-align: center;
   border-radius: 2px;
-  transition: all 0.3s;
+  transition: all ${props => props.theme.animation.time.repaint};
 
   &:active {
     background-color: ${Colors.purple};
-    color: ${Colors.gray};
+    color: ${Colors.white};
   }
   &:hover {
-    opacity: 0.7;
+    background-color: ${Colors.purple};
+    color: ${Colors.white};
   }
 `
 

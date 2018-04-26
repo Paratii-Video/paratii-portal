@@ -44,6 +44,8 @@ type Props = {
   isFullscreen: boolean,
   togglePlayPause: () => void,
   transitionState: TransitionState,
+  showShareModal?: boolean,
+  isStartScreen?: boolean,
   currentTimeSeconds: number,
   currentBufferedTimeSeconds: number,
   currentVolume: number,
@@ -66,17 +68,26 @@ type State = {
 }
 
 const CONTROL_BUTTONS_HEIGHT: string = '50px'
+const SHADOW_HEIGHT: string = '100px'
 const Z_INDEX_SHADOW: string = '1'
 const Z_INDEX_CONTENT: string = '2'
 
 const Wrapper = styled.div`
   position: relative;
-  display: flex;
-  flex: 0 0 ${CONTROLS_HEIGHT};
-
-  @media (max-width: 768px) {
-    flex: 0 0 ${CONTROLS_HEIGHT_TABLET};
-  }
+  transform: translate3d(
+    0,
+    ${({ transitionState, showShareModal, isStartScreen }) => {
+    return transitionState === TRANSITION_STATE.ENTERED &&
+        !showShareModal &&
+        !isStartScreen
+      ? 0
+      : 'calc(100% + 10px)'
+  }},
+    0
+  );
+  transition: transform
+    ${({ transitionState }) => (TRANSITION_STATE.EXITED ? '0.6s' : '0.9s')}
+    ${({ theme }) => theme.animation.ease.smooth};
 `
 
 const Shadow = styled.span`
@@ -84,7 +95,7 @@ const Shadow = styled.span`
   bottom: 0;
   left: 0;
   z-index: ${Z_INDEX_SHADOW};
-  height: 180%;
+  height: ${SHADOW_HEIGHT};
   width: 100%;
   background: linear-gradient(
     to bottom,
@@ -93,16 +104,12 @@ const Shadow = styled.span`
     rgba(0, 0, 0, 0.55) 70%,
     rgba(0, 0, 0, 0.7) 95%
   );
-  opacity: ${({ transitionState }) => {
-    switch (transitionState) {
-      case TRANSITION_STATE.ENTERING:
-      case TRANSITION_STATE.EXITED:
-        return 0
-      case TRANSITION_STATE.EXITING:
-      case TRANSITION_STATE.ENTERED:
-      default:
-        return 1
-    }
+  opacity: ${({ transitionState, showShareModal, isStartScreen }) => {
+    return transitionState === TRANSITION_STATE.ENTERED &&
+      !showShareModal &&
+      !isStartScreen
+      ? 1
+      : 0
   }};
   transition: opacity
     ${({ transitionState }) => {
@@ -122,29 +129,15 @@ const Controls = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: ${CONTROLS_HEIGHT};
   position: relative;
   z-index: ${Z_INDEX_CONTENT};
   align-items: center;
   background: ${({ theme }) => theme.colors.VideoPlayer.controls.background};
-  transform: translate3d(
-    0,
-    ${({ transitionState }) => {
-    switch (transitionState) {
-      case TRANSITION_STATE.ENTERING:
-      case TRANSITION_STATE.EXITED:
-        return 'calc(100% + 10px)'
-      case TRANSITION_STATE.EXITING:
-      case TRANSITION_STATE.ENTERED:
-      default:
-        return 0
-    }
-  }},
-    0
-  );
-  transition: transform
-    ${({ transitionState }) => (TRANSITION_STATE.EXITED ? '0.6s' : '0.9s')}
-    ${({ theme }) => theme.animation.ease.smooth};
+
+  @media (max-width: 768px) {
+    height: ${CONTROLS_HEIGHT_TABLET};
+  }
 `
 
 const ProgressWrapper = styled.div`
@@ -287,6 +280,7 @@ class PlayerControls extends Component<Props, State> {
       activePlugin,
       isPlaying,
       isFullscreen,
+      isStartScreen,
       onScrub,
       onVolumeChange,
       onToggleMute,
@@ -294,6 +288,7 @@ class PlayerControls extends Component<Props, State> {
       togglePlayPause,
       toggleFullscreen,
       transitionState,
+      showShareModal,
       currentTimeSeconds,
       currentBufferedTimeSeconds,
       formattedCurrentTime,
@@ -304,11 +299,21 @@ class PlayerControls extends Component<Props, State> {
     } = this.props
 
     return (
-      <Wrapper>
-        <Shadow transitionState={transitionState} />
+      <Wrapper
+        transitionState={transitionState}
+        showShareModal={showShareModal}
+        isStartScreen={isStartScreen}
+      >
+        <Shadow
+          transitionState={transitionState}
+          showShareModal={showShareModal}
+          isStartScreen={isStartScreen}
+        />
         <Controls
           data-test-id="player-controls"
           transitionState={transitionState}
+          showShareModal={showShareModal}
+          isStartScreen={isStartScreen}
         >
           <ProgressWrapper
             onMouseDown={(e: Object) => {

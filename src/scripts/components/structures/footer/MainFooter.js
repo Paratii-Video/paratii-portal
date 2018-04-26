@@ -17,6 +17,10 @@ const Footer = styled.footer`
     padding: 55px 40px 50px;
     flex: initial;
   }
+
+  @media (max-width: 767px) {
+    text-align: center;
+  }
 `
 
 const FooterOpenSourceText = styled.p`
@@ -30,6 +34,10 @@ const FooterOpenSourceText2 = FooterOpenSourceText.extend`
 
   @media (max-width: 900px) {
     margin-top: 30px;
+  }
+
+  @media (max-width: 767px) {
+    padding: 0 40px;
   }
 `
 

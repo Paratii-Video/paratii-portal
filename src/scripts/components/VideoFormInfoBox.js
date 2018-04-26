@@ -10,6 +10,7 @@ import TextField from './widgets/forms/TextField'
 import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
 import VideoProgressTitle from 'components/widgets/VideoForm/VideoProgressTitle'
+import { getAppRootUrl } from 'utils/AppUtils'
 
 const VideoFormInfoBox = styled.div`
   flex: 1 1 584px;
@@ -145,7 +146,9 @@ class InfoBox extends Component<Props, Object> {
     // const fileSize = prettyBytes((video && video.get('filesize')) || 0)
     const ipfsHash = (video && video.get('ipfsHash')) || ''
     const urlToPlay = `/play/${video.id}`
-    const urlForSharing = `https://portal.paratii.video/play/${video.id}`
+    const urlForSharing = `${getAppRootUrl(process.env.NODE_ENV)}/play/${
+      video.id
+    }`
 
     const thumbImages: ImmutableList<string> =
       (video && video.getIn(['thumbnails'])) || ImmutableList()

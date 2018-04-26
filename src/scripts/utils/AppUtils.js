@@ -3,6 +3,29 @@
 import shortNumber from 'short-number'
 import VideoRecord from 'records/VideoRecords'
 
+export const passwordStrength = (password: ?string): string => {
+  const longRegex = new RegExp('^(?=.{8,})')
+  const numberRegex = new RegExp('^(?=.*[0-9])')
+  const uppercaseRegex = new RegExp('^(?=.*[A-Z])')
+  let error = ''
+  if (password) {
+    if (!longRegex.test(password)) {
+      error = 'The password must be eight characters or longer'
+      return error
+    }
+    if (!numberRegex.test(password)) {
+      error = 'The password must contain at least 1 numeric character'
+      return error
+    }
+    if (!uppercaseRegex.test(password)) {
+      error =
+        'The password must contain at least 1 uppercase alphabetical character'
+      return error
+    }
+  }
+  return ''
+}
+
 export const getRoot = (): Element => {
   let root: ?Element = document.getElementById('root')
 
@@ -13,6 +36,20 @@ export const getRoot = (): Element => {
   }
 
   return root
+}
+
+export const getAppRootUrl = (env: ?string = 'development'): string => {
+  switch (env) {
+    case 'production':
+      return 'https://portal.paratii.video'
+    case 'test':
+      return 'https://staging.paratii.video'
+    case 'staging':
+      return 'https://staging.paratii.video'
+    case 'development':
+    default:
+      return 'http://localhost:8080'
+  }
 }
 
 export const getParatiiConfig = (env: ?string = 'development'): Object => {

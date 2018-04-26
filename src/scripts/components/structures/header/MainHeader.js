@@ -1,18 +1,22 @@
-// import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import Blockies from 'react-blockies'
+
+import SearchInputContainer from 'containers/widgets/SearchInputContainer'
 import Button from 'components/foundations/Button'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
 import MainNavigation from 'components/structures/header/MainNavigation'
-import { Link } from 'react-router-dom'
 import { add0x } from 'utils/AppUtils'
-import Blockies from 'react-blockies'
 
 import { Z_INDEX_HEADER } from 'constants/UIConstants'
+import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 
 type Props = {
   children: Object,
-  userAddress: String
+  userAddress: string,
+  isWalletSecured: boolean,
+  checkUserWallet: () => void
 }
 
 const Header = styled.header`
@@ -20,7 +24,7 @@ const Header = styled.header`
   box-shadow: ${({ displayShadow }) =>
     displayShadow ? '0 3px 5px rgba(0,0,0,0.16)' : ''};
   display: flex;
-  padding: 20px 80px;
+  padding: 0 80px;
   position: fixed;
   transition: box-shadow 0.3s;
   width: 100%;
@@ -28,7 +32,7 @@ const Header = styled.header`
 
   @media (max-width: 768px) {
     height: ${props => (props.open ? '100vh' : null)};
-    padding: 20px 40px;
+    padding: 0 40px;
   }
 `
 
@@ -44,22 +48,33 @@ const HeaderWrapper = styled.div`
   }
 `
 
+const LogoWrapper = styled.div`
+  margin-right: 40px;
+  flex: 0 0
+    ${props =>
+    props.theme.sizes ? props.theme.sizes.mainHeaderLogo.width : ''};
+  height: ${props =>
+    props.theme.sizes ? props.theme.sizes.mainHeaderLogo.height : ''};
+`
+
 const HeaderContent = styled.div`
   align-items: center;
   display: flex;
+  flex: 0 1 100%;
+  justify-content: flex-end;
 
   @media (max-width: 768px) {
     display: ${props => (props.open ? 'block' : 'none')};
     flex: 1 1 100%;
   }
+`
 
-  form {
-    flex: 0 0 207px;
-    transform: translate3d(82px, -5px, 0);
-  }
+const SearchWrapper = styled.div`
+  flex: 0 1 auto;
 `
 
 const HeaderButtons = styled.div`
+  flex: 1 1 auto;
   align-items: center;
   display: flex;
   justify-content: flex-end;
@@ -71,8 +86,6 @@ const HeaderButtons = styled.div`
     margin-top: 30px;
   }
 `
-
-// foundation/widgets(move?)
 
 const ProfileAvatarLink = styled(Link)`
   background-color: ${props => props.theme.colors.header.color};
@@ -108,7 +121,13 @@ const SVG = styled.svg`
   width: 100%;
 `
 
-class MainHeader extends Component<Props, void> {
+class MainHeader extends Component<Props, Object> {
+  secureWallet: () => void
+  openNav: () => void
+  closeNav: () => void
+  toggleNav: () => void
+  secureWallet: () => void
+
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -119,6 +138,7 @@ class MainHeader extends Component<Props, void> {
     this.openNav = this.openNav.bind(this)
     this.closeNav = this.closeNav.bind(this)
     this.toggleNav = this.toggleNav.bind(this)
+    this.secureWallet = this.secureWallet.bind(this)
   }
 
   componentDidMount () {
@@ -154,7 +174,7 @@ class MainHeader extends Component<Props, void> {
 
   handleScroll = () => {
     // Ugly cross-browser compatibility
-    const top =
+    const top: number =
       document.documentElement.scrollTop ||
       document.body.parentNode.scrollTop ||
       document.body.scrollTop
@@ -185,15 +205,32 @@ class MainHeader extends Component<Props, void> {
     })
   }
 
+  secureWallet () {
+    console.log('click')
+    this.props.checkUserWallet()
+  }
+
   render () {
     let userAvatar = ''
     if (this.props.userAddress) {
       const lowerAddress = add0x(this.props.userAddress)
-      userAvatar = (
-        <ProfileAvatarLink to="/wallet">
-          <Blockies seed={lowerAddress} size={10} scale={4} />
-        </ProfileAvatarLink>
-      )
+      if (ACTIVATE_SECURE_WALLET && !this.props.isWalletSecured) {
+        userAvatar = (
+          <ProfileAvatarLink
+            data-test-id="address-avatar"
+            to="/#"
+            onClick={this.secureWallet}
+          >
+            <Blockies seed={lowerAddress} size={10} scale={4} />
+          </ProfileAvatarLink>
+        )
+      } else {
+        userAvatar = (
+          <ProfileAvatarLink data-test-id="address-avatar" to="/wallet">
+            <Blockies seed={lowerAddress} size={10} scale={4} />
+          </ProfileAvatarLink>
+        )
+      }
     }
 
     return (
@@ -203,8 +240,15 @@ class MainHeader extends Component<Props, void> {
       >
         {this.props.children}
         <HeaderWrapper open={this.state.navOpen}>
-          <MainHeaderLogo />
+          <LogoWrapper>
+            <MainHeaderLogo />
+          </LogoWrapper>
           <HeaderContent open={this.state.navOpen}>
+            {process.env.NODE_ENV !== 'production' && (
+              <SearchWrapper>
+                <SearchInputContainer />
+              </SearchWrapper>
+            )}
             <HeaderButtons>
               <MainNavigation closeNav={this.closeNav} />
               {userAvatar}
