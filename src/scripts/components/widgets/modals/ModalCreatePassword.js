@@ -17,10 +17,18 @@ import {
 import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
-  openModal: String => void,
+  openModal: string => void,
   closeModal: () => void,
-  secureKeystore: String => void,
-  getContext: String
+  secureKeystore: string => void,
+  getContext: string
+}
+
+type State = {
+  password: string,
+  confirm: string,
+  errors: Array<string>,
+  hasBlurredPasswordInput: boolean,
+  hasAttemptedToSubmit: boolean
 }
 
 const Footer = styled.div`
@@ -40,7 +48,7 @@ const Icon = styled.div`
   width: 100%;
 `
 
-class ModalSetPassword extends Component<Props, Object> {
+class ModalSetPassword extends Component<Props, State> {
   setPassword: () => void
   secureAccount: () => void
   handleInputChange: (input: string, e: Object) => void
@@ -50,7 +58,9 @@ class ModalSetPassword extends Component<Props, Object> {
     this.state = {
       password: '',
       confirm: '',
-      errors: []
+      errors: [],
+      hasBlurredPasswordInput: false,
+      hasAttemptedToSubmit: false
     }
     this.setPassword = this.setPassword.bind(this)
     this.secureAccount = this.secureAccount.bind(this)
@@ -68,7 +78,8 @@ class ModalSetPassword extends Component<Props, Object> {
 
     this.setState(
       {
-        errors
+        errors,
+        hasAttemptedToSubmit: true
       },
       () => {
         const { errors } = this.state
@@ -81,11 +92,6 @@ class ModalSetPassword extends Component<Props, Object> {
               this.props.secureKeystore(this.state.password)
               this.props.closeModal()
             }
-          } else {
-            // Error, the two Passwords are different
-            this.setState({
-              error: `Hey, your passwords do not match`
-            })
           }
         }
       }
@@ -93,10 +99,53 @@ class ModalSetPassword extends Component<Props, Object> {
   }
 
   handleInputChange (input: string, e: Object) {
-    this.setState({
-      [input]: e.target.value,
-      error: ''
+    const value: string = e.target.value
+    const stateToMerge: Object = {
+      [input]: value
+    }
+    if (input === 'password') {
+      stateToMerge.errors = getPasswordValidationErrors(value)
+    }
+    this.setState(stateToMerge)
+  }
+
+  handlePasswordInputBlur = () => {
+    this.setState((prevState: State) => {
+      if (!prevState.hasBlurredPasswordInput) {
+        return {
+          hasBlurredPasswordInput: true
+        }
+      }
     })
+  }
+
+  getPasswordErrors () {
+    const passwordErrors: Array<string> =
+      (this.state.hasBlurredPasswordInput && this.state.errors) || []
+    return passwordErrors
+  }
+
+  getConfirmErrors () {
+    const confirmErrors: Array<string> =
+      (this.state.hasAttemptedToSubmit &&
+        this.state.password !== this.state.confirm && [
+        'Hey, your passwords do not match'
+      ]) ||
+      []
+
+    return confirmErrors
+  }
+
+  getAllErrors () {
+    return this.getPasswordErrors().concat(this.getConfirmErrors())
+  }
+
+  renderErrors () {
+    return this.getAllErrors().map((error: string) => (
+      <Text pink small key={error}>
+        {error}
+      </Text>
+    ))
   }
 
   render () {
@@ -113,17 +162,18 @@ class ModalSetPassword extends Component<Props, Object> {
             <BigLockSvg />
           </Icon>
           <TextField
-            error={this.state.errors.length > 0}
+            error={this.getPasswordErrors().length > 0}
             label="New Password"
             id="input-new-password"
             name="input-new-password"
             type="password"
             value={this.state.password}
+            onBlur={this.handlePasswordInputBlur}
             onChange={e => this.handleInputChange('password', e)}
             margin="0 0 30px"
           />
           <TextField
-            error={this.state.errors.length > 0}
+            error={this.getConfirmErrors().length > 0}
             label="Confirm Password"
             id="input-confirm-password"
             name="input-confirm-password"
@@ -132,11 +182,7 @@ class ModalSetPassword extends Component<Props, Object> {
             onChange={e => this.handleInputChange('confirm', e)}
             margin="0 0 30px"
           />
-          {this.state.errors.map((error: string) => (
-            <Text pink small key={error}>
-              {error}
-            </Text>
-          ))}
+          {this.renderErrors()}
           <Footer>
             <ButtonContainer>
               <Button onClick={this.secureAccount}>Back</Button>
