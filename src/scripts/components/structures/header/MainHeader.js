@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
 
 import SearchInputContainer from 'containers/widgets/SearchInputContainer'
-import Button from 'components/foundations/Button'
+import Button, { SVGIcon } from 'components/foundations/Button'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
 import MainNavigation from 'components/structures/header/MainNavigation'
 import { add0x } from 'utils/AppUtils'
@@ -110,13 +110,6 @@ const MobileButton = styled(Button)`
   @media (max-width: 768px) {
     display: block;
   }
-`
-
-const SVG = styled.svg`
-  fill: ${props => props.theme.colors.Modal.close};
-  display: block;
-  height: 100%;
-  width: 100%;
 `
 
 class MainHeader extends Component<Props, void> {
@@ -229,11 +222,10 @@ class MainHeader extends Component<Props, void> {
             </HeaderButtons>
           </HeaderContent>
           <MobileButton onClick={this.toggleNav} open={this.state.navOpen}>
-            <SVG>
-              <use
-                xlinkHref={this.state.navOpen ? '#icon-close' : '#icon-menu'}
-              />
-            </SVG>
+            <SVGIcon
+              color="white"
+              icon={this.state.navOpen ? 'icon-close' : 'icon-menu'}
+            />
           </MobileButton>
         </HeaderWrapper>
       </Header>

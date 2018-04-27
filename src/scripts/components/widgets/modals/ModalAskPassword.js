@@ -42,7 +42,6 @@ const ButtonContainer = styled.div`
 `
 
 class ModalAskPassword extends Component<Props, Object> {
-  clearPassword: () => void
   setPassword: () => void
   handleInputChange: (input: string, e: Object) => void
 
@@ -54,17 +53,8 @@ class ModalAskPassword extends Component<Props, Object> {
       resetPasswordField: false,
       error: ''
     }
-    this.clearPassword = this.clearPassword.bind(this)
     this.setPassword = this.setPassword.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
-  }
-
-  clearPassword () {
-    this.setState({
-      assword: '',
-      resetPasswordField: true,
-      error: ''
-    })
   }
 
   setPassword () {
@@ -127,7 +117,7 @@ class ModalAskPassword extends Component<Props, Object> {
           <FieldContainer>
             <TextField
               error={this.state.error.length > 0}
-              label="New Password"
+              label="Your password"
               id="input-new-password"
               name="input-new-password"
               type="password"
@@ -142,9 +132,6 @@ class ModalAskPassword extends Component<Props, Object> {
             )}
           </FieldContainer>
           <Footer>
-            <ButtonContainer>
-              <Button onClick={this.clearPassword}>Clear</Button>
-            </ButtonContainer>
             <ButtonContainer>
               <Button
                 data-test-id="continue"

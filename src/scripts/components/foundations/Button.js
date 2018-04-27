@@ -3,7 +3,10 @@ import styled, { css } from 'styled-components'
 
 type Props = {
   color?: string,
-  icon: string
+  icon: string,
+  width: string,
+  height: string,
+  margin: string
 }
 
 export const ButtonStyleColor = css`
@@ -77,12 +80,20 @@ export const IconFillStyleColor = css`
 
 const SVG = styled.svg`
   ${IconFillStyleColor};
-  width: 100%;
-  height: 100%;
+  width: ${({ width }) => width || '100%'};
+  height: ${({ height }) => height || '100%'};
+  margin: ${({ margin }) => margin || null};
 `
 
-export const SVGIcon = ({ icon, color, ...rest }: Props) => (
-  <SVG color={color}>
+export const SVGIcon = ({
+  width,
+  height,
+  icon,
+  color,
+  margin,
+  ...rest
+}: Props) => (
+  <SVG color={color} width={width} height={height} margin={margin}>
     <use xlinkHref={'#' + icon} />
   </SVG>
 )
@@ -90,16 +101,16 @@ export const SVGIcon = ({ icon, color, ...rest }: Props) => (
 const Button = styled.button`
   ${StyleAnchor} ${ButtonStyleColor} ${ButtonStyleHover} cursor: ${props =>
   props.disabled ? 'initial' : 'pointer'};
-  font-size: ${props => (props.anchor ? '' : props.theme.fonts.button)};
+  font-size: ${props => (props.anchor ? null : props.theme.fonts.button)};
   font-weight: ${props =>
     props.anchor
       ? props.theme.fonts.weight.regular
       : props.theme.fonts.weight.bold};
   margin: ${props => props.margin};
   opacity: ${props => (props.disabled ? 0.5 : 1)};
-  pointer-events: ${props => (props.disabled ? 'none' : '')};
-  text-transform: ${props => (props.anchor ? '' : 'uppercase')};
-  user-select: ${props => (props.anchor ? '' : 'none')};
+  pointer-events: ${props => (props.disabled ? 'none' : null)};
+  text-transform: ${props => (props.anchor ? null : 'uppercase')};
+  user-select: ${props => (props.anchor ? null : 'none')};
 `
 
 export default Button

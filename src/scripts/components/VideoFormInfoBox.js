@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { List as ImmutableList } from 'immutable'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { SVGIcon } from 'components/foundations/Button'
 import VideoRecord from 'records/VideoRecords'
 import Card from './structures/Card'
 import TextField from './widgets/forms/TextField'
@@ -11,6 +12,9 @@ import VideoProgress from 'components/widgets/VideoForm/VideoProgress'
 import Hidden from 'components/foundations/Hidden'
 import VideoProgressTitle from 'components/widgets/VideoForm/VideoProgressTitle'
 import { getAppRootUrl } from 'utils/AppUtils'
+
+const Z_INDEX_TIME = '1'
+const Z_INDEX_MEDIAICON = '2'
 
 const VideoFormInfoBox = styled.div`
   flex: 1 1 584px;
@@ -67,13 +71,12 @@ const VideoMediaOverlay = styled.div`
     }
   }
 `
-
-const VideoMediaIcon = styled.svg`
-  fill: ${props => props.theme.colors.VideoForm.info.icon};
+const VideoMediaIcon = styled.div`
   height: 20%;
   transition: transform 0.3s ${props => props.theme.animation.ease.smooth};
+  position: relative;
   width: 20%;
-  z-index: 10;
+  z-index: ${Z_INDEX_MEDIAICON};
   ${VideoMediaLink}:hover & {
     transform: scale(0.9);
   }
@@ -84,7 +87,7 @@ const VideoMediaTime = styled.div`
   padding: 10px;
   position: absolute;
   right: 10px;
-  z-index: 15;
+  z-index: ${Z_INDEX_TIME};
 
   &::before {
     background-color: ${props =>
@@ -212,7 +215,7 @@ class InfoBox extends Component<Props, Object> {
           <VideoMediaLink to={urlToPlay}>
             <VideoMediaOverlay>
               <VideoMediaIcon>
-                <use xlinkHref="#icon-player-play" />
+                <SVGIcon color="white" icon="icon-player-play" />
               </VideoMediaIcon>
               {durationBox}
             </VideoMediaOverlay>

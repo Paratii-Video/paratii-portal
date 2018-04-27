@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { SVGIcon } from 'components/foundations/Button'
 
 type Props = {}
 
@@ -16,21 +17,12 @@ const MainLogoAnchor = styled(Link)`
   width: 100%;
 `
 
-const MainLogoSVG = styled.svg`
-  display: block;
-  fill: ${props => props.theme.colors.header.logo};
-  height: 100%;
-  width: 100%;
-`
-
 class MainHeaderLogo extends Component<Props, void> {
   render () {
     return (
       <MainLogo>
         <MainLogoAnchor to="/">
-          <MainLogoSVG>
-            <use xlinkHref="#paratii-logo" />
-          </MainLogoSVG>
+          <SVGIcon color="white" icon="paratii-logo" />
         </MainLogoAnchor>
       </MainLogo>
     )

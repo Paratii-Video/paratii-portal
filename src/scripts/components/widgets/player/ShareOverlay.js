@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Button from 'components/foundations/Button'
+import Button, { SVGIcon } from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
 import RadioCheck, { RadioWrapper } from 'components/widgets/forms/RadioCheck'
 import {
@@ -58,7 +58,7 @@ const ArrowButton = styled(Button)`
   z-index: ${Z_INDEX_ARROWBUTTON};
 `
 
-const ArrowButtonIcon = styled.svg`
+const ArrowButtonIcon = styled.div`
   height: 100%;
   transform: rotateY(180deg);
   width: 100%;
@@ -71,13 +71,6 @@ const CloseButton = Button.extend`
   top: 27px;
   width: 20px;
   z-index: ${Z_INDEX_CLOSEBUTTON};
-`
-
-const CloseButtonIcon = styled.svg`
-  fill: ${props => props.theme.colors.VideoPlayer.header.icons};
-  display: block;
-  height: 100%;
-  width: 100%;
 `
 
 const Content = styled.div`
@@ -279,13 +272,11 @@ class ShareOverlay extends Component<Props, State> {
           onClick={this.toggleShareContent}
         >
           <ArrowButtonIcon>
-            <use xlinkHref="#icon-arrow" />
+            <SVGIcon icon="icon-arrow" />
           </ArrowButtonIcon>
         </ArrowButton>
         <CloseButton onClick={this.props.onToggle}>
-          <CloseButtonIcon>
-            <use xlinkHref="#icon-close" />
-          </CloseButtonIcon>
+          <SVGIcon color="white" icon="icon-close" />
         </CloseButton>
         <Content show={!this.state.showEmbed}>
           <ShareTitle small>Share this video</ShareTitle>

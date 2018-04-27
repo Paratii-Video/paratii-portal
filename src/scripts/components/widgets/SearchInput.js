@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
-import Button from 'components/foundations/Button'
+import Button, { SVGIcon } from 'components/foundations/Button'
 import { SEARCH_PATH } from 'constants/UrlConstants'
 
 import type { RouterHistory } from 'react-router-dom'
@@ -41,12 +41,6 @@ const SearchInputButton = styled(Button)`
   margin-right: 10px;
 `
 
-const SearchInputSVG = styled.svg`
-  fill: ${props => props.theme.colors.header.icon};
-  height: 100%;
-  width: 100%;
-`
-
 class SearchInput extends Component<Props, void> {
   onSubmitForm = (e: Object): void => {
     const { history } = this.props
@@ -72,9 +66,7 @@ class SearchInput extends Component<Props, void> {
           value={currentSearchText}
         />
         <SearchInputButton>
-          <SearchInputSVG>
-            <use xlinkHref="#icon-search" />
-          </SearchInputSVG>
+          <SVGIcon icon="icon-search" />
         </SearchInputButton>
       </SearchInputForm>
     )

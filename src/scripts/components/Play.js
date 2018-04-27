@@ -12,7 +12,7 @@ import queryString from 'query-string'
 import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
 import VideoOverlayContainer from 'containers/VideoOverlayContainer'
-import Button from 'components/foundations/Button'
+import Button, { SVGIcon } from 'components/foundations/Button'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
@@ -146,14 +146,6 @@ const PlayInfoButtons = styled.div`
 const ButtonIcon = styled(Button)`
   display: flex;
   margin-right: 10px;
-`
-
-const SVG = styled.svg`
-  display: block;
-  fill: ${props => props.theme.colors.VideoDescription.icon};
-  height: 20px;
-  margin-right: 10px;
-  width: 20px;
 `
 
 const PlayInfoHighlight = Text.withComponent('span')
@@ -797,25 +789,37 @@ class Play extends Component<Props, State> {
               {video.share && (
                 <PlayInfoButtons>
                   <ButtonIcon>
-                    <SVG>
-                      <use xlinkHref="#icon-play-view" />
-                    </SVG>
+                    <SVGIcon
+                      color="white"
+                      width="20px"
+                      height="20px"
+                      margin="0 20px 0 0"
+                      icon="#icon-play-view"
+                    />
                     <Text small gray>
                         0
                     </Text>
                   </ButtonIcon>
                   <ButtonIcon>
-                    <SVG>
-                      <use xlinkHref="#icon-play-like" />
-                    </SVG>
+                    <SVGIcon
+                      color="white"
+                      width="20px"
+                      height="20px"
+                      margin="0 20px 0 0"
+                      icon="#icon-play-like"
+                    />
                     <Text small gray>
                         0
                     </Text>
                   </ButtonIcon>
                   <ButtonIcon>
-                    <SVG>
-                      <use xlinkHref="#icon-play-dislike" />
-                    </SVG>
+                    <SVGIcon
+                      color="white"
+                      width="20px"
+                      height="20px"
+                      margin="0 20px 0 0"
+                      icon="#icon-play-dislike"
+                    />
                     <Text small gray>
                         0
                     </Text>

@@ -166,12 +166,6 @@ const StartScreenIcon = styled.span`
   }
 `
 
-const StartScreenSVG = styled.svg`
-  fill: ${Colors.white};
-  height: 100%;
-  width: 100%;
-`
-
 class VideoOverlay extends Component<Props> {
   getVideoTitle (): string {
     const { video } = this.props
@@ -277,9 +271,7 @@ class VideoOverlay extends Component<Props> {
           >
             {isEmbed && (
               <StartScreenIcon isStartScreen={isStartScreen}>
-                <StartScreenSVG>
-                  <use xlinkHref="#icon-player-play" />
-                </StartScreenSVG>
+                <SVGIcon color="white" icon="icon-player-play" />
               </StartScreenIcon>
             )}
           </CentralizedContent>
