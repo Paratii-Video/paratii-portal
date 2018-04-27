@@ -12,14 +12,12 @@ import VideoManager from 'containers/VideoManagerContainer'
 import DebugContainer from 'containers/DebugContainer'
 import WalletContainer from 'containers/WalletContainer'
 import SearchResultsContainer from 'containers/pages/SearchResultsContainer'
-
+import MainHeader from 'containers/MainHeaderContainer'
 import Notifications from 'containers/NotificationContainer'
 
 import type { Match } from 'react-router-dom'
-
 import MainTemplate from './templates/MainTemplate'
 import Modal from 'containers/widgets/modals/ModalContainer'
-import MainHeader from './structures/header/MainHeader'
 import Main from './structures/Main'
 import MainFooter from './structures/footer/MainFooter'
 import Home from './pages/Home'
@@ -33,10 +31,10 @@ import type { Map } from 'immutable'
 
 type Props = {
   initializeApp: () => void,
-  match: Match,
   setSelectedVideo: (id: string) => void,
+  match: Match,
   videos: Map<string, VideoRecord>,
-  userAddress: String
+  isWalletSecured: boolean
 }
 
 type State = {
@@ -76,9 +74,10 @@ class App extends Component<Props, State> {
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
           <Modal />
-          <Notifications />
 
-          <MainHeader userAddress={this.props.userAddress} />
+          <Notifications />
+          <MainHeader />
+
           <Main>
             <Switch>
               <Route exact path="/" component={Home} />
@@ -92,7 +91,18 @@ class App extends Component<Props, State> {
               <Route path={`${match.url}upload`} component={VideoManager} />
               <Route path={`${match.url}voucher`} component={Voucher} />
               <Route path={`${match.url}debug`} component={DebugContainer} />
+              {
+                this.props.isWalletSecured
+                // &&
+                // (
+                //   <Route
+                //     path={`${match.url}wallet`}
+                //     component={WalletContainer}
+                //   />
+                // )
+              }
               <Route path={`${match.url}wallet`} component={WalletContainer} />
+
               <Route path={`${match.url}play/:id`} component={PlayContainer} />
               <Route path={`${match.url}embed/:id`} component={PlayContainer} />
               {process.env.NODE_ENV !== 'production' && (

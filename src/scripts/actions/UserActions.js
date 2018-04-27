@@ -170,11 +170,14 @@ export const secureKeystore = (password: string) => async (
   if (!mnemonicFromSession) {
     encryptedSecuredWallet = await paratii.eth.wallet.encrypt(password)
     if (encryptedSecuredWallet) {
+      console.log('--- restore secure wallet')
       localStorage.setItem(
         WALLET_KEY_SECURE,
         JSON.stringify(encryptedSecuredWallet)
       )
-      console.log('restore secure wallet')
+      // Change the name of keystore used by the application
+      dispatch(setWalletData({ walletKey: WALLET_KEY_SECURE }))
+      // Open Notification
       dispatch(
         Notifications.success({
           title: 'Your wallet is now secured'
@@ -194,8 +197,10 @@ export const secureKeystore = (password: string) => async (
           WALLET_KEY_SECURE,
           JSON.stringify(encryptedSecuredWallet)
         )
+        // Change the name of keystore used by the application
+        dispatch(setWalletData({ walletKey: WALLET_KEY_SECURE }))
       }
-      // FIXME: why do we clear the wallet here?
+      // Clear wallet because then we recreate from localStorage
       paratii.eth.wallet.clear()
     } catch (error) {
       dispatch(
@@ -213,7 +218,7 @@ export const secureKeystore = (password: string) => async (
           JSON.parse(walletStringAnon),
           DEFAULT_PASSWORD
         )
-        console.log('migrate account')
+        console.log('--- migrate account')
         await paratii.users.migrateAccount(newWalletAddress)
         paratii.eth.wallet.clear()
       } catch (error) {
@@ -227,11 +232,10 @@ export const secureKeystore = (password: string) => async (
       }
     }
 
-    console.log(encryptedSecuredWallet)
     if (encryptedSecuredWallet) {
       try {
         // Reload the new secure wallet from localStorage
-        console.log('restore secure wallet')
+        console.log('--- restore secure wallet')
         paratii.eth.wallet.decrypt(encryptedSecuredWallet, password)
         dispatch(
           Notifications.success({
@@ -254,7 +258,7 @@ export const restoreKeystore = (mnemonic: string) => async (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {
-  console.log('Restoring wallet')
+  console.log('--- Restoring wallet')
   dispatch(
     Notifications.warning({
       title: 'Trying to restore your wallet..'
@@ -264,8 +268,7 @@ export const restoreKeystore = (mnemonic: string) => async (
     sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
     paratii.eth.wallet.clear()
     await paratii.eth.wallet.create(1, mnemonic)
-    // sessionStorage.setItem(MNEMONIC_KEY_TEMP, mnemonic)
-    // Clear Paratii and remove keystore-anon
+    // Notification
     dispatch(
       Notifications.success({
         title: 'Your wallet has been created'

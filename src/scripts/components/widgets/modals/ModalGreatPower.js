@@ -5,7 +5,7 @@ import Colors from 'components/foundations/base/Colors'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
-import NotepadSvg from 'components/foundations/svgs/NotepadSvg'
+import NotepadLockedSvg from 'components/foundations/svgs/NotepadLockedSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
 
@@ -65,7 +65,7 @@ class ModalSecure extends Component<Props, Object> {
             by Uncle Ben
           </Text>
           <Icon>
-            <NotepadSvg />
+            <NotepadLockedSvg />
           </Icon>
           <MainText small gray>
             On the decentralised internet, no company owns your stuff. Paratii

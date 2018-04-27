@@ -153,7 +153,7 @@ class Modal extends Component<Props, void> {
       case MODAL.CREATE_PASSWORD:
         return '900px'
       case MODAL.ASK_PASSWORD:
-        return '900px'
+        return '490px'
       case MODAL.PROFILE:
         return '900px'
       default:

@@ -24,7 +24,7 @@ import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
 type Props = {
   video: ?VideoRecord,
   isEmbed?: boolean,
-  isStartScreen?: boolean,
+  showStartScreen?: boolean,
   onClick: (e: Object) => void,
   transitionState: ?TransitionState,
   showShareModal?: boolean,
@@ -69,7 +69,7 @@ const Wrapper = styled.div`
 
 const PlayerControlsWrapper = styled.div`
   bottom: 0;
-  pointer-events: ${props => (props.isStartScreen ? 'none' : null)};
+  pointer-events: ${props => (props.showStartScreen ? 'none' : null)};
   position: absolute;
   width: 100%;
   z-index: ${Z_INDEX_CONTROLS};
@@ -159,7 +159,7 @@ const CentralizedContent = styled.div`
 
 const StartScreenIcon = styled.span`
   height: 20%;
-  opacity: ${props => (props.isStartScreen ? 1 : 0)};
+  opacity: ${props => (props.showStartScreen ? 1 : 0)};
   transition: transform 0.3s ${props => props.theme.animation.ease.smooth};
   ${Overlay}:hover & {
     transform: scale(0.9);
@@ -203,7 +203,7 @@ class VideoOverlay extends Component<Props> {
     const {
       activePlugin,
       isEmbed,
-      isStartScreen,
+      showStartScreen,
       onClick,
       onScrub,
       onVolumeChange,
@@ -270,13 +270,13 @@ class VideoOverlay extends Component<Props> {
             showShareModal={showShareModal}
           >
             {isEmbed && (
-              <StartScreenIcon isStartScreen={isStartScreen}>
+              <StartScreenIcon showStartScreen={showStartScreen}>
                 <SVGIcon color="white" icon="icon-player-play" />
               </StartScreenIcon>
             )}
           </CentralizedContent>
         </Overlay>
-        <PlayerControlsWrapper isStartScreen={isStartScreen}>
+        <PlayerControlsWrapper showStartScreen={showStartScreen}>
           <PlayerControlsContainer
             onScrub={onScrub}
             onVolumeChange={onVolumeChange}
@@ -286,7 +286,7 @@ class VideoOverlay extends Component<Props> {
             toggleFullscreen={toggleFullscreen}
             transitionState={transitionState}
             showShareModal={showShareModal}
-            isStartScreen={isStartScreen}
+            showStartScreen={showStartScreen}
           />
         </PlayerControlsWrapper>
       </Wrapper>

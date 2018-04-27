@@ -58,8 +58,8 @@ type Props = {
 }
 
 type State = {
+  hasNeverPlayed: boolean,
   isEmbed: boolean,
-  isStartScreen: boolean,
   mouseInOverlay: boolean,
   shouldShowVideoOverlay: boolean,
   showShareModal: boolean,
@@ -171,12 +171,12 @@ class Play extends Component<Props, State> {
     super(props)
 
     this.state = {
+      hasNeverPlayed: true,
       mouseInOverlay: false,
       shouldShowVideoOverlay: false,
       videoNotFound: false,
       playerCreated: '',
       isEmbed: this.props.isEmbed || false,
-      isStartScreen: this.props.isEmbed || false,
       showShareModal: false,
       videoHasNeverPlayed: true
     }
@@ -214,6 +214,12 @@ class Play extends Component<Props, State> {
     if (player) {
       player.on(Events.PLAYER_PLAY, (): void => {
         togglePlayPause(true)
+
+        this.setState((prevState: State) => {
+          if (prevState.hasNeverPlayed) {
+            return { hasNeverPlayed: false }
+          }
+        })
       })
       player.on(Events.PLAYER_PAUSE, (): void => {
         togglePlayPause(false)
@@ -581,12 +587,6 @@ class Play extends Component<Props, State> {
       } else {
         player.play()
       }
-
-      this.setState(prevState => {
-        if (prevState.isStartScreen) {
-          return { isStartScreen: false }
-        }
-      })
     }
   }
 
@@ -690,11 +690,13 @@ class Play extends Component<Props, State> {
   }
 
   shouldShowStartScreen () {
-    return this.props.isEmbed && this.props.isPlaying
+    const { isAttemptingPlay, isEmbed } = this.props
+
+    return !isAttemptingPlay && isEmbed && this.state.hasNeverPlayed
   }
 
   render () {
-    const { isEmbed, video } = this.props
+    const { isAttemptingPlay, isEmbed, video } = this.props
 
     const shareOptions = [
       {
@@ -737,7 +739,11 @@ class Play extends Component<Props, State> {
                       onClick={this.onOverlayClick}
                       video={video}
                       isEmbed={isEmbed}
-                      isStartScreen={this.state.isStartScreen}
+                      showStartScreen={
+                        isEmbed &&
+                        this.state.hasNeverPlayed &&
+                        !isAttemptingPlay
+                      }
                       toggleShareModal={this.toggleShareModal}
                       showShareModal={this.state.showShareModal}
                       onScrub={this.scrubVideo}

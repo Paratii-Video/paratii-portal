@@ -75,7 +75,7 @@ class ModalSecure extends Component<Props, Object> {
                 purple
                 onClick={this.createPassword}
               >
-                I am new here
+                Secure this account
               </Button>
             </ButtonContainer>
           </Footer>
