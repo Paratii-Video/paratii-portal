@@ -136,7 +136,6 @@ class ModalShowSeed extends Component<Props, Object> {
           </Text>
           <WordsWrapper>
             <Text
-              big
               white
               data-test-id="new-mnemonic"
               innerRef={(ref: HTMLElement) => {
