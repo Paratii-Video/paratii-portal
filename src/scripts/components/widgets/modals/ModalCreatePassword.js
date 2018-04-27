@@ -16,6 +16,8 @@ import {
 } from 'constants/ParatiiLibConstants'
 import { MODAL } from 'constants/ModalConstants'
 
+const FORM_ID: string = 'create-password-form'
+
 type Props = {
   openModal: string => void,
   closeModal: () => void,
@@ -75,7 +77,8 @@ class ModalSetPassword extends Component<Props, State> {
     this.props.openModal(MODAL.SECURE)
   }
 
-  setPassword () {
+  setPassword (e: Object) {
+    e.preventDefault()
     const errors: Array<string> = getPasswordValidationErrors(
       this.state.password
     )
@@ -160,36 +163,38 @@ class ModalSetPassword extends Component<Props, State> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Choose a password</Title>
-          <Text small gray>
-            Please insert a password of <strong>eight</strong> characters or
-            longer, and it must contain at least on <strong>uppercase</strong>
-            letter and on <strong>number</strong>
-          </Text>
-          <Icon>
-            <BigLockSvg />
-          </Icon>
-          <TextField
-            error={this.getPasswordErrors().length > 0}
-            label="New Password"
-            id="input-new-password"
-            name="input-new-password"
-            type="password"
-            value={this.state.password}
-            onBlur={this.handlePasswordInputBlur}
-            onChange={e => this.handleInputChange('password', e)}
-            margin="0 0 30px"
-          />
-          <TextField
-            error={this.getConfirmErrors().length > 0}
-            label="Confirm Password"
-            id="input-confirm-password"
-            name="input-confirm-password"
-            type="password"
-            value={this.state.confirm}
-            onChange={e => this.handleInputChange('confirm', e)}
-            margin="0 0 30px"
-          />
+          <form id={FORM_ID} onSubmit={this.setPassword}>
+            <Title>Choose a password</Title>
+            <Text small gray>
+              Please insert a password of <strong>eight</strong> characters or
+              longer, and it must contain at least on <strong>uppercase</strong>
+              letter and on <strong>number</strong>
+            </Text>
+            <Icon>
+              <BigLockSvg />
+            </Icon>
+            <TextField
+              error={this.getPasswordErrors().length > 0}
+              label="New Password"
+              id="input-new-password"
+              name="input-new-password"
+              type="password"
+              value={this.state.password}
+              onBlur={this.handlePasswordInputBlur}
+              onChange={e => this.handleInputChange('password', e)}
+              margin="0 0 30px"
+            />
+            <TextField
+              error={this.getConfirmErrors().length > 0}
+              label="Confirm Password"
+              id="input-confirm-password"
+              name="input-confirm-password"
+              type="password"
+              value={this.state.confirm}
+              onChange={e => this.handleInputChange('confirm', e)}
+              margin="0 0 30px"
+            />
+          </form>
           {this.renderErrors()}
           <Footer>
             <ButtonContainer>
@@ -197,9 +202,10 @@ class ModalSetPassword extends Component<Props, State> {
             </ButtonContainer>
             <ButtonContainer>
               <Button
+                form={FORM_ID}
+                type="submit"
                 data-test-id="continue"
                 purple
-                onClick={this.setPassword}
                 disabled={!this.state.confirm}
               >
                 Continue
