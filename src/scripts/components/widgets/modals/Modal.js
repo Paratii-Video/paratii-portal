@@ -2,7 +2,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Z_INDEX_MODAL } from 'constants/UIConstants'
-import Button, { SVGIcon } from 'components/foundations/Button'
+import Button from 'components/foundations/Button'
+import SVGIcon from 'components/foundations/SVGIcon'
 
 import ModalStake from 'containers/widgets/modals/ModalStakeContainer' // need to receive any content
 import ModalSecure from 'containers/widgets/modals/ModalSecureContainer'

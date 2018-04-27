@@ -3,7 +3,8 @@
 import React, { Component, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
-import Button, { SVGIcon } from 'components/foundations/Button'
+import Button from 'components/foundations/Button'
+import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import PlayerControlsContainer from 'containers/PlayerControlsContainer'
 import VideoRecord from 'records/VideoRecords'

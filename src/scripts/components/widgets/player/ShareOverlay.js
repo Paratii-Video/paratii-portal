@@ -2,7 +2,8 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Button, { SVGIcon } from 'components/foundations/Button'
+import Button from 'components/foundations/Button'
+import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import RadioCheck, { RadioWrapper } from 'components/widgets/forms/RadioCheck'
 import {

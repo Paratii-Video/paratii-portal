@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { SVGIcon } from 'components/foundations/Button'
+import SVGIcon from 'components/foundations/SVGIcon'
 
 type Props = {}
 

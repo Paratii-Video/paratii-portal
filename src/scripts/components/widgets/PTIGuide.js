@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import PTIGuideSvg from '../foundations/svgs/PTIGuideSvg'
-import Button, { SVGIcon } from 'components/foundations/Button'
+import Button from 'components/foundations/Button'
+import SVGIcon from 'components/foundations/SVGIcon'
 import Text from 'components/foundations/Text'
 import Card, { CardTitle } from 'components/structures/Card'
 
