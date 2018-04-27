@@ -18,15 +18,18 @@ body {
   }
 }
 
-.main-loader {
-  background: #2E3133 url('/assets/img/paratii-loader.gif') no-repeat 50%;
-  background-size: cover;
-  height: 50px;
+.app-loader {
   left: 50%;
   position: fixed;
   top: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  width: 50px;
+  transform: translate3d(-50%, -50%, 0);  
+}
+
+.paratii-loader {
+  background: #2E3133 url('/assets/img/paratii-loader.gif') no-repeat 50%;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {

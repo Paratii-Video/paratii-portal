@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { List as ImmutableList } from 'immutable'
 
+import Loader from 'components/foundations/Loader'
 import SearchResult from 'components/widgets/SearchResult'
 import Video from 'records/VideoRecords'
 
@@ -22,6 +23,13 @@ const Results = styled.div`
   overflow-y: auto;
 `
 
+const LoaderWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  min-height: 400px;
+  align-items: center;
+`
+
 const HasNextLink = styled.button`
   width: 100%;
   flex: 0 0 20px;
@@ -32,7 +40,8 @@ const HasNextLink = styled.button`
 type Props = {
   hasNext: boolean,
   results: ImmutableList<Video>,
-  searchForMoreVideos: () => Promise<void>
+  searchForMoreVideos: () => Promise<void>,
+  resultsLoading: boolean
 }
 
 class SearchResults extends React.Component<Props, void> {
@@ -54,9 +63,15 @@ class SearchResults extends React.Component<Props, void> {
     return (
       <Wrapper>
         <Results>
-          {this.props.results.map((result: Video) => (
-            <SearchResult key={result.get('id')} video={result} />
-          ))}
+          {this.props.resultsLoading ? (
+            <LoaderWrapper>
+              <Loader height="50px" width="50px" />
+            </LoaderWrapper>
+          ) : (
+            this.props.results.map((result: Video) => (
+              <SearchResult key={result.get('id')} video={result} />
+            ))
+          )}
         </Results>
         {this.renderClickForMore()}
       </Wrapper>
