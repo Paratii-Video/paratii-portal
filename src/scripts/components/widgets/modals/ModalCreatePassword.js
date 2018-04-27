@@ -6,7 +6,7 @@ import Title from 'components/foundations/Title'
 import TextField from 'components/widgets/forms/TextField'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
-import { passwordStrength } from 'utils/AppUtils'
+import { getPasswordValidationErrors } from 'utils/AppUtils'
 import BigLockSvg from 'components/foundations/svgs/BigLockSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import {
@@ -50,7 +50,7 @@ class ModalSetPassword extends Component<Props, Object> {
     this.state = {
       password: '',
       confirm: '',
-      error: ''
+      errors: []
     }
     this.setPassword = this.setPassword.bind(this)
     this.secureAccount = this.secureAccount.bind(this)
@@ -62,27 +62,34 @@ class ModalSetPassword extends Component<Props, Object> {
   }
 
   setPassword () {
-    const error = passwordStrength(this.state.password)
-    if (error) {
-      this.setState({
-        error
-      })
-    } else {
-      if (this.state.password === this.state.confirm) {
-        if (this.props.getContext === NEW_ACCOUNT) {
-          sessionStorage.setItem(PASSWORD_TEMP, this.state.password)
-          this.props.openModal(MODAL.SHOW_SEED)
-        } else if (this.props.getContext === RESTORE_ACCOUNT) {
-          this.props.secureKeystore(this.state.password)
-          this.props.closeModal()
+    const errors: Array<string> = getPasswordValidationErrors(
+      this.state.password
+    )
+
+    this.setState(
+      {
+        errors
+      },
+      () => {
+        const { errors } = this.state
+        if (!errors.length) {
+          if (this.state.password === this.state.confirm) {
+            if (this.props.getContext === NEW_ACCOUNT) {
+              sessionStorage.setItem(PASSWORD_TEMP, this.state.password)
+              this.props.openModal(MODAL.SHOW_SEED)
+            } else if (this.props.getContext === RESTORE_ACCOUNT) {
+              this.props.secureKeystore(this.state.password)
+              this.props.closeModal()
+            }
+          } else {
+            // Error, the two Passwords are different
+            this.setState({
+              error: `Hey, your passwords do not match`
+            })
+          }
         }
-      } else {
-        // Error, the two Passwords are different
-        this.setState({
-          error: `Hey, your passwords do not match`
-        })
       }
-    }
+    )
   }
 
   handleInputChange (input: string, e: Object) {
@@ -106,7 +113,7 @@ class ModalSetPassword extends Component<Props, Object> {
             <BigLockSvg />
           </Icon>
           <TextField
-            error={this.state.error.length > 0}
+            error={this.state.errors.length > 0}
             label="New Password"
             id="input-new-password"
             name="input-new-password"
@@ -116,7 +123,7 @@ class ModalSetPassword extends Component<Props, Object> {
             margin="0 0 30px"
           />
           <TextField
-            error={this.state.error.length > 0}
+            error={this.state.errors.length > 0}
             label="Confirm Password"
             id="input-confirm-password"
             name="input-confirm-password"
@@ -125,12 +132,11 @@ class ModalSetPassword extends Component<Props, Object> {
             onChange={e => this.handleInputChange('confirm', e)}
             margin="0 0 30px"
           />
-
-          {this.state.error && (
-            <Text pink small>
-              {this.state.error}
+          {this.state.errors.map((error: string) => (
+            <Text pink small key={error}>
+              {error}
             </Text>
-          )}
+          ))}
           <Footer>
             <ButtonContainer>
               <Button onClick={this.secureAccount}>Back</Button>
