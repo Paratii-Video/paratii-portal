@@ -48,6 +48,10 @@ const Icon = styled.div`
   width: 100%;
 `
 
+const Errors = styled.div`
+  min-height: 100px;
+`
+
 class ModalSetPassword extends Component<Props, State> {
   setPassword: () => void
   secureAccount: () => void
@@ -141,11 +145,15 @@ class ModalSetPassword extends Component<Props, State> {
   }
 
   renderErrors () {
-    return this.getAllErrors().map((error: string) => (
-      <Text pink small key={error}>
-        {error}
-      </Text>
-    ))
+    return (
+      <Errors>
+        {this.getAllErrors().map((error: string) => (
+          <Text pink small key={error}>
+            {error}
+          </Text>
+        ))}
+      </Errors>
+    )
   }
 
   render () {
