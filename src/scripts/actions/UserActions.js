@@ -18,8 +18,10 @@ import {
   DEFAULT_PASSWORD,
   WALLET_KEY_ANON,
   MNEMONIC_KEY_TEMP,
+  PASSWORD_TEMP,
   MNEMONIC_KEY_ANON,
-  WALLET_KEY_SECURE
+  WALLET_KEY_SECURE,
+  ACTIVATE_SECURE_WALLET
 } from 'constants/ParatiiLibConstants'
 
 import paratii from 'utils/ParatiiLib'
@@ -54,8 +56,21 @@ export const logout = () => (dispatch: Dispatch) => {
   dispatch(logoutAction())
 }
 
+export const checkUserWallet = () => (dispatch: Dispatch) => {
+  if (ACTIVATE_SECURE_WALLET) {
+    const walletStringSecure: ?string = localStorage.getItem(WALLET_KEY_SECURE)
+    if (walletStringSecure) {
+      console.log('Try to open encrypted keystore')
+      // Need to ask the PIN
+      dispatch(openModal(MODAL.ASK_PASSWORD))
+    } else {
+      dispatch(openModal(MODAL.SECURE))
+    }
+  }
+}
+
 export const loadBalances = () => (dispatch: Dispatch) => {
-  const address: string = paratii.config.account.address
+  const address: string = paratii.eth.getAccount()
   if (address) {
     paratii.eth.balanceOf(address).then(({ ETH, PTI }) => {
       dispatch(
@@ -69,13 +84,11 @@ export const loadBalances = () => (dispatch: Dispatch) => {
 }
 
 export const setAddressAndBalance = () => (dispatch: Dispatch) => {
-  // FIXME this is a temporary fix because paratii lib not sync eth.wallet and config.address
-  if (paratii.eth.wallet[0]) {
-    const address: string = paratii.eth.wallet[0].address
-    paratii.eth.setAccount(address)
-    dispatch(setWalletAddress({ address: address }))
-  }
+  const address: string = paratii.eth.getAccount()
+  dispatch(setWalletAddress({ address: address }))
   dispatch(loadBalances())
+  sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
+  sessionStorage.removeItem(PASSWORD_TEMP)
 }
 
 export const setupKeystore = () => async (
@@ -88,13 +101,8 @@ export const setupKeystore = () => async (
   const walletStringSecure: ?string = localStorage.getItem(WALLET_KEY_SECURE)
   const walletStringAnon: ?string = localStorage.getItem(WALLET_KEY_ANON)
 
-  // Case 1: we have a secured wallet is localStorage
-  if (walletStringSecure) {
-    console.log('Try to open encrypted keystore')
-    // Need to ask the PIN
-    dispatch(openModal(MODAL.ASK_PIN))
-    // Case 2: we have anonymous wallet is localStorage
-  } else if (walletStringAnon) {
+  // Case 1: we have anonymous wallet is localStorage
+  if (walletStringAnon) {
     try {
       paratii.eth.wallet.decrypt(JSON.parse(walletStringAnon), DEFAULT_PASSWORD)
     } catch (err) {
@@ -107,7 +115,15 @@ export const setupKeystore = () => async (
     }
   }
 
-  // Case 3: (dev) wallet in paratii.eth.wallet but not on localStorage
+  // Case 2: we have a secured wallet is localStorage
+  if (walletStringSecure && ACTIVATE_SECURE_WALLET) {
+    console.log('Try to open encrypted keystore')
+    // Need to ask the PIN
+    dispatch(openModal(MODAL.ASK_PASSWORD))
+  }
+
+  // Case 3: there is an account in paratii.eth.wallet but not on localStorage
+  // we save the paratii.eth.wallet[0] account in local storage
   if (
     paratii.eth.wallet.length > 0 &&
     !walletStringSecure &&
@@ -117,15 +133,15 @@ export const setupKeystore = () => async (
     localStorage.setItem(WALLET_KEY_ANON, JSON.stringify(encryptedWallet))
   }
 
-  // Case 4: we need to create a new Wallet
+  // Case 4: we have no wallet in localstorage, and neither do we have one in paratii.eth.wallet:
+  // we need to create a new Wallet
   if (
     paratii.eth.wallet.length === 0 &&
     !walletStringSecure &&
     !walletStringAnon
   ) {
-    console.log('Create a new wallet')
+    // console.log('Create a new wallet')
     mnemonic = bip39.generateMnemonic()
-    console.log(mnemonic)
     await paratii.eth.wallet.create(1, mnemonic)
     const encryptedWallet = paratii.eth.wallet.encrypt(DEFAULT_PASSWORD)
     localStorage.setItem(WALLET_KEY_ANON, JSON.stringify(encryptedWallet))
@@ -137,12 +153,12 @@ export const secureKeystore = (password: string) => async (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {
-  console.log('Securing wallet')
+  // save paratii.eth.wallet in localstorage, encrypted with password
+  // console.log('Securing wallet')
   let newWalletAddress: ?string
   let encryptedSecuredWallet: ?Object
   const walletStringAnon: ?string = localStorage.getItem(WALLET_KEY_ANON)
-  const mnemonic = sessionStorage.getItem(MNEMONIC_KEY_TEMP)
-  console.log(mnemonic)
+  const mnemonicFromSession = sessionStorage.getItem(MNEMONIC_KEY_TEMP)
 
   dispatch(
     Notifications.warning({
@@ -150,13 +166,22 @@ export const secureKeystore = (password: string) => async (
     })
   )
 
-  // There is non mnemonic means we arrive from restoreKeystore
-  if (!mnemonic) {
+  // There is no mnemonic means we arrive from restoreKeystore
+  if (!mnemonicFromSession) {
     encryptedSecuredWallet = await paratii.eth.wallet.encrypt(password)
     if (encryptedSecuredWallet) {
+      console.log('--- restore secure wallet')
       localStorage.setItem(
         WALLET_KEY_SECURE,
         JSON.stringify(encryptedSecuredWallet)
+      )
+      // Change the name of keystore used by the application
+      dispatch(setWalletData({ walletKey: WALLET_KEY_SECURE }))
+      // Open Notification
+      dispatch(
+        Notifications.success({
+          title: 'Your wallet is now secured'
+        })
       )
     }
   } else {
@@ -164,7 +189,7 @@ export const secureKeystore = (password: string) => async (
     try {
       // Create the new wallet based on the generated mnemonic
       paratii.eth.wallet.clear()
-      await paratii.eth.wallet.create(1, mnemonic)
+      await paratii.eth.wallet.create(1, mnemonicFromSession)
       newWalletAddress = paratii.eth.wallet[0].address
       encryptedSecuredWallet = await paratii.eth.wallet.encrypt(password)
       if (encryptedSecuredWallet) {
@@ -172,7 +197,10 @@ export const secureKeystore = (password: string) => async (
           WALLET_KEY_SECURE,
           JSON.stringify(encryptedSecuredWallet)
         )
+        // Change the name of keystore used by the application
+        dispatch(setWalletData({ walletKey: WALLET_KEY_SECURE }))
       }
+      // Clear wallet because then we recreate from localStorage
       paratii.eth.wallet.clear()
     } catch (error) {
       dispatch(
@@ -190,10 +218,12 @@ export const secureKeystore = (password: string) => async (
           JSON.parse(walletStringAnon),
           DEFAULT_PASSWORD
         )
-        console.log('migrate account')
-        await paratii.core.migrateAccount(newWalletAddress)
+        console.log('--- migrate account')
+        await paratii.users.migrateAccount(newWalletAddress)
         paratii.eth.wallet.clear()
       } catch (error) {
+        // In case of error, clear the secure keystore from localstorage
+        localStorage.removeItem(WALLET_KEY_SECURE)
         // error opening the anonymous wallet
         Notifications.error({
           title: error.message
@@ -205,16 +235,13 @@ export const secureKeystore = (password: string) => async (
     if (encryptedSecuredWallet) {
       try {
         // Reload the new secure wallet from localStorage
-        console.log('restore secure wallet')
+        console.log('--- restore secure wallet')
         paratii.eth.wallet.decrypt(encryptedSecuredWallet, password)
         dispatch(
           Notifications.success({
             title: 'Your wallet is now secured'
           })
         )
-        sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
-        console.log('set address')
-        console.log(paratii.eth.wallet[0].address)
       } catch (error) {
         // error opening the secure wallet
         Notifications.error({
@@ -231,17 +258,17 @@ export const restoreKeystore = (mnemonic: string) => async (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {
-  console.log('Restoring wallet')
+  console.log('--- Restoring wallet')
   dispatch(
     Notifications.warning({
       title: 'Trying to restore your wallet..'
     })
   )
   try {
+    sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
     paratii.eth.wallet.clear()
     await paratii.eth.wallet.create(1, mnemonic)
-    // sessionStorage.setItem(MNEMONIC_KEY_TEMP, mnemonic)
-    // Clear Paratii and remove keystore-anon
+    // Notification
     dispatch(
       Notifications.success({
         title: 'Your wallet has been created'

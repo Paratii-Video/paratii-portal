@@ -1,21 +1,9 @@
-/* eslint-disable */
-// /*
-//
-//     MIGRATED FROM paratii-player/tests/helpers.js
-//
-//     These helper functions need to be migrated (if they are used in the tests or simply deleted)
-//
-// */
-//
-
-import { Paratii, utils } from 'paratii-lib'
+import { Paratii } from 'paratii-js'
 import testConfig from '../../../config/test.json'
 
 const fs = require('fs')
-const Promise = require('bluebird')
 const path = require('path')
 const pull = require('pull-stream')
-const pullFilereader = require('pull-filereader')
 const toPull = require('stream-to-pull-stream')
 
 const registryConfigPath = '/tmp/registry.json'
@@ -29,28 +17,29 @@ export const DEFAULT_PASSWORD = ''
 export const WALLET_KEY_ANON = 'keystore-anon'
 export const MNEMONIC_KEY_ANON = 'mnemonic-anon'
 export const WALLET_KEY_SECURE = 'keystore-secure'
+export const password = 'N3wpassword'
 
 // this address will be used as the owner address for all paratii contracts in the tests
-let address = '0xCbe4f07b343171ac37055B25a5266f48f6945b7d'
-let privateKey =
+const address = '0xCbe4f07b343171ac37055B25a5266f48f6945b7d'
+const privateKey =
   '0x399b141d0cc2b863b2f514ffe53edc6afc9416d5899da4d9bd2350074c38f1c6'
 
 // some other addresses and keys used in testing
-let address1 = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
-let address99 = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
-let address17 = '0xb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01'
-let privateKey17 =
+const address1 = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
+const address99 = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
+const address17 = '0xb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01'
+const privateKey17 =
   '0x348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709'
 
 // an address generated from a seed phrase
-let mnemonic23 =
+const mnemonic23 =
   'jelly better achieve collect unaware mountain thought cargo oxygen act hood bridge'
 // this is the first HD address generated
-let address23 = '0xCbe4f07b343171ac37055B25a5266f48f6945b7d'
+const address23 = '0xCbe4f07b343171ac37055B25a5266f48f6945b7d'
 
-export let restoreMnemonic =
+export const restoreMnemonic =
   'design under day valve eagle exact night maid circle hammer polar ramp'
-export let restoredAddress = '0x500B678cAC6BEB4092662437698Daa49c5d2E267'
+export const restoredAddress = '0x500B678cAC6BEB4092662437698Daa49c5d2E267'
 
 export {
   address,
@@ -86,15 +75,15 @@ export const clearCookies = () => {
 //   browser.execute(nukeSessionStorage)
 // })
 
-export function nukeLocalStorage() {
+export function nukeLocalStorage () {
   localStorage.clear()
 }
 
-export function nukeSessionStorage() {
+export function nukeSessionStorage () {
   window.sessionStorage.clear()
 }
 
-export function add0x(input) {
+export function add0x (input) {
   if (typeof input !== 'string') {
     return input
   } else if (input.length < 2 || input.slice(0, 2) !== '0x') {
@@ -103,6 +92,12 @@ export function add0x(input) {
   return input
 }
 
+// a voucher code and an amount
+export const voucherCode11 = 'ZJLUaMqLR1'
+export const voucherAmount11 = 0.3141 * 10 ** 18
+export const voucherAmountInitial11 = 2 * 10 ** 18
+export const hashedVoucherCode11 =
+  '0x182b41b125c1c14efaf188d95b6a7e2074d8b746237fc47b48beb63551d742f9'
 //
 // export function getProvider () {
 //   return Meteor.settings.public.http_provider
@@ -178,13 +173,13 @@ export function add0x(input) {
 //   })
 // }
 //
-export function waitForKeystore(browser, key = 'keystore-anon') {
-  browser.waitUntil(function() {
-    return browser.execute(function(key) {
+export function waitForKeystore (browser, key = 'keystore-anon') {
+  browser.waitUntil(function () {
+    return browser.execute(function (key) {
       return localStorage.getItem(key)
     }, key).value
   })
-  return browser.execute(function(key) {
+  return browser.execute(function (key) {
     return localStorage.getItem(key)
   }, key).value
 }
@@ -354,12 +349,12 @@ export function waitForKeystore(browser, key = 'keystore-anon') {
 // }
 
 // next line copied from old uploader as a quick workaround to get thetests workign
-export function uploadFilesToIPFS(ipfs, files) {
-  let meta = {} // holds File metadata.
+export function uploadFilesToIPFS (ipfs, files) {
+  const meta = {} // holds File metadata.
   // let files = [file]
 
-  let _chunkSize = 262144
-  let node = ipfs
+  const _chunkSize = 262144
+  const node = ipfs
   ipfs.start(() => {
     pull(
       pull.values(files),
@@ -387,7 +382,7 @@ export function uploadFilesToIPFS(ipfs, files) {
             if (err) {
               console.log(err)
             }
-            const file = res[0]
+            // const file = res[0]
             // console.log('Adding %s finished', file.name)
             setImmediate(() => {
               cb()
@@ -403,10 +398,3 @@ export function uploadFilesToIPFS(ipfs, files) {
     )
   })
 }
-
-// const playerIsFullScreen = () => !!(
-//   document.fullscreenElement ||
-//   document.mozFullScreenElement ||
-//   document.webkitFullscreenElement ||
-//   document.msFullscreenElement
-// )

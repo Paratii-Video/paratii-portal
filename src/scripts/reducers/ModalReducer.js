@@ -9,6 +9,7 @@ const reducer = {
   [OPEN_MODAL]: (state: ModalRecord, action: Action<string>) => {
     return state.merge({
       modalContent: action.payload,
+      previousModalContent: state.modalContent,
       showModal: true
     })
   },

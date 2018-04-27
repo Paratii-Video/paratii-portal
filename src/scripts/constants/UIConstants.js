@@ -22,4 +22,4 @@ export const CONTROLS_SPACING_MOBILE: string = '12px'
 export const POPOVER_PADDING: string = '20px'
 
 // Video Overlay
-export const OVERLAY_BUTTONS_HEIGHT: string = '40px'
+export const OVERLAY_BUTTONS_HEIGHT: string = '20px'

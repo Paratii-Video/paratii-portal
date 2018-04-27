@@ -9,31 +9,6 @@ declare var browser: Object
 chai.use(chaiAsPromised)
 
 before(async function (done) {
-  //
-  // check if a registry was already known - int hat we we use that one
-  // ^^^^^^^ this is supposed to create less confusion for devs - if you are confused, we need to change this
-  // console.log('BEFORE')
-  // let existingAddress = (await browser.execute(function () { paratii.getRegistryAddress() }))
-  // // .value
-  // console.log(existingAddress)
-  // if (existingAddress) {
-  //   paratii.setRegistryAddress(existingAddress)
-  // } else {
-  //   await paratii.eth.deployContracts()
-  //
-  //   // we open the browser and save the registryAddress in localStorage
-  //   // where it will be picked up by paratii-lib (in ParatiiLib.js)
-  //   browser.url(`http://localhost:8080/`)
-  //
-  //   browser.execute(
-  //     function (registryAddress) {
-  //       paratii.setRegistryAddress(registryAddress)
-  //       sessionStorage.setItem('paratii.registry', registryAddress)
-  //     },
-  //     await paratii.eth.getRegistryAddress()
-  //   )
-  // }
-  // console.log(`Using registry at ${await paratii.eth.getRegistryAddress()}`)
   browser.addCommand('waitForClickable', function (selector, timeout) {
     this.waitForVisible(selector, timeout)
     this.waitForEnabled(selector, timeout)

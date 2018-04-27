@@ -76,7 +76,7 @@ type Props = {
 class WalletInfo extends React.Component<Props> {
   addressRef: ?HTMLElement
 
-  getAddress = (): string => paratii.config.account.address
+  getAddress = (): string => paratii.eth.getAccount()
 
   copyAddressToClipboard = (): void => {
     const { showNotification } = this.props
@@ -95,7 +95,7 @@ class WalletInfo extends React.Component<Props> {
     }
   }
 
-  getAddress = (): string => paratii.config.account.address
+  getAddress = (): string => paratii.eth.getAccount()
 
   setAddressRef = (ref: HTMLElement): void => {
     this.addressRef = ref

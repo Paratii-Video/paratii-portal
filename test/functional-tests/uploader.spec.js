@@ -1,19 +1,54 @@
 import { assert } from 'chai'
-import { paratii } from './test-utils/helpers'
+import {
+  paratii,
+  password,
+  nukeLocalStorage,
+  nukeSessionStorage
+} from './test-utils/helpers'
 
 describe('🦄 Uploader Tool', function () {
-  it.skip('should have basic flow in place', async function () {
-    // THIS TEST is SKiPPED BECAUSE IT EXPECTS TO FIND A PARATII-DB INSTANCE LISTENING ON LOCALHOST:348539b9cd58fe0344dfa029cbfd601bfd3d8745
-    // AND THIS IS NOT THE CASE IN CIRCLECI
+  beforeEach(function () {
+    browser.url(`http://localhost:8080`)
+    browser.execute(nukeLocalStorage)
+    browser.execute(nukeSessionStorage)
+  })
 
-    // see https://github.com/Paratii-Video/paratii-portal/issues/8
+  it('should have basic flow in place @watch', async function () {
+    // Create a secure wallet
+    browser.url(`http://localhost:8080`)
+    browser.execute(function (password) {
+      window.paratii.eth.wallet.clear()
+      window.paratii.eth.wallet
+        .create()
+        .then(
+          localStorage.setItem(
+            'keystore-secure',
+            JSON.stringify(window.paratii.eth.wallet.encrypt(password))
+          )
+        )
+    }, password)
+
+    // Get address from browser
+    const newAddress = browser.execute(function () {
+      return window.paratii.eth.getAccount()
+    }).value
+
+    // Send some PTI to new address
+    const value = paratii.eth.web3.utils.toWei('20')
+    paratii.eth.transfer(newAddress, value, 'PTI')
+
     const video = {
       title: 'Some title',
       description:
         'Description of the video which can be pretty long and may contain dïàcrítics'
     }
-    browser.url('http://localhost:8080/upload')
 
+    browser.url('http://localhost:8080/upload')
+    browser.waitAndClick('[name="wallet-password"]')
+    browser.setValue('[name="wallet-password"]', password)
+    browser.waitAndClick('[data-test-id="continue"]')
+
+    // Upload file
     const fileToUpload = `${__dirname}/data/pti-logo.mp4`
     browser.waitForExist('input[type="file"]')
     browser.chooseFile('input[type="file"]', fileToUpload)
@@ -38,7 +73,7 @@ describe('🦄 Uploader Tool', function () {
     browser.setValue('#input-video-title', video.title)
     browser.setValue('#input-video-description', video.description)
     // submit the form
-    browser.waitAndClick('#video-submit')
+    browser.waitAndClick('[data-test-id="video-submit-save"]')
     // we now should be on the status screen
 
     // wait until the video is saved on the blockchain
@@ -47,6 +82,7 @@ describe('🦄 Uploader Tool', function () {
         const videoInfoFromBlockchain = await paratii.eth.vids.get(videoId)
         return videoInfoFromBlockchain
       } catch (err) {
+        throw err
         // console.log(err)
       }
     }
@@ -57,11 +93,15 @@ describe('🦄 Uploader Tool', function () {
     })
     const videoInfoFromBlockchain = await getVideoInfoFromBlockchain()
     assert.isOk(videoInfoFromBlockchain)
-    assert.equal(videoInfoFromBlockchain.owner, paratii.config.account.address)
+    assert.equal(videoInfoFromBlockchain.owner, newAddress)
 
-    // now wait until the transcoder is done - we should see a "play" link at this point
-    // TODO: this often times out on circleci because it depends on the (external) response of the transcoder
-    await browser.waitAndClick(`a[href="/play/${videoId}"]`)
+    // when the transcoder is done, we should be ready to publish the video
+    browser.waitAndClick(`[data-test-id="video-submit-publish"]`)
+    browser.pause(500)
+    browser.waitAndClick(`[data-test-id="button-stake"]`)
+    browser.waitAndClick(`a[href="/play/${videoId}"]`)
+    browser.url('http://localhost:8080')
+    browser.alertAccept()
   })
 
   it.skip('cancel upload should work [but is not yet]', function () {
@@ -73,7 +113,4 @@ describe('🦄 Uploader Tool', function () {
     // (the file is small so is immediately done uploading, but the cancel button should be avaiblabel in any case)
     browser.waitForExist('#cancel-upload')
   })
-  it.skip('Upload file should have decent error handling', function () {})
-
-  it.skip('Edit  video should have decent error handling', function () {})
 })

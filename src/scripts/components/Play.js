@@ -7,6 +7,7 @@ import debounce from 'lodash.debounce'
 import Transition from 'react-transition-group/Transition'
 import TimeFormat from 'hh-mm-ss'
 import playerjs from 'player.js'
+import queryString from 'query-string'
 
 import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
@@ -17,13 +18,20 @@ import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
-import { requestFullscreen, requestCancelFullscreen } from 'utils/AppUtils'
+import {
+  requestFullscreen,
+  requestCancelFullscreen,
+  getAppRootUrl
+} from 'utils/AppUtils'
+import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 
 import type { ClapprPlayer, PlayerPlugin } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
 import mux from 'mux-embed'
 
 const PLAYER_ID = 'player'
+const Z_INDEX_PLAYER: string = '1'
+const Z_INDEX_OVERLAY: string = '2'
 
 type Props = {
   match: Match,
@@ -50,11 +58,13 @@ type Props = {
 }
 
 type State = {
+  hasNeverPlayed: boolean,
   isEmbed: boolean,
   mouseInOverlay: boolean,
   shouldShowVideoOverlay: boolean,
-  videoNotFound: boolean,
-  showShareModal: boolean
+  showShareModal: boolean,
+  videoHasNeverPlayed: boolean,
+  videoNotFound: boolean
 }
 
 const Wrapper = styled.div`
@@ -112,7 +122,7 @@ const PlayerWrapper = styled.div`
 const Player = styled.div`
   width: 100%;
   height: 100%;
-  z-index: 5;
+  z-index: ${Z_INDEX_PLAYER};
 `
 
 const OverlayWrapper = styled.div`
@@ -121,7 +131,7 @@ const OverlayWrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  z-index: ${Z_INDEX_OVERLAY};
 `
 
 const PlayInfo = styled(Card)`
@@ -163,17 +173,20 @@ class Play extends Component<Props, State> {
   wrapperRef: ?HTMLElement
   playerWrapperRef: ?HTMLElement
   stagedPlaybackLevel: number
+  shouldShowStartScreen: () => boolean
 
   constructor (props: Props) {
     super(props)
 
     this.state = {
+      hasNeverPlayed: true,
       mouseInOverlay: false,
       shouldShowVideoOverlay: false,
       videoNotFound: false,
       playerCreated: '',
       isEmbed: this.props.isEmbed || false,
-      showShareModal: false
+      showShareModal: false,
+      videoHasNeverPlayed: true
     }
 
     this.lastMouseMove = 0
@@ -209,6 +222,12 @@ class Play extends Component<Props, State> {
     if (player) {
       player.on(Events.PLAYER_PLAY, (): void => {
         togglePlayPause(true)
+
+        this.setState((prevState: State) => {
+          if (prevState.hasNeverPlayed) {
+            return { hasNeverPlayed: false }
+          }
+        })
       })
       player.on(Events.PLAYER_PAUSE, (): void => {
         togglePlayPause(false)
@@ -471,8 +490,8 @@ class Play extends Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    const { video } = this.props
-    const { video: nextVideo } = nextProps
+    const { video, isPlaying } = this.props
+    const { video: nextVideo, isPlaying: nextIsPlaying } = nextProps
     if (nextVideo) {
       const fetchStatus = nextVideo.getIn(['fetchStatus', 'name'])
       if (nextProps.video && fetchStatus === 'success') {
@@ -487,6 +506,15 @@ class Play extends Component<Props, State> {
         // If video not exist we set in the component state
         this.setState({ videoNotFound: true })
       }
+    }
+    if (isPlaying !== nextIsPlaying) {
+      this.setState((prevState: State): ?Object => {
+        if (prevState.videoHasNeverPlayed) {
+          return {
+            videoHasNeverPlayed: false
+          }
+        }
+      })
     }
   }
 
@@ -516,6 +544,8 @@ class Play extends Component<Props, State> {
         this.player.destroy()
       }
 
+      const autoPlay: boolean = this.getAutoPlaySetting()
+
       this.player = CreatePlayer({
         selector: `#${PLAYER_ID}`,
         source: `https://gateway.paratii.video/ipfs/${
@@ -526,7 +556,7 @@ class Play extends Component<Props, State> {
         }/${poster}`,
         mimeType: 'application/x-mpegURL',
         ipfsHash: video.ipfsHash,
-        autoPlay: true
+        autoPlay
       })
 
       this.bindClapprEvents()
@@ -574,58 +604,107 @@ class Play extends Component<Props, State> {
   }
 
   shouldShowVideoOverlay (): boolean {
-    return this.state.mouseInOverlay
+    const { activePlugin } = this.props
+    const { shouldShowVideoOverlay, videoHasNeverPlayed } = this.state
+    return shouldShowVideoOverlay || videoHasNeverPlayed || !!activePlugin
   }
 
-  getPortalUrl () {
-    // FIXME: do not hardcode this here
-    return 'https://portal.paratii.video'
+  getAutoPlaySetting (): boolean {
+    const { isEmbed } = this.props
+
+    if (!isEmbed) {
+      return true
+    }
+
+    const parsedQueryString = queryString.parse(location.search)
+
+    const hasAutoPlayParam: boolean = Object.prototype.hasOwnProperty.call(
+      parsedQueryString,
+      PLAYER_PARAMS.AUTOPLAY
+    )
+
+    if (!hasAutoPlayParam) {
+      return false
+    }
+
+    const paramValue: string = parsedQueryString[PLAYER_PARAMS.AUTOPLAY]
+
+    if (!paramValue) {
+      return true
+    }
+
+    const parsedNumberValue: number = parseInt(paramValue, 10)
+
+    if (!isNaN(parsedNumberValue)) {
+      return !!parsedNumberValue
+    }
+
+    const valueIsFalse: boolean = paramValue.toLowerCase() === 'false'
+
+    return !valueIsFalse
   }
+
   getFacebookHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
     if (video) {
       var baseurl = 'https://www.facebook.com/sharer/sharer.php?u='
-      return baseurl + this.getPortalUrl() + '/play/' + video.id
+      return baseurl + appRootUrl + '/play/' + video.id
     }
   }
   getTwitterHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
+
     if (video) {
       const baseurl = 'https://twitter.com/intent/tweet'
-      const url = '?url=' + this.getPortalUrl() + '/play/' + video.id
+      const url = '?url=' + appRootUrl + '/play/' + video.id
       const text = '&text=🎬 Worth a watch: ' + video.title
       return baseurl + url + text
     }
   }
   getWhatsAppMobileHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
+
     if (video) {
       const baseurl = 'whatsapp://send?text='
-      const url = this.getPortalUrl() + '/play/' + video.id
+      const url = appRootUrl + '/play/' + video.id
       const text = '🎬 Worth a watch: ' + video.title + ' '
       return baseurl + text + url
     }
   }
   getWhatsAppDesktopHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
+
     if (video) {
       const baseurl = 'https://web.whatsapp.com/send?text='
-      const url = this.getPortalUrl() + '/play/' + video.id
+      const url = appRootUrl + '/play/' + video.id
       const text = '🎬 Worth a watch: ' + video.title + ' '
       return baseurl + text + url
     }
   }
   getTelegramHref () {
     const { video } = this.props
+    const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
+
     if (video) {
       const baseurl = 'https://t.me/share/url'
-      const url = '?url=' + this.getPortalUrl() + '/play/' + video.id
+      const url = '?url=' + appRootUrl + '/play/' + video.id
       const text = '&text=🎬 Worth a watch: ' + video.title
       return baseurl + url + text
     }
   }
+
+  shouldShowStartScreen () {
+    const { isAttemptingPlay, isEmbed } = this.props
+
+    return !isAttemptingPlay && isEmbed && this.state.hasNeverPlayed
+  }
+
   render () {
-    const { activePlugin, isEmbed, video } = this.props
+    const { isAttemptingPlay, isEmbed, video } = this.props
 
     const shareOptions = [
       {
@@ -658,10 +737,7 @@ class Play extends Component<Props, State> {
                 this.wrapperRef = ref
               }}
             >
-              <Transition
-                in={this.state.shouldShowVideoOverlay || !!activePlugin}
-                timeout={0}
-              >
+              <Transition in={this.shouldShowVideoOverlay()} timeout={0}>
                 {(transitionState: ?string) => (
                   <OverlayWrapper
                     onMouseLeave={this.onMouseLeave}
@@ -671,6 +747,11 @@ class Play extends Component<Props, State> {
                       onClick={this.onOverlayClick}
                       video={video}
                       isEmbed={isEmbed}
+                      showStartScreen={
+                        isEmbed &&
+                        this.state.hasNeverPlayed &&
+                        !isAttemptingPlay
+                      }
                       toggleShareModal={this.toggleShareModal}
                       showShareModal={this.state.showShareModal}
                       onScrub={this.scrubVideo}
@@ -700,10 +781,12 @@ class Play extends Component<Props, State> {
                 <ShareOverlay
                   show={this.state.showShareModal}
                   onToggle={this.toggleShareModal}
-                  portalUrl={this.getPortalUrl()}
+                  portalUrl={getAppRootUrl(process.env.NODE_ENV)}
                   videoId={video && video.id}
                   videoLabelUrl={
-                    this.getPortalUrl() + '/play/' + ((video && video.id) || '')
+                    getAppRootUrl(process.env.NODE_ENV) +
+                    '/play/' +
+                    ((video && video.id) || '')
                   }
                   shareOptions={shareOptions}
                 />
@@ -712,52 +795,52 @@ class Play extends Component<Props, State> {
           </VideoWrapper>
           {!isEmbed &&
             video && (
-              <PlayInfo>
-                {(video.title || video.filename) && (
-                  <Title small>{video.title || video.filename}</Title>
-                )}
-                {video.author && <Text>By {video.author}</Text>}
-                {video.share && (
-                  <PlayInfoButtons>
-                    <ButtonIcon>
-                      <SVG>
-                        <use xlinkHref="#icon-play-view" />
-                      </SVG>
-                      <Text small gray>
+            <PlayInfo>
+              {(video.title || video.filename) && (
+                <Title small>{video.title || video.filename}</Title>
+              )}
+              {video.author && <Text>By {video.author}</Text>}
+              {video.share && (
+                <PlayInfoButtons>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-view" />
+                    </SVG>
+                    <Text small gray>
                         0
-                      </Text>
-                    </ButtonIcon>
-                    <ButtonIcon>
-                      <SVG>
-                        <use xlinkHref="#icon-play-like" />
-                      </SVG>
-                      <Text small gray>
+                    </Text>
+                  </ButtonIcon>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-like" />
+                    </SVG>
+                    <Text small gray>
                         0
-                      </Text>
-                    </ButtonIcon>
-                    <ButtonIcon>
-                      <SVG>
-                        <use xlinkHref="#icon-play-dislike" />
-                      </SVG>
-                      <Text small gray>
+                    </Text>
+                  </ButtonIcon>
+                  <ButtonIcon>
+                    <SVG>
+                      <use xlinkHref="#icon-play-dislike" />
+                    </SVG>
+                    <Text small gray>
                         0
-                      </Text>
-                    </ButtonIcon>
-                  </PlayInfoButtons>
-                )}
-                <Text gray>
+                    </Text>
+                  </ButtonIcon>
+                </PlayInfoButtons>
+              )}
+              <Text gray>
                   Price{' '}
-                  <PlayInfoHighlight purple>
-                    {video.free ? 'Free' : 'Free'}
-                  </PlayInfoHighlight>
-                </Text>
-                {video.description && (
-                  <DescriptionWrapper>
-                    <Text>{video.description}</Text>
-                  </DescriptionWrapper>
-                )}
-              </PlayInfo>
-            )}
+                <PlayInfoHighlight purple>
+                  {video.free ? 'Free' : 'Free'}
+                </PlayInfoHighlight>
+              </Text>
+              {video.description && (
+                <DescriptionWrapper>
+                  <Text>{video.description}</Text>
+                </DescriptionWrapper>
+              )}
+            </PlayInfo>
+          )}
         </Wrapper>
       )
     }

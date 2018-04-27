@@ -2,10 +2,14 @@
 import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import NumPad from 'components/widgets/NumPad'
-import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
+import {
+  WALLET_KEY_SECURE,
+  MNEMONIC_KEY_TEMP
+} from 'constants/ParatiiLibConstants'
 
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
@@ -14,17 +18,16 @@ type Props = {
   closeModal: () => void,
   notification: (Object, string) => void,
   setWalletAddress: Object => void,
-  setAddressAndBalance: () => void
+  setAddressAndBalance: () => void,
+  fetchOwnedVideos: () => void
 }
 
-const Title = styled.h2`
-  color: ${props => props.theme.colors.Modal.title};
-  font-size: ${props => props.theme.fonts.modal.title};
-  margin-bottom: 25px;
-`
+const PadWrapper = styled.div`
+  margin: 66px 0 96px;
 
-const MainText = styled(Text)`
-  margin-bottom: 35px;
+  @media (max-width: 767px) {
+    margin-bottom: 0;
+  }
 `
 
 const Footer = styled.div`
@@ -56,6 +59,31 @@ class ModalAskPin extends Component<Props, Object> {
     this.handlePinChange = this.handlePinChange.bind(this)
   }
 
+  componentDidMount (): void {
+    this.addKeyDownEventListeners()
+  }
+
+  componentWillUnmount (): void {
+    this.removeKeyDownEventListeners()
+  }
+
+  addKeyDownEventListeners () {
+    window.addEventListener('keydown', this.handleKeyDown.bind(this))
+  }
+
+  removeKeyDownEventListeners () {
+    window.removeEventListener('keydown', this.handleKeyDown.bind(this))
+  }
+
+  handleKeyDown (event: Object) {
+    if (event.keyCode === 13 /* enter */) {
+      this.setPin()
+    }
+    if (this.state.isPin && event.keyCode === 8 /* backspace */) {
+      this.clearPin()
+    }
+  }
+
   clearPin () {
     this.setState({
       pin: '',
@@ -65,6 +93,7 @@ class ModalAskPin extends Component<Props, Object> {
   }
 
   setPin () {
+    sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
     // Decrypt Keystore
     const pin = this.state.pin
     const walletString = localStorage.getItem(WALLET_KEY_SECURE) || ''
@@ -72,12 +101,10 @@ class ModalAskPin extends Component<Props, Object> {
       { title: 'Trying to unlock your keystore...' },
       'warning'
     )
-    this.props.closeModal()
     try {
       paratii.eth.wallet.clear()
       paratii.eth.wallet.decrypt(JSON.parse(walletString), pin)
-      const address = paratii.config.account.address
-      console.log(address)
+      const address = paratii.eth.getAccount()
       this.props.setWalletAddress({ address })
       this.props.notification(
         {
@@ -88,6 +115,9 @@ class ModalAskPin extends Component<Props, Object> {
       )
       // Set the balance
       this.props.setAddressAndBalance()
+      // Retrieve your videos
+      this.props.fetchOwnedVideos()
+      this.props.closeModal()
     } catch (err) {
       // wallet is not valid
       this.setState({
@@ -123,15 +153,13 @@ class ModalAskPin extends Component<Props, Object> {
       <ModalContentWrapper>
         <ModalScrollContent>
           <Title>Insert your PIN.</Title>
-          <MainText small gray>
-            Insert your PIN to unlock the keystore.
-          </MainText>
-
-          <NumPad
-            onSetPin={this.handlePinChange}
-            reset={this.state.resetPinField}
-            error={this.state.error.length > 0}
-          />
+          <PadWrapper>
+            <NumPad
+              onSetPin={this.handlePinChange}
+              reset={this.state.resetPinField}
+              error={this.state.error.length > 0}
+            />
+          </PadWrapper>
 
           {this.state.error && (
             <Text pink small>

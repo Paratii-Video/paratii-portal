@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const { Paratii } = require('paratii-lib')
+const { Paratii } = require('paratii-js')
 
 const env = process.env.NODE_ENV || 'development'
 
@@ -34,7 +34,7 @@ async function deployContracts () {
 }
 
 async function seedVideos () {
-  await paratii.core.vids.create({
+  await paratii.vids.create({
     id: '999',
     owner: address1,
     title: 'Paratii Test Video',

@@ -26,11 +26,9 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
   console.log('FETCH VIDEO: ' + id)
   let videoInfo
   try {
-    videoInfo = await paratii.core.vids.get(id)
+    videoInfo = await paratii.vids.get(id)
 
-    if (videoInfo) {
-      videoInfo.id = videoInfo._id
-    } else {
+    if (!videoInfo) {
       dispatch(videoFetchError(new VideoRecord({ id: id, error: 'failed' })))
     }
     if (videoInfo && videoInfo.id) {
@@ -48,10 +46,10 @@ export const fetchOwnedVideos = () => async (
   dispatch: Dispatch<*>,
   getState: () => RootState
 ) => {
-  const address: string = paratii.config.account.address
-  const ownedVideos: Array<Object> = await paratii.core.vids.search({
+  const address: string = paratii.eth.getAccount()
+  const ownedVideos: Object = (await paratii.vids.search({
     owner: address
-  })
+  })).results
   const filteredOwnedVideos = []
   for (let i = 0; i < ownedVideos.length; i++) {
     const video = ownedVideos[i]
@@ -67,15 +65,15 @@ export const fetchOwnedVideos = () => async (
         video.transcodingStatus.name !== 'success' ||
         video.transcodingStatus.data.progress !== 100
       ) {
-        console.log('Restarting to transcode' + video._id)
+        console.log('Restarting to transcode' + video.id)
         dispatch(
           Notifications.success({
             title: 'Transcoding',
-            message: 'We are transcoding video ' + video._id
+            message: 'We are transcoding video ' + video.id
           })
         )
         transcodeVideo({
-          id: video._id,
+          id: video.id,
           hash: video.ipfsHashOrig,
           size: video.filesize
         })(dispatch, getState)

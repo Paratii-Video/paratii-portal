@@ -9,7 +9,7 @@ type Props = {
 }
 
 const NumPadWrapper = styled.div`
-  max-width: 260px;
+  max-width: 270px;
   margin: auto;
 `
 const ButtonsWrapper = styled.div`
@@ -19,23 +19,25 @@ const ButtonsWrapper = styled.div`
 `
 const NumberBtn = styled.div`
   user-select: none;
-  padding: 10px;
-  border: 1px solid ${Colors.purple};
+  border: 2px solid ${Colors.purple};
   color: ${Colors.purple};
-  margin: 3px;
+  margin: 0 6px 12px;
   cursor: pointer;
-  flex: 1 0 calc(33.333% - 20px);
-  max-width: calc(33.333% - 20px);
+  flex: 1 0 68px;
+  max-width: 68px;
+  height: 60px;
+  line-height: 60px;
   text-align: center;
   border-radius: 2px;
-  transition: all 0.3s;
+  transition: all ${props => props.theme.animation.time.repaint};
 
   &:active {
     background-color: ${Colors.purple};
-    color: ${Colors.gray};
+    color: ${Colors.white};
   }
   &:hover {
-    opacity: 0.7;
+    background-color: ${Colors.purple};
+    color: ${Colors.white};
   }
 `
 
@@ -56,9 +58,11 @@ const HashPin = styled.div`
 `
 
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+const keyboard = [49, 50, 51, 52, 53, 54, 55, 56, 57, 48]
 
 class NumPad extends Component<Props, Object> {
   handleClick: (e: Object) => void
+  handleKeyDown: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
@@ -66,8 +70,24 @@ class NumPad extends Component<Props, Object> {
       pin: [],
       hidePin: ''
     }
-
     this.handleClick = this.handleClick.bind(this)
+  }
+
+  componentDidMount (): void {
+    this.addKeyDownEventListeners()
+  }
+
+  componentWillUnmount (): void {
+    console.log('unmount')
+    this.removeKeyDownEventListeners()
+  }
+
+  addKeyDownEventListeners () {
+    window.addEventListener('keydown', this.handleKeyDown.bind(this))
+  }
+
+  removeKeyDownEventListeners () {
+    window.removeEventListener('keydown', this.handleKeyDown.bind(this))
   }
 
   componentWillReceiveProps (nextProps: Props): void {
@@ -95,6 +115,20 @@ class NumPad extends Component<Props, Object> {
     } else {
       console.log(`you've already insert 4 numbers`)
     }
+  }
+
+  handleKeyDown (event: Object) {
+    if (keyboard.includes(event.keyCode)) {
+      const index = keyboard.indexOf(event.keyCode)
+      const numberClicked = numbers[index]
+      this.handleClick(numberClicked)
+    }
+    // if (event.keyCode === 8 /* backspace */) {
+    //   this.setState({
+    //     pin: [],
+    //     hidePin: ''
+    //   })
+    // }
   }
 
   render () {

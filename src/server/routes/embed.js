@@ -1,8 +1,8 @@
 /* @flow */
 
 import type { $Request, $Response } from 'express'
-import { Paratii } from 'paratii-lib/dist/paratii'
-import { getParatiiConfig } from 'utils/AppUtils'
+import { Paratii } from 'paratii-js/dist/paratii'
+import { getParatiiConfig, getAppRootUrl } from 'utils/AppUtils'
 
 const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 
@@ -31,7 +31,7 @@ module.exports = async (req: $Request, res: $Response) => {
     )
   }
   const { id } = req.params
-  const video = await paratii.core.vids.get(id)
+  const video = await paratii.vids.get(id)
   // TODO: reaise a 404 at this point
 
   if (!video) {
@@ -44,9 +44,10 @@ module.exports = async (req: $Request, res: $Response) => {
   const thumbName = video.transcodingStatus.data.result.screenshots[0]
   const thumbnailUrl =
     'https://gateway.paratii.video/ipfs/' + ipfsHash + '/' + thumbName
+  const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
 
-  const url = `https://portal.paratii.video/play/${id}`
-  const embedUrl = `https://portal.paratii.video/embed/${id}`
+  const url = `${appRootUrl}/play/${id}`
+  const embedUrl = `${appRootUrl}/embed/${id}`
   const height = `1080`
   const width = `1920`
   // this needs to be the has of a video - just as the thumbnail, we need to save these data from paratii-db
@@ -94,7 +95,7 @@ module.exports = async (req: $Request, res: $Response) => {
 
 
         <style>
-  
+
         </style>
       </head>
       <body>
@@ -102,7 +103,7 @@ module.exports = async (req: $Request, res: $Response) => {
           You need to enable JavaScript to run this app.
         </noscript>
         <div id="root">
-          <span class="main-loader"></span>
+          <span class="app-loader paratii-loader" style="width: 50px; height: 50px;"></span>
         </div>
         ${script}
       </body>

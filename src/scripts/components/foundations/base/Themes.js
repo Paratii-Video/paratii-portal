@@ -136,6 +136,25 @@ const Themes = {
     },
     VideoDescription: {
       icon: Colors.grayLight
+    },
+    Nav: {
+      search: {
+        background: Colors.grayDark
+      }
+    },
+    Search: {
+      results: {
+        background: Colors.blackMedium,
+        hoverBackground: Colors.blackDarkTransparent,
+        titleColor: Colors.white,
+        descriptionColor: Colors.gray,
+        border: Colors.grayDark,
+        duration: {
+          text: Colors.white,
+          background: Colors.blackDarkTransparent
+        }
+      },
+      nextButton: Colors.gray
     }
   }
 }

@@ -22,9 +22,9 @@ export const ButtonStyleColor = css`
 
     return css`
       color: ${_color};
-    `
+`
   }};
-  `
+`
 
 export const StyleAnchor = css`
   ${props => {
@@ -41,18 +41,19 @@ export const StyleAnchor = css`
 
       return css`
         ${_css};
-      `
+`
     }
   }};
-  `
+`
 
 export const ButtonStyleHover = css`
+  backface-visibility: hidden;
   transition: opacity ${props => props.theme.animation.time.repaint};
 
   &:hover {
     opacity: ${props => props.theme.animation.opacity.hover};
   }
-  `
+`
 
 export const IconFillStyleColor = css`
   ${props => {
@@ -70,15 +71,15 @@ export const IconFillStyleColor = css`
 
     return css`
       fill: ${_color};
-    `
+`
   }};
-  `
+`
 
 const SVG = styled.svg`
   ${IconFillStyleColor};
   width: 100%;
   height: 100%;
-  `
+`
 
 export const SVGIcon = ({ icon, color, ...rest }: Props) => (
   <SVG color={color}>
@@ -99,6 +100,6 @@ const Button = styled.button`
   pointer-events: ${props => (props.disabled ? 'none' : '')};
   text-transform: ${props => (props.anchor ? '' : 'uppercase')};
   user-select: ${props => (props.anchor ? '' : 'none')};
-  `
+`
 
 export default Button

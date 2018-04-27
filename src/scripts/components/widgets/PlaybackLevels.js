@@ -10,7 +10,8 @@ import { CONTROLS_HEIGHT } from 'constants/UIConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
 
 const PADDING: string = '20px'
-const LevelHeight: string = '42px'
+const LevelHeight: number = 42
+const WrapperBottomSpace: number = 100
 
 const RESOLUTIONS = {
   Auto: 'Auto',
@@ -44,11 +45,12 @@ const Title = Text.extend`
 
 const LevelsList = styled.ul`
   flex: 1 1 0;
+  height: ${({ height }) => (height ? height + 'px' : null)};
 `
 
 const Level = styled.li`
-  height: ${LevelHeight};
-  line-height: ${LevelHeight};
+  height: ${LevelHeight + 'px'};
+  line-height: ${LevelHeight + 'px'};
   width: 100%;
   cursor: pointer;
   display: flex;
@@ -66,13 +68,18 @@ const Level = styled.li`
     display: inline-block;
     font-size: 20px;
     margin-right: 5px;
-    transform: scale(${({ selected }) => (selected ? 1 : 0)});
+    transform: scale(${({ selected }) => (selected ? 1 : 0)}) translateY(2px);
     transition: transform 0.7s ${({ theme }) => theme.animation.ease.smooth};
   }
 `
 
-const LevelLabel = Text.extend`
+const LevelLabel = styled.p`
   display: inline-block;
+  font-size: ${props => props.theme.fonts.video.quality.levelsDesktop};
+
+  @media (max-width: 1680px) {
+    font-size: ${props => props.theme.fonts.video.quality.levels};
+  }
 `
 
 type Props = {
@@ -84,6 +91,12 @@ type Props = {
 }
 
 class PlaybackLevels extends React.Component<Props> {
+  getMaxHeight: () => number
+  constructor (props: Props) {
+    super(props)
+    this.getMaxHeight = this.getMaxHeight.bind(this)
+  }
+
   getSelectedLevelIndex (): number {
     const { currentPlaybackLevel, playbackLevels } = this.props
     if (!currentPlaybackLevel) {
@@ -113,10 +126,27 @@ class PlaybackLevels extends React.Component<Props> {
     return offsetXPercentage
   }
 
+  getMaxHeight (): number {
+    let numLevels: number = this.props.playbackLevels.size
+    const elementHeight: number =
+      (numLevels + 1) * LevelHeight + WrapperBottomSpace
+    const documentHeight: number = document.body
+      ? document.body.clientHeight
+      : elementHeight + 1
+    const difference: number = elementHeight - documentHeight
+
+    if (difference > 0) {
+      numLevels = numLevels - Math.round(difference / LevelHeight)
+    }
+
+    return numLevels
+  }
+
   render () {
     const { playbackLevels, onPlaybackLevelChange, open, onClose } = this.props
     const offsetXPercentage: number = this.getLevelsListOffsetPercentage()
     const selectedIndex: number = this.getSelectedLevelIndex()
+    const getMaxHeight = this.getMaxHeight
     const numLevels: number = playbackLevels.size
 
     return (
@@ -127,18 +157,24 @@ class PlaybackLevels extends React.Component<Props> {
             <CloseButton onClick={onClose} />
           </TopBar>
           <LevelsList offsetXPercentage={offsetXPercentage}>
-            {playbackLevels.map((level: PlaybackLevel, index: number) => (
-              <Level
-                numLevels={numLevels}
-                selected={selectedIndex === index}
-                key={level.get('id')}
-                onClick={() => {
-                  onPlaybackLevelChange(level.get('id'))
-                }}
-              >
-                <LevelLabel small>{RESOLUTIONS[level.get('label')]}</LevelLabel>
-              </Level>
-            ))}
+            {playbackLevels.map((level: PlaybackLevel, index: number) => {
+              if (index < getMaxHeight()) {
+                return (
+                  <Level
+                    numLevels={numLevels}
+                    selected={selectedIndex === index}
+                    key={level.get('id')}
+                    onClick={() => {
+                      onPlaybackLevelChange(level.get('id'))
+                    }}
+                  >
+                    <LevelLabel small>
+                      {RESOLUTIONS[level.get('label')]}
+                    </LevelLabel>
+                  </Level>
+                )
+              }
+            })}
           </LevelsList>
         </Wrapper>
       </Popover>

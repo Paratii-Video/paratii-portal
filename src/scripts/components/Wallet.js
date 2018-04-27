@@ -1,15 +1,18 @@
+/* @flow */
 import React, { Component } from 'react'
 import Card from 'components/structures/Card'
 import Text from 'components/foundations/Text'
 import Button from './foundations/Button'
 import paratii from 'utils/ParatiiLib'
 import { MODAL } from 'constants/ModalConstants'
+import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 
 type Props = {
   user: Object,
+  userAddress: string,
+  isWalletSecured: boolean,
   closeModal: () => void,
-  openModal: () => void,
-  userAddress: String
+  openModal: string => void
 }
 
 class Wallet extends Component<Props> {
@@ -21,7 +24,6 @@ class Wallet extends Component<Props> {
   }
 
   secureWallet () {
-    console.log('secure')
     this.props.openModal(MODAL.SECURE)
   }
 
@@ -38,9 +40,16 @@ class Wallet extends Component<Props> {
           PTI
         </Text>
         <br />
-        <Button data-test-id="secure-wallet" onClick={this.secureWallet} purple>
-          Secure Wallet
-        </Button>
+        {ACTIVATE_SECURE_WALLET &&
+          !this.props.isWalletSecured && (
+          <Button
+            data-test-id="secure-wallet"
+            onClick={this.secureWallet}
+            purple
+          >
+              Secure Wallet
+          </Button>
+        )}
       </Card>
     )
   }

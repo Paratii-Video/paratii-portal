@@ -6,17 +6,20 @@ import Button from 'components/foundations/Button'
 
 import ModalStake from 'containers/widgets/modals/ModalStakeContainer' // need to receive any content
 import ModalSecure from 'containers/widgets/modals/ModalSecureContainer'
+import ModalGreatPower from 'containers/widgets/modals/ModalGreatPowerContainer'
+import ModalCreatePassword from 'containers/widgets/modals/ModalCreatePasswordContainer'
+import ModalAskPassword from 'containers/widgets/modals/ModalAskPasswordContainer'
 import ModalShowSeed from 'containers/widgets/modals/ModalShowSeedContainer'
+import ModalProfile from 'containers/widgets/modals/ModalProfileContainer'
 import ModalRewriteSeed from 'containers/widgets/modals/ModalRewriteSeedContainer'
 import ModalRestoreAccount from 'containers/widgets/modals/ModalRestoreAccountContainer'
-import ModalSetPin from 'containers/widgets/modals/ModalSetPinContainer'
-import ModalAskPin from 'containers/widgets/modals/ModalAskPinContainer'
 
 import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
   modalContent: string,
   showModal: boolean,
+  width: string,
   closeModal: () => null
 }
 
@@ -53,12 +56,12 @@ const Container = styled.div`
   margin: 0 40px;
   opacity: ${props => (props.show ? '1' : '0')};
   transform: translate3d(0, ${props => (props.show ? '' : '100px')}, 0);
-  transition: transform ${props => (props.show ? '0.7s' : '0.5s')}
+  transition: transform ${props => (props.show ? '0.7s' : '0.4s')}
       ${props => props.theme.animation.ease.smooth}
       ${props => (props.show ? '0.2s' : null)},
     opacity ${props => (props.show ? '0.25s' : '0.2s')} linear
       ${props => (props.show ? '0.3s' : null)};
-  width: 490px;
+  width: ${props => props.width};
   z-index: 2;
 
   @media (max-width: 767px) {
@@ -75,6 +78,10 @@ const CloseButton = styled(Button)`
   top: 30px;
   width: 20px;
   z-index: 3;
+
+  @media (max-width: 767px) {
+    top: 39px;
+  }
 `
 
 const SVG = styled.svg`
@@ -88,6 +95,10 @@ const Content = styled.div`
   height: 100%;
   padding: 44px 48px;
   width: 100%;
+
+  @media (max-width: 767px) {
+    padding: 30px 34px;
+  }
 `
 
 export const ModalContentWrapper = styled.div`
@@ -114,16 +125,46 @@ class Modal extends Component<Props, void> {
         return <ModalStake />
       case MODAL.SECURE:
         return <ModalSecure />
+      case MODAL.GREAT_POWER:
+        return <ModalGreatPower />
+      case MODAL.CREATE_PASSWORD:
+        return <ModalCreatePassword />
+      case MODAL.ASK_PASSWORD:
+        return <ModalAskPassword />
       case MODAL.SHOW_SEED:
         return <ModalShowSeed />
+      case MODAL.PROFILE:
+        return <ModalProfile />
       case MODAL.REWRITE_SEED:
         return <ModalRewriteSeed />
       case MODAL.RESTORE_ACCOUNT:
         return <ModalRestoreAccount />
-      case MODAL.SET_PIN:
-        return <ModalSetPin />
-      case MODAL.ASK_PIN:
-        return <ModalAskPin />
+    }
+  }
+
+  getModalWidth () {
+    const { modalContent } = this.props
+    switch (modalContent) {
+      case MODAL.STAKE:
+        return '490px'
+      case MODAL.SECURE:
+        return '900px'
+      case MODAL.SHOW_SEED:
+        return '900px'
+      case MODAL.GREAT_POWER:
+        return '900px'
+      case MODAL.REWRITE_SEED:
+        return '900px'
+      case MODAL.RESTORE_ACCOUNT:
+        return '900px'
+      case MODAL.CREATE_PASSWORD:
+        return '900px'
+      case MODAL.ASK_PASSWORD:
+        return '490px'
+      case MODAL.PROFILE:
+        return '900px'
+      default:
+        return '490px'
     }
   }
 
@@ -145,7 +186,7 @@ class Modal extends Component<Props, void> {
     const isVisible = this.props.showModal
     return (
       <Wrapper show={isVisible}>
-        <Container show={isVisible}>
+        <Container show={isVisible} width={this.getModalWidth()}>
           <CloseButton onClick={this.props.closeModal}>
             <SVG>
               <use xlinkHref="#icon-close" />

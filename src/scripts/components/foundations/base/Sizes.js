@@ -4,7 +4,7 @@ const Sizes = {
     padding: '0 80px'
   },
   mainHeaderLogo: {
-    height: '29px',
+    height: '69px',
     width: '98px'
   },
   searchInputButton: '17px',

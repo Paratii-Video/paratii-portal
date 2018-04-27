@@ -1,11 +1,10 @@
 /* @flow */
-// import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import NumPad from 'components/widgets/NumPad'
-
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
 type Props = {
@@ -14,14 +13,12 @@ type Props = {
   secureKeystore: String => void
 }
 
-const Title = styled.h2`
-  color: ${props => props.theme.colors.Modal.title};
-  font-size: ${props => props.theme.fonts.modal.title};
-  margin-bottom: 25px;
-`
+const PadWrapper = styled.div`
+  margin: 66px 0 96px;
 
-const MainText = styled(Text)`
-  margin-bottom: 35px;
+  @media (max-width: 767px) {
+    margin-bottom: 0;
+  }
 `
 
 const Footer = styled.div`
@@ -46,6 +43,7 @@ class ModalSetPin extends Component<Props, Object> {
       pin: '',
       newPin: '',
       isPin: false,
+      checkPin: false,
       resetPinField: false,
       error: ''
     }
@@ -55,17 +53,15 @@ class ModalSetPin extends Component<Props, Object> {
   }
 
   clearPin () {
-    if (this.state.isPin) {
-      this.setState({
-        newPin: '',
-        resetPinField: true
-      })
-    } else {
-      this.setState({
-        pin: '',
-        resetPinField: true
-      })
-    }
+    // Totally reset the PIN
+    this.setState({
+      pin: '',
+      newPin: '',
+      isPin: false,
+      checkPin: false,
+      error: '',
+      resetPinField: true
+    })
   }
 
   setPin () {
@@ -85,7 +81,8 @@ class ModalSetPin extends Component<Props, Object> {
       }
     } else {
       this.setState({
-        resetPinField: true
+        resetPinField: true,
+        checkPin: true
       })
     }
   }
@@ -110,19 +107,38 @@ class ModalSetPin extends Component<Props, Object> {
   }
 
   render () {
+    let header = ''
+    // The first pin has not yet been set
+    if (!this.state.checkPin) {
+      header = (
+        <div>
+          <Title>Create a PIN.</Title>
+          <Text small gray>
+            This is the password for you account in this browser.
+          </Text>
+        </div>
+      )
+    } else {
+      header = (
+        <div>
+          <Title>Check your PIN.</Title>
+          <Text small gray>
+            Please insert your PIN again
+          </Text>
+        </div>
+      )
+    }
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Create a security PIN.</Title>
-          <MainText small gray>
-            It will work like a password for your account, in this browser.
-          </MainText>
-
-          <NumPad
-            onSetPin={this.handlePinChange}
-            reset={this.state.resetPinField}
-            error={this.state.error.length > 0}
-          />
+          {header}
+          <PadWrapper>
+            <NumPad
+              onSetPin={this.handlePinChange}
+              reset={this.state.resetPinField}
+              error={this.state.error.length > 0}
+            />
+          </PadWrapper>
 
           {this.state.error && (
             <Text pink small>

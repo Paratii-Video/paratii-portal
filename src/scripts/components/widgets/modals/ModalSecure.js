@@ -1,32 +1,24 @@
 /* @flow */
-// import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
+import NotepadLockSvg from 'components/foundations/svgs/NotepadLockSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
+import { RESTORE_ACCOUNT, NEW_ACCOUNT } from 'constants/ParatiiLibConstants'
 
 type Props = {
-  openModal: String => void
+  openModal: string => void,
+  setContext: string => void
 }
 
-const Title = styled.h2`
-  color: ${props => props.theme.colors.Modal.title};
-  font-size: ${props => props.theme.fonts.modal.title};
-  margin-bottom: 25px;
+const Icon = styled.div`
+  height: 250px;
+  margin: 75px 0 96px;
+  width: 100%;
 `
-
-const Highlight = styled(Text)`
-  color: ${props => props.theme.colors.Modal.hightlight};
-  margin-bottom: 14px;
-`
-
-const MainText = styled(Text)`
-  margin-bottom: 35px;
-`
-
-// const Anchor = Button.withComponent('a')
 
 const Footer = styled.div`
   display: flex;
@@ -41,38 +33,33 @@ const ButtonContainer = styled.div`
 
 class ModalSecure extends Component<Props, Object> {
   restoreAccount: (e: Object) => void
-  showSeed: (e: Object) => void
+  createPassword: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
     this.restoreAccount = this.restoreAccount.bind(this)
-    this.showSeed = this.showSeed.bind(this)
+    this.createPassword = this.createPassword.bind(this)
   }
 
   restoreAccount () {
-    console.log('Restore Account')
+    this.props.setContext(RESTORE_ACCOUNT)
     this.props.openModal(MODAL.RESTORE_ACCOUNT)
   }
 
-  showSeed () {
-    console.log('Show Seed')
-    this.props.openModal(MODAL.SHOW_SEED)
+  createPassword () {
+    this.props.setContext(NEW_ACCOUNT)
+    this.props.openModal(MODAL.CREATE_PASSWORD)
   }
 
   render () {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Secure you wallet</Title>
-          <Highlight>
-            Vestibulum turpis ex, sagittis non libero sed, tincidunt egestas
-            augue.
-          </Highlight>
-          <MainText small gray>
-            Donec eleifend vitae felis nec laoreet. Nam ullamcorper justo et
-            ante malesuada iaculis. Aliquam lacus quam, condimentum eget massa
-            vitae, ultrices porta ligula.
-          </MainText>
+          <Title>Before you proceed your account needs to be secure</Title>
+          <Text gray>It won’t take more than a minute</Text>
+          <Icon>
+            <NotepadLockSvg />
+          </Icon>
           <Footer>
             <ButtonContainer>
               <Button
@@ -83,8 +70,12 @@ class ModalSecure extends Component<Props, Object> {
               </Button>
             </ButtonContainer>
             <ButtonContainer>
-              <Button data-test-id="new-here" purple onClick={this.showSeed}>
-                I am new here
+              <Button
+                data-test-id="new-here"
+                purple
+                onClick={this.createPassword}
+              >
+                Secure this account
               </Button>
             </ButtonContainer>
           </Footer>
