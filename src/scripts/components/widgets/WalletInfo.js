@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import paratii from 'utils/ParatiiLib'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 import CloseButton from 'components/foundations/buttons/CloseButton'
-import { SvgIcon } from 'components/foundations/Button'
+import { SVGIcon } from 'components/foundations/Button'
 import Popover from 'components/foundations/Popover'
 import Colors from 'components/foundations/base/Colors'
 import { POPOVER_PADDING, OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
@@ -116,7 +116,7 @@ class WalletInfo extends React.Component<Props> {
             <Header>Public Address</Header>
             <AddressWrapper onClick={this.copyAddressToClipboard}>
               <CopyIcon>
-                <SvgIcon color="white" icon="icon-copy" />
+                <SVGIcon color="white" icon="icon-copy" />
               </CopyIcon>
               <Address innerRef={this.setAddressRef}>
                 {this.getAddress()}
