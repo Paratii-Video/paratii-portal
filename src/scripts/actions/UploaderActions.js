@@ -81,6 +81,7 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
     })
   )
   // this will upload the file to the local IPFS node and report on progress
+  // const uploader = paratii.ipfs.local.add(file)
   const uploader = paratii.vids.uploadAndTranscode(file)
 
   uploader.on('error', function (error) {
@@ -129,13 +130,94 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
     dispatch(
       uploadLocalSuccess({ id: videoId, hash: file.hash, size: file.size })
     )
+    console.log(
+      `Requesting to transcode video ${videoId} with hash ${file.hash}`
+    )
     // now we can start the transcoding
     // this wll ALSO start the XHR upload
-    transcodeVideo({
+    const videoInfo = {
       id: videoId,
       hash: file.hash,
       size: file.size
-    })(dispatch, getState)
+    }
+    dispatch(transcodingRequested(videoInfo))
+  })
+  _handleTrancoderEvents(uploader, videoId, dispatch, getState)
+}
+
+const _handleTrancoderEvents = (transcoder, videoId, dispatch, getState) => {
+  transcoder.on('uploader:progress', function (hash, size, percent) {
+    console.log('upload progress', percent)
+    dispatch(uploadProgress({ id: videoId, progress: percent }))
+  })
+
+  transcoder.on('transcoding:error', function (error) {
+    console.log('TRANSCODER ERROR', error)
+    dispatch(
+      Notifications.error({
+        title: 'Transcoder Error',
+        message: 'The machines are not cooperating. Can you refresh?',
+        autoDismiss: 0
+      })
+    )
+    dispatch(transcodingFailure({ id: videoId }, error))
+  })
+
+  transcoder.on('transcoding:started', function (hash, author) {
+    // Once we have this, the file is fully uploaded to the transcoder
+    console.log('Remote upload done!')
+    dispatch(uploadProgress({ id: videoId, progress: 100 }))
+    dispatch(uploadRemoteSuccess({ id: videoId, hash: hash }))
+    // save the updaded state
+    upsertVideo(videoId, {}, getState())
+
+    console.log('TRANSCODER STARTED', hash, author)
+    dispatch(
+      Notifications.success({
+        title: 'Transcoding',
+        message: 'The transcoding has started.'
+      })
+    )
+  })
+
+  transcoder.on('transcoding:progress', function (hash, size, percent) {
+    console.log('TRANSCODER PROGRESS', percent)
+    percent = parseFloat(percent)
+    dispatch(transcodingProgress({ id: videoId, progress: percent }))
+  })
+
+  transcoder.on('transcoding:downsample:ready', function (hash, size) {
+    console.log('TRANSCODER DOWNSAMPLE READY', hash, size)
+  })
+
+  transcoder.once('transcoding:done', function (hash, result) {
+    // if transcoding is done, apparently we have uploaded the file first
+    dispatch(
+      Notifications.success({
+        title: 'Transcoder done',
+        message: 'Your video is ready to be published!'
+      })
+    )
+    dispatch(uploadRemoteSuccess({ id: videoId, hash: hash }))
+    dispatch(
+      transcodingSuccess({
+        id: videoId,
+        hash: hash,
+        result: result,
+        duration: result.duration
+      })
+    )
+    console.log('TRANSCODER DONE', hash, result, videoId)
+    upsertVideo(
+      videoId,
+      {
+        ipfsHash: result.master.hash,
+        owner: paratii.eth.getAccount(),
+        duration: result.duration,
+        thumbnails: result.screenshots
+      },
+      getState()
+    )
   })
 }
 
@@ -143,95 +225,11 @@ export const transcodeVideo = (videoInfo: Object) => async (
   dispatch: Dispatch<*>,
   getState: () => RootState
 ) => {
-  console.log(
-    `Requesting to transcode video ${videoInfo.id} with hash ${videoInfo.hash}`
-  )
-  dispatch(transcodingRequested(videoInfo))
-  // FIXME: paratii-js should hande the starting of the ipfs node if it is not started yet
-  paratii.ipfs.getIPFSInstance().then(function () {
-    const transcoder = paratii.transcoder.transcode(videoInfo.hash, {
-      author: paratii.eth.getAccount(),
-      size: videoInfo.size
-    })
-
-    transcoder.on('uploader:progress', function (hash, size, percent) {
-      console.log('upload progress', percent)
-      dispatch(uploadProgress({ id: videoInfo.id, progress: percent }))
-    })
-
-    transcoder.on('transcoding:error', function (error) {
-      console.log('TRANSCODER ERROR', error)
-      dispatch(
-        Notifications.error({
-          title: 'Transcoder Error',
-          message: 'The machines are not cooperating. Can you refresh?',
-          autoDismiss: 0
-        })
-      )
-      dispatch(transcodingFailure(videoInfo, error))
-    })
-
-    transcoder.on('transcoding:started', function (hash, author) {
-      // Once we have this, the file is fully uploaded to the transcoder
-      console.log('Remote upload done!')
-      dispatch(uploadProgress({ id: videoInfo.id, progress: 100 }))
-      dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
-      // save the updaded state
-      upsertVideo(videoInfo.id, {}, getState())
-
-      console.log('TRANSCODER STARTED', hash, author)
-      dispatch(
-        Notifications.success({
-          title: 'Transcoding',
-          message: 'The transcoding has started.'
-        })
-      )
-    })
-
-    // transcoder.once('transcoding:progress', function (hash, size, percent) {
-    //
-    // })
-
-    transcoder.on('transcoding:progress', function (hash, size, percent) {
-      console.log('TRANSCODER PROGRESS', percent)
-      percent = parseFloat(percent)
-      dispatch(transcodingProgress({ id: videoInfo.id, progress: percent }))
-    })
-
-    transcoder.on('transcoding:downsample:ready', function (hash, size) {
-      console.log('TRANSCODER DOWNSAMPLE READY', hash, size)
-    })
-
-    transcoder.once('transcoding:done', function (hash, result) {
-      // if transcoding is done, apparently we have uploaded the file first
-      dispatch(
-        Notifications.success({
-          title: 'Transcoder done',
-          message: 'Your video is ready to be published!'
-        })
-      )
-      dispatch(uploadRemoteSuccess({ id: videoInfo.id, hash: videoInfo.hash }))
-      dispatch(
-        transcodingSuccess({
-          id: videoInfo.id,
-          hash: hash,
-          result: result,
-          duration: result.duration
-        })
-      )
-      console.log('TRANSCODER DONE', hash, result, videoInfo.id)
-      upsertVideo(
-        videoInfo.id,
-        {
-          ipfsHash: result.master.hash,
-          owner: paratii.eth.getAccount(),
-          duration: result.duration,
-          thumbnails: result.screenshots
-        },
-        getState()
-      )
-    })
+  const transcoder = paratii.transcoder.transcode(videoInfo.hash, {
+    author: paratii.eth.getAccount(),
+    size: videoInfo.size
   })
+  _handleTrancoderEvents(transcoder, videoInfo.id, dispatch, getState)
 }
 
 export const saveVideoInfo = (videoInfo: Object) => async (

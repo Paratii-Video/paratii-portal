@@ -21,15 +21,6 @@ if (process.env.NODE_ENV === 'development') {
   app.use(hotMiddleware(compiler))
 }
 
-if (process.env.NODE_ENV === 'production-notugly') {
-  const compiler = webpack(webpackConfig)
-  app.use(
-    devMiddleware(compiler, {
-      stats: { colors: true }
-    })
-  )
-}
-
 app.engine(
   '.hbs',
   exphbs({
