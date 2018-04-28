@@ -52,7 +52,7 @@ describe('Wallet:', function () {
   //   assert.equal(balance, '21M')
   // })
 
-  it('restore your wallet using a seed @watch', async function () {
+  it('restore your wallet using a seed', async function () {
     browser.url(`http://localhost:8080`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
@@ -69,9 +69,8 @@ describe('Wallet:', function () {
     browser.setValue('[name="input-new-password"]', password)
     browser.waitAndClick('[name="input-confirm-password"]')
     browser.setValue('[name="input-confirm-password"]', password)
-    browser.execute(continueButtonSelector => {
-      document.querySelector(continueButtonSelector).click()
-    }, '[data-test-id="continue"]')
+    browser.waitForEnabled('[data-test-id="continue"]')
+    browser.click('[data-test-id="continue"]')
 
     // Get address from browser
     const newAddress = browser.execute(function () {
