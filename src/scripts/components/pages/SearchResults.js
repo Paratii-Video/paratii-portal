@@ -32,8 +32,11 @@ const LoaderWrapper = styled.div`
 
 const HasNextLink = styled.button`
   width: 100%;
-  flex: 0 0 40px;
-  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 60px;
+  padding: 10px 0;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.Search.nextButton};
 `
