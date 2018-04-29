@@ -52,7 +52,7 @@ describe('Wallet:', function () {
   //   assert.equal(balance, '21M')
   // })
 
-  it('restore your wallet using a seed', async function () {
+  it.skip('restore your wallet using a seed', async function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
@@ -87,7 +87,7 @@ describe('Wallet:', function () {
     assert.equal(balance, '0')
   })
 
-  it('secure your wallet, transfer data to a new address', async function () {
+  it.skip('secure your wallet, transfer data to a new address', async function () {
     browser.url(`http://localhost:8080/wallet`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
