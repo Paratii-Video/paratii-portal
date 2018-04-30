@@ -45,6 +45,10 @@ const WordsWrapper = styled.div`
   padding: 22px ${WORDSWRAPPER_HORIZONTAL_PADDING};
 `
 
+const Word = styled.span`
+  padding: 0 5px 0 0;
+`
+
 const CheckWrapper = styled.div`
   margin: 20px 0 143px ${WORDSWRAPPER_HORIZONTAL_PADDING};
 `
@@ -121,6 +125,9 @@ class ModalShowSeed extends Component<Props, Object> {
       sessionStorage.setItem(MNEMONIC_KEY_TEMP, mnemonic)
     }
 
+    const mnemonicArray = mnemonic.split(' ')
+    const mnemonicArrayLength = mnemonicArray.length - 1
+
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
@@ -137,13 +144,20 @@ class ModalShowSeed extends Component<Props, Object> {
           </Text>
           <WordsWrapper>
             <Text
-              white
+              purple
+              bold
               data-test-id="new-mnemonic"
               innerRef={(ref: HTMLElement) => {
                 this.KeyWords = ref
               }}
             >
-              {mnemonic}
+              {mnemonicArray.map((item, index) => {
+                let word = item
+                if (index < mnemonicArrayLength) {
+                  word += ' '
+                }
+                return <Word key={index}>{word}</Word>
+              })}
             </Text>
             <CopyButton gray small onClick={this.copyWordsToClipboard}>
               <SVGIcon
