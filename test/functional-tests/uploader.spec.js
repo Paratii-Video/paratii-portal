@@ -13,7 +13,7 @@ describe('🦄 Uploader Tool', function () {
     browser.execute(nukeSessionStorage)
   })
 
-  it('should have basic flow in place', async function () {
+  it('should have basic flow in place @watch', async function () {
     // Create a secure wallet
     browser.url(`http://localhost:8080`)
     browser.execute(function (password) {

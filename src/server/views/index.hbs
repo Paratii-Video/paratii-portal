@@ -1,38 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>{{title}}</title>
-    <meta name="viewport" content="width=device-width,user-scalable=no">
-    {{#if player}}
-      {{#if video}}
-        {{> metas }}
-      {{else}}
-        {{> notfoundmetas }}
-      {{/if}}
-    {{/if}}
+
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <meta name="viewport" content="width=device-width,user-scalable=no"> {{#if player}} {{#if video}} {{> metas }} {{else}} {{> notfoundmetas }} {{/if}} {{/if}}
 
 
-    <link rel="shortcut icon" href="/img/favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
-    <link rel="icon" href="http://paratii.video/public/images/paratii-icon-192x192.png">
-    <link rel="image_src" href="http://paratii.video/public/images/paratii-src.png">
-    <meta name="theme-color" content="#21262A">
-    <style>
-   
-    </style>
-  </head>
-  <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
-    <div id="root">
-      <span class="main-loader"></span>
-    </div>
-    {{#if embed}}
-      <script type="text/javascript" src="/embed/bundle.js"></script>
-    {{else}}
-      <script type="text/javascript" src="/bundle.js"></script>
-    {{/if}}
-  </body>
+  <link rel="shortcut icon" href="/img/favicon.png">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+  <link rel="icon" href="http://paratii.video/public/images/paratii-icon-192x192.png">
+  <link rel="image_src" href="http://paratii.video/public/images/paratii-src.png">
+  <meta name="theme-color" content="#21262A">
+  <style>
+  </style>
+</head>
+
+<body>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+  <div id="root">
+    <span class="app-loader paratii-loader" style="width: 50px; height: 50px;"></span>
+  </div>
+  {{#if embed}}
+  <script type="text/javascript" src="/embed/bundle.js"></script> {{else}}
+  <script type="text/javascript" src="/bundle.js"></script> {{/if}}
+</body>
+
 </html>

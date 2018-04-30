@@ -103,7 +103,7 @@ module.exports = async (req: $Request, res: $Response) => {
           You need to enable JavaScript to run this app.
         </noscript>
         <div id="root">
-          <span class="main-loader"></span>
+          <span class="app-loader paratii-loader" style="width: 50px; height: 50px;"></span>
         </div>
         ${script}
       </body>
