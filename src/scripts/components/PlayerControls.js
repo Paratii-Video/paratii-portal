@@ -45,7 +45,7 @@ type Props = {
   togglePlayPause: () => void,
   transitionState: TransitionState,
   showShareModal?: boolean,
-  isStartScreen?: boolean,
+  showStartScreen?: boolean,
   currentTimeSeconds: number,
   currentBufferedTimeSeconds: number,
   currentVolume: number,
@@ -76,10 +76,10 @@ const Wrapper = styled.div`
   position: relative;
   transform: translate3d(
     0,
-    ${({ transitionState, showShareModal, isStartScreen }) => {
+    ${({ transitionState, showShareModal, showStartScreen }) => {
     return transitionState === TRANSITION_STATE.ENTERED &&
         !showShareModal &&
-        !isStartScreen
+        !showStartScreen
       ? 0
       : 'calc(100% + 10px)'
   }},
@@ -104,10 +104,10 @@ const Shadow = styled.span`
     rgba(0, 0, 0, 0.55) 70%,
     rgba(0, 0, 0, 0.7) 95%
   );
-  opacity: ${({ transitionState, showShareModal, isStartScreen }) => {
+  opacity: ${({ transitionState, showShareModal, showStartScreen }) => {
     return transitionState === TRANSITION_STATE.ENTERED &&
       !showShareModal &&
-      !isStartScreen
+      !showStartScreen
       ? 1
       : 0
   }};
@@ -280,7 +280,7 @@ class PlayerControls extends Component<Props, State> {
       activePlugin,
       isPlaying,
       isFullscreen,
-      isStartScreen,
+      showStartScreen,
       onScrub,
       onVolumeChange,
       onToggleMute,
@@ -302,17 +302,17 @@ class PlayerControls extends Component<Props, State> {
       <Wrapper
         transitionState={transitionState}
         showShareModal={showShareModal}
-        isStartScreen={isStartScreen}
+        showStartScreen={showStartScreen}
       >
         <Shadow
           transitionState={transitionState}
           showShareModal={showShareModal}
-          isStartScreen={isStartScreen}
+          showStartScreen={showStartScreen}
         />
         <Controls
           transitionState={transitionState}
           showShareModal={showShareModal}
-          isStartScreen={isStartScreen}
+          showStartScreen={showStartScreen}
         >
           <ProgressWrapper
             onMouseDown={(e: Object) => {
