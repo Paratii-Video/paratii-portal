@@ -1,3 +1,5 @@
+/* @flow */
+
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -93,7 +95,7 @@ const ProfileAvatarLink = styled(Link)`
   border-radius: 100%;
   flex: 0 0 40px;
   height: 40px;
-  margin-left: 45px;
+  margin-left: 10px;
   overflow: hidden;
 
   @media (max-width: 768px) {
@@ -134,52 +136,6 @@ class MainHeader extends Component<Props, Object> {
     this.secureWallet = this.secureWallet.bind(this)
   }
 
-  componentDidMount () {
-    this.bindScroll()
-  }
-
-  componentWillUnmount () {
-    this.unbindScroll()
-  }
-
-  bindScroll = () => {
-    // Use passive event listener if available
-    let supportsPassive = false
-    try {
-      const opts = Object.defineProperty({}, 'passive', {
-        get: () => {
-          supportsPassive = true
-        }
-      })
-      window.addEventListener('test', null, opts)
-    } catch (e) {} // eslint-disable-line no-empty
-
-    window.addEventListener(
-      'scroll',
-      this.handleScroll,
-      supportsPassive ? { passive: true } : false
-    )
-  }
-
-  unbindScroll = () => {
-    window.removeEventListener('scroll', this.handleScroll)
-  }
-
-  handleScroll = () => {
-    // Ugly cross-browser compatibility
-    const top: number =
-      document.documentElement.scrollTop ||
-      document.body.parentNode.scrollTop ||
-      document.body.scrollTop
-
-    // Test < 1 since Safari's rebound effect scrolls past the top
-    if (top < 1) {
-      this.setState({ displayShadow: false })
-    } else if (this.state.displayShadow === false) {
-      this.setState({ displayShadow: true })
-    }
-  }
-
   openNav () {
     this.setState({
       navOpen: true
@@ -207,17 +163,7 @@ class MainHeader extends Component<Props, Object> {
     let userAvatar = ''
     if (this.props.userAddress) {
       const lowerAddress = add0x(this.props.userAddress)
-      if (ACTIVATE_SECURE_WALLET && !this.props.isWalletSecured) {
-        userAvatar = (
-          <ProfileAvatarLink
-            data-test-id="address-avatar"
-            to="/#"
-            onClick={this.secureWallet}
-          >
-            <Blockies seed={lowerAddress} size={10} scale={4} />
-          </ProfileAvatarLink>
-        )
-      } else {
+      if (ACTIVATE_SECURE_WALLET && this.props.isWalletSecured) {
         userAvatar = (
           <ProfileAvatarLink data-test-id="address-avatar" to="/wallet">
             <Blockies seed={lowerAddress} size={10} scale={4} />
@@ -243,7 +189,11 @@ class MainHeader extends Component<Props, Object> {
               </SearchWrapper>
             )}
             <HeaderButtons>
-              <MainNavigation closeNav={this.closeNav} />
+              <MainNavigation
+                isWalletSecured={this.props.isWalletSecured}
+                checkUserWallet={this.props.checkUserWallet}
+                closeNav={this.closeNav}
+              />
               {userAvatar}
             </HeaderButtons>
           </HeaderContent>

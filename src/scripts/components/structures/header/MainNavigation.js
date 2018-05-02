@@ -1,3 +1,5 @@
+/* @flow */
+
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -5,9 +7,12 @@ import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 import Hidden from 'components/foundations/Hidden'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
+import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
 
 type Props = {
-  closeNav: () => void
+  isWalletSecured: boolean,
+  closeNav: () => void,
+  checkUserWallet: () => void
 }
 
 const Nav = styled.nav`
@@ -39,12 +44,35 @@ const StyleNavLink = Button.extend`
   text-transform: initial;
 `
 
+const StyleNavLinkPurple = Button.extend`
+  font-size: 14px;
+  font-weight: ${props => props.theme.fonts.weight.bold};
+  text-transform: initial;
+  color: ${props => props.theme.colors.body.primary};
+`
+
 const NavLink = StyleNavLink.withComponent(Link)
+const NavLinkPurple = StyleNavLinkPurple.withComponent(Link)
 
 const Anchor = StyleNavLink.withComponent('a')
 
-class MainNavigation extends Component<Props, void> {
+class MainNavigation extends Component<Props, Object> {
+  secureWallet: (e: Object) => void
+
+  constructor (props: Props) {
+    super(props)
+    this.secureWallet = this.secureWallet.bind(this)
+  }
+
+  secureWallet (e: Object) {
+    e.preventDefault()
+    this.props.checkUserWallet()
+    this.props.closeNav()
+  }
+
   render () {
+    const walletStringSecure: ?string = localStorage.getItem(WALLET_KEY_SECURE)
+
     return (
       <Nav>
         <NavList>
@@ -74,9 +102,18 @@ class MainNavigation extends Component<Props, void> {
               About Paratii
             </Anchor>
           </NavItem>
-          <NavItem data-test-id="nav-pti-balance">
-            <PTIBalanceContainer />
-          </NavItem>
+
+          {!this.props.isWalletSecured ? (
+            <NavItem>
+              <NavLinkPurple onClick={this.secureWallet} to="#">
+                {walletStringSecure ? 'Log In' : 'Sign Up'}
+              </NavLinkPurple>
+            </NavItem>
+          ) : (
+            <NavItem>
+              <PTIBalanceContainer />
+            </NavItem>
+          )}
         </NavList>
       </Nav>
     )

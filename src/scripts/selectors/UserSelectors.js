@@ -5,7 +5,7 @@ import { createSelector } from 'reselect'
 import { getLoginRequestStatus, getUser, getBalances } from 'selectors/index'
 import User, { Balances } from 'records/UserRecords'
 import { REQUEST_STATUS } from 'constants/ApplicationConstants'
-import { WALLET_KEY_ANON } from 'constants/ParatiiLibConstants'
+import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
 import paratii from 'utils/ParatiiLib'
 import { formatBalance } from 'utils/AppUtils'
 
@@ -25,7 +25,7 @@ export const getIsLoggedIn: (state: RootState) => boolean = createSelector(
 
 export const getIsSecure: (state: RootState) => boolean = createSelector(
   [getUser],
-  (user: User): boolean => !(user.get('walletKey') === WALLET_KEY_ANON)
+  (user: User): boolean => user.get('walletKey') === WALLET_KEY_SECURE
 )
 
 export const getUserAddress: (state: RootState) => string = createSelector(
