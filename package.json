@@ -149,7 +149,6 @@
     "ipfs-bitswap": "^0.19.0",
     "js-cookie": "^2.2.0",
     "lodash.debounce": "^4.0.8",
-    "mux-embed": "^2.3.2",
     "paratii-js": "github:Paratii-Video/paratii-js#31ba4ff5e5d8c198212d273dee30c21af823c8d7",
     "paratii-mediaplayer": "^3.0.3",
     "player.js": "^0.1.0",

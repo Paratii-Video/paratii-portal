@@ -61,7 +61,6 @@ class ModalAskPassword extends Component<Props, Object> {
     this.setPassword = this.setPassword.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
   }
-
   forgotPassword () {
     this.props.openModal(MODAL.RESTORE_ACCOUNT)
   }

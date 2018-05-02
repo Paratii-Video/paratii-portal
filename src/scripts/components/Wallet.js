@@ -1,4 +1,3 @@
-/* @flow */
 import React, { Component } from 'react'
 import Card from 'components/structures/Card'
 import Text from 'components/foundations/Text'
@@ -12,7 +11,7 @@ type Props = {
   userAddress: string,
   isWalletSecured: boolean,
   closeModal: () => void,
-  openModal: string => void
+  openModal: () => void
 }
 
 class Wallet extends Component<Props> {
