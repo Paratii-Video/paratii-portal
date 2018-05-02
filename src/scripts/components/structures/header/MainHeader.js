@@ -122,11 +122,10 @@ const SVG = styled.svg`
 `
 
 class MainHeader extends Component<Props, Object> {
-  secureWallet: () => void
   openNav: () => void
   closeNav: () => void
   toggleNav: () => void
-  secureWallet: () => void
+  secureWallet: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
@@ -205,8 +204,8 @@ class MainHeader extends Component<Props, Object> {
     })
   }
 
-  secureWallet () {
-    console.log('click')
+  secureWallet (e: Object) {
+    e.preventDefault()
     this.props.checkUserWallet()
   }
 
