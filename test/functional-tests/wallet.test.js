@@ -69,7 +69,8 @@ describe('Wallet:', function () {
     browser.setValue('[name="input-new-password"]', password)
     browser.waitAndClick('[name="input-confirm-password"]')
     browser.setValue('[name="input-confirm-password"]', password)
-    browser.waitAndClick('[data-test-id="continue"]')
+    browser.waitForEnabled('[data-test-id="continue"]')
+    browser.click('[data-test-id="continue"]')
 
     // Get address from browser
     const newAddress = browser.execute(function () {
