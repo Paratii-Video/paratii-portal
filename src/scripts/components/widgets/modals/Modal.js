@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Z_INDEX_MODAL } from 'constants/UIConstants'
 import Button from 'components/foundations/Button'
+import SVGIcon from 'components/foundations/SVGIcon'
 
 import ModalStake from 'containers/widgets/modals/ModalStakeContainer' // need to receive any content
 import ModalSecure from 'containers/widgets/modals/ModalSecureContainer'
@@ -82,13 +83,6 @@ const CloseButton = styled(Button)`
   @media (max-width: 767px) {
     top: 39px;
   }
-`
-
-const SVG = styled.svg`
-  fill: ${props => props.theme.colors.Modal.close};
-  display: block;
-  height: 100%;
-  width: 100%;
 `
 
 const Content = styled.div`
@@ -188,9 +182,7 @@ class Modal extends Component<Props, void> {
       <Wrapper show={isVisible}>
         <Container show={isVisible} width={this.getModalWidth()}>
           <CloseButton onClick={this.props.closeModal}>
-            <SVG>
-              <use xlinkHref="#icon-close" />
-            </SVG>
+            <SVGIcon icon="icon-close" />
           </CloseButton>
           <Content>{this.renderModal()}</Content>
         </Container>

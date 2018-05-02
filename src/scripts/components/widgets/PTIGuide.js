@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import PTIGuideSvg from '../foundations/svgs/PTIGuideSvg'
 import Button from 'components/foundations/Button'
+import SVGIcon from 'components/foundations/SVGIcon'
 import Text from 'components/foundations/Text'
 import Card, { CardTitle } from 'components/structures/Card'
 
@@ -36,13 +37,12 @@ const Subtitle = Text.extend`
   color: ${props => props.theme.colors.MainCard.subtitle};
 `
 
-const TitleIcon = styled.svg`
-  fill: ${props => props.theme.colors.MainCard.subtitleIcon};
+const AlertIcon = styled.span`
   display: inline-block;
-  height: 14px;
-  margin-right: 10px;
-  transform: translate3d(0, 3px, 0);
-  width: 14px;
+  height: 12px;
+  margin: 0 5px 0 0;
+  transform: translate3d(0, 2px, 0);
+  width: 12px;
 `
 
 const Icon = styled.div`
@@ -74,7 +74,7 @@ const ArrowButton = styled(Button)`
   width: 20px;
 `
 
-const ButtonIcon = styled.svg`
+const ButtonIcon = styled.div`
   height: 80%;
   transform: ${props => (props.inverse ? 'rotateY(180deg)' : '')};
   width: 80%;
@@ -130,9 +130,9 @@ class PTIGuide extends Component<Props, void> {
               <Header>
                 <CardTitle>What is PTI?</CardTitle>
                 <Subtitle tiny>
-                  <TitleIcon>
-                    <use xlinkHref="#icon-alert" />
-                  </TitleIcon>
+                  <AlertIcon>
+                    <SVGIcon color="purple" icon="icon-alert" />
+                  </AlertIcon>
                   Suggested reading before you upload any content
                 </Subtitle>
               </Header>
@@ -248,7 +248,7 @@ class PTIGuide extends Component<Props, void> {
             disabled={this.state.page === 0}
           >
             <ButtonIcon inverse>
-              <use xlinkHref="#icon-arrow" />
+              <SVGIcon white icon="icon-arrow" />
             </ButtonIcon>
           </ArrowButton>
           <Index>
@@ -259,7 +259,7 @@ class PTIGuide extends Component<Props, void> {
             disabled={this.state.page >= this.state.total}
           >
             <ButtonIcon>
-              <use xlinkHref="#icon-arrow" />
+              <SVGIcon white icon="icon-arrow" />
             </ButtonIcon>
           </ArrowButton>
         </Footer>
