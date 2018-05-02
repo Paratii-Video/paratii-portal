@@ -105,7 +105,11 @@ class MainNavigation extends Component<Props, Object> {
 
           {!this.props.isWalletSecured ? (
             <NavItem>
-              <NavLinkPurple onClick={this.secureWallet} to="#">
+              <NavLinkPurple
+                data-test-id="login-signup"
+                onClick={this.secureWallet}
+                to="#"
+              >
                 {walletStringSecure ? 'Log In' : 'Sign Up'}
               </NavLinkPurple>
             </NavItem>

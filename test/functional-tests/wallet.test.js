@@ -38,6 +38,7 @@ describe('Wallet:', function () {
 
     browser.url(`http://localhost:8080/wallet`)
     // Insert the password
+    browser.waitAndClick('[data-test-id="login-signup"]')
     browser.waitAndClick('[name="wallet-password"]')
     browser.setValue('[name="wallet-password"]', password)
     browser.waitAndClick('[data-test-id="continue"]')
@@ -57,7 +58,7 @@ describe('Wallet:', function () {
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
     })
-    browser.waitAndClick('[data-test-id="address-avatar"]')
+    browser.waitAndClick('[data-test-id="login-signup"]')
     browser.pause(500)
     browser.waitAndClick('[data-test-id="restore-account"]')
     // Insert the seed
@@ -85,23 +86,26 @@ describe('Wallet:', function () {
     assert.equal(balance, '0')
   })
 
-  it('secure your wallet, transfer data to a new address', async function () {
+  it('secure your wallet, transfer data to a new address @watch', async function () {
     const username = 'newuser'
     const email = 'newuser@mail.com'
 
-    browser.url(`http://localhost:8080/wallet`)
+    browser.url(`http://localhost:8080`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
     })
-    browser.pause(500)
-    browser.waitForClickable('[data-test-id="user-address"]')
-    const anonAddress = browser.getText('[data-test-id="user-address"]')
-    browser.waitForClickable('[data-test-id="pti-balance"]')
-    const balance = browser.getText('[data-test-id="pti-balance"]')
-    browser.waitAndClick('[data-test-id="secure-wallet"]')
+
+    const anonAddress = browser.execute(function () {
+      return window.paratii.eth.getAccount()
+    }).value
+
+    const balance = await paratii.eth.balanceOf(anonAddress, 'PTI')
+
+    browser.waitAndClick('[data-test-id="login-signup"]')
     // Click on - new here
+    browser.waitForClickable('[data-test-id="new-here"]')
     browser.waitAndClick('[data-test-id="new-here"]')
-    // Insert the password
+    // // Insert the password
     browser.waitAndClick('[name="input-new-password"]')
     browser.setValue('[name="input-new-password"]', password)
     browser.waitAndClick('[name="input-confirm-password"]')
@@ -117,7 +121,9 @@ describe('Wallet:', function () {
     browser.setValue('[name="email"]', email)
     browser.waitAndClick('[data-test-id="continue"]')
 
-    const newBalance = browser.getText('[data-test-id="pti-balance"]')
+    // const newBalance = browser.getText('[data-test-id="pti-balance"]')
+    const newBalance = await paratii.eth.balanceOf(restoredAddress, 'PTI')
+
     // Check the if the restoredAddress is different than the anonAddress
     assert.notEqual(anonAddress, restoredAddress)
     // We have a new account so the balance should be zero

@@ -44,6 +44,7 @@ describe('🦄 Uploader Tool', function () {
     }
 
     browser.url('http://localhost:8080/upload')
+    browser.waitAndClick('[data-test-id="login-signup"]')
     browser.waitAndClick('[name="wallet-password"]')
     browser.setValue('[name="wallet-password"]', password)
     browser.waitAndClick('[data-test-id="continue"]')
