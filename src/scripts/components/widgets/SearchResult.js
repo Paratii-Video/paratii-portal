@@ -17,6 +17,10 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 10px 20px;
 
+  &:last-child {
+    padding-bottom: 0;
+  }
+
   &:hover {
     background: ${({ theme }) => theme.colors.Search.results.hoverBackground};
   }

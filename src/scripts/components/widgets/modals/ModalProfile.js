@@ -13,7 +13,7 @@ import { MODAL } from 'constants/ModalConstants'
 type Props = {
   openModal: string => void,
   closeModal: () => void,
-  secureKeystore: String => void
+  secureKeystore: string => void
 }
 
 const Footer = styled.div`
@@ -55,11 +55,18 @@ class ModalSetPassword extends Component<Props, Object> {
   }
 
   setProfile () {
-    paratii.users.create({
-      id: paratii.eth.getAccount(), // must be a valid ethereum address
-      name: this.state.username,
-      email: this.state.email
-    })
+    if (this.state.email) {
+      paratii.users.create({
+        id: paratii.eth.getAccount(), // must be a valid ethereum address
+        name: this.state.username,
+        email: this.state.email
+      })
+    } else {
+      paratii.users.create({
+        id: paratii.eth.getAccount(), // must be a valid ethereum address
+        name: this.state.username
+      })
+    }
     this.props.closeModal()
   }
 
