@@ -7,7 +7,7 @@ import TextField from 'components/widgets/forms/TextField'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import { getPasswordValidationErrors } from 'utils/AppUtils'
-import PadLockSvg from 'components/foundations/svgs/PadLockSvg'
+import PadLockSvg from 'components/foundations/svgs/PadlockSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import {
   PASSWORD_TEMP,
