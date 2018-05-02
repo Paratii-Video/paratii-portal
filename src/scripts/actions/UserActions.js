@@ -117,9 +117,9 @@ export const setupKeystore = () => async (
 
   // Case 2: we have a secured wallet is localStorage
   if (walletStringSecure && ACTIVATE_SECURE_WALLET) {
-    console.log('Try to open encrypted keystore')
+    // console.log('Try to open encrypted keystore')
     // Need to ask the PIN
-    dispatch(openModal(MODAL.ASK_PASSWORD))
+    // dispatch(openModal(MODAL.ASK_PASSWORD))
   }
 
   // Case 3: there is an account in paratii.eth.wallet but not on localStorage
