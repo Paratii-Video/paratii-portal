@@ -41,6 +41,3 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "dev" ]; then
               ./deploy.sh staging
             fi
-            if [ "${CIRCLE_BRANCH}" == "circle-build-test" ]; then
-              ./deploy.sh staging
-            fi
