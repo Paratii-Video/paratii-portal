@@ -3,7 +3,8 @@
 import React, { Component, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
-import Button, { SVGIcon } from 'components/foundations/Button'
+import Button from 'components/foundations/Button'
+import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import PlayerControlsContainer from 'containers/PlayerControlsContainer'
 import VideoRecord from 'records/VideoRecords'
@@ -166,12 +167,6 @@ const StartScreenIcon = styled.span`
   }
 `
 
-const StartScreenSVG = styled.svg`
-  fill: ${Colors.white};
-  height: 100%;
-  width: 100%;
-`
-
 class VideoOverlay extends Component<Props> {
   getVideoTitle (): string {
     const { video } = this.props
@@ -277,9 +272,7 @@ class VideoOverlay extends Component<Props> {
           >
             {isEmbed && (
               <StartScreenIcon showStartScreen={showStartScreen}>
-                <StartScreenSVG>
-                  <use xlinkHref="#icon-player-play" />
-                </StartScreenSVG>
+                <SVGIcon color="white" icon="icon-player-play" />
               </StartScreenIcon>
             )}
           </CentralizedContent>

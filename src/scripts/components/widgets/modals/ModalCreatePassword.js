@@ -7,7 +7,7 @@ import TextField from 'components/widgets/forms/TextField'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import { passwordStrength } from 'utils/AppUtils'
-import BigLockSvg from 'components/foundations/svgs/BigLockSvg'
+import PadlockSvg from 'components/foundations/svgs/PadlockSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import {
   PASSWORD_TEMP,
@@ -36,7 +36,7 @@ const ButtonContainer = styled.div`
 
 const Icon = styled.div`
   height: 180px;
-  margin: 40px 0 54px;
+  margin: 40px 0;
   width: 100%;
 `
 
@@ -102,8 +102,14 @@ class ModalSetPassword extends Component<Props, Object> {
             longer, and it must contain at least on <strong>uppercase</strong>
             letter and on <strong>number</strong>
           </Text>
+
+          <Text small gray>
+            The password must be <strong>eight characters or longer</strong>,
+            contain at least <strong>1 numeric</strong> and{' '}
+            <strong>1 uppercase alphabetical</strong> character
+          </Text>
           <Icon>
-            <BigLockSvg />
+            <PadlockSvg />
           </Icon>
           <TextField
             error={this.state.error.length > 0}
