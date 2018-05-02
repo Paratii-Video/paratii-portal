@@ -46,7 +46,7 @@ const ButtonContainer = styled.div`
 
 const Icon = styled.div`
   height: 180px;
-  margin: 40px 0 54px;
+  margin: 40px 0;
   width: 100%;
 `
 

@@ -6,11 +6,11 @@ import Colors from 'components/foundations/base/Colors'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
+import SVGIcon from 'components/foundations/SVGIcon'
 import RadioCheck from 'components/widgets/forms/RadioCheck'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MNEMONIC_KEY_TEMP, PASSWORD_TEMP } from 'constants/ParatiiLibConstants'
 import { MODAL } from 'constants/ModalConstants'
-
 import {
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS
@@ -24,73 +24,38 @@ type Props = {
   secureKeystore: string => void
 }
 
-const WORDPADDING: string = '14px'
+const WORDSWRAPPER_HORIZONTAL_PADDING = '24px'
 
-const TextHidden = styled.p`
-  opacity: 0.01;
-  position: absolute;
+const AlertIcon = styled.span`
+  display: inline-block;
+  height: 15px;
+  margin: 0 5px 0 0;
+  transform: translate3d(0, 2px, 0);
+  width: 15px;
 `
+
+const Strong = Text.withComponent('strong')
 
 const WordsWrapper = styled.div`
-  cursor: pointer;
-  margin: 80px 0 104px;
-
-  @media (max-width: 767px) {
-    margin-bottom: 0;
-  }
-`
-
-const WordsList = styled.ol`
+  background-color: ${Colors.grayDark};
+  border-radius: 4px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 24px;
-  transition: opacity ${props => props.theme.animation.time.repaint};
-
-  &:hover {
-    opacity: ${props => props.theme.animation.opacity.hover};
-  }
-
-  @media (max-width: 450px) {
-    justify-content: baseline;
-  }
+  margin: 150px 0 0;
+  padding: 22px ${WORDSWRAPPER_HORIZONTAL_PADDING};
 `
 
-const Word = styled.li`
-  border: 2px solid ${Colors.purple};
-  border-radius: 2px;
+const Word = styled.span`
+  padding: 0 5px 0 0;
+`
+
+const CheckWrapper = styled.div`
+  margin: 20px 0 143px ${WORDSWRAPPER_HORIZONTAL_PADDING};
+`
+
+const CopyButton = styled(Button)`
+  align-items: flex-end;
   display: flex;
-  flex: 0 1 23%;
-  margin-bottom: 20px;
-  padding-right: ${WORDPADDING};
-  user-select: none;
-
-  @media (max-width: 768px) {
-    flex-basis: 32%;
-  }
-
-  @media (max-width: 650px) {
-    flex-basis: 48%;
-  }
-
-  @media (max-width: 460px) {
-    flex-basis: 100%;
-  }
-`
-
-const WordText = styled(Text)`
-  display: flex;
-  height: 40px;
-  line-height: 40px;
-`
-
-const WordIndex = styled.span`
-  border-right: 2px solid ${Colors.purple};
-  flex: 0 0 40px;
-  display: inline-block;
-  height: 100%;
-  margin: 0 ${WORDPADDING} 0 0;
-  text-align: center;
 `
 
 const Footer = styled.div`
@@ -99,7 +64,6 @@ const Footer = styled.div`
   margin-top: 50px;
   width: 100%;
 `
-
 const ButtonContainer = styled.div`
   margin-left: 10px;
 `
@@ -161,44 +125,61 @@ class ModalShowSeed extends Component<Props, Object> {
       sessionStorage.setItem(MNEMONIC_KEY_TEMP, mnemonic)
     }
 
+    const mnemonicArray = mnemonic.split(' ')
+    const mnemonicArrayLength = mnemonicArray.length - 1
+
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Your recovery phrase</Title>
-          <Text small gray>
-            You will need these 12 words later to restore your account, or to
-            use it on other device. Write this phrase down and keep it in a safe
-            place.
+          <Title>Your account recovery key</Title>
+          <Text>
+            <AlertIcon>
+              <SVGIcon color="purple" icon="icon-alert" />
+            </AlertIcon>
+            This is you recovery key. It’ like a password that will restore your
+            accont.{' '}
+            <Strong purple bold>
+              Keep it secret. Keep it safe.
+            </Strong>
           </Text>
-          <TextHidden
-            data-test-id="new-mnemonic"
-            innerRef={(ref: HTMLElement) => {
-              this.KeyWords = ref
-            }}
-          >
-            {mnemonic}
-          </TextHidden>
           <WordsWrapper>
-            <WordsList onClick={this.copyWordsToClipboard}>
-              {mnemonic.split(' ').map((word: string, index: number) => (
-                <Word key={index}>
-                  <WordText purple>
-                    <WordIndex>{index + 1}</WordIndex>
-                    {word}
-                  </WordText>
-                </Word>
-              ))}
-            </WordsList>
+            <Text
+              purple
+              bold
+              data-test-id="new-mnemonic"
+              innerRef={(ref: HTMLElement) => {
+                this.KeyWords = ref
+              }}
+            >
+              {mnemonicArray.map((item, index) => {
+                let word = item
+                if (index < mnemonicArrayLength) {
+                  word += ' '
+                }
+                return <Word key={index}>{word}</Word>
+              })}
+            </Text>
+            <CopyButton gray small onClick={this.copyWordsToClipboard}>
+              <SVGIcon
+                color="gray"
+                icon="icon-copy"
+                height="20px"
+                width="20px"
+                margin="0 5px 0 0"
+              />
+              Copy
+            </CopyButton>
+          </WordsWrapper>
+          <CheckWrapper>
             <RadioCheck
               checkbox
-              white
               name="check-seed"
               value={this.state.checkSeed}
               onChange={this.toggleOption}
             >
               I have copied the 12 words, they are secret, safe and sound
             </RadioCheck>
-          </WordsWrapper>
+          </CheckWrapper>
 
           <Footer>
             <ButtonContainer>

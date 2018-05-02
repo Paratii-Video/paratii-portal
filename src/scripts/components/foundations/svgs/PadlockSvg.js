@@ -9,11 +9,11 @@ const SVG = styled.svg`
   width: 100%;
 `
 
-class NotepadLockSvg extends Component<Props, void> {
+class PadlockSvg extends Component<Props, void> {
   render () {
     return (
-      <SVG xmlns="http://www.w3.org/2000/svg" viewBox="-8242 12844 384 234">
-        <g transform="translate(-9010 12492)">
+      <SVG xmlns="http://www.w3.org/2000/svg" viewBox="4978 352 384 234">
+        <g transform="translate(4210)">
           <g transform="translate(786.499 360)">
             <g transform="translate(0 8.55)">
               <path
@@ -82,4 +82,4 @@ class NotepadLockSvg extends Component<Props, void> {
   }
 }
 
-export default NotepadLockSvg
+export default PadlockSvg
