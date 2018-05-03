@@ -34,6 +34,15 @@ const SearchTermPrompt = styled.span`
   color: ${({ theme }) => theme.colors.Search.results.searchTerm.prompt};
 `
 
+const ZeroState = styled.div`
+  color: ${({ theme }) => theme.colors.Search.results.zeroState.text};
+  height: 200px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 const Results = styled.div`
   width: 100%;
   flex: 1 0 auto;
@@ -92,6 +101,29 @@ class SearchResults extends React.Component<Props, void> {
     )
   }
 
+  renderSearchResultsSection () {
+    if (this.props.searchTerm) {
+      if (!this.props.results.size) {
+        return (
+          <ZeroState>{`No results found for "${
+            this.props.searchTerm
+          }"`}</ZeroState>
+        )
+      }
+
+      return (
+        <Fragment>
+          {this.renderSearchTerm()}
+          {this.props.results.map((result: Video) => (
+            <SearchResult key={result.get('id')} video={result} />
+          ))}
+        </Fragment>
+      )
+    }
+
+    return <ZeroState>Enter some keywords above to search!</ZeroState>
+  }
+
   render () {
     return (
       <Wrapper>
@@ -101,12 +133,7 @@ class SearchResults extends React.Component<Props, void> {
               <Loader height="50px" width="50px" />
             </LoaderWrapper>
           ) : (
-            <Fragment>
-              {this.renderSearchTerm()}
-              {this.props.results.map((result: Video) => (
-                <SearchResult key={result.get('id')} video={result} />
-              ))}
-            </Fragment>
+            this.renderSearchResultsSection()
           )}
         </Results>
         {this.renderClickForMore()}

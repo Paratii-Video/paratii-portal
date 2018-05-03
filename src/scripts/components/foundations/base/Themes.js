@@ -156,6 +156,9 @@ const Themes = {
         searchTerm: {
           prompt: Colors.grayLight,
           term: Colors.white
+        },
+        zeroState: {
+          text: Colors.white
         }
       },
       nextButton: Colors.gray
