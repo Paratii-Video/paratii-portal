@@ -1739,13 +1739,13 @@ bignumber.js@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-6.0.0.tgz#bbfa047644609a5af093e9cbd83b0461fa3f6002"
 
+"bignumber.js@git+https://github.com/debris/bignumber.js#master":
+  version "2.0.7"
+  resolved "git+https://github.com/debris/bignumber.js#c7a38de919ed75e6fb6ba38051986e294b328df9"
+
 "bignumber.js@git+https://github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2":
   version "2.0.7"
   resolved "git+https://github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2"
-
-"bignumber.js@git+https://github.com/debris/bignumber.js.git#master":
-  version "2.0.7"
-  resolved "git+https://github.com/debris/bignumber.js.git#c7a38de919ed75e6fb6ba38051986e294b328df9"
 
 bignumber.js@~3.0.0:
   version "3.0.1"
@@ -11749,9 +11749,9 @@ parallel-transform@^1.1.0:
     web3 "^1.0.0-beta.27"
     zeppelin-solidity "^1.3.0"
 
-"paratii-js@github:Paratii-Video/paratii-js#31ba4ff5e5d8c198212d273dee30c21af823c8d7":
-  version "0.2.5"
-  resolved "https://codeload.github.com/Paratii-Video/paratii-js/tar.gz/31ba4ff5e5d8c198212d273dee30c21af823c8d7"
+paratii-js@0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/paratii-js/-/paratii-js-0.2.6.tgz#ff5157837fe499b43c4b8143c04417069dc27c44"
   dependencies:
     async "^2.6.0"
     babel-runtime "^6.26.0"
