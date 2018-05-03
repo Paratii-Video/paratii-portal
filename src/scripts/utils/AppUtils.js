@@ -3,27 +3,27 @@
 import shortNumber from 'short-number'
 import VideoRecord from 'records/VideoRecords'
 
-export const passwordStrength = (password: ?string): string => {
+export const getPasswordValidationErrors = (
+  password: ?string
+): Array<string> => {
   const longRegex = new RegExp('^(?=.{8,})')
   const numberRegex = new RegExp('^(?=.*[0-9])')
   const uppercaseRegex = new RegExp('^(?=.*[A-Z])')
-  let error = ''
+  const errors = []
   if (password) {
     if (!longRegex.test(password)) {
-      error = 'The password must be eight characters or longer'
-      return error
+      errors.push('The password must be eight characters or longer')
     }
     if (!numberRegex.test(password)) {
-      error = 'The password must contain at least 1 numeric character'
-      return error
+      errors.push('The password must contain at least 1 numeric character')
     }
     if (!uppercaseRegex.test(password)) {
-      error =
+      errors.push(
         'The password must contain at least 1 uppercase alphabetical character'
-      return error
+      )
     }
   }
-  return ''
+  return errors
 }
 
 export const getRoot = (): Element => {

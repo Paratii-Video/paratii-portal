@@ -69,7 +69,8 @@ type Props = {
   type: String,
   maxLength: String,
   tabIndex: String,
-  onChange: (e: Object) => void
+  onChange: (e: Object) => void,
+  onBlur?: (e: Object) => void
 }
 
 class TextField extends Component<Props, void> {
@@ -132,6 +133,7 @@ class TextField extends Component<Props, void> {
         type={this.props.type}
       >
         <InputField
+          onBlur={this.props.onBlur}
           onChange={this.handleChange}
           onKeyUp={this.handleKeyUp}
           onFocus={this.handleFocus}

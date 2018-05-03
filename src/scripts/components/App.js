@@ -105,12 +105,10 @@ class App extends Component<Props, State> {
 
               <Route path={`${match.url}play/:id`} component={PlayContainer} />
               <Route path={`${match.url}embed/:id`} component={PlayContainer} />
-              {process.env.NODE_ENV !== 'production' && (
-                <Route
-                  path={`${match.url}search`}
-                  component={SearchResultsContainer}
-                />
-              )}
+              <Route
+                path={`${match.url}search`}
+                component={SearchResultsContainer}
+              />
               <Route component={NotFound} />
             </Switch>
           </Main>
