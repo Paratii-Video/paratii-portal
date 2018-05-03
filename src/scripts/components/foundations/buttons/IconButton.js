@@ -30,6 +30,7 @@ const IconButton = ({ onClick, disabled, icon, color, ...rest }: Props) => (
     disabled={disabled}
     icon={icon}
     onClick={disabled ? undefined : onClick}
+    data-test-id="overlay-profile-button"
   />
 )
 

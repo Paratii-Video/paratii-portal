@@ -182,39 +182,6 @@ describe('Profile and accounts workflow:', function () {
     assert.equal(errorMsg, 'Email already exists.')
   })
 
-  it.skip('do not overwrite a user address if failed to register a new user with a used email [TODO]', function () {
-    // createUserAndLogin(browser)
-    // browser.waitForVisible('#public_address')
-    // const address = browser.getText('#public_address')
-    // browser.pause(5000)
-    // // logout
-    // browser.$('#logout').click()
-    // // browser.url('http://localhost:3000/profile')
-    // browser.url('http://localhost:3000')
-    // browser.waitForClickable('#nav-profile')
-    // browser.click('#nav-profile')
-    // // we should see the login form, we click on the register link
-    // browser.waitForClickable('#at-signUp')
-    // browser.pause(2000)
-    // browser.click('#at-signUp')
-    // // fill in the form
-    // browser.waitForExist('[name="at-field-name"]')
-    // browser
-    //   .setValue('[name="at-field-name"]', 'Guildenstern')
-    //   .setValue('[name="at-field-email"]', 'guildenstern@rosencrantz.com')
-    //   .setValue('[name="at-field-password"]', 'password')
-    //   .setValue('[name="at-field-password_again"]', 'password')
-    // // submit the form
-    // browser.$('#at-btn').click()
-    //
-    // // verify if the address doesn't changed
-    // login(browser)
-    // browser.waitForVisible('#public_address')
-    // const address2 = browser.getText('#public_address')
-    // assert.equal(web3.toChecksumAddress(address), address2, 'The address is not the same')
-    // browser.pause(5000)
-  })
-
   it.skip('shows the seed', function () {
     browser.execute(clearUserKeystoreFromLocalStorage)
     createUserAndLogin(browser)
@@ -249,27 +216,6 @@ describe('Profile and accounts workflow:', function () {
     // browser.pause(1000)
     browser.waitForExist('#form-doTransaction')
     // browser.pause(1000)
-  })
-
-  it.skip('do not show the seed if wrong password', function () {
-    createUserAndLogin(browser)
-    browser.pause(3000)
-    browser.url('http://localhost:3000/profile')
-
-    browser.waitForClickable('#show-seed')
-    browser.click('#show-seed')
-    browser.waitForVisible('[name="user_password"]')
-    browser.setValue('[name="user_password"]', 'wrong')
-    browser.waitForEnabled('#btn-show-seed')
-    browser.pause(1000)
-    browser.click('#btn-show-seed')
-
-    // browser.waitForVisible('.main-form-input-password.error', 30000)
-    browser.waitForVisible('.main-form-input-password.error')
-
-    // // TODO: next test checks for error message - temp comment to get the test to pass
-    // browser.waitForVisible('.control-label')
-    // assert.equal(browser.getText('.control-label'), 'Wrong password', 'should show "Wrong password" text')
   })
 
   it.skip('restore the keystore', function () {
