@@ -152,6 +152,10 @@ const Themes = {
         duration: {
           text: Colors.white,
           background: Colors.blackDarkTransparent
+        },
+        searchTerm: {
+          prompt: Colors.grayLight,
+          term: Colors.white
         }
       },
       nextButton: Colors.gray

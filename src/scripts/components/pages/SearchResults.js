@@ -1,6 +1,6 @@
 /* @flow */
 
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import { List as ImmutableList } from 'immutable'
 
@@ -15,6 +15,23 @@ const Wrapper = styled.div`
   flex-direction: column;
   margin: 0 auto;
   background: ${({ theme }) => theme.colors.Search.results.background};
+`
+
+const SearchTerm = styled.div`
+  flex: 0 0 100px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  padding-bottom: 10px;
+  color: ${({ theme }) => theme.colors.Search.results.searchTerm.term};
+`
+
+const SearchTermPrompt = styled.span`
+  display: inline-block;
+  margin-right: 10px;
+  color: ${({ theme }) => theme.colors.Search.results.searchTerm.prompt};
 `
 
 const Results = styled.div`
@@ -45,6 +62,7 @@ type Props = {
   hasNext: boolean,
   results: ImmutableList<Video>,
   searchForMoreVideos: () => Promise<void>,
+  searchTerm: string,
   resultsLoading: boolean
 }
 
@@ -63,6 +81,17 @@ class SearchResults extends React.Component<Props, void> {
     )
   }
 
+  renderSearchTerm () {
+    const { searchTerm } = this.props
+
+    return (
+      <SearchTerm>
+        <SearchTermPrompt>Results for: </SearchTermPrompt>
+        {searchTerm}
+      </SearchTerm>
+    )
+  }
+
   render () {
     return (
       <Wrapper>
@@ -72,9 +101,12 @@ class SearchResults extends React.Component<Props, void> {
               <Loader height="50px" width="50px" />
             </LoaderWrapper>
           ) : (
-            this.props.results.map((result: Video) => (
-              <SearchResult key={result.get('id')} video={result} />
-            ))
+            <Fragment>
+              {this.renderSearchTerm()}
+              {this.props.results.map((result: Video) => (
+                <SearchResult key={result.get('id')} video={result} />
+              ))}
+            </Fragment>
           )}
         </Results>
         {this.renderClickForMore()}
