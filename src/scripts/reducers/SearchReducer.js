@@ -34,12 +34,14 @@ const reducer = {
     state: Search,
     action: Action<{
       hasNext: boolean,
+      lastSearchedForText: string,
       nextSearchOffset: number,
       results: Array<VideoInfo>
     }>
   ): Search =>
     state.merge({
       hasNext: action.payload.hasNext,
+      lastSearchedForText: action.payload.lastSearchedForText,
       nextSearchOffset: action.payload.nextSearchOffset,
       results: ImmutableList(
         action.payload.results.map(

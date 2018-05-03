@@ -55,6 +55,7 @@ export const searchForVideos = ({ keyword }: Object = {}) => async (
         searchResultsLoaded({
           hasNext: searchResults.hasNext,
           nextSearchOffset: searchOffset + results.length,
+          lastSearchedForText: keyword,
           results: searchResults.results
         })
       )
