@@ -48,12 +48,6 @@ describe('Wallet:', function () {
     assert.equal(balance, '0')
   })
 
-  // it('If there is an anonymous wallet in localStorage we open it @watch', function () {
-  //   const balance = browser.getText('[data-test-id="pti-balance"]')
-  //   // We check the default address balance
-  //   assert.equal(balance, '21M')
-  // })
-
   it('restore your wallet using a seed', async function () {
     browser.url(`http://localhost:8080`)
     browser.waitUntil(() => {
@@ -87,7 +81,7 @@ describe('Wallet:', function () {
     assert.equal(balance, '0')
   })
 
-  it('secure your wallet, transfer data to a new address @watch', async function (done) {
+  it('secure your wallet, transfer data to a new address', async function (done) {
     const username = 'newuser'
     const email = 'newuser@mail.com'
     let balance = ''

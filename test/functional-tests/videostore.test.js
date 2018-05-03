@@ -39,13 +39,6 @@ describe.skip('Video Store:', function() {
     done()
   })
 
-  // beforeEach(function () {
-  //   server.execute(resetDb)
-  //   browser.execute(nukeLocalStorage)
-  //   browser.execute(nukeSessionStorage)
-  //   // browser.url(`http://localhost:3000/`)
-  // })
-
   it.skip('should be possible to buy (and unlock) a video  ', function() {
     // make sure we have enough funds
     userAccount = createUserAndLogin(browser)
