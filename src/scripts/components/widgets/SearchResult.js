@@ -96,12 +96,12 @@ const BottomBar = styled.div`
 
 const Description = styled.p`
   font-size: 16px;
-  max-height: 100%;
+  max-height: 37.5px;
   overflow: hidden;
   display: block;
   /* stylelint-disable-next-line value-no-vendor-prefix */
   display: -webkit-box;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 2;
   /* stylelint-disable-next-line property-no-vendor-prefix */
   -webkit-box-orient: vertical;
 `
