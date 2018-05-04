@@ -46,7 +46,7 @@ const ZeroState = styled.div`
 const Results = styled.div`
   width: 100%;
   flex: 1 0 auto;
-  overflow-y: auto;
+  padding-bottom: 10px;
 `
 
 const LoaderWrapper = styled.div`
@@ -62,7 +62,8 @@ const HasNextLink = styled.button`
   align-items: center;
   justify-content: center;
   flex: 0 0 60px;
-  padding: 10px 0;
+  padding-top: 10px;
+  padding-bottom: 20px;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.Search.nextButton};
 `
