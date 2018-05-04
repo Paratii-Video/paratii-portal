@@ -66,16 +66,16 @@ const Info = styled.div`
   flex: 1 1 0;
   max-width: calc(100% - ${THUMBNAIL_WIDTH});
   height: 100%;
-  display: flex;
-  flex-direction: column;
   padding: 10px;
   padding-bottom: 20px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.Search.results.border};
 `
 
+const TOP_BAR_HEIGHT: string = '25px'
+
 const TopBar = styled.div`
   width: 100%;
-  flex: 0 0 auto;
+  height: ${TOP_BAR_HEIGHT};
   display: flex;
 `
 
@@ -88,17 +88,22 @@ const Title = styled.div`
 `
 
 const BottomBar = styled.div`
-  flex: 1 1 0;
+  height: calc(100% - ${TOP_BAR_HEIGHT});
   display: flex;
   align-items: flex-end;
   color: ${({ theme }) => theme.colors.Search.results.descriptionColor};
 `
 
 const Description = styled.p`
-  display: block;
   font-size: 16px;
   max-height: 100%;
-  overflow-y: auto;
+  overflow: hidden;
+  display: block;
+  /* stylelint-disable-next-line value-no-vendor-prefix */
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-box-orient: vertical;
 `
 
 type Props = {
