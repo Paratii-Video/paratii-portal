@@ -60,7 +60,7 @@ exports.player = async function player (req, res, next) {
         return `https://gateway.paratii.video/ipfs/` + video.ipfsHashOrig
       },
       embedUrl: function () {
-        return `${appRootUrl}/embed/${video}`
+        return `${appRootUrl}/embed/${video.id}`
       },
       oembedUrl: function () {
         return `${appRootUrl}/oembed?url=`
