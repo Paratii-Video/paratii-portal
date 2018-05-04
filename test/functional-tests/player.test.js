@@ -1,32 +1,38 @@
 import { assert } from 'chai'
-// import { address1, paratii, uploadFilesToIPFS } from './test-utils/helpers.js'
+import { address1, paratii, uploadFilesToIPFS } from './test-utils/helpers.js'
 
-// const fs = require('fs')
-// const Promise = require('bluebird')
-// const path = require('path')
+const fs = require('fs')
+const Promise = require('bluebird')
+const path = require('path')
 
-describe('🎥 Player:', function () {
-  // const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
+describe('🎥 Player: @watch ', function () {
+  const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
   const videoId = 'foo'
-  //
-  // before(async function () {
-  //   await paratii.vids.create({
-  //     id: videoId,
-  //     owner: address1,
-  //     title: 'Test 1',
-  //     ipfsHash: ipfsHash
-  //   })
-  //
-  //   const directory = `test/functional-tests/data/${ipfsHash}`
-  //
-  //   let files = await Promise.promisify(fs.readdir)(directory)
-  //   const ipfs = await paratii.ipfs.getIPFSInstance()
-  //   files = files.map(function (f) {
-  //     return path.join(directory, f)
-  //   })
-  //
-  //   await uploadFilesToIPFS(ipfs, files)
-  // })
+
+  before(async function () {
+    paratii.vids
+      .create({
+        id: videoId,
+        owner: address1,
+        title: 'Test 1',
+        ipfsHash: ipfsHash
+      })
+      .then(function () {
+        const directory = `test/functional-tests/data/${ipfsHash}`
+        let files = ''
+        Promise.promisify(fs.readdir)(directory).then(function (results) {
+          files = results
+          files = files.map(function (f) {
+            return path.join(directory, f)
+          })
+        })
+        let ipfs = ''
+        paratii.ipfs.getIPFSInstance().then(function (results) {
+          ipfs = results
+          uploadFilesToIPFS(ipfs, files)
+        })
+      })
+  })
 
   beforeEach(function () {
     // server.execute(createVideo, '12345', 'Test 1', '', '', [''], 0)
@@ -77,7 +83,7 @@ describe('🎥 Player:', function () {
         browser.getText('#button-dislike') === '1'
     )
   })
-  describe('portal player', () => {
+  describe('Portal player', () => {
     it('plays a video automatically', () => {
       browser.url(`http://localhost:8080/play/${videoId}`)
       browser.waitUntilVideoIsPlaying()
@@ -88,7 +94,7 @@ describe('🎥 Player:', function () {
       browser.waitForText('main h1', 'Oooooops, page not found')
     })
 
-    it('@watch does not render a profile button', function () {
+    it('does not render a profile button', function () {
       browser.url(`http://localhost:8080/play/${videoId}`)
       // browser.waitUntilVideoIsPlaying()
       browser.waitAndClick('[data-test-id="video-overlay"]')
@@ -99,7 +105,7 @@ describe('🎥 Player:', function () {
     })
   })
 
-  describe('embedded player', () => {
+  describe('Embedded player', () => {
     it.skip('plays a video automatically', () => {
       browser.url(`http://localhost:8080/embed/${videoId}`)
       browser.waitUntilVideoIsPlaying()

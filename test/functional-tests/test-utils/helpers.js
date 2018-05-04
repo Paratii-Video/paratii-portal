@@ -94,8 +94,8 @@ export function add0x (input) {
 
 // a voucher code and an amount
 export const voucherCode11 = 'ZJLUaMqLR1'
-export const voucherAmount11 = 0.3141 * 10 ** 18
-export const voucherAmountInitial11 = 2 * 10 ** 18
+export const voucherAmount11 = 5 * 10 ** 18
+export const voucherAmountInitial11 = 100 * 10 ** 18
 export const hashedVoucherCode11 =
   '0x182b41b125c1c14efaf188d95b6a7e2074d8b746237fc47b48beb63551d742f9'
 //
@@ -116,7 +116,7 @@ export const hashedVoucherCode11 =
 // }
 //
 // export function createUserAndLogin (browser) {
-//   let userId = server.execute(createUser)
+//   let userId = server.execute(createUser)voucherAmount11
 //   browser.execute(createKeystore, null, userId)
 //   browser.waitUntil(function () {
 //     return browser.execute(function (userId) {
@@ -141,21 +141,7 @@ export const hashedVoucherCode11 =
 //   return account
 // }
 //
-// export function createUserKeystore (browser) {
-//   let userId = USERADDRESS
-//   browser.execute(createKeystore, null, userId)
-//   browser.waitUntil(function () {
-//     return browser.execute(function (userId) {
-//       return localStorage.getItem(`keystore-${userId}`)
-//     }, userId).value
-//   })
-//   let address = getEthAccountFromApp()
-//   server.execute(function (userId, address) {
-//     Meteor.users.update(userId, {$set: { 'profile.ptiAddress': address }})
-//   }, userId, address)
-//   return userId
-// }
-//
+
 // export function assertUserIsLoggedIn (browser) {
 //   // assert that the user is logged in
 //   let userId = browser.execute(function () {
@@ -221,21 +207,7 @@ export function waitForKeystore (browser, key = 'keystore-anon') {
 //   })
 // }
 //
-// export function resetDb () {
-//   Meteor.users.remove({})
-//   const { Videos } = require('/imports/api/videos')
-//   Videos.remove({'_id': '12345'})
-//   Videos.remove({'_id': '12346'})
-//   Videos.remove({'_id': '12347'})
-//   Videos.remove({'_id': '12348'})
-//   Videos.remove({'_id': '23456'})
-//   const { Playlists } = require('/imports/api/playlists')
-//   Playlists.remove({'_id': '98765'})
-//   const { Transactions } = require('/imports/api/transactions')
-//   Transactions.remove({'_id': '5000'})
-//   Transactions.remove({})
-// }
-//
+
 // export async function getOrDeployParatiiContracts (server, browser) {
 //   let contracts
 //   let paratiiRegistryAddress = await server.execute(function () {
@@ -267,18 +239,23 @@ export function waitForKeystore (browser, key = 'keystore-anon') {
 //   })
 // }
 //
-// export function createKeystore (seed, userId) {
-//   const wallet = require('./imports/lib/ethereum/wallet.js')
-//   wallet.createKeystore('password', seed, userId, function () {
-//     // remove the seed from the Session to simulate the situation
-//     // where the user has seen and dismissed the dialog
-//     Session.set('seed', null)
-//   })
-// }
+export function createKeystore (userpassword = password) {
+  browser.execute(function (userpassword) {
+    window.paratii.eth.wallet.clear()
+    window.paratii.eth.wallet
+      .create()
+      .then(
+        localStorage.setItem(
+          'keystore-secure',
+          JSON.stringify(window.paratii.eth.wallet.encrypt(userpassword))
+        )
+      )
+  }, userpassword)
+}
 //
-// export function clearUserKeystoreFromLocalStorage () {
-//   localStorage.removeItem(`keystore-${Accounts.userId()}`)
-// }
+export function clearUserKeystoreFromLocalStorage () {
+  localStorage.removeItem(`keystore-secure`)
+}
 //
 // // export function createVideo (id, title, price) {
 // //   const video = {
