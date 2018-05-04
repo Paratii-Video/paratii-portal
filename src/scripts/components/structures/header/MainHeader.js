@@ -165,7 +165,7 @@ class MainHeader extends Component<Props, Object> {
       const lowerAddress = add0x(this.props.userAddress)
       if (ACTIVATE_SECURE_WALLET && this.props.isWalletSecured) {
         userAvatar = (
-          <ProfileAvatarLink data-test-id="address-avatar" to="/wallet">
+          <ProfileAvatarLink data-test-id="address-avatar" to="/profile">
             <Blockies seed={lowerAddress} size={10} scale={4} />
           </ProfileAvatarLink>
         )
