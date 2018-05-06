@@ -72,6 +72,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   margin: 0 auto;
   width: ${props => (props.isEmbed ? '100%' : '1280px')};
+  height: ${props => (props.isEmbed ? '100%' : null)};
 
   @media (max-width: 1440px) {
     width: ${props => (props.isEmbed ? null : '1024px')};
@@ -89,6 +90,7 @@ const Wrapper = styled.div`
 const VideoWrapper = styled.div`
   position: relative;
   width: 100%;
+  height: ${props => (props.isEmbed ? '100%' : null)};
   margin: ${props => (props.isEmbed ? null : '0 auto 25px')};
 
   @media (max-width: 930px) {
