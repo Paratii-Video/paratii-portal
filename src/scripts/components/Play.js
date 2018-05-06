@@ -224,11 +224,9 @@ class Play extends Component<Props, State> {
           }
         })
       })
-      player.on(Events.PLAYER_PAUSE, (params): void => {
+      player.on(Events.PLAYER_PAUSE, (): void => {
         togglePlayPause(false)
       })
-
-      player.on(Events.PLAYER_ERROR, () => {})
 
       player.on(Events.PLAYER_VOLUMEUPDATE, (volume: number): void => {
         updateVolume(volume)
@@ -238,12 +236,6 @@ class Play extends Component<Props, State> {
       const playback = player.core && player.core.getCurrentPlayback()
       if (playback && video) {
         playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
-
-        playback.on(Events.PLAYBACK_STOP, () => {
-          this.setState({
-            hasNeverPlayed: true
-          })
-        })
 
         playback.on(Events.PLAYBACK_ENDED, () => {
           this.setState({
