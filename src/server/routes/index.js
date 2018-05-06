@@ -1,4 +1,5 @@
 const { getParatiiConfig, getAppRootUrl } = require('utils/AppUtils')
+const { APP_TITLE } = require('constants/ApplicationConstants')
 const { Paratii } = require('paratii-js')
 const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 const paratii = new Paratii(paratiiConfig)
@@ -7,7 +8,7 @@ exports.default = function (req, res, next) {
   res.render('index', {
     helpers: {
       title: function () {
-        return 'Paratii'
+        return APP_TITLE
       },
       script: function () {
         return '<script type="text/javascript" src="/bundle.js"></script>'
