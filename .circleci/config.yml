@@ -21,7 +21,7 @@ jobs:
           command: yarn run parity
           background: true
       - run:
-          command: yarn run build:staging
+          command: yarn run build
           background: true
       - run:
           command: yarn run server:staging

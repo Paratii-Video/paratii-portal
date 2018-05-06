@@ -1,3 +1,5 @@
+/* @flow */
+
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -5,6 +7,7 @@ import Blockies from 'react-blockies'
 
 import SearchInputContainer from 'containers/widgets/SearchInputContainer'
 import Button from 'components/foundations/Button'
+import SVGIcon from 'components/foundations/SVGIcon'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
 import MainNavigation from 'components/structures/header/MainNavigation'
 import { add0x } from 'utils/AppUtils'
@@ -92,7 +95,7 @@ const ProfileAvatarLink = styled(Link)`
   border-radius: 100%;
   flex: 0 0 40px;
   height: 40px;
-  margin-left: 45px;
+  margin-left: 10px;
   overflow: hidden;
 
   @media (max-width: 768px) {
@@ -114,19 +117,11 @@ const MobileButton = styled(Button)`
   }
 `
 
-const SVG = styled.svg`
-  fill: ${props => props.theme.colors.Modal.close};
-  display: block;
-  height: 100%;
-  width: 100%;
-`
-
 class MainHeader extends Component<Props, Object> {
-  secureWallet: () => void
   openNav: () => void
   closeNav: () => void
   toggleNav: () => void
-  secureWallet: () => void
+  secureWallet: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
@@ -139,52 +134,6 @@ class MainHeader extends Component<Props, Object> {
     this.closeNav = this.closeNav.bind(this)
     this.toggleNav = this.toggleNav.bind(this)
     this.secureWallet = this.secureWallet.bind(this)
-  }
-
-  componentDidMount () {
-    this.bindScroll()
-  }
-
-  componentWillUnmount () {
-    this.unbindScroll()
-  }
-
-  bindScroll = () => {
-    // Use passive event listener if available
-    let supportsPassive = false
-    try {
-      const opts = Object.defineProperty({}, 'passive', {
-        get: () => {
-          supportsPassive = true
-        }
-      })
-      window.addEventListener('test', null, opts)
-    } catch (e) {} // eslint-disable-line no-empty
-
-    window.addEventListener(
-      'scroll',
-      this.handleScroll,
-      supportsPassive ? { passive: true } : false
-    )
-  }
-
-  unbindScroll = () => {
-    window.removeEventListener('scroll', this.handleScroll)
-  }
-
-  handleScroll = () => {
-    // Ugly cross-browser compatibility
-    const top: number =
-      document.documentElement.scrollTop ||
-      document.body.parentNode.scrollTop ||
-      document.body.scrollTop
-
-    // Test < 1 since Safari's rebound effect scrolls past the top
-    if (top < 1) {
-      this.setState({ displayShadow: false })
-    } else if (this.state.displayShadow === false) {
-      this.setState({ displayShadow: true })
-    }
   }
 
   openNav () {
@@ -205,8 +154,8 @@ class MainHeader extends Component<Props, Object> {
     })
   }
 
-  secureWallet () {
-    console.log('click')
+  secureWallet (e: Object) {
+    e.preventDefault()
     this.props.checkUserWallet()
   }
 
@@ -214,17 +163,7 @@ class MainHeader extends Component<Props, Object> {
     let userAvatar = ''
     if (this.props.userAddress) {
       const lowerAddress = add0x(this.props.userAddress)
-      if (ACTIVATE_SECURE_WALLET && !this.props.isWalletSecured) {
-        userAvatar = (
-          <ProfileAvatarLink
-            data-test-id="address-avatar"
-            to="/#"
-            onClick={this.secureWallet}
-          >
-            <Blockies seed={lowerAddress} size={10} scale={4} />
-          </ProfileAvatarLink>
-        )
-      } else {
+      if (ACTIVATE_SECURE_WALLET && this.props.isWalletSecured) {
         userAvatar = (
           <ProfileAvatarLink data-test-id="address-avatar" to="/wallet">
             <Blockies seed={lowerAddress} size={10} scale={4} />
@@ -244,22 +183,23 @@ class MainHeader extends Component<Props, Object> {
             <MainHeaderLogo />
           </LogoWrapper>
           <HeaderContent open={this.state.navOpen}>
-            {process.env.NODE_ENV !== 'production' && (
-              <SearchWrapper>
-                <SearchInputContainer />
-              </SearchWrapper>
-            )}
+            <SearchWrapper>
+              <SearchInputContainer />
+            </SearchWrapper>
             <HeaderButtons>
-              <MainNavigation closeNav={this.closeNav} />
+              <MainNavigation
+                isWalletSecured={this.props.isWalletSecured}
+                checkUserWallet={this.props.checkUserWallet}
+                closeNav={this.closeNav}
+              />
               {userAvatar}
             </HeaderButtons>
           </HeaderContent>
           <MobileButton onClick={this.toggleNav} open={this.state.navOpen}>
-            <SVG>
-              <use
-                xlinkHref={this.state.navOpen ? '#icon-close' : '#icon-menu'}
-              />
-            </SVG>
+            <SVGIcon
+              color="white"
+              icon={this.state.navOpen ? 'icon-close' : 'icon-menu'}
+            />
           </MobileButton>
         </HeaderWrapper>
       </Header>

@@ -144,7 +144,7 @@ const Themes = {
     },
     Search: {
       results: {
-        background: Colors.blackLight,
+        background: Colors.blackMedium,
         hoverBackground: Colors.blackDarkTransparent,
         titleColor: Colors.white,
         descriptionColor: Colors.gray,
@@ -152,6 +152,13 @@ const Themes = {
         duration: {
           text: Colors.white,
           background: Colors.blackDarkTransparent
+        },
+        searchTerm: {
+          prompt: Colors.grayLight,
+          term: Colors.white
+        },
+        zeroState: {
+          text: Colors.white
         }
       },
       nextButton: Colors.gray

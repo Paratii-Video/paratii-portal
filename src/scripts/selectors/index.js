@@ -26,6 +26,7 @@ import { _getSelectedUploaderVideoId } from 'records/UploaderRecords'
 import {
   _getCurrentSearchText,
   _getHasNext,
+  _getLastSearchedForText,
   _getNextSearchOffset,
   _getSearchResults,
   _getSearchRequestStatus,
@@ -103,6 +104,8 @@ export const getCurrentSearchText = (state: RootState): string =>
   _getCurrentSearchText(state.search)
 export const getHasNext = (state: RootState): boolean =>
   _getHasNext(state.search)
+export const getLastSearchedForText = (state: RootState): string =>
+  _getLastSearchedForText(state.search)
 export const getNextSearchOffset = (state: RootState): number =>
   _getNextSearchOffset(state.search)
 export const getSearchResults = (state: RootState): ImmutableList<Video> =>

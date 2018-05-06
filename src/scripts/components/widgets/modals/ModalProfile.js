@@ -6,14 +6,14 @@ import Title from 'components/foundations/Title'
 import TextField from 'components/widgets/forms/TextField'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
-import UsernameSvg from 'components/foundations/svgs/UsernameSvg'
+import NotepadSvg from 'components/foundations/svgs/NotepadSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
   openModal: string => void,
   closeModal: () => void,
-  secureKeystore: String => void
+  secureKeystore: string => void
 }
 
 const Footer = styled.div`
@@ -29,7 +29,7 @@ const ButtonContainer = styled.div`
 
 const Icon = styled.div`
   height: 180px;
-  margin: 40px 0 54px;
+  margin: 25px 0;
   width: 100%;
 `
 
@@ -55,11 +55,18 @@ class ModalSetPassword extends Component<Props, Object> {
   }
 
   setProfile () {
-    paratii.users.create({
-      id: paratii.eth.getAccount(), // must be a valid ethereum address
-      name: this.state.username,
-      email: this.state.email
-    })
+    if (this.state.email) {
+      paratii.users.create({
+        id: paratii.eth.getAccount(), // must be a valid ethereum address
+        name: this.state.username,
+        email: this.state.email
+      })
+    } else {
+      paratii.users.create({
+        id: paratii.eth.getAccount(), // must be a valid ethereum address
+        name: this.state.username
+      })
+    }
     this.props.closeModal()
   }
 
@@ -81,7 +88,7 @@ class ModalSetPassword extends Component<Props, Object> {
             }
           </Text>
           <Icon>
-            <UsernameSvg />
+            <NotepadSvg />
           </Icon>
           <TextField
             error={this.state.error.length > 0}

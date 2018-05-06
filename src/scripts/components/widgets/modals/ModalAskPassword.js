@@ -14,6 +14,8 @@ import {
 
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
+const FORM_ID: string = 'ask-password-form'
+
 type Props = {
   openModal: string => void,
   closeModal: () => void,
@@ -30,7 +32,7 @@ const Footer = styled.div`
   width: 100%;
 `
 
-const FieldContainer = styled.div`
+const FieldContainer = styled.form`
   margin: 164px 0 220px;
 
   @media (max-width: 767px) {
@@ -59,12 +61,12 @@ class ModalAskPassword extends Component<Props, Object> {
     this.setPassword = this.setPassword.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
   }
-
   forgotPassword () {
     this.props.openModal(MODAL.RESTORE_ACCOUNT)
   }
 
-  setPassword () {
+  setPassword (e: Object) {
+    e.preventDefault()
     sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
     // Decrypt Keystore
     const password = this.state.password
@@ -101,7 +103,6 @@ class ModalAskPassword extends Component<Props, Object> {
         },
         'error'
       )
-      throw err
     }
   }
 
@@ -120,11 +121,11 @@ class ModalAskPassword extends Component<Props, Object> {
           <Text small gray>
             Please insert your password to use all the features of Paratii
           </Text>
-          <FieldContainer>
+          <FieldContainer id={FORM_ID} onSubmit={this.setPassword}>
             <TextField
               error={this.state.error.length > 0}
               label="Insert your Password"
-              id="wallet-password"
+              id={'wallet-password'}
               name="wallet-password"
               type="password"
               value={this.state.password}
@@ -144,8 +145,9 @@ class ModalAskPassword extends Component<Props, Object> {
             <ButtonContainer>
               <Button
                 data-test-id="continue"
+                form={FORM_ID}
+                type="submit"
                 purple
-                onClick={this.setPassword}
                 disabled={!this.state.password}
               >
                 Continue

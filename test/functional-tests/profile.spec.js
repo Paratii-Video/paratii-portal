@@ -2,10 +2,10 @@ import {
   add0x,
   SEED,
   USERADDRESS,
-  assertUserIsLoggedIn,
+  // assertUserIsLoggedIn,
   createUserKeystore,
   createUserAndLogin,
-  login,
+  // login,
   waitForUserIsLoggedIn,
   assertUserIsNotLoggedIn,
   nukeLocalStorage,
@@ -43,47 +43,6 @@ describe('Profile and accounts workflow:', function () {
       paratiiConfigAddress.toLowerCase(),
       add0x(keystore[0].address).toLowerCase()
     )
-  })
-
-  it.skip('register a new user', function () {
-    browser.url(getPath('signup'))
-
-    // fill in the form
-    browser.waitForEnabled(
-      '[data-test-id="signup-form"] input[type="text"]:first-child'
-    )
-    browser.setValue(
-      '[data-test-id="signup-form"] input[type="text"]:first-child',
-      'Guildenstern'
-    )
-    browser.setValue(
-      '[data-test-id="signup-form"] input[type="text"]:nth-child(1)',
-      'guildenstern@rosencrantz.com'
-    )
-    browser.setValue(
-      '[data-test-id="signup-form"] input[type="password"]',
-      'password'
-    )
-    browser.click('[data-test-id="signup-form"] [type="submit"]')
-
-    // the new user is automaticaly logged in after account creation
-    // waitForUserIsLoggedIn(browser)
-
-    // wait for the keystore to be generated
-    // waitForKeystore(browser)
-
-    // now a modal should be opened with the seed
-    // browser.waitForClickable('#seed')
-    // const seed = browser.getText('#seed strong', false)
-    // browser.waitForClickable('#btn-check-seed')
-    // browser.click('#btn-check-seed')
-    // browser.waitForClickable('[name="check_seed"]')
-    // browser.setValue('[name="check_seed"]', seed)
-    // browser.waitForClickable('#btn-check-seed-finish')
-    // browser.click('#btn-check-seed-finish')
-    // browser.pause(1000)
-    // the user is now logged in
-    // assertUserIsLoggedIn(browser)
   })
 
   it.skip('login', () => {
@@ -459,94 +418,94 @@ describe('Profile and accounts workflow:', function () {
     browser.waitForVisible('#loginModal')
   })
 
-  describe('Password reset:', () => {
-    it.skip('should not allow the user to change their password if they enter the incorrect current password ', function () {
-      createUserAndLogin(browser)
-      browser.url('http://localhost:3000/profile')
-      browser.waitForClickable('.button-settings')
-      browser.click('.button-settings')
-      browser.waitForClickable('.edit-password')
-      browser.click('.edit-password')
-      browser.waitAndSetValue('#current-password', 'foobar')
-      browser.waitAndSetValue('#new-password', 'myshinynewpassword')
-      browser.click('#save-password')
-
-      assert.equal(browser.isVisible('.edit-password-modal'), true)
-      browser.waitForVisible('.main-alert-content')
-      browser.waitUntil(() => {
-        // console.log(browser.getText('.main-alert-content'))
-        return browser.getText('.main-alert-content') === 'Wrong password'
-      })
-    })
-
-    it.skip('should not allow the user to attempt to change their password if they do not enter their current password ', function () {
-      createUserAndLogin(browser)
-      browser.url('http://localhost:3000/profile')
-      browser.waitForClickable('.button-settings')
-      browser.click('.button-settings')
-      browser.waitForClickable('.edit-password')
-      browser.click('.edit-password')
-      browser.waitAndSetValue('#current-password', 'myshinynewpassword')
-      browser.click('#save-password')
-
-      assert.equal(browser.isVisible('.edit-password-modal'), true)
-      assert.equal(browser.getAttribute('#save-password', 'disabled'), 'true')
-    })
-
-    it.skip('should not allow the user to attempt to change their password if they do not enter a new password', function () {
-      createUserAndLogin(browser)
-      browser.url('http://localhost:3000/profile')
-      browser.waitAndClick('.button-settings')
-      browser.waitAndClick('.edit-password')
-      browser.waitAndSetValue('#current-password', 'myshinynewpassword')
-      browser.click('#save-password')
-
-      assert.equal(browser.isVisible('.edit-password-modal'), true)
-      assert.equal(browser.getAttribute('#save-password', 'disabled'), 'true')
-    })
-
-    it.skip('should not allow the user to attempt to change their password if they do not enter their current password or a new password', function () {
-      createUserAndLogin(browser)
-      browser.url('http://localhost:3000/profile')
-      browser.waitForClickable('.button-settings')
-      browser.click('.button-settings')
-      browser.waitForClickable('.edit-password')
-      browser.click('.edit-password')
-      browser.waitForClickable('#current-password')
-      assert.equal(browser.getAttribute('#save-password', 'disabled'), 'true')
-    })
-
-    it.skip('should allow the user to attempt to change their password if they enter the correct current password and a new password', function () {
-      createUserAndLogin(browser)
-      browser.url('http://localhost:3000/profile')
-      browser.waitForClickable('.button-settings')
-      browser.click('.button-settings')
-      browser.waitForClickable('.edit-password')
-      browser.click('.edit-password')
-      browser.waitAndSetValue('#current-password', 'password')
-      browser.waitAndSetValue('#new-password', 'foobar')
-      browser.waitForClickable('#save-password')
-      browser.click('#save-password')
-
-      browser.waitUntil(() => {
-        return !browser.isVisible('.edit-password-modal')
-      })
-      browser.pause(500)
-      browser.waitForClickable('#logout a')
-      browser.click('#logout a')
-      browser.waitForVisible('#confirmLogout')
-      browser.pause(500)
-      browser.waitForClickable('#logoutBtn')
-      browser.click('#logoutBtn')
-      browser.waitForClickable('#nav-profile')
-      assertUserIsNotLoggedIn(browser)
-
-      login(browser, 'foobar')
-
-      waitForUserIsLoggedIn(browser)
-      assertUserIsLoggedIn(browser)
-    })
-  })
+  // describe('Password reset:', () => {
+  //   it.skip('should not allow the user to change their password if they enter the incorrect current password ', function () {
+  //     createUserAndLogin(browser)
+  //     browser.url('http://localhost:3000/profile')
+  //     browser.waitForClickable('.button-settings')
+  //     browser.click('.button-settings')
+  //     browser.waitForClickable('.edit-password')
+  //     browser.click('.edit-password')
+  //     browser.waitAndSetValue('#current-password', 'foobar')
+  //     browser.waitAndSetValue('#new-password', 'myshinynewpassword')
+  //     browser.click('#save-password')
+  //
+  //     assert.equal(browser.isVisible('.edit-password-modal'), true)
+  //     browser.waitForVisible('.main-alert-content')
+  //     browser.waitUntil(() => {
+  //       // console.log(browser.getText('.main-alert-content'))
+  //       return browser.getText('.main-alert-content') === 'Wrong password'
+  //     })
+  //   })
+  //
+  //   it.skip('should not allow the user to attempt to change their password if they do not enter their current password ', function () {
+  //     createUserAndLogin(browser)
+  //     browser.url('http://localhost:3000/profile')
+  //     browser.waitForClickable('.button-settings')
+  //     browser.click('.button-settings')
+  //     browser.waitForClickable('.edit-password')
+  //     browser.click('.edit-password')
+  //     browser.waitAndSetValue('#current-password', 'myshinynewpassword')
+  //     browser.click('#save-password')
+  //
+  //     assert.equal(browser.isVisible('.edit-password-modal'), true)
+  //     assert.equal(browser.getAttribute('#save-password', 'disabled'), 'true')
+  //   })
+  //
+  //   it.skip('should not allow the user to attempt to change their password if they do not enter a new password', function () {
+  //     createUserAndLogin(browser)
+  //     browser.url('http://localhost:3000/profile')
+  //     browser.waitAndClick('.button-settings')
+  //     browser.waitAndClick('.edit-password')
+  //     browser.waitAndSetValue('#current-password', 'myshinynewpassword')
+  //     browser.click('#save-password')
+  //
+  //     assert.equal(browser.isVisible('.edit-password-modal'), true)
+  //     assert.equal(browser.getAttribute('#save-password', 'disabled'), 'true')
+  //   })
+  //
+  //   it.skip('should not allow the user to attempt to change their password if they do not enter their current password or a new password', function () {
+  //     createUserAndLogin(browser)
+  //     browser.url('http://localhost:3000/profile')
+  //     browser.waitForClickable('.button-settings')
+  //     browser.click('.button-settings')
+  //     browser.waitForClickable('.edit-password')
+  //     browser.click('.edit-password')
+  //     browser.waitForClickable('#current-password')
+  //     assert.equal(browser.getAttribute('#save-password', 'disabled'), 'true')
+  //   })
+  //
+  //   it.skip('should allow the user to attempt to change their password if they enter the correct current password and a new password', function () {
+  //     createUserAndLogin(browser)
+  //     browser.url('http://localhost:3000/profile')
+  //     browser.waitForClickable('.button-settings')
+  //     browser.click('.button-settings')
+  //     browser.waitForClickable('.edit-password')
+  //     browser.click('.edit-password')
+  //     browser.waitAndSetValue('#current-password', 'password')
+  //     browser.waitAndSetValue('#new-password', 'foobar')
+  //     browser.waitForClickable('#save-password')
+  //     browser.click('#save-password')
+  //
+  //     browser.waitUntil(() => {
+  //       return !browser.isVisible('.edit-password-modal')
+  //     })
+  //     browser.pause(500)
+  //     browser.waitForClickable('#logout a')
+  //     browser.click('#logout a')
+  //     browser.waitForVisible('#confirmLogout')
+  //     browser.pause(500)
+  //     browser.waitForClickable('#logoutBtn')
+  //     browser.click('#logoutBtn')
+  //     browser.waitForClickable('#nav-profile')
+  //     assertUserIsNotLoggedIn(browser)
+  //
+  //     login(browser, 'foobar')
+  //
+  //     waitForUserIsLoggedIn(browser)
+  //     assertUserIsLoggedIn(browser)
+  //   })
+  // })
 
   describe('edit profile', () => {
     it.skip("should render the current profile's information correctly", () => {

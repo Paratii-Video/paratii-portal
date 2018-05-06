@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
-import NotepadLockSvg from 'components/foundations/svgs/NotepadLockSvg'
+import NotepadLockedSvg from 'components/foundations/svgs/NotepadLockedSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
 import { RESTORE_ACCOUNT, NEW_ACCOUNT } from 'constants/ParatiiLibConstants'
@@ -15,8 +15,8 @@ type Props = {
 }
 
 const Icon = styled.div`
-  height: 250px;
-  margin: 75px 0 96px;
+  height: 200px;
+  margin: 75px 0 95px;
   width: 100%;
 `
 
@@ -58,7 +58,7 @@ class ModalSecure extends Component<Props, Object> {
           <Title>Before you proceed your account needs to be secure</Title>
           <Text gray>It won’t take more than a minute</Text>
           <Icon>
-            <NotepadLockSvg />
+            <NotepadLockedSvg />
           </Icon>
           <Footer>
             <ButtonContainer>

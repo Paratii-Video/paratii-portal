@@ -118,3 +118,10 @@ before(async function (done) {
   //   browser.contracts = await getOrDeployParatiiContracts(server, browser)
   done()
 })
+
+beforeEach(() => {
+  browser.setViewportSize({
+    width: 2000,
+    height: 2000
+  })
+})

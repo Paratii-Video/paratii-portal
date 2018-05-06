@@ -6,11 +6,18 @@ import type { RootState } from 'types/ApplicationTypes'
 
 import SearchResults from 'components/pages/SearchResults'
 import { searchForMoreVideos } from 'actions/SearchActions'
-import { getHasNext, getSearchResults } from 'selectors/index'
+import { getSearchResultsLoading } from 'selectors/SearchSelectors'
+import {
+  getHasNext,
+  getLastSearchedForText,
+  getSearchResults
+} from 'selectors/index'
 
 const mapStateToProps = (state: RootState): Object => ({
   hasNext: getHasNext(state),
-  results: getSearchResults(state)
+  results: getSearchResults(state),
+  resultsLoading: getSearchResultsLoading(state),
+  searchTerm: getLastSearchedForText(state)
 })
 
 const mapDispatchToProps: Object = {

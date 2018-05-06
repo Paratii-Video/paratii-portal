@@ -13,6 +13,7 @@ import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
 import VideoOverlayContainer from 'containers/VideoOverlayContainer'
 import Button from 'components/foundations/Button'
+import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
@@ -58,8 +59,8 @@ type Props = {
 }
 
 type State = {
+  hasNeverPlayed: boolean,
   isEmbed: boolean,
-  isStartScreen: boolean,
   mouseInOverlay: boolean,
   shouldShowVideoOverlay: boolean,
   showShareModal: boolean,
@@ -148,14 +149,6 @@ const ButtonIcon = styled(Button)`
   margin-right: 10px;
 `
 
-const SVG = styled.svg`
-  display: block;
-  fill: ${props => props.theme.colors.VideoDescription.icon};
-  height: 20px;
-  margin-right: 10px;
-  width: 20px;
-`
-
 const PlayInfoHighlight = Text.withComponent('span')
 
 const DescriptionWrapper = styled.div`
@@ -179,12 +172,12 @@ class Play extends Component<Props, State> {
     super(props)
 
     this.state = {
+      hasNeverPlayed: true,
       mouseInOverlay: false,
       shouldShowVideoOverlay: false,
       videoNotFound: false,
       playerCreated: '',
       isEmbed: this.props.isEmbed || false,
-      isStartScreen: this.props.isEmbed || false,
       showShareModal: false,
       videoHasNeverPlayed: true
     }
@@ -222,6 +215,12 @@ class Play extends Component<Props, State> {
     if (player) {
       player.on(Events.PLAYER_PLAY, (): void => {
         togglePlayPause(true)
+
+        this.setState((prevState: State) => {
+          if (prevState.hasNeverPlayed) {
+            return { hasNeverPlayed: false }
+          }
+        })
       })
       player.on(Events.PLAYER_PAUSE, (): void => {
         togglePlayPause(false)
@@ -589,12 +588,6 @@ class Play extends Component<Props, State> {
       } else {
         player.play()
       }
-
-      this.setState(prevState => {
-        if (prevState.isStartScreen) {
-          return { isStartScreen: false }
-        }
-      })
     }
   }
 
@@ -698,11 +691,13 @@ class Play extends Component<Props, State> {
   }
 
   shouldShowStartScreen () {
-    return this.props.isEmbed && this.props.isPlaying
+    const { isAttemptingPlay, isEmbed } = this.props
+
+    return !isAttemptingPlay && isEmbed && this.state.hasNeverPlayed
   }
 
   render () {
-    const { isEmbed, video } = this.props
+    const { isAttemptingPlay, isEmbed, video } = this.props
 
     const shareOptions = [
       {
@@ -745,7 +740,11 @@ class Play extends Component<Props, State> {
                       onClick={this.onOverlayClick}
                       video={video}
                       isEmbed={isEmbed}
-                      isStartScreen={this.state.isStartScreen}
+                      showStartScreen={
+                        isEmbed &&
+                        this.state.hasNeverPlayed &&
+                        !isAttemptingPlay
+                      }
                       toggleShareModal={this.toggleShareModal}
                       showShareModal={this.state.showShareModal}
                       onScrub={this.scrubVideo}
@@ -798,25 +797,37 @@ class Play extends Component<Props, State> {
               {video.share && (
                 <PlayInfoButtons>
                   <ButtonIcon>
-                    <SVG>
-                      <use xlinkHref="#icon-play-view" />
-                    </SVG>
+                    <SVGIcon
+                      color="white"
+                      width="20px"
+                      height="20px"
+                      margin="0 20px 0 0"
+                      icon="#icon-play-view"
+                    />
                     <Text small gray>
                         0
                     </Text>
                   </ButtonIcon>
                   <ButtonIcon>
-                    <SVG>
-                      <use xlinkHref="#icon-play-like" />
-                    </SVG>
+                    <SVGIcon
+                      color="white"
+                      width="20px"
+                      height="20px"
+                      margin="0 20px 0 0"
+                      icon="#icon-play-like"
+                    />
                     <Text small gray>
                         0
                     </Text>
                   </ButtonIcon>
                   <ButtonIcon>
-                    <SVG>
-                      <use xlinkHref="#icon-play-dislike" />
-                    </SVG>
+                    <SVGIcon
+                      color="white"
+                      width="20px"
+                      height="20px"
+                      margin="0 20px 0 0"
+                      icon="#icon-play-dislike"
+                    />
                     <Text small gray>
                         0
                     </Text>

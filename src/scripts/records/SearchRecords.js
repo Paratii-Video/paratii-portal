@@ -10,6 +10,7 @@ import type { RequestStatus } from 'types/ApplicationTypes'
 class Search extends ImmutableRecord({
   currentSearchText: '',
   hasNext: false,
+  lastSearchedForText: '',
   nextSearchOffset: 0,
   results: ImmutableList(),
   searchRequestStatus: REQUEST_STATUS.NOT_STARTED,
@@ -17,6 +18,7 @@ class Search extends ImmutableRecord({
 }) {
   currentSearchText: string
   hasNext: boolean
+  lastSearchedForText: string
   nextSearchOffset: number
   results: ImmutableList<Video>
   searchRequestStatus: RequestStatus
@@ -27,6 +29,9 @@ export const _getCurrentSearchText = (search: Search): string =>
   search.get('currentSearchText')
 
 export const _getHasNext = (search: Search): boolean => search.get('hasNext')
+
+export const _getLastSearchedForText = (search: Search): string =>
+  search.get('lastSearchedForText')
 
 export const _getNextSearchOffset = (search: Search): number =>
   search.get('nextSearchOffset')

@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 
 import SignupContainer from 'containers/SignupContainer'
@@ -69,12 +69,12 @@ class App extends Component<Props, State> {
   }
 
   render () {
-    const { match } = this.props
+    const { match, isWalletSecured } = this.props
+
     return (
       <ThemeProvider theme={paratiiTheme}>
         <MainTemplate>
           <Modal />
-
           <Notifications />
           <MainHeader />
 
@@ -91,26 +91,20 @@ class App extends Component<Props, State> {
               <Route path={`${match.url}upload`} component={VideoManager} />
               <Route path={`${match.url}voucher`} component={Voucher} />
               <Route path={`${match.url}debug`} component={DebugContainer} />
-              {
-                this.props.isWalletSecured
-                // &&
-                // (
-                //   <Route
-                //     path={`${match.url}wallet`}
-                //     component={WalletContainer}
-                //   />
-                // )
-              }
-              <Route path={`${match.url}wallet`} component={WalletContainer} />
+
+              <Route
+                path={`${match.url}wallet`}
+                render={() =>
+                  isWalletSecured ? <WalletContainer /> : <Redirect to="/" />
+                }
+              />
 
               <Route path={`${match.url}play/:id`} component={PlayContainer} />
               <Route path={`${match.url}embed/:id`} component={PlayContainer} />
-              {process.env.NODE_ENV !== 'production' && (
-                <Route
-                  path={`${match.url}search`}
-                  component={SearchResultsContainer}
-                />
-              )}
+              <Route
+                path={`${match.url}search`}
+                component={SearchResultsContainer}
+              />
               <Route component={NotFound} />
             </Switch>
           </Main>

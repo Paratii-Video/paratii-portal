@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import paratii from 'utils/ParatiiLib'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 import CloseButton from 'components/foundations/buttons/CloseButton'
+import SVGIcon from 'components/foundations/SVGIcon'
 import Popover from 'components/foundations/Popover'
 import Colors from 'components/foundations/base/Colors'
 import { POPOVER_PADDING, OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
@@ -59,12 +60,11 @@ const Address = styled.div`
   word-break: break-word;
 `
 
-const CopySvg = styled.svg`
+const CopyIcon = styled.div`
   flex: 0 0 15px;
   height: 20px;
   margin-right: 15px;
-  stroke: ${Colors.white};
-  fill: ${Colors.white};
+  width: 20px;
 `
 
 type Props = {
@@ -123,9 +123,9 @@ class WalletInfo extends React.Component<Props> {
             <PTIBalanceContainer color={Colors.white} />
             <Header>Public Address</Header>
             <AddressWrapper onClick={this.copyAddressToClipboard}>
-              <CopySvg>
-                <use xlinkHref="#icon-copy" />
-              </CopySvg>
+              <CopyIcon>
+                <SVGIcon color="white" icon="icon-copy" />
+              </CopyIcon>
               <Address
                 data-test-id="wallet-info-address"
                 innerRef={this.setAddressRef}

@@ -133,7 +133,8 @@ export type ParatiiLib = {
     create: Object => Object,
     upsert: Object => Object,
     update: (id: string, Object) => Object,
-    search: Object => Object
+    search: Object => Object,
+    uploadAndTranscode: Object => Object
   },
   users: {
     migrateAccount: (address: string) => Object,
