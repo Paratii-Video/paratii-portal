@@ -7,6 +7,8 @@ import Typography from 'components/foundations/base/Typography'
 
 import type { Theme } from 'types/ApplicationTypes'
 
+export const APP_TITLE: string = 'Paratii'
+
 export const paratiiTheme: Theme = {
   animation: Animation,
   fonts: Typography,
