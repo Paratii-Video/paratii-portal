@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import BaseTitle from '../foundations/Title'
 import styled from 'styled-components'
 
+import cardBackgroundSvgDataUrl from 'assets/svg/card-bg.svg'
+
 type Props = {
   className: String,
   children: Object,
@@ -64,7 +66,7 @@ export const CardWrapper = styled.div`
 
 const Main = styled.div`
   background: ${props => props.theme.colors.MainCard.background}
-    ${props => (props.nobackground ? null : "url('assets/svg/card-bg.svg')")}
+    ${props => (props.nobackground ? null : `url(${cardBackgroundSvgDataUrl})`)}
     no-repeat 50% 0;
   background-size: cover;
   color: ${props => props.theme.colors.MainCard.color};
