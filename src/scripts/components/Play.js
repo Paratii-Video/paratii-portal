@@ -25,7 +25,9 @@ import {
   requestCancelFullscreen,
   getAppRootUrl
 } from 'utils/AppUtils'
+
 import { PLAYER_PARAMS } from 'constants/PlayerConstants'
+import { APP_TITLE } from 'constants/ApplicationConstants'
 
 import type { ClapprPlayer, PlayerPlugin } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
@@ -714,7 +716,7 @@ class Play extends Component<Props, State> {
       const videoName: string = this.getVideoName()
 
       return (
-        <DocumentTitle title={videoName}>
+        <DocumentTitle title={videoName || APP_TITLE}>
           <Wrapper isEmbed={isEmbed}>
             <VideoWrapper isEmbed={isEmbed}>
               <PlayerWrapper
