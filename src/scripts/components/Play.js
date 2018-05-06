@@ -216,6 +216,7 @@ class Play extends Component<Props, State> {
         if (!player.isPlaying()) {
           return
         }
+      
         togglePlayPause(true)
 
         this.setState((prevState: State) => {
