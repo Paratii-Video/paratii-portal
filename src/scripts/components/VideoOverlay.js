@@ -273,7 +273,10 @@ class VideoOverlay extends Component<Props> {
             showShareModal={showShareModal}
           >
             {isEmbed && (
-              <StartScreenIcon showStartScreen={showStartScreen}>
+              <StartScreenIcon
+                data-test-id="start-screen-icon"
+                showStartScreen={showStartScreen}
+              >
                 <SVGIcon color="white" icon="icon-player-play" />
               </StartScreenIcon>
             )}

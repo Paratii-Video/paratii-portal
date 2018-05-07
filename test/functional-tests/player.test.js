@@ -1,24 +1,28 @@
+import fs from 'fs'
+import path from 'path'
+import Promise from 'bluebird'
 import { assert } from 'chai'
 import queryString from 'query-string'
 
+import { address1, paratii, uploadFilesToIPFS } from './test-utils/helpers.js'
+import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
+
 describe('🎥 Player: @watch', function () {
-  const videoId = 'FdLPHh8kmNLY'
-  const videoTitle = 'Great title'
   const videoElementSelector = '[data-test-id="player"] video'
   const overlaySelector = '[data-test-id="video-overlay"]'
+  const startScreenIconSelector = '[data-test-id="start-screen-icon"]'
   const controlsSelector = '[data-test-id="player-controls"]'
   const playpauseButtonSelector = '[data-test-id="playpause-button"]'
 
-  before(() => {
+  before(done => {
     browser.addCommand(
       'goToTestVideoUrl',
-      ({ embed, overrideVideoId, queryParams }) => {
-        const finalQueryParams = queryParams || { autoplay: true }
+      ({ embed, overrideID, queryParams }) => {
+        const finalQueryParams = queryParams || { autoplay: false }
         const query = queryString.stringify(finalQueryParams)
         browser.url(
-          `http://localhost:8080/${
-            embed ? 'embed' : 'play'
-          }/${overrideVideoId || videoId}?${query}`
+          `http://localhost:8080/${embed ? 'embed' : 'play'}/${overrideID ||
+            ID}?${query}`
         )
         browser.execute(() => {
           window.PLAYER_TEST_DATA = {
@@ -126,76 +130,41 @@ describe('🎥 Player: @watch', function () {
       },
       true
     )
+
+    browser.addCommand('waitUntilStartButtonIsVisible', () =>
+      browser.isVisible(startScreenIconSelector)
+    )
+
+    paratii.vids
+      .create({
+        id: ID,
+        owner: address1,
+        title: TITLE,
+        ipfsHash: IPFS_HASH
+      })
+      .then(function () {
+        const directory = `test/functional-tests/data/${IPFS_HASH}`
+        let files = ''
+        Promise.promisify(fs.readdir)(directory).then(function (results) {
+          files = results
+          files = files.map(function (f) {
+            return path.join(directory, f)
+          })
+        })
+        let ipfs = ''
+        paratii.ipfs.getIPFSInstance().then(function (results) {
+          ipfs = results
+          uploadFilesToIPFS(ipfs, files)
+        })
+        done()
+      })
   })
 
   const runPlayerExpectations = ({ embed } = {}) => {
     describe('video play/pause', () => {
-      if (embed) {
-        it('does not play a video automatically by default', () => {
-          browser.goToTestVideoUrl({ embed, queryParams: {} })
-          browser.pause(10000)
-          browser.assertVideoNeverPlayed()
-        })
-
-        it('does not play a video automatically if autoplay is 0', () => {
-          const queryParams = { autoplay: 0 }
-
-          browser.goToTestVideoUrl({ embed, queryParams })
-          browser.pause(10000)
-          browser.assertVideoNeverPlayed()
-        })
-
-        it('does not play a video automatically if autoplay is false', () => {
-          const queryParams = { autoplay: false }
-
-          browser.goToTestVideoUrl({ embed, queryParams })
-          browser.pause(10000)
-          browser.assertVideoNeverPlayed()
-        })
-      } else {
-        it('plays a video automatically by default', () => {
-          browser.goToTestVideoUrl({ embed })
-          browser.waitUntilVideoIsPlaying()
-        })
-
-        it('plays a video automatically even if autoplay is false', () => {
-          const queryParams = { autoplay: false }
-          browser.goToTestVideoUrl({ embed, queryParams })
-          browser.waitUntilVideoIsPlaying()
-        })
-
-        it('plays a video automatically even if autoplay is 0', () => {
-          const queryParams = { autoplay: 0 }
-
-          browser.goToTestVideoUrl({ embed, queryParams })
-          browser.waitUntilVideoIsPlaying()
-        })
-      }
-
-      it('plays a video automatically if autoplay is true', () => {
-        const queryParams = { autoplay: true }
-        browser.goToTestVideoUrl({ embed, queryParams })
-        browser.waitUntilVideoIsPlaying()
-      })
-
-      it('plays a video automatically if autoplay is 1', () => {
-        const queryParams = { autoplay: 1 }
-
-        browser.goToTestVideoUrl({ embed, queryParams })
-        browser.waitUntilVideoIsPlaying()
-      })
-
-      it('plays a video automatically if autoplay is present with no explicit value', () => {
-        const queryParams = { autoplay: '' }
-
-        browser.goToTestVideoUrl({ embed, queryParams })
-        browser.waitUntilVideoIsPlaying()
-      })
-
-      it('plays a video automatically if autoplay is some random value', () => {
-        const queryParams = { autoplay: 'foobarbaz' }
-
-        browser.goToTestVideoUrl({ embed, queryParams })
+      it('plays a video when the video overlay is clicked', () => {
+        browser.goToTestVideoUrl({ embed })
+        browser.waitAndClick(overlaySelector)
         browser.waitUntilVideoIsPlaying()
       })
 
@@ -205,33 +174,71 @@ describe('🎥 Player: @watch', function () {
         browser.waitUntilVideoIsPaused()
       })
 
-      it('toggles between pause and play when repeatedly clicking the playpause button', () => {
-        browser.goToTestVideoUrl({ embed })
-        browser.waitUntilVideoIsPlaying()
-        browser.moveToObject(overlaySelector)
-        browser.waitAndClick(playpauseButtonSelector)
-        browser.waitUntilVideoIsPaused()
-        browser.waitAndClick(playpauseButtonSelector)
-        browser.waitUntilVideoIsPlaying()
-        browser.waitAndClick(playpauseButtonSelector)
-        browser.waitUntilVideoIsPaused()
-        browser.waitAndClick(playpauseButtonSelector)
-        browser.waitUntilVideoIsPlaying()
-      })
+      if (embed) {
+        it('toggles between pause and play when repeatedly clicking the playpause button', () => {
+          browser.goToTestVideoUrl({
+            embed,
+            queryParams: {
+              autoplay: false
+            }
+          })
+          browser.waitAndClick(startScreenIconSelector)
+          browser.waitUntilVideoIsPlaying()
+          browser.moveToObject(overlaySelector)
+          browser.waitAndClick(playpauseButtonSelector)
+          browser.waitUntilVideoIsPaused()
+          browser.waitAndClick(playpauseButtonSelector)
+          browser.waitUntilVideoIsPlaying()
+          browser.waitAndClick(playpauseButtonSelector)
+          browser.waitUntilVideoIsPaused()
+          browser.waitAndClick(playpauseButtonSelector)
+          browser.waitUntilVideoIsPlaying()
+        })
+      } else {
+        it('toggles between pause and play when repeatedly clicking the playpause button', () => {
+          browser.goToTestVideoUrl({ embed })
+          browser.waitAndClick(playpauseButtonSelector)
+          browser.waitUntilVideoIsPlaying()
+          browser.moveToObject(overlaySelector)
+          browser.waitAndClick(playpauseButtonSelector)
+          browser.waitUntilVideoIsPaused()
+          browser.waitAndClick(playpauseButtonSelector)
+          browser.waitUntilVideoIsPlaying()
+          browser.waitAndClick(playpauseButtonSelector)
+          browser.waitUntilVideoIsPaused()
+          browser.waitAndClick(playpauseButtonSelector)
+          browser.waitUntilVideoIsPlaying()
+        })
+      }
     })
 
     describe('controls show/hide', () => {
-      it('shows the controls until the video is playing', () => {
-        browser.goToTestVideoUrl({ embed })
-        browser.waitUntilControlsAreVisible()
-        browser.waitUntilVideoIsPlaying()
-        browser.waitUntilControlsAreHidden()
-        browser.pause(3000)
-        browser.waitUntilControlsAreHidden()
-      })
+      if (embed) {
+        it('hides the controls and shows the start button until the video is playing', () => {
+          browser.goToTestVideoUrl({ embed })
+          browser.waitUntilStartButtonIsVisible()
+          browser.waitUntilControlsAreHidden()
+          browser.waitAndClick(overlaySelector)
+          browser.waitUntilVideoIsPlaying()
+          browser.waitUntilControlsAreHidden()
+          browser.pause(3000)
+          browser.waitUntilControlsAreHidden()
+        })
+      } else {
+        it('shows the controls until the video is playing', () => {
+          browser.goToTestVideoUrl({ embed })
+          browser.waitUntilControlsAreVisible()
+          browser.waitAndClick(overlaySelector)
+          browser.waitUntilVideoIsPlaying()
+          browser.waitUntilControlsAreHidden()
+          browser.pause(3000)
+          browser.waitUntilControlsAreHidden()
+        })
+      }
 
       it('shows the controls on hover', () => {
         browser.goToTestVideoUrl({ embed })
+        browser.waitAndClick(overlaySelector)
         browser.waitUntilVideoIsPlaying()
         browser.waitUntilControlsAreHidden()
         browser.moveToObject(overlaySelector)
@@ -240,6 +247,7 @@ describe('🎥 Player: @watch', function () {
 
       it('hides the controls after not moving the mouse for approximately 2 seconds', () => {
         browser.goToTestVideoUrl({ embed })
+        browser.waitAndClick(overlaySelector)
         browser.waitUntilVideoIsPlaying()
         browser.waitUntilControlsAreHidden()
         browser.moveToObject(overlaySelector)
@@ -250,6 +258,7 @@ describe('🎥 Player: @watch', function () {
 
       it('pauses the video when the playpause button is clicked for the first time', () => {
         browser.goToTestVideoUrl({ embed })
+        browser.waitAndClick(overlaySelector)
         browser.waitUntilVideoIsPlaying()
         browser.moveToObject(overlaySelector)
         browser.waitAndClick(playpauseButtonSelector)
@@ -308,6 +317,7 @@ describe('🎥 Player: @watch', function () {
       })
       it('should bring the player fullscreen and back', () => {
         browser.goToTestVideoUrl({ embed })
+        browser.waitAndClick(overlaySelector)
         browser.moveToObject(overlaySelector)
         browser.waitAndClick(fullscreenButtonSelector)
         browser.waitUntilVideoIsFullscreen()
@@ -362,6 +372,7 @@ describe('🎥 Player: @watch', function () {
 
       it('should mute the video when the volume button is clicked', () => {
         browser.waitUntilVolumeIsNotMuted()
+        browser.waitAndClick(overlaySelector)
         browser.moveToObject(overlaySelector)
         browser.waitAndClick(volumeButtonSelector)
         browser.waitUntilVolumeIsMuted()
@@ -432,11 +443,17 @@ describe('🎥 Player: @watch', function () {
           true
         )
 
-        browser.goToTestVideoUrl({ embed })
+        browser.goToTestVideoUrl({
+          embed,
+          queryParams: {
+            autoplay: false
+          }
+        })
       })
+
       it('should show the playback levels menu when the quality button is clicked', () => {
-        browser.moveToObject(overlaySelector)
         browser.waitUntilQualityPopoverIsNotVisible()
+        browser.waitAndClick(overlaySelector)
         browser.waitAndClick(qualityButtonSelector)
         browser.waitUntilQualityPopoverIsVisible()
         browser.waitUntil(
@@ -468,6 +485,7 @@ describe('🎥 Player: @watch', function () {
       })
 
       it('should close the quality menu and hide the controls when the quality button is clicked again', () => {
+        browser.waitAndClick(overlaySelector)
         browser.moveToObject(overlaySelector)
         browser.waitUntilQualityPopoverIsVisible()
         browser.waitAndClick(qualityButtonSelector)
@@ -477,9 +495,10 @@ describe('🎥 Player: @watch', function () {
 
       it('should close the quality menu and hide the controls when the close button is clicked', () => {
         browser.goToTestVideoUrl({ embed })
+        browser.waitAndClick(overlaySelector)
         browser.moveToObject(overlaySelector)
-        browser.waitUntilQualityPopoverIsNotVisible()
         browser.waitUntilControlsAreVisible()
+        browser.waitUntilQualityPopoverIsNotVisible()
         browser.waitAndClick(qualityButtonSelector)
         browser.waitUntilQualityPopoverIsVisible()
         browser.waitAndClick(qualityCloseButtonSelector)
@@ -502,7 +521,8 @@ describe('🎥 Player: @watch', function () {
           () => {
             browser.waitUntil(() => !browser.isVisible(walletPopoverSelector))
           },
-          true
+          true,
+          'Could not verify that wallet info is not visible'
         )
 
         browser.addCommand(
@@ -564,12 +584,16 @@ describe('🎥 Player: @watch', function () {
                 ).value
             )
           },
-          true
+          true,
+          'Could not verify that wallet info is visible'
         )
       })
       if (embed) {
         it('should show the wallet info when the wallet button is clicked', () => {
           browser.goToTestVideoUrl({ embed })
+          browser.waitAndClick(overlaySelector)
+          browser.waitUntilVideoIsPlaying()
+          browser.waitAndClick(overlaySelector)
           browser.moveToObject(overlaySelector)
           browser.waitUntilWalletInfoIsNotVisible()
           browser.waitAndClick(walletButtonSelector)
@@ -577,6 +601,7 @@ describe('🎥 Player: @watch', function () {
         })
 
         it('should not dismiss the controls as long as the wallet info is being displayed', () => {
+          browser.waitUntilVideoIsPlaying()
           browser.waitUntilWalletInfoIsVisible()
           browser.waitUntilControlsAreVisible()
           browser.pause(5000)
@@ -584,6 +609,7 @@ describe('🎥 Player: @watch', function () {
         })
 
         it('should close the wallet info menu and hide the controls when the button is clicked again', () => {
+          browser.waitUntilVideoIsPlaying()
           browser.waitUntilWalletInfoIsVisible()
           browser.waitAndClick(walletButtonSelector)
           browser.waitUntilWalletInfoIsNotVisible()
@@ -592,6 +618,8 @@ describe('🎥 Player: @watch', function () {
 
         it('should close the wallet info and hide the controls menu when the close button is clicked', () => {
           browser.goToTestVideoUrl({ embed })
+          browser.waitAndClick(overlaySelector)
+          browser.waitUntilVideoIsPlaying()
           browser.moveToObject(overlaySelector)
           browser.waitUntilWalletInfoIsNotVisible()
           browser.waitAndClick(walletButtonSelector)
@@ -686,7 +714,7 @@ describe('🎥 Player: @watch', function () {
         browser.waitUntil(
           () =>
             browser.execute(
-              (shareOverlaySelector, shareAnchorLinkSelector, videoId) => {
+              (shareOverlaySelector, shareAnchorLinkSelector, ID) => {
                 const shareOverlayEl = document.querySelector(
                   shareOverlaySelector
                 )
@@ -695,12 +723,12 @@ describe('🎥 Player: @watch', function () {
                 )
                 return (
                   anchorLinkEl.getAttribute('href') ===
-                  `https://portal.paratii.video/play/${videoId}`
+                  `${window.location.origin}/play/${ID}`
                 )
               },
               shareOverlaySelector,
               shareAnchorLinkSelector,
-              videoId
+              ID
             ).value,
           undefined,
           'video link is incorrect'
@@ -709,12 +737,7 @@ describe('🎥 Player: @watch', function () {
         browser.waitUntil(
           () =>
             browser.execute(
-              (
-                shareOverlaySelector,
-                telegramShareLinkSelector,
-                videoId,
-                videoTitle
-              ) => {
+              (shareOverlaySelector, telegramShareLinkSelector, ID, TITLE) => {
                 const shareOverlayEl = document.querySelector(
                   shareOverlaySelector
                 )
@@ -723,13 +746,15 @@ describe('🎥 Player: @watch', function () {
                 )
                 return (
                   telegramEl.getAttribute('href') ===
-                  `https://t.me/share/url?url=https://portal.paratii.video/play/${videoId}&text=🎬 Worth a watch: ${videoTitle}`
+                  `https://t.me/share/url?url=${
+                    window.location.origin
+                  }/play/${ID}&text=🎬 Worth a watch: ${TITLE}`
                 )
               },
               shareOverlaySelector,
               telegramShareLinkSelector,
-              videoId,
-              videoTitle
+              ID,
+              TITLE
             ).value,
           undefined,
           'telegram link is incorrect'
@@ -738,12 +763,7 @@ describe('🎥 Player: @watch', function () {
         browser.waitUntil(
           () =>
             browser.execute(
-              (
-                shareOverlaySelector,
-                twitterShareLinkSelector,
-                videoId,
-                videoTitle
-              ) => {
+              (shareOverlaySelector, twitterShareLinkSelector, ID, TITLE) => {
                 const shareOverlayEl = document.querySelector(
                   shareOverlaySelector
                 )
@@ -753,13 +773,15 @@ describe('🎥 Player: @watch', function () {
                 )
                 return (
                   twitterEl.getAttribute('href') ===
-                  `https://twitter.com/intent/tweet?url=https://portal.paratii.video/play/${videoId}&text=🎬 Worth a watch: ${videoTitle}`
+                  `https://twitter.com/intent/tweet?url=${
+                    window.location.origin
+                  }/play/${ID}&text=🎬 Worth a watch: ${TITLE}`
                 )
               },
               shareOverlaySelector,
               twitterShareLinkSelector,
-              videoId,
-              videoTitle
+              ID,
+              TITLE
             ).value,
           undefined,
           'twitter link is incorrect'
@@ -768,12 +790,7 @@ describe('🎥 Player: @watch', function () {
         browser.waitUntil(
           () =>
             browser.execute(
-              (
-                shareOverlaySelector,
-                whatsAppShareLinkSelector,
-                videoId,
-                videoTitle
-              ) => {
+              (shareOverlaySelector, whatsAppShareLinkSelector, ID, TITLE) => {
                 const shareOverlayEl = document.querySelector(
                   shareOverlaySelector
                 )
@@ -782,13 +799,15 @@ describe('🎥 Player: @watch', function () {
                 )
                 return (
                   whatsAppEl.getAttribute('href') ===
-                  `whatsapp://send?text=🎬 Worth a watch: ${videoTitle} https://portal.paratii.video/play/${videoId}`
+                  `whatsapp://send?text=🎬 Worth a watch: ${TITLE} ${
+                    window.location.origin
+                  }/play/${ID}`
                 )
               },
               shareOverlaySelector,
               whatsAppShareLinkSelector,
-              videoId,
-              videoTitle
+              ID,
+              TITLE
             ).value,
           undefined,
           'whatsapp link is incorrect'
@@ -803,9 +822,9 @@ describe('🎥 Player: @watch', function () {
     })
   }
 
-  // describe('portal player', () => {
-  //   runPlayerExpectations({ embed: false })
-  // })
+  describe('portal player', () => {
+    runPlayerExpectations({ embed: false })
+  })
 
   describe('embed player', () => {
     runPlayerExpectations({ embed: true })

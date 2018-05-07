@@ -1,6 +1,5 @@
 /* @flow */
 
-// import { paratii } from './test-utils/helpers'
 import chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 
@@ -117,11 +116,4 @@ before(async function (done) {
   //   browser.url('http://localhost:3000')
   //   browser.contracts = await getOrDeployParatiiContracts(server, browser)
   done()
-})
-
-beforeEach(() => {
-  browser.setViewportSize({
-    width: 2000,
-    height: 2000
-  })
 })
