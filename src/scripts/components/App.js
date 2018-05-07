@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
+import DocumentTitle from 'react-document-title'
 import { ThemeProvider } from 'styled-components'
 
 import SignupContainer from 'containers/SignupContainer'
@@ -24,7 +25,7 @@ import Home from './pages/Home'
 import Voucher from './pages/Voucher'
 import NotFound from './pages/NotFound'
 
-import { paratiiTheme } from 'constants/ApplicationConstants'
+import { APP_TITLE, paratiiTheme } from 'constants/ApplicationConstants'
 
 import type VideoRecord from 'records/VideoRecords'
 import type { Map } from 'immutable'
@@ -73,44 +74,58 @@ class App extends Component<Props, State> {
 
     return (
       <ThemeProvider theme={paratiiTheme}>
-        <MainTemplate>
-          <Modal />
-          <Notifications />
-          <MainHeader />
+        <DocumentTitle title={APP_TITLE}>
+          <MainTemplate>
+            <Modal />
+            <Notifications />
+            <MainHeader />
 
-          <Main>
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path={`${match.url}signup`} component={SignupContainer} />
-              <Route path={`${match.url}login`} component={LoginContainer} />
-              <Route
-                path={`${match.url}profile`}
-                component={ProfileContainer}
-              />
-              <Route path={`${match.url}upload/:id`} component={VideoManager} />
-              <Route path={`${match.url}upload`} component={VideoManager} />
-              <Route path={`${match.url}voucher`} component={Voucher} />
-              <Route path={`${match.url}debug`} component={DebugContainer} />
+            <Main>
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route
+                  path={`${match.url}signup`}
+                  component={SignupContainer}
+                />
+                <Route path={`${match.url}login`} component={LoginContainer} />
+                <Route
+                  path={`${match.url}profile`}
+                  component={ProfileContainer}
+                />
+                <Route
+                  path={`${match.url}upload/:id`}
+                  component={VideoManager}
+                />
+                <Route path={`${match.url}upload`} component={VideoManager} />
+                <Route path={`${match.url}voucher`} component={Voucher} />
+                <Route path={`${match.url}debug`} component={DebugContainer} />
 
-              <Route
-                path={`${match.url}wallet`}
-                render={() =>
-                  isWalletSecured ? <WalletContainer /> : <Redirect to="/" />
-                }
-              />
+                <Route
+                  path={`${match.url}wallet`}
+                  render={() =>
+                    isWalletSecured ? <WalletContainer /> : <Redirect to="/" />
+                  }
+                />
 
-              <Route path={`${match.url}play/:id`} component={PlayContainer} />
-              <Route path={`${match.url}embed/:id`} component={PlayContainer} />
-              <Route
-                path={`${match.url}search`}
-                component={SearchResultsContainer}
-              />
-              <Route component={NotFound} />
-            </Switch>
-          </Main>
-          {/* <DebugContainer /> */}
-          <MainFooter />
-        </MainTemplate>
+                <Route
+                  path={`${match.url}play/:id`}
+                  component={PlayContainer}
+                />
+                <Route
+                  path={`${match.url}embed/:id`}
+                  component={PlayContainer}
+                />
+                <Route
+                  path={`${match.url}search`}
+                  component={SearchResultsContainer}
+                />
+                <Route component={NotFound} />
+              </Switch>
+            </Main>
+            {/* <DebugContainer /> */}
+            <MainFooter />
+          </MainTemplate>
+        </DocumentTitle>
       </ThemeProvider>
     )
   }
