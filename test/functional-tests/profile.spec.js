@@ -652,17 +652,4 @@ describe('Profile and accounts workflow:', function () {
       )
     })
   })
-
-  describe('profile redirects', () => {
-    it('should redirect to login page if user not logged in', () => {
-      // clear Cookies
-      clearCookies()
-
-      browser.url(getPath('profile'))
-      const loginUrl = RegExp(getPath('login'))
-      assert.match(browser.getUrl(), loginUrl, 'it is not login page')
-      const profileUrl = RegExp(getPath('profile'))
-      assert.notMatch(browser.getUrl(), profileUrl, 'it is the profile page')
-    })
-  })
 })
