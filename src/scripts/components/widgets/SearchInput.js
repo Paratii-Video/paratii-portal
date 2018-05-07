@@ -12,7 +12,8 @@ type Props = {
   currentSearchText: string,
   history: RouterHistory,
   onSearchInputChange: (value: string) => void,
-  search: (value: string) => void
+  search: (value: string) => void,
+  onSearchSubmit: () => void
 }
 
 const SearchInputForm = styled.form`
@@ -44,7 +45,7 @@ const SearchInputButton = styled(Button)`
 
 class SearchInput extends Component<Props, void> {
   onSubmitForm = (e: Object): void => {
-    const { history } = this.props
+    const { history, onSearchSubmit } = this.props
     const { currentSearchText, search } = this.props
 
     e.preventDefault()
@@ -52,6 +53,7 @@ class SearchInput extends Component<Props, void> {
     history.push(SEARCH_PATH)
 
     search({ keyword: currentSearchText })
+    onSearchSubmit()
   }
 
   render () {
@@ -72,6 +74,10 @@ class SearchInput extends Component<Props, void> {
       </SearchInputForm>
     )
   }
+}
+
+SearchInput.defaultProps = {
+  onSearchSubmit: () => {}
 }
 
 export default withRouter(SearchInput)
