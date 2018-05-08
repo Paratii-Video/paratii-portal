@@ -746,7 +746,7 @@ class Play extends Component<Props, State> {
                         onClick={this.onOverlayClick}
                         video={video}
                         isEmbed={isEmbed}
-                        showStartScreen={this.showStartScreen()}
+                        showStartScreen={this.shouldShowStartScreen()}
                         toggleShareModal={this.toggleShareModal}
                         showShareModal={this.state.showShareModal}
                         onScrub={this.scrubVideo}
