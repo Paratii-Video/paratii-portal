@@ -32,7 +32,6 @@
     "server": "NODE_ENV=production node src/server/index.js",
     "server:staging": "NODE_ENV=staging node src/server/index.js",
     "server:dev": "NODE_ENV=development yarn run setup-dev-env && NODE_ENV=development nodemon src/server/index.js --watch node_modules  --watch src/server",
-    "server:staging": "NODE_ENV=staging node src/server/index.js",
     "unit-test-circleci": "NODE_ENV=test karma start .circleci/karma.circleci.conf.js",
     "unit-test": "NODE_ENV=test karma start karma.conf.js",
     "unit-test:dev": "yarn run unit-test -- --single-run false"
@@ -118,6 +117,7 @@
     "mocha": "^4.0.1",
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.11",
+    "paratii-db": "github:Paratii-Video/paratii-db#74d7b739fc131c55c81997c40a6d8b2278ac6f66",
     "postcss-cssnext": "^3.0.2",
     "postcss-loader": "^2.0.9",
     "prettier-standard": "^8.0.0",
