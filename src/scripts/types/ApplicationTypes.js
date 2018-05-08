@@ -138,7 +138,8 @@ export type ParatiiLib = {
   },
   users: {
     migrateAccount: (address: string) => Object,
-    create: Object => Object
+    create: Object => Object,
+    get: (address: string) => Object
   },
   eth: {
     getAccount: () => string,

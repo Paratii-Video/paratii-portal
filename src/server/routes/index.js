@@ -1,4 +1,5 @@
 const { getParatiiConfig, getAppRootUrl } = require('utils/AppUtils')
+const { APP_TITLE } = require('constants/ApplicationConstants')
 const { Paratii } = require('paratii-js')
 const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
 const paratii = new Paratii(paratiiConfig)
@@ -7,7 +8,7 @@ exports.default = function (req, res, next) {
   res.render('index', {
     helpers: {
       title: function () {
-        return 'Paratii'
+        return APP_TITLE
       },
       script: function () {
         return '<script type="text/javascript" src="/bundle.js"></script>'
@@ -60,7 +61,7 @@ exports.player = async function player (req, res, next) {
         return `https://gateway.paratii.video/ipfs/` + video.ipfsHashOrig
       },
       embedUrl: function () {
-        return `${appRootUrl}/embed/${video}`
+        return `${appRootUrl}/embed/${video.id}`
       },
       oembedUrl: function () {
         return `${appRootUrl}/oembed?url=`

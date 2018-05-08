@@ -25,10 +25,12 @@ const reducer = {
   },
   [LOGIN_SUCCESS]: (
     state: UserRecord,
-    { payload }: Action<{ email: string }>
+    { payload }: Action<{ name: string, email: string }>
   ): UserRecord => {
+    console.log('redux', payload)
     return state.merge({
       loginRequestStatus: REQUEST_STATUS.SUCCEEDED,
+      name: payload.name,
       email: payload.email
     })
   },
