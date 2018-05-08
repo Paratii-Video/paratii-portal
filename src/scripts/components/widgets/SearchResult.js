@@ -58,7 +58,7 @@ const Duration = styled.div`
   color: ${({ theme }) => theme.colors.Search.results.duration.text};
   background: ${({ theme }) => theme.colors.Search.results.duration.background};
   padding: 4px;
-  font-size: 10px;
+  font-size: 16px;
   text-align: center;
 `
 
