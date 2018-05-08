@@ -202,7 +202,8 @@ describe('👤 Profile:', function () {
   })
 
   describe('- profile redirects', () => {
-    it('arriving on profile page without being logged should redirect to home', function () {
+    // FIXME decide if you want to redirect the user
+    it.skip('arriving on profile page without being logged should redirect to home', function () {
       browser.url('http://localhost:8080/profile')
       const url = browser.url()
       browser.pause(1000)
