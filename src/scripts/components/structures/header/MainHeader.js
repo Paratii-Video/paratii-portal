@@ -22,6 +22,11 @@ type Props = {
   checkUserWallet: () => void
 }
 
+type State = {
+  navOpen: boolean,
+  displayShadow: boolean
+}
+
 const Header = styled.header`
   background-color: ${props => props.theme.colors.header.background};
   box-shadow: ${({ displayShadow }) =>
@@ -117,7 +122,7 @@ const MobileButton = styled(Button)`
   }
 `
 
-class MainHeader extends Component<Props, Object> {
+class MainHeader extends Component<Props, State> {
   openNav: () => void
   closeNav: () => void
   toggleNav: () => void
@@ -149,9 +154,9 @@ class MainHeader extends Component<Props, Object> {
   }
 
   toggleNav () {
-    this.setState({
-      navOpen: !this.state.navOpen
-    })
+    this.setState((prevState: State) => ({
+      navOpen: !prevState.navOpen
+    }))
   }
 
   secureWallet (e: Object) {
@@ -165,7 +170,7 @@ class MainHeader extends Component<Props, Object> {
       const lowerAddress = add0x(this.props.userAddress)
       if (ACTIVATE_SECURE_WALLET && this.props.isWalletSecured) {
         userAvatar = (
-          <ProfileAvatarLink data-test-id="address-avatar" to="/wallet">
+          <ProfileAvatarLink data-test-id="address-avatar" to="/profile">
             <Blockies seed={lowerAddress} size={10} scale={4} />
           </ProfileAvatarLink>
         )
@@ -184,7 +189,7 @@ class MainHeader extends Component<Props, Object> {
           </LogoWrapper>
           <HeaderContent open={this.state.navOpen}>
             <SearchWrapper>
-              <SearchInputContainer />
+              <SearchInputContainer onSearchSubmit={this.closeNav} />
             </SearchWrapper>
             <HeaderButtons>
               <MainNavigation
