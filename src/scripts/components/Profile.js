@@ -180,7 +180,7 @@ class Profile extends Component<Props, void> {
                 {name}
               </Text>
               <Text tiny gray>
-                Member since 2018
+                Since 2018
               </Text>
               <HR />
               <Text tiny gray>
