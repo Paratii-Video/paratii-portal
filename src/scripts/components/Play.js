@@ -61,7 +61,7 @@ type Props = {
 }
 
 type State = {
-  hasNeverPlayed: boolean,
+  shouldShowStartScreen: boolean,
   isEmbed: boolean,
   mouseInOverlay: boolean,
   shouldShowVideoOverlay: boolean,
@@ -183,7 +183,7 @@ class Play extends Component<Props, State> {
     super(props)
 
     this.state = {
-      hasNeverPlayed: true,
+      shouldShowStartScreen: true,
       mouseInOverlay: false,
       shouldShowVideoOverlay: false,
       videoNotFound: false,
@@ -224,18 +224,26 @@ class Play extends Component<Props, State> {
     } = this.props
     const { player } = this
     if (player) {
-      player.on(Events.PLAYER_PLAY, (): void => {
+      player.on(Events.PLAYER_PLAY, (params): void => {
+        if (!player.isPlaying()) {
+          this.setState({
+            shouldShowStartScreen: true
+          })
+          return
+        }
+
         togglePlayPause(true)
 
         this.setState((prevState: State) => {
-          if (prevState.hasNeverPlayed) {
-            return { hasNeverPlayed: false }
+          if (prevState.shouldShowStartScreen) {
+            return { shouldShowStartScreen: false }
           }
         })
       })
       player.on(Events.PLAYER_PAUSE, (): void => {
         togglePlayPause(false)
       })
+
       player.on(Events.PLAYER_VOLUMEUPDATE, (volume: number): void => {
         updateVolume(volume)
       })
@@ -243,7 +251,19 @@ class Play extends Component<Props, State> {
       // $FlowFixMe
       const playback = player.core && player.core.getCurrentPlayback()
       if (playback && video) {
-        playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
+        playback.on(Events.PLAYBACK_PLAY_INTENT, () => {
+          this.setState({
+            shouldShowStartScreen: false
+          })
+          attemptPlay()
+        })
+
+        playback.on(Events.PLAYBACK_ENDED, () => {
+          this.setState({
+            shouldShowStartScreen: true
+          })
+        })
+
         playback.on(
           Events.PLAYBACK_TIMEUPDATE,
           ({
@@ -264,6 +284,13 @@ class Play extends Component<Props, State> {
         playback.on(
           Events.PLAYBACK_PROGRESS,
           ({ current }: { current: number }): void => {
+            this.setState((prevState: State) => {
+              if (!prevState.shouldShowStartScreen) {
+                return {
+                  shouldShowStartScreen: false
+                }
+              }
+            })
             this.props.updateVideoBufferedTime({
               time: current
             })
@@ -692,14 +719,12 @@ class Play extends Component<Props, State> {
     return ''
   }
 
-  shouldShowStartScreen () {
-    const { isAttemptingPlay, isEmbed } = this.props
-
-    return !isAttemptingPlay && isEmbed && this.state.hasNeverPlayed
+  shouldShowStartScreen (): boolean {
+    return this.state.shouldShowStartScreen && !!this.player
   }
 
   render () {
-    const { isAttemptingPlay, isEmbed, video } = this.props
+    const { isEmbed, video } = this.props
 
     const shareOptions = [
       {
@@ -746,11 +771,7 @@ class Play extends Component<Props, State> {
                           onClick={this.onOverlayClick}
                           video={video}
                           isEmbed={isEmbed}
-                          showStartScreen={
-                            isEmbed &&
-                            this.state.hasNeverPlayed &&
-                            !isAttemptingPlay
-                          }
+                          showStartScreen={this.shouldShowStartScreen()}
                           toggleShareModal={this.toggleShareModal}
                           showShareModal={this.state.showShareModal}
                           onScrub={this.scrubVideo}
