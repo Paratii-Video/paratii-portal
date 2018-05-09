@@ -61,7 +61,7 @@ type Props = {
 }
 
 type State = {
-  hasNeverPlayed: boolean,
+  shouldShowStartScreen: boolean,
   isEmbed: boolean,
   mouseInOverlay: boolean,
   shouldShowVideoOverlay: boolean,
@@ -183,7 +183,7 @@ class Play extends Component<Props, State> {
     super(props)
 
     this.state = {
-      hasNeverPlayed: true,
+      shouldShowStartScreen: true,
       mouseInOverlay: false,
       shouldShowVideoOverlay: false,
       videoNotFound: false,
@@ -226,14 +226,17 @@ class Play extends Component<Props, State> {
     if (player) {
       player.on(Events.PLAYER_PLAY, (params): void => {
         if (!player.isPlaying()) {
+          this.setState({
+            shouldShowStartScreen: true
+          })
           return
         }
 
         togglePlayPause(true)
 
         this.setState((prevState: State) => {
-          if (prevState.hasNeverPlayed) {
-            return { hasNeverPlayed: false }
+          if (prevState.shouldShowStartScreen) {
+            return { shouldShowStartScreen: false }
           }
         })
       })
@@ -248,11 +251,16 @@ class Play extends Component<Props, State> {
       // $FlowFixMe
       const playback = player.core && player.core.getCurrentPlayback()
       if (playback && video) {
-        playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
+        playback.on(Events.PLAYBACK_PLAY_INTENT, () => {
+          this.setState({
+            shouldShowStartScreen: false
+          })
+          attemptPlay()
+        })
 
         playback.on(Events.PLAYBACK_ENDED, () => {
           this.setState({
-            hasNeverPlayed: true
+            shouldShowStartScreen: true
           })
         })
 
@@ -276,6 +284,13 @@ class Play extends Component<Props, State> {
         playback.on(
           Events.PLAYBACK_PROGRESS,
           ({ current }: { current: number }): void => {
+            this.setState((prevState: State) => {
+              if (!prevState.shouldShowStartScreen) {
+                return {
+                  shouldShowStartScreen: false
+                }
+              }
+            })
             this.props.updateVideoBufferedTime({
               time: current
             })
@@ -705,7 +720,7 @@ class Play extends Component<Props, State> {
   }
 
   shouldShowStartScreen () {
-    return this.state.hasNeverPlayed
+    return this.state.shouldShowStartScreen
   }
 
   render () {
