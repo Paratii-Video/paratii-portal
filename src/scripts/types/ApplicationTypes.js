@@ -138,7 +138,8 @@ export type ParatiiLib = {
   },
   users: {
     migrateAccount: (address: string) => Object,
-    create: Object => Object
+    create: Object => Object,
+    get: (address: string) => Object
   },
   eth: {
     getAccount: () => string,
@@ -149,6 +150,7 @@ export type ParatiiLib = {
       getMnemonic: () => Promise<string>,
       create: (num: ?number, mnemonic: ?string) => Object,
       clear: () => void,
+      isValidMnemonic: string => boolean,
       length: number
     },
     vids: {
