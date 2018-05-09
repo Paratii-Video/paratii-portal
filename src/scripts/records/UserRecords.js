@@ -1,10 +1,7 @@
 /* @flow */
 
 import Immutable from 'immutable'
-import Cookies from 'js-cookie'
-
 import { REQUEST_STATUS } from 'constants/ApplicationConstants'
-
 import type { RequestStatus } from 'types/ApplicationTypes'
 
 export class Balances extends Immutable.Record({
@@ -16,18 +13,18 @@ export class Balances extends Immutable.Record({
 }
 
 class User extends Immutable.Record({
-  email: Cookies.get('email'),
   address: '',
   name: '',
+  email: '',
   keepUrl: true,
   walletKey: 'keystore-anon',
   mnemonicKey: 'mnemonic-anon',
   loginRequestStatus: REQUEST_STATUS.NOT_STARTED,
   balances: new Balances()
 }) {
-  email: string
   address: string
   name: string
+  email: string
   keepUrl: boolean
   walletKey: string
   mnemonicKey: string

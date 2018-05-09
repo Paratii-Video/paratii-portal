@@ -13,7 +13,8 @@ import { MODAL } from 'constants/ModalConstants'
 type Props = {
   openModal: string => void,
   closeModal: () => void,
-  secureKeystore: string => void
+  secureKeystore: string => void,
+  setUserData: () => void
 }
 
 const Footer = styled.div`
@@ -68,6 +69,8 @@ class ModalSetPassword extends Component<Props, Object> {
       })
     }
     this.props.closeModal()
+    // Set profile in the state
+    this.props.setUserData()
   }
 
   handleInputChange (input: string, e: Object) {

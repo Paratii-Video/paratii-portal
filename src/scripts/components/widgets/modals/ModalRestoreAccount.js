@@ -57,7 +57,7 @@ class ModalRewriteSeed extends Component<Props, Object> {
 
   restoreWallet () {
     const mnemonic = this.state.mnemonic
-    if (paratii.eth.wallet.isValidMnemonic) {
+    if (paratii.eth.wallet.isValidMnemonic(mnemonic)) {
       this.props.restoreKeystore(mnemonic)
       this.props.openModal(MODAL.CREATE_PASSWORD)
     } else {
