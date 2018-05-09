@@ -719,8 +719,8 @@ class Play extends Component<Props, State> {
     return ''
   }
 
-  shouldShowStartScreen () {
-    return this.state.shouldShowStartScreen
+  shouldShowStartScreen (): boolean {
+    return this.state.shouldShowStartScreen && !!this.player
   }
 
   render () {
