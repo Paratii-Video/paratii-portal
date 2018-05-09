@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
-import { add0x, copyTextToClipboard } from 'utils/AppUtils'
+import { add0x } from 'utils/AppUtils'
 import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 import Button from './foundations/Button'
 import Text from './foundations/Text'
@@ -18,7 +18,6 @@ import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
 
 type Props = {
   user: {
-    user: string,
     email: string,
     name: string
   },
@@ -57,7 +56,6 @@ const CancelButton = styled(NavLink)`
 
 class Profile extends Component<Props, void> {
   secureWallet: (e: Object) => void
-  copyWordsToClipboard: (event: Object) => void
   handleInputChange: (input: string, e: Object) => void
   saveUserData: () => void
 
@@ -65,14 +63,13 @@ class Profile extends Component<Props, void> {
     super(props)
 
     this.state = {
-      email: this.props.user.email,
       address: this.props.userAddress,
+      email: this.props.user.email,
       username: this.props.user.name,
       updated: false
     }
 
     this.secureWallet = this.secureWallet.bind(this)
-    this.copyWordsToClipboard = this.copyWordsToClipboard.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.saveUserData = this.saveUserData.bind(this)
   }
@@ -102,27 +99,20 @@ class Profile extends Component<Props, void> {
   }
 
   async saveUserData () {
-    console.log(this.state.username, this.state.email)
     if (this.state.email) {
-      paratii.users.create({
-        id: paratii.eth.getAccount(), // must be a valid ethereum address
+      paratii.users.update(paratii.eth.getAccount(), {
         name: this.state.username,
         email: this.state.email
       })
     } else {
-      paratii.users.create({
-        id: paratii.eth.getAccount(), // must be a valid ethereum address
+      paratii.users.update(paratii.eth.getAccount(), {
         name: this.state.username
       })
     }
-  }
-
-  copyWordsToClipboard (event: Object) {
-    copyTextToClipboard(this.KeyWords)
     this.props.showNotification(
       {
         title: 'Copied!',
-        message: 'Your address has been copied to the clipboard',
+        message: 'Your changes have been saved',
         position: NOTIFICATION_POSITIONS.TOP_RIGHT
       },
       NOTIFICATION_LEVELS.SUCCESS
