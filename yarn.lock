@@ -11745,9 +11745,9 @@ parallel-transform@^1.1.0:
     web3 "^1.0.0-beta.27"
     zeppelin-solidity "^1.3.0"
 
-paratii-js@0.2.6:
+"paratii-js@github:Paratii-Video/paratii-js#32112c940c4aee190962c2ec494b15375f806e1a":
   version "0.2.6"
-  resolved "https://registry.yarnpkg.com/paratii-js/-/paratii-js-0.2.6.tgz#ff5157837fe499b43c4b8143c04417069dc27c44"
+  resolved "https://codeload.github.com/Paratii-Video/paratii-js/tar.gz/32112c940c4aee190962c2ec494b15375f806e1a"
   dependencies:
     async "^2.6.0"
     babel-runtime "^6.26.0"
@@ -11768,7 +11768,10 @@ paratii-js@0.2.6:
     resumablejs "^1.1.0"
     sol-tcr "github:ya7ya/tcr#compiled"
     stream-to-pull-stream "^1.7.2"
-    web3 "^1.0.0-beta.29"
+    web3 "1.0.0-beta.33"
+    web3-core-method "1.0.0-beta.33"
+    web3-eth "1.0.0-beta.33"
+    web3-eth-accounts "1.0.0-beta.33"
 
 paratii-mediaplayer@^3.0.3:
   version "3.0.3"
@@ -17158,6 +17161,18 @@ web3-utils@1.0.0-beta.33:
     underscore "1.8.3"
     utf8 "2.1.1"
 
+web3@1.0.0-beta.33, web3@^1.0.0-beta.27, web3@^1.0.0-beta.29:
+  version "1.0.0-beta.33"
+  resolved "https://registry.yarnpkg.com/web3/-/web3-1.0.0-beta.33.tgz#c6021b5769927726371c184b868445311b139295"
+  dependencies:
+    web3-bzz "1.0.0-beta.33"
+    web3-core "1.0.0-beta.33"
+    web3-eth "1.0.0-beta.33"
+    web3-eth-personal "1.0.0-beta.33"
+    web3-net "1.0.0-beta.33"
+    web3-shh "1.0.0-beta.33"
+    web3-utils "1.0.0-beta.33"
+
 web3@^0.16.0:
   version "0.16.0"
   resolved "https://registry.yarnpkg.com/web3/-/web3-0.16.0.tgz#a4554175cd462943035b1f1d39432f741c6b6019"
@@ -17176,18 +17191,6 @@ web3@^0.18.2:
     utf8 "^2.1.1"
     xhr2 "*"
     xmlhttprequest "*"
-
-web3@^1.0.0-beta.27, web3@^1.0.0-beta.29:
-  version "1.0.0-beta.33"
-  resolved "https://registry.yarnpkg.com/web3/-/web3-1.0.0-beta.33.tgz#c6021b5769927726371c184b868445311b139295"
-  dependencies:
-    web3-bzz "1.0.0-beta.33"
-    web3-core "1.0.0-beta.33"
-    web3-eth "1.0.0-beta.33"
-    web3-eth-personal "1.0.0-beta.33"
-    web3-net "1.0.0-beta.33"
-    web3-shh "1.0.0-beta.33"
-    web3-utils "1.0.0-beta.33"
 
 "webcrypto-shim@github:dignifiedquire/webcrypto-shim#master":
   version "0.1.1"

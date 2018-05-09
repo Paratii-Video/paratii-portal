@@ -1,18 +1,15 @@
+import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
 import { add0x, copyTextToClipboard } from 'utils/AppUtils'
 import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
-import Colors from './foundations/base/Colors'
 import Button from './foundations/Button'
 import Text from './foundations/Text'
-import TruncatedText from './foundations/TruncatedText'
-import SVGIcon from './foundations/SVGIcon'
 import HR from './foundations/HR'
 import TextField from './widgets/forms/TextField'
 import Card from './structures/Card'
-import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 import {
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS
@@ -31,20 +28,10 @@ type Props = {
   showNotification: (Notification, NotificationLevel) => void
 }
 
-const WORDSWRAPPER_HORIZONTAL_PADDING = '24px'
-
 const Wrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-`
-
-const NavLink = Button.withComponent(Link)
-
-const EditProfileButton = styled(NavLink)`
-  position: absolute;
-  top: 50px;
-  right: 42px;
 `
 
 const ProfileAvatar = styled.div`
@@ -57,30 +44,22 @@ const ProfileAvatar = styled.div`
 `
 
 const FooterWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
   width: 100%;
 `
 
-const WordsWrapper = styled.div`
-  background-color: ${Colors.grayDark};
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-  margin: 5px 0 0;
-  padding: 22px ${WORDSWRAPPER_HORIZONTAL_PADDING};
-`
+const NavLink = Button.withComponent(Link)
 
-const CopyText = TruncatedText.withComponent('p')
-
-const CopyButton = styled(Button)`
-  align-items: flex-end;
-  display: flex;
-  margin-left: 20px;
+const CancelButton = styled(NavLink)`
+  margin-right: 10px;
 `
 
 class Profile extends Component<Props, void> {
   secureWallet: (e: Object) => void
   copyWordsToClipboard: (event: Object) => void
   handleInputChange: (input: string, e: Object) => void
+  saveUserData: () => void
 
   constructor (props: Props) {
     super(props)
@@ -88,12 +67,14 @@ class Profile extends Component<Props, void> {
     this.state = {
       email: this.props.user.email,
       address: this.props.userAddress,
-      name: this.props.user.name
+      username: this.props.user.name,
+      updated: false
     }
 
     this.secureWallet = this.secureWallet.bind(this)
     this.copyWordsToClipboard = this.copyWordsToClipboard.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.saveUserData = this.saveUserData.bind(this)
   }
 
   componentDidMount () {
@@ -102,15 +83,38 @@ class Profile extends Component<Props, void> {
     }
   }
 
+  componentDidUpdate () {
+    if (!this.props.isWalletSecured) {
+      this.props.checkUserWallet()
+    }
+  }
+
   handleInputChange (input: string, e: Object) {
     this.setState({
-      [input]: e.target.value
+      [input]: e.target.value,
+      updated: true
     })
   }
 
   secureWallet (e: Object) {
     e.preventDefault()
     this.props.checkUserWallet()
+  }
+
+  async saveUserData () {
+    console.log(this.state.username, this.state.email)
+    if (this.state.email) {
+      paratii.users.create({
+        id: paratii.eth.getAccount(), // must be a valid ethereum address
+        name: this.state.username,
+        email: this.state.email
+      })
+    } else {
+      paratii.users.create({
+        id: paratii.eth.getAccount(), // must be a valid ethereum address
+        name: this.state.username
+      })
+    }
   }
 
   copyWordsToClipboard (event: Object) {
@@ -127,7 +131,7 @@ class Profile extends Component<Props, void> {
 
   render () {
     const { isWalletSecured } = this.props
-    const { email, address, name } = this.state
+    const { email, address, username, updated } = this.state
     let userAvatar = ''
     if (address) {
       const lowerAddress = add0x(address)
@@ -137,61 +141,43 @@ class Profile extends Component<Props, void> {
     }
     const cardFooter = (
       <FooterWrapper>
-        <TextField
-          type="text"
-          label="Email"
-          margin="0 0 30px"
-          value={email}
-          data-test-id="profile-email"
-          onChange={e => this.handleInputChange('email', e)}
-        />
-        <Text gray small>
-          Address:
-        </Text>
-        <WordsWrapper>
-          <CopyText
-            innerRef={(ref: HTMLElement) => {
-              this.KeyWords = ref
-            }}
-          >
-            {address}
-          </CopyText>
-          <CopyButton gray small onClick={this.copyWordsToClipboard}>
-            <SVGIcon
-              color="gray"
-              icon="icon-copy"
-              height="20px"
-              width="20px"
-              margin="0 5px 0 0"
-            />
-            Copy
-          </CopyButton>
-        </WordsWrapper>
+        <CancelButton gray="true" to="/profile">
+          Cancel
+        </CancelButton>
+        <Button purple disabled={!updated} onClick={this.saveUserData}>
+          Change informations
+        </Button>
       </FooterWrapper>
     )
     return (
       <div>
         {isWalletSecured ? (
-          <Card nobackground title="Profile" footer={cardFooter}>
+          <Card nobackground title="Edit Profile" footer={cardFooter}>
             <Wrapper>
-              <EditProfileButton to="/profile/edit">Edit</EditProfileButton>
               <ProfileAvatar>{userAvatar}</ProfileAvatar>
-              <Text bold small>
-                {name}
-              </Text>
-              <Text tiny gray>
-                Member since 2018
-              </Text>
+              <Button>Change avatar</Button>
               <HR />
-              <Text tiny gray>
-                Current balance:
-              </Text>
-              <PTIBalanceContainer />
+              <TextField
+                type="text"
+                label="Username"
+                margin="0 0 30px"
+                value={username}
+                data-test-id="profile-username"
+                onChange={e => this.handleInputChange('username', e)}
+              />
+              <TextField
+                type="text"
+                label="Email"
+                margin="0 0 30px"
+                value={email}
+                data-test-id="profile-email"
+                onChange={e => this.handleInputChange('email', e)}
+              />
             </Wrapper>
           </Card>
         ) : (
           <Card
-            title="Profile"
+            title="Edit Profile"
             footer={
               <Button purple onClick={this.secureWallet}>
                 Log in
