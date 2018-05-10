@@ -64,9 +64,9 @@ class Profile extends Component<Props, void> {
     super(props)
 
     this.state = {
-      address: '',
-      email: '',
-      username: '',
+      address: this.props.userAddress,
+      email: this.props.user.email,
+      username: this.props.user.name,
       updated: false
     }
 
@@ -127,6 +127,10 @@ class Profile extends Component<Props, void> {
         },
         NOTIFICATION_LEVELS.SUCCESS
       )
+      // Set Updated to false again
+      this.setState({
+        updated: false
+      })
     } catch (e) {
       console.log(e)
     }
