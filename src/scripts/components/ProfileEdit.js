@@ -110,27 +110,26 @@ class Profile extends Component<Props, void> {
   }
 
   async saveUserData () {
-    if (this.state.email) {
-      paratii.users.update(paratii.eth.getAccount(), {
+    try {
+      await paratii.users.upsert({
+        id: paratii.eth.getAccount(),
         name: this.state.username,
         email: this.state.email
       })
-    } else {
-      paratii.users.update(paratii.eth.getAccount(), {
-        name: this.state.username
-      })
+      // Update user data in redux state
+      this.props.setUserData()
+      // Notification
+      this.props.showNotification(
+        {
+          title: 'Update!',
+          message: 'Your changes have been saved',
+          position: NOTIFICATION_POSITIONS.TOP_RIGHT
+        },
+        NOTIFICATION_LEVELS.SUCCESS
+      )
+    } catch (e) {
+      console.log(e)
     }
-    // Update user data in redux state
-    this.props.setUserData()
-    // Notification
-    this.props.showNotification(
-      {
-        title: 'Update!',
-        message: 'Your changes have been saved',
-        position: NOTIFICATION_POSITIONS.TOP_RIGHT
-      },
-      NOTIFICATION_LEVELS.SUCCESS
-    )
   }
 
   render () {
