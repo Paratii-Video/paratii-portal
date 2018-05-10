@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { checkUserWallet } from 'actions/UserActions'
+import { checkUserWallet, setUserData } from 'actions/UserActions'
 import { getUserAddress, getIsSecure } from 'selectors/UserSelectors'
 import { getUser } from 'selectors/index'
 import { show } from 'react-notification-system-redux'
@@ -18,7 +18,8 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = dispatch => ({
   showNotification: bindActionCreators(show, dispatch),
-  checkUserWallet: bindActionCreators(checkUserWallet, dispatch)
+  checkUserWallet: bindActionCreators(checkUserWallet, dispatch),
+  setUserData: bindActionCreators(setUserData, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileEdit)

@@ -24,7 +24,8 @@ type Props = {
   userAddress: string,
   isWalletSecured: boolean,
   checkUserWallet: () => void,
-  showNotification: (Notification, NotificationLevel) => void
+  showNotification: (Notification, NotificationLevel) => void,
+  setUserData: () => void
 }
 
 const Wrapper = styled.div`
@@ -63,9 +64,9 @@ class Profile extends Component<Props, void> {
     super(props)
 
     this.state = {
-      address: this.props.userAddress,
-      email: this.props.user.email,
-      username: this.props.user.name,
+      address: '',
+      email: '',
+      username: '',
       updated: false
     }
 
@@ -83,6 +84,16 @@ class Profile extends Component<Props, void> {
   componentDidUpdate () {
     if (!this.props.isWalletSecured) {
       this.props.checkUserWallet()
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!this.state.updated) {
+      this.setState({
+        address: nextProps.userAddress,
+        email: nextProps.user.email,
+        username: nextProps.user.name
+      })
     }
   }
 
@@ -109,9 +120,12 @@ class Profile extends Component<Props, void> {
         name: this.state.username
       })
     }
+    // Update user data in redux state
+    this.props.setUserData()
+    // Notification
     this.props.showNotification(
       {
-        title: 'Copied!',
+        title: 'Update!',
         message: 'Your changes have been saved',
         position: NOTIFICATION_POSITIONS.TOP_RIGHT
       },
