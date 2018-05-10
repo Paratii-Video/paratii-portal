@@ -21,7 +21,6 @@ import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
 
 type Props = {
   user: {
-    user: string,
     email: string,
     name: string
   },
@@ -85,12 +84,6 @@ class Profile extends Component<Props, void> {
   constructor (props: Props) {
     super(props)
 
-    this.state = {
-      email: this.props.user.email,
-      address: this.props.userAddress,
-      name: this.props.user.name
-    }
-
     this.secureWallet = this.secureWallet.bind(this)
     this.copyWordsToClipboard = this.copyWordsToClipboard.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -126,11 +119,10 @@ class Profile extends Component<Props, void> {
   }
 
   render () {
-    const { isWalletSecured } = this.props
-    const { email, address, name } = this.state
+    const { user, userAddress, isWalletSecured } = this.props
     let userAvatar = ''
-    if (address) {
-      const lowerAddress = add0x(address)
+    if (userAddress) {
+      const lowerAddress = add0x(userAddress)
       if (ACTIVATE_SECURE_WALLET && isWalletSecured) {
         userAvatar = <Blockies seed={lowerAddress} size={10} scale={10} />
       }
@@ -141,7 +133,7 @@ class Profile extends Component<Props, void> {
           type="text"
           label="Email"
           margin="0 0 30px"
-          value={email}
+          value={user.email}
           data-test-id="profile-email"
           onChange={e => this.handleInputChange('email', e)}
         />
@@ -154,7 +146,7 @@ class Profile extends Component<Props, void> {
               this.KeyWords = ref
             }}
           >
-            {address}
+            {userAddress}
           </CopyText>
           <CopyButton gray small onClick={this.copyWordsToClipboard}>
             <SVGIcon
@@ -177,7 +169,7 @@ class Profile extends Component<Props, void> {
               <EditProfileButton to="/profile/edit">Edit</EditProfileButton>
               <ProfileAvatar>{userAvatar}</ProfileAvatar>
               <Text bold small>
-                {name}
+                {user.name}
               </Text>
               <Text tiny gray>
                 Member since 2018

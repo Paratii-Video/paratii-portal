@@ -89,7 +89,7 @@ class ModalAskPassword extends Component<Props, Object> {
       // Set the balance
       this.props.setAddressAndBalance()
       this.props.setWalletData({ walletKey: WALLET_KEY_SECURE })
-      // Set User data
+      /// Update user data in redux state
       this.props.setUserData()
       // Retrieve your videos
       this.props.fetchOwnedVideos()
