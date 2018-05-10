@@ -95,13 +95,14 @@ export const setAddressAndBalance = () => (dispatch: Dispatch) => {
 export const setUserData = () => async (dispatch: Dispatch) => {
   const address: string = paratii.eth.getAccount()
   const user: UserRecord = await paratii.users.get(address)
-  console.log('setuserdata')
-  dispatch(
-    loginSuccess({
-      name: user.name,
-      email: user.email
-    })
-  )
+  if (user) {
+    dispatch(
+      loginSuccess({
+        name: user.name,
+        email: user.email
+      })
+    )
+  }
 }
 
 export const setupKeystore = () => async (

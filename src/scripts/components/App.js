@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components'
 import SignupContainer from 'containers/SignupContainer'
 import LoginContainer from 'containers/LoginContainer'
 import ProfileContainer from 'containers/ProfileContainer'
+import ProfileEditContainer from 'containers/ProfileEditContainer'
 import PlayContainer from 'containers/PlayContainer'
 import VideoManager from 'containers/VideoManagerContainer'
 import DebugContainer from 'containers/DebugContainer'
@@ -91,6 +92,11 @@ class App extends Component<Props, State> {
                 <Route
                   path={`${match.url}profile`}
                   component={ProfileContainer}
+                  exact
+                />
+                <Route
+                  path={`${match.url}profile/edit`}
+                  component={ProfileEditContainer}
                 />
                 <Route
                   path={`${match.url}upload/:id`}
