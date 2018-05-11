@@ -1,15 +1,16 @@
 import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
+import { Redirect, router } from 'react-router'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
 import { add0x } from 'utils/AppUtils'
-import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 import Button from './foundations/Button'
 import Text from './foundations/Text'
 import HR from './foundations/HR'
 import TextField from './widgets/forms/TextField'
 import Card from './structures/Card'
+import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 import {
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS
@@ -67,7 +68,8 @@ class Profile extends Component<Props, void> {
       address: this.props.userAddress,
       email: this.props.user.email,
       username: this.props.user.name,
-      updated: false
+      updated: false,
+      saved: false
     }
 
     this.secureWallet = this.secureWallet.bind(this)
@@ -100,7 +102,8 @@ class Profile extends Component<Props, void> {
   handleInputChange (input: string, e: Object) {
     this.setState({
       [input]: e.target.value,
-      updated: true
+      updated: true,
+      saved: false
     })
   }
 
@@ -129,8 +132,11 @@ class Profile extends Component<Props, void> {
       )
       // Set Updated to false again
       this.setState({
-        updated: false
+        updated: false,
+        saved: true
       })
+      // Redirect to User Profile
+      router.push('/profile')
     } catch (e) {
       console.log(e)
     }
@@ -138,7 +144,7 @@ class Profile extends Component<Props, void> {
 
   render () {
     const { isWalletSecured } = this.props
-    const { email, address, username, updated } = this.state
+    const { email, address, username, updated, saved } = this.state
     let userAvatar = ''
     if (address) {
       const lowerAddress = add0x(address)
@@ -154,6 +160,7 @@ class Profile extends Component<Props, void> {
         <Button purple disabled={!updated} onClick={this.saveUserData}>
           Change informations
         </Button>
+        {saved && <Redirect to={'/profile'} />}
       </FooterWrapper>
     )
     return (
