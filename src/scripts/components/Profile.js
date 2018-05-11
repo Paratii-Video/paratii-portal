@@ -160,10 +160,10 @@ class Profile extends Component<Props, void> {
               <EditProfileButton to="/profile/edit">Edit</EditProfileButton>
               <ProfileAvatar>{userAvatar}</ProfileAvatar>
               <Text bold small>
-                {user.name || 'Garou'}
+                {user.name}
               </Text>
               <Text data-test-id="profile-email" gray small>
-                {user.email || 'garou@gmail.com'}
+                {user.email}
               </Text>
               <Text tiny gray>
                 Since 2018
