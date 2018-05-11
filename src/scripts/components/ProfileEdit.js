@@ -158,7 +158,7 @@ class Profile extends Component<Props, void> {
           Cancel
         </CancelButton>
         <Button purple disabled={!updated} onClick={this.saveUserData}>
-          Change informations
+          Save
         </Button>
         {saved && <Redirect to={'/profile'} />}
       </FooterWrapper>
