@@ -62,6 +62,12 @@
       "react-hot-loader/babel"
     ]
   },
+  "bundlesize": [
+    {
+      "path": "./build/bundle.js",
+      "maxSize": "5 MB"
+    }
+  ],
   "lint-staged": {
     "*.js": [
       "prettier-standard",
@@ -85,6 +91,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
+    "bundlesize": "^0.17.0",
     "chai": "^4.1.2",
     "chimp": "^0.50.2",
     "concurrently": "^3.5.1",
