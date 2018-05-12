@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import DocumentTitle from 'react-document-title'
-import { Events } from 'clappr'
 import styled from 'styled-components'
 import debounce from 'lodash.debounce'
 import Transition from 'react-transition-group/Transition'
@@ -10,6 +9,7 @@ import TimeFormat from 'hh-mm-ss'
 import playerjs from 'player.js'
 import queryString from 'query-string'
 
+import Events from 'constants/ClapprEvents'
 import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
 import VideoOverlayContainer from 'containers/VideoOverlayContainer'
@@ -570,7 +570,7 @@ class Play extends Component<Props, State> {
     if (video && video.thumbnails.size === 4) {
       poster = video.thumbnails.get(0)
     }
-    import('paratii-mediaplayer').then(CreatePlayer => {
+    import('../../../../paratii-mediaplayer').then(CreatePlayer => {
       if (this.player && this.player.destroy) {
         this.player.destroy()
       }
