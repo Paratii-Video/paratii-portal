@@ -1,7 +1,9 @@
-<img src="https://github.com/Paratii-Video/paratiisite/blob/dev/dist/assets/svgs/paratii-logo.svg" width="200">
+[![Follow](https://img.shields.io/twitter/follow/ParatiiVideo.svg?style=social&label=Follow)](https://twitter.com/ParatiiVideo)
 
-# paratii-portal
-A modular web-interface for uploading content into the peer-to-peer network behind Paratii, and to browse or organize it. It's purpose is to **1)** help populate Paratii's registries with real world data and files from creators; **2)** expose widgets and forms of interaction with the paratii-jsrary that other developers can leverage, or platform owners can implement; **3)** battletest distributed curation concepts, whenever mature for account management. First iteration will randomize account info. and focus on the experience of uploading videos.
+# Paratii portal <img align="right" src="https://github.com/Paratii-Video/paratiisite/blob/dev/dist/assets/svgs/paratii-logo.svg" height="80px" />
+_Make a living from video without having to be [Logan Paul](https://www.polygon.com/2018/1/9/16869430/youtube-logan-paul-pewdiepie-transparency-advertisers-monetization)_
+
+<img align="left" src="https://i.imgur.com/C6kyiuB.png" height="300px" /> A modular web-interface for uploading content into the peer-to-peer network behind Paratii, and to browse or organize it. It's purpose is to **1)** help populate Paratii's registries with real world data and files from creators; **2)** expose widgets and forms of interaction with the paratii-js that other developers can leverage, or platform owners can implement; **3)** battletest distributed curation concepts, whenever mature for account management. First iteration will randomize account info. and focus on the experience of uploading videos.
 
 ## Prerequisites
 
