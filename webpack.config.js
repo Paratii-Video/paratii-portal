@@ -56,6 +56,7 @@ const config = {
   target: 'web',
   resolve: {
     alias: {
+      clappr: 'clappr/dist/clappr.min',
       config: configDir,
       scripts: scriptsDir,
       styles: stylesDir,
