@@ -3,6 +3,7 @@
 # Paratii portal <img align="right" src="https://github.com/Paratii-Video/paratiisite/blob/dev/dist/assets/svgs/paratii-logo.svg" height="80px" />
 _Your window to a new era for videos_
 
+
 <img align="left" src="https://i.imgur.com/C6kyiuB.png" height="300px" /> A modular web-interface for uploading content into the peer-to-peer network behind Paratii, and to browse or organize it. It's purpose is to **1)** help populate Paratii's registries with real world data and files from creators; **2)** expose widgets and forms of interaction with the paratii-js that other developers can leverage, or platform owners can implement; **3)** battletest distributed curation concepts, whenever mature for account management. First iteration will randomize account info. and focus on the experience of uploading videos.
 
 ## Prerequisites
