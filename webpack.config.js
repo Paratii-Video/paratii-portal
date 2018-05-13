@@ -1,6 +1,5 @@
 const webpack = require('webpack')
 const fs = require('fs')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
@@ -35,6 +34,12 @@ if ((dev || test) && fs.existsSync(registryConfigPath)) {
     registryConfig.registryAddress
   )
 }
+
+const SassLoaders = [
+  { loader: 'css-loader' },
+  { loader: 'postcss-loader' },
+  { loader: 'sass-loader' }
+]
 
 const config = {
   entry: {
@@ -111,7 +116,7 @@ const config = {
       {
         test: /\.scss$/,
         include: stylesDir,
-        use: [{loader: 'style-loader'}, {loader: 'css-loader'}, {loader: 'postcss-loader'}, {loader: 'sass-loader'}]
+        use: [{ loader: 'style-loader' }, ...SassLoaders]
       }
     ]
   },
@@ -123,7 +128,6 @@ const config = {
     },
   plugins: [
     new webpack.DefinePlugin(definedVariables),
-    // new MiniCssExtractPlugin('embed/index.css'),
     prod
       ? new UglifyJsPlugin({
         sourceMap: false,
