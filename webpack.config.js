@@ -1,6 +1,6 @@
 const webpack = require('webpack')
 const fs = require('fs')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
@@ -85,11 +85,11 @@ const config = {
     fs: 'empty'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         include: [srcDir, testDir],
-        loader: 'babel-loader'
+        use: 'babel-loader'
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -106,16 +106,12 @@ const config = {
       {
         test: /\.(svg)$/,
         include: assetsDir,
-        use: [
-          {
-            loader: 'svg-url-loader'
-          }
-        ]
+        use: 'svg-url-loader'
       },
       {
         test: /\.scss$/,
         include: stylesDir,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+        use: [{loader: 'style-loader'}, {loader: 'css-loader'}, {loader: 'postcss-loader'}, {loader: 'sass-loader'}]
       }
     ]
   },
@@ -127,7 +123,7 @@ const config = {
     },
   plugins: [
     new webpack.DefinePlugin(definedVariables),
-    new ExtractTextPlugin('embed/index.css'),
+    // new MiniCssExtractPlugin('embed/index.css'),
     prod
       ? new UglifyJsPlugin({
         sourceMap: false,
@@ -147,6 +143,7 @@ const config = {
             ]
           },
           compress: false,
+          parallel: true,
           safari10: true
         }
       })
