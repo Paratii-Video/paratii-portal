@@ -18,8 +18,8 @@ const functionalTestsDir = testDir + '/functional-tests'
 
 const dev = process.env.NODE_ENV === 'development'
 const test = process.env.NODE_ENV === 'test'
-const prod =
-  process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging'
+const staging = process.env.NODE_ENV === 'staging'
+const prod = process.env.NODE_ENV === 'production'
 
 const definedVariables = {
   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
@@ -43,7 +43,7 @@ const SassLoaders = [
 
 const config = {
   entry: {
-    bundle: prod
+    bundle: prod || staging
       ? [scriptsDir + '/index.js']
       : [
         'react-hot-loader/patch',
@@ -121,14 +121,14 @@ const config = {
     ]
   },
   devtool: prod ? undefined : 'eval-source-map',
-  devServer: prod
+  devServer: prod || staging
     ? {}
     : {
       hot: true
     },
   plugins: [
     new webpack.DefinePlugin(definedVariables),
-    prod
+    prod || staging
       ? new UglifyJsPlugin({
         sourceMap: false,
         uglifyOptions: {
