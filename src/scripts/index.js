@@ -4,6 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import { Provider } from 'react-redux'
+import 'promise-polyfill/src/polyfill'
 
 import Root from 'components/Root'
 import { getRoot } from 'utils/AppUtils'
