@@ -26,8 +26,8 @@ jobs:
       - run:
           command: yarn run server
           background: true
-    #   - run:
-        #   command: mv /paratii-db/paratii-db db
+      - run:
+          command: mv /paratii-db/paratii-db db
       - run:
           command: yarn run mock-server:start
           background: true
