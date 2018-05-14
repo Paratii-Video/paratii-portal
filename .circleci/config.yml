@@ -30,6 +30,7 @@ jobs:
         #   command: mv /paratii-db/paratii-db db
       - run:
           command: yarn run mock-server:start
+          background: true
       - run:
           command: cd db && npm run dev
           background: true
