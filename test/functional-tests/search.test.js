@@ -2,7 +2,7 @@ import { MATH_VIDEO, DEVCON_VIDEO } from './data/fixtures/videos'
 
 import mockEndpoint from '../../mock-server/mockEndpoint'
 
-describe('🔍 Search: @watch', () => {
+describe('🔍 Search:', () => {
   const navigateToSearch = () => browser.url('http://localhost:8080/search')
   const searchResultsWrapperSelector = '[data-test-id="search-results"]'
   const enterKeywordsZeroStateSelector = `${searchResultsWrapperSelector} [data-test-id="enter-keywords-zero-state"]`
@@ -10,6 +10,10 @@ describe('🔍 Search: @watch', () => {
   const searchNavFormSelector = '[data-test-id="search-nav-form"]'
   const searchNavInputSelector = `${searchNavFormSelector} [data-test-id="search-nav-input"]`
   const searchResultSelector = '[data-test-id="search-result"]'
+  const searchResultThumbnailSelector = `${searchResultSelector} [data-test-id="search-result-thumbnail"]`
+  const searchResultDurationSelector = `${searchResultSelector} [data-test-id="search-result-duration"]`
+  const searchResultTitleSelector = `${searchResultSelector} [data-test-id="search-result-title"]`
+  const searchResultDescriptionSelector = `${searchResultSelector} [data-test-id="search-result-description"]`
 
   const mockSearchResponse = ({
     query = '',
@@ -103,6 +107,137 @@ describe('🔍 Search: @watch', () => {
         ).value,
       undefined,
       'Could not verify that search two search results appeared'
+    )
+  })
+
+  it('should render info about each search result', () => {
+    const query = 'math'
+    mockSearchResponse({
+      query,
+      results: [MATH_VIDEO, DEVCON_VIDEO]
+    })
+
+    navigateToSearch()
+
+    browser.waitForEnabled(searchNavInputSelector)
+    browser.setValue(searchNavInputSelector, query)
+    browser.submitForm(searchNavFormSelector)
+
+    expect(browser.isVisible(enterKeywordsZeroStateSelector)).to.equal(false)
+    expect(browser.isVisible(noResultsZeroStateSelector)).to.equal(false)
+
+    const videoResults = [MATH_VIDEO, DEVCON_VIDEO]
+
+    browser.waitUntil(
+      () =>
+        browser.execute(
+          (
+            searchResultSelector,
+            searchResultThumbnailSelector,
+            searchResultDurationSelector,
+            searchResultTitleSelector,
+            searchResultDescriptionSelector,
+            videoResults
+          ) => {
+            const resultsData = JSON.parse(videoResults)
+            const searchResults = document.querySelectorAll(
+              searchResultSelector
+            )
+
+            if (searchResults.length !== 2) {
+              return false
+            }
+
+            for (let i = 0; i < searchResults.length; i++) {
+              const searchResult = searchResults[i]
+
+              const thumbnailEl = searchResult.querySelector(
+                searchResultThumbnailSelector
+              )
+              const thumbnailOk =
+                thumbnailEl.getAttribute('src') ===
+                `https://gateway.paratii.video/ipfs/${
+                  resultsData[i].ipfsHash
+                }/${resultsData[i].thumbnails[0]}`
+
+              const durationEl = searchResult.querySelector(
+                searchResultDurationSelector
+              )
+              const durationOk =
+                durationEl.textContent === resultsData[i].duration
+
+              const titleEl = searchResult.querySelector(
+                searchResultTitleSelector
+              )
+              const titleOk = titleEl.textContent === resultsData[i].title
+
+              const descriptionEl = searchResult.querySelector(
+                searchResultDescriptionSelector
+              )
+              const descriptionOk =
+                descriptionEl.textContent === resultsData[i].description
+              if (!thumbnailOk || !durationOk || !titleOk || !descriptionOk) {
+                return false
+              }
+            }
+
+            return true
+          },
+          searchResultSelector,
+          searchResultThumbnailSelector,
+          searchResultDurationSelector,
+          searchResultTitleSelector,
+          searchResultDescriptionSelector,
+          JSON.stringify(videoResults)
+        ).value,
+      undefined,
+      'Could not verify that search results were rendered correctly'
+    )
+  })
+
+  it('should render a default thumbnail url for a search result that is missing thumbnails', () => {
+    const query = 'math'
+    mockSearchResponse({
+      query,
+      results: [{ ...MATH_VIDEO, thumbnails: [] }, DEVCON_VIDEO]
+    })
+
+    navigateToSearch()
+
+    browser.waitForEnabled(searchNavInputSelector)
+    browser.setValue(searchNavInputSelector, query)
+    browser.submitForm(searchNavFormSelector)
+
+    expect(browser.isVisible(enterKeywordsZeroStateSelector)).to.equal(false)
+    expect(browser.isVisible(noResultsZeroStateSelector)).to.equal(false)
+
+    browser.waitUntil(
+      () =>
+        browser.execute(
+          (searchResultSelector, searchResultThumbnailSelector) => {
+            const searchResults = document.querySelectorAll(
+              searchResultSelector
+            )
+
+            if (searchResults.length !== 2) {
+              return false
+            }
+
+            const searchResult = searchResults[0]
+
+            const thumbnailEl = searchResult.querySelector(
+              searchResultThumbnailSelector
+            )
+            return (
+              thumbnailEl.getAttribute('src') ===
+              'https://paratii.video/public/images/paratii-src.png'
+            )
+          },
+          searchResultSelector,
+          searchResultThumbnailSelector
+        ).value,
+      undefined,
+      'Could not verify that search results were rendered correctly'
     )
   })
 })

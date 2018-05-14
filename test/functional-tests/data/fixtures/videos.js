@@ -5,10 +5,10 @@ export const MATH_VIDEO = {
     "Jim Simons was a mathematician and cryptographer who realized: the complex math he used to break codes could help explain patterns in the world of finance. Billions later, he’s working to support the next generation of math teachers and scholars. TED’s Chris Anderson sits down with Simons to talk about his extraordinary life in numbers.\n\nTEDTalks is a daily video podcast of the best talks and performances from the TED Conference, where the world'sleading thinkers and doers give the talk of their lives in 18 minutes (or less). Look for talks on Technology, Entertainment and Design -- plus science, business, global issues, the arts and much more.\nFind closed captions and translated subtitles in many languages at http://www.ted.com/translate\n\nFollow TED news on Twitter: http://www.twitter.com/tednews\nLike TED on Facebook: https://www.facebook.com/TED\n\nSubscribe to our channel: http://www.youtube.com/user/TEDtalksD...",
   duration: '23:19',
   price: 14,
+  ipfsHash: 'hash1',
   src: '/ipfs/QmQvhvzMXKX71jLGjSfM9iKiWVKETXDmkPaQXhe4WrMmZ9',
   mimetype: 'video/mp4',
-  thumb:
-    '/ipfs/QmQvhvzMXKX71jLGjSfM9iKiWVKETXDmkPaQXhe4WrMmZ9/thumbnail-1280x720_2.png',
+  thumbnails: ['thumbnail-1280x720_2.png'],
   owner: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
   stats: {
     likes: 0,
@@ -38,11 +38,12 @@ export const DEVCON_VIDEO = {
   title: 'Devcon2: Ethereum in 25 Minutes',
   description:
     'Presentation Slides Download: https://ethereumfoundation.org/devcon...\n\nDevcon2: Ethereum in 25 Minutes. Ethereum Foundation Chief Scientist, Vitalik Buterin, describes Ethereum.\nSpeakers: Vitalik Buterin\n\nEthereum Developer Conference, 2016 September 19 - 21,\nShanghai, China',
+  duration: '11:11',
   price: 0,
+  ipfsHash: 'hash2',
   src: '/ipfs/QmU1f8mKebPzCHskk3DDsFUJLxFLVeCxJ1BqyhQvkV8FyJ',
   mimetype: 'video/mp4',
-  thumb:
-    '/ipfs/QmU1f8mKebPzCHskk3DDsFUJLxFLVeCxJ1BqyhQvkV8FyJ/thumbnail-1280x720_3.png',
+  thumbnails: ['thumbnail-1280x720_3.png', 'foo.png'],
   owner: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
   stats: {
     likes: 0,
