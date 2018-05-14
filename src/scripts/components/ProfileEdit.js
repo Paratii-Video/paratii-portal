@@ -44,6 +44,11 @@ const ProfileAvatar = styled.div`
   width: 100px;
 `
 
+const Form = styled.form`
+  display: block;
+  width: 100%;
+`
+
 const FooterWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -58,6 +63,7 @@ const CancelButton = styled(NavLink)`
 
 class Profile extends Component<Props, void> {
   secureWallet: (e: Object) => void
+  submitForm: (e: Object) => void
   handleInputChange: (input: string, e: Object) => void
   saveUserData: () => void
 
@@ -69,12 +75,14 @@ class Profile extends Component<Props, void> {
       email: this.props.user.email,
       username: this.props.user.name,
       updated: false,
+      formDisable: false,
       saved: false
     }
 
     this.secureWallet = this.secureWallet.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.saveUserData = this.saveUserData.bind(this)
+    this.submitForm = this.submitForm.bind(this)
   }
 
   componentDidMount () {
@@ -100,10 +108,18 @@ class Profile extends Component<Props, void> {
   }
 
   handleInputChange (input: string, e: Object) {
+    const inputValue = e.target.value
+    let changed = true
+
+    if (inputValue.length < 1) {
+      changed =
+        this.state[input === 'username' ? 'email' : 'username'].length > 0
+    }
+
     this.setState({
-      [input]: e.target.value,
-      updated: true,
-      saved: false
+      [input]: inputValue,
+      saved: false,
+      updated: changed
     })
   }
 
@@ -112,7 +128,24 @@ class Profile extends Component<Props, void> {
     this.props.checkUserWallet()
   }
 
+  submitForm (e: Object) {
+    e.preventDefault()
+    this.saveUserData()
+  }
+
   async saveUserData () {
+    this.setState({
+      updated: false,
+      formDisabled: true
+    })
+    // Notification
+    this.props.showNotification(
+      {
+        title: 'Saving your info',
+        position: NOTIFICATION_POSITIONS.TOP_RIGHT
+      },
+      NOTIFICATION_LEVELS.SUCCESS
+    )
     try {
       await paratii.users.upsert({
         id: paratii.eth.getAccount(),
@@ -133,12 +166,18 @@ class Profile extends Component<Props, void> {
       // Set Updated to false again
       this.setState({
         updated: false,
-        saved: true
+        saved: true,
+        formDisabled: true
       })
       // Redirect to User Profile
       router.push('/profile')
     } catch (e) {
       console.log(e)
+      this.setState({
+        updated: true,
+        saved: false,
+        formDisabled: true
+      })
     }
   }
 
@@ -158,7 +197,7 @@ class Profile extends Component<Props, void> {
           Cancel
         </CancelButton>
         <Button purple disabled={!updated} onClick={this.saveUserData}>
-          Change informations
+          Save
         </Button>
         {saved && <Redirect to={'/profile'} />}
       </FooterWrapper>
@@ -171,22 +210,30 @@ class Profile extends Component<Props, void> {
               <ProfileAvatar>{userAvatar}</ProfileAvatar>
               <Button>Change avatar</Button>
               <HR />
-              <TextField
-                type="text"
-                label="Username"
-                margin="0 0 30px"
-                value={username}
-                data-test-id="profile-username"
-                onChange={e => this.handleInputChange('username', e)}
-              />
-              <TextField
-                type="text"
-                label="Email"
-                margin="0 0 30px"
-                value={email}
-                data-test-id="profile-email"
-                onChange={e => this.handleInputChange('email', e)}
-              />
+              <Form onSubmit={this.submitForm}>
+                <TextField
+                  type="text"
+                  label="Username"
+                  tabIndex="1"
+                  value={username}
+                  disabled={this.formDisabled}
+                  margin="0 0 30px"
+                  data-test-id="profile-username"
+                  onChange={e => this.handleInputChange('username', e)}
+                />
+                <TextField
+                  type="text"
+                  label="Email"
+                  tabIndex="2"
+                  value={email}
+                  disabled={this.formDisabled}
+                  data-test-id="profile-email"
+                  onChange={e => this.handleInputChange('email', e)}
+                />
+                <Button hidden disabled={!updated} onClick={this.saveUserData}>
+                  Save
+                </Button>
+              </Form>
             </Wrapper>
           </Card>
         ) : (
