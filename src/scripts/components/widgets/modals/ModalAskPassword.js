@@ -136,7 +136,7 @@ class ModalAskPassword extends Component<Props, Object> {
               margin="0 0 30px"
             />
             {this.state.error && (
-              <Text pink small>
+              <Text pink small data-test-id="error-password">
                 {this.state.error}
               </Text>
             )}

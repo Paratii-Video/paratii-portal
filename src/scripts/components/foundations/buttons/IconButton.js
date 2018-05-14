@@ -8,6 +8,7 @@ type Props = {
   color?: string,
   disabled?: boolean,
   icon: string,
+  dataTestID?: string,
   onClick: (e: Object) => void
 }
 
@@ -24,13 +25,20 @@ const Button = styled.button`
     color || (disabled ? theme.colors.button.gray : theme.colors.button.white)};
 `
 
-const IconButton = ({ onClick, disabled, icon, color, ...rest }: Props) => (
+const IconButton = ({
+  onClick,
+  disabled,
+  icon,
+  color,
+  dataTestID,
+  ...rest
+}: Props) => (
   <Button
     color={color}
     disabled={disabled}
     icon={icon}
     onClick={disabled ? undefined : onClick}
-    data-test-id="overlay-profile-button"
+    data-test-id={dataTestID}
   />
 )
 

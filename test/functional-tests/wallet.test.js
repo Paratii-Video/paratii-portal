@@ -35,6 +35,18 @@ describe('💰 Wallet:', function () {
     assert.equal(balance, '0')
   })
 
+  it('do not open the secure wallet if wrong password', function () {
+    const wrongPassword = 'Wrong-p4ssword'
+    createKeystore()
+    // Click on login and insert the password
+    browser.waitAndClick('[data-test-id="login-signup"]')
+    browser.waitAndClick('[name="wallet-password"]')
+    browser.setValue('[name="wallet-password"]', wrongPassword)
+    browser.waitAndClick('[data-test-id="continue"]')
+    // Display error message
+    browser.waitForExist('[data-test-id="error-password"]')
+  })
+
   it('restore your wallet using a seed', async function () {
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
@@ -67,9 +79,28 @@ describe('💰 Wallet:', function () {
     assert.equal(balance, '0')
   })
 
-  it.skip('do not open the secure wallet if wrong password', function () {})
-
-  it.skip('do not create a new secure wallet if the password is weak', function () {})
+  it('do not create a new secure wallet if the password is weak', function () {
+    const weakPassword = 'password'
+    browser.waitUntil(() => {
+      return browser.getTitle() === 'Paratii'
+    })
+    browser.waitAndClick('[data-test-id="login-signup"]')
+    browser.pause(500)
+    browser.waitAndClick('[data-test-id="restore-account"]')
+    // Insert the seed
+    browser.waitForClickable('[name="mnemonic-restore"]')
+    browser.setValue('[name="mnemonic-restore"]', restoreMnemonic)
+    browser.waitAndClick('[data-test-id="restore-wallet"]')
+    // Insert the password
+    browser.waitAndClick('[name="input-new-password"]')
+    browser.setValue('[name="input-new-password"]', weakPassword)
+    browser.waitAndClick('[name="input-confirm-password"]')
+    browser.setValue('[name="input-confirm-password"]', weakPassword)
+    browser.waitForEnabled('[data-test-id="continue"]')
+    browser.click('[data-test-id="continue"]')
+    // Display error message
+    browser.waitForExist('[data-test-id="error-password"]')
+  })
 
   it('secure your wallet, transfer data to a new address', async function (done) {
     const username = 'newuser'
@@ -82,7 +113,6 @@ describe('💰 Wallet:', function () {
     })
 
     const anonAddress = address
-
     paratii.eth.balanceOf(anonAddress, 'PTI').then(function (results) {
       balance = results
     })
@@ -216,7 +246,7 @@ describe('💰 Wallet:', function () {
 })
 
 describe('Voucher:', function () {
-  it('redeem a voucher', async function () {
+  it('redeem a voucher', async function (done) {
     browser.url(`http://localhost:8080`)
     createKeystore()
     browser.url(`http://localhost:8080/voucher`)
@@ -250,5 +280,6 @@ describe('Voucher:', function () {
     // Then we check the balance
     const balance = browser.getText('[data-test-id="pti-balance"]')
     assert.equal(paratii.eth.web3.utils.toWei(balance), voucherAmount11)
+    done()
   })
 })

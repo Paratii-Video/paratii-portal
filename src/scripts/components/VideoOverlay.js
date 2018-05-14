@@ -254,6 +254,7 @@ class VideoOverlay extends Component<Props> {
                     e.stopPropagation()
                     toggleActivePlugin(PLAYER_PLUGIN.WALLET)
                   }}
+                  dataTestID="overlay-profile-button"
                 />
               </ProfileButtonWrapper>
             )}

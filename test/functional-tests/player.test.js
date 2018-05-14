@@ -5,7 +5,7 @@ const fs = require('fs')
 const Promise = require('bluebird')
 const path = require('path')
 
-describe('🎥 Player: @watch ', function () {
+describe('🎥 Player:', function () {
   const ipfsHash = 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
   const videoId = 'foo'
 
@@ -95,7 +95,7 @@ describe('🎥 Player: @watch ', function () {
       browser.waitForText('main h1', 'Oooooops, page not found')
     })
 
-    it.skip('does not render a profile button', function () {
+    it('does not render a profile button', function () {
       browser.url(`http://localhost:8080/play/${videoId}`)
       // browser.waitUntilVideoIsPlaying()
       browser.waitAndClick('[data-test-id="video-overlay"]')
