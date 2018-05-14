@@ -10,7 +10,6 @@ import Text from './foundations/Text'
 import TruncatedText from './foundations/TruncatedText'
 import SVGIcon from './foundations/SVGIcon'
 import HR from './foundations/HR'
-import TextField from './widgets/forms/TextField'
 import Card from './structures/Card'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 import {
@@ -129,14 +128,6 @@ class Profile extends Component<Props, void> {
     }
     const cardFooter = (
       <FooterWrapper>
-        <TextField
-          type="text"
-          label="Email"
-          margin="0 0 30px"
-          value={user.email}
-          data-test-id="profile-email"
-          onChange={e => this.handleInputChange('email', e)}
-        />
         <Text gray small>
           Address:
         </Text>
@@ -171,8 +162,11 @@ class Profile extends Component<Props, void> {
               <Text bold small>
                 {user.name}
               </Text>
+              <Text data-test-id="profile-email" gray small>
+                {user.email}
+              </Text>
               <Text tiny gray>
-                Member since 2018
+                Since 2018
               </Text>
               <HR />
               <Text tiny gray>
