@@ -1,6 +1,6 @@
 {
   "eth": {
-    "provider": "ws://localhost:8546"
+    "provider": "http://localhost:8545"
   },
   "account": {
     "address": "0xCbe4f07b343171ac37055B25a5266f48f6945b7d",
