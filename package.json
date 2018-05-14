@@ -7,6 +7,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "build": "yarn run clean && yarn run prep && NODE_ENV=production node --max_old_space_size=4096 node_modules/.bin/webpack --progress --colors",
+    "build:test": "yarn run clean && yarn run prep && NODE_ENV=test node --max_old_space_size=4096 node_modules/.bin/webpack --progress --colors",
     "build:staging": "yarn run clean && yarn run prep && NODE_ENV=staging node --max_old_space_size=4096 node_modules/.bin/webpack --progress --colors",
     "build:dev": "yarn run clean && yarn run prep && NODE_ENV=development webpack --watch --colors --progress",
     "analyze": "yarn run clean && yarn run prep && NODE_ENV=production ANALYZE=1 node --max_old_space_size=4096 node_modules/.bin/webpack --progress --colors",
