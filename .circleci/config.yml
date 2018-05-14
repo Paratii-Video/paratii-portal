@@ -24,7 +24,7 @@ jobs:
           command: yarn run build:test
           background: true
       - run:
-          command: yarn run server
+          command: yarn run server:test
           background: true
     #   - run:
         #   command: mv /paratii-db/paratii-db db
