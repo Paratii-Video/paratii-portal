@@ -60,8 +60,12 @@ class SearchInput extends Component<Props, void> {
     const { currentSearchText, onSearchInputChange } = this.props
 
     return (
-      <SearchInputForm onSubmit={this.onSubmitForm}>
+      <SearchInputForm
+        data-test-id="search-nav-form"
+        onSubmit={this.onSubmitForm}
+      >
         <SearchInputField
+          data-test-id="search-nav-input"
           onChange={(e: Object) => {
             onSearchInputChange({ value: e.target.value })
           }}

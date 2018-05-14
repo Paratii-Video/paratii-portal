@@ -1,212 +1,108 @@
-/* eslint-disable */
-//
-// Note for devs: WORK IN PROGRESS
-//
-//
-// MIGRATING FROM paratii-player/tests/
-// Issue where this migratin is tracked: https://github.com/Paratii-Video/paratii-portal/issues/29
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-import { createVideo } from './test-utils/helpers.js'
-import { assert } from 'chai'
+import { MATH_VIDEO, DEVCON_VIDEO } from './data/fixtures/videos'
 
-describe('Search video :', function() {
-  beforeEach(function() {
-    browser.url('http:localhost:3000/search')
-  })
+import mockEndpoint from '../../mock-server/mockEndpoint'
 
-  it.skip('search is triggered if user enter a 3 character lenght keyword ', function(done) {
-    server.execute(
-      createVideo,
-      '12345',
-      'this is the video key title',
-      'this is the video key description ',
-      'Uploader key name',
-      ['foo', 'keyword'],
-      0
+describe('🔍 Search: @watch', () => {
+  const navigateToSearch = () => browser.url('http://localhost:8080/search')
+  const searchResultsWrapperSelector = '[data-test-id="search-results"]'
+  const enterKeywordsZeroStateSelector = `${searchResultsWrapperSelector} [data-test-id="enter-keywords-zero-state"]`
+  const noResultsZeroStateSelector = `${searchResultsWrapperSelector} [data-test-id="no-results-zero-state"]`
+  const searchNavFormSelector = '[data-test-id="search-nav-form"]'
+  const searchNavInputSelector = `${searchNavFormSelector} [data-test-id="search-nav-input"]`
+  const searchResultSelector = '[data-test-id="search-result"]'
+
+  const mockSearchResponse = ({
+    query = '',
+    limit = 12,
+    offset = 0,
+    results = [],
+    statusCode = 200
+  }) => {
+    mockEndpoint({
+      endpoint: `/api/v1/videos/?keyword=${query}&limit=${limit}&offset=${offset}`,
+      response: { results }
+    })
+  }
+
+  before(() => {
+    browser.addCommand('waitUntilIsOnSearchRoute', ({ query = '' } = {}) => {
+      browser.waitUntil(
+        () =>
+          browser.execute(() => window.location.pathname === '/search').value,
+        2000,
+        'Could not confirm that browser is at the search route'
+      )
+    })
+
+    browser.addCommand(
+      'waitUntilNoResultsZeroStateIsVisible',
+      ({ query = '' } = {}) => {
+        browser.waitForVisible(noResultsZeroStateSelector)
+        browser.waitUntil(
+          () =>
+            browser.getText(noResultsZeroStateSelector) ===
+            `No results found for "${query}"`,
+          2000,
+          'No results zero state text is incorrect'
+        )
+      }
     )
-    browser.setValue('[name="search"]', 'k')
-    browser.pause(2000)
-    let results = browser.elements('.thumbs-list li')
-    assert.equal(results.value.length, 0)
-
-    browser.setValue('[name="search"]', 'ke')
-    browser.pause(2000)
-    results = browser.elements('.thumbs-list li')
-    assert.equal(results.value.length, 0)
-
-    browser.setValue('[name="search"]', 'key')
-    browser.pause(2000)
-    results = browser.elements('.thumbs-list li')
-    assert.equal(results.value.length, 1)
-    done()
   })
 
-  it.skip('search must return no video with no matching title', function(done) {
-    server.execute(
-      createVideo,
-      '12345',
-      'matching-keyword-title',
-      'matching-keyword-description',
-      'matching-keyword-user',
-      ['foo', 'keyword'],
-      0
+  it('should show placeholder text when arriving at the /search route', () => {
+    navigateToSearch()
+
+    browser.waitForVisible(enterKeywordsZeroStateSelector)
+    expect(browser.getText(enterKeywordsZeroStateSelector)).to.equal(
+      'Enter some keywords above to search!'
     )
-    browser.setValue('[name="search"]', 'noresultkeyword')
-    browser.pause(2000)
-    let results = browser.elements('.thumbs-list li')
-    assert.equal(results.value.length, 0)
-    done()
   })
 
-  it.skip('search must return 4 video with matching keyword in different field', function(done) {
-    server.execute(
-      createVideo,
-      '12345',
-      'foo keyword foo',
-      'fookeyword1foo',
-      'fookeyword1foo',
-      ['foo', 'fookeyword1foo'],
-      0
+  it('should navigate to the /search route after searching on another page and render no results', () => {
+    const query = 'video'
+    mockSearchResponse({
+      query,
+      results: []
+    })
+
+    browser.url('http://localhost:8080')
+
+    browser.waitForEnabled(searchNavInputSelector)
+    browser.setValue(searchNavInputSelector, query)
+    browser.submitForm(searchNavFormSelector)
+
+    browser.waitUntilIsOnSearchRoute()
+
+    browser.waitUntilNoResultsZeroStateIsVisible({ query })
+  })
+
+  it('should navigate to the /search route after searching on another page and render results', () => {
+    const query = 'math'
+    mockSearchResponse({
+      query,
+      results: [MATH_VIDEO, DEVCON_VIDEO]
+    })
+
+    browser.url('http://localhost:8080')
+
+    browser.waitForEnabled(searchNavInputSelector)
+    browser.setValue(searchNavInputSelector, query)
+    browser.submitForm(searchNavFormSelector)
+
+    browser.waitUntilIsOnSearchRoute()
+
+    expect(browser.isVisible(enterKeywordsZeroStateSelector)).to.equal(false)
+    expect(browser.isVisible(noResultsZeroStateSelector)).to.equal(false)
+
+    browser.waitUntil(
+      () =>
+        browser.execute(
+          searchResultSelector =>
+            document.querySelectorAll(searchResultSelector).length === 2,
+          searchResultSelector
+        ).value,
+      undefined,
+      'Could not verify that search two search results appeared'
     )
-    server.execute(
-      createVideo,
-      '12346',
-      'fookeyword2foo',
-      'foo keyword foo',
-      'fookeyword2foo',
-      ['foo', 'fookeyword2foo'],
-      0
-    )
-    server.execute(
-      createVideo,
-      '12347',
-      'fookeyword3foo',
-      'fookeyword3foo',
-      'foo keyword foo',
-      ['foo', 'fookeyword3foo'],
-      0
-    )
-    server.execute(
-      createVideo,
-      '12348',
-      'fookeyword4foo',
-      'fookeyword4foo',
-      'fookeyword4foo',
-      ['foo', 'foo keyword foo'],
-      0
-    )
-    browser.setValue('[name="search"]', 'keyword')
-    browser.waitForExist('.thumbs-list li')
-    let results = browser.elements('.thumbs-list li')
-    assert.equal(results.value.length, 4)
-    done()
   })
-
-  it.skip('search must return some video with matching title', function(done) {
-    server.execute(
-      createVideo,
-      '12345',
-      'matching-keyword-title',
-      '',
-      '',
-      [],
-      0
-    )
-    browser.setValue('[name="search"]', 'keyword')
-    browser.waitForExist('.thumbs-list li')
-    let results = browser.elements('.thumbs-list li')
-    assert.equal(results.value.length, 1)
-    done()
-  })
-
-  it.skip('search must return some video with matching description', function(done) {
-    server.execute(
-      createVideo,
-      '12345',
-      '',
-      'matching-keyword-description',
-      '',
-      [],
-      0
-    )
-    browser.setValue('[name="search"]', 'keyword')
-    browser.waitForExist('.thumbs-list li')
-    let results = browser.elements('.thumbs-list li')
-    assert.equal(results.value.length, 1)
-    done()
-  })
-
-  it.skip('search must return some video with matching uploader name', function(done) {
-    server.execute(createVideo, '12345', '', '', 'matching-keyword-user', [], 0)
-    browser.setValue('[name="search"]', 'keyword')
-    browser.waitForExist('.thumbs-list li')
-    let results = browser.elements('.thumbs-list li')
-    assert.equal(results.value.length, 1)
-    done()
-  })
-
-  it.skip('search must return some video with matching tags', function(done) {
-    server.execute(
-      createVideo,
-      '12345',
-      '',
-      '',
-      '',
-      ['foo', 'matching-keyword-tag'],
-      0
-    )
-    browser.setValue('[name="search"]', 'keyword')
-    browser.waitForExist('.thumbs-list li')
-    let results = browser.elements('.thumbs-list li')
-    assert.equal(results.value.length, 1)
-    done()
-  })
-
-  it.skip('search must return a video with a matching field and player should open in the right video', function(done) {
-    server.execute(
-      createVideo,
-      '12345',
-      'fookeyword1foo',
-      '',
-      '',
-      ['foo', 'matching-keyword-tag'],
-      0
-    )
-    browser.setValue('[name="search"]', 'keyword')
-    browser.waitForClickable('.thumbs-list li')
-    let results = browser.elements('.thumbs-list li')
-    assert.equal(results.value.length, 1)
-    let title = browser.getText('.thumbs-list-title')
-    browser.click('.thumbs-list li')
-    browser.waitForClickable('.player-title')
-    let videoTitle = browser.getText('.player-title')
-    assert.equal(title, videoTitle)
-    done()
-  })
-
-  // TODO: out of scope sorting
-  it.skip('search results must sorted by price ascending', function(done) {
-    done()
-  })
-
-  it.skip('search results must sorted by price descending', function(done) {
-    done()
-  })
-
-  it.skip('search results must sorted by date ascending', function(done) {
-    done()
-  })
-
-  it.skip('search results must sorted by date descending', function(done) {})
 })
