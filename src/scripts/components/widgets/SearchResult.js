@@ -114,8 +114,8 @@ class SearchResult extends React.Component<Props, void> {
   render () {
     const { video } = this.props
     return (
-      <Link to={getVideoPlayUrl(video)}>
-        <Wrapper data-test-id="search-result">
+      <Link to={getVideoPlayUrl(video)} data-test-id="search-result">
+        <Wrapper>
           <ThumbnailWrapper>
             <ThumbnailImage
               data-test-id="search-result-thumbnail"

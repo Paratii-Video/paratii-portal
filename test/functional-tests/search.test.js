@@ -240,4 +240,27 @@ describe('🔍 Search:', () => {
       'Could not verify that search results were rendered correctly'
     )
   })
+
+  it("should take you to the video's page when a search result is clicked on", () => {
+    const query = 'math'
+    mockSearchResponse({
+      query,
+      results: [{ ...MATH_VIDEO, thumbnails: [] }, DEVCON_VIDEO]
+    })
+
+    navigateToSearch()
+
+    browser.waitForEnabled(searchNavInputSelector)
+    browser.setValue(searchNavInputSelector, query)
+    browser.submitForm(searchNavFormSelector)
+
+    browser.waitAndClick(searchResultSelector)
+    browser.waitUntil(
+      () =>
+        browser.execute(
+          videoId => window.location.pathname === `/play/${videoId}`,
+          MATH_VIDEO.id
+        ).value
+    )
+  })
 })
