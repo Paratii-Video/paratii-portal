@@ -182,8 +182,7 @@ class VideoForm extends Component<Props, Object> {
       id: this.state.id,
       title: this.state.title,
       description: this.state.description,
-      author: this.state.author
-      // published: publish
+      author: this.props.user.name
     }
     this.props.saveVideoInfo(videoToSave)
   }
@@ -247,19 +246,6 @@ class VideoForm extends Component<Props, Object> {
       </ButtonWrapper>
     )
 
-    // The restart button is just for convenicene, for testing
-    let restartButton
-    // if (process.env.NODE_ENV === 'development') {
-    //   restartButton = (
-    //     <div>
-    //       Use this for testing (this will not be visible in production)
-    //       <input type="file" onChange={this.onFileChosen} />
-    //     </div>
-    //   )
-    // } else {
-    //   restartButton = ''
-    // }
-
     return (
       <Card full innerRef={this.props.innerRef} nobackground>
         <VideoFormHeader>
@@ -296,16 +282,7 @@ class VideoForm extends Component<Props, Object> {
               margin="0 0 30px"
               tabIndex="2"
             />
-            <TextField
-              label="Video Owner"
-              id="input-video-owner"
-              type="text"
-              value={this.state.author}
-              onChange={e => this.handleInputChange('author', e)}
-              margin="0 0 30px"
-              maxLength="50"
-              tabIndex="3"
-            />
+
             <RadioWrapper>
               <RadioTitle>What kind of content?</RadioTitle>
               <RadioCheck name="content-type" value="free" defaultChecked>
@@ -318,7 +295,6 @@ class VideoForm extends Component<Props, Object> {
             <ButtonContainer>
               {publishButton}
               {saveButton}
-              {restartButton}
             </ButtonContainer>
           </Form>
           <VideoFormInfoBox />
