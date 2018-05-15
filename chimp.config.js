@@ -4,6 +4,7 @@ module.exports = {
   mocha: true,
   chai: true,
   webdriverio: {
+    deprecationWarnings: false,
     waitforTimeout: 20000
   }
 }

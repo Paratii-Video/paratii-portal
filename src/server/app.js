@@ -11,7 +11,7 @@ const oembedRoute = require('./routes/oembed')
 const app = express()
 const cors = require('cors')
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
   const compiler = webpack(webpackConfig)
   app.use(
     devMiddleware(compiler, {
