@@ -106,7 +106,7 @@ class SearchResults extends React.Component<Props, void> {
     if (this.props.searchTerm) {
       if (!this.props.results.size) {
         return (
-          <ZeroState>{`No results found for "${
+          <ZeroState data-test-id="no-results-zero-state">{`No results found for "${
             this.props.searchTerm
           }"`}</ZeroState>
         )
@@ -122,12 +122,16 @@ class SearchResults extends React.Component<Props, void> {
       )
     }
 
-    return <ZeroState>Enter some keywords above to search!</ZeroState>
+    return (
+      <ZeroState data-test-id="enter-keywords-zero-state">
+        Enter some keywords above to search!
+      </ZeroState>
+    )
   }
 
   render () {
     return (
-      <Wrapper>
+      <Wrapper data-test-id="search-results">
         <Results>
           {this.props.resultsLoading ? (
             <LoaderWrapper>

@@ -114,22 +114,29 @@ class SearchResult extends React.Component<Props, void> {
   render () {
     const { video } = this.props
     return (
-      <Link to={getVideoPlayUrl(video)}>
+      <Link to={getVideoPlayUrl(video)} data-test-id="search-result">
         <Wrapper>
           <ThumbnailWrapper>
-            <ThumbnailImage src={getVideoThumbnailUrl(video)} />
+            <ThumbnailImage
+              data-test-id="search-result-thumbnail"
+              src={getVideoThumbnailUrl(video)}
+            />
             <ThumbnailData>
-              <Duration>{formatDuration(video.get('duration'))}</Duration>
+              <Duration data-test-id="search-result-duration">
+                {formatDuration(video.get('duration'))}
+              </Duration>
             </ThumbnailData>
           </ThumbnailWrapper>
           <Info>
             <TopBar>
-              <Title>
+              <Title data-test-id="search-result-title">
                 <TruncatedText>{video.get('title')}</TruncatedText>
               </Title>
             </TopBar>
             <BottomBar>
-              <Description>{video.get('description')}</Description>
+              <Description data-test-id="search-result-description">
+                {video.get('description')}
+              </Description>
             </BottomBar>
           </Info>
         </Wrapper>
