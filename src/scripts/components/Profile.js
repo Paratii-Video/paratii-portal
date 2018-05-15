@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
 import { add0x, copyTextToClipboard } from 'utils/AppUtils'
 import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
@@ -9,8 +10,6 @@ import Text from './foundations/Text'
 import TruncatedText from './foundations/TruncatedText'
 import SVGIcon from './foundations/SVGIcon'
 import HR from './foundations/HR'
-import Label from './foundations/Label'
-import TextField from './widgets/forms/TextField'
 import Card from './structures/Card'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 import {
@@ -21,8 +20,8 @@ import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
 
 type Props = {
   user: {
-    user: string,
-    email: string
+    email: string,
+    name: string
   },
   userAddress: string,
   isWalletSecured: boolean,
@@ -36,6 +35,14 @@ const Wrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
+`
+
+const NavLink = Button.withComponent(Link)
+
+const EditProfileButton = styled(NavLink)`
+  position: absolute;
+  top: 50px;
+  right: 42px;
 `
 
 const ProfileAvatar = styled.div`
@@ -71,17 +78,26 @@ const CopyButton = styled(Button)`
 class Profile extends Component<Props, void> {
   secureWallet: (e: Object) => void
   copyWordsToClipboard: (event: Object) => void
+  handleInputChange: (input: string, e: Object) => void
 
   constructor (props: Props) {
     super(props)
+
     this.secureWallet = this.secureWallet.bind(this)
     this.copyWordsToClipboard = this.copyWordsToClipboard.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
   }
 
   componentDidMount () {
     if (!this.props.isWalletSecured) {
       this.props.checkUserWallet()
     }
+  }
+
+  handleInputChange (input: string, e: Object) {
+    this.setState({
+      [input]: e.target.value
+    })
   }
 
   secureWallet (e: Object) {
@@ -102,22 +118,16 @@ class Profile extends Component<Props, void> {
   }
 
   render () {
-    const { user, isWalletSecured } = this.props
+    const { user, userAddress, isWalletSecured } = this.props
     let userAvatar = ''
-    if (this.props.userAddress) {
-      const lowerAddress = add0x(this.props.userAddress)
-      if (ACTIVATE_SECURE_WALLET && this.props.isWalletSecured) {
+    if (userAddress) {
+      const lowerAddress = add0x(userAddress)
+      if (ACTIVATE_SECURE_WALLET && isWalletSecured) {
         userAvatar = <Blockies seed={lowerAddress} size={10} scale={10} />
       }
     }
     const cardFooter = (
       <FooterWrapper>
-        <TextField
-          type="text"
-          label="Email"
-          value={user.email}
-          margin="0 0 30px"
-        />
         <Text gray small>
           Address:
         </Text>
@@ -127,7 +137,7 @@ class Profile extends Component<Props, void> {
               this.KeyWords = ref
             }}
           >
-            {this.props.userAddress}
+            {userAddress}
           </CopyText>
           <CopyButton gray small onClick={this.copyWordsToClipboard}>
             <SVGIcon
@@ -147,21 +157,22 @@ class Profile extends Component<Props, void> {
         {isWalletSecured ? (
           <Card nobackground title="Profile" footer={cardFooter}>
             <Wrapper>
+              <EditProfileButton to="/profile/edit">Edit</EditProfileButton>
               <ProfileAvatar>{userAvatar}</ProfileAvatar>
               <Text bold small>
-                {user.name || '---'}
+                {user.name}
               </Text>
-              {true && (
-                <Text tiny gray>
-                  Member since 2018
-                </Text>
-              )}
+              <Text data-test-id="profile-email" gray small>
+                {user.email}
+              </Text>
+              <Text tiny gray>
+                Since 2018
+              </Text>
               <HR />
               <Text tiny gray>
                 Current balance:
               </Text>
               <PTIBalanceContainer />
-              <Label data-test-id="profile-email">{user.email}</Label>
             </Wrapper>
           </Card>
         ) : (
@@ -174,7 +185,6 @@ class Profile extends Component<Props, void> {
             }
           >
             <Text gray>Perhaps you want to login to see this content</Text>
-            <Label data-test-id="profile-email" />
           </Card>
         )}
       </div>

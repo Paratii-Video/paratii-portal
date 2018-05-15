@@ -27,7 +27,6 @@ const reducer = {
     state: UserRecord,
     { payload }: Action<{ name: string, email: string }>
   ): UserRecord => {
-    console.log('redux', payload)
     return state.merge({
       loginRequestStatus: REQUEST_STATUS.SUCCEEDED,
       name: payload.name,

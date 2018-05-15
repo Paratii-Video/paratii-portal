@@ -150,6 +150,7 @@ export type ParatiiLib = {
       getMnemonic: () => Promise<string>,
       create: (num: ?number, mnemonic: ?string) => Object,
       clear: () => void,
+      isValidMnemonic: string => boolean,
       length: number
     },
     vids: {
