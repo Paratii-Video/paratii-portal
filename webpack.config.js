@@ -35,12 +35,6 @@ if ((dev || test) && fs.existsSync(registryConfigPath)) {
   )
 }
 
-const SassLoaders = [
-  { loader: 'css-loader' },
-  { loader: 'postcss-loader' },
-  { loader: 'sass-loader' }
-]
-
 const config = {
   entry: {
     bundle: prod || staging
@@ -116,7 +110,12 @@ const config = {
       {
         test: /\.scss$/,
         include: stylesDir,
-        use: [{ loader: 'style-loader' }, ...SassLoaders]
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'postcss-loader' },
+          { loader: 'sass-loader' }
+        ]
       }
     ]
   },
