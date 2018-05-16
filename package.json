@@ -68,12 +68,6 @@
       "react-hot-loader/babel"
     ]
   },
-  "bundlesize": [
-    {
-      "path": "./build/bundle.js",
-      "maxSize": "5 MB"
-    }
-  ],
   "lint-staged": {
     "*.js": [
       "prettier-standard",
