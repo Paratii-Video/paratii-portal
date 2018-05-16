@@ -1,11 +1,9 @@
-import fs from 'fs'
-import path from 'path'
-import Promise from 'bluebird'
 import { assert } from 'chai'
 import queryString from 'query-string'
 
-import { address1, paratii, uploadFilesToIPFS } from './test-utils/helpers.js'
 import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
+
+import mockEndpoint from '../../mock-server/mockEndpoint'
 
 describe('🎥 Player: @watch', function () {
   const videoElementSelector = '[data-test-id="player"] video'
@@ -14,7 +12,35 @@ describe('🎥 Player: @watch', function () {
   const controlsSelector = '[data-test-id="player-controls"]'
   const playpauseButtonSelector = '[data-test-id="playpause-button"]'
 
-  before(done => {
+  before(() => {
+    mockEndpoint({
+      endpoint: `/api/v1/videos/${ID}`,
+      response: {
+        author: '',
+        blockNumber: 1167,
+        createBlockNumber: 1166,
+        description: '',
+        duration: '00:00:05.31',
+        filename: 'city.mp4',
+        filesize: '2989735',
+        id: ID,
+        ipfsData: 'QmZeRT7KNid9UAWhpncFPgiungZYtvzdnRodqtE66AuFR7',
+        ipfsHash: IPFS_HASH,
+        ipfsHashOrig: 'Qmd6t5arM98ShdmHXvYzjT7ku4Z8xtKbM8AY3oN5Cs7oSi',
+        owner: '0x7d1Cbbd813b1a865CDf1476d112a21dC5d643B8b',
+        price: 0,
+        published: '',
+        stats: { likers: [], dislikers: [] },
+        thumbnails: [
+          'thumbnail-1920x1080_1.png',
+          'thumbnail-1920x1080_2.png',
+          'thumbnail-1920x1080_3.png'
+        ],
+        title: TITLE,
+        uploader: { address: '0x7d1Cbbd813b1a865CDf1476d112a21dC5d643B8b' }
+      }
+    })
+
     browser.addCommand(
       'goToTestVideoUrl',
       ({ embed, overrideID, queryParams }) => {
@@ -134,30 +160,6 @@ describe('🎥 Player: @watch', function () {
     browser.addCommand('waitUntilStartButtonIsVisible', () =>
       browser.isVisible(startScreenIconSelector)
     )
-
-    paratii.vids
-      .create({
-        id: ID,
-        owner: address1,
-        title: TITLE,
-        ipfsHash: IPFS_HASH
-      })
-      .then(function () {
-        const directory = `test/functional-tests/data/${IPFS_HASH}`
-        let files = ''
-        Promise.promisify(fs.readdir)(directory).then(function (results) {
-          files = results
-          files = files.map(function (f) {
-            return path.join(directory, f)
-          })
-        })
-        let ipfs = ''
-        paratii.ipfs.getIPFSInstance().then(function (results) {
-          ipfs = results
-          uploadFilesToIPFS(ipfs, files)
-        })
-        done()
-      })
   })
 
   const runPlayerExpectations = ({ embed } = {}) => {
