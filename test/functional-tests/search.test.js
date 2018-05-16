@@ -23,7 +23,7 @@ describe('🔍 Search:', () => {
     statusCode = 200
   }) => {
     mockEndpoint({
-      endpoint: `/api/v1/videos/?keyword=${query}&limit=${limit}&offset=${offset}`,
+      endpoint: `/api/v1/videos/?keyword=${query}&limit=${limit}&offset=${offset}&staked=true`,
       response: { results }
     })
   }
