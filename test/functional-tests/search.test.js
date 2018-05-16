@@ -2,7 +2,7 @@ import { MATH_VIDEO, DEVCON_VIDEO } from './data/fixtures/videos'
 
 import mockEndpoint from '../../mock-server/mockEndpoint'
 
-describe('🔍 Search:', () => {
+describe('🔍 Search: @watch', () => {
   const navigateToSearch = () => browser.url('http://localhost:8080/search')
   const searchResultsWrapperSelector = '[data-test-id="search-results"]'
   const enterKeywordsZeroStateSelector = `${searchResultsWrapperSelector} [data-test-id="enter-keywords-zero-state"]`
@@ -23,7 +23,7 @@ describe('🔍 Search:', () => {
     statusCode = 200
   }) => {
     mockEndpoint({
-      endpoint: `/api/v1/videos/?keyword=${query}&limit=${limit}&offset=${offset}`,
+      endpoint: `/api/v1/videos/?keyword=${query}&limit=${limit}&offset=${offset}&staked=true`,
       response: { results }
     })
   }

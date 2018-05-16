@@ -14,7 +14,7 @@
     "clean": "rm -rf build/",
     "chimp-test": "yarn run chimp:setup & chimp chimp.config.js && yarn run chimp:teardown",
     "chimp-circleci-test": "yarn run chimp:setup & chimp .circleci/chimp.circleci.config.js && yarn run chimp:teardown",
-    "chimp-test:watch": "yarn run chimp-test --watch",
+    "chimp-test:watch": "yarn run chimp:setup & chimp chimp.config.js --watch && yarn run chimp:teardown",
     "chimp:setup": "rm -rf ./mock-server/routes && mkdir ./mock-server/routes && yarn run mock-server:start",
     "chimp:teardown": "rm -rf ./mock-server/routes",
     "dev": "concurrently \"yarn run build:dev\" \"yarn run server:dev\" \"yarn run parity\"",
