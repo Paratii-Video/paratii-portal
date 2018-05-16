@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import DocumentTitle from 'react-document-title'
-import { Events } from 'clappr'
 import styled from 'styled-components'
 import debounce from 'lodash.debounce'
 import Transition from 'react-transition-group/Transition'
@@ -213,7 +212,7 @@ class Play extends Component<Props, State> {
     }
   }
 
-  bindClapprEvents (): void {
+  bindClapprEvents ({ eventsMap }: Object): void {
     const {
       attemptPlay,
       playbackLevelsLoaded,
@@ -224,7 +223,7 @@ class Play extends Component<Props, State> {
     } = this.props
     const { player } = this
     if (player) {
-      player.on(Events.PLAYER_PLAY, (params): void => {
+      player.on(eventsMap.PLAYER_PLAY, (params): void => {
         if (!player.isPlaying()) {
           this.setState({
             shouldShowStartScreen: true
@@ -240,32 +239,32 @@ class Play extends Component<Props, State> {
           }
         })
       })
-      player.on(Events.PLAYER_PAUSE, (): void => {
+      player.on(eventsMap.PLAYER_PAUSE, (): void => {
         togglePlayPause(false)
       })
 
-      player.on(Events.PLAYER_VOLUMEUPDATE, (volume: number): void => {
+      player.on(eventsMap.PLAYER_VOLUMEUPDATE, (volume: number): void => {
         updateVolume(volume)
       })
 
       // $FlowFixMe
       const playback = player.core && player.core.getCurrentPlayback()
       if (playback && video) {
-        playback.on(Events.PLAYBACK_PLAY_INTENT, () => {
+        playback.on(eventsMap.PLAYBACK_PLAY_INTENT, () => {
           this.setState({
             shouldShowStartScreen: false
           })
           attemptPlay()
         })
 
-        playback.on(Events.PLAYBACK_ENDED, () => {
+        playback.on(eventsMap.PLAYBACK_ENDED, () => {
           this.setState({
             shouldShowStartScreen: true
           })
         })
 
         playback.on(
-          Events.PLAYBACK_TIMEUPDATE,
+          eventsMap.PLAYBACK_TIMEUPDATE,
           ({
             current,
             total
@@ -282,7 +281,7 @@ class Play extends Component<Props, State> {
           }
         )
         playback.on(
-          Events.PLAYBACK_PROGRESS,
+          eventsMap.PLAYBACK_PROGRESS,
           ({ current }: { current: number }): void => {
             this.setState((prevState: State) => {
               if (!prevState.shouldShowStartScreen) {
@@ -296,18 +295,21 @@ class Play extends Component<Props, State> {
             })
           }
         )
-        playback.on(Events.PLAYBACK_LEVELS_AVAILABLE, (levels = []): void => {
-          playbackLevelsLoaded(
-            levels.map((level: Object = {}): Object => ({
-              id: level.id,
-              label: level.label
-            }))
-          )
-        })
-        playback.on(Events.PLAYBACK_LEVEL_SWITCH_START, () => {
+        playback.on(
+          eventsMap.PLAYBACK_LEVELS_AVAILABLE,
+          (levels = []): void => {
+            playbackLevelsLoaded(
+              levels.map((level: Object = {}): Object => ({
+                id: level.id,
+                label: level.label
+              }))
+            )
+          }
+        )
+        playback.on(eventsMap.PLAYBACK_LEVEL_SWITCH_START, () => {
           playbackLevelSet(this.stagedPlaybackLevel)
         })
-        playback.on(Events.PLAYBACK_LEVEL_SWITCH_END, () => {
+        playback.on(eventsMap.PLAYBACK_LEVEL_SWITCH_END, () => {
           const { isPlaying } = this.props
           if (isPlaying && this.player) {
             this.player.play()
@@ -570,6 +572,7 @@ class Play extends Component<Props, State> {
     if (video && video.thumbnails.size === 4) {
       poster = video.thumbnails.get(0)
     }
+
     import('paratii-mediaplayer').then(CreatePlayer => {
       if (this.player && this.player.destroy) {
         this.player.destroy()
@@ -590,7 +593,7 @@ class Play extends Component<Props, State> {
         autoPlay
       })
 
-      this.bindClapprEvents()
+      this.bindClapprEvents({ eventsMap: this.player.clappr.Events })
       this.configureVideoAdapter()
 
       if (this.player) {
