@@ -87,7 +87,7 @@ describe('Wallet:', function () {
     assert.equal(balance, '0')
   })
 
-  it('secure your wallet, transfer data to a new address @watch', async function (done) {
+  it('secure your wallet, transfer data to a new address', async function (done) {
     const username = 'newuser'
     const email = 'newuser@mail.com'
     let balance = ''

@@ -29,6 +29,7 @@ import { openModal } from 'actions/ModalActions'
 import Notifications from 'react-notification-system-redux'
 import type { RootState, Dispatch } from 'types/ApplicationTypes'
 import { MODAL } from 'constants/ModalConstants'
+import UserRecord from 'records/UserRecords'
 
 const loginRequested = createAction(LOGIN_REQUESTED)
 const loginSuccess = createAction(LOGIN_SUCCESS)
@@ -89,6 +90,19 @@ export const setAddressAndBalance = () => (dispatch: Dispatch) => {
   dispatch(loadBalances())
   sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
   sessionStorage.removeItem(PASSWORD_TEMP)
+}
+
+export const setUserData = () => async (dispatch: Dispatch) => {
+  const address: string = paratii.eth.getAccount()
+  const user: UserRecord = await paratii.users.get(address)
+  if (user) {
+    dispatch(
+      loginSuccess({
+        name: user.name,
+        email: user.email
+      })
+    )
+  }
 }
 
 export const setupKeystore = () => async (

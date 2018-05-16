@@ -9,9 +9,9 @@ export const getVideoThumbnailUrl = (video: Video): string => {
   const thumbnails = video.get('thumbnails')
   const ipfsHash = video.get('ipfsHash')
   if (thumbnails && ipfsHash) {
-    const firsThumbUrl = thumbnails.get(0)
-    if (firsThumbUrl !== undefined) {
-      return `https://gateway.paratii.video/ipfs/${ipfsHash}/${firsThumbUrl}`
+    const firstThumbUrl = thumbnails.get(0)
+    if (firstThumbUrl !== undefined) {
+      return `https://gateway.paratii.video/ipfs/${ipfsHash}/${firstThumbUrl}`
     }
   }
 

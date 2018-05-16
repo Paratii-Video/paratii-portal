@@ -61,7 +61,7 @@ type Props = {
 }
 
 type State = {
-  hasNeverPlayed: boolean,
+  shouldShowStartScreen: boolean,
   isEmbed: boolean,
   mouseInOverlay: boolean,
   shouldShowVideoOverlay: boolean,
@@ -75,6 +75,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   margin: 0 auto;
   width: ${props => (props.isEmbed ? '100%' : '1280px')};
+  height: ${props => (props.isEmbed ? '100%' : null)};
 
   @media (max-width: 1440px) {
     width: ${props => (props.isEmbed ? null : '1024px')};
@@ -90,10 +91,19 @@ const Wrapper = styled.div`
 `
 
 const VideoWrapper = styled.div`
-  margin: ${props => (props.isEmbed ? null : '0 auto 25px')};
   position: relative;
-  height: ${props => (props.isEmbed ? '100%' : '720px')};
   width: 100%;
+  height: ${props => (props.isEmbed ? '100%' : null)};
+  margin: ${props => (props.isEmbed ? null : '0 auto 25px')};
+
+  @media (max-width: 930px) {
+    margin: ${props => (props.isEmbed ? null : '0 0 25px')};
+  }
+`
+
+const VideoCover = styled.div`
+  width: 100%;
+  height: ${props => (props.isEmbed ? '100%' : '720px')};
 
   @media (max-width: 1440px) {
     height: ${props => (props.isEmbed ? null : '576px')};
@@ -105,9 +115,8 @@ const VideoWrapper = styled.div`
 
   @media (max-width: 930px) {
     height: ${props => (props.isEmbed ? '100%' : '0')};
-    margin: ${props => (props.isEmbed ? null : '0 0 25px')};
-    padding-bottom: ${props => (props.isEmbed ? null : '56.25%')};
     padding-top: ${props => (props.isEmbed ? null : '30px')};
+    padding-bottom: ${props => (props.isEmbed ? null : '56.25%')};
   }
 `
 
@@ -174,7 +183,7 @@ class Play extends Component<Props, State> {
     super(props)
 
     this.state = {
-      hasNeverPlayed: true,
+      shouldShowStartScreen: true,
       mouseInOverlay: false,
       shouldShowVideoOverlay: false,
       videoNotFound: false,
@@ -215,18 +224,26 @@ class Play extends Component<Props, State> {
     } = this.props
     const { player } = this
     if (player) {
-      player.on(Events.PLAYER_PLAY, (): void => {
+      player.on(Events.PLAYER_PLAY, (params): void => {
+        if (!player.isPlaying()) {
+          this.setState({
+            shouldShowStartScreen: true
+          })
+          return
+        }
+
         togglePlayPause(true)
 
         this.setState((prevState: State) => {
-          if (prevState.hasNeverPlayed) {
-            return { hasNeverPlayed: false }
+          if (prevState.shouldShowStartScreen) {
+            return { shouldShowStartScreen: false }
           }
         })
       })
       player.on(Events.PLAYER_PAUSE, (): void => {
         togglePlayPause(false)
       })
+
       player.on(Events.PLAYER_VOLUMEUPDATE, (volume: number): void => {
         updateVolume(volume)
       })
@@ -234,7 +251,19 @@ class Play extends Component<Props, State> {
       // $FlowFixMe
       const playback = player.core && player.core.getCurrentPlayback()
       if (playback && video) {
-        playback.on(Events.PLAYBACK_PLAY_INTENT, attemptPlay)
+        playback.on(Events.PLAYBACK_PLAY_INTENT, () => {
+          this.setState({
+            shouldShowStartScreen: false
+          })
+          attemptPlay()
+        })
+
+        playback.on(Events.PLAYBACK_ENDED, () => {
+          this.setState({
+            shouldShowStartScreen: true
+          })
+        })
+
         playback.on(
           Events.PLAYBACK_TIMEUPDATE,
           ({
@@ -255,6 +284,13 @@ class Play extends Component<Props, State> {
         playback.on(
           Events.PLAYBACK_PROGRESS,
           ({ current }: { current: number }): void => {
+            this.setState((prevState: State) => {
+              if (!prevState.shouldShowStartScreen) {
+                return {
+                  shouldShowStartScreen: false
+                }
+              }
+            })
             this.props.updateVideoBufferedTime({
               time: current
             })
@@ -683,14 +719,12 @@ class Play extends Component<Props, State> {
     return ''
   }
 
-  shouldShowStartScreen () {
-    const { isAttemptingPlay, isEmbed } = this.props
-
-    return !isAttemptingPlay && isEmbed && this.state.hasNeverPlayed
+  shouldShowStartScreen (): boolean {
+    return this.state.shouldShowStartScreen && !!this.player
   }
 
   render () {
-    const { isAttemptingPlay, isEmbed, video } = this.props
+    const { isEmbed, video } = this.props
 
     const shareOptions = [
       {
@@ -719,69 +753,66 @@ class Play extends Component<Props, State> {
         <DocumentTitle title={videoName || APP_TITLE}>
           <Wrapper isEmbed={isEmbed}>
             <VideoWrapper isEmbed={isEmbed}>
-              <PlayerWrapper
-                onClick={this.onPlayerClick}
-                onMouseEnter={this.onMouseEnter}
-                innerRef={(ref: HTMLElement) => {
-                  this.wrapperRef = ref
-                }}
-              >
-                <Transition in={this.shouldShowVideoOverlay()} timeout={0}>
-                  {(transitionState: ?string) => (
-                    <OverlayWrapper
-                      onMouseLeave={this.onMouseLeave}
-                      onMouseMove={this.onMouseMove}
-                    >
-                      <VideoOverlayContainer
-                        onClick={this.onOverlayClick}
-                        video={video}
-                        isEmbed={isEmbed}
-                        showStartScreen={
-                          isEmbed &&
-                          this.state.hasNeverPlayed &&
-                          !isAttemptingPlay
-                        }
-                        toggleShareModal={this.toggleShareModal}
-                        showShareModal={this.state.showShareModal}
-                        onScrub={this.scrubVideo}
-                        onVolumeChange={this.changeVolume}
-                        onToggleMute={this.toggleMute}
-                        onPlaybackLevelChange={this.changePlaybackLevel}
-                        transitionState={transitionState}
-                        togglePlayPause={this.togglePlayPause}
-                        toggleFullscreen={(goToFullscreen: boolean): void => {
-                          if (goToFullscreen && this.wrapperRef) {
-                            requestFullscreen(this.wrapperRef)
-                          } else {
-                            requestCancelFullscreen()
-                          }
-                        }}
-                      />
-                    </OverlayWrapper>
-                  )}
-                </Transition>
-                <Player
-                  data-test-id="player"
-                  id={PLAYER_ID}
+              <VideoCover isEmbed={isEmbed}>
+                <PlayerWrapper
+                  onClick={this.onPlayerClick}
+                  onMouseEnter={this.onMouseEnter}
                   innerRef={(ref: HTMLElement) => {
-                    this.playerWrapperRef = ref
+                    this.wrapperRef = ref
                   }}
-                />
-                {this.props.video ? (
-                  <ShareOverlay
-                    show={this.state.showShareModal}
-                    onToggle={this.toggleShareModal}
-                    portalUrl={getAppRootUrl(process.env.NODE_ENV)}
-                    videoId={video && video.id}
-                    videoLabelUrl={
-                      getAppRootUrl(process.env.NODE_ENV) +
-                      '/play/' +
-                      ((video && video.id) || '')
-                    }
-                    shareOptions={shareOptions}
+                >
+                  <Transition in={this.shouldShowVideoOverlay()} timeout={0}>
+                    {(transitionState: ?string) => (
+                      <OverlayWrapper
+                        onMouseLeave={this.onMouseLeave}
+                        onMouseMove={this.onMouseMove}
+                      >
+                        <VideoOverlayContainer
+                          onClick={this.onOverlayClick}
+                          video={video}
+                          isEmbed={isEmbed}
+                          showStartScreen={this.shouldShowStartScreen()}
+                          toggleShareModal={this.toggleShareModal}
+                          showShareModal={this.state.showShareModal}
+                          onScrub={this.scrubVideo}
+                          onVolumeChange={this.changeVolume}
+                          onToggleMute={this.toggleMute}
+                          onPlaybackLevelChange={this.changePlaybackLevel}
+                          transitionState={transitionState}
+                          togglePlayPause={this.togglePlayPause}
+                          toggleFullscreen={(goToFullscreen: boolean): void => {
+                            if (goToFullscreen && this.wrapperRef) {
+                              requestFullscreen(this.wrapperRef)
+                            } else {
+                              requestCancelFullscreen()
+                            }
+                          }}
+                        />
+                      </OverlayWrapper>
+                    )}
+                  </Transition>
+                  <Player
+                    id={PLAYER_ID}
+                    innerRef={(ref: HTMLElement) => {
+                      this.playerWrapperRef = ref
+                    }}
                   />
-                ) : null}
-              </PlayerWrapper>
+                  {this.props.video ? (
+                    <ShareOverlay
+                      show={this.state.showShareModal}
+                      onToggle={this.toggleShareModal}
+                      portalUrl={getAppRootUrl(process.env.NODE_ENV)}
+                      videoId={video && video.id}
+                      videoLabelUrl={
+                        getAppRootUrl(process.env.NODE_ENV) +
+                        '/play/' +
+                        ((video && video.id) || '')
+                      }
+                      shareOptions={shareOptions}
+                    />
+                  ) : null}
+                </PlayerWrapper>
+              </VideoCover>
             </VideoWrapper>
             {!isEmbed &&
               video && (

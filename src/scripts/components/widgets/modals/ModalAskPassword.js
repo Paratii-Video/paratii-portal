@@ -22,6 +22,7 @@ type Props = {
   notification: (Object, string) => void,
   setWalletData: Object => void,
   setAddressAndBalance: () => void,
+  setUserData: () => void,
   fetchOwnedVideos: () => void
 }
 
@@ -88,6 +89,8 @@ class ModalAskPassword extends Component<Props, Object> {
       // Set the balance
       this.props.setAddressAndBalance()
       this.props.setWalletData({ walletKey: WALLET_KEY_SECURE })
+      /// Update user data in redux state
+      this.props.setUserData()
       // Retrieve your videos
       this.props.fetchOwnedVideos()
       this.props.closeModal()
