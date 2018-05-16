@@ -105,14 +105,12 @@ class App extends Component<Props, State> {
                 <Route path={`${match.url}upload`} component={VideoManager} />
                 <Route path={`${match.url}voucher`} component={Voucher} />
                 <Route path={`${match.url}debug`} component={DebugContainer} />
-
                 <Route
                   path={`${match.url}wallet`}
                   render={() =>
                     isWalletSecured ? <WalletContainer /> : <Redirect to="/" />
                   }
                 />
-
                 <Route
                   path={`${match.url}play/:id`}
                   component={PlayContainer}
