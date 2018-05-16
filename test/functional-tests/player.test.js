@@ -2,7 +2,6 @@ import { assert } from 'chai'
 // import { address1, paratii, uploadFilesToIPFS } from './test-utils/helpers.js'
 
 // const fs = require('fs')
-// const Promise = require('bluebird')
 // const path = require('path')
 
 describe('🎥 Player:', function () {

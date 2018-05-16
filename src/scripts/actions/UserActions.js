@@ -1,7 +1,6 @@
 /* @flow */
 
 import { createAction } from 'redux-actions'
-import Promise from 'bluebird'
 import Cookies from 'js-cookie'
 import bip39 from 'bip39'
 
