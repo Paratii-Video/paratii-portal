@@ -11757,9 +11757,9 @@ parallel-transform@^1.1.0:
     web3-eth "1.0.0-beta.33"
     web3-eth-accounts "1.0.0-beta.33"
 
-paratii-mediaplayer@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/paratii-mediaplayer/-/paratii-mediaplayer-3.0.3.tgz#ea3784d5c1be023deb9ac64def476896f87f7ecd"
+paratii-mediaplayer@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/paratii-mediaplayer/-/paratii-mediaplayer-3.1.2.tgz#368459da80fa419c51fa61c58f89db00fa35b119"
 
 "paratii-protocol@github:Paratii-Video/paratii-protocol#45aadcf300f1ad184d6d3db8f9c4b3d438b6f658":
   version "0.0.1"

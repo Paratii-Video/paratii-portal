@@ -56,7 +56,7 @@ type Props = {
   currentBufferedTimeSeconds: number,
   currentPlaybackLevel: ?PlaybackLevel,
   playerReset: () => void,
-  activePlugin: ?PlayerPlugin
+  activePlugin: ?PlayerPlugin,
 }
 
 type State = {
@@ -66,7 +66,7 @@ type State = {
   shouldShowVideoOverlay: boolean,
   showShareModal: boolean,
   videoHasNeverPlayed: boolean,
-  videoNotFound: boolean
+  videoNotFound: boolean,
 }
 
 const Wrapper = styled.div`
@@ -271,7 +271,7 @@ class Play extends Component<Props, State> {
           }: {
             total: number,
             current: number,
-            total: number
+            total: number,
           }): void => {
             this.props.updateVideoTime({
               id: video.get('id'),
@@ -573,35 +573,29 @@ class Play extends Component<Props, State> {
       poster = video.thumbnails.get(0)
     }
 
-    Promise.all([import('paratii-mediaplayer'), import('clappr')]).then(
-      ([CreatePlayer, Clappr]) => {
-        if (this.player && this.player.destroy) {
-          this.player.destroy()
-        }
-
-        const autoPlay: boolean = this.getAutoPlaySetting()
-
-        this.player = CreatePlayer({
-          selector: `#${PLAYER_ID}`,
-          source: `https://gateway.paratii.video/ipfs/${
-            video.ipfsHash
-          }/master.m3u8`,
-          poster: `https://gateway.paratii.video/ipfs/${
-            video.ipfsHash
-          }/${poster}`,
-          mimeType: 'application/x-mpegURL',
-          ipfsHash: video.ipfsHash,
-          autoPlay
-        })
-
-        this.bindClapprEvents({ eventsMap: Clappr.Events })
-        this.configureVideoAdapter()
-
-        if (this.player) {
-          updateVolume(this.player.getVolume())
-        }
+    import('paratii-mediaplayer').then(CreatePlayer => {
+      if (this.player && this.player.destroy) {
+        this.player.destroy()
       }
-    )
+
+      const autoPlay: boolean = this.getAutoPlaySetting()
+
+      this.player = CreatePlayer({
+        selector: `#${PLAYER_ID}`,
+        source: `https://gateway.paratii.video/ipfs/${video.ipfsHash}/master.m3u8`,
+        poster: `https://gateway.paratii.video/ipfs/${video.ipfsHash}/${poster}`,
+        mimeType: 'application/x-mpegURL',
+        ipfsHash: video.ipfsHash,
+        autoPlay
+      })
+
+      this.bindClapprEvents({ eventsMap: this.player.clappr.Events })
+      this.configureVideoAdapter()
+
+      if (this.player) {
+        updateVolume(this.player.getVolume())
+      }
+    })
   }
 
   togglePlayPause = (): void => {
@@ -802,81 +796,78 @@ class Play extends Component<Props, State> {
                       this.playerWrapperRef = ref
                     }}
                   />
-                  {this.props.video ? (
-                    <ShareOverlay
+                  {this.props.video
+                    ? <ShareOverlay
                       show={this.state.showShareModal}
                       onToggle={this.toggleShareModal}
                       portalUrl={getAppRootUrl(process.env.NODE_ENV)}
                       videoId={video && video.id}
                       videoLabelUrl={
-                        getAppRootUrl(process.env.NODE_ENV) +
-                        '/play/' +
-                        ((video && video.id) || '')
-                      }
+                          getAppRootUrl(process.env.NODE_ENV) +
+                            '/play/' +
+                            ((video && video.id) || '')
+                        }
                       shareOptions={shareOptions}
-                    />
-                  ) : null}
+                      />
+                    : null}
                 </PlayerWrapper>
               </VideoCover>
             </VideoWrapper>
             {!isEmbed &&
-              video && (
+              video &&
               <PlayInfo>
                 {videoName && <Title small>{videoName}</Title>}
                 {video.author && <Text>By {video.author}</Text>}
-                {video.share && (
+                {video.share &&
                   <PlayInfoButtons>
                     <ButtonIcon>
                       <SVGIcon
-                        color="white"
-                        width="20px"
-                        height="20px"
-                        margin="0 20px 0 0"
-                        icon="#icon-play-view"
+                        color='white'
+                        width='20px'
+                        height='20px'
+                        margin='0 20px 0 0'
+                        icon='#icon-play-view'
                       />
                       <Text small gray>
-                          0
+                        0
                       </Text>
                     </ButtonIcon>
                     <ButtonIcon>
                       <SVGIcon
-                        color="white"
-                        width="20px"
-                        height="20px"
-                        margin="0 20px 0 0"
-                        icon="#icon-play-like"
+                        color='white'
+                        width='20px'
+                        height='20px'
+                        margin='0 20px 0 0'
+                        icon='#icon-play-like'
                       />
                       <Text small gray>
-                          0
+                        0
                       </Text>
                     </ButtonIcon>
                     <ButtonIcon>
                       <SVGIcon
-                        color="white"
-                        width="20px"
-                        height="20px"
-                        margin="0 20px 0 0"
-                        icon="#icon-play-dislike"
+                        color='white'
+                        width='20px'
+                        height='20px'
+                        margin='0 20px 0 0'
+                        icon='#icon-play-dislike'
                       />
                       <Text small gray>
-                          0
+                        0
                       </Text>
                     </ButtonIcon>
-                  </PlayInfoButtons>
-                )}
+                  </PlayInfoButtons>}
                 <Text gray>
-                    Price{' '}
+                  Price{' '}
                   <PlayInfoHighlight purple>
                     {video.free ? 'Free' : 'Free'}
                   </PlayInfoHighlight>
                 </Text>
-                {video.description && (
+                {video.description &&
                   <DescriptionWrapper>
                     <Text>{video.description}</Text>
-                  </DescriptionWrapper>
-                )}
-              </PlayInfo>
-            )}
+                  </DescriptionWrapper>}
+              </PlayInfo>}
           </Wrapper>
         </DocumentTitle>
       )
