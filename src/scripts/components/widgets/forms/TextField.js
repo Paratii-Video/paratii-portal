@@ -5,6 +5,24 @@ import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import InputField, { StyleFieldText } from 'components/foundations/forms/Input'
 
+type Props = {
+  className: String,
+  error: Boolean,
+  label: String,
+  helper: String,
+  margin: String,
+  disabled: Boolean,
+  readonly: Boolean,
+  value: String,
+  id: String,
+  name: String,
+  type: String,
+  maxLength: String,
+  tabIndex: String,
+  onChange: (e: Object) => void,
+  onBlur?: (e: Object) => void
+}
+
 export const StyleInputFilled = css`
   transform: translate3d(0, -22px, 0) scale(0.8);
   transition-duration: 0.4s;
@@ -54,24 +72,6 @@ const HelperLabel = styled.span`
   opacity: 0.7;
   white-space: nowrap;
 `
-
-type Props = {
-  className: String,
-  error: Boolean,
-  label: String,
-  helper: String,
-  margin: String,
-  disabled: Boolean,
-  readonly: Boolean,
-  value: String,
-  id: String,
-  name: String,
-  type: String,
-  maxLength: String,
-  tabIndex: String,
-  onChange: (e: Object) => void,
-  onBlur?: (e: Object) => void
-}
 
 class TextField extends Component<Props, void> {
   constructor (props) {
