@@ -252,7 +252,7 @@ class Play extends Component<Props, State> {
       if (playback && video) {
         playback.on(eventsMap.PLAYBACK_PLAY_INTENT, () => {
           this.setState({
-            shouldShowStartScreen: false
+            // shouldShowStartScreen: false
           })
           attemptPlay()
         })
@@ -758,6 +758,7 @@ class Play extends Component<Props, State> {
             <VideoWrapper isEmbed={isEmbed}>
               <VideoCover isEmbed={isEmbed}>
                 <PlayerWrapper
+                  data-test-id="player-wrapper"
                   onClick={this.onPlayerClick}
                   onMouseEnter={this.onMouseEnter}
                   innerRef={(ref: HTMLElement) => {
@@ -795,6 +796,7 @@ class Play extends Component<Props, State> {
                     )}
                   </Transition>
                   <Player
+                    datat-test-id={PLAYER_ID}
                     id={PLAYER_ID}
                     innerRef={(ref: HTMLElement) => {
                       this.playerWrapperRef = ref

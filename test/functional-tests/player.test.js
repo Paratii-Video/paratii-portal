@@ -5,8 +5,8 @@ import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
 
 import mockEndpoint from '../../mock-server/mockEndpoint'
 
-describe('🎥 Player: @watch', function () {
-  const videoElementSelector = '[data-test-id="player"] video'
+describe.only('🎥 Player: @watch', function () {
+  const videoElementSelector = '#player video'
   const overlaySelector = '[data-test-id="video-overlay"]'
   const startScreenIconSelector = '[data-test-id="start-screen-icon"]'
   const controlsSelector = '[data-test-id="player-controls"]'
@@ -39,6 +39,37 @@ describe('🎥 Player: @watch', function () {
         title: TITLE,
         uploader: { address: '0x7d1Cbbd813b1a865CDf1476d112a21dC5d643B8b' }
       }
+    })
+
+    browser.addCommand('attemptToPlayVideo', () => {
+      browser.waitUntil(
+        () =>
+          browser.execute(
+            (startScreenIconSelector, overlaySelector) => {
+              const startScreenIcon = document.querySelector(
+                startScreenIconSelector
+              )
+
+              if (startScreenIcon) {
+                startScreenIcon.click()
+                return true
+              }
+
+              const overlayElement = document.querySelector(overlaySelector)
+
+              if (overlayElement) {
+                overlayElement.click()
+                return true
+              }
+
+              return false
+            },
+            startScreenIconSelector,
+            overlaySelector
+          ).value,
+        undefined,
+        'Could not attempt to play video'
+      )
     })
 
     browser.addCommand(
@@ -81,7 +112,9 @@ describe('🎥 Player: @watch', function () {
               }
 
               return false
-            }, videoElementSelector).value
+            }, videoElementSelector).value,
+          undefined,
+          'Could not attach handlers to video element.'
         )
       }
     )
@@ -166,7 +199,7 @@ describe('🎥 Player: @watch', function () {
     describe('video play/pause', () => {
       it('plays a video when the video overlay is clicked', () => {
         browser.goToTestVideoUrl({ embed })
-        browser.waitAndClick(overlaySelector)
+        browser.waitAndClick(startScreenIconSelector)
         browser.waitUntilVideoIsPlaying()
       })
 
@@ -176,42 +209,19 @@ describe('🎥 Player: @watch', function () {
         browser.waitUntilVideoIsPaused()
       })
 
-      if (embed) {
-        it('toggles between pause and play when repeatedly clicking the playpause button', () => {
-          browser.goToTestVideoUrl({
-            embed,
-            queryParams: {
-              autoplay: false
-            }
-          })
-          browser.waitAndClick(startScreenIconSelector)
-          browser.waitUntilVideoIsPlaying()
-          browser.moveToObject(overlaySelector)
-          browser.waitAndClick(playpauseButtonSelector)
-          browser.waitUntilVideoIsPaused()
-          browser.waitAndClick(playpauseButtonSelector)
-          browser.waitUntilVideoIsPlaying()
-          browser.waitAndClick(playpauseButtonSelector)
-          browser.waitUntilVideoIsPaused()
-          browser.waitAndClick(playpauseButtonSelector)
-          browser.waitUntilVideoIsPlaying()
-        })
-      } else {
-        it('toggles between pause and play when repeatedly clicking the playpause button', () => {
-          browser.goToTestVideoUrl({ embed })
-          browser.waitAndClick(playpauseButtonSelector)
-          browser.waitUntilVideoIsPlaying()
-          browser.moveToObject(overlaySelector)
-          browser.waitAndClick(playpauseButtonSelector)
-          browser.waitUntilVideoIsPaused()
-          browser.waitAndClick(playpauseButtonSelector)
-          browser.waitUntilVideoIsPlaying()
-          browser.waitAndClick(playpauseButtonSelector)
-          browser.waitUntilVideoIsPaused()
-          browser.waitAndClick(playpauseButtonSelector)
-          browser.waitUntilVideoIsPlaying()
-        })
-      }
+      it('toggles between pause and play when repeatedly clicking the playpause button', () => {
+        browser.goToTestVideoUrl({ embed })
+        browser.waitAndClick(startScreenIconSelector)
+        browser.waitUntilControlsAreVisible()
+        browser.waitAndClick(playpauseButtonSelector)
+        browser.waitUntilVideoIsPaused()
+        browser.waitAndClick(playpauseButtonSelector)
+        browser.waitUntilVideoIsPlaying()
+        browser.waitAndClick(playpauseButtonSelector)
+        browser.waitUntilVideoIsPaused()
+        browser.waitAndClick(playpauseButtonSelector)
+        browser.waitUntilVideoIsPlaying()
+      })
     })
 
     describe('controls show/hide', () => {
@@ -229,7 +239,7 @@ describe('🎥 Player: @watch', function () {
       } else {
         it('shows the controls until the video is playing', () => {
           browser.goToTestVideoUrl({ embed })
-          browser.waitUntilControlsAreVisible()
+          browser.waitAndClick(startScreenIconSelector)
           browser.waitAndClick(overlaySelector)
           browser.waitUntilVideoIsPlaying()
           browser.waitUntilControlsAreHidden()
@@ -240,7 +250,7 @@ describe('🎥 Player: @watch', function () {
 
       it('shows the controls on hover', () => {
         browser.goToTestVideoUrl({ embed })
-        browser.waitAndClick(overlaySelector)
+        browser.waitAndClick(startScreenIconSelector)
         browser.waitUntilVideoIsPlaying()
         browser.waitUntilControlsAreHidden()
         browser.moveToObject(overlaySelector)
@@ -249,7 +259,7 @@ describe('🎥 Player: @watch', function () {
 
       it('hides the controls after not moving the mouse for approximately 2 seconds', () => {
         browser.goToTestVideoUrl({ embed })
-        browser.waitAndClick(overlaySelector)
+        browser.waitAndClick(startScreenIconSelector)
         browser.waitUntilVideoIsPlaying()
         browser.waitUntilControlsAreHidden()
         browser.moveToObject(overlaySelector)
@@ -260,8 +270,8 @@ describe('🎥 Player: @watch', function () {
 
       it('pauses the video when the playpause button is clicked for the first time', () => {
         browser.goToTestVideoUrl({ embed })
-        browser.waitAndClick(overlaySelector)
-        browser.waitUntilVideoIsPlaying()
+        browser.waitAndClick(startScreenIconSelector)
+        browser.waitUntilControlsAreVisible()
         browser.moveToObject(overlaySelector)
         browser.waitAndClick(playpauseButtonSelector)
         browser.waitUntilVideoIsPaused()
@@ -319,7 +329,8 @@ describe('🎥 Player: @watch', function () {
       })
       it('should bring the player fullscreen and back', () => {
         browser.goToTestVideoUrl({ embed })
-        browser.waitAndClick(overlaySelector)
+        browser.waitAndClick(startScreenIconSelector)
+        browser.waitUntilControlsAreVisible()
         browser.moveToObject(overlaySelector)
         browser.waitAndClick(fullscreenButtonSelector)
         browser.waitUntilVideoIsFullscreen()
@@ -374,8 +385,10 @@ describe('🎥 Player: @watch', function () {
 
       it('should mute the video when the volume button is clicked', () => {
         browser.waitUntilVolumeIsNotMuted()
-        browser.waitAndClick(overlaySelector)
+        browser.attemptToPlayVideo()
+        browser.waitUntilVideoIsPlaying()
         browser.moveToObject(overlaySelector)
+        browser.waitUntilControlsAreVisible()
         browser.waitAndClick(volumeButtonSelector)
         browser.waitUntilVolumeIsMuted()
       })

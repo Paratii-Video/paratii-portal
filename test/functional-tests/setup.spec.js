@@ -48,8 +48,8 @@ before(async function (done) {
   //     }, timeout, `Could not set value on ${selector} (timeout: ${timeout}s)`)
   //   })
   browser.addCommand('waitAndClick', function (selector, timeout = 1000) {
-    this.waitForVisible(selector, timeout)
-    this.waitForEnabled(selector, timeout)
+    this.waitForVisible(selector, timeout, `${selector} was never visible`)
+    this.waitForEnabled(selector, timeout, `${selector} was never enabled`)
     browser.waitUntil(
       function () {
         try {
