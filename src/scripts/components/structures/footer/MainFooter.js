@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from 'components/foundations/Button'
+import { MAINFOOTER_HEIGHT, Z_INDEX_FOOTER } from 'constants/UIConstants'
 
 type Props = {}
 
 const Footer = styled.footer`
   align-items: center;
   background-color: ${props => props.theme.colors.footer.background};
+  box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.16);
   display: flex;
-  flex: 0 0 ${props => props.theme.sizes.mainFooter.height};
+  flex: 0 0 ${MAINFOOTER_HEIGHT};
   justify-content: space-between;
-  padding: ${props => props.theme.sizes.mainFooter.padding};
+  padding: 0 80px;
+  z-index: ${Z_INDEX_FOOTER};
 
   @media (max-width: 900px) {
     flex-direction: column;

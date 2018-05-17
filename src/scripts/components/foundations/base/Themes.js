@@ -162,6 +162,13 @@ const Themes = {
         }
       },
       nextButton: Colors.gray
+    },
+    UserNav: {
+      background: Colors.black,
+      Userbackground: Colors.blackDark,
+      UserPTIValueBox: Colors.blackLight,
+      UserPTIBarOne: Colors.purple,
+      UserPTIBarTwo: Colors.pink
     }
   }
 }
