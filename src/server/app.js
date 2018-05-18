@@ -37,7 +37,8 @@ app.use(express.static(path.resolve(__dirname, '../../', 'build')))
 app.get('/embed/:id', routeHelper.player)
 app.get('/play/:id', routeHelper.player)
 app.get('/oembed', cors(), oembedRoute)
-app.get('/mail/send', mailRoute.send)
+app.get('/mail/verify', mailRoute.sendVerificationEmail)
+app.get('/verify', mailRoute.handleVerifyLink)
 app.get('*', routeHelper.default)
 
 module.exports = app

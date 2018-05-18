@@ -4,7 +4,7 @@ const path = require('path')
 
 const { Paratii } = require('paratii-js')
 const nodemailer = require('nodemailer')
-const ethUtil = require('ethereumjs-util')
+// const ethUtil = require('ethereumjs-util')
 
 const configFilename = path.join(__dirname, `/../../config/${env}.json`)
 const config = require(configFilename)
@@ -37,7 +37,7 @@ module.exports = {
     // return reponse
   },
 
-  generateVoucher: (amount, reason) => {
+  generateVoucher: async function (amount, reason) {
     // TODO
     // 1. hook up to web3
     // 2. generateRandomSalt
@@ -50,32 +50,43 @@ module.exports = {
       salt,
       String(reason)
     )
-    const signature = paratii.eth.web3.eth.sign(hash, paratii.eth.getAccount())
+    // const signature = paratii.eth.web3.eth.sign(hash, paratii.eth.getAccount())
+    const signature = await paratii.eth.distributor.generateSignature(
+      amount,
+      salt,
+      reason,
+      paratii.eth.getAccount()
+    )
 
     return { salt, hash, signature }
   },
 
-  claimVoucher: async function (
-    toAddress,
-    amount,
-    reason,
-    salt,
-    hash,
-    signature
-  ) {
-    const ptiDistributor = await paratii.eth.getContract('PTIDistributor')
-    const signatureData = ethUtil.fromRpcSig(signature)
-    const tx = await ptiDistributor.methods
-      .distribute(
-        toAddress,
-        amount,
-        salt,
-        reason,
-        signatureData.v,
-        signatureData.r,
-        signatureData.s
-      )
-      .send()
+  claimVoucher: async function (toAddress, amount, reason, salt, hash, v, r, s) {
+    // const ptiDistributor = await paratii.eth.getContract('PTIDistributor')
+    // const signatureData = ethUtil.fromRpcSig(signature)
+    const opts = {
+      address: toAddress,
+      amount: amount,
+      salt: salt,
+      reason: reason,
+      v: v,
+      r: r,
+      s: s
+    }
+
+    const tx = await paratii.eth.distributor.distribute(opts)
+
+    // const tx = await ptiDistributor.methods
+    //   .distribute(
+    //     toAddress,
+    //     amount,
+    //     salt,
+    //     reason,
+    //     signatureData.v,
+    //     signatureData.r,
+    //     signatureData.s
+    //   )
+    //   .send()
 
     return tx
   }
