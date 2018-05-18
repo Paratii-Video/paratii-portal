@@ -21,7 +21,7 @@ type Props = {
 }
 
 const Wrapper = CardContainer.extend`
-  flex-direction: column;
+  flex-direction: ${props => (props.column ? 'initial' : 'column')};
   margin: 0 auto;
   max-width: 1080px;
   width: 100%;
@@ -50,11 +50,11 @@ class VideoManager extends Component<Props, void> {
     const showForm = this.props.selectedVideo
     const showList = this.props.videos.size > 0 || this.props.selectedVideo
     return (
-      <Wrapper padding={!showForm}>
+      <Wrapper padding={!showForm} column={!showList}>
         {showList && <UploadList />}
         <UploadFile />
         {!showList ? <RedeemVoucher marginLeft /> : ''}
-        {!showForm && <PTIGuide marginLeft />}
+        {!showList && <PTIGuide marginLeft />}
       </Wrapper>
     )
   }

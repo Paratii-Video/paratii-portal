@@ -282,6 +282,16 @@ class VideoForm extends Component<Props, Object> {
               margin="0 0 30px"
               tabIndex="2"
             />
+            <TextField
+              label="Is this video really yours?"
+              id="input-video-title"
+              type="text"
+              value={this.state.title}
+              onChange={e => this.handleInputChange('title', e)}
+              margin="0 0 30px"
+              maxLength="100"
+              tabIndex="1"
+            />
 
             <RadioWrapper>
               <RadioTitle>What kind of content?</RadioTitle>
