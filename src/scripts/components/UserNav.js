@@ -6,6 +6,7 @@ import { add0x } from 'utils/AppUtils'
 import Blockies from 'react-blockies'
 import {
   MAINHEADER_LOGO_HEIGHT,
+  MAINFOOTER_HEIGHT,
   Z_INDEX_USERNAV
 } from '../constants/UIConstants'
 import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
@@ -24,6 +25,9 @@ const Wrapper = styled.div`
   background: ${props => props.theme.colors.UserNav.background};
   height: 100%;
   left: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 0 0 ${MAINFOOTER_HEIGHT};
   position: fixed;
   top: 0;
   width: 312px;
