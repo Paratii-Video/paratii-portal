@@ -115,3 +115,7 @@ export const getSearchRequestStatus = (state: RootState): RequestStatus =>
 export const getAdditionalSearchRequestStatus = (
   state: RootState
 ): RequestStatus => _getAdditionalSearchRequestStatus(state.search)
+
+/* UserNav */
+export const getUserNavStatus = (state: RootState): boolean =>
+  state.userNav.showUserNav

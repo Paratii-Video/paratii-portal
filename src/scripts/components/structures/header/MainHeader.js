@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
 
 import SearchInputContainer from 'containers/widgets/SearchInputContainer'
@@ -21,9 +20,12 @@ import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 
 type Props = {
   children: Object,
-  userAddress: string,
-  isWalletSecured: boolean,
-  checkUserWallet: () => void
+  userAddress: String,
+  isWalletSecured: Boolean,
+  showUserNav: Boolean,
+  checkUserWallet: () => void,
+  openUserNav: () => void,
+  closeUserNav: () => void
 }
 
 type State = {
@@ -96,7 +98,7 @@ const HeaderButtons = styled.div`
   }
 `
 
-const ProfileAvatarLink = styled(Link)`
+const ProfileAvatarButton = styled.button`
   background-color: ${props => props.theme.colors.header.color};
   border-radius: 100%;
   flex: 0 0 40px;
@@ -128,6 +130,7 @@ class MainHeader extends Component<Props, State> {
   closeNav: () => void
   toggleNav: () => void
   secureWallet: (e: Object) => void
+  toggleUserNav: () => void
 
   constructor (props: Props) {
     super(props)
@@ -140,6 +143,7 @@ class MainHeader extends Component<Props, State> {
     this.closeNav = this.closeNav.bind(this)
     this.toggleNav = this.toggleNav.bind(this)
     this.secureWallet = this.secureWallet.bind(this)
+    this.toggleUserNav = this.toggleUserNav.bind(this)
   }
 
   openNav () {
@@ -155,9 +159,18 @@ class MainHeader extends Component<Props, State> {
   }
 
   toggleNav () {
-    this.setState((prevState: State) => ({
-      navOpen: !prevState.navOpen
-    }))
+    console.log(this)
+    // this.setState((prevState: State) => ({
+    //   navOpen: !prevState.navOpen
+    // }))
+  }
+
+  toggleUserNav () {
+    if (this.props.showUserNav) {
+      this.props.closeUserNav()
+    } else {
+      this.props.openUserNav()
+    }
   }
 
   secureWallet (e: Object) {
@@ -171,9 +184,12 @@ class MainHeader extends Component<Props, State> {
       const lowerAddress = add0x(this.props.userAddress)
       if (ACTIVATE_SECURE_WALLET && this.props.isWalletSecured) {
         userAvatar = (
-          <ProfileAvatarLink data-test-id="address-avatar" to="/profile">
+          <ProfileAvatarButton
+            data-test-id="address-avatar"
+            onClick={this.toggleUserNav}
+          >
             <Blockies seed={lowerAddress} size={10} scale={4} />
-          </ProfileAvatarLink>
+          </ProfileAvatarButton>
         )
       }
     }

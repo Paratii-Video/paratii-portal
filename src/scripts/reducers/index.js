@@ -9,6 +9,7 @@ import uploader from 'reducers/UploaderReducer'
 import user from 'reducers/UserReducer'
 import videos from 'reducers/VideosReducer'
 import search from 'reducers/SearchReducer'
+import userNav from 'reducers/UserNavReducer'
 
 export default combineReducers({
   global,
@@ -18,5 +19,6 @@ export default combineReducers({
   player,
   modal,
   notifications,
-  search
+  search,
+  userNav
 })

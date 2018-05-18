@@ -93,3 +93,7 @@ export const ADDITIONAL_SEARCH_RESULTS_LOADED = createActionConstant(
 export const ADDITIONAL_SEARCH_FAILED = createActionConstant(
   'ADDITIONAL_SEARCH_FAILED'
 )
+
+// User nav
+export const OPEN_USERNAV = createActionConstant('OPEN_USERNAV')
+export const CLOSE_USERNAV = createActionConstant('CLOSE_USERNAV')

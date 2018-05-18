@@ -16,8 +16,9 @@ import SVGIcon from './foundations/SVGIcon'
 
 type Props = {
   children: Object,
-  userAddress: string,
-  isWalletSecured: boolean,
+  userAddress: String,
+  isWalletSecured: Boolean,
+  showUserNav: Boolean,
   checkUserWallet: () => void
 }
 
@@ -30,6 +31,8 @@ const Wrapper = styled.div`
   padding: 0 0 ${MAINFOOTER_HEIGHT};
   position: fixed;
   top: 0;
+  transform: translate3d(${({ show }) => (show ? 0 : '-100%')}, 0, 0);
+  transition: transform 0.6s ${({ theme }) => theme.animation.ease.smooth};
   width: 312px;
   z-index: ${Z_INDEX_USERNAV};
 `
@@ -173,12 +176,12 @@ class UserNav extends Component<Props, void> {
     }
 
     return (
-      <Wrapper>
+      <Wrapper show={this.props.showUserNav}>
         <UserWrapper>
           <UserInfo>
             <UserAvatar>{avatarUser}</UserAvatar>
             <UserText>
-              <Text small>User 12610549</Text>
+              <Text small>{this.props.showUserNav} User 12610549</Text>
               <Text tiny gray>
                 Paratii member since 2018
               </Text>
