@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components'
 import { add0x } from 'utils/AppUtils'
 import Blockies from 'react-blockies'
 import {
+  USERNAV_WIDTH,
   MAINHEADER_LOGO_HEIGHT,
   MAINFOOTER_HEIGHT,
   Z_INDEX_USERNAV
@@ -19,7 +20,8 @@ type Props = {
   userAddress: String,
   isWalletSecured: Boolean,
   showUserNav: Boolean,
-  checkUserWallet: () => void
+  checkUserWallet: () => void,
+  closeUserNav: () => void
 }
 
 const Wrapper = styled.div`
@@ -33,7 +35,7 @@ const Wrapper = styled.div`
   top: 0;
   transform: translate3d(${({ show }) => (show ? 0 : '-100%')}, 0, 0);
   transition: transform 0.6s ${({ theme }) => theme.animation.ease.smooth};
-  width: 312px;
+  width: ${USERNAV_WIDTH};
   z-index: ${Z_INDEX_USERNAV};
 `
 
@@ -158,7 +160,7 @@ const UserSubNavListItem = styled.li`
 `
 
 const UserSubNavListItemLink = styled(Link)`
-  ${UserNavListItemStyle} padding: 25px 30px 25px 64px;
+  ${UserNavListItemStyle} padding: 25px 30px 25px 90px;
   transition: opacity 0.3s;
   &:hover {
     opacity: 0.5;
@@ -166,6 +168,12 @@ const UserSubNavListItemLink = styled(Link)`
 `
 
 class UserNav extends Component<Props, void> {
+  componentDidUpdate () {
+    if (this.props.showUserNav) {
+      this.UserNavWrapper.scrollTo(0, 0)
+    }
+  }
+
   render () {
     let avatarUser = ''
     if (this.props.userAddress) {
@@ -176,7 +184,12 @@ class UserNav extends Component<Props, void> {
     }
 
     return (
-      <Wrapper show={this.props.showUserNav}>
+      <Wrapper
+        show={this.props.showUserNav}
+        innerRef={(ref: HTMLElement) => {
+          this.UserNavWrapper = ref
+        }}
+      >
         <UserWrapper>
           <UserInfo>
             <UserAvatar>{avatarUser}</UserAvatar>
@@ -277,12 +290,20 @@ class UserNav extends Component<Props, void> {
               </UserNavListItemNoLink>
               <UserSubNavList>
                 <UserSubNavListItem>
-                  <UserSubNavListItemLink to="/">
+                  <UserSubNavListItemLink
+                    to="/profile/curation"
+                    onClick={this.props.closeUserNav}
+                  >
                     Dashboard
                   </UserSubNavListItemLink>
                 </UserSubNavListItem>
                 <UserSubNavListItem>
-                  <UserSubNavListItemLink to="/">List</UserSubNavListItemLink>
+                  <UserSubNavListItemLink
+                    to="/"
+                    onClick={this.props.closeUserNav}
+                  >
+                    List
+                  </UserSubNavListItemLink>
                 </UserSubNavListItem>
               </UserSubNavList>
             </UserNavListItem>

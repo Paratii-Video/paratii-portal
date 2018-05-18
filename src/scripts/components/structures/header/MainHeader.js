@@ -131,6 +131,7 @@ class MainHeader extends Component<Props, State> {
   toggleNav: () => void
   secureWallet: (e: Object) => void
   toggleUserNav: () => void
+  closeNavAndUserNav: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
@@ -144,6 +145,7 @@ class MainHeader extends Component<Props, State> {
     this.toggleNav = this.toggleNav.bind(this)
     this.secureWallet = this.secureWallet.bind(this)
     this.toggleUserNav = this.toggleUserNav.bind(this)
+    this.closeNavAndUserNav = this.closeNavAndUserNav.bind(this)
   }
 
   openNav () {
@@ -158,14 +160,20 @@ class MainHeader extends Component<Props, State> {
     })
   }
 
+  closeNavAndUserNav () {
+    this.closeNav()
+    this.props.closeUserNav()
+  }
+
   toggleNav () {
-    console.log(this)
-    // this.setState((prevState: State) => ({
-    //   navOpen: !prevState.navOpen
-    // }))
+    this.setState((prevState: State) => ({
+      navOpen: !prevState.navOpen
+    }))
   }
 
   toggleUserNav () {
+    this.closeNav()
+
     if (this.props.showUserNav) {
       this.props.closeUserNav()
     } else {
@@ -202,7 +210,7 @@ class MainHeader extends Component<Props, State> {
         {this.props.children}
         <HeaderWrapper open={this.state.navOpen}>
           <LogoWrapper>
-            <MainHeaderLogo />
+            <MainHeaderLogo clickOnLogo={this.closeNavAndUserNav} />
           </LogoWrapper>
           <HeaderContent open={this.state.navOpen}>
             <SearchWrapper>
@@ -212,7 +220,7 @@ class MainHeader extends Component<Props, State> {
               <MainNavigation
                 isWalletSecured={this.props.isWalletSecured}
                 checkUserWallet={this.props.checkUserWallet}
-                closeNav={this.closeNav}
+                closeNavAndUserNav={this.closeNavAndUserNav}
               />
               {userAvatar}
             </HeaderButtons>
