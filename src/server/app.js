@@ -38,7 +38,7 @@ app.use(express.static(path.resolve(__dirname, '../../', 'build')))
 app.get('/embed/:id', routeHelper.player)
 app.get('/play/:id', routeHelper.player)
 app.get('/oembed', cors(), oembedRoute)
-app.get('/mail/send', mailRoute.send)
+app.get('/mail/send', mailRoute.sendVerificationEmail)
 app.get('/mail/verify', verify.send)
 app.get('*', routeHelper.default)
 
