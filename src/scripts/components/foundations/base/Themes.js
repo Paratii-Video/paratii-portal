@@ -168,7 +168,10 @@ const Themes = {
       Userbackground: Colors.blackDark,
       UserPTIValueBox: Colors.blackLight,
       UserPTIBarOne: Colors.purple,
-      UserPTIBarTwo: Colors.pink
+      UserPTIBarTwo: Colors.pink,
+      Navigation: Colors.black,
+      NavigationText: Colors.grayLight,
+      SubNavigation: Colors.blackLight
     }
   }
 }

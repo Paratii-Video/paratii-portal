@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { add0x } from 'utils/AppUtils'
 import Blockies from 'react-blockies'
 import {
@@ -9,7 +9,9 @@ import {
   Z_INDEX_USERNAV
 } from '../constants/UIConstants'
 import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
+import { Link } from 'react-router-dom'
 import Text from './foundations/Text'
+import SVGIcon from './foundations/SVGIcon'
 
 type Props = {
   children: Object,
@@ -20,8 +22,6 @@ type Props = {
 
 const Wrapper = styled.div`
   background: ${props => props.theme.colors.UserNav.background};
-  display: flex;
-  flex-direction: column;
   height: 100%;
   left: 0;
   position: fixed;
@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   z-index: ${Z_INDEX_USERNAV};
 `
 
+// User
 const UserWrapper = styled.div`
   background: ${props => props.theme.colors.UserNav.Userbackground};
   display: flex;
@@ -68,7 +69,7 @@ const UserPTIValuesWrapper = styled.div`
 `
 
 const UserPTIValue = styled.div`
-  flex: 0 1 48.5%;
+  flex: 0 0 48.5%;
 `
 
 const UserPTIValueBox = styled.div`
@@ -99,6 +100,61 @@ const UserPTIBar = styled.div`
 
   ${Text} {
     margin-top: 5px;
+  }
+`
+
+// User navigation
+const UserNavListWrapper = styled.div`
+  display: block;
+`
+
+const UserNavList = styled.ul`
+  display: flex;
+  flex-direction: column;
+`
+
+const UserNavListItem = styled.li`
+  background-color: ${props => props.theme.colors.UserNav.Navigation};
+`
+
+const UserNavListItemStyle = css`
+  align-items: center;
+  color: ${props => props.theme.colors.UserNav.NavigationText};
+  display: flex;
+  padding: 25px 30px;
+`
+
+const UserNavListItemNoLink = styled.div`
+  ${UserNavListItemStyle};
+`
+
+const UserNavListItemLink = styled(Link)`
+  ${UserNavListItemStyle} transition: opacity .3s;
+  &:hover {
+    opacity: 0.5;
+  }
+`
+
+const UserNavListItemIcon = styled.span`
+  flex: 0 0 22px;
+  height: 22px;
+  margin-right: 10px;
+`
+
+const UserSubNavList = styled.ul`
+  display: flex;
+  flex-direction: column;
+`
+
+const UserSubNavListItem = styled.li`
+  background-color: ${props => props.theme.colors.UserNav.SubNavigation};
+`
+
+const UserSubNavListItemLink = styled(Link)`
+  ${UserNavListItemStyle} padding: 25px 30px 25px 64px;
+  transition: opacity 0.3s;
+  &:hover {
+    opacity: 0.5;
   }
 `
 
@@ -163,6 +219,68 @@ class UserNav extends Component<Props, void> {
             </UserPTIBarWrapper>
           </UserPTI>
         </UserWrapper>
+        <UserNavListWrapper>
+          <UserNavList>
+            <UserNavListItem>
+              <UserNavListItemLink to="/">
+                <UserNavListItemIcon>
+                  <SVGIcon icon="icon-bucket" />
+                </UserNavListItemIcon>
+                Profile
+              </UserNavListItemLink>
+            </UserNavListItem>
+            <UserNavListItem>
+              <UserNavListItemLink to="/">
+                <UserNavListItemIcon>
+                  <SVGIcon icon="icon-bucket" />
+                </UserNavListItemIcon>
+                My Videos
+              </UserNavListItemLink>
+            </UserNavListItem>
+            <UserNavListItem>
+              <UserNavListItemLink to="/">
+                <UserNavListItemIcon>
+                  <SVGIcon icon="icon-bucket" />
+                </UserNavListItemIcon>
+                My Favorites
+              </UserNavListItemLink>
+            </UserNavListItem>
+            <UserNavListItem>
+              <UserNavListItemLink to="/">
+                <UserNavListItemIcon>
+                  <SVGIcon icon="icon-bucket" />
+                </UserNavListItemIcon>
+                Finances
+              </UserNavListItemLink>
+            </UserNavListItem>
+            <UserNavListItem>
+              <UserNavListItemLink to="/">
+                <UserNavListItemIcon>
+                  <SVGIcon icon="icon-bucket" />
+                </UserNavListItemIcon>
+                Settings
+              </UserNavListItemLink>
+            </UserNavListItem>
+            <UserNavListItem>
+              <UserNavListItemNoLink>
+                <UserNavListItemIcon>
+                  <SVGIcon icon="icon-bucket" />
+                </UserNavListItemIcon>
+                Curation
+              </UserNavListItemNoLink>
+              <UserSubNavList>
+                <UserSubNavListItem>
+                  <UserSubNavListItemLink to="/">
+                    Dashboard
+                  </UserSubNavListItemLink>
+                </UserSubNavListItem>
+                <UserSubNavListItem>
+                  <UserSubNavListItemLink to="/">List</UserSubNavListItemLink>
+                </UserSubNavListItem>
+              </UserSubNavList>
+            </UserNavListItem>
+          </UserNavList>
+        </UserNavListWrapper>
       </Wrapper>
     )
   }
