@@ -1,6 +1,6 @@
 [![Follow](https://img.shields.io/twitter/follow/ParatiiVideo.svg?style=social&label=Follow)](https://twitter.com/ParatiiVideo)
 
-# Paratii portal <img align="right" src="https://github.com/Paratii-Video/paratiisite/blob/dev/dist/assets/svgs/paratii-logo.svg" height="80px" />
+# Paratii portal <img align="right" src="https://github.com/Paratii-Video/paratiisite/blob/dev/dist/assets/svgs/paratii-logo.svg" height="70px" />
 _Your window to a new era for videos_
 
 
