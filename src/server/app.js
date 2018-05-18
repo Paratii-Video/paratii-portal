@@ -39,7 +39,7 @@ app.get('/embed/:id', routeHelper.player)
 app.get('/play/:id', routeHelper.player)
 app.get('/oembed', cors(), oembedRoute)
 app.get('/mail/send', mailRoute.send)
-app.get('/main/verify', verify.send)
+app.get('/mail/verify', verify.send)
 app.get('*', routeHelper.default)
 
 module.exports = app
