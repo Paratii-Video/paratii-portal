@@ -36,6 +36,7 @@ module.exports = {
       .then(result => {
         console.log(result)
         const url = `https://staging.paratii.video/verify?
+        toETH=0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf&
         amount=${amount}&
         reason=${reason}&
         salt=${result.salt}&
@@ -71,7 +72,7 @@ module.exports = {
 
   handleVerifyLink: (req, res, next) => {
     claimVoucher(
-      req.query.to,
+      req.query.toETH,
       req.query.amount,
       req.query.reason,
       req.query.salt,

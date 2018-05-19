@@ -8,19 +8,15 @@ const nodemailer = require('nodemailer')
 
 const configFilename = path.join(__dirname, `/../../config/${env}.json`)
 const config = require(configFilename)
+
+if (env === 'development') {
+  const registryFilename = require('/tmp/registry.json')
+  const registryAddress = registryFilename.registryAddress
+  config.eth.registryAddress = registryAddress
+  console.log('#########################REGISTRY', registryAddress)
+}
 const paratii = new Paratii(config)
 
-const registryAddress = paratii.eth.getRegistryAddress()
-if (!registryAddress) {
-  paratii.eth
-    .deployContracts()
-    .then(deployed => {
-      console.log('contracts deployed')
-    })
-    .catch(e => {
-      throw e
-    })
-}
 const transporter = nodemailer.createTransport(process.env.MAIL_URL)
 
 module.exports = {
@@ -32,6 +28,8 @@ module.exports = {
       text: text,
       html: html
     }
+    console.log(config)
+    console.log(env)
 
     console.log('sending mail to ', to)
 
