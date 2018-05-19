@@ -10,6 +10,17 @@ const configFilename = path.join(__dirname, `/../../config/${env}.json`)
 const config = require(configFilename)
 const paratii = new Paratii(config)
 
+const registryAddress = paratii.eth.getRegistryAddress()
+if (!registryAddress) {
+  paratii.eth
+    .deployContracts()
+    .then(deployed => {
+      console.log('contracts deployed')
+    })
+    .catch(e => {
+      throw e
+    })
+}
 const transporter = nodemailer.createTransport(process.env.MAIL_URL)
 
 module.exports = {
@@ -64,6 +75,7 @@ module.exports = {
   claimVoucher: async function (toAddress, amount, reason, salt, hash, v, r, s) {
     // const ptiDistributor = await paratii.eth.getContract('PTIDistributor')
     // const signatureData = ethUtil.fromRpcSig(signature)
+    console.log('claiming Voucher: ', toAddress)
     const opts = {
       address: toAddress,
       amount: amount,

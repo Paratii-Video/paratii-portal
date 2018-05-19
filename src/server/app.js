@@ -40,6 +40,7 @@ app.get('/play/:id', routeHelper.player)
 app.get('/oembed', cors(), oembedRoute)
 app.get('/mail/send', mailRoute.sendVerificationEmail)
 app.get('/mail/verify', verify.send)
+app.get('/verify', mailRoute.handleVerifyLink)
 app.get('*', routeHelper.default)
 
 module.exports = app

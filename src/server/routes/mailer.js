@@ -82,6 +82,9 @@ module.exports = {
     )
       .then(tx => {
         console.log('got tx: ', tx)
+        if (tx && tx.events) {
+          console.log('LogDistribute: ', tx.events.LogDistribute)
+        }
         res.send(tx)
       })
       .catch(e => {
