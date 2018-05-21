@@ -16,6 +16,7 @@ if (env === 'development') {
   console.log('#########################REGISTRY', registryAddress)
 }
 const paratii = new Paratii(config)
+// --------------------[FOR TESTING ONLY]---------------------------------------
 // fund distributor
 paratii.eth.distributor
   .getPTIDistributeContract()
@@ -48,33 +49,60 @@ paratii.eth.distributor
     throw e
   })
 
-const transporter = nodemailer.createTransport(process.env.MAIL_URL)
+// -----------------------------------------------------------------------------
+var transporter
+
+function getTransporter () {
+  return new Promise((resolve, reject) => {
+    if (transporter) {
+      resolve(transporter)
+    } else {
+      if (!process.env.MAIL_URL) {
+        nodemailer.createTestAccount((err, account) => {
+          if (err) {
+            return reject(err)
+          }
+          transporter = nodemailer.createTransport({
+            host: 'stmp.ethereal.email',
+            port: 587,
+            secure: false,
+            auth: {
+              user: account.user,
+              pass: account.pass
+            }
+          })
+
+          resolve(transporter)
+        })
+      } else {
+        transporter = nodemailer.createTransport(process.env.MAIL_URL)
+        resolve(transporter)
+      }
+    }
+  })
+}
+// -----------------------------------------------------------------------------
 
 module.exports = {
   sendMail: (to, subject, text, html, cb) => {
-    const mailOptions = {
-      from: 'Yahya Paratii <ya7yaz@paratii.video>',
-      to: to,
-      subject: subject,
-      text: text,
-      html: html
-    }
-    console.log(config)
-    console.log(env)
+    getTransporter().then(transporter => {
+      const mailOptions = {
+        from: 'Paratii Video <ya7yaz@paratii.video>',
+        to: to,
+        subject: subject,
+        text: text,
+        html: html
+      }
+      // console.log(config)
+      // console.log(env)
 
-    console.log('sending mail to ', to)
+      // console.log('sending mail to ', to)
 
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) return cb(err)
-      return cb(null, info)
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) return cb(err)
+        return cb(null, info)
+      })
     })
-    // try {
-    //   response = await transporter.sendMail(mailOptions)
-    // } catch (e) {
-    //   throw e
-    // }
-    //
-    // return reponse
   },
 
   generateVoucher: async function (amount, reason) {

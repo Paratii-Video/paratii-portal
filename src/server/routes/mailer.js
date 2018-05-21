@@ -1,9 +1,14 @@
+const querystring = require('querystring')
+
 const {
   sendMail,
   generateVoucher,
   claimVoucher
 } = require('../../scripts/mailer')
 
+const { getAppRootUrl } = require('../../scripts/utils/AppUtils')
+
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 module.exports = {
   send: (req, res, next) => {
     sendMail(
@@ -35,15 +40,30 @@ module.exports = {
     generateVoucher(amount, reason)
       .then(result => {
         console.log(result)
-        const url = `https://staging.paratii.video/verify?
-        toETH=0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf&
-        amount=${amount}&
-        reason=${reason}&
-        salt=${result.salt}&
-        hash=${result.hash}&
-        v=${result.signature.v}&
-        r=${result.signature.r}&
-        s=${result.signature.s}`
+        const obj = {
+          toETH: req.query.toETH,
+          amount: amount.toString(),
+          reason: reason.toString(),
+          salt: result.salt,
+          hash: result.hash,
+          v: result.signature.v,
+          r: result.signature.r,
+          s: result.signature.s
+        }
+
+        const url = `${getAppRootUrl(
+          process.env.NODE_ENV
+        )}/verify?${querystring.stringify(obj)}`
+
+        // const url =
+        // `${getAppRootUrl(process.env.NODE_ENV)}/verify?toETH=${req.query.toETH}&
+        // amount=${amount}&
+        // reason=${reason}&
+        // salt=${result.salt}&
+        // hash=${result.hash}&
+        // v=${result.signature.v}&
+        // r=${result.signature.r}&
+        // s=${result.signature.s}`
 
         console.log('url: ', url)
         // res.send(url)
@@ -59,7 +79,11 @@ module.exports = {
             if (err) {
               res.send(err)
             } else {
-              res.send(info)
+              if (info && info.accepted && info.accepted.length > 0) {
+                res.send(info.response)
+              } else {
+                res.statusCode(500).send(info)
+              }
             }
           }
         )
