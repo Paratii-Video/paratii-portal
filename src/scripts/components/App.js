@@ -33,7 +33,6 @@ import type { Map } from 'immutable'
 
 type Props = {
   initializeApp: () => void,
-  setSelectedVideo: (id: string) => void,
   match: Match,
   videos: Map<string, VideoRecord>,
   isWalletSecured: boolean
