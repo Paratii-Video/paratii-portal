@@ -57,9 +57,7 @@ export const getParatiiConfig = (env: ?string, scope: ?string): Object => {
 
   function needsScope (scope: ?string) {
     if (scope !== 'client' && scope !== 'server') {
-      throw Error(
-        `"scope" should be either "client" or "server" (not ${scope})`
-      )
+      throw Error(`"scope" should be either "client" or "server"`)
     }
   }
   switch (env) {
