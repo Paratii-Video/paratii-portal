@@ -62,24 +62,27 @@ export const getParatiiConfig = (env: ?string, scope: ?string): Object => {
       )
     }
   }
+  const configlocation = '../../../config'
+  let filename
   switch (env) {
     case 'production':
       needsScope(scope)
-      // const filename = `config/production-${scope}.json`
-      const filename = '../../../config/development.json'
-      console.log(`opening ${filename}`)
+      filename = `${configlocation}/production-${scope}.json`
       config = require(filename)
       break
     case 'test':
-      config = require(`config/test.json`)
+      filename = `${configlocation}/test.json`
+      config = require(filename)
       break
     case 'staging':
       needsScope(scope)
-      config = require(`config/staging-${scope}.json`)
+      filename = `${configlocation}/staging-${scope}.json`
+      config = require(filename)
       break
     case 'development':
     default:
-      config = require('config/development.json')
+      filename = `${configlocation}/development.json`
+      config = require(filename)
       break
   }
 
