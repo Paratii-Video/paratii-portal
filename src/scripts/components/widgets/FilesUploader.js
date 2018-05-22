@@ -6,8 +6,9 @@ import TextField from '../widgets/forms/TextField'
 import Card, { CardTitle } from 'components/structures/Card'
 
 type Props = {
-  isWalletSecured: Boolean,
-  onError: Boolean,
+  isWalletSecured: boolean,
+  onError: boolean,
+  showCard: boolean,
   margin: string,
   onFileChosen: (file: Object) => void,
   checkUserWallet: () => void
@@ -81,6 +82,11 @@ const InputText = styled(TextField)`
   margin: 0 0 30px;
 `
 
+const UploaderWrapper = styled.div`
+  width: 100%;
+  position: relative;
+`
+
 class FilesUploader extends Component<Props, Object> {
   onFileChosen: (e: Object) => void
   onDrag: (e: Object) => void
@@ -142,43 +148,66 @@ class FilesUploader extends Component<Props, Object> {
   }
 
   render () {
-    return (
-      <Card
-        {...this.props}
-        nopadding
-        className={this.state.dragClass}
-        footer={
-          <FooterWrapper>
-            <InputText
-              label="(Not working yet) Or upload from Youtube or Vimeo"
-              helper="i.e.: http://youtube.com/videoID or http://vimeo.com/videoID"
-              error={this.state.inputTextError}
-              disabled
-            />
-          </FooterWrapper>
-        }
-      >
-        <InputFile
-          type="file"
-          onClick={this.onCheck}
-          onChange={this.onFileChosen}
-          onDragEnd={this.onDrag}
-        />
+    let uploaderBox = ''
+    console.log(this.props.showCard)
+    if (this.props.showCard) {
+      uploaderBox = (
+        <Card
+          {...this.props}
+          nopadding
+          className={this.state.dragClass}
+          footer={
+            <FooterWrapper>
+              <InputText
+                label="(Not working yet) Or upload from Youtube or Vimeo"
+                helper="i.e.: http://youtube.com/videoID or http://vimeo.com/videoID"
+                error={this.state.inputTextError}
+                disabled
+              />
+            </FooterWrapper>
+          }
+        >
+          <InputFile
+            type="file"
+            onClick={this.onCheck}
+            onChange={this.onFileChosen}
+            onDragEnd={this.onDrag}
+          />
+          <UploadCover>
+            <Title>Upload video</Title>
+            <UploadCoverIcon>
+              <Icon>
+                <FilesUploaderSvg />
+              </Icon>
+            </UploadCoverIcon>
+            <UploadCoverText>
+              <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
+              choose a file
+            </UploadCoverText>
+          </UploadCover>
+        </Card>
+      )
+    } else {
+      uploaderBox = (
+        <UploaderWrapper>
+          <InputFile
+            type="file"
+            onClick={this.onCheck}
+            onChange={this.onFileChosen}
+            onDragEnd={this.onDrag}
+          />
+          <UploadCover>
+            <UploadCoverIcon />
+            <UploadCoverText>
+              <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
+              choose a file
+            </UploadCoverText>
+          </UploadCover>
+        </UploaderWrapper>
+      )
+    }
 
-        <UploadCover>
-          <Title>Upload video</Title>
-          <UploadCoverIcon>
-            <Icon>
-              <FilesUploaderSvg />
-            </Icon>
-          </UploadCoverIcon>
-          <UploadCoverText>
-            <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
-            choose a file
-          </UploadCoverText>
-        </UploadCover>
-      </Card>
-    )
+    return uploaderBox
   }
 }
 

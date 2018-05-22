@@ -52,7 +52,7 @@ class VideoManager extends Component<Props, void> {
     return (
       <Wrapper padding={!showForm} column={!showList}>
         {showList && <UploadList />}
-        <UploadFile />
+        <UploadFile showCard={!showList} />
         {!showList ? <RedeemVoucher marginLeft /> : ''}
         {!showList && <PTIGuide marginLeft />}
       </Wrapper>
