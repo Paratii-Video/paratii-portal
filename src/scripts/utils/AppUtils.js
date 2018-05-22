@@ -56,14 +56,19 @@ export const getParatiiConfig = (env: ?string, scope: ?string): Object => {
   let config = {}
 
   function needsScope (scope: ?string) {
-    if (scope && !(scope in ['client', 'server'])) {
-      throw Error(`"scope" should be either "client" or "server"`)
+    if (scope !== 'client' && scope !== 'server') {
+      throw Error(
+        `"scope" should be either "client" or "server" (not ${scope})`
+      )
     }
   }
   switch (env) {
     case 'production':
       needsScope(scope)
-      config = require(`config/production-${scope}.json`)
+      // const filename = `config/production-${scope}.json`
+      const filename = '../../../config/development.json'
+      console.log(`opening ${filename}`)
+      config = require(filename)
       break
     case 'test':
       config = require(`config/test.json`)

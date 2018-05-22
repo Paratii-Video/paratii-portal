@@ -1,20 +1,16 @@
 'use strict'
-const env = process.env.NODE_ENV || 'development'
-const path = require('path')
-
 const { Paratii } = require('paratii-js')
 const nodemailer = require('nodemailer')
-// const ethUtil = require('ethereumjs-util')
+const { getParatiiConfig } = require('./utils/AppUtils.js')
 
-const configFilename = path.join(__dirname, `/../../config/${env}.json`)
-const config = require(configFilename)
+const config = getParatiiConfig(process.env.NODE_ENV, 'server')
 
 // is this necessary here?
-if (env === 'development') {
-  const registryFilename = require('/tmp/registry.json')
-  const registryAddress = registryFilename.registryAddress
-  config.eth.registryAddress = registryAddress
-}
+// if (process.env.NODE_ENV === 'development') {
+//   const registryFilename = require('/tmp/registry.json')
+//   const registryAddress = registryFilename.registryAddress
+//   config.eth.registryAddress = registryAddress
+// }
 
 const paratii = new Paratii(config)
 
