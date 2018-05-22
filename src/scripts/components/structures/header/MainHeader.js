@@ -64,8 +64,8 @@ const HeaderWrapper = styled.div`
 
 const LogoWrapper = styled.div`
   margin-right: 40px;
-  flex: 0 0 ${props => (props.theme.sizes ? MAINHEADER_LOGO_WIDTH : '')};
-  height: ${props => (props.theme.sizes ? MAINHEADER_LOGO_HEIGHT : '')};
+  flex: 0 0 ${MAINHEADER_LOGO_WIDTH};
+  height: ${MAINHEADER_LOGO_HEIGHT};
 `
 
 const HeaderContent = styled.div`
