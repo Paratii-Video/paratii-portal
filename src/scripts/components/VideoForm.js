@@ -1,5 +1,3 @@
-/* @flow */
-
 import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
@@ -255,7 +253,7 @@ class VideoForm extends Component<Props, Object> {
         <VideoFormWrapper>
           <Form
             onSubmit={this.onPublishVideo}
-            // disabled={this.props.selectedVideo.storageStatus.name === 'running'}
+            disabled={this.props.selectedVideo.storageStatus.name === 'running'}
           >
             <TextField
               id="video-id"

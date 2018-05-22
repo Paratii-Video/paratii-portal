@@ -1,8 +1,9 @@
+/* @flow */
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import paratii from 'utils/ParatiiLib'
 
-import type { VideoRecord } from 'records/VideoRecords'
 import { getAppRootUrl } from 'utils/AppUtils'
 import Text from './foundations/Text'
 import Button from './foundations/Button'
@@ -14,13 +15,29 @@ import RadioCheck, {
   RadioWrapper,
   RadioTitle
 } from './widgets/forms/RadioCheck'
+import type VideoRecord from 'records/VideoRecords'
+import UserRecord from 'records/UserRecords'
+import {
+  isVideoPublished,
+  isVideoPublishable,
+  videoProgress,
+  videoDuration
+} from '../operators/VideoOperators'
+import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
+  user: UserRecord,
+  balance: string,
   video: VideoRecord,
-  videoId: 'String'
+  videoId: string,
+  isWalletSecured: boolean,
+  saveVideoInfo: Object => Object,
+  openModal: string => void,
+  notification: (Object, string) => void,
+  checkUserWallet: () => void
 }
 
-const PADDING_HORIZONTAL: String = '50px'
+const PADDING_HORIZONTAL: string = '50px'
 const Z_INDEX_TIME = 1
 const Z_INDEX_MEDIAICON = 2
 
@@ -77,7 +94,7 @@ const ItemHeaderButtons = styled.div`
   display: flex;
   flex: 0 1 auto;
 
-  Button {
+  button {
     margin-left: 20px;
   }
 `
@@ -195,6 +212,13 @@ const VideoMediaTime = styled.div`
   }
 `
 
+const LabelStake = styled.div`
+  background-color: ${props => props.theme.colors.body.background};
+  color: white;
+  padding: 5px;
+  width: 100px;
+`
+
 const VideoMediaTimeText = styled.p`
   color: ${props => props.theme.colors.VideoForm.info.time.color};
   font-size: ${props => props.theme.fonts.video.info.time};
@@ -202,8 +226,16 @@ const VideoMediaTimeText = styled.p`
   z-index: 1;
 `
 
-class UploadListItem extends Component<Props, void> {
-  constructor (props) {
+class UploadListItem extends Component<Props, Object> {
+  handleInputChange: (input: string, e: Object) => void
+  onPublishVideo: (e: Object) => void
+  onSaveData: (e: Object) => void
+  publishVideo: (publish: boolean) => void
+  saveData: (publish: boolean) => void
+  handleHeight: (e: Object) => string
+  toggleOpen: (e: Object) => void
+
+  constructor (props: Props) {
     super(props)
     const theVideo = this.props.video
     this.state = {
@@ -211,15 +243,16 @@ class UploadListItem extends Component<Props, void> {
       id: theVideo.id,
       title: theVideo.title,
       description: theVideo.description,
-      // FIXME: we are not editing duration, so we do not need to store it in the state
       duration: theVideo.duration,
       author: theVideo.author
     }
 
     this.handleHeight = this.handleHeight.bind(this)
     this.toggleOpen = this.toggleOpen.bind(this)
-    this.clickButton = this.clickButton.bind(this)
+    this.onSaveData = this.onSaveData.bind(this)
     this.onPublishVideo = this.onPublishVideo.bind(this)
+    this.publishVideo = this.publishVideo.bind(this)
+    this.saveData = this.saveData.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
   }
 
@@ -229,27 +262,65 @@ class UploadListItem extends Component<Props, void> {
     })
   }
 
+  onSaveData (e: Object) {
+    e.preventDefault()
+    if (this.props.isWalletSecured) {
+      this.saveData(false)
+    } else {
+      // If wallet not secure open the modal
+      this.props.checkUserWallet()
+    }
+  }
+
+  saveData (publish: false) {
+    const videoToSave = {
+      id: this.state.id,
+      title: this.state.title,
+      description: this.state.description,
+      author: this.props.user.name
+    }
+    this.props.saveVideoInfo(videoToSave)
+  }
+
   onPublishVideo (e: Object) {
     e.preventDefault()
-  }
-
-  clickButton (e) {
-    e.stopPropagation()
-    console.log(this.props.video)
-    console.log(
-      this.props.video.transcodingStatus,
-      this.props.video.uploadStatus
+    const balance = Number(this.props.user.balances.PTI) // paratii.eth.web3.utils.fromWei(balance)
+    // FIXME we need to manage this globally and not hardcoded
+    const stakeAmount = 5
+    const stakeAmountWei = Number(
+      paratii.eth.web3.utils.toWei(stakeAmount + '')
     )
+    if (balance < stakeAmountWei) {
+      this.props.notification(
+        {
+          title: 'Not enough tokens',
+          message: `You need at least ${stakeAmount} PTIs to make a stake.`
+        },
+        'error'
+      )
+    } else {
+      if (this.props.isWalletSecured) {
+        this.publishVideo(true)
+      } else {
+        // If wallet not secure open the modal for signup / login
+        this.props.checkUserWallet()
+      }
+    }
   }
 
-  toggleOpen (e) {
+  publishVideo (publish: false) {
+    this.props.openModal(MODAL.STAKE)
+  }
+
+  toggleOpen (e: Object) {
     this.setState({
       open: !this.state.open
     })
   }
 
-  handleHeight (e) {
+  handleHeight (e: Object) {
     let height = '0px'
+    console.log(this.formWrapperRef)
     if (this.formWrapperRef && this.state.open) {
       height = this.formWrapperRef.offsetHeight + 'px'
     }
@@ -258,7 +329,6 @@ class UploadListItem extends Component<Props, void> {
 
   render () {
     const { video, videoId } = this.props
-
     // Title
     const title = video.title || video.filename
 
@@ -294,18 +364,15 @@ class UploadListItem extends Component<Props, void> {
     }
 
     // Progress
-    const uploadProgress = video.uploadStatus.data.progress
-    const transcodingStatus = video.transcodingStatus.data.progress
-    const progress = Math.ceil((uploadProgress + transcodingStatus) / 2)
-    // const uploaderVideoUrl = `/upload/${this.props.video.id}`
+    const progress = videoProgress(video)
 
     // Media box
-    const isPublished = true
-    const isPublishable = true
     let poster = ''
     let videoPoster = ''
     let videoMediaBox = null
-    const duration = (video && video.get('duration')) || ''
+    const isPublished = isVideoPublished(video)
+    const isPublishable = isVideoPublishable(video)
+    const duration = videoDuration(video)
 
     let durationBox = null
     if (duration) {
@@ -317,7 +384,6 @@ class UploadListItem extends Component<Props, void> {
       )
     }
 
-    // const ipfsHash = (video && video.get('ipfsHash')) || ''
     const urlToPlay = '/play/' + video.id
     const urlForSharing =
       getAppRootUrl(process.env.NODE_ENV) + '/play/' + video.id
@@ -362,8 +428,26 @@ class UploadListItem extends Component<Props, void> {
       )
     }
 
+    let publishButton = ''
+    if (!isPublished) {
+      publishButton = (
+        <Button
+          data-test-id="video-submit-publish"
+          type="submit"
+          onClick={this.onPublishVideo}
+          disabled={!isPublishable}
+          purple
+        >
+          Publish
+        </Button>
+      )
+    } else {
+      // FIXME the value is hardcoded
+      publishButton = <LabelStake>5 PTI Staked</LabelStake>
+    }
+
     return (
-      <Item>
+      <Item data-test-id="uploader-item">
         <ItemHeader open={this.state.open} onClick={this.toggleOpen}>
           <ItemHeaderContent>
             <Icon flip={!this.state.open}>
@@ -378,14 +462,7 @@ class UploadListItem extends Component<Props, void> {
                 {statusMessage}
               </ItemHeaderStatus>
             </ItemHeaderData>
-            <ItemHeaderButtons>
-              <Button onClick={this.clickButton} gray>
-                Cancel
-              </Button>
-              <Button onClick={this.clickButton} purple>
-                Publish
-              </Button>
-            </ItemHeaderButtons>
+            <ItemHeaderButtons>{publishButton}</ItemHeaderButtons>
           </ItemHeaderContent>
           <ItemHeaderBar>
             <VideoProgressBar progress={progress + '%'} nopercentual />
@@ -398,15 +475,16 @@ class UploadListItem extends Component<Props, void> {
             }}
           >
             <Form onSubmit={this.onPublishVideo}>
-              <TextField
-                id={'video-id' + videoId}
+              <input
+                data-test-id="video-id"
+                id={'video-id-' + videoId}
                 type="hidden"
                 value={this.state.id}
-                label="Title"
+                label="Video Id"
               />
               <TextField
                 label="Title"
-                id={'input-video-title' + videoId}
+                id={'input-video-title-' + videoId}
                 type="text"
                 value={this.state.title}
                 onChange={e => this.handleInputChange('title', e)}
@@ -415,7 +493,7 @@ class UploadListItem extends Component<Props, void> {
                 tabIndex="0"
               />
               <Textarea
-                id={'input-video-description' + videoId}
+                id={'input-video-description-' + videoId}
                 value={this.state.description}
                 onChange={e => this.handleInputChange('description', e)}
                 label="Description"
@@ -424,11 +502,11 @@ class UploadListItem extends Component<Props, void> {
                 tabIndex="0"
               />
               <TextField
-                label="Video Owner"
-                id={'input-video-owner' + videoId}
+                label="is this video really yours?"
+                id={'input-video-ownership-proof' + videoId}
                 type="text"
-                value={this.state.author}
-                onChange={e => this.handleInputChange('author', e)}
+                value={this.state.ownershipProof}
+                onChange={e => this.handleInputChange('ownershipProof', e)}
                 margin="0 0 30px"
                 maxLength="50"
                 tabIndex="0"
@@ -454,7 +532,13 @@ class UploadListItem extends Component<Props, void> {
                 </RadioCheck>
               </RadioWrapper>
               <FormButtons>
-                <Button disabled={true} purple type="submit">
+                <Button
+                  data-test-id="video-submit-save"
+                  type="submit"
+                  onClick={this.onSaveData}
+                  purple
+                  disabled={this.props.video.storageStatus.name === 'running'}
+                >
                   Save
                 </Button>
               </FormButtons>

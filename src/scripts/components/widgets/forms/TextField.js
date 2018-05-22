@@ -1,24 +1,21 @@
-/* stylelint-disable */
-// Stylint issue will be fixed in future:
-// https://github.com/styled-components/stylelint-processor-styled-components/issues/34
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import InputField, { StyleFieldText } from 'components/foundations/forms/Input'
 
 type Props = {
-  className: String,
-  error: Boolean,
-  label: String,
-  helper: String,
-  margin: String,
-  disabled: Boolean,
-  readonly: Boolean,
-  value: String,
-  id: String,
-  name: String,
-  type: String,
-  maxLength: String,
-  tabIndex: String,
+  className: string,
+  error: boolean,
+  label: string,
+  helper: string,
+  margin: string,
+  disabled: boolean,
+  readonly: boolean,
+  value: string,
+  id: string,
+  name: string,
+  type: string,
+  maxLength: string,
+  tabIndex: string,
   onChange: (e: Object) => void,
   onBlur?: (e: Object) => void
 }
@@ -59,7 +56,7 @@ const LabelField = styled.label`
 `
 
 const Placeholder = styled.span`
-  ${StyleFieldText} ${StylePlaceholder} .filled &, ${InputField}:focus + & {
+  ${StyleFieldText} ${StylePlaceholder} .filled &, input:focus + & {
     ${StyleInputFilled};
   }
 `

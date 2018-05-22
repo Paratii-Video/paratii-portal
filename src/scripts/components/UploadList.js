@@ -1,7 +1,8 @@
+/* @flow */
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import type { VideoRecord } from 'records/VideoRecords'
+import type VideoRecord from 'records/VideoRecords'
 import type { Map } from 'immutable'
 
 import UploadListItem from 'containers/UploadListItemContainer'
