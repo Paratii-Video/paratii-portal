@@ -1,102 +1,103 @@
-const webpack = require("webpack");
-const fs = require('fs');
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const path = require("path");
+const webpack = require('webpack')
+const fs = require('fs')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
+const path = require('path')
 
-const srcDir = path.resolve(__dirname, "src");
-const configDir = path.resolve(__dirname, "config");
-const scriptsDir = srcDir + "/scripts";
-const embedDir = scriptsDir + "/embed";
-const assetsDir = srcDir + "/assets";
-const stylesDir = srcDir + "/styles";
-const buildDir = path.resolve(__dirname, "build");
-const testDir = path.resolve(__dirname, "test");
-const unitTestsDir = testDir + "/unit-tests";
-const functionalTestsDir = testDir + "/functional-tests";
+const srcDir = path.resolve(__dirname, 'src')
+const configDir = path.resolve(__dirname, 'config')
+const scriptsDir = srcDir + '/scripts'
+const embedDir = scriptsDir + '/embed'
+const assetsDir = srcDir + '/assets'
+const stylesDir = srcDir + '/styles'
+const buildDir = path.resolve(__dirname, 'build')
+const testDir = path.resolve(__dirname, 'test')
+const unitTestsDir = testDir + '/unit-tests'
+const functionalTestsDir = testDir + '/functional-tests'
 
-const dev = process.env.NODE_ENV === "development";
-const test = process.env.NODE_ENV === "test";
-const prod = (process.env.NODE_ENV === "production" || process.env.NODE_ENV === 'staging')
-
-
+const dev = process.env.NODE_ENV === 'development'
+const test = process.env.NODE_ENV === 'test'
+const staging = process.env.NODE_ENV === 'staging'
+const prod = process.env.NODE_ENV === 'production'
 
 const definedVariables = {
-  "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-  "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
+  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+  'process.env.DEBUG': JSON.stringify(process.env.DEBUG)
 }
 
 const registryConfigPath = `/tmp/registry.json`
 
 if ((dev || test) && fs.existsSync(registryConfigPath)) {
   const registryConfig = require(registryConfigPath)
-  definedVariables['process.env.REGISTRY_ADDRESS'] = JSON.stringify(registryConfig.registryAddress);
+  definedVariables['process.env.REGISTRY_ADDRESS'] = JSON.stringify(
+    registryConfig.registryAddress
+  )
 }
 
 const config = {
   entry: {
-    bundle: (prod)
-      ? [scriptsDir + "/index.js"]
-
+    bundle: prod || staging
+      ? [scriptsDir + '/index.js']
       : [
-          "react-hot-loader/patch",
-          scriptsDir + "/index.js",
-          "webpack-hot-middleware/client?quiet=true"
-        ],
-    'embed/bundle': embedDir + "/index.js"
+        'react-hot-loader/patch',
+        scriptsDir + '/index.js',
+        'webpack-hot-middleware/client?quiet=true'
+      ],
+    'embed/bundle': embedDir + '/index.js'
   },
   output: {
-    chunkFilename: "[name].bundle.js",
-    filename: "[name].js",
+    chunkFilename: '[name].bundle.js',
+    filename: '[name].js',
     path: buildDir,
-    publicPath: "/",
+    publicPath: '/'
   },
-  target: "web",
+  target: 'web',
   resolve: {
     alias: {
+      clappr: 'clappr/dist/clappr.min',
       config: configDir,
       scripts: scriptsDir,
       styles: stylesDir,
       assets: assetsDir,
-      components: scriptsDir + "/components",
-      constants: scriptsDir + "/constants",
-      actions: scriptsDir + "/actions",
-      reducers: scriptsDir + "/reducers",
-      records: scriptsDir + "/records",
-      containers: scriptsDir + "/containers",
-      selectors: scriptsDir + "/selectors",
-      apis: scriptsDir + "/apis",
-      adapters: scriptsDir + "/adapters",
-      types: scriptsDir + "/types",
-      utils: scriptsDir + "/utils",
-      "test-utils": testDir + "/test-utils",
-      "unit-tests": unitTestsDir,
-      "functional-tests": functionalTestsDir
+      components: scriptsDir + '/components',
+      constants: scriptsDir + '/constants',
+      actions: scriptsDir + '/actions',
+      reducers: scriptsDir + '/reducers',
+      records: scriptsDir + '/records',
+      containers: scriptsDir + '/containers',
+      selectors: scriptsDir + '/selectors',
+      apis: scriptsDir + '/apis',
+      adapters: scriptsDir + '/adapters',
+      types: scriptsDir + '/types',
+      utils: scriptsDir + '/utils',
+      'test-utils': testDir + '/test-utils',
+      'unit-tests': unitTestsDir,
+      'functional-tests': functionalTestsDir
     },
-    aliasFields: ["browser"]
+    aliasFields: ['browser']
   },
   node: {
-      net: 'empty',
-      tls: 'empty',
-      dns: 'empty',
-      fs: 'empty'
-    },
+    net: 'empty',
+    tls: 'empty',
+    dns: 'empty',
+    fs: 'empty'
+  },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         include: [srcDir, testDir],
-        loader: "babel-loader",
+        use: 'babel-loader'
       },
       {
         test: /\.(png|jpg|gif)$/,
         include: assetsDir,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {
-              outputPath: "assets/"
+              outputPath: 'assets/'
             }
           }
         ]
@@ -104,66 +105,57 @@ const config = {
       {
         test: /\.(svg)$/,
         include: assetsDir,
-        use: [
-          {
-            loader: 'svg-url-loader'
-          }
-        ]
+        use: 'svg-url-loader'
       },
       {
         test: /\.scss$/,
         include: stylesDir,
-        use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"]
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'postcss-loader' },
+          { loader: 'sass-loader' }
+        ]
       }
     ]
   },
-  devtool: prod ? undefined : "eval-source-map",
-  devServer: prod
+  devtool: prod ? undefined : 'eval-source-map',
+  devServer: prod || staging
     ? {}
     : {
-        hot: true
-      },
+      hot: true
+    },
   plugins: [
     new webpack.DefinePlugin(definedVariables),
-    new ExtractTextPlugin('embed/index.css'),
-    prod
-    ? new UglifyJsPlugin({
-        sourceMap: false, // this is an effor to save some memory
+    prod || staging
+      ? new UglifyJsPlugin({
+        sourceMap: false,
         uglifyOptions: {
           ecma: 6,
           mangle: {
-            reserved:
-            ['DAGNode', 'DAGLink','Name', 'Tsize', 'Hash', 'Block', '_idB58String',
-            'Multiaddr', 'WebSockets']
-            // NOTE I'm still working on this. keep this commented out for now.
-            // ['_links', 'links', '_data', 'data', 'mutlihash', '_multihash',
-            //   'serialized', '_serialized', 'size', '_size',
-            // '_id', 'peerId._id', 'peerId._idB58String', 'peerId', 'id', 'multiaddr',
-            // 'multiaddrs', 'buffer', 'Buffer',
+            reserved: [
+              'DAGNode',
+              'DAGLink',
+              'Name',
+              'Tsize',
+              'Hash',
+              'Block',
+              '_idB58String',
+              'Multiaddr',
+              'WebSockets'
+            ]
           },
           compress: false,
+          parallel: true,
           safari10: true
         }
       })
-    : new webpack.HotModuleReplacementPlugin(),
-    // NOTE this still causes an issue when IPFS is starting.
-    // I'm debugging this :( :x
-    // prod
-    // ? new UglifyJsPlugin({
-    //     exclude: [/ipfs/i],
-    //     sourceMap: false, // this is an effor to save some memory
-    //     uglifyOptions: {
-    //       ecma: 6,
-    //       mangle: true,
-    //       compress: true
-    //     }
-    //   })
-    // : new webpack.HotModuleReplacementPlugin()
+      : new webpack.HotModuleReplacementPlugin()
   ]
-};
+}
 
 if (process.env.ANALYZE) {
   config.plugins.push(new BundleAnalyzerPlugin())
 }
 
-module.exports = config;
+module.exports = config

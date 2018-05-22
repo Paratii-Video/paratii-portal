@@ -112,27 +112,13 @@ export const ModalScrollContent = styled.div`
 `
 
 class Modal extends Component<Props, void> {
-  renderModal () {
-    const { modalContent } = this.props
-    switch (modalContent) {
-      case MODAL.STAKE:
-        return <ModalStake />
-      case MODAL.SECURE:
-        return <ModalSecure />
-      case MODAL.GREAT_POWER:
-        return <ModalGreatPower />
-      case MODAL.CREATE_PASSWORD:
-        return <ModalCreatePassword />
-      case MODAL.ASK_PASSWORD:
-        return <ModalAskPassword />
-      case MODAL.SHOW_SEED:
-        return <ModalShowSeed />
-      case MODAL.PROFILE:
-        return <ModalProfile />
-      case MODAL.REWRITE_SEED:
-        return <ModalRewriteSeed />
-      case MODAL.RESTORE_ACCOUNT:
-        return <ModalRestoreAccount />
+  canClose = () => {
+    return this.props.modalContent !== MODAL.PROFILE
+  }
+
+  close = () => {
+    if (this.canClose()) {
+      this.props.closeModal()
     }
   }
 
@@ -164,29 +150,56 @@ class Modal extends Component<Props, void> {
 
   handleKeydown = (e: Event): void => {
     if (event.keyCode === 27) {
-      this.props.closeModal()
+      this.close()
     }
   }
 
   componentDidMount () {
-    document.addEventListener('keydown', this.handleKeydown.bind(this))
+    document.addEventListener('keydown', this.handleKeydown)
   }
 
   componentWillUnmount () {
-    document.removeEventListener('keydown', this.handleKeydown.bind(this))
+    document.removeEventListener('keydown', this.handleKeydown)
+  }
+
+  renderModal () {
+    const { modalContent } = this.props
+    switch (modalContent) {
+      case MODAL.STAKE:
+        return <ModalStake />
+      case MODAL.SECURE:
+        return <ModalSecure />
+      case MODAL.GREAT_POWER:
+        return <ModalGreatPower />
+      case MODAL.CREATE_PASSWORD:
+        return <ModalCreatePassword />
+      case MODAL.ASK_PASSWORD:
+        return <ModalAskPassword />
+      case MODAL.SHOW_SEED:
+        return <ModalShowSeed />
+      case MODAL.PROFILE:
+        return <ModalProfile />
+      case MODAL.REWRITE_SEED:
+        return <ModalRewriteSeed />
+      case MODAL.RESTORE_ACCOUNT:
+        return <ModalRestoreAccount />
+    }
   }
 
   render () {
     const isVisible = this.props.showModal
+
     return (
       <Wrapper show={isVisible}>
         <Container show={isVisible} width={this.getModalWidth()}>
-          <CloseButton onClick={this.props.closeModal}>
-            <SVGIcon icon="icon-close" />
-          </CloseButton>
+          {this.canClose() && (
+            <CloseButton onClick={this.close}>
+              <SVGIcon icon="icon-close" />
+            </CloseButton>
+          )}
           <Content>{this.renderModal()}</Content>
         </Container>
-        <Background show={isVisible} onClick={this.props.closeModal} />
+        <Background show={isVisible} onClick={this.close} />
       </Wrapper>
     )
   }

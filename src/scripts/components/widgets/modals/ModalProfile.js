@@ -8,7 +8,8 @@ import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import NotepadSvg from 'components/foundations/svgs/NotepadSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
-import { MODAL } from 'constants/ModalConstants'
+
+const FORM_ID: string = 'PROFILE_MODAL'
 
 type Props = {
   openModal: string => void,
@@ -34,9 +35,8 @@ const Icon = styled.div`
   width: 100%;
 `
 
-class ModalSetPassword extends Component<Props, Object> {
+class ModalProfile extends Component<Props, Object> {
   setProfile: () => void
-  goBack: () => void
   handleInputChange: (input: string, e: Object) => void
 
   constructor (props: Props) {
@@ -47,15 +47,12 @@ class ModalSetPassword extends Component<Props, Object> {
       error: ''
     }
     this.setProfile = this.setProfile.bind(this)
-    this.goBack = this.goBack.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
   }
 
-  goBack () {
-    this.props.openModal(MODAL.SHOW_SEED)
-  }
+  setProfile (e: Object) {
+    e.preventDefault()
 
-  setProfile () {
     if (this.state.email) {
       paratii.users.create({
         id: paratii.eth.getAccount(), // must be a valid ethereum address
@@ -93,24 +90,26 @@ class ModalSetPassword extends Component<Props, Object> {
           <Icon>
             <NotepadSvg />
           </Icon>
-          <TextField
-            error={this.state.error.length > 0}
-            label="Username"
-            name="username"
-            type="text"
-            value={this.state.username}
-            onChange={e => this.handleInputChange('username', e)}
-            margin="0 0 30px"
-          />
-          <TextField
-            error={this.state.error.length > 0}
-            label="Email"
-            name="email"
-            type="text"
-            value={this.state.email}
-            onChange={e => this.handleInputChange('email', e)}
-            margin="0 0 30px"
-          />
+          <form id={FORM_ID} onSubmit={this.setProfile}>
+            <TextField
+              error={this.state.error.length > 0}
+              label="Username"
+              name="username"
+              type="text"
+              value={this.state.username}
+              onChange={e => this.handleInputChange('username', e)}
+              margin="0 0 30px"
+            />
+            <TextField
+              error={this.state.error.length > 0}
+              label="Email"
+              name="email"
+              type="text"
+              value={this.state.email}
+              onChange={e => this.handleInputChange('email', e)}
+              margin="0 0 30px"
+            />
+          </form>
 
           {this.state.error && (
             <Text pink small>
@@ -120,9 +119,10 @@ class ModalSetPassword extends Component<Props, Object> {
           <Footer>
             <ButtonContainer>
               <Button
+                type="submit"
+                form={FORM_ID}
                 data-test-id="continue"
                 purple
-                onClick={this.setProfile}
                 disabled={!this.state.username}
               >
                 Continue
@@ -135,4 +135,4 @@ class ModalSetPassword extends Component<Props, Object> {
   }
 }
 
-export default ModalSetPassword
+export default ModalProfile
