@@ -235,7 +235,9 @@ class UploadListItem extends Component<Props, Object> {
   handleHeight: (e: Object) => string
   toggleOpen: (e: Object) => void
 
-  constructor (props: Props) {
+  formWrapperRef: Object
+
+  constructor (props: Props, formWrapperRef: Object) {
     super(props)
     const theVideo = this.props.video
     this.state = {
@@ -244,8 +246,11 @@ class UploadListItem extends Component<Props, Object> {
       title: theVideo.title,
       description: theVideo.description,
       duration: theVideo.duration,
-      author: theVideo.author
+      author: theVideo.author,
+      height: '0px'
     }
+
+    this.formWrapperRef = formWrapperRef
 
     this.handleHeight = this.handleHeight.bind(this)
     this.toggleOpen = this.toggleOpen.bind(this)
@@ -320,7 +325,6 @@ class UploadListItem extends Component<Props, Object> {
 
   handleHeight (e: Object) {
     let height = '0px'
-    console.log(this.formWrapperRef)
     if (this.formWrapperRef && this.state.open) {
       height = this.formWrapperRef.offsetHeight + 'px'
     }
