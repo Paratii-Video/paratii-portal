@@ -5,8 +5,6 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import DocumentTitle from 'react-document-title'
 import { ThemeProvider } from 'styled-components'
 
-import SignupContainer from 'containers/SignupContainer'
-import LoginContainer from 'containers/LoginContainer'
 import ProfileContainer from 'containers/ProfileContainer'
 import ProfileEditContainer from 'containers/ProfileEditContainer'
 import PlayContainer from 'containers/PlayContainer'
@@ -83,11 +81,6 @@ class App extends Component<Props, State> {
             <Main>
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route
-                  path={`${match.url}signup`}
-                  component={SignupContainer}
-                />
-                <Route path={`${match.url}login`} component={LoginContainer} />
                 <Route
                   path={`${match.url}profile`}
                   component={ProfileContainer}
