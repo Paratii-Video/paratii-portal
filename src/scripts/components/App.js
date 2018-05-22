@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components'
 import SignupContainer from 'containers/SignupContainer'
 import LoginContainer from 'containers/LoginContainer'
 import ProfileContainer from 'containers/ProfileContainer'
+
 import ProfileEditContainer from 'containers/ProfileEditContainer'
 import ProfileCurationContainer from 'containers/ProfileCurationContainer'
 
@@ -28,6 +29,7 @@ import MainFooter from './structures/footer/MainFooter'
 import Home from './pages/Home'
 import Voucher from './pages/Voucher'
 import NotFound from './pages/NotFound'
+import MailVerify from './pages/MailVerify'
 
 import { APP_TITLE, paratiiTheme } from 'constants/ApplicationConstants'
 
@@ -87,6 +89,7 @@ class App extends Component<Props, State> {
             <Main>
               <Switch>
                 <Route exact path="/" component={Home} />
+                <Route path={`${match.url}verify`} component={MailVerify} />
                 <Route
                   path={`${match.url}signup`}
                   component={SignupContainer}
