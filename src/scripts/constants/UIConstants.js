@@ -35,3 +35,6 @@ export const POPOVER_PADDING: string = '20px'
 
 // Video Overlay
 export const OVERLAY_BUTTONS_HEIGHT: string = '20px'
+
+// Card(not imported to structures/Card, just for CardStyle)
+export const CARD_PADDING: string = '40px 42px'
