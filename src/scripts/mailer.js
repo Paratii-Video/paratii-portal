@@ -9,12 +9,13 @@ const nodemailer = require('nodemailer')
 const configFilename = path.join(__dirname, `/../../config/${env}.json`)
 const config = require(configFilename)
 
+// is this necessary here?
 if (env === 'development') {
   const registryFilename = require('/tmp/registry.json')
   const registryAddress = registryFilename.registryAddress
   config.eth.registryAddress = registryAddress
-  console.log('#########################REGISTRY', registryAddress)
 }
+
 const paratii = new Paratii(config)
 
 var transporter
@@ -48,13 +49,12 @@ function getTransporter () {
     }
   })
 }
-// -----------------------------------------------------------------------------
 
 module.exports = {
   sendMail: (to, subject, text, html, cb) => {
     getTransporter().then(transporter => {
       const mailOptions = {
-        from: 'Paratii Video <ya7yaz@paratii.video>',
+        from: 'Paratii Video <we@paratii.video>',
         to: to,
         subject: subject,
         text: text,

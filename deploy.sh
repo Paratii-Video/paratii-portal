@@ -16,5 +16,6 @@ else
     exit
 fi
 # yarn run build:$1
-rsync -e 'ssh -o StrictHostKeyChecking=no'  -azh --exclude config . paratii@$host:/home/paratii/paratii-portal/ 
+echo "xx"
+rsync -e 'ssh -o StrictHostKeyChecking=no'  -azh --exclude config . paratii@$host:/home/paratii/paratii-portal/
 ssh -o StrictHostKeyChecking=no paratii@$host "sh restart.sh"
