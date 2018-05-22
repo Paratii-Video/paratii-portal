@@ -45,7 +45,6 @@ module.exports = {
           amount: amount.toString(),
           reason: reason.toString(),
           salt: result.salt,
-          hash: result.hash,
           v: result.signature.v,
           r: result.signature.r,
           s: result.signature.s
@@ -55,18 +54,8 @@ module.exports = {
           process.env.NODE_ENV
         )}/verify?${querystring.stringify(obj)}`
 
-        // const url =
-        // `${getAppRootUrl(process.env.NODE_ENV)}/verify?toETH=${req.query.toETH}&
-        // amount=${amount}&
-        // reason=${reason}&
-        // salt=${result.salt}&
-        // hash=${result.hash}&
-        // v=${result.signature.v}&
-        // r=${result.signature.r}&
-        // s=${result.signature.s}`
-
         console.log('url: ', url)
-        // res.send(url)
+
         sendMail(
           req.query.to,
           'Verify your Paratii Account',

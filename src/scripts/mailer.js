@@ -60,10 +60,6 @@ module.exports = {
         text: text,
         html: html
       }
-      // console.log(config)
-      // console.log(env)
-
-      // console.log('sending mail to ', to)
 
       transporter.sendMail(mailOptions, (err, info) => {
         if (err) return cb(err)
@@ -73,19 +69,7 @@ module.exports = {
   },
 
   generateVoucher: async function (amount, reason) {
-    // TODO
-    // 1. hook up to web3
-    // 2. generateRandomSalt
-    // 3. sign it with key.
-    // 4. create a url with signedNonce, amount, to, and signature.
-    // 5. profit.
     const salt = paratii.eth.web3.utils.randomHex(32)
-    const hash = paratii.eth.web3.utils.soliditySha3(
-      amount,
-      salt,
-      String(reason)
-    )
-    // const signature = paratii.eth.web3.eth.sign(hash, paratii.eth.getAccount())
     const signature = await paratii.eth.distributor.generateSignature(
       amount,
       salt,
@@ -93,12 +77,10 @@ module.exports = {
       paratii.eth.getAccount()
     )
 
-    return { salt, hash, signature }
+    return { salt, signature }
   },
 
   claimVoucher: async function (toAddress, amount, reason, salt, hash, v, r, s) {
-    // const ptiDistributor = await paratii.eth.getContract('PTIDistributor')
-    // const signatureData = ethUtil.fromRpcSig(signature)
     console.log('claiming Voucher: ', toAddress)
     const opts = {
       address: toAddress,
@@ -111,19 +93,6 @@ module.exports = {
     }
 
     const tx = await paratii.eth.distributor.distribute(opts)
-
-    // const tx = await ptiDistributor.methods
-    //   .distribute(
-    //     toAddress,
-    //     amount,
-    //     salt,
-    //     reason,
-    //     signatureData.v,
-    //     signatureData.r,
-    //     signatureData.s
-    //   )
-    //   .send()
-
     return tx
   }
 }
