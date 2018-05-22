@@ -10,6 +10,8 @@ export const ColorText = css`
       _color = props.theme.colors.button.purple
     } else if (props.pink) {
       _color = props.theme.colors.button.pink
+    } else if (props.green) {
+      _color = props.theme.colors.button.green
     } else {
       _color = props.theme.colors.button.white
     }
@@ -20,7 +22,7 @@ export const ColorText = css`
   }};
 `
 
-export default styled.p`
+const Text = styled.p`
   ${ColorText} font-size: ${props => {
   if (props.big) {
     return props.theme.fonts.text.big
@@ -47,7 +49,16 @@ export default styled.p`
       return props.theme.fonts.text.mainLineHeight
     }
   }};
+  opacity: ${props => (props.disabled ? 0.5 : null)};
   overflow-wrap: break-word;
+  text-transform: ${({ textTransform }) =>
+    textTransform || null};
   white-space: pre-wrap;
   word-wrap: break-word;
 `
+
+export const Strong = styled.strong`
+  ${ColorText} font-weight: ${props => props.theme.fonts.weight.bold};
+`
+
+export default Text
