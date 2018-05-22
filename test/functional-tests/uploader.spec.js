@@ -6,7 +6,7 @@ import {
   nukeSessionStorage
 } from './test-utils/helpers'
 
-describe('🦄 Uploader Tool @watch', function () {
+describe('🦄 Uploader Tool', function () {
   beforeEach(function () {
     browser.url(`http://localhost:8080`)
     browser.execute(nukeLocalStorage)
