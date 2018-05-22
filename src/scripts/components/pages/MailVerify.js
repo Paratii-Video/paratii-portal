@@ -29,6 +29,8 @@ class MailVerify extends Component<Props, void> {
         if (response.events.LogDistribute) {
           console.log('good')
           console.log(response)
+          const redeemPTI = response.events.LogDistribute.returnValues._amount
+          console.log(redeemPTI)
         } else {
           console.log('transaction already done')
         }
