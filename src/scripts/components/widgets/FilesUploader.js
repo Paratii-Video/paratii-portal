@@ -149,7 +149,6 @@ class FilesUploader extends Component<Props, Object> {
 
   render () {
     let uploaderBox = ''
-    console.log(this.props.showCard)
     if (this.props.showCard) {
       uploaderBox = (
         <Card
