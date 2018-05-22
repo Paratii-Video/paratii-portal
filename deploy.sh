@@ -15,8 +15,6 @@ else
     echo "unknown parameter - please specify one of 'staging' or 'production'"
     exit
 fi
-yarn run build:$1
-rsync -e 'ssh -o StrictHostKeyChecking=no'  -azh . paratii@$host:/home/paratii/paratii-portal/
-ssh -o StrictHostKeyChecking=no paratii@$host << EOF
-  sh restart.sh
-EOF
+# yarn run build:$1
+rsync -e 'ssh -o StrictHostKeyChecking=no'  -azh --exclude config . paratii@$host:/home/paratii/paratii-portal/ 
+ssh -o StrictHostKeyChecking=no paratii@$host "sh restart.sh"
