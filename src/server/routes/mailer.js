@@ -110,11 +110,34 @@ module.exports = {
         if (tx && tx.events) {
           console.log('LogDistribute: ', tx.events.LogDistribute)
         }
-        res.send(tx)
+        if (tx.events.LogDistribute) {
+          res.send(
+            `
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <title>Verify</title>
+                <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+                <link rel="stylesheet" type="text/css" href="/embed/index.css">
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+              </head>
+              <body>
+                <noscript>
+                  You need to enable JavaScript to run this app.
+                </noscript>
+                <div id="root">
+                  <span class="app-loader paratii-loader" style="width: 50px; height: 50px;"></span>
+                </div>
+                <script type="text/javascript" src="/bundle.js"></script>
+              </body>
+            </html>
+          `
+          )
+        }
       })
       .catch(e => {
         console.log('e:', e)
-        res.send(e)
+        res.send('errore')
       })
   }
 }
