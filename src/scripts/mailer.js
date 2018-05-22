@@ -16,42 +16,7 @@ if (env === 'development') {
   console.log('#########################REGISTRY', registryAddress)
 }
 const paratii = new Paratii(config)
-// --------------------[FOR TESTING ONLY]---------------------------------------
-// fund distributor
-if (env === 'development') {
-  paratii.eth.distributor
-    .getPTIDistributeContract()
-    .then(distributor => {
-      paratii.eth.getContract('ParatiiToken').then(token => {
-        console.log('approving distributor.... ', distributor.options.address)
-        token.methods
-          .approve(
-            distributor.options.address,
-            paratii.eth.web3.utils.toWei('50')
-          )
-          .send()
-          .then(approvalTx => {
-            console.log('distributor approved', approvalTx)
-            token.methods
-              .transfer(
-                distributor.options.address,
-                paratii.eth.web3.utils.toWei('50')
-              )
-              .send((err, tx) => {
-                if (err) throw err
-                if (tx) {
-                  console.log('transfer : ', tx)
-                }
-              })
-          })
-      })
-    })
-    .catch(e => {
-      throw e
-    })
 
-  // -----------------------------------------------------------------------------
-}
 var transporter
 
 function getTransporter () {
