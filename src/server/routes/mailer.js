@@ -110,11 +110,12 @@ module.exports = {
         if (tx && tx.events) {
           console.log('LogDistribute: ', tx.events.LogDistribute)
         }
+        res.setHeader('Content-Type', 'application/json')
         res.send(tx)
       })
       .catch(e => {
         console.log('e:', e)
-        res.send(e)
+        res.send({ error: e.message })
       })
   }
 }
