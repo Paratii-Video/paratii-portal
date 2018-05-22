@@ -22,9 +22,10 @@ const Themes = {
     },
     button: {
       white: Colors.white,
-      gray: Colors.grayLight,
+      gray: Colors.gray,
       purple: Colors.purple,
-      pink: Colors.pink
+      pink: Colors.pink,
+      green: Colors.green
     },
     Modal: {
       background: Colors.blackLight,
@@ -172,6 +173,15 @@ const Themes = {
       Navigation: Colors.black,
       NavigationText: Colors.grayLight,
       SubNavigation: Colors.blackLight
+    },
+    ProfileCuration: {
+      ChallengeBackgroundOneFrom: Colors.purpleGradientFrom,
+      ChallengeBackgroundOneTo: Colors.purpleGradientTo,
+      ChallengeBackgroundTwoFrom: Colors.pink,
+      ChallengeBackgroundTwoTo: Colors.purple,
+      VotingBarOne: Colors.green,
+      VotingBarTwo: Colors.pink,
+      ChallengeSequenceDot: Colors.white
     }
   }
 }

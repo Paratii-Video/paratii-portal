@@ -21,7 +21,8 @@ const Colors: Object = {
   purpleGradientTo: '#7D70FF',
   pink: '#E13D84',
   pinkGradientFrom: '#E72061',
-  pinkGradientTo: '#DC3DCC'
+  pinkGradientTo: '#DC3DCC',
+  green: '#24BF71'
 }
 
 export default Colors
