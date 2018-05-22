@@ -1,24 +1,9 @@
+/* stylelint-disable */
+// Stylint issue will be fixed in future:
+// https://github.com/styled-components/stylelint-processor-styled-components/issues/34
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import InputField, { StyleFieldText } from 'components/foundations/forms/Input'
-
-type Props = {
-  className: string,
-  error: boolean,
-  label: string,
-  helper: string,
-  margin: string,
-  disabled: boolean,
-  readonly: boolean,
-  value: string,
-  id: string,
-  name: string,
-  type: string,
-  maxLength: string,
-  tabIndex: string,
-  onChange: (e: Object) => void,
-  onBlur?: (e: Object) => void
-}
 
 export const StyleInputFilled = css`
   transform: translate3d(0, -22px, 0) scale(0.8);
@@ -56,7 +41,7 @@ const LabelField = styled.label`
 `
 
 const Placeholder = styled.span`
-  ${StyleFieldText} ${StylePlaceholder} .filled &, input:focus + & {
+  ${StyleFieldText} ${StylePlaceholder} .filled &, ${InputField}:focus + & {
     ${StyleInputFilled};
   }
 `
@@ -69,6 +54,24 @@ const HelperLabel = styled.span`
   opacity: 0.7;
   white-space: nowrap;
 `
+
+type Props = {
+  className: String,
+  error: Boolean,
+  label: String,
+  helper: String,
+  margin: String,
+  disabled: Boolean,
+  readonly: Boolean,
+  value: String,
+  id: String,
+  name: String,
+  type: String,
+  maxLength: String,
+  tabIndex: String,
+  onChange: (e: Object) => void,
+  onBlur?: (e: Object) => void
+}
 
 class TextField extends Component<Props, void> {
   constructor (props) {
