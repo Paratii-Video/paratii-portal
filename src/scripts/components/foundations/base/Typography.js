@@ -55,6 +55,7 @@ const Typography = {
     label: '0.8rem'
   },
   title: {
+    bigger: '2.2rem',
     big: '2rem',
     main: '1.75rem',
     small: '1.5rem',
