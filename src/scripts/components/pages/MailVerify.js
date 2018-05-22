@@ -18,10 +18,29 @@ type Props = {}
 // const NavLink = Button.withComponent('a')
 
 class MailVerify extends Component<Props, void> {
+  componentDidMount () {
+    const query = window.location.search.substring(1)
+    var xhttp = new XMLHttpRequest()
+    xhttp.onreadystatechange = function () {
+      if (this.readyState === 4 && this.status === 200) {
+        // Notification mail sent!
+        const response = JSON.parse(xhttp.responseText)
+        console.log(response)
+        if (response.events.LogDistribute) {
+          console.log('good')
+          console.log(response)
+        } else {
+          console.log('transaction already done')
+        }
+      }
+    }
+    xhttp.open('GET', `/mail/verify/?${query}`, true)
+    xhttp.send()
+  }
   render () {
     return (
       <Wrapper>
-        <Title purple>Your Mail is verified</Title>
+        <Title purple>Mail verification</Title>
         <Text gray>You have earned 20 PTI</Text>
       </Wrapper>
     )
