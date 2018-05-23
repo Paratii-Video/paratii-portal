@@ -44,6 +44,9 @@ class MailVerify extends Component<Props, void> {
       <Wrapper>
         <Title purple>Mail verification</Title>
         <Text gray>You have earned 20 PTI</Text>
+        <Text gray>
+          Please <a href="/profile">log in</a> to check your balance
+        </Text>
       </Wrapper>
     )
   }
