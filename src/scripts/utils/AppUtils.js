@@ -52,22 +52,37 @@ export const getAppRootUrl = (env: ?string = 'development'): string => {
   }
 }
 
-export const getParatiiConfig = (env: ?string = 'development'): Object => {
+export const getParatiiConfig = (env: ?string, scope: ?string): Object => {
   let config = {}
 
+  function needsScope (scope: ?string) {
+    if (scope !== 'client' && scope !== 'server') {
+      throw Error(`"scope" should be either "client" or "server"`)
+    }
+  }
   switch (env) {
     case 'production':
-      config = require('config/production.json')
+      needsScope(scope)
+      if (scope === 'client') {
+        config = require('../../../config/production-client.json')
+      } else {
+        config = require('../../../config/production-server.json')
+      }
       break
     case 'test':
-      config = require('config/test.json')
+      config = require('../../../config/test.json')
       break
     case 'staging':
-      config = require('config/staging.json')
+      needsScope(scope)
+      if (scope === 'client') {
+        config = require('../../../config/staging-client.json')
+      } else {
+        config = require('../../../config/staging-server.json')
+      }
       break
     case 'development':
     default:
-      config = require('config/development.json')
+      config = require('../../../config/development.json')
       break
   }
 

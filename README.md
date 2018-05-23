@@ -4,7 +4,8 @@
 _Your window to a new era for videos_
 
 
-<img align="left" src="https://i.imgur.com/C6kyiuB.png" height="300px" /> A modular web-interface for uploading content into the peer-to-peer network behind Paratii, and to browse or organize it. It's purpose is to **1)** help populate Paratii's registries with real world data and files from creators; **2)** expose widgets and forms of interaction with the paratii-js that other developers can leverage, or platform owners can implement; **3)** battletest distributed curation concepts, whenever mature for account management. First iteration will randomize account info. and focus on the experience of uploading videos.
+<img align="right" src="https://i.imgur.com/C6kyiuB.png" height="310px" /> A modular web-interface for uploading content into the peer-to-peer network behind Paratii, and to browse or organize it. The purpose here is to **1)** populate Paratii's registries with real world data and files from creators; **2)** expose widgets and forms of interaction with the `paratii-js` that other developers can leverage, or platform owners can implement; **3)** battletest distributed curation concepts. Early iterations will focus on the **uploader** experience.
+
 
 ## Prerequisites
 

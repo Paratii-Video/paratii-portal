@@ -1,0 +1,13 @@
+{
+  "eth": {
+    "provider": "https://newchain.paratii.video",
+    "registryAddress": "0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F"
+  },
+  "account": {
+    "address": "0x7e7e5Db705113F3693F030BB8f1fB029E59549eF",
+    "privateKey": ""
+  },
+  "db": {
+    "provider": "https://db.paratii.video/api/v1/"
+  }
+}

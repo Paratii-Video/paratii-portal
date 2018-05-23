@@ -5,7 +5,7 @@ import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
 
 import mockEndpoint from '../../mock-server/mockEndpoint'
 
-describe.only('🎥 Player: @watch', function () {
+describe('🎥 Player: @watch', function () {
   const videoElementSelector = '#player video'
   const overlaySelector = '[data-test-id="video-overlay"]'
   const startScreenIconSelector = '[data-test-id="start-screen-icon"]'
@@ -41,37 +41,6 @@ describe.only('🎥 Player: @watch', function () {
       }
     })
 
-    browser.addCommand('attemptToPlayVideo', () => {
-      browser.waitUntil(
-        () =>
-          browser.execute(
-            (startScreenIconSelector, overlaySelector) => {
-              const startScreenIcon = document.querySelector(
-                startScreenIconSelector
-              )
-
-              if (startScreenIcon) {
-                startScreenIcon.click()
-                return true
-              }
-
-              const overlayElement = document.querySelector(overlaySelector)
-
-              if (overlayElement) {
-                overlayElement.click()
-                return true
-              }
-
-              return false
-            },
-            startScreenIconSelector,
-            overlaySelector
-          ).value,
-        undefined,
-        'Could not attempt to play video'
-      )
-    })
-
     browser.addCommand(
       'goToTestVideoUrl',
       ({ embed, overrideID, queryParams }) => {
@@ -86,6 +55,7 @@ describe.only('🎥 Player: @watch', function () {
             playing: false,
             paused: false
           }
+          document.body.focus()
         })
         browser.waitUntil(
           () =>
@@ -324,12 +294,11 @@ describe.only('🎥 Player: @watch', function () {
           },
           true
         )
-
-        browser.goToTestVideoUrl({ embed })
       })
       it('should bring the player fullscreen and back', () => {
         browser.goToTestVideoUrl({ embed })
         browser.waitAndClick(startScreenIconSelector)
+        browser.waitUntilVideoIsPlaying()
         browser.waitUntilControlsAreVisible()
         browser.moveToObject(overlaySelector)
         browser.waitAndClick(fullscreenButtonSelector)
@@ -375,17 +344,16 @@ describe.only('🎥 Player: @watch', function () {
           },
           true
         )
-
-        browser.goToTestVideoUrl({ embed })
       })
 
       it('should default the volume to not be muted', () => {
+        browser.goToTestVideoUrl({ embed })
         browser.waitUntilVolumeIsNotMuted()
       })
 
       it('should mute the video when the volume button is clicked', () => {
         browser.waitUntilVolumeIsNotMuted()
-        browser.attemptToPlayVideo()
+        browser.waitAndClick(startScreenIconSelector)
         browser.waitUntilVideoIsPlaying()
         browser.moveToObject(overlaySelector)
         browser.waitUntilControlsAreVisible()
