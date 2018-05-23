@@ -27,7 +27,7 @@ jobs:
       - run:
           command: yarn run server:test
           background: true
-      - run: node src/scripts/waitForServer.js    
+      - run: node src/scripts/waitForServer.js
       - run: yarn run chimp-circleci-test
       - deploy:
           command: |
