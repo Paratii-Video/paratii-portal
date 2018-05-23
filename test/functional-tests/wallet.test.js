@@ -54,7 +54,7 @@ describe('Wallet: @watch', function () {
   //   assert.equal(balance, '21M')
   // })
 
-  it.only('restore your wallet using a seed', async function () {
+  it('restore your wallet using a seed', async function () {
     browser.url(`http://localhost:8080`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
