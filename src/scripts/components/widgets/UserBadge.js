@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
+import { add0x } from 'utils/AppUtils'
+import Blockies from 'react-blockies'
+import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 import styled from 'styled-components'
 import Text from '../foundations/Text'
 
 type Props = {
-  userAvatar: String,
+  userAddress: String,
   userName: String,
-  userDate: String
+  userDate: String,
+  isWalletSecured: Boolean
 }
 
 const UserInfo = styled.div`
@@ -28,9 +32,16 @@ const UserText = styled.div`
 
 class UserBadge extends Component<Props> {
   render () {
+    let avatarUser = ''
+    if (this.props.userAddress) {
+      const lowerAddress = add0x(this.props.userAddress)
+      if (ACTIVATE_SECURE_WALLET && this.props.isWalletSecured) {
+        avatarUser = <Blockies seed={lowerAddress} size={10} scale={4} />
+      }
+    }
     return (
       <UserInfo>
-        <UserAvatar>{this.props.userAvatar}</UserAvatar>
+        <UserAvatar>{avatarUser}</UserAvatar>
         <UserText>
           <Text small>{this.props.userName}</Text>
           <Text tiny gray>

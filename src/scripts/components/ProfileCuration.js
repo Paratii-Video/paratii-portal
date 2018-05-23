@@ -9,6 +9,8 @@ import ProgressBar, {
   ProgressBarWrapper
 } from 'components/foundations/ProgressBar'
 
+import UserBadge from '../containers/UserBadgeContainer'
+
 type Props = {}
 
 const INFOSTATUS_CARD_MARGIN_BOTTOM: string = '15px'
@@ -208,6 +210,10 @@ class Profile extends Component<Props, void> {
           <Text>Video</Text>
           <PlayInfo>
             <Title small>Video title</Title>
+            <UserBadge
+              userName="Susan Medelin"
+              userDate="Published on July 4, 2007."
+            />
           </PlayInfo>
         </VideoWrapper>
         <InfoWrapper>

@@ -2,19 +2,16 @@
 
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
-import { add0x } from 'utils/AppUtils'
-import Blockies from 'react-blockies'
 import {
   USERNAV_WIDTH,
   MAINHEADER_LOGO_HEIGHT,
   MAINFOOTER_HEIGHT,
   Z_INDEX_USERNAV
 } from '../constants/UIConstants'
-import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 import { Link } from 'react-router-dom'
 import Text from './foundations/Text'
 import SVGIcon from './foundations/SVGIcon'
-import UserBadge from './widgets/UserBadge'
+import UserBadge from '../containers/UserBadgeContainer'
 
 type Props = {
   children: Object,
@@ -158,14 +155,6 @@ class UserNav extends Component<Props, void> {
   }
 
   render () {
-    let avatarUser = ''
-    if (this.props.userAddress) {
-      const lowerAddress = add0x(this.props.userAddress)
-      if (ACTIVATE_SECURE_WALLET && this.props.isWalletSecured) {
-        avatarUser = <Blockies seed={lowerAddress} size={10} scale={4} />
-      }
-    }
-
     return (
       <Wrapper
         show={this.props.showUserNav}
@@ -175,7 +164,6 @@ class UserNav extends Component<Props, void> {
       >
         <UserWrapper>
           <UserBadge
-            userAvatar={avatarUser}
             userName="User 12610549"
             userDate="Paratii member since 2018"
           />
