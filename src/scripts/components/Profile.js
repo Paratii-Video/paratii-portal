@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import Blockies from 'react-blockies'
-import { add0x, copyTextToClipboard } from 'utils/AppUtils'
-import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
+import { copyTextToClipboard } from 'utils/AppUtils'
 import Colors from './foundations/base/Colors'
 import Button from './foundations/Button'
 import Text from './foundations/Text'
 import TruncatedText from './foundations/TruncatedText'
 import SVGIcon from './foundations/SVGIcon'
 import HR from './foundations/HR'
+import UserAvatar from './widgets/UserAvatar'
 import Card from './structures/Card'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 import {
@@ -43,15 +42,6 @@ const EditProfileButton = styled(NavLink)`
   position: absolute;
   top: 50px;
   right: 42px;
-`
-
-const ProfileAvatar = styled.div`
-  background-color: ${props => props.theme.colors.header.color};
-  border-radius: 100%;
-  height: 100px;
-  margin-bottom: 20px;
-  overflow: hidden;
-  width: 100px;
 `
 
 const FooterWrapper = styled.div`
@@ -119,13 +109,6 @@ class Profile extends Component<Props, void> {
 
   render () {
     const { user, userAddress, isWalletSecured } = this.props
-    let userAvatar = ''
-    if (userAddress) {
-      const lowerAddress = add0x(userAddress)
-      if (ACTIVATE_SECURE_WALLET && isWalletSecured) {
-        userAvatar = <Blockies seed={lowerAddress} size={10} scale={10} />
-      }
-    }
     const cardFooter = (
       <FooterWrapper>
         <Text gray small>
@@ -158,7 +141,7 @@ class Profile extends Component<Props, void> {
           <Card nobackground title="Profile" footer={cardFooter}>
             <Wrapper>
               <EditProfileButton to="/profile/edit">Edit</EditProfileButton>
-              <ProfileAvatar>{userAvatar}</ProfileAvatar>
+              <UserAvatar address={userAddress} />
               <Text bold small>
                 {user.name}
               </Text>
