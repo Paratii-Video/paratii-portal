@@ -42,11 +42,10 @@ export const getAppRootUrl = (env: ?string = 'development'): string => {
   switch (env) {
     case 'production':
       return 'https://portal.paratii.video'
-    case 'test':
-      return 'https://staging.paratii.video'
     case 'staging':
       return 'https://staging.paratii.video'
     case 'development':
+    case 'test':
     default:
       return 'http://localhost:8080'
   }
