@@ -37,7 +37,7 @@ const Icon = styled.div`
 
 class ModalProfile extends Component<Props, Object> {
   setProfile: () => void
-  sendVerifyMail: (string, string) => void
+  sendVerificationMail: (string, string) => void
   handleInputChange: (input: string, e: Object) => void
 
   constructor (props: Props) {
@@ -48,7 +48,7 @@ class ModalProfile extends Component<Props, Object> {
       error: ''
     }
     this.setProfile = this.setProfile.bind(this)
-    this.sendVerifyMail = this.sendVerifyMail.bind(this)
+    this.sendVerificationMail = this.sendVerificationMail.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
   }
 
@@ -58,7 +58,7 @@ class ModalProfile extends Component<Props, Object> {
     if (this.state.email) {
       const userAddress = paratii.eth.getAccount()
       // Send Email Verification
-      this.sendVerifyMail(this.state.email, userAddress)
+      this.sendVerificationMail(this.state.email, userAddress)
       // Create the user
       paratii.users.create({
         id: userAddress,
@@ -76,7 +76,7 @@ class ModalProfile extends Component<Props, Object> {
     this.props.setUserData()
   }
 
-  sendVerifyMail (mail: string, address: string) {
+  sendVerificationMail (mail: string, address: string) {
     var xhttp = new XMLHttpRequest()
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {

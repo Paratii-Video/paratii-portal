@@ -167,8 +167,9 @@ class ModalSetPassword extends Component<Props, State> {
             <Title>Choose a password</Title>
             <Text small gray>
               Please insert a password of <strong>eight</strong> characters or
-              longer, and it must contain at least on <strong>uppercase</strong>
-              letter and on <strong>number</strong>
+              longer, and it must contain at least one{' '}
+              <strong>uppercase</strong>
+              letter and one <strong>number</strong>
             </Text>
             <Icon>
               <PadLockSvg />

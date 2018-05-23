@@ -81,7 +81,6 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
     })
   )
   // this will upload the file to the local IPFS node and report on progress
-  // const uploader = paratii.ipfs.local.add(file)
   const uploader = paratii.vids.uploadAndTranscode(file)
 
   uploader.on('error', function (error) {
