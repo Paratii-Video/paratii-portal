@@ -5,6 +5,9 @@ import SVGIcon from './foundations/SVGIcon'
 import Title from './foundations/Title'
 import Text, { Strong } from './foundations/Text'
 import Card, { CardStyle } from './structures/Card'
+import ProgressBar, {
+  ProgressBarWrapper
+} from 'components/foundations/ProgressBar'
 
 type Props = {}
 
@@ -81,21 +84,13 @@ const VotingValue = styled.div`
   text-align: center;
 `
 
-const VotingBarWrapper = styled.div`
-  border-radius: 2px;
-  display: flex;
-  height: 4px;
-  margin: 25px 0;
+const VotingBarWrapper = styled(ProgressBarWrapper)`
+  background: ${props => props.theme.colors.ProfileCuration.VotingBarTwo};
+  margin: 20px 0 25px;
 `
 
-const VotingBar = styled.div`
-  background: ${props =>
-    props.red
-      ? props.theme.colors.ProfileCuration.VotingBarTwo
-      : props.theme.colors.ProfileCuration.VotingBarOne};
-  flex: 1 1 ${props => props.percentage};
-  height: 100%;
-  text-align: center;
+const VotingBar = styled(ProgressBar)`
+  background: ${props => props.theme.colors.ProfileCuration.VotingBarOne};
 `
 
 const ChallengePeriod = styled.div`
@@ -390,8 +385,7 @@ class Profile extends Component<Props, void> {
                 </VotingValue>
               </VotingValuesWrapper>
               <VotingBarWrapper>
-                <VotingBar percentage="65%" />
-                <VotingBar red percentage="35%" />
+                <VotingBar current="65" total="100" />
               </VotingBarWrapper>
             </Voting>
             <Text small gray>
