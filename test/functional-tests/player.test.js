@@ -7,6 +7,7 @@ import mockEndpoint from '../../mock-server/mockEndpoint'
 
 describe('🎥 Player: @watch', function () {
   const videoElementSelector = '#player video'
+  const playerWrapperSelector = '[data-test-id="player-wrapper"]'
   const overlaySelector = '[data-test-id="video-overlay"]'
   const startScreenIconSelector = '[data-test-id="start-screen-icon"]'
   const controlsSelector = '[data-test-id="player-controls"]'
@@ -50,13 +51,47 @@ describe('🎥 Player: @watch', function () {
           `http://localhost:8080/${embed ? 'embed' : 'play'}/${overrideID ||
             ID}?${query}`
         )
-        browser.execute(() => {
+        browser.execute(playerWrapperSelector => {
           window.PLAYER_TEST_DATA = {
             playing: false,
             paused: false
           }
-          document.body.focus()
-        })
+
+          window.PLAYER_IS_FULLSCREEN = false
+
+          const mockRequestFullscreen = function () {
+            window.PLAYER_IS_FULLSCREEN = true
+            document.fullscreenElement = this
+
+            const fullscreenEvent = new Event('fullscreenchange')
+            document.dispatchEvent(fullscreenEvent)
+          }
+
+          const mockExitFullscreen = () => {
+            window.PLAYER_IS_FULLSCREEN = false
+            document.fullscreenElement = undefined
+
+            const fullscreenEvent = new Event('fullscreenchange')
+            document.dispatchEvent(fullscreenEvent)
+          }
+
+          const playerWrapper = document.querySelector(playerWrapperSelector)
+          if (playerWrapper.requestFullscreen) {
+            playerWrapper.requestFullscreen = mockRequestFullscreen
+          } else if (playerWrapper.mozRequestFullScreen) {
+            playerWrapper.mozRequestFullScreen = mockRequestFullscreen
+          } else if (playerWrapper.webkitRequestFullscreen) {
+            playerWrapper.webkitRequestFullscreen = mockRequestFullscreen
+          }
+
+          if (document.exitFullscreen) {
+            document.exitFullscreen = mockExitFullscreen
+          } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen = mockExitFullscreen
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen = mockExitFullscreen
+          }
+        }, playerWrapperSelector)
         browser.waitUntil(
           () =>
             browser.execute(videoElementSelector => {
@@ -257,20 +292,9 @@ describe('🎥 Player: @watch', function () {
           () => {
             browser.waitUntil(
               () =>
-                browser.execute(videoElementSelector => {
-                  const videoEl = document.querySelector(videoElementSelector)
-                  const fullscreenElement =
-                    document.fullscreenElement ||
-                    document.webkitFullscreenElement ||
-                    document.mozFullScreenElement ||
-                    document.msFullscreenElement
-
-                  if (!fullscreenElement) {
-                    return false
-                  }
-
-                  return fullscreenElement.contains(videoEl)
-                }, videoElementSelector).value,
+                browser.execute(() => {
+                  return window.PLAYER_IS_FULLSCREEN === true
+                }).value,
               undefined,
               'video did not enter fullscreen mode'
             )
@@ -283,15 +307,8 @@ describe('🎥 Player: @watch', function () {
           () => {
             browser.waitUntil(
               () =>
-                browser.execute(
-                  () =>
-                    !(
-                      document.fullscreenElement ||
-                      document.webkitFullscreenElement ||
-                      document.mozFullScreenElement ||
-                      document.msFullscreenElement
-                    )
-                ).value,
+                browser.execute(() => window.PLAYER_IS_FULLSCREEN === false)
+                  .value,
               undefined,
               'video did not exit fullscreen mode'
             )
@@ -307,7 +324,8 @@ describe('🎥 Player: @watch', function () {
         browser.moveToObject(overlaySelector)
         browser.waitAndClick(fullscreenButtonSelector)
         browser.waitUntilVideoIsFullscreen()
-        browser.moveToObject(overlaySelector)
+        browser.waitAndClick(overlaySelector)
+        browser.waitUntilControlsAreVisible()
         browser.waitAndClick(fullscreenButtonSelector)
         browser.waitUntilVideoIsNotFullscreen()
       })
