@@ -267,7 +267,7 @@ class ShareOverlay extends Component<Props, State> {
 
   render () {
     return (
-      <Wrapper data-test-id="share-overlay" show={this.props.show}>
+      <Wrapper show={this.props.show}>
         <ArrowButton
           show={this.state.showEmbed}
           onClick={this.toggleShareContent}
@@ -276,28 +276,18 @@ class ShareOverlay extends Component<Props, State> {
             <SVGIcon icon="icon-arrow" />
           </ArrowButtonIcon>
         </ArrowButton>
-        <CloseButton
-          data-test-id="share-close-button"
-          onClick={this.props.onToggle}
-        >
+        <CloseButton onClick={this.props.onToggle}>
           <SVGIcon color="white" icon="icon-close" />
         </CloseButton>
         <Content show={!this.state.showEmbed}>
           <ShareTitle small>Share this video</ShareTitle>
-          <AnchorLink
-            data-test-id="share-anchor-link"
-            href={this.getUrl()}
-            target="_blank"
-            anchor
-            white
-          >
+          <AnchorLink href={this.getUrl()} target="_blank" anchor white>
             {this.props.videoLabelUrl}
           </AnchorLink>
           <ShareButtons>
             {this.props.shareOptions &&
               this.props.shareOptions.map((share: Object, index: number) => (
                 <Anchor
-                  data-test-id={`${share.label}-share-link`}
                   key={index}
                   href={share.href}
                   title={share.label}

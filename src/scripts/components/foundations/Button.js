@@ -49,9 +49,7 @@ export const ButtonStyleHover = css`
   }
 `
 
-const Button = styled.button.attrs({
-  'data-test-id': props => props['data-test-id']
-})`
+const Button = styled.button`
   ${StyleAnchor} ${ButtonStyleColor} ${ButtonStyleHover} cursor: ${props =>
   props.disabled ? 'initial' : 'pointer'};
   font-size: ${props => (props.anchor ? null : props.theme.fonts.button)};
