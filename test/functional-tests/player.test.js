@@ -5,7 +5,7 @@ import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
 
 import mockEndpoint from '../../mock-server/mockEndpoint'
 
-describe('🎥 Player: @watch', function () {
+describe('🎥 Player:', function () {
   const videoElementSelector = '#player video'
   const playerWrapperSelector = '[data-test-id="player-wrapper"]'
   const overlaySelector = '[data-test-id="video-overlay"]'
