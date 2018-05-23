@@ -55,6 +55,7 @@ const Themes = {
     },
     MainCard: {
       background: Colors.black,
+      border: Colors.grayDark,
       color: Colors.white,
       title: Colors.white,
       subtitle: Colors.white,
