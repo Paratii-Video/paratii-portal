@@ -8,8 +8,7 @@ import Card, { CardStyle } from './structures/Card'
 import ProgressBar, {
   ProgressBarWrapper
 } from 'components/foundations/ProgressBar'
-
-import UserBadge from '../containers/UserBadgeContainer'
+import UserBadge from './widgets/UserBadge'
 
 type Props = {}
 
@@ -30,11 +29,37 @@ const VideoWrapper = styled.div`
   margin-right: 20px;
 `
 
-const PlayInfo = styled(Card)`
+const VideoInfo = styled(Card)`
   width: 100%;
 `
 
-const InfoWrapper = styled.div`
+const VideoInfoHeader = styled.div`
+  border-bottom: 1px solid ${props => props.theme.colors.MainCard.border};
+  padding-bottom: 32px;
+  width: 100%;
+`
+
+const VideoInfoTitle = styled(Title)`
+  margin-bottom: 20px;
+`
+
+const VideoInfoHeaderContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const VideoInfoData = styled.div`
+  display: flex;
+`
+
+const VideoInfoDataItem = styled.div`
+  align-items: center;
+  display: flex;
+  margin-left: 20px;
+`
+
+// Sidebar
+const Sidebar = styled.div`
   display: flex;
   flex: 1 1 410px;
   flex-direction: column;
@@ -204,19 +229,44 @@ const ChallengeSequenceDot = styled.span`
 
 class Profile extends Component<Props, void> {
   render () {
+    const MockAvatar = (
+      <img src="http://www.onrouteforward.com/uploads/6/0/0/8/60080487/6808024.jpg" />
+    )
     return (
       <Wrapper>
         <VideoWrapper>
           <Text>Video</Text>
-          <PlayInfo>
-            <Title small>Video title</Title>
-            <UserBadge
-              userName="Susan Medelin"
-              userDate="Published on July 4, 2007."
-            />
-          </PlayInfo>
+          <VideoInfo nobackground>
+            <VideoInfoHeader>
+              <VideoInfoTitle small bold>
+                Video title
+              </VideoInfoTitle>
+              <VideoInfoHeaderContent>
+                <UserBadge
+                  userAvatar={MockAvatar}
+                  userName="Susan Medelin"
+                  userDate="Since 2018"
+                />
+                <VideoInfoData>
+                  <VideoInfoDataItem>
+                    <Text gray>10.000 views</Text>
+                  </VideoInfoDataItem>
+                  <VideoInfoDataItem>
+                    <Text pink>548 flags</Text>
+                    <SVGIcon
+                      color="pink"
+                      icon="icon-flag"
+                      width="16px"
+                      height="18px"
+                      margin="0 0 0 10px"
+                    />
+                  </VideoInfoDataItem>
+                </VideoInfoData>
+              </VideoInfoHeaderContent>
+            </VideoInfoHeader>
+          </VideoInfo>
         </VideoWrapper>
-        <InfoWrapper>
+        <Sidebar>
           <ChallengePeriod inReveal>
             <Text big>
               <Strong>challenged period</Strong> ends in
@@ -418,7 +468,7 @@ class Profile extends Component<Props, void> {
               believe that this video broke one of our policies
             </Text>
           </InfoStatus>
-        </InfoWrapper>
+        </Sidebar>
       </Wrapper>
     )
   }
