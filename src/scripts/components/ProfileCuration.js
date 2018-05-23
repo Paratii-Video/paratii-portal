@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
+import Colors from './foundations/base/Colors'
 import { ButtonColor } from './foundations/Button'
 import SVGIcon from './foundations/SVGIcon'
 import Title from './foundations/Title'
@@ -35,6 +36,7 @@ const VideoInfo = styled(Card)`
 
 const VideoInfoHeader = styled.div`
   border-bottom: 1px solid ${props => props.theme.colors.MainCard.border};
+  margin-bottom: 50px;
   padding-bottom: 32px;
   width: 100%;
 `
@@ -56,6 +58,22 @@ const VideoInfoDataItem = styled.div`
   align-items: center;
   display: flex;
   margin-left: 20px;
+`
+
+const VideoInfoContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const VideoInfoContentItem = styled.div`
+  margin-bottom: 45px;
+`
+
+const ProofText = styled(Text)`
+  background: ${Colors.grayDark};
+  border-radius: 4px;
+  margin-top: 10px;
+  padding: 24px;
 `
 
 // Sidebar
@@ -264,6 +282,32 @@ class Profile extends Component<Props, void> {
                 </VideoInfoData>
               </VideoInfoHeaderContent>
             </VideoInfoHeader>
+            <VideoInfoContent>
+              <VideoInfoContentItem>
+                <Text>Proof-of-ownership</Text>
+                <ProofText purple bold>
+                  I have the same video on youtube
+                  https://www.youtube.com/watch?v=tGYIBWlJcro Please check out
+                  before you watch it here
+                </ProofText>
+              </VideoInfoContentItem>
+              <VideoInfoContentItem>
+                <Text>Description</Text>
+                <Text gray small>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  et risus egestas, facilisis justo nec, aliquam enim. Sed
+                  lobortis mi sodales massa euismod sodales. Praesent lacinia ac
+                  nulla eu mollis. Praesent vitae consequat massa. Morbi sed
+                  massa vitae ligula tincidunt rutrum.
+                </Text>
+              </VideoInfoContentItem>
+              <VideoInfoContentItem>
+                <Text>Tags</Text>
+                <Text gray small>
+                  #Loremipsum #dolorsit #amet #consectetur #adipiscing{' '}
+                </Text>
+              </VideoInfoContentItem>
+            </VideoInfoContent>
           </VideoInfo>
         </VideoWrapper>
         <Sidebar>
