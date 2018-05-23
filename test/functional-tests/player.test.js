@@ -527,7 +527,7 @@ describe('🎥 Player:', function () {
       const walletInfoAddressSelector = '[data-test-id="wallet-info-address"]'
       const walletInfoCloseButtonSelector =
         '[data-test-id="wallet-info-close-button"]'
-      const ptiBalanceSelector = '[data-test-id="pti-balance"]'
+      const ptiBalanceSelector = '[data-test-id="pti-balance-wrapper"]'
 
       before(() => {
         browser.addCommand(

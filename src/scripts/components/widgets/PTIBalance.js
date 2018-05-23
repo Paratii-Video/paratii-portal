@@ -45,7 +45,7 @@ class PTIBalance extends React.Component<Props, void> {
     const { balance, color } = this.props
 
     return (
-      <Wrapper color={color} data-test-id="pti-balance">
+      <Wrapper color={color} data-test-id="pti-balance-wrapper">
         <NumberWrapper>
           <TruncatedText data-test-id="pti-balance" maxWidth="60px">
             {balance}
