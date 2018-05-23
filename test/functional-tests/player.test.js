@@ -384,7 +384,7 @@ describe('🎥 Player: @watch', function () {
       })
     })
 
-    describe.only('video quality', () => {
+    describe('video quality', () => {
       const qualityButtonSelector = '[data-test-id="playback-levels-button"]'
       const qualityMenuSelector = '[data-test-id="playback-levels-popover"]'
       const qualityCloseButtonSelector =
