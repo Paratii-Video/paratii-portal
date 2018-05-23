@@ -23,7 +23,6 @@ jobs:
       - run:
           command: yarn run build:test
           background: true
-      - run: yarn run setup-dev-env
       - run:
           command: yarn run server:test
           background: true
