@@ -122,7 +122,6 @@
     "mocha": "^4.0.1",
     "node-sass": "^4.9.0",
     "nodemon": "^1.14.11",
-    "paratii-db": "github:Paratii-Video/paratii-db#74d7b739fc131c55c81997c40a6d8b2278ac6f66",
     "postcss-cssnext": "^3.0.2",
     "postcss-loader": "^2.0.9",
     "prettier-standard": "^8.0.0",
