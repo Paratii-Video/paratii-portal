@@ -7,10 +7,6 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run:
-          name: Download and start X
-          command: sudo apt-get update && sudo apt-get install --fix-missing -y x11vnc && x11vnc -forever -nopw
-          background: true
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
@@ -32,7 +28,7 @@ jobs:
           command: yarn run server:test
           background: true
       - run: node src/scripts/waitForServer.js    
-      - run: yarn run chimp-test
+      - run: yarn run chimp-circleci-test
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
