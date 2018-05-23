@@ -14,6 +14,7 @@ import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 import { Link } from 'react-router-dom'
 import Text from './foundations/Text'
 import SVGIcon from './foundations/SVGIcon'
+import UserBadge from './widgets/UserBadge'
 
 type Props = {
   children: Object,
@@ -46,24 +47,6 @@ const UserWrapper = styled.div`
   flex-direction: column;
   margin-top: ${MAINHEADER_LOGO_HEIGHT};
   padding: 40px 30px;
-`
-
-const UserInfo = styled.div`
-  align-items: center;
-  display: flex;
-`
-
-const UserAvatar = styled.div`
-  background-color: ${props => props.theme.colors.header.color};
-  border-radius: 100%;
-  flex: 0 0 40px;
-  height: 40px;
-  margin-right: 10px;
-  overflow: hidden;
-`
-
-const UserText = styled.div`
-  flex: 1 1 100%;
 `
 
 const UserPTI = styled.div`
@@ -191,15 +174,11 @@ class UserNav extends Component<Props, void> {
         }}
       >
         <UserWrapper>
-          <UserInfo>
-            <UserAvatar>{avatarUser}</UserAvatar>
-            <UserText>
-              <Text small>{this.props.showUserNav} User 12610549</Text>
-              <Text tiny gray>
-                Paratii member since 2018
-              </Text>
-            </UserText>
-          </UserInfo>
+          <UserBadge
+            userAvatar={avatarUser}
+            userName="User 12610549"
+            userDate="Paratii member since 2018"
+          />
           <UserPTI>
             <UserPTIValuesWrapper>
               <UserPTIValue>
