@@ -265,6 +265,10 @@ describe('🎥 Player: @watch', function () {
                     document.mozFullScreenElement ||
                     document.msFullscreenElement
 
+                  if (!fullscreenElement) {
+                    return false
+                  }
+
                   return fullscreenElement.contains(videoEl)
                 }, videoElementSelector).value,
               undefined,
