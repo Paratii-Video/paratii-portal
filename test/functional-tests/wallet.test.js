@@ -13,7 +13,7 @@ import {
 } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
-describe('Wallet:', function () {
+describe('Wallet: @watch', function () {
   let userAccount
 
   beforeEach(function () {
@@ -54,7 +54,7 @@ describe('Wallet:', function () {
   //   assert.equal(balance, '21M')
   // })
 
-  it('restore your wallet using a seed', async function () {
+  it.only('restore your wallet using a seed', async function () {
     browser.url(`http://localhost:8080`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
@@ -71,8 +71,7 @@ describe('Wallet:', function () {
     browser.setValue('[name="input-new-password"]', password)
     browser.waitAndClick('[name="input-confirm-password"]')
     browser.setValue('[name="input-confirm-password"]', password)
-    browser.waitForEnabled('[data-test-id="continue"]')
-    browser.click('[data-test-id="continue"]')
+    browser.waitAndClick('[data-test-id="continue"]')
 
     // Get address from browser
     const newAddress = browser.execute(function () {
@@ -166,15 +165,15 @@ describe('Wallet:', function () {
     const toAddress = web3.eth.accounts[2]
     browser.sendSomePTI(userAccount, 1412)
     // open the send PTI dialog
-    browser.click('a[href="#pti"]')
+    browser.waitAndClick('a[href="#pti"]')
     browser.waitForClickable('#send-pti')
-    browser.click('#send-pti')
+    browser.waitAndClick('#send-pti')
     browser.waitForClickable('[name="wallet_friend_number"]')
     browser.setValue('[name="wallet_friend_number"]', toAddress)
     browser.setValue('[name="wallet_amount"]', '5')
     browser.setValue('[name="tx_description"]', description)
     browser.setValue('[name="user_password"]', 'password')
-    browser.click('#send_trans_btn')
+    browser.waitAndClick('#send_trans_btn')
 
     // now check if the amount is updated correctly
     browser.waitForExist('#pti_amount')
@@ -185,7 +184,7 @@ describe('Wallet:', function () {
     })
 
     // we should see our transaction description in the transaction history
-    browser.click('#transaction-history')
+    browser.waitAndClick('#transaction-history')
 
     browser.waitForClickable('.transaction-to')
     browser.waitUntil(function () {
@@ -206,13 +205,13 @@ describe('Wallet:', function () {
     browser.waitForExist('#eth_amount')
     // open the send ETH dialog
     browser.waitForClickable('#send-eth')
-    browser.click('#send-eth')
+    browser.waitAndClick('#send-eth')
     browser.waitForClickable('[name="wallet_amount"]')
     browser.setValue('[name="wallet_friend_number"]', web3.eth.accounts[1])
     browser.setValue('[name="wallet_amount"]', '1.234')
     browser.setValue('[name="tx_description"]', description)
     browser.setValue('[name="user_password"]', 'password')
-    browser.click('#send_trans_btn')
+    browser.waitAndClick('#send_trans_btn')
 
     // now check if the amount is updated correctly
     browser.waitForExist('#eth_amount')
@@ -223,7 +222,7 @@ describe('Wallet:', function () {
     }, 10000)
 
     // we should see our transaction description in the transaction history
-    browser.click('#transaction-history')
+    browser.waitAndClick('#transaction-history')
     browser.waitForExist('.transaction-description')
     assert.equal(browser.getText('.transaction-description'), description)
 
