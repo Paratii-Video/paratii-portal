@@ -634,6 +634,8 @@ class Play extends Component<Props, State> {
   }
 
   getAutoPlaySetting (): boolean {
+    const { isEmbed } = this.props
+
     const parsedQueryString = queryString.parse(location.search)
 
     const hasAutoPlayParam: boolean = Object.prototype.hasOwnProperty.call(
@@ -642,7 +644,10 @@ class Play extends Component<Props, State> {
     )
 
     if (!hasAutoPlayParam) {
-      return false
+      if (isEmbed) {
+        return false
+      }
+      return true
     }
 
     const paramValue: string = parsedQueryString[PLAYER_PARAMS.AUTOPLAY]
