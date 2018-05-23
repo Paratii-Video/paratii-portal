@@ -4,7 +4,7 @@ const config = Object.assign({}, require('../chimp.config.js'), {
     waitforTimeout: 70000,
     desiredCapabilities: {
       chromeOptions: {
-        args: ['headless', 'disable-gpu']
+        args: ['disable-gpu']
       },
       isHeadless: true
     }
