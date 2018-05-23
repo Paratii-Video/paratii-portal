@@ -837,7 +837,7 @@ describe('🎥 Player:', function () {
   }
 
   describe('portal player', () => {
-    // runPlayerExpectations({ embed: false })
+    runPlayerExpectations({ embed: false })
   })
 
   describe('embed player', () => {
