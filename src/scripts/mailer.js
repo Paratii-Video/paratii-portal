@@ -4,7 +4,6 @@ const nodemailer = require('nodemailer')
 const { getParatiiConfig } = require('./utils/AppUtils.js')
 
 const config = getParatiiConfig(process.env.NODE_ENV, 'server')
-
 const paratii = new Paratii(config)
 
 var transporter
