@@ -11,6 +11,7 @@ import ProfileContainer from 'containers/ProfileContainer'
 
 import ProfileEditContainer from 'containers/ProfileEditContainer'
 import ProfileCurationContainer from 'containers/ProfileCurationContainer'
+import ProfileMyVideosContainer from 'containers/ProfileMyVideosContainer'
 
 import PlayContainer from 'containers/PlayContainer'
 import VideoManager from 'containers/VideoManagerContainer'
@@ -107,6 +108,10 @@ class App extends Component<Props, State> {
                 <Route
                   path={`${match.url}profile/curation`}
                   component={ProfileCurationContainer}
+                />
+                <Route
+                  path={`${match.url}profile/my-videos`}
+                  component={ProfileMyVideosContainer}
                 />
                 <Route
                   path={`${match.url}upload/:id`}

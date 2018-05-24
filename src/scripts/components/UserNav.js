@@ -229,7 +229,10 @@ class UserNav extends Component<Props, void> {
               </UserNavListItemLink>
             </UserNavListItem>
             <UserNavListItem>
-              <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
+              <UserNavListItemLink
+                to="/profile/my-videos"
+                onClick={this.props.closeUserNav}
+              >
                 <UserNavListItemIcon>
                   <SVGIcon icon="icon-myvideos" />
                 </UserNavListItemIcon>

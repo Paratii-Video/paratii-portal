@@ -183,6 +183,10 @@ const Themes = {
       VotingBarOne: Colors.green,
       VotingBarTwo: Colors.pink,
       ChallengeSequenceDot: Colors.white
+    },
+    ProfileMyVideos: {
+      headerImageBackground: Colors.blackDark,
+      headerInfoBackground: Colors.blackAlt
     }
   }
 }
