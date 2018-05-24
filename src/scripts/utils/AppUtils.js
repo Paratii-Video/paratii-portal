@@ -94,6 +94,7 @@ export const getParatiiConfig = (env: ?string, scope: ?string): Object => {
       config.eth.registryAddress = registryAddress
     } else {
       console.log('getting registry from /tmp/registry.json')
+      // $FlowFixMe
       const registryConfig = require('/tmp/registry.json')
       config.eth.registryAddress = registryConfig.registryAddress
 
