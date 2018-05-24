@@ -367,13 +367,9 @@ class UploadListItem extends Component<Props, Object> {
       }
     }
 
-    // Progress
-    const progress = videoProgress(video)
-
     // Media box
     let poster = ''
     let videoPoster = ''
-    let videoMediaBox = null
     const isPublished = isVideoPublished(video)
     const isPublishable = isVideoPublishable(video)
     const duration = videoDuration(video)
@@ -398,58 +394,6 @@ class UploadListItem extends Component<Props, Object> {
         'https://gateway.paratii.video/ipfs/' + video.ipfsHash + '/' + poster
     }
 
-    if (isPublished) {
-      videoMediaBox = (
-        <VideoMedia>
-          <VideoMediaLink to={urlToPlay}>
-            <VideoMediaOverlay>
-              <VideoMediaIcon>
-                <SVGIcon color="white" icon="icon-player-play" />
-              </VideoMediaIcon>
-              {durationBox}
-            </VideoMediaOverlay>
-            <VideoImage source={videoPoster} />
-          </VideoMediaLink>
-        </VideoMedia>
-      )
-    } else if (isPublishable) {
-      videoMediaBox = (
-        <VideoMedia>
-          <div>
-            <VideoMediaOverlay>{durationBox}</VideoMediaOverlay>
-            <VideoImage source={videoPoster} />
-          </div>
-        </VideoMedia>
-      )
-    } else {
-      videoMediaBox = (
-        <VideoMedia>
-          <div>
-            <VideoMediaOverlay>{durationBox}</VideoMediaOverlay>
-            <VideoImage source={videoPoster} />
-          </div>
-        </VideoMedia>
-      )
-    }
-
-    let publishButton = ''
-    if (!isPublished) {
-      publishButton = (
-        <Button
-          data-test-id="video-submit-publish"
-          type="submit"
-          onClick={this.onPublishVideo}
-          disabled={!isPublishable}
-          purple
-        >
-          Publish
-        </Button>
-      )
-    } else {
-      // FIXME the value is hardcoded
-      publishButton = <LabelStake>5 PTI Staked</LabelStake>
-    }
-
     return (
       <Item data-test-id="uploader-item">
         <ItemHeader open={this.state.open} onClick={this.toggleOpen}>
@@ -466,10 +410,27 @@ class UploadListItem extends Component<Props, Object> {
                 {statusMessage}
               </ItemHeaderStatus>
             </ItemHeaderData>
-            <ItemHeaderButtons>{publishButton}</ItemHeaderButtons>
+            <ItemHeaderButtons>
+              {!isPublished ? (
+                <Button
+                  data-test-id="video-submit-publish"
+                  type="submit"
+                  onClick={this.onPublishVideo}
+                  disabled={!isPublishable}
+                  purple
+                >
+                  Publish
+                </Button>
+              ) : (
+                <LabelStake>5 PTI Staked</LabelStake>
+              )}
+            </ItemHeaderButtons>
           </ItemHeaderContent>
           <ItemHeaderBar>
-            <VideoProgressBar progress={progress + '%'} nopercentual />
+            <VideoProgressBar
+              progress={videoProgress(video) + '%'}
+              nopercentual
+            />
           </ItemHeaderBar>
         </ItemHeader>
         <ItemContent offsetHeight={this.handleHeight}>
@@ -548,7 +509,26 @@ class UploadListItem extends Component<Props, Object> {
               </FormButtons>
             </Form>
             <PreviewBox>
-              {videoMediaBox}
+              {isPublished ? (
+                <VideoMedia>
+                  <VideoMediaLink to={urlToPlay}>
+                    <VideoMediaOverlay>
+                      <VideoMediaIcon>
+                        <SVGIcon color="white" icon="icon-player-play" />
+                      </VideoMediaIcon>
+                      {durationBox}
+                    </VideoMediaOverlay>
+                    <VideoImage source={videoPoster} />
+                  </VideoMediaLink>
+                </VideoMedia>
+              ) : (
+                <VideoMedia>
+                  <div>
+                    <VideoMediaOverlay>{durationBox}</VideoMediaOverlay>
+                    <VideoImage source={videoPoster} />
+                  </div>
+                </VideoMedia>
+              )}
               <Text gray small>
                 By clicking on the “Publish” button you acknowledge that you
                 agree to Paratii’s Terms of Service and Community Guidelines.
