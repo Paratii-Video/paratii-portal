@@ -38,10 +38,10 @@ class MailVerify extends Component<Props, void> {
         const response = JSON.parse(xhttp.responseText)
         console.log(response)
         if (response.events && response.events.LogDistribute) {
-          console.log('good')
           const redeemPTI = response.events.LogDistribute.returnValues._amount
           this.setState({
-            message: `You have earned ${redeemPTI} PTI`
+            message: `You have earned ${redeemPTI} PTI`,
+            error: ''
           })
         } else {
           this.setState({
@@ -56,7 +56,6 @@ class MailVerify extends Component<Props, void> {
   }
 
   render () {
-    console.log(this.state.message)
     return (
       <Wrapper>
         <Title purple>Mail verification</Title>
