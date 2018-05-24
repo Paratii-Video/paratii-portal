@@ -245,7 +245,7 @@ describe('💰 Wallet:', function () {
 })
 
 describe('Voucher:', function () {
-  it('redeem a voucher', async function (done) {
+  it.skip('redeem a voucher', async function (done) {
     // Generate a random voucher
     const voucherCode11 = Math.random()
       .toString(36)
