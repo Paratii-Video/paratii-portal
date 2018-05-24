@@ -8,8 +8,9 @@ const {
 
 const { getAppRootUrl } = require('../../scripts/utils/AppUtils')
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 module.exports = {
+  // send mail url looks like this
+  // http://localhost:8080/mail/send?toETH=0xCbe4f07b343171ac37055B25a5266f48f6945b7d&to=jellegerbrandy@gmail.com
   send: (req, res, next) => {
     sendMail(
       req.query.to,
@@ -29,7 +30,6 @@ module.exports = {
   sendVerificationEmail: (req, res, next) => {
     const amount = 20
     const reason = 'email_verification'
-
     generateVoucher(amount, reason)
       .then(result => {
         console.log(result)
@@ -46,8 +46,7 @@ module.exports = {
         const url = `${getAppRootUrl(
           process.env.NODE_ENV
         )}/verify?${querystring.stringify(obj)}`
-
-        console.log('url: ', url)
+        console.log(url)
 
         sendMail(
           req.query.to,

@@ -86,13 +86,23 @@ export const getParatiiConfig = (env: ?string, scope: ?string): Object => {
       break
   }
 
-  // If a registry address is not given in the config file, we read it from the environment
+  // we try to get the registry address either from REGISTRY_ADDRESS environemnt definedVariable
+  // or if that changes, from /tmp/registry.json
   if (config.eth.registryAddress === undefined) {
     const registryAddress = process.env.REGISTRY_ADDRESS
     if (registryAddress) {
       config.eth.registryAddress = registryAddress
-      return config
+    } else {
+      console.log('getting registry from /tmp/registry.json')
+      const registryConfig = require('/tmp/registry.json')
+      config.eth.registryAddress = registryConfig.registryAddress
+
+      console.log(registryConfig)
     }
+    if (!config.eth.registryAddress) {
+      throw Error('No registry address configured')
+    }
+    return config
   }
 
   return config
