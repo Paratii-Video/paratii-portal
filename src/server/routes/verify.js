@@ -1,7 +1,7 @@
 import { Paratii } from 'paratii-js/dist/paratii'
 import { getParatiiConfig } from 'utils/AppUtils'
 
-const paratiiConfig = getParatiiConfig(process.env.NODE_ENV)
+const paratiiConfig = getParatiiConfig(process.env.NODE_ENV, 'server')
 
 if (process.env.ENV === 'development') {
   const registryFilename = require('/tmp/registry.json')

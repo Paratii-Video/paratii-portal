@@ -31,8 +31,10 @@ jobs:
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              yarn build:staging
               ./deploy.sh production
             fi
             if [ "${CIRCLE_BRANCH}" == "dev" ]; then
+              yarn build
               ./deploy.sh staging
             fi

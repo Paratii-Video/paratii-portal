@@ -7,8 +7,9 @@
   "license": "GPL-3.0",
   "scripts": {
     "analyze": "yarn run clean && yarn run prep && yarn run compile:sass && NODE_ENV=production ANALYZE=1 node --max_old_space_size=4096 node_modules/.bin/webpack --progress --colors",
-    "build": "yarn run clean && yarn run prep && yarn run compile:sass && NODE_ENV=production node --max_old_space_size=4096 node_modules/.bin/webpack --progress --colors",
+    "build": "yarn run build:production",
     "build:dev": "yarn run clean && yarn run prep && yarn run compile:sass && NODE_ENV=development node_modules/.bin/webpack --watch --colors --progress",
+    "build:production": "yarn run clean && yarn run prep && yarn run compile:sass && NODE_ENV=production node --max_old_space_size=4096 node_modules/.bin/webpack --progress --colors",
     "build:test": "yarn run clean && yarn run prep && NODE_ENV=test node --max_old_space_size=4096 node_modules/.bin/webpack --progress --colors",
     "build:staging": "yarn run clean && yarn run prep && yarn run compile:sass && NODE_ENV=staging node --max_old_space_size=4096 node_modules/.bin/webpack --progress --colors",
     "clean": "rm -rf build/",

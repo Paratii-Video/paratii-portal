@@ -24,13 +24,6 @@ module.exports = {
         }
       }
     )
-    // .then((response) => {
-    //   res.send(response)
-    // }).catch((e) => {
-    //   res.sendStatus(500).send(e)
-    // })
-
-    console.log(req.query)
   },
 
   sendVerificationEmail: (req, res, next) => {
@@ -45,7 +38,6 @@ module.exports = {
           amount: amount.toString(),
           reason: reason.toString(),
           salt: result.salt,
-          hash: result.hash,
           v: result.signature.v,
           r: result.signature.r,
           s: result.signature.s
@@ -55,26 +47,19 @@ module.exports = {
           process.env.NODE_ENV
         )}/verify?${querystring.stringify(obj)}`
 
-        // const url =
-        // `${getAppRootUrl(process.env.NODE_ENV)}/verify?toETH=${req.query.toETH}&
-        // amount=${amount}&
-        // reason=${reason}&
-        // salt=${result.salt}&
-        // hash=${result.hash}&
-        // v=${result.signature.v}&
-        // r=${result.signature.r}&
-        // s=${result.signature.s}`
-
         console.log('url: ', url)
-        // res.send(url)
+
         sendMail(
           req.query.to,
           'Verify your Paratii Account',
-          `hello, please click the following link to verify your account ${url.replace(
-            / /g,
-            ''
-          )}`,
-          `<p> hello, please click the link to verify <a href="${url}">${url}</a></p>`,
+          'Thank you for registering at Paratii! Click the link below to confirm your e-mail and earn 25 PTI, enough to upload 5 videos.' +
+            '\n\n' +
+            `${url.replace(/ /g, '')}`,
+          '<p>' +
+            'Thank you for registering at Paratii! Click the link below to confirm your e-mail and earn 25 PTI, enough to upload 5 videos.' +
+            '</p>' +
+            '\n\n' +
+            `<p><a href="${url}">confirm your e-mail</a></p>`,
           (err, info) => {
             if (err) {
               res.send(err)
@@ -110,11 +95,12 @@ module.exports = {
         if (tx && tx.events) {
           console.log('LogDistribute: ', tx.events.LogDistribute)
         }
+        res.setHeader('Content-Type', 'application/json')
         res.send(tx)
       })
       .catch(e => {
         console.log('e:', e)
-        res.send(e)
+        res.send({ error: e.message })
       })
   }
 }
