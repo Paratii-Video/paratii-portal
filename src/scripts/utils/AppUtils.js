@@ -95,11 +95,14 @@ export const getParatiiConfig = (env: ?string, scope: ?string): Object => {
     } else {
       console.log('getting registry from /tmp/registry.json')
       // $FlowFixMe
-      const registryConfig = require('/tmp/registry.json')
-      config.eth.registryAddress = registryConfig.registryAddress
-
-      console.log(registryConfig)
+      try {
+        const registryConfig = require('/tmp/registry.json')
+        config.eth.registryAddress = registryConfig.registryAddress
+      } catch (e) {
+        console.log(e)
+      }
     }
+
     if (!config.eth.registryAddress) {
       throw Error('No registry address configured')
     }
