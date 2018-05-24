@@ -285,6 +285,9 @@ class Profile extends Component<Props, void> {
             <VideoInfoContent>
               <VideoInfoContentItem>
                 <Text>Proof-of-ownership</Text>
+                <Text gray small>
+                  The user wrote this to proof its ownership
+                </Text>
                 <ProofText purple bold>
                   I have the same video on youtube
                   https://www.youtube.com/watch?v=tGYIBWlJcro Please check out

@@ -221,41 +221,41 @@ class UserNav extends Component<Props, void> {
         <UserNavListWrapper>
           <UserNavList>
             <UserNavListItem>
-              <UserNavListItemLink to="/">
+              <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
                 <UserNavListItemIcon>
-                  <SVGIcon icon="icon-bucket" />
+                  <SVGIcon icon="icon-profile" />
                 </UserNavListItemIcon>
                 Profile
               </UserNavListItemLink>
             </UserNavListItem>
             <UserNavListItem>
-              <UserNavListItemLink to="/">
+              <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
                 <UserNavListItemIcon>
-                  <SVGIcon icon="icon-bucket" />
+                  <SVGIcon icon="icon-myvideos" />
                 </UserNavListItemIcon>
                 My Videos
               </UserNavListItemLink>
             </UserNavListItem>
             <UserNavListItem>
-              <UserNavListItemLink to="/">
+              <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
                 <UserNavListItemIcon>
-                  <SVGIcon icon="icon-bucket" />
+                  <SVGIcon icon="icon-fav" />
                 </UserNavListItemIcon>
                 My Favorites
               </UserNavListItemLink>
             </UserNavListItem>
             <UserNavListItem>
-              <UserNavListItemLink to="/">
+              <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
                 <UserNavListItemIcon>
-                  <SVGIcon icon="icon-bucket" />
+                  <SVGIcon icon="icon-myvideos" />
                 </UserNavListItemIcon>
                 Finances
               </UserNavListItemLink>
             </UserNavListItem>
             <UserNavListItem>
-              <UserNavListItemLink to="/">
+              <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
                 <UserNavListItemIcon>
-                  <SVGIcon icon="icon-bucket" />
+                  <SVGIcon icon="icon-settings" />
                 </UserNavListItemIcon>
                 Settings
               </UserNavListItemLink>
@@ -263,7 +263,7 @@ class UserNav extends Component<Props, void> {
             <UserNavListItem>
               <UserNavListItemNoLink>
                 <UserNavListItemIcon>
-                  <SVGIcon icon="icon-bucket" />
+                  <SVGIcon icon="icon-myvideos" />
                 </UserNavListItemIcon>
                 Curation
               </UserNavListItemNoLink>
