@@ -148,65 +148,59 @@ class FilesUploader extends Component<Props, Object> {
   }
 
   render () {
-    let uploaderBox = ''
-    if (this.props.showCard) {
-      uploaderBox = (
-        <Card
-          {...this.props}
-          nopadding
-          className={this.state.dragClass}
-          footer={
-            <FooterWrapper>
-              <InputText
-                label="(Not working yet) Or upload from Youtube or Vimeo"
-                helper="i.e.: http://youtube.com/videoID or http://vimeo.com/videoID"
-                error={this.state.inputTextError}
-                disabled
-              />
-            </FooterWrapper>
-          }
-        >
-          <InputFile
-            type="file"
-            onClick={this.onCheck}
-            onChange={this.onFileChosen}
-            onDragEnd={this.onDrag}
-          />
-          <UploadCover>
-            <Title>Upload video</Title>
-            <UploadCoverIcon>
-              <Icon>
-                <FilesUploaderSvg />
-              </Icon>
-            </UploadCoverIcon>
-            <UploadCoverText>
-              <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
-              choose a file
-            </UploadCoverText>
-          </UploadCover>
-        </Card>
-      )
-    } else {
-      uploaderBox = (
-        <UploaderWrapper>
-          <InputFile
-            type="file"
-            onClick={this.onCheck}
-            onChange={this.onFileChosen}
-            onDragEnd={this.onDrag}
-          />
-          <UploadCover>
-            <UploadCoverIcon />
-            <UploadCoverText>
-              <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
-              choose a file
-            </UploadCoverText>
-          </UploadCover>
-        </UploaderWrapper>
-      )
-    }
-
-    return uploaderBox
+    const showcard = this.props.showCard
+    return showcard ? (
+      <Card
+        {...this.props}
+        nopadding
+        className={this.state.dragClass}
+        footer={
+          <FooterWrapper>
+            <InputText
+              label="(Not working yet) Or upload from Youtube or Vimeo"
+              helper="i.e.: http://youtube.com/videoID or http://vimeo.com/videoID"
+              error={this.state.inputTextError}
+              disabled
+            />
+          </FooterWrapper>
+        }
+      >
+        <InputFile
+          type="file"
+          onClick={this.onCheck}
+          onChange={this.onFileChosen}
+          onDragEnd={this.onDrag}
+        />
+        <UploadCover>
+          <Title>Upload video</Title>
+          <UploadCoverIcon>
+            <Icon>
+              <FilesUploaderSvg />
+            </Icon>
+          </UploadCoverIcon>
+          <UploadCoverText>
+            <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
+            choose a file
+          </UploadCoverText>
+        </UploadCover>
+      </Card>
+    ) : (
+      <UploaderWrapper>
+        <InputFile
+          type="file"
+          onClick={this.onCheck}
+          onChange={this.onFileChosen}
+          onDragEnd={this.onDrag}
+        />
+        <UploadCover>
+          <UploadCoverIcon />
+          <UploadCoverText>
+            <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
+            choose a file
+          </UploadCoverText>
+        </UploadCover>
+      </UploaderWrapper>
+    )
   }
 }
 
