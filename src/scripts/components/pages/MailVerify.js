@@ -26,7 +26,7 @@ class MailVerify extends Component<Props, void> {
         // Notification mail sent!
         const response = JSON.parse(xhttp.responseText)
         console.log(response)
-        if (response.events.LogDistribute) {
+        if (response.events && response.events.LogDistribute) {
           console.log('good')
           console.log(response)
           const redeemPTI = response.events.LogDistribute.returnValues._amount
