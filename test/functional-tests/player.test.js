@@ -95,7 +95,7 @@ describe('🎥 Player:', function () {
       browser.waitForText('main h1', 'Oooooops, page not found')
     })
 
-    it('does not render a profile button', function () {
+    it.skip('does not render a profile button', function () {
       browser.url(`http://localhost:8080/play/${videoId}`)
       // browser.waitUntilVideoIsPlaying()
       browser.waitAndClick('[data-test-id="video-overlay"]')
@@ -113,12 +113,12 @@ describe('🎥 Player:', function () {
       browser.waitUntilVideoIsPlaying()
     })
 
-    it('shows the video title on the overlay', function () {
+    it.skip('shows the video title on the overlay', function () {
       browser.url(`http://localhost:8080/embed/${videoId}`)
       browser.waitForText('[data-test-id="video-overlay"]', 'Test 1')
     })
 
-    it('renders a profile button', function () {
+    it.skip('renders a profile button', function () {
       browser.url(`http://localhost:8080/embed/${videoId}`)
       browser.waitForClickable('[data-test-id="overlay-profile-button"]')
     })
