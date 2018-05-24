@@ -99,9 +99,7 @@ export const getParatiiConfig = (env: ?string, scope: ?string): Object => {
         const registryConfig = require(registryConfigPath)
         config.eth.registryAddress = registryConfig.registryAddress
       } catch (e) {
-        console.log(
-          `WARNING: no registry address configured (perhaps because of this error: ${e})`
-        )
+        console.log(`WARNING: no registry address configured`)
       }
     }
 
