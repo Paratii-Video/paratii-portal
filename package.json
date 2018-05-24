@@ -41,7 +41,7 @@
     "setup-dev-env": "node src/scripts/setupDevEnv.js",
     "unit-test": "NODE_ENV=test karma start karma.conf.js",
     "unit-test:dev": "yarn run unit-test -- --single-run false",
-    "unit-test-circleci": "NODE_ENV=test karma start .circleci/karma.circleci.conf.js"
+    "unit-test-circleci": "yarn run setup-dev-env && NODE_ENV=test karma start .circleci/karma.circleci.conf.js"
   },
   "babel": {
     "env": {
