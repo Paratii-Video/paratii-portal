@@ -7,7 +7,6 @@ import {
   restoredAddress,
   address,
   password,
-  voucherCode11,
   voucherAmount11,
   voucherAmountInitial11,
   createKeystore
@@ -247,25 +246,37 @@ describe('💰 Wallet:', function () {
 
 describe('Voucher:', function () {
   it('redeem a voucher', async function (done) {
+    // Generate a random voucher
+    const voucherCode11 = Math.random()
+      .toString(36)
+      .substring(3)
     browser.url(`http://localhost:8080`)
     createKeystore()
     browser.url(`http://localhost:8080/voucher`)
     let vouchers = ''
     let token = ''
-    paratii.eth.getContract('Vouchers').then(function (results) {
-      vouchers = results
-    })
-    paratii.eth.getContract('ParatiiToken').then(function (results) {
-      token = results
-      token.methods
-        .transfer(vouchers.options.address, voucherAmountInitial11)
-        .send()
-    })
+    paratii.eth
+      .getContract('Vouchers')
+      .then(function (results) {
+        vouchers = results
+      })
+      .then(
+        paratii.eth
+          .getContract('ParatiiToken')
+          .then(function (results) {
+            token = results
+            token.methods
+              .transfer(vouchers.options.address, voucherAmountInitial11)
+              .send()
+          })
+          .then(
+            paratii.eth.vouchers.create({
+              voucherCode: voucherCode11,
+              amount: voucherAmount11
+            })
+          )
+      )
 
-    paratii.eth.vouchers.create({
-      voucherCode: voucherCode11,
-      amount: voucherAmount11
-    })
     browser.waitForExist('[name="voucher-code"]')
     browser.setValue('[name="voucher-code"]', voucherCode11)
     // Insert the password
