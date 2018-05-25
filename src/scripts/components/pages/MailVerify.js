@@ -18,35 +18,53 @@ type Props = {}
 // const NavLink = Button.withComponent('a')
 
 class MailVerify extends Component<Props, void> {
+  constructor (props: Props) {
+    super(props)
+    this.state = {
+      message: '',
+      error: ''
+    }
+  }
+
   componentDidMount () {
     const query = window.location.search.substring(1)
     var xhttp = new XMLHttpRequest()
-    xhttp.onreadystatechange = function () {
-      if (this.readyState === 4 && this.status === 200) {
+    xhttp.onreadystatechange = (event: Object) => {
+      if (
+        event.currentTarget.readyState === 4 &&
+        event.currentTarget.status === 200
+      ) {
         // Notification mail sent!
         const response = JSON.parse(xhttp.responseText)
         console.log(response)
-        if (response.events.LogDistribute) {
-          console.log('good')
-          console.log(response)
+        if (response.events && response.events.LogDistribute) {
           const redeemPTI = response.events.LogDistribute.returnValues._amount
-          console.log(redeemPTI)
+          this.setState({
+            message: `You have earned ${redeemPTI} PTI`,
+            error: ''
+          })
         } else {
-          console.log('transaction already done')
+          this.setState({
+            message: 'An error occured',
+            error: 'An error occured'
+          })
         }
       }
     }
     xhttp.open('GET', `/mail/verify/?${query}`, true)
     xhttp.send()
   }
+
   render () {
     return (
       <Wrapper>
         <Title purple>Mail verification</Title>
-        <Text gray>You have earned 20 PTI</Text>
-        <Text gray>
-          Please <a href="/profile">log in</a> to check your balance
-        </Text>
+        <Text gray>{this.state.message}</Text>
+        {!this.state.error && (
+          <Text gray>
+            Please <a href="/profile">log in</a> to check your balance
+          </Text>
+        )}
       </Wrapper>
     )
   }

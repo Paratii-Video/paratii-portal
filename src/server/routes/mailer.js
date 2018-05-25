@@ -1,3 +1,8 @@
+const { getParatiiConfig, getAppRootUrl } = require('utils/AppUtils')
+const { Paratii } = require('paratii-js')
+const paratiiConfig = getParatiiConfig(process.env.NODE_ENV, 'server')
+const paratii = new Paratii(paratiiConfig)
+
 const querystring = require('querystring')
 
 const {
@@ -5,8 +10,6 @@ const {
   generateVoucher,
   claimVoucher
 } = require('../../scripts/mailer')
-
-const { getAppRootUrl } = require('../../scripts/utils/AppUtils')
 
 module.exports = {
   // send mail url looks like this
@@ -28,7 +31,7 @@ module.exports = {
   },
 
   sendVerificationEmail: (req, res, next) => {
-    const amount = 20
+    const amount = paratii.eth.web3.utils.toWei('20')
     const reason = 'email_verification'
     generateVoucher(amount, reason)
       .then(result => {
