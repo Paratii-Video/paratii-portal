@@ -10,7 +10,10 @@ const registryConfigPath = '/tmp/registry.json'
 let registryAddressConfig = {}
 
 if (fs.existsSync(path.resolve(__dirname, registryConfigPath))) {
-  registryAddressConfig = require(registryConfigPath)
+  const registryConfigPath = '/tmp/registry.json'
+  registryAddressConfig = JSON.parse(
+    fs.readFileSync(registryConfigPath, 'utf8')
+  )
 }
 
 export const DEFAULT_PASSWORD = ''

@@ -33,8 +33,8 @@ async function deployContracts () {
   console.log(diagnosis)
 }
 
-function fundDistributor () {
-  paratii.eth.distributor
+async function fundDistributor () {
+  await paratii.eth.distributor
     .getPTIDistributeContract()
     .then(distributor => {
       paratii.eth.getContract('ParatiiToken').then(token => {

@@ -4,14 +4,6 @@ const nodemailer = require('nodemailer')
 const { getParatiiConfig } = require('./utils/AppUtils.js')
 
 const config = getParatiiConfig(process.env.NODE_ENV, 'server')
-
-// is this necessary here?
-// if (process.env.NODE_ENV === 'development') {
-//   const registryFilename = require('/tmp/registry.json')
-//   const registryAddress = registryFilename.registryAddress
-//   config.eth.registryAddress = registryAddress
-// }
-
 const paratii = new Paratii(config)
 
 var transporter
@@ -77,7 +69,6 @@ module.exports = {
   },
 
   claimVoucher: async function (toAddress, amount, reason, salt, hash, v, r, s) {
-    console.log('claiming Voucher: ', toAddress)
     const opts = {
       address: toAddress,
       amount: amount,
