@@ -6,6 +6,7 @@ import DocumentTitle from 'react-document-title'
 import { ThemeProvider } from 'styled-components'
 
 import ProfileContainer from 'containers/ProfileContainer'
+
 import ProfileEditContainer from 'containers/ProfileEditContainer'
 import PlayContainer from 'containers/PlayContainer'
 import VideoManager from 'containers/VideoManagerContainer'
@@ -23,6 +24,7 @@ import MainFooter from './structures/footer/MainFooter'
 import Home from './pages/Home'
 import Voucher from './pages/Voucher'
 import NotFound from './pages/NotFound'
+import MailVerify from './pages/MailVerify'
 
 import { APP_TITLE, paratiiTheme } from 'constants/ApplicationConstants'
 
@@ -81,6 +83,7 @@ class App extends Component<Props, State> {
             <Main>
               <Switch>
                 <Route exact path="/" component={Home} />
+                <Route path={`${match.url}verify`} component={MailVerify} />
                 <Route
                   path={`${match.url}profile`}
                   component={ProfileContainer}

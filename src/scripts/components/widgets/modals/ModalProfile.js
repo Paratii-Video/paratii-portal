@@ -15,7 +15,8 @@ type Props = {
   openModal: string => void,
   closeModal: () => void,
   secureKeystore: string => void,
-  setUserData: () => void
+  setUserData: () => void,
+  notification: (Object, string) => void
 }
 
 const Footer = styled.div`
@@ -37,6 +38,7 @@ const Icon = styled.div`
 
 class ModalProfile extends Component<Props, Object> {
   setProfile: () => void
+  sendVerificationMail: (string, string) => void
   handleInputChange: (input: string, e: Object) => void
 
   constructor (props: Props) {
@@ -47,6 +49,7 @@ class ModalProfile extends Component<Props, Object> {
       error: ''
     }
     this.setProfile = this.setProfile.bind(this)
+    this.sendVerificationMail = this.sendVerificationMail.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
   }
 
@@ -54,8 +57,12 @@ class ModalProfile extends Component<Props, Object> {
     e.preventDefault()
 
     if (this.state.email) {
+      const userAddress = paratii.eth.getAccount()
+      // Send Email Verification
+      this.sendVerificationMail(this.state.email, userAddress)
+      // Create the user
       paratii.users.create({
-        id: paratii.eth.getAccount(), // must be a valid ethereum address
+        id: userAddress,
         name: this.state.username,
         email: this.state.email
       })
@@ -68,6 +75,28 @@ class ModalProfile extends Component<Props, Object> {
     this.props.closeModal()
     // Set profile in the state
     this.props.setUserData()
+  }
+
+  sendVerificationMail (mail: string, address: string) {
+    var xhttp = new XMLHttpRequest()
+    xhttp.onreadystatechange = (event: Object) => {
+      if (
+        event.currentTarget.readyState === 4 &&
+        event.currentTarget.status === 200
+      ) {
+        // Notification mail sent!
+        this.props.notification(
+          {
+            title: 'Check you email!',
+            message: 'We sent you a confirmation link',
+            autoDismiss: 0
+          },
+          'success'
+        )
+      }
+    }
+    xhttp.open('GET', `/mail/send/?to=${mail}&toETH=${address}`, true)
+    xhttp.send()
   }
 
   handleInputChange (input: string, e: Object) {

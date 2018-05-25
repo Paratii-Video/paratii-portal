@@ -33,6 +33,30 @@ async function deployContracts () {
   console.log(diagnosis)
 }
 
+async function fundDistributor () {
+  await paratii.eth.distributor
+    .getPTIDistributeContract()
+    .then(distributor => {
+      paratii.eth.getContract('ParatiiToken').then(token => {
+        console.log('approving distributor.... ', distributor.options.address)
+        token.methods
+          .transfer(
+            distributor.options.address,
+            paratii.eth.web3.utils.toWei('50')
+          )
+          .send((err, tx) => {
+            if (err) throw err
+            if (tx) {
+              console.log('transfer : ', tx)
+            }
+          })
+      })
+    })
+    .catch(e => {
+      throw e
+    })
+}
+
 async function seedVideos () {
   await paratii.vids.create({
     id: '999',
@@ -44,6 +68,7 @@ async function seedVideos () {
 
 deployContracts()
   .then(seedVideos)
+  .then(fundDistributor)
   .then(() => {
     process.exit(0)
   })
