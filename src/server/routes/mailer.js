@@ -33,7 +33,7 @@ module.exports = {
   sendVerificationEmail: (req, res, next) => {
     const amount = paratii.eth.web3.utils.toWei('20')
     const reason = 'email_verification'
-    generateVoucher(amount, reason)
+    generateVoucher(req.query.toETH, amount, reason)
       .then(result => {
         console.log(result)
         const obj = {
