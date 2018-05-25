@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import Button from '../foundations/Button'
+import paratii from 'utils/ParatiiLib'
 import Title from '../foundations/Title'
 import Text from '../foundations/Text'
 import styled from 'styled-components'
@@ -38,7 +38,8 @@ class MailVerify extends Component<Props, void> {
         const response = JSON.parse(xhttp.responseText)
         console.log(response)
         if (response.events && response.events.LogDistribute) {
-          const redeemPTI = response.events.LogDistribute.returnValues._amount
+          const redeemWei = response.events.LogDistribute.returnValues._amount
+          const redeemPTI = paratii.eth.web3.utils.fromWei(String(redeemWei))
           this.setState({
             message: `You have earned ${redeemPTI} PTI`,
             error: ''
