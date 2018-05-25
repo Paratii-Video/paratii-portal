@@ -186,7 +186,9 @@ const Themes = {
     },
     ProfileMyVideos: {
       headerImageBackground: Colors.blackDark,
-      headerInfoBackground: Colors.blackAlt
+      headerInfoBackground: Colors.blackAlt,
+      ProfilePictureBackground: Colors.blackAlt,
+      filterBackground: Colors.blackDark
     }
   }
 }
