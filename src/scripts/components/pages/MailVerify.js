@@ -45,8 +45,8 @@ class MailVerify extends Component<Props, void> {
           })
         } else {
           this.setState({
-            message: 'Transaction already done',
-            error: response.error
+            message: 'An error occured',
+            error: 'An error occured'
           })
         }
       }
