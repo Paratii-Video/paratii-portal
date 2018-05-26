@@ -1,6 +1,7 @@
 /* @flow */
 
 import { Map } from 'immutable'
+import { expect } from 'chai'
 
 import mockGetState from 'unit-tests/test-utils/mockGetState'
 
