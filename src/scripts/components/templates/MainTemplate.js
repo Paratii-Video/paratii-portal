@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 class MainTemplate extends Component<Props, void> {
   render () {
     return (
-      <Wrapper>
+      <Wrapper data-test-id="main-template">
         <MainSvg />
         {this.props.children}
       </Wrapper>
