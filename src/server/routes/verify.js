@@ -1,14 +1,8 @@
 import { Paratii } from 'paratii-js/dist/paratii'
 import { getParatiiConfig } from 'utils/AppUtils'
 
-const paratiiConfig = getParatiiConfig(process.env.NODE_ENV, 'server')
-
-if (process.env.ENV === 'development') {
-  const registryFilename = require('/tmp/registry.json')
-  const registryAddress = registryFilename.registryAddress
-  paratiiConfig.eth.registryAddress = registryAddress
-}
-const paratii = new Paratii(paratiiConfig)
+const config = getParatiiConfig(process.env.NODE_ENV, 'server')
+const paratii = new Paratii(config)
 
 module.exports = {
   send: (req, res, next) => {
