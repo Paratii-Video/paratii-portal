@@ -12,7 +12,7 @@ const WrapperSvg = styled.svg`
   border-radius: 50%;
   height: ${DIMENSION_PX}px;
   width: ${DIMENSION_PX}px;
-  padding: px;
+  padding: 1px;
 `
 
 const CheckIcon = () => (
