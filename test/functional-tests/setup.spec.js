@@ -77,7 +77,8 @@ before(async function (done) {
   //     browser.waitUntil(() => {
   //       const request = new XMLHttpRequest()
   //       request.open(method, url, false)
-  //       request.send(null)
+  //       request.send(null)setv
+
   //       return request.status === status
   //     }, timeout, `The ${method} request to ${url} never achieved a ${status} status`)
   //   })
@@ -116,4 +117,11 @@ before(async function (done) {
   //   browser.url('http://localhost:3000')
   //   browser.contracts = await getOrDeployParatiiContracts(server, browser)
   done()
+})
+
+beforeEach(() => {
+  browser.setViewportSize({
+    width: 2000,
+    height: 2000
+  })
 })
