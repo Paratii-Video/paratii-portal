@@ -59,8 +59,7 @@ class MailVerify extends Component<Props, State> {
         const response = JSON.parse(xhttp.responseText)
         if (response.events && response.events.LogDistribute) {
           const redeemWei = response.events.LogDistribute.returnValues._amount
-          const redeemPTI =
-            10 || paratii.eth.web3.utils.fromWei(String(redeemWei))
+          const redeemPTI = paratii.eth.web3.utils.fromWei(String(redeemWei))
           this.setState({
             message: `You have earned ${redeemPTI} PTI`,
             error: ''
