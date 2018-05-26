@@ -7,8 +7,6 @@ import {
 } from './test-utils/helpers'
 
 describe('🦄 Uploader Tool', function () {
-  this.timeout(120000)
-
   beforeEach(function () {
     browser.url(`http://localhost:8080`)
     browser.execute(nukeLocalStorage)

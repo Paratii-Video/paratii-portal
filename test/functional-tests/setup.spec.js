@@ -1,5 +1,6 @@
 /* @flow */
 
+// import { paratii } from './test-utils/helpers'
 import chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 
@@ -47,9 +48,9 @@ before(async function (done) {
   //       }
   //     }, timeout, `Could not set value on ${selector} (timeout: ${timeout}s)`)
   //   })
-  browser.addCommand('waitAndClick', function (selector, timeout = 1000) {
-    this.waitForVisible(selector, timeout, `${selector} was never visible`)
-    this.waitForEnabled(selector, timeout, `${selector} was never enabled`)
+  browser.addCommand('waitAndClick', function (selector, timeout) {
+    this.waitForVisible(selector, timeout)
+    this.waitForEnabled(selector, timeout)
     browser.waitUntil(
       function () {
         try {
@@ -70,15 +71,29 @@ before(async function (done) {
         }
       },
       timeout,
-      `Could not click on ${selector} in ${timeout}ms`
+      `Could not click on ${selector} (timeout: ${timeout}s)`
+    )
+  })
+  browser.addCommand('waitUntilVideoIsPlaying', function (
+    selector = 'video',
+    timeout = 20000
+  ) {
+    this.waitUntil(
+      () => {
+        return browser.execute(() => {
+          const video = document.querySelector('video')
+          return !!(video && video.currentTime > 0)
+        }).value
+      },
+      timeout,
+      `Video did not play (timeout: ${timeout}s`
     )
   })
   //   browser.addCommand('waitUntilRequestHasStatus', function (url, status = 200, method = 'GET', timeout) {
   //     browser.waitUntil(() => {
   //       const request = new XMLHttpRequest()
   //       request.open(method, url, false)
-  //       request.send(null)setv
-
+  //       request.send(null)
   //       return request.status === status
   //     }, timeout, `The ${method} request to ${url} never achieved a ${status} status`)
   //   })
