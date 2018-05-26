@@ -53,7 +53,7 @@ class MailVerify extends Component<Props, State> {
     xhttp.onreadystatechange = (event: Object) => {
       if (
         event.currentTarget.readyState === 4 &&
-        event.cusucrrentTarget.status === 200
+        event.currentTarget.status === 200
       ) {
         // Notification mail sent!
         const response = JSON.parse(xhttp.responseText)
