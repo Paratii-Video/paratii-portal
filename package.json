@@ -158,7 +158,7 @@
     "js-cookie": "^2.2.0",
     "lodash.debounce": "^4.0.8",
     "nodemailer": "^4.6.4",
-    "paratii-js": "github:Paratii-Video/paratii-js#cd9b835be0d1bac466e73426feb108078a400f0b",
+    "paratii-js": "github:Paratii-Video/paratii-js#e6af434a91bb3305aab4311992f47163bbbc4725",
     "paratii-mediaplayer": "3.1.2",
     "player.js": "^0.1.0",
     "promise-polyfill": "^7.1.2",
