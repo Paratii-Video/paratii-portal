@@ -8,8 +8,7 @@ type Props = {
   color?: string,
   disabled?: boolean,
   icon: string,
-  onClick: (e: Object) => void,
-  'data-test-id'?: string
+  onClick: (e: Object) => void
 }
 
 const Button = styled.button`
@@ -28,7 +27,6 @@ const Button = styled.button`
 const IconButton = ({ onClick, disabled, icon, color, ...rest }: Props) => (
   <Button
     color={color}
-    data-test-id={rest['data-test-id']}
     disabled={disabled}
     icon={icon}
     onClick={disabled ? undefined : onClick}
