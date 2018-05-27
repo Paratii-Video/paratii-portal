@@ -87,7 +87,7 @@ class ModalProfile extends Component<Props, Object> {
         // Notification mail sent!
         this.props.notification(
           {
-            title: 'Check you email!',
+            title: 'Check your email!',
             message: 'We sent you a confirmation link',
             autoDismiss: 0
           },

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
@@ -7,6 +7,7 @@ import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 import Colors from './foundations/base/Colors'
 import Button from './foundations/Button'
 import Text from './foundations/Text'
+import CheckIcon from './widgets/CheckIcon'
 import TruncatedText from './foundations/TruncatedText'
 import SVGIcon from './foundations/SVGIcon'
 import HR from './foundations/HR'
@@ -16,13 +17,12 @@ import {
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS
 } from 'constants/ApplicationConstants'
+import User from 'records/UserRecords'
+import { getEmail, getEmailIsVerified, getName } from 'operators/UserOperators'
 import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
 
 type Props = {
-  user: {
-    email: string,
-    name: string
-  },
+  user: User,
   userAddress: string,
   isWalletSecured: boolean,
   checkUserWallet: () => void,
@@ -56,6 +56,15 @@ const ProfileAvatar = styled.div`
 
 const FooterWrapper = styled.div`
   width: 100%;
+`
+
+const EmailAddressWrapper = styled.span`
+  margin-right: 10px;
+`
+
+const EmailDataWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `
 
 const WordsWrapper = styled.div`
@@ -128,8 +137,21 @@ class Profile extends Component<Props, void> {
     }
     const cardFooter = (
       <FooterWrapper>
+        {getEmail(user) && (
+          <Fragment>
+            <Text gray small>
+              Email
+            </Text>
+            <Text data-test-id="profile-email" margin="0 0 20px 0">
+              <EmailDataWrapper>
+                <EmailAddressWrapper>{getEmail(user)}</EmailAddressWrapper>{' '}
+                {getEmailIsVerified(user) && <CheckIcon />}
+              </EmailDataWrapper>
+            </Text>
+          </Fragment>
+        )}
         <Text gray small>
-          Address:
+          Address
         </Text>
         <WordsWrapper>
           <CopyText
@@ -160,10 +182,7 @@ class Profile extends Component<Props, void> {
               <EditProfileButton to="/profile/edit">Edit</EditProfileButton>
               <ProfileAvatar>{userAvatar}</ProfileAvatar>
               <Text bold small>
-                {user.name}
-              </Text>
-              <Text data-test-id="profile-email" gray small>
-                {user.email}
+                {getName(user)}
               </Text>
               <Text tiny gray>
                 Since 2018
