@@ -310,6 +310,7 @@ class PlayerControls extends Component<Props, State> {
           showStartScreen={showStartScreen}
         />
         <Controls
+          data-test-id="player-controls"
           transitionState={transitionState}
           showShareModal={showShareModal}
           showStartScreen={showStartScreen}
@@ -350,6 +351,7 @@ class PlayerControls extends Component<Props, State> {
             <LeftControls>
               <ControlButtonWrapper>
                 <IconButton
+                  data-test-id="playpause-button"
                   icon={isPlaying ? pauseIcon : playIcon}
                   onClick={togglePlayPause}
                 />
@@ -375,6 +377,7 @@ class PlayerControls extends Component<Props, State> {
                       ? Colors.purple
                       : undefined
                   }
+                  data-test-id="playback-levels-button"
                   disabled={!playbackLevels.size}
                   icon={qualityIcon}
                   onClick={() => {
@@ -385,6 +388,7 @@ class PlayerControls extends Component<Props, State> {
               {getFullscreenEnabled() && (
                 <ControlButtonWrapper>
                   <IconButton
+                    data-test-id="fullscreen-button"
                     icon={isFullscreen ? normalscreenIcon : fullscreenIcon}
                     onClick={() => {
                       toggleFullscreen(!isFullscreen)

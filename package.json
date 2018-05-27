@@ -16,8 +16,6 @@
     "chimp-test": "yarn run chimp:setup & chimp chimp.config.js && yarn run chimp:teardown",
     "chimp-circleci-test": "yarn run chimp:setup & chimp .circleci/chimp.circleci.config.js && yarn run chimp:teardown",
     "chimp-test:watch": "yarn run chimp:setup & chimp chimp.config.js --watch && yarn run chimp:teardown",
-    "chimp-test:concurrently": "concurrently --kill-others --success first \"NODE_ENV=test yarn run dev\" \"yarn run chimp-test\"",
-    "chimp-test:concurrently:watch": "concurrently --kill-others --success all \"NODE_ENV=test yarn run dev\" \"yarn run chimp-test --watch\"",
     "compile:sass": "node_modules/.bin/node-sass --output-style compressed src/styles/embed/index.scss > build/embed/index.css",
     "chimp:setup": "rm -rf ./mock-server/routes && mkdir ./mock-server/routes && yarn run mock-server:start",
     "chimp:teardown": "rm -rf ./mock-server/routes",
