@@ -105,19 +105,11 @@ class WalletInfo extends React.Component<Props> {
     const { onClose, open } = this.props
 
     return (
-      <Popover
-        open={open}
-        top={OVERLAY_BUTTONS_HEIGHT}
-        right={0}
-        data-test-id="wallet-info-popover"
-      >
+      <Popover open={open} top={OVERLAY_BUTTONS_HEIGHT} right={0}>
         <Wrapper>
           <TopBar>
             <Header>Balance</Header>
-            <CloseButton
-              data-test-id="wallet-info-close-button"
-              onClick={onClose}
-            />
+            <CloseButton onClick={onClose} />
           </TopBar>
           <Content>
             <PTIBalanceContainer color={Colors.white} />
@@ -126,10 +118,7 @@ class WalletInfo extends React.Component<Props> {
               <CopyIcon>
                 <SVGIcon color="white" icon="icon-copy" />
               </CopyIcon>
-              <Address
-                data-test-id="wallet-info-address"
-                innerRef={this.setAddressRef}
-              >
+              <Address innerRef={this.setAddressRef}>
                 {this.getAddress()}
               </Address>
             </AddressWrapper>

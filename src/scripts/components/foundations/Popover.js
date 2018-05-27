@@ -16,8 +16,7 @@ type Props = {
   right: number | string,
   children: any,
   open: boolean,
-  style?: Object,
-  'data-test-id'?: string
+  style?: Object
 }
 
 const Wrapper = styled.div`
@@ -74,7 +73,6 @@ class Popover extends React.Component<Props, void> {
       <Transition in={open} timeout={50} unmountOnExit>
         {(transitionState: TransitionState) => (
           <Wrapper
-            data-test-id={this.props['data-test-id']}
             onClick={(e: Object) => e.stopPropagation()}
             transitionState={transitionState}
             top={top}

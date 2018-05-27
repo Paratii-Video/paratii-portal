@@ -186,7 +186,6 @@ class PlayerControls extends Component<Props, State> {
       >
         <ButtonWrapper>
           <IconButton
-            data-test-id="volume-button"
             icon={currentVolume === 0 ? muteIcon : volumeIcon}
             onClick={() => onToggleMute()}
           />

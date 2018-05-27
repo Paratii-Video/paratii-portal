@@ -60,7 +60,6 @@ type Props = {
 }
 
 type State = {
-  player?: ?ClapprPlayer,
   shouldShowStartScreen: boolean,
   isEmbed: boolean,
   mouseInOverlay: boolean,
@@ -222,7 +221,7 @@ class Play extends Component<Props, State> {
       updateVolume,
       video
     } = this.props
-    const { player } = this.state
+    const { player } = this
     if (player) {
       player.on(eventsMap.PLAYER_PLAY, (params): void => {
         if (!player.isPlaying()) {
@@ -248,6 +247,7 @@ class Play extends Component<Props, State> {
         updateVolume(volume)
       })
 
+      // $FlowFixMe
       const playback = player.core && player.core.getCurrentPlayback()
       if (playback && video) {
         playback.on(eventsMap.PLAYBACK_PLAY_INTENT, () => {
@@ -311,8 +311,8 @@ class Play extends Component<Props, State> {
         })
         playback.on(eventsMap.PLAYBACK_LEVEL_SWITCH_END, () => {
           const { isPlaying } = this.props
-          if (isPlaying && this.state.player) {
-            this.state.player.play()
+          if (isPlaying && this.player) {
+            this.player.play()
           }
         })
       }
@@ -320,7 +320,7 @@ class Play extends Component<Props, State> {
   }
 
   onOverlayClick (e: Object): void {
-    if (this.state.player) {
+    if (this.player) {
       e.stopPropagation()
       this.togglePlayPause()
     }
@@ -333,7 +333,7 @@ class Play extends Component<Props, State> {
   }
 
   onMouseEnter = (): void => {
-    if (this.state.player) {
+    if (this.player) {
       clearTimeout(this.playerHideTimeout)
       this.showControls()
     }
@@ -362,14 +362,14 @@ class Play extends Component<Props, State> {
   scrubVideo = (percentage: number): void => {
     const { videoDurationSeconds, video } = this.props
     if (video) {
-      if (this.state.player) {
-        this.state.player.seek(videoDurationSeconds * percentage / 100)
+      if (this.player) {
+        this.player.seek(videoDurationSeconds * percentage / 100)
       }
     }
   }
 
   changeVolume = (percentage: number): void => {
-    const { player } = this.state
+    const { player } = this
 
     if (player) {
       player.setVolume(percentage)
@@ -377,7 +377,7 @@ class Play extends Component<Props, State> {
   }
 
   toggleMute = (mute: boolean): void => {
-    const { player } = this.state
+    const { player } = this
 
     if (player) {
       if (mute) {
@@ -389,7 +389,7 @@ class Play extends Component<Props, State> {
   }
 
   changePlaybackLevel = (levelId: number): void => {
-    const { player } = this.state
+    const { player } = this
 
     this.stagedPlaybackLevel = levelId
 
@@ -413,7 +413,7 @@ class Play extends Component<Props, State> {
   )
 
   onMouseLeave = (): void => {
-    if (this.state.player) {
+    if (this.player) {
       clearTimeout(this.playerHideTimeout)
       this.playerHideTimeout = setTimeout(() => {
         this.setState({
@@ -483,8 +483,8 @@ class Play extends Component<Props, State> {
   }
 
   destroyPlayer () {
-    if (this.state.player) {
-      this.state.player.destroy()
+    if (this.player) {
+      this.player.destroy()
     }
 
     const playerNode = document.querySelector(`#${PLAYER_ID}`)
@@ -530,7 +530,7 @@ class Play extends Component<Props, State> {
       if (nextProps.video && fetchStatus === 'success') {
         if (
           !video ||
-          !this.state.player ||
+          !this.player ||
           video.get('ipfsHash') !== nextVideo.get('ipfsHash')
         ) {
           this.createPlayer(nextProps.video)
@@ -574,45 +574,36 @@ class Play extends Component<Props, State> {
     }
 
     import('paratii-mediaplayer').then(CreatePlayer => {
-      if (this.state.player && this.state.player.destroy) {
-        this.state.player.destroy()
+      if (this.player && this.player.destroy) {
+        this.player.destroy()
       }
 
       const autoPlay: boolean = this.getAutoPlaySetting()
 
-      this.setState(
-        {
-          player: CreatePlayer({
-            selector: `#${PLAYER_ID}`,
-            source: `https://gateway.paratii.video/ipfs/${
-              video.ipfsHash
-            }/master.m3u8`,
-            poster: `https://gateway.paratii.video/ipfs/${
-              video.ipfsHash
-            }/${poster}`,
-            mimeType: 'application/x-mpegURL',
-            ipfsHash: video.ipfsHash,
-            autoPlay
-          })
-        },
-        () => {
-          if (this.state.player) {
-            this.bindClapprEvents({
-              eventsMap: this.state.player.clappr.Events
-            })
-            this.configureVideoAdapter()
-          }
-        }
-      )
+      this.player = CreatePlayer({
+        selector: `#${PLAYER_ID}`,
+        source: `https://gateway.paratii.video/ipfs/${
+          video.ipfsHash
+        }/master.m3u8`,
+        poster: `https://gateway.paratii.video/ipfs/${
+          video.ipfsHash
+        }/${poster}`,
+        mimeType: 'application/x-mpegURL',
+        ipfsHash: video.ipfsHash,
+        autoPlay
+      })
 
-      if (this.state.player) {
-        updateVolume(this.state.player.getVolume())
+      this.bindClapprEvents({ eventsMap: this.player.clappr.Events })
+      this.configureVideoAdapter()
+
+      if (this.player) {
+        updateVolume(this.player.getVolume())
       }
     })
   }
 
   togglePlayPause = (): void => {
-    const { player } = this.state
+    const { player } = this
     if (player) {
       if (player.isPlaying()) {
         player.pause()
@@ -636,6 +627,10 @@ class Play extends Component<Props, State> {
   getAutoPlaySetting (): boolean {
     const { isEmbed } = this.props
 
+    if (!isEmbed) {
+      return true
+    }
+
     const parsedQueryString = queryString.parse(location.search)
 
     const hasAutoPlayParam: boolean = Object.prototype.hasOwnProperty.call(
@@ -644,10 +639,7 @@ class Play extends Component<Props, State> {
     )
 
     if (!hasAutoPlayParam) {
-      if (isEmbed) {
-        return false
-      }
-      return true
+      return false
     }
 
     const paramValue: string = parsedQueryString[PLAYER_PARAMS.AUTOPLAY]
@@ -731,7 +723,7 @@ class Play extends Component<Props, State> {
   }
 
   shouldShowStartScreen (): boolean {
-    return this.state.shouldShowStartScreen && !!this.state.player
+    return this.state.shouldShowStartScreen && !!this.player
   }
 
   render () {
@@ -766,7 +758,6 @@ class Play extends Component<Props, State> {
             <VideoWrapper isEmbed={isEmbed}>
               <VideoCover isEmbed={isEmbed}>
                 <PlayerWrapper
-                  data-test-id="player-wrapper"
                   onClick={this.onPlayerClick}
                   onMouseEnter={this.onMouseEnter}
                   innerRef={(ref: HTMLElement) => {
@@ -804,7 +795,6 @@ class Play extends Component<Props, State> {
                     )}
                   </Transition>
                   <Player
-                    datat-test-id={PLAYER_ID}
                     id={PLAYER_ID}
                     innerRef={(ref: HTMLElement) => {
                       this.playerWrapperRef = ref
