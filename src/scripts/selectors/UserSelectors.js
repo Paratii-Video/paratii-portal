@@ -56,9 +56,6 @@ const getPtiBalance: (state: RootState) => string = createSelector(
 export const getFormattedPtiBalance: (
   state: RootState
 ) => string = createSelector([getPtiBalance], (ptiBalance: string): string => {
-  if (ptiBalance === undefined) {
-    return '0'
-  }
   const balance: number = parseInt(
     paratii.eth.web3.utils.fromWei(ptiBalance, 'ether'),
     10

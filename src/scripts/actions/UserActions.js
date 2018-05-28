@@ -77,8 +77,8 @@ export const loadBalances = () => (dispatch: Dispatch) => {
       const PTIAsString = PTI.toString()
       dispatch(
         balancesLoaded({
-          ETHAsString,
-          PTIAsString
+          ETH: ETHAsString,
+          PTI: PTIAsString
         })
       )
     })
