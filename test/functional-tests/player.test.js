@@ -5,7 +5,7 @@ import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
 
 import mockEndpoint from '../../mock-server/mockEndpoint'
 
-describe('🎥 Player:', function () {
+describe('🎥 Player: @watch', function () {
   const videoElementSelector = '#player video'
   const playerWrapperSelector = '[data-test-id="player-wrapper"]'
   const overlaySelector = '[data-test-id="video-overlay"]'
@@ -95,28 +95,32 @@ describe('🎥 Player:', function () {
         browser.waitUntil(
           () =>
             browser.execute(videoElementSelector => {
-              const videoEl = window.document.querySelector(
-                videoElementSelector
-              )
-              if (videoEl) {
-                videoEl.addEventListener('playing', () => {
-                  window.PLAYER_TEST_DATA.playing = true
-                  window.PLAYER_TEST_DATA.paused = false
-                })
-                videoEl.addEventListener('pause', () => {
-                  window.PLAYER_TEST_DATA.paused = true
-                  window.PLAYER_TEST_DATA.playing = true
-                })
+              try {
+                const videoEl = window.document.querySelector(
+                  videoElementSelector
+                )
+                if (videoEl) {
+                  videoEl.addEventListener('playing', () => {
+                    window.PLAYER_TEST_DATA.playing = true
+                    window.PLAYER_TEST_DATA.paused = false
+                  })
+                  videoEl.addEventListener('pause', () => {
+                    window.PLAYER_TEST_DATA.paused = true
+                    window.PLAYER_TEST_DATA.playing = true
+                  })
 
-                window.PLAYER_TEST_DATA = {
-                  playing: false,
-                  paused: false
+                  window.PLAYER_TEST_DATA = {
+                    playing: false,
+                    paused: false
+                  }
+
+                  return true
                 }
 
-                return true
+                return false
+              } catch (e) {
+                return false
               }
-
-              return false
             }, videoElementSelector).value,
           undefined,
           'Could not attach handlers to video element.'
@@ -160,17 +164,17 @@ describe('🎥 Player:', function () {
         () =>
           browser.execute(
             (videoElementSelector, controlsSelector, hidden) => {
-              const videoEl = document.querySelector(videoElementSelector)
-              const controlsEl = document.querySelector(controlsSelector)
-              if (videoEl && controlsEl) {
+              try {
+                const videoEl = document.querySelector(videoElementSelector)
+                const controlsEl = document.querySelector(controlsSelector)
                 const videoRect = videoEl.getBoundingClientRect()
                 const controlsRect = controlsEl.getBoundingClientRect()
                 return hidden
                   ? controlsRect.y >= videoRect.y + videoRect.height
                   : controlsRect.y < videoRect.y + videoRect.height
+              } catch (e) {
+                return false
               }
-
-              return false
             },
             videoElementSelector,
             controlsSelector,
@@ -341,8 +345,12 @@ describe('🎥 Player:', function () {
             browser.waitUntil(
               () =>
                 browser.execute(videoElementSelector => {
-                  const videoEl = document.querySelector(videoElementSelector)
-                  return !videoEl.getAttribute('volume')
+                  try {
+                    const videoEl = document.querySelector(videoElementSelector)
+                    return !videoEl.getAttribute('volume')
+                  } catch (e) {
+                    return false
+                  }
                 }, videoElementSelector).value,
               undefined,
               'Could not verify that volume is muted'
@@ -357,8 +365,12 @@ describe('🎥 Player:', function () {
             browser.waitUntil(
               () =>
                 browser.execute(videoElementSelector => {
-                  const videoEl = document.querySelector(videoElementSelector)
-                  return videoEl.getAttribute('volume') >= 0
+                  try {
+                    const videoEl = document.querySelector(videoElementSelector)
+                    return videoEl.getAttribute('volume') >= 0
+                  } catch (e) {
+                    return false
+                  }
                 }, videoElementSelector).value,
               undefined,
               'Could not verify that volume is not muted.'
@@ -415,36 +427,35 @@ describe('🎥 Player:', function () {
                     controlsSelector,
                     videoElementSelector
                   ) => {
-                    const videoEl = document.querySelector(videoElementSelector)
-                    if (!videoEl) {
+                    try {
+                      const videoEl = document.querySelector(
+                        videoElementSelector
+                      )
+                      const videoRect = videoEl.getBoundingClientRect()
+                      const controlsEl = document.querySelector(
+                        controlsSelector
+                      )
+                      const controlsRect = controlsEl.getBoundingClientRect()
+                      const qualityEl = document.querySelector(
+                        qualityMenuSelector
+                      )
+                      const qualityRect = qualityEl.getBoundingClientRect()
+
+                      const qualityIsVerticallyPositioned =
+                        controlsRect.y > qualityRect.y + qualityRect.height
+
+                      const qualityIsHorizontallyContained =
+                        videoRect.x < qualityRect.x &&
+                        videoRect.x + videoRect.width >
+                          qualityRect.x + qualityRect.width
+
+                      return (
+                        qualityIsVerticallyPositioned &&
+                        qualityIsHorizontallyContained
+                      )
+                    } catch (e) {
                       return false
                     }
-                    const videoRect = videoEl.getBoundingClientRect()
-                    const controlsEl = document.querySelector(controlsSelector)
-                    if (!controlsEl) {
-                      return false
-                    }
-                    const controlsRect = controlsEl.getBoundingClientRect()
-                    const qualityEl = document.querySelector(
-                      qualityMenuSelector
-                    )
-                    if (!qualityEl) {
-                      return false
-                    }
-                    const qualityRect = qualityEl.getBoundingClientRect()
-
-                    const qualityIsVerticallyPositioned =
-                      controlsRect.y > qualityRect.y + qualityRect.height
-
-                    const qualityIsHorizontallyContained =
-                      videoRect.x < qualityRect.x &&
-                      videoRect.x + videoRect.width >
-                        qualityRect.x + qualityRect.width
-
-                    return (
-                      qualityIsVerticallyPositioned &&
-                      qualityIsHorizontallyContained
-                    )
                   },
                   qualityMenuSelector,
                   controlsSelector,
@@ -474,14 +485,18 @@ describe('🎥 Player:', function () {
           () =>
             browser.execute(
               (levelSelector, qualityMenuSelector) => {
-                const qualityEl = document.querySelector(qualityMenuSelector)
-                const levels = Array.prototype.slice.call(
-                  qualityEl.querySelectorAll(levelSelector)
-                )
-                const firstLevelTextIsAutomatic = (levels[0].innerText =
-                  'Automatic')
+                try {
+                  const qualityEl = document.querySelector(qualityMenuSelector)
+                  const levels = Array.prototype.slice.call(
+                    qualityEl.querySelectorAll(levelSelector)
+                  )
+                  const firstLevelTextIsAutomatic = (levels[0].innerText =
+                    'Automatic')
 
-                return firstLevelTextIsAutomatic && levels.length > 1
+                  return firstLevelTextIsAutomatic && levels.length > 1
+                } catch (e) {
+                  return false
+                }
               },
               levelSelector,
               qualityMenuSelector
@@ -552,43 +567,59 @@ describe('🎥 Player:', function () {
                     ptiBalanceSelector,
                     walletInfoAddressSelector
                   ) => {
-                    const videoEl = document.querySelector(videoElementSelector)
-                    const videoRect = videoEl.getBoundingClientRect()
-                    const controlsEl = document.querySelector(controlsSelector)
-                    const controlsRect = controlsEl.getBoundingClientRect()
-                    const walletEl = document.querySelector(
-                      walletPopoverSelector
-                    )
-                    const walletRect = walletEl.getBoundingClientRect()
+                    try {
+                      const videoEl = document.querySelector(
+                        videoElementSelector
+                      )
+                      const videoRect = videoEl.getBoundingClientRect()
 
-                    const walletIsVerticallyContained =
-                      controlsRect.y > walletRect.y + walletRect.height &&
-                      videoRect.y < walletRect.y
+                      const controlsEl = document.querySelector(
+                        controlsSelector
+                      )
+                      const controlsRect = controlsEl.getBoundingClientRect()
 
-                    const walletIsHorizontallyContained =
-                      videoRect.x < walletRect.x &&
-                      videoRect.x + videoRect.width >
-                        walletRect.x + walletRect.width
+                      const walletEl = document.querySelector(
+                        walletPopoverSelector
+                      )
+                      const walletRect = walletEl.getBoundingClientRect()
 
-                    const balanceEl = walletEl.querySelector(ptiBalanceSelector)
-                    const balanceText = balanceEl.innerText
-                    const balanceTextIsExpected =
-                      balanceText.indexOf('PTI') === balanceText.length - 3 &&
-                      balanceText.length > 3
+                      const walletIsVerticallyContained =
+                        controlsRect.y > walletRect.y + walletRect.height &&
+                        videoRect.y < walletRect.y
 
-                    const addressEl = walletEl.querySelector(
-                      walletInfoAddressSelector
-                    )
-                    const addressText = addressEl.innerText
-                    const addressTextIsExpected =
-                      addressText === window.paratii.config.account.address
+                      const walletIsHorizontallyContained =
+                        videoRect.x < walletRect.x &&
+                        videoRect.x + videoRect.width >
+                          walletRect.x + walletRect.width
 
-                    return (
-                      walletIsVerticallyContained &&
-                      walletIsHorizontallyContained &&
-                      balanceTextIsExpected &&
-                      addressTextIsExpected
-                    )
+                      const balanceEl = walletEl.querySelector(
+                        ptiBalanceSelector
+                      )
+                      if (!balanceEl) {
+                        return false
+                      }
+
+                      const balanceText = balanceEl.innerText
+                      const balanceTextIsExpected =
+                        balanceText.indexOf('PTI') === balanceText.length - 3 &&
+                        balanceText.length > 3
+
+                      const addressEl = walletEl.querySelector(
+                        walletInfoAddressSelector
+                      )
+                      const addressText = addressEl.innerText
+                      const addressTextIsExpected =
+                        addressText === window.paratii.config.account.address
+
+                      return (
+                        walletIsVerticallyContained &&
+                        walletIsHorizontallyContained &&
+                        balanceTextIsExpected &&
+                        addressTextIsExpected
+                      )
+                    } catch (e) {
+                      return false
+                    }
                   },
                   walletPopoverSelector,
                   controlsSelector,
@@ -681,29 +712,35 @@ describe('🎥 Player:', function () {
               () =>
                 browser.execute(
                   (shareOverlaySelector, videoElementSelector) => {
-                    const videoEl = document.querySelector(videoElementSelector)
-                    const videoRect = videoEl.getBoundingClientRect()
-                    const shareOverlayEl = document.querySelector(
-                      shareOverlaySelector
-                    )
-                    const shareOverlayRect = shareOverlayEl.getBoundingClientRect()
+                    try {
+                      const videoEl = document.querySelector(
+                        videoElementSelector
+                      )
+                      const videoRect = videoEl.getBoundingClientRect()
+                      const shareOverlayEl = document.querySelector(
+                        shareOverlaySelector
+                      )
+                      const shareOverlayRect = shareOverlayEl.getBoundingClientRect()
 
-                    const shareOverlayStyle = window.getComputedStyle(
-                      shareOverlayEl
-                    )
-                    const overlayIsVisible =
-                      parseInt(
-                        shareOverlayStyle.getPropertyValue('opacity'),
-                        10
-                      ) === 1
+                      const shareOverlayStyle = window.getComputedStyle(
+                        shareOverlayEl
+                      )
+                      const overlayIsVisible =
+                        parseInt(
+                          shareOverlayStyle.getPropertyValue('opacity'),
+                          10
+                        ) === 1
 
-                    const overlayIsFullHeightAndWidth =
-                      videoRect.x === shareOverlayRect.x &&
-                      videoRect.y === shareOverlayRect.y &&
-                      videoRect.width === shareOverlayRect.width &&
-                      videoRect.height === shareOverlayRect.height
+                      const overlayIsFullHeightAndWidth =
+                        videoRect.x === shareOverlayRect.x &&
+                        videoRect.y === shareOverlayRect.y &&
+                        videoRect.width === shareOverlayRect.width &&
+                        videoRect.height === shareOverlayRect.height
 
-                    return overlayIsVisible && overlayIsFullHeightAndWidth
+                      return overlayIsVisible && overlayIsFullHeightAndWidth
+                    } catch (e) {
+                      return false
+                    }
                   },
                   shareOverlaySelector,
                   videoElementSelector
@@ -729,16 +766,20 @@ describe('🎥 Player:', function () {
           () =>
             browser.execute(
               (shareOverlaySelector, shareAnchorLinkSelector, ID) => {
-                const shareOverlayEl = document.querySelector(
-                  shareOverlaySelector
-                )
-                const anchorLinkEl = shareOverlayEl.querySelector(
-                  shareAnchorLinkSelector
-                )
-                return (
-                  anchorLinkEl.getAttribute('href') ===
-                  `${window.location.origin}/play/${ID}`
-                )
+                try {
+                  const shareOverlayEl = document.querySelector(
+                    shareOverlaySelector
+                  )
+                  const anchorLinkEl = shareOverlayEl.querySelector(
+                    shareAnchorLinkSelector
+                  )
+                  return (
+                    anchorLinkEl.getAttribute('href') ===
+                    `${window.location.origin}/play/${ID}`
+                  )
+                } catch (e) {
+                  return false
+                }
               },
               shareOverlaySelector,
               shareAnchorLinkSelector,
@@ -752,18 +793,22 @@ describe('🎥 Player:', function () {
           () =>
             browser.execute(
               (shareOverlaySelector, telegramShareLinkSelector, ID, TITLE) => {
-                const shareOverlayEl = document.querySelector(
-                  shareOverlaySelector
-                )
-                const telegramEl = shareOverlayEl.querySelector(
-                  telegramShareLinkSelector
-                )
-                return (
-                  telegramEl.getAttribute('href') ===
-                  `https://t.me/share/url?url=${
-                    window.location.origin
-                  }/play/${ID}&text=🎬 Worth a watch: ${TITLE}`
-                )
+                try {
+                  const shareOverlayEl = document.querySelector(
+                    shareOverlaySelector
+                  )
+                  const telegramEl = shareOverlayEl.querySelector(
+                    telegramShareLinkSelector
+                  )
+                  return (
+                    telegramEl.getAttribute('href') ===
+                    `https://t.me/share/url?url=${
+                      window.location.origin
+                    }/play/${ID}&text=🎬 Worth a watch: ${TITLE}`
+                  )
+                } catch (e) {
+                  return false
+                }
               },
               shareOverlaySelector,
               telegramShareLinkSelector,
@@ -778,19 +823,23 @@ describe('🎥 Player:', function () {
           () =>
             browser.execute(
               (shareOverlaySelector, twitterShareLinkSelector, ID, TITLE) => {
-                const shareOverlayEl = document.querySelector(
-                  shareOverlaySelector
-                )
+                try {
+                  const shareOverlayEl = document.querySelector(
+                    shareOverlaySelector
+                  )
 
-                const twitterEl = shareOverlayEl.querySelector(
-                  twitterShareLinkSelector
-                )
-                return (
-                  twitterEl.getAttribute('href') ===
-                  `https://twitter.com/intent/tweet?url=${
-                    window.location.origin
-                  }/play/${ID}&text=🎬 Worth a watch: ${TITLE}`
-                )
+                  const twitterEl = shareOverlayEl.querySelector(
+                    twitterShareLinkSelector
+                  )
+                  return (
+                    twitterEl.getAttribute('href') ===
+                    `https://twitter.com/intent/tweet?url=${
+                      window.location.origin
+                    }/play/${ID}&text=🎬 Worth a watch: ${TITLE}`
+                  )
+                } catch (e) {
+                  return false
+                }
               },
               shareOverlaySelector,
               twitterShareLinkSelector,
@@ -805,18 +854,22 @@ describe('🎥 Player:', function () {
           () =>
             browser.execute(
               (shareOverlaySelector, whatsAppShareLinkSelector, ID, TITLE) => {
-                const shareOverlayEl = document.querySelector(
-                  shareOverlaySelector
-                )
-                const whatsAppEl = shareOverlayEl.querySelector(
-                  whatsAppShareLinkSelector
-                )
-                return (
-                  whatsAppEl.getAttribute('href') ===
-                  `whatsapp://send?text=🎬 Worth a watch: ${TITLE} ${
-                    window.location.origin
-                  }/play/${ID}`
-                )
+                try {
+                  const shareOverlayEl = document.querySelector(
+                    shareOverlaySelector
+                  )
+                  const whatsAppEl = shareOverlayEl.querySelector(
+                    whatsAppShareLinkSelector
+                  )
+                  return (
+                    whatsAppEl.getAttribute('href') ===
+                    `whatsapp://send?text=🎬 Worth a watch: ${TITLE} ${
+                      window.location.origin
+                    }/play/${ID}`
+                  )
+                } catch (e) {
+                  return false
+                }
               },
               shareOverlaySelector,
               whatsAppShareLinkSelector,
