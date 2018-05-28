@@ -43,6 +43,7 @@ const FooterWrapper = styled.div`
 class RedeemVoucher extends Component<Props, Object> {
   redeemVoucher: (e: Object) => void
   handleChange: (e: Object) => void
+  handleFocus: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
@@ -52,6 +53,7 @@ class RedeemVoucher extends Component<Props, Object> {
       disableInput: false
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleFocus = this.handleFocus.bind(this)
     this.redeemVoucher = this.redeemVoucher.bind(this)
   }
 
@@ -60,6 +62,14 @@ class RedeemVoucher extends Component<Props, Object> {
     if (this.props.isWalletSecured) {
       this.setState({ voucher: event.target.value })
     } else {
+      this.props.checkUserWallet()
+    }
+  }
+
+  handleFocus (event: Object) {
+    console.log('fouxus')
+    // If wallet not secure open the modal
+    if (!this.props.isWalletSecured) {
       this.props.checkUserWallet()
     }
   }
@@ -163,6 +173,7 @@ class RedeemVoucher extends Component<Props, Object> {
           <TextField
             error={this.state.error.length > 0}
             onChange={this.handleChange}
+            onFocus={this.handleFocus}
             label="Enter code here to receive test PTI"
             disabled={this.state.disableInput}
             value={this.state.voucher}
