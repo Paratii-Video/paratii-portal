@@ -82,7 +82,7 @@ describe('Price tag status', function() {
     })
   })
 
-  it.skip('when the video was bought [TODO] ', () => {
+  it.skip('when the video was bought', () => {
     createUserAndLogin(browser)
     browser.pause(5000)
     const address = getEthAccountFromApp()

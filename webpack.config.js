@@ -65,6 +65,7 @@ const config = {
       components: scriptsDir + '/components',
       constants: scriptsDir + '/constants',
       actions: scriptsDir + '/actions',
+      operators: scriptsDir + '/operators',
       reducers: scriptsDir + '/reducers',
       records: scriptsDir + '/records',
       containers: scriptsDir + '/containers',

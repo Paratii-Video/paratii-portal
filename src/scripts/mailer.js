@@ -56,9 +56,10 @@ module.exports = {
     })
   },
 
-  generateVoucher: async function (amount, reason) {
+  generateVoucher: async function (address, amount, reason) {
     const salt = paratii.eth.web3.utils.randomHex(32)
     const signature = await paratii.eth.distributor.generateSignature(
+      address,
       amount,
       salt,
       reason,

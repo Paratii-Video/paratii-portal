@@ -19,12 +19,12 @@ import Notifications from 'containers/NotificationContainer'
 import type { Match } from 'react-router-dom'
 import MainTemplate from './templates/MainTemplate'
 import Modal from 'containers/widgets/modals/ModalContainer'
+import MailVerifyContainer from 'containers/pages/MailVerifyContainer'
 import Main from './structures/Main'
 import MainFooter from './structures/footer/MainFooter'
 import Home from './pages/Home'
 import Voucher from './pages/Voucher'
 import NotFound from './pages/NotFound'
-import MailVerify from './pages/MailVerify'
 
 import { APP_TITLE, paratiiTheme } from 'constants/ApplicationConstants'
 
@@ -83,7 +83,10 @@ class App extends Component<Props, State> {
             <Main>
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route path={`${match.url}verify`} component={MailVerify} />
+                <Route
+                  path={`${match.url}verify`}
+                  component={MailVerifyContainer}
+                />
                 <Route
                   path={`${match.url}profile`}
                   component={ProfileContainer}

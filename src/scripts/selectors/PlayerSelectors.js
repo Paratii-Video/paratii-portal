@@ -33,19 +33,6 @@ export const getPlayingVideo: (
   }
 )
 
-export const getFormattedCurrentTime: (
-  state: RootState
-) => string = createSelector(
-  [getPlayerCurrentTimeSeconds],
-  (currentTimeSeconds: number): string => {
-    const roundedTime: number = Math.floor(currentTimeSeconds)
-    return TimeFormat.fromS(
-      roundedTime,
-      roundedTime >= 3600 ? 'hh:mm:ss' : 'mm:ss'
-    )
-  }
-)
-
 export const getFormattedDuration: (
   state: RootState
 ) => string = createSelector(
@@ -53,6 +40,23 @@ export const getFormattedDuration: (
   (playingVideo: ?VideoRecord): string => {
     const duration: ?string = playingVideo && playingVideo.get('duration')
     return formatDuration(duration)
+  }
+)
+
+export const getFormattedCurrentTime: (
+  state: RootState
+) => string = createSelector(
+  [getPlayerCurrentTimeSeconds, getFormattedDuration],
+  (currentTimeSeconds: number, formattedDuration: string): string => {
+    const roundedTime: number = Math.floor(currentTimeSeconds)
+    const formattedCurrentTime: string = TimeFormat.fromS(
+      roundedTime,
+      roundedTime >= 3600 ? 'hh:mm:ss' : 'mm:ss'
+    )
+
+    return formattedDuration < formattedCurrentTime
+      ? formattedDuration
+      : formattedCurrentTime
   }
 )
 
