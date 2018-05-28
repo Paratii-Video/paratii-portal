@@ -5,8 +5,6 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import DocumentTitle from 'react-document-title'
 import { ThemeProvider } from 'styled-components'
 
-import SignupContainer from 'containers/SignupContainer'
-import LoginContainer from 'containers/LoginContainer'
 import ProfileContainer from 'containers/ProfileContainer'
 
 import ProfileEditContainer from 'containers/ProfileEditContainer'
@@ -38,7 +36,6 @@ import type { Map } from 'immutable'
 
 type Props = {
   initializeApp: () => void,
-  setSelectedVideo: (id: string) => void,
   match: Match,
   videos: Map<string, VideoRecord>,
   isWalletSecured: boolean
@@ -94,11 +91,6 @@ class App extends Component<Props, State> {
                   component={MailVerifyContainer}
                 />
                 <Route
-                  path={`${match.url}signup`}
-                  component={SignupContainer}
-                />
-                <Route path={`${match.url}login`} component={LoginContainer} />
-                <Route
                   path={`${match.url}profile`}
                   component={ProfileContainer}
                   exact
@@ -118,14 +110,12 @@ class App extends Component<Props, State> {
                 <Route path={`${match.url}upload`} component={VideoManager} />
                 <Route path={`${match.url}voucher`} component={Voucher} />
                 <Route path={`${match.url}debug`} component={DebugContainer} />
-
                 <Route
                   path={`${match.url}wallet`}
                   render={() =>
                     isWalletSecured ? <WalletContainer /> : <Redirect to="/" />
                   }
                 />
-
                 <Route
                   path={`${match.url}play/:id`}
                   component={PlayContainer}

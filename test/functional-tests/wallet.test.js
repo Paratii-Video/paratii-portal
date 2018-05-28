@@ -7,13 +7,13 @@ import {
   restoredAddress,
   address,
   password,
-  voucherCode11,
   voucherAmount11,
-  voucherAmountInitial11
+  voucherAmountInitial11,
+  createKeystore
 } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
-describe('Wallet:', function () {
+describe('💰 Wallet:', function () {
   let userAccount
 
   beforeEach(function () {
@@ -23,22 +23,8 @@ describe('Wallet:', function () {
   })
 
   it('If we have a secured wallet in localStorage, we open it with a password', function () {
-    browser.url(`http://localhost:8080`)
-    browser.execute(function (password) {
-      window.paratii.eth.wallet.clear()
-      console.log(password)
-      window.paratii.eth.wallet
-        .create()
-        .then(
-          localStorage.setItem(
-            'keystore-secure',
-            JSON.stringify(window.paratii.eth.wallet.encrypt(password))
-          )
-        )
-    }, password)
-
-    browser.url(`http://localhost:8080/wallet`)
-    // Insert the password
+    createKeystore()
+    // Click on login and insert the password
     browser.waitAndClick('[data-test-id="login-signup"]')
     browser.waitAndClick('[name="wallet-password"]')
     browser.setValue('[name="wallet-password"]', password)
@@ -48,14 +34,19 @@ describe('Wallet:', function () {
     assert.equal(balance, '0')
   })
 
-  // it('If there is an anonymous wallet in localStorage we open it', function () {
-  //   const balance = browser.getText('[data-test-id="pti-balance"]')
-  //   // We check the default address balance
-  //   assert.equal(balance, '21M')
-  // })
+  it('do not open the secure wallet if wrong password', function () {
+    const wrongPassword = 'Wrong-p4ssword'
+    createKeystore()
+    // Click on login and insert the password
+    browser.waitAndClick('[data-test-id="login-signup"]')
+    browser.waitAndClick('[name="wallet-password"]')
+    browser.setValue('[name="wallet-password"]', wrongPassword)
+    browser.waitAndClick('[data-test-id="continue"]')
+    // Display error message
+    browser.waitForExist('[data-test-id="error-password"]')
+  })
 
   it('restore your wallet using a seed', async function () {
-    browser.url(`http://localhost:8080`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
     })
@@ -86,6 +77,29 @@ describe('Wallet:', function () {
     assert.equal(balance, '0')
   })
 
+  it('do not create a new secure wallet if the password is weak', function () {
+    const weakPassword = 'password'
+    browser.waitUntil(() => {
+      return browser.getTitle() === 'Paratii'
+    })
+    browser.waitAndClick('[data-test-id="login-signup"]')
+    browser.pause(500)
+    browser.waitAndClick('[data-test-id="restore-account"]')
+    // Insert the seed
+    browser.waitForClickable('[name="mnemonic-restore"]')
+    browser.setValue('[name="mnemonic-restore"]', restoreMnemonic)
+    browser.waitAndClick('[data-test-id="restore-wallet"]')
+    // Insert the password
+    browser.waitAndClick('[name="input-new-password"]')
+    browser.setValue('[name="input-new-password"]', weakPassword)
+    browser.waitAndClick('[name="input-confirm-password"]')
+    browser.setValue('[name="input-confirm-password"]', weakPassword)
+    browser.waitForEnabled('[data-test-id="continue"]')
+    browser.click('[data-test-id="continue"]')
+    // Display error message
+    browser.waitForExist('[data-test-id="error-password"]')
+  })
+
   it('secure your wallet, transfer data to a new address', async function (done) {
     const username = 'newuser'
     const email = 'newuser@mail.com'
@@ -97,7 +111,6 @@ describe('Wallet:', function () {
     })
 
     const anonAddress = address
-
     paratii.eth.balanceOf(anonAddress, 'PTI').then(function (results) {
       balance = results
     })
@@ -106,7 +119,7 @@ describe('Wallet:', function () {
     // Click on - new here
     browser.waitForClickable('[data-test-id="new-here"]')
     browser.waitAndClick('[data-test-id="new-here"]')
-    // // Insert the password
+    // Insert the password
     browser.waitAndClick('[name="input-new-password"]')
     browser.setValue('[name="input-new-password"]', password)
     browser.waitAndClick('[name="input-confirm-password"]')
@@ -231,22 +244,52 @@ describe('Wallet:', function () {
 })
 
 describe('Voucher:', function () {
-  it('redeem a voucher', async function () {
+  it.skip('redeem a voucher', async function (done) {
+    // Generate a random voucher
+    const voucherCode11 = Math.random()
+      .toString(36)
+      .substring(3)
+    browser.url(`http://localhost:8080`)
+    createKeystore()
     browser.url(`http://localhost:8080/voucher`)
-    browser.waitUntil(() => {
-      return browser.getTitle() === 'Paratii'
-    })
-    const vouchers = await paratii.eth.getContract('Vouchers')
-    const token = await paratii.eth.getContract('ParatiiToken')
-    await token.methods
-      .transfer(vouchers.options.address, voucherAmountInitial11)
-      .send()
-    await paratii.eth.vouchers.create({
-      voucherCode: voucherCode11,
-      amount: voucherAmount11
-    })
+    let vouchers = ''
+    let token = ''
+    paratii.eth
+      .getContract('Vouchers')
+      .then(function (results) {
+        vouchers = results
+      })
+      .then(
+        paratii.eth
+          .getContract('ParatiiToken')
+          .then(function (results) {
+            token = results
+            token.methods
+              .transfer(vouchers.options.address, voucherAmountInitial11)
+              .send()
+          })
+          .then(
+            paratii.eth.vouchers.create({
+              voucherCode: voucherCode11,
+              amount: voucherAmount11
+            })
+          )
+      )
+
     browser.waitForExist('[name="voucher-code"]')
     browser.setValue('[name="voucher-code"]', voucherCode11)
+    // Insert the password
+    browser.waitAndClick('[name="wallet-password"]')
+    browser.setValue('[name="wallet-password"]', password)
+    browser.waitAndClick('[data-test-id="continue"]')
+    // Reinsert the voucher
+    browser.setValue('[name="voucher-code"]', voucherCode11)
     browser.waitAndClick('[data-test-id="redeem-voucher"]')
+    // We need to wait the voucher be redeem
+    browser.pause(2000)
+    // Then we check the balance
+    const balance = browser.getText('[data-test-id="pti-balance"]')
+    assert.equal(paratii.eth.web3.utils.toWei(balance), voucherAmount11)
+    done()
   })
 })

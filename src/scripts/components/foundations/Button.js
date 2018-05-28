@@ -82,6 +82,7 @@ export const ButtonStyleHover = css`
   backface-visibility: hidden;
   transition: opacity ${props => props.theme.animation.time.repaint};
 
+  &:focus,
   &:hover {
     opacity: ${props => props.theme.animation.opacity.hover};
   }

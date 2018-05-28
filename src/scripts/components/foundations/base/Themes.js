@@ -104,7 +104,7 @@ const Themes = {
           color: Colors.grayLight,
           icon: Colors.black,
           iconBg: Colors.purple,
-          background: Colors.grayLight,
+          background: Colors.gray,
           barFrom: Colors.purpleGradientFrom,
           barTo: Colors.purpleGradientTo
         },
@@ -183,6 +183,9 @@ const Themes = {
       VotingBarOne: Colors.green,
       VotingBarTwo: Colors.pink,
       ChallengeSequenceDot: Colors.white
+    },
+    UploadListItem: {
+      background: Colors.black
     }
   }
 }

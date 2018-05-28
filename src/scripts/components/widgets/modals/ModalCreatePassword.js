@@ -151,7 +151,7 @@ class ModalSetPassword extends Component<Props, State> {
     return (
       <Errors>
         {this.getAllErrors().map((error: string) => (
-          <Text pink small key={error}>
+          <Text pink small key={error} data-test-id="error-password">
             {error}
           </Text>
         ))}
