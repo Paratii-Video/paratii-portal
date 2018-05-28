@@ -1,5 +1,4 @@
 /* @flow */
-
 import shortNumber from 'short-number'
 import VideoRecord from 'records/VideoRecords'
 
@@ -42,42 +41,68 @@ export const getAppRootUrl = (env: ?string = 'development'): string => {
   switch (env) {
     case 'production':
       return 'https://portal.paratii.video'
-    case 'test':
-      return 'https://staging.paratii.video'
     case 'staging':
       return 'https://staging.paratii.video'
     case 'development':
+    case 'test':
     default:
       return 'http://localhost:8080'
   }
 }
 
-export const getParatiiConfig = (env: ?string = 'development'): Object => {
+export const getParatiiConfig = (env: ?string, scope: ?string): Object => {
   let config = {}
 
+  function needsScope (scope: ?string) {
+    if (scope !== 'client' && scope !== 'server') {
+      throw Error(`"scope" should be either "client" or "server"`)
+    }
+  }
   switch (env) {
     case 'production':
-      config = require('config/production.json')
+      needsScope(scope)
+      if (scope === 'client') {
+        config = require('../../../config/production-client.json')
+      } else {
+        config = require('../../../config/production-server.json')
+      }
       break
     case 'test':
-      config = require('config/test.json')
+      config = require('../../../config/test.json')
       break
     case 'staging':
-      config = require('config/staging.json')
+      needsScope(scope)
+      if (scope === 'client') {
+        config = require('../../../config/staging-client.json')
+      } else {
+        config = require('../../../config/staging-server.json')
+      }
       break
     case 'development':
     default:
-      config = require('config/development.json')
+      config = require('../../../config/development.json')
       break
   }
 
-  // If a registry address is not given in the config file, we read it from the environment
+  // we try to get the registry address either from REGISTRY_ADDRESS environemnt definedVariable
+  // or if that changes, from /tmp/registry.json
   if (config.eth.registryAddress === undefined) {
     const registryAddress = process.env.REGISTRY_ADDRESS
     if (registryAddress) {
       config.eth.registryAddress = registryAddress
-      return config
+    } else {
+      try {
+        const registryConfigPath = '/tmp/registry.json'
+        console.log(`getting registry address from ${registryConfigPath}`)
+        // const registryConfig = JSON.parse(fs.readFileSync(registryConfigPath, 'utf8'))
+        const registryConfig = require(registryConfigPath)
+        config.eth.registryAddress = registryConfig.registryAddress
+      } catch (e) {
+        console.log(`WARNING: no registry address configured`)
+      }
     }
+
+    return config
   }
 
   return config

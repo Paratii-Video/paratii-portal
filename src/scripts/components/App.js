@@ -6,6 +6,7 @@ import DocumentTitle from 'react-document-title'
 import { ThemeProvider } from 'styled-components'
 
 import ProfileContainer from 'containers/ProfileContainer'
+
 import ProfileEditContainer from 'containers/ProfileEditContainer'
 import PlayContainer from 'containers/PlayContainer'
 import VideoManager from 'containers/VideoManagerContainer'
@@ -18,6 +19,7 @@ import Notifications from 'containers/NotificationContainer'
 import type { Match } from 'react-router-dom'
 import MainTemplate from './templates/MainTemplate'
 import Modal from 'containers/widgets/modals/ModalContainer'
+import MailVerifyContainer from 'containers/pages/MailVerifyContainer'
 import Main from './structures/Main'
 import MainFooter from './structures/footer/MainFooter'
 import Home from './pages/Home'
@@ -81,6 +83,10 @@ class App extends Component<Props, State> {
             <Main>
               <Switch>
                 <Route exact path="/" component={Home} />
+                <Route
+                  path={`${match.url}verify`}
+                  component={MailVerifyContainer}
+                />
                 <Route
                   path={`${match.url}profile`}
                   component={ProfileContainer}

@@ -16,7 +16,6 @@ else
     exit
 fi
 yarn run build:$1
-rsync -e 'ssh -o StrictHostKeyChecking=no'  -azh . paratii@$host:/home/paratii/paratii-portal/
-ssh -o StrictHostKeyChecking=no paratii@$host << EOF
-  sh restart.sh
-EOF
+echo "copying files..."
+rsync -e 'ssh -o StrictHostKeyChecking=no'  -azh --exclude config --delete . paratii@$host:/home/paratii/paratii-portal/
+ssh -o StrictHostKeyChecking=no paratii@$host "sh restart.sh"
