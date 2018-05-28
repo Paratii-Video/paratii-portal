@@ -73,10 +73,12 @@ export const loadBalances = () => (dispatch: Dispatch) => {
   const address: string = paratii.eth.getAccount()
   if (address) {
     paratii.eth.balanceOf(address).then(({ ETH, PTI }) => {
+      const ETHAsString = ETH
+      const PTIAsString = PTI
       dispatch(
         balancesLoaded({
-          ETH,
-          PTI
+          ETHAsString,
+          PTIAsString
         })
       )
     })
