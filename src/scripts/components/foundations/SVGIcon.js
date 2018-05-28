@@ -31,9 +31,11 @@ export const IconFillStyleColor = css`
 
 const SVG = styled.svg`
   ${IconFillStyleColor};
+  display: block;
   width: ${({ width }) => width || '100%'};
   height: ${({ height }) => height || '100%'};
   margin: ${({ margin }) => margin || null};
+  transition: fill 0.3s;
 `
 
 const SVGIcon = ({ width, height, icon, color, margin, ...rest }: Props) => (

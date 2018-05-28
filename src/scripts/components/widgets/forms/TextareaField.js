@@ -22,11 +22,11 @@ type Props = {
   id: String,
   name: String,
   type: String,
-  onChange: (e: Object) => void,
   cols: String,
   rows: String,
   maxLength: String,
-  tabIndex: String
+  tabIndex: String,
+  onChange: (e: Object) => void
 }
 
 const LabelField = styled.label`

@@ -102,7 +102,7 @@ const Themes = {
           color: Colors.grayLight,
           icon: Colors.black,
           iconBg: Colors.purple,
-          background: Colors.grayLight,
+          background: Colors.gray,
           barFrom: Colors.purpleGradientFrom,
           barTo: Colors.purpleGradientTo
         },
@@ -162,6 +162,9 @@ const Themes = {
         }
       },
       nextButton: Colors.gray
+    },
+    UploadListItem: {
+      background: Colors.black
     }
   }
 }
