@@ -4,14 +4,6 @@ const nodemailer = require('nodemailer')
 const { getParatiiConfig } = require('./utils/AppUtils.js')
 
 const config = getParatiiConfig(process.env.NODE_ENV, 'server')
-
-// is this necessary here?
-// if (process.env.NODE_ENV === 'development') {
-//   const registryFilename = require('/tmp/registry.json')
-//   const registryAddress = registryFilename.registryAddress
-//   config.eth.registryAddress = registryAddress
-// }
-
 const paratii = new Paratii(config)
 
 var transporter
@@ -64,9 +56,10 @@ module.exports = {
     })
   },
 
-  generateVoucher: async function (amount, reason) {
+  generateVoucher: async function (address, amount, reason) {
     const salt = paratii.eth.web3.utils.randomHex(32)
     const signature = await paratii.eth.distributor.generateSignature(
+      address,
       amount,
       salt,
       reason,
@@ -77,7 +70,6 @@ module.exports = {
   },
 
   claimVoucher: async function (toAddress, amount, reason, salt, hash, v, r, s) {
-    console.log('claiming Voucher: ', toAddress)
     const opts = {
       address: toAddress,
       amount: amount,

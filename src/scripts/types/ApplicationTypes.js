@@ -107,6 +107,10 @@ type ClapprCore = EventEmitter & {
   }
 }
 
+type ClapprModule = {
+  Events: { [key: string]: string }
+}
+
 export type ClapprPlayer = EventEmitter & {
   core: ClapprCore,
   isPlaying: () => boolean,
@@ -117,7 +121,8 @@ export type ClapprPlayer = EventEmitter & {
   getVolume: () => number,
   setVolume: (percentage: number) => void,
   destroy: () => void,
-  seek: (time: number) => void
+  seek: (time: number) => void,
+  clappr: ClapprModule
 }
 
 // TODO move this into paratii-js repo
