@@ -29,7 +29,9 @@ const definedVariables = {
 const registryConfigPath = `/tmp/registry.json`
 
 if ((dev || test) && fs.existsSync(registryConfigPath)) {
-  const registryConfig = require(registryConfigPath)
+  const registryConfig = JSON.parse(fs.readFileSync(registryConfigPath, 'utf8'))
+  // const registryConfig = require(registryConfigPath)
+
   definedVariables['process.env.REGISTRY_ADDRESS'] = JSON.stringify(
     registryConfig.registryAddress
   )
@@ -63,6 +65,7 @@ const config = {
       components: scriptsDir + '/components',
       constants: scriptsDir + '/constants',
       actions: scriptsDir + '/actions',
+      operators: scriptsDir + '/operators',
       reducers: scriptsDir + '/reducers',
       records: scriptsDir + '/records',
       containers: scriptsDir + '/containers',
