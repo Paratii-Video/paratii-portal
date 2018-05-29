@@ -135,10 +135,10 @@ describe('💰 Wallet:', function () {
     browser.setValue('[name="email"]', email)
     browser.waitAndClick('[data-test-id="continue"]')
 
-    const newBalance = browser.getText('[data-test-id="pti-balance"]')
-
     // We have a new account with all the PTI in the anonymous so 21M
-    assert.equal(newBalance, '21M')
+    browser.waitUntil(
+      () => browser.getText('[data-test-id="pti-balance"]') === '21M'
+    )
     // After the test we resend the money back to the default address
     // FIXME this is not working, the balance is too high
     paratii.eth.transfer(anonAddress, balance, 'PTI')
