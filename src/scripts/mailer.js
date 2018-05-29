@@ -42,7 +42,7 @@ module.exports = {
   sendMail: (to, subject, text, html, cb) => {
     getTransporter().then(transporter => {
       const mailOptions = {
-        from: 'Paratii Video <we@paratii.video>',
+        from: 'Paratii Video <we@player.paratii.video>',
         to: to,
         subject: subject,
         text: text,
