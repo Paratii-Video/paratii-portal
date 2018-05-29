@@ -4,6 +4,7 @@ import type { VideoRecord } from 'records/VideoRecords'
 import Title from './foundations/Title'
 import RadioCheck, { RadioWrapper } from './widgets/forms/RadioCheck'
 import MyVideoItem from '../containers/MyVideoItemContainer'
+import { MyVideosWrapper } from './MyVideoItem'
 
 type Props = {
   videos: Map<string, VideoRecord> // maps video ids to upload records
@@ -78,11 +79,7 @@ const ProfileFilterRadioWrapper = styled(RadioWrapper)`
   width: auto;
 `
 
-const ProfileMyVideosList = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-column-gap: 24px;
-  grid-row-gap: 24px;
+const ProfileMyVideosList = MyVideosWrapper.extend`
   margin-top: 24px;
 `
 

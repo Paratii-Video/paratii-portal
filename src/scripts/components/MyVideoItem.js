@@ -13,6 +13,13 @@ type Props = {
 
 const Z_INDEX_TIME = 2
 
+export const MyVideosWrapper = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 24px;
+  grid-row-gap: 24px;
+`
+
 const Wrapper = styled.li`
   background: ${props => props.theme.colors.MyVideoItem.background};
   position: relative;
