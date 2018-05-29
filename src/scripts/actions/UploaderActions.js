@@ -24,7 +24,7 @@ import type { RootState } from 'types/ApplicationTypes'
 
 import Notifications from 'react-notification-system-redux'
 
-export const selectUploaderVideo = createAction(UPLOAD_VIDEO_SELECT)
+export const selectVideoToPublish = createAction(UPLOAD_VIDEO_SELECT)
 const uploadRequested = createAction(UPLOAD_REQUESTED)
 const uploadProgress = createAction(UPLOAD_PROGRESS)
 const uploadRemoteSuccess = createAction(UPLOAD_REMOTE_SUCCESS)
@@ -71,7 +71,7 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
     videoId = paratii.eth.vids.makeId()
   }
   dispatch(videoFetchSuccess({ id: videoId, owner: paratii.eth.getAccount() }))
-  dispatch(selectUploaderVideo(videoId))
+  // dispatch(selectVideoToPublish(videoId))
   dispatch(
     uploadRequested({
       id: videoId,
