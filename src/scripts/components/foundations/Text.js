@@ -51,10 +51,10 @@ const Text = styled.p`
   }};
   opacity: ${props => (props.disabled ? 0.5 : null)};
   overflow-wrap: break-word;
-  text-transform: ${({ textTransform }) =>
-    textTransform || null};
+  text-transform: ${({ textTransform }) => textTransform || null};
   white-space: pre-wrap;
   word-wrap: break-word;
+  margin: ${({ margin }) => margin};
 `
 
 export const Strong = styled.strong`

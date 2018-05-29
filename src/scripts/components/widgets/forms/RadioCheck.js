@@ -16,6 +16,7 @@ type Props = {
   justifyContent: String,
   margin: String,
   white: Boolean,
+  tabIndex: String,
   onChange: (e: Object) => void
 }
 
@@ -107,6 +108,7 @@ class RadioCheck extends Component<Props, void> {
           disabled={this.props.disabled}
           defaultChecked={this.props.defaultChecked}
           onChange={this.props.onChange}
+          tabIndex={this.props.tabIndex}
         />
         <RadioInputBox white={this.props.white}>
           <RadioInputIcon>

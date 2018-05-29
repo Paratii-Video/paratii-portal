@@ -15,7 +15,8 @@ type Props = {
   openModal: string => void,
   closeModal: () => void,
   secureKeystore: string => void,
-  setUserData: () => void
+  setUserData: () => void,
+  notification: (Object, string) => void
 }
 
 const Footer = styled.div`
@@ -78,9 +79,20 @@ class ModalProfile extends Component<Props, Object> {
 
   sendVerificationMail (mail: string, address: string) {
     var xhttp = new XMLHttpRequest()
-    xhttp.onreadystatechange = function () {
-      if (this.readyState === 4 && this.status === 200) {
+    xhttp.onreadystatechange = (event: Object) => {
+      if (
+        event.currentTarget.readyState === 4 &&
+        event.currentTarget.status === 200
+      ) {
         // Notification mail sent!
+        this.props.notification(
+          {
+            title: 'Check your email!',
+            message: 'We sent you a confirmation link',
+            autoDismiss: 0
+          },
+          'success'
+        )
       }
     }
     xhttp.open('GET', `/mail/send/?to=${mail}&toETH=${address}`, true)

@@ -16,6 +16,7 @@ class User extends Immutable.Record({
   address: '',
   name: '',
   email: '',
+  emailIsVerified: false,
   keepUrl: true,
   walletKey: 'keystore-anon',
   mnemonicKey: 'mnemonic-anon',
@@ -25,6 +26,7 @@ class User extends Immutable.Record({
   address: string
   name: string
   email: string
+  emailIsVerified: boolean
   keepUrl: boolean
   walletKey: string
   mnemonicKey: string

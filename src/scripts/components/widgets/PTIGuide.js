@@ -232,7 +232,7 @@ class PTIGuide extends Component<Props, void> {
                   <Anchor
                     anchor
                     purple
-                    href="mailto:we@paratii.video"
+                    href="mailto:we@player.paratii.video"
                     target="_blank"
                   >
                     get in touch.

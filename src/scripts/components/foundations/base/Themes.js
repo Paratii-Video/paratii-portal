@@ -104,7 +104,7 @@ const Themes = {
           color: Colors.grayLight,
           icon: Colors.black,
           iconBg: Colors.purple,
-          background: Colors.grayLight,
+          background: Colors.gray,
           barFrom: Colors.purpleGradientFrom,
           barTo: Colors.purpleGradientTo
         },
@@ -189,6 +189,13 @@ const Themes = {
       headerInfoBackground: Colors.blackAlt,
       ProfilePictureBackground: Colors.blackAlt,
       filterBackground: Colors.blackDark
+    },
+    UploadListItem: {
+      background: Colors.black
+    },
+    MyVideoItem: {
+      background: Colors.black,
+      imageBackground: Colors.blackAlt
     }
   }
 }

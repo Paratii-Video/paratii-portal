@@ -218,7 +218,7 @@ class VideoOverlay extends Component<Props> {
       showShareModal
     } = this.props
     return (
-      <Wrapper>
+      <Wrapper data-test-id="video-overlay">
         {this.renderPlugins()}
         <OverlayShadow
           transitionState={transitionState}
@@ -249,6 +249,7 @@ class VideoOverlay extends Component<Props> {
                   color={
                     activePlugin === PLAYER_PLUGIN.WALLET ? Colors.purple : ''
                   }
+                  data-test-id="wallet-info-button"
                   icon="/assets/img/profile.svg"
                   onClick={(e: Object) => {
                     e.stopPropagation()
@@ -258,6 +259,7 @@ class VideoOverlay extends Component<Props> {
               </ProfileButtonWrapper>
             )}
             <ShareButton
+              data-test-id="share-button"
               onClick={(e: Object) => {
                 e.stopPropagation()
                 toggleShareModal(e)
@@ -271,7 +273,10 @@ class VideoOverlay extends Component<Props> {
             showShareModal={showShareModal}
           >
             {
-              <StartScreenIcon showStartScreen={showStartScreen}>
+              <StartScreenIcon
+                data-test-id="start-screen-icon"
+                showStartScreen={showStartScreen}
+              >
                 <SVGIcon color="white" icon="icon-player-play" />
               </StartScreenIcon>
             }

@@ -11673,9 +11673,9 @@ parallel-transform@^1.1.0:
     inherits "^2.0.3"
     readable-stream "^2.1.5"
 
-"paratii-contracts@github:Paratii-Video/paratii-contracts#f216b44302efa0f1914973785c68b20460f10fc8":
+"paratii-contracts@github:Paratii-Video/paratii-contracts#430080f2cd1fd14721dee5e2e6fb216c3b61b50f":
   version "0.0.3"
-  resolved "https://codeload.github.com/Paratii-Video/paratii-contracts/tar.gz/f216b44302efa0f1914973785c68b20460f10fc8"
+  resolved "https://codeload.github.com/Paratii-Video/paratii-contracts/tar.gz/430080f2cd1fd14721dee5e2e6fb216c3b61b50f"
   dependencies:
     async "^2.6.0"
     babel-cli "^6.26.0"
@@ -11687,9 +11687,9 @@ parallel-transform@^1.1.0:
     web3-utils "1.0.0-beta.33"
     zeppelin-solidity "1.3.0"
 
-"paratii-js@github:Paratii-Video/paratii-js#cd9b835be0d1bac466e73426feb108078a400f0b":
+"paratii-js@github:Paratii-Video/paratii-js#24a95d530e6cc32682f4f534b01626f644f3fa5b":
   version "0.2.6"
-  resolved "https://codeload.github.com/Paratii-Video/paratii-js/tar.gz/cd9b835be0d1bac466e73426feb108078a400f0b"
+  resolved "https://codeload.github.com/Paratii-Video/paratii-js/tar.gz/24a95d530e6cc32682f4f534b01626f644f3fa5b"
   dependencies:
     async "^2.6.0"
     babel-runtime "^6.26.0"
@@ -11703,7 +11703,7 @@ parallel-transform@^1.1.0:
     joi "^13.1.2"
     multiaddr "^3.0.2"
     once "^1.4.0"
-    paratii-contracts "github:Paratii-Video/paratii-contracts#f216b44302efa0f1914973785c68b20460f10fc8"
+    paratii-contracts "github:Paratii-Video/paratii-contracts#430080f2cd1fd14721dee5e2e6fb216c3b61b50f"
     paratii-protocol "github:Paratii-Video/paratii-protocol#45aadcf300f1ad184d6d3db8f9c4b3d438b6f658"
     promisify-node "^0.4.0"
     pull-filereader "^1.0.1"

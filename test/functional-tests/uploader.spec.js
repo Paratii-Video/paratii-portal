@@ -7,6 +7,8 @@ import {
 } from './test-utils/helpers'
 
 describe('🦄 Uploader Tool', function () {
+  this.timeout(120000)
+
   beforeEach(function () {
     browser.url(`http://localhost:8080`)
     browser.execute(nukeLocalStorage)
@@ -44,6 +46,7 @@ describe('🦄 Uploader Tool', function () {
     }
 
     browser.url('http://localhost:8080/upload')
+    // Login
     browser.waitAndClick('[data-test-id="login-signup"]')
     browser.waitAndClick('[name="wallet-password"]')
     browser.setValue('[name="wallet-password"]', password)
@@ -56,10 +59,10 @@ describe('🦄 Uploader Tool', function () {
 
     // now we should see a form to fill in
     // the form should contain the id of our video
-    browser.waitForExist('input#video-id')
-
+    browser.waitAndClick('[data-test-id="uploader-item"]')
+    browser.waitForExist('[data-test-id="video-id"]')
     const getVideoId = function () {
-      var videoId = browser.getValue('input#video-id')
+      var videoId = browser.getValue('[data-test-id="video-id"]')
       if (videoId) {
         return videoId
       } else {
@@ -71,8 +74,8 @@ describe('🦄 Uploader Tool', function () {
     assert.isOk(videoId)
     assert.isOk(videoId.length > 8)
     // set title and video in the form
-    browser.setValue('#input-video-title', video.title)
-    browser.setValue('#input-video-description', video.description)
+    browser.setValue('#input-video-title-' + videoId, video.title)
+    browser.setValue('#input-video-description-' + videoId, video.description)
     // submit the form
     browser.waitAndClick('[data-test-id="video-submit-save"]')
     // we now should be on the status screen
@@ -90,12 +93,11 @@ describe('🦄 Uploader Tool', function () {
     browser.waitUntil(getVideoInfoFromBlockchain)
     // Check if video title has been saved
     browser.waitUntil(() => {
-      return browser.getValue('#input-video-title') === video.title
+      return browser.getValue('#input-video-title-' + videoId) === video.title
     })
     const videoInfoFromBlockchain = await getVideoInfoFromBlockchain()
     assert.isOk(videoInfoFromBlockchain)
     assert.equal(videoInfoFromBlockchain.owner, newAddress)
-
     // when the transcoder is done, we should be ready to publish the video
     browser.waitAndClick(`[data-test-id="video-submit-publish"]`)
     browser.pause(500)

@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 const BarWrapper = styled.div`
   background-color: ${props =>
     props.theme.colors.VideoForm.info.progress.background};
-  height: ${props => (props.small ? '1px' : '2px')};
+  height: ${props => (props.small ? '1px' : '3px')};
   position: relative;
   width: 100%;
 `

@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import type { VideoRecord } from 'records/VideoRecords'
 import Title from './foundations/Title'
-import Text, { Strong } from './foundations/Text'
-import Button from './foundations/Button'
-import SVGIcon from './foundations/SVGIcon'
 import RadioCheck, { RadioWrapper } from './widgets/forms/RadioCheck'
+import MyVideoItem from '../containers/MyVideoItemContainer'
 
-type Props = {}
+type Props = {
+  videos: Map<string, VideoRecord> // maps video ids to upload records
+}
 
 const PROFILEPICTURE_SIZE = '112px'
-const Z_INDEX_TIME = 2
 
 const Wrapper = styled.div`
   display: flex;
@@ -87,84 +86,6 @@ const ProfileMyVideosList = styled.ul`
   margin-top: 24px;
 `
 
-const ProfileMyVideosItem = styled.li`
-  background: ${props =>
-    props.theme.colors.ProfileMyVideos.headerInfoBackground};
-  position: relative;
-`
-
-const ProfileMyVideosItemLink = styled(Link)`
-  display: block;
-  transition: opacity 0.3s;
-
-  &:hover {
-    opacity: 0.5;
-  }
-`
-
-const ProfileMyVideosItemMedia = styled.div`
-  background: ${props =>
-    props.theme.colors.ProfileMyVideos.headerImageBackground};
-  height: 200px;
-  position: relative;
-  width: 100%;
-`
-
-const ProfileMyVideosItemImage = styled.div`
-  background: url(${({ source }) => source}) no-repeat 50%;
-  background-size: cover;
-  height: 100%;
-  width: 100%;
-`
-
-// <export or import from Videoform>
-const VideoMediaTime = styled.div`
-  bottom: 10px;
-  padding: 10px;
-  position: absolute;
-  right: 10px;
-  z-index: ${Z_INDEX_TIME};
-
-  &::before {
-    background-color: ${props =>
-    props.theme.colors.VideoForm.info.time.background};
-    border-radius: 2px;
-    content: '';
-    height: 100%;
-    left: 0;
-    opacity: 0.8;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-`
-
-const VideoMediaTimeText = styled.p`
-  color: ${props => props.theme.colors.VideoForm.info.time.color};
-  font-size: ${props => props.theme.fonts.video.info.time};
-  position: relative;
-  z-index: 1;
-`
-// </export or import from Videoform>
-
-const ProfileMyVideosItemInfo = styled.div`
-  background: ${props =>
-    props.theme.colors.ProfileMyVideos.headerInfoBackground};
-  padding: 20px;
-`
-
-const ProfileMyVideosItemButtons = styled.div`
-  align-items: center;
-  bottom: 20px;
-  display: flex;
-  position: absolute;
-  right: 20px;
-`
-
-const ProfileMyVideosItemButton = styled(Button)`
-  margin-left: 10px;
-`
-
 class ProfileMyVideos extends Component<Props, void> {
   render () {
     return (
@@ -212,96 +133,11 @@ class ProfileMyVideos extends Component<Props, void> {
           </ProfileFilterRadioWrapper>
         </ProfileFilterVideos>
         <ProfileMyVideosList>
-          <ProfileMyVideosItem>
-            <ProfileMyVideosItemLink to="/profile">
-              <ProfileMyVideosItemMedia>
-                <ProfileMyVideosItemImage source="http://www.redbullsignatureseries.com/wp-content/uploads/2017/03/P-20160515-00063_News-720x405.jpg" />
-
-                <VideoMediaTime>
-                  <VideoMediaTimeText>00:10:00</VideoMediaTimeText>
-                </VideoMediaTime>
-              </ProfileMyVideosItemMedia>
-              <ProfileMyVideosItemInfo>
-                <Text small>
-                  Lorem ipsum dolor sit amet, dipiscing elit. Lorem ipsum sit
-                  amet dipi dolor, dipiscing elit. Lorem ipsum sit amet dipi
-                  dolor
-                </Text>
-                <Text small gray>
-                  10 000 views
-                </Text>
-                <Text small>
-                  Status: <Strong purple>Published</Strong>
-                </Text>
-                <Text small gray>
-                  11 months ago
-                </Text>
-              </ProfileMyVideosItemInfo>
-            </ProfileMyVideosItemLink>
-            <ProfileMyVideosItemButtons>
-              <ProfileMyVideosItemButton>
-                <SVGIcon
-                  icon="icon-player-share"
-                  color="gray"
-                  width="24px"
-                  height="15px"
-                />
-              </ProfileMyVideosItemButton>
-              <ProfileMyVideosItemButton>
-                <SVGIcon
-                  icon="icon-settings"
-                  color="gray"
-                  width="17px"
-                  height="17px"
-                />
-              </ProfileMyVideosItemButton>
-            </ProfileMyVideosItemButtons>
-          </ProfileMyVideosItem>
-          <ProfileMyVideosItem>
-            <ProfileMyVideosItemLink to="/profile">
-              <ProfileMyVideosItemMedia>
-                <ProfileMyVideosItemImage source="http://www.redbullsignatureseries.com/wp-content/uploads/2017/03/P-20160515-00063_News-720x405.jpg" />
-
-                <VideoMediaTime>
-                  <VideoMediaTimeText>00:10:00</VideoMediaTimeText>
-                </VideoMediaTime>
-              </ProfileMyVideosItemMedia>
-              <ProfileMyVideosItemInfo>
-                <Text small>
-                  Lorem ipsum dolor sit amet, dipiscing elit. Lorem ipsum sit
-                  amet dipi dolor, dipiscing elit. Lorem ipsum sit amet dipi
-                  dolor
-                </Text>
-                <Text small gray>
-                  10 000 views
-                </Text>
-                <Text small>
-                  Status: <Strong pink>Challenged</Strong>
-                </Text>
-                <Text small gray>
-                  11 months ago
-                </Text>
-              </ProfileMyVideosItemInfo>
-            </ProfileMyVideosItemLink>
-            <ProfileMyVideosItemButtons>
-              <ProfileMyVideosItemButton>
-                <SVGIcon
-                  icon="icon-player-share"
-                  color="gray"
-                  width="24px"
-                  height="15px"
-                />
-              </ProfileMyVideosItemButton>
-              <ProfileMyVideosItemButton>
-                <SVGIcon
-                  icon="icon-settings"
-                  color="gray"
-                  width="17px"
-                  height="17px"
-                />
-              </ProfileMyVideosItemButton>
-            </ProfileMyVideosItemButtons>
-          </ProfileMyVideosItem>
+          {this.props.videos
+            .entrySeq()
+            .map(([videoId, videoInfo]) => (
+              <MyVideoItem key={videoId} videoId={videoId} video={videoInfo} />
+            ))}
         </ProfileMyVideosList>
       </Wrapper>
     )

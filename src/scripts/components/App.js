@@ -5,8 +5,6 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import DocumentTitle from 'react-document-title'
 import { ThemeProvider } from 'styled-components'
 
-import SignupContainer from 'containers/SignupContainer'
-import LoginContainer from 'containers/LoginContainer'
 import ProfileContainer from 'containers/ProfileContainer'
 
 import ProfileEditContainer from 'containers/ProfileEditContainer'
@@ -25,12 +23,12 @@ import Notifications from 'containers/NotificationContainer'
 import type { Match } from 'react-router-dom'
 import MainTemplate from './templates/MainTemplate'
 import Modal from 'containers/widgets/modals/ModalContainer'
+import MailVerifyContainer from 'containers/pages/MailVerifyContainer'
 import Main from './structures/Main'
 import MainFooter from './structures/footer/MainFooter'
 import Home from './pages/Home'
 import Voucher from './pages/Voucher'
 import NotFound from './pages/NotFound'
-import MailVerify from './pages/MailVerify'
 
 import { APP_TITLE, paratiiTheme } from 'constants/ApplicationConstants'
 
@@ -39,7 +37,6 @@ import type { Map } from 'immutable'
 
 type Props = {
   initializeApp: () => void,
-  setSelectedVideo: (id: string) => void,
   match: Match,
   videos: Map<string, VideoRecord>,
   isWalletSecured: boolean
@@ -90,12 +87,10 @@ class App extends Component<Props, State> {
             <Main>
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route path={`${match.url}verify`} component={MailVerify} />
                 <Route
-                  path={`${match.url}signup`}
-                  component={SignupContainer}
+                  path={`${match.url}verify`}
+                  component={MailVerifyContainer}
                 />
-                <Route path={`${match.url}login`} component={LoginContainer} />
                 <Route
                   path={`${match.url}profile`}
                   component={ProfileContainer}
@@ -120,14 +115,12 @@ class App extends Component<Props, State> {
                 <Route path={`${match.url}upload`} component={VideoManager} />
                 <Route path={`${match.url}voucher`} component={Voucher} />
                 <Route path={`${match.url}debug`} component={DebugContainer} />
-
                 <Route
                   path={`${match.url}wallet`}
                   render={() =>
                     isWalletSecured ? <WalletContainer /> : <Redirect to="/" />
                   }
                 />
-
                 <Route
                   path={`${match.url}play/:id`}
                   component={PlayContainer}

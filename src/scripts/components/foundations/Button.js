@@ -82,6 +82,7 @@ export const ButtonStyleHover = css`
   backface-visibility: hidden;
   transition: opacity ${props => props.theme.animation.time.repaint};
 
+  &:focus,
   &:hover {
     opacity: ${props => props.theme.animation.opacity.hover};
   }
@@ -93,8 +94,21 @@ export const ButtonColor = styled.button`
   padding: 12px;
 `
 
-const Button = styled.button`
-  ${StyleAnchor} ${ButtonStyleColor} ${ButtonStyle} ${ButtonStyleHover};
+const Button = styled.button.attrs({
+  'data-test-id': props => props['data-test-id']
+})`
+  ${StyleAnchor} ${ButtonStyleColor} ${ButtonStyleHover} cursor: ${props =>
+  props.disabled ? 'initial' : 'pointer'};
+  font-size: ${props => (props.anchor ? null : props.theme.fonts.button)};
+  font-weight: ${props =>
+    props.anchor
+      ? props.theme.fonts.weight.regular
+      : props.theme.fonts.weight.bold};
+  margin: ${props => props.margin};
+  opacity: ${props => (props.disabled ? 0.5 : 1)};
+  pointer-events: ${props => (props.disabled ? 'none' : null)};
+  text-transform: ${props => (props.anchor ? null : 'uppercase')};
+  user-select: ${props => (props.anchor ? null : 'none')};
 `
 
 export default Button
