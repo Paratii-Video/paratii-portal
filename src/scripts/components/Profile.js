@@ -62,7 +62,7 @@ const EmailAddressWrapper = styled.span`
   margin-right: 10px;
 `
 
-const EmailDataWrapper = styled.div`
+const EmailDataWrapper = styled.span`
   display: flex;
   align-items: center;
 `
