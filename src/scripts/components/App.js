@@ -9,7 +9,6 @@ import { ThemeProvider } from 'styled-components'
 import ProfileContainer from 'containers/ProfileContainer'
 
 import ProfileEditContainer from 'containers/ProfileEditContainer'
-import VideoManager from 'containers/VideoManagerContainer'
 import DebugContainer from 'containers/DebugContainer'
 import WalletContainer from 'containers/WalletContainer'
 import MainHeader from 'containers/MainHeaderContainer'
@@ -21,8 +20,6 @@ import MailVerifyContainer from 'containers/pages/MailVerifyContainer'
 import Main from './structures/Main'
 import MainFooter from './structures/footer/MainFooter'
 import Home from './pages/Home'
-import Voucher from './pages/Voucher'
-import NotFound from './pages/NotFound'
 
 import { APP_TITLE, paratiiTheme } from 'constants/ApplicationConstants'
 
@@ -39,6 +36,21 @@ const PlayContainerLoadable = Loadable({
 
 const SearchResultsContainerLoadable = Loadable({
   loader: () => import('containers/pages/SearchResultsContainer'),
+  loading: ComponentLoader
+})
+
+const VideoManagerLoadable = Loadable({
+  loader: () => import('containers/VideoManagerContainer'),
+  loading: ComponentLoader
+})
+
+const VoucherLoadable = Loadable({
+  loader: () => import('./pages/Voucher'),
+  loading: ComponentLoader
+})
+
+const NotFoundLoadable = Loadable({
+  loader: () => import('./pages/NotFound'),
   loading: ComponentLoader
 })
 
@@ -109,10 +121,16 @@ class App extends Component<Props, State> {
                 />
                 <Route
                   path={`${match.url}upload/:id`}
-                  component={VideoManager}
+                  component={VideoManagerLoadable}
                 />
-                <Route path={`${match.url}upload`} component={VideoManager} />
-                <Route path={`${match.url}voucher`} component={Voucher} />
+                <Route
+                  path={`${match.url}upload`}
+                  component={VideoManagerLoadable}
+                />
+                <Route
+                  path={`${match.url}voucher`}
+                  component={VoucherLoadable}
+                />
                 <Route path={`${match.url}debug`} component={DebugContainer} />
                 <Route
                   path={`${match.url}wallet`}
@@ -132,7 +150,7 @@ class App extends Component<Props, State> {
                   path={`${match.url}search`}
                   component={SearchResultsContainerLoadable}
                 />
-                <Route component={NotFound} />
+                <Route component={NotFoundLoadable} />
               </Switch>
             </Main>
             {/* <DebugContainer /> */}
