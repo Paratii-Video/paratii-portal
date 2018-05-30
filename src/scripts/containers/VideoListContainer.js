@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { selectUploaderVideo } from 'actions/UploaderActions'
+import { selectVideoToPublish } from 'actions/UploaderActions'
 import VideoList from 'components/VideoList'
 import { bindActionCreators } from 'redux'
 import {
@@ -15,7 +15,7 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setSelectedVideo: bindActionCreators(selectUploaderVideo, dispatch)
+  setSelectedVideo: bindActionCreators(selectVideoToPublish, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoList)
