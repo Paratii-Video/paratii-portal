@@ -2,21 +2,19 @@
 
 import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
+import Loadable from 'react-loadable'
 import DocumentTitle from 'react-document-title'
 import { ThemeProvider } from 'styled-components'
 
 import ProfileContainer from 'containers/ProfileContainer'
 
 import ProfileEditContainer from 'containers/ProfileEditContainer'
-import PlayContainer from 'containers/PlayContainer'
 import VideoManager from 'containers/VideoManagerContainer'
 import DebugContainer from 'containers/DebugContainer'
 import WalletContainer from 'containers/WalletContainer'
-import SearchResultsContainer from 'containers/pages/SearchResultsContainer'
 import MainHeader from 'containers/MainHeaderContainer'
 import Notifications from 'containers/NotificationContainer'
-
-import type { Match } from 'react-router-dom'
+import Loader from 'components/foundations/Loader'
 import MainTemplate from './templates/MainTemplate'
 import Modal from 'containers/widgets/modals/ModalContainer'
 import MailVerifyContainer from 'containers/pages/MailVerifyContainer'
@@ -28,8 +26,21 @@ import NotFound from './pages/NotFound'
 
 import { APP_TITLE, paratiiTheme } from 'constants/ApplicationConstants'
 
+import type { Match } from 'react-router-dom'
 import type VideoRecord from 'records/VideoRecords'
 import type { Map } from 'immutable'
+
+const ComponentLoader = () => <Loader width="50px" height="50px" />
+
+const PlayContainerLoadable = Loadable({
+  loader: () => import('containers/PlayContainer'),
+  loading: ComponentLoader
+})
+
+const SearchResultsContainerLoadable = Loadable({
+  loader: () => import('containers/pages/SearchResultsContainer'),
+  loading: ComponentLoader
+})
 
 type Props = {
   initializeApp: () => void,
@@ -111,15 +122,15 @@ class App extends Component<Props, State> {
                 />
                 <Route
                   path={`${match.url}play/:id`}
-                  component={PlayContainer}
+                  component={PlayContainerLoadable}
                 />
                 <Route
                   path={`${match.url}embed/:id`}
-                  component={PlayContainer}
+                  component={PlayContainerLoadable}
                 />
                 <Route
                   path={`${match.url}search`}
-                  component={SearchResultsContainer}
+                  component={SearchResultsContainerLoadable}
                 />
                 <Route component={NotFound} />
               </Switch>
