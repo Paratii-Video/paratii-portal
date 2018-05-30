@@ -165,6 +165,11 @@ const Themes = {
     },
     UploadListItem: {
       background: Colors.black
+    },
+    LandingPage: {
+      headerBackground: Colors.blackLight,
+      videosBackground: Colors.blackDark,
+      headerContentBackground: Colors.blackTransparent
     }
   }
 }
