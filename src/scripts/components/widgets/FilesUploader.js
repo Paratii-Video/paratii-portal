@@ -1,15 +1,20 @@
 /* @flow */
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import type { RouterHistory } from 'react-router-dom'
 import styled, { css } from 'styled-components'
+import { FILESUPLOADER_PATH_TO } from 'constants/UrlConstants'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
 import TextField from '../widgets/forms/TextField'
 import Card, { CardTitle } from 'components/structures/Card'
+import SVGIcon from '../foundations/SVGIcon'
 
 type Props = {
+  history: RouterHistory,
   isWalletSecured: boolean,
+  margin: string,
   onError: boolean,
   showCard: boolean,
-  margin: string,
   onFileChosen: (file: Object) => void,
   checkUserWallet: () => void
 }
@@ -47,6 +52,13 @@ const UploadCover = styled.div`
 `
 
 const UploadCoverIcon = styled.div`
+  margin: 30px 0 20px;
+  width: 100%;
+`
+
+const UploadAddIcon = styled.div`
+  display: flex;
+  justify-content: center;
   margin: 30px 0 20px;
   width: 100%;
 `
@@ -122,6 +134,8 @@ class FilesUploader extends Component<Props, Object> {
         file: file,
         fileName: file.name + ' | ' + file.size + 'bytes'
       })
+
+      this.props.history.push(FILESUPLOADER_PATH_TO)
     } else {
       this.props.checkUserWallet()
     }
@@ -193,7 +207,14 @@ class FilesUploader extends Component<Props, Object> {
           onDragEnd={this.onDrag}
         />
         <UploadCover>
-          <UploadCoverIcon />
+          <UploadAddIcon>
+            <SVGIcon
+              color="purple"
+              icon="icon-add"
+              width="36px"
+              height="36px"
+            />
+          </UploadAddIcon>
           <UploadCoverText>
             <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
             choose a file
@@ -204,4 +225,4 @@ class FilesUploader extends Component<Props, Object> {
   }
 }
 
-export default FilesUploader
+export default withRouter(FilesUploader)
