@@ -100,7 +100,8 @@ export const setUserData = () => async (dispatch: Dispatch) => {
     dispatch(
       loginSuccess({
         name: user.name,
-        email: user.email
+        email: user.email,
+        emailIsVerified: user.emailIsVerified
       })
     )
   }
