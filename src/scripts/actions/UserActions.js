@@ -97,11 +97,12 @@ export const setUserData = () => async (dispatch: Dispatch) => {
   const address: string = paratii.eth.getAccount()
   const user: UserRecord = await paratii.users.get(address)
   if (user) {
+    const emailIsVerified = user.emailIsVerified || false
     dispatch(
       loginSuccess({
         name: user.name,
         email: user.email,
-        emailIsVerified: user.emailIsVerified
+        emailIsVerified: emailIsVerified
       })
     )
   }

@@ -25,12 +25,15 @@ const reducer = {
   },
   [LOGIN_SUCCESS]: (
     state: UserRecord,
-    { payload }: Action<{ name: string, email: string }>
+    {
+      payload
+    }: Action<{ name: string, email: string, emailIsVerified: string }>
   ): UserRecord => {
     return state.merge({
       loginRequestStatus: REQUEST_STATUS.SUCCEEDED,
       name: payload.name,
-      email: payload.email
+      email: payload.email,
+      emailIsVerified: payload.emailIsVerified
     })
   },
   [LOGOUT]: (state: UserRecord): UserRecord => {
