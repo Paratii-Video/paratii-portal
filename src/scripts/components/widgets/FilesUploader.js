@@ -73,9 +73,10 @@ const UploadCoverText = styled(Text)`
   text-align: center;
 `
 
-const UploadCoverTextBig = styled.span`
+const TextBig = Text.withComponent('span')
+
+const UploadCoverTextBig = styled(TextBig)`
   display: block;
-  font-size: ${props => props.theme.fonts.text.big};
   margin-bottom: 5px;
 `
 
@@ -93,6 +94,7 @@ const UploaderWrapper = styled.div`
 `
 
 const UploaderSimpleWrapper = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
   padding: 70px 0;
@@ -100,10 +102,15 @@ const UploaderSimpleWrapper = styled.div`
 `
 
 const UploadAddIcon = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 0 0 25px;
-  width: 100%;
+  height: 36px;
+  margin: 0 0 20px;
+  transform: ${({ className }) =>
+    className === 'dragenter' ? 'scale(1.2)' : 'scale(1)'};
+  transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
+  width: 36px;
+  ${UploaderSimpleWrapper}:hover & {
+    transform: scale(1.2);
+  }
 `
 
 class FilesUploader extends Component<Props, Object> {
@@ -209,18 +216,19 @@ class FilesUploader extends Component<Props, Object> {
             onClick={this.onCheck}
             onChange={this.onFileChosen}
             onDragEnter={this.onDrag}
+            onDragLeave={this.onDrag}
           />
-          <UploadAddIcon>
+          <UploadAddIcon className={this.state.dragClass}>
             <SVGIcon
               color={this.props.white ? 'white' : 'purple'}
               icon="icon-add"
-              width="36px"
-              height="36px"
             />
           </UploadAddIcon>
-          <UploadCoverText purple={!this.props.white} white={this.props.white}>
-            <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
-            choose a file
+          <UploadCoverText purple={!this.props.white} small>
+            <UploadCoverTextBig big purple={!this.props.white}>
+              Drag your files here
+            </UploadCoverTextBig>{' '}
+            or click to find them
           </UploadCoverText>
         </UploaderSimpleWrapper>
       </UploaderWrapper>
