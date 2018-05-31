@@ -34,7 +34,8 @@ type Props = {
   saveVideoInfo: Object => Object,
   openModal: string => void,
   notification: (Object, string) => void,
-  checkUserWallet: () => void
+  checkUserWallet: () => void,
+  setVideoToPublish: string => void
 }
 
 const PADDING_HORIZONTAL: string = '50px'
@@ -289,12 +290,14 @@ class UploadListItem extends Component<Props, Object> {
 
   onPublishVideo (e: Object) {
     e.preventDefault()
+    const videoId = this.state.id
     const balance = Number(this.props.user.balances.PTI) // paratii.eth.web3.utils.fromWei(balance)
     // FIXME we need to manage this globally and not hardcoded
     const stakeAmount = 5
     const stakeAmountWei = Number(
       paratii.eth.web3.utils.toWei(stakeAmount + '')
     )
+    this.props.setVideoToPublish(videoId)
     if (balance < stakeAmountWei) {
       this.props.notification(
         {
