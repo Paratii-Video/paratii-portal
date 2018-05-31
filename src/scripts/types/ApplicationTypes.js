@@ -175,7 +175,13 @@ export type ParatiiLib = {
     },
     tcr: {
       apply: (string, number) => Promise<Object>,
-      checkEligiblityAndApply: (string, number) => Promise<Object>
+      checkEligiblityAndApply: (string, number) => Promise<Object>,
+      getMinDeposit: () => string
+    },
+    tcrPlaceholder: {
+      apply: (string, number) => Promise<Object>,
+      checkEligiblityAndApply: (string, number) => Promise<Object>,
+      getMinDeposit: () => string
     }
   },
   ipfs: {
