@@ -11667,9 +11667,9 @@ parallel-transform@^1.1.0:
     inherits "^2.0.3"
     readable-stream "^2.1.5"
 
-"paratii-contracts@github:Paratii-Video/paratii-contracts#430080f2cd1fd14721dee5e2e6fb216c3b61b50f":
+"paratii-contracts@github:Paratii-Video/paratii-contracts#f216b44302efa0f1914973785c68b20460f10fc8":
   version "0.0.3"
-  resolved "https://codeload.github.com/Paratii-Video/paratii-contracts/tar.gz/430080f2cd1fd14721dee5e2e6fb216c3b61b50f"
+  resolved "https://codeload.github.com/Paratii-Video/paratii-contracts/tar.gz/f216b44302efa0f1914973785c68b20460f10fc8"
   dependencies:
     async "^2.6.0"
     babel-cli "^6.26.0"
@@ -17964,9 +17964,9 @@ zcash-bitcore-lib@^0.13.20-rc3:
     inherits "=2.0.1"
     lodash "=3.10.1"
 
-zeppelin-solidity@^1.8.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/zeppelin-solidity/-/zeppelin-solidity-1.9.0.tgz#463ac7dc04480f8c9c4f9e1db3da96a39009fe6c"
+zeppelin-solidity@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/zeppelin-solidity/-/zeppelin-solidity-1.3.0.tgz#066ab35d7e07510da391d1dbaaf319e0d06fcfc6"
 
 zero-fill@^2.2.3:
   version "2.2.3"
