@@ -1,12 +1,12 @@
 /* @flow */
 
 import { connect } from 'react-redux'
-import { show } from 'react-notification-system-redux'
-
+import { getUploaderVideos } from 'selectors/UploaderSelectors'
+import type { RootState } from 'types/ApplicationTypes'
 import Landing from 'components/pages/Landing'
 
-const mapDispatchToProps = {
-  showNotification: show
-}
+const mapStateToProps = (state: RootState) => ({
+  videos: getUploaderVideos(state)
+})
 
-export default connect(undefined, mapDispatchToProps)(Landing)
+export default connect(mapStateToProps, undefined)(Landing)

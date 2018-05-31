@@ -56,13 +56,6 @@ const UploadCoverIcon = styled.div`
   width: 100%;
 `
 
-const UploadAddIcon = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 30px 0 20px;
-  width: 100%;
-`
-
 const Icon = styled.div`
   height: 110px;
   margin: 0 auto;
@@ -83,7 +76,7 @@ const UploadCoverText = styled.p`
 const UploadCoverTextBig = styled.span`
   display: block;
   font-size: ${props => props.theme.fonts.text.big};
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 `
 
 const FooterWrapper = styled.div`
@@ -97,6 +90,20 @@ const InputText = styled(TextField)`
 const UploaderWrapper = styled.div`
   width: 100%;
   position: relative;
+`
+
+const UploaderSimpleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 70px 0;
+  position: relative;
+`
+
+const UploadAddIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 0 0 25px;
+  width: 100%;
 `
 
 class FilesUploader extends Component<Props, Object> {
@@ -142,23 +149,19 @@ class FilesUploader extends Component<Props, Object> {
   }
 
   onDrag (e: Object) {
-    // If wallet not secure open the modal
-    if (this.props.isWalletSecured) {
-      const status = e.type
-      let klass = ''
-      if (status === 'dragenter' || status === 'mouseover') {
-        klass = 'dragenter'
-      } else if (status === 'drop') {
-        klass = 'drop'
-      } else {
-        klass = ''
-      }
-      this.setState({
-        dragClass: klass
-      })
+    const status = e.type
+    let klass = ''
+    if (status === 'dragenter' || status === 'mouseover') {
+      klass = 'dragenter'
+    } else if (status === 'drop') {
+      klass = 'drop'
     } else {
-      this.props.checkUserWallet()
+      klass = ''
     }
+
+    this.setState({
+      dragClass: klass
+    })
   }
 
   render () {
@@ -199,14 +202,14 @@ class FilesUploader extends Component<Props, Object> {
         </UploadCover>
       </Card>
     ) : (
-      <UploaderWrapper>
-        <InputFile
-          type="file"
-          onClick={this.onCheck}
-          onChange={this.onFileChosen}
-          onDragEnd={this.onDrag}
-        />
-        <UploadCover>
+      <UploaderWrapper className={this.state.dragClass}>
+        <UploaderSimpleWrapper>
+          <InputFile
+            type="file"
+            onClick={this.onCheck}
+            onChange={this.onFileChosen}
+            onDragEnter={this.onDrag}
+          />
           <UploadAddIcon>
             <SVGIcon
               color="purple"
@@ -219,7 +222,7 @@ class FilesUploader extends Component<Props, Object> {
             <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
             choose a file
           </UploadCoverText>
-        </UploadCover>
+        </UploaderSimpleWrapper>
       </UploaderWrapper>
     )
   }
