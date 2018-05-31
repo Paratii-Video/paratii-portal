@@ -7,6 +7,7 @@ import { FILESUPLOADER_PATH_TO } from 'constants/UrlConstants'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
 import TextField from '../widgets/forms/TextField'
 import Card, { CardTitle } from 'components/structures/Card'
+import Text from '../foundations/Text'
 import SVGIcon from '../foundations/SVGIcon'
 
 type Props = {
@@ -15,6 +16,7 @@ type Props = {
   margin: string,
   onError: boolean,
   showCard: boolean,
+  white: Boolean,
   onFileChosen: (file: Object) => void,
   checkUserWallet: () => void
 }
@@ -67,9 +69,7 @@ const Icon = styled.div`
   }
 `
 
-const UploadCoverText = styled.p`
-  color: ${props => props.theme.colors.FilesUploader.drag.color};
-  font-size: ${props => props.theme.fonts.text.small};
+const UploadCoverText = styled(Text)`
   text-align: center;
 `
 
@@ -212,13 +212,13 @@ class FilesUploader extends Component<Props, Object> {
           />
           <UploadAddIcon>
             <SVGIcon
-              color="purple"
+              color={this.props.white ? 'white' : 'purple'}
               icon="icon-add"
               width="36px"
               height="36px"
             />
           </UploadAddIcon>
-          <UploadCoverText>
+          <UploadCoverText purple={!this.props.white} white={this.props.white}>
             <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
             choose a file
           </UploadCoverText>

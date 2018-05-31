@@ -186,7 +186,7 @@ class Landing extends Component<Props, void> {
                 giving the power back to peers.
               </Text>
             </HeaderContentWrapper>
-            <FilesUploader />
+            <FilesUploader white />
           </HeaderContent>
 
           <HeaderSVGBackground viewbox="0 0 500 500">
