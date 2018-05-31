@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom'
 import Title from '../foundations/Title'
 import Text from '../foundations/Text'
 import TruncatedText from '../foundations/TruncatedText'
+import { ButtonStyleHover } from '../foundations/Button'
 import FilesUploader from '../../containers/FileUploaderContainer'
 import SVGIcon from '../foundations/SVGIcon'
 import type VideoRecord from 'records/VideoRecords'
 import type { Map } from 'immutable'
+import { MAINHEADER_LOGO_HEIGHT } from 'constants/UIConstants'
 
 type Props = {
   videos: Map<string, VideoRecord> // maps video ids to upload records
@@ -17,6 +19,7 @@ type Props = {
 const ZINDEX_LANDINGVIDEOITEMSHADOW: Number = 2
 const ZINDEX_LANDINGVIDEOITEMBACKGROUND: Number = 1
 const ZINDEX_LANDINGVIDEOITEMLINK: Number = 3
+const VIDEOLINK_POSITION: String = '40px'
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,9 +32,29 @@ const Header = styled.div`
     url(${props => props.background}) no-repeat 50%;
   background-size: cover;
   display: flex;
-  height: calc(100vh - 69px);
+  min-height: calc(100vh - ${MAINHEADER_LOGO_HEIGHT});
   justify-content: center;
   position: relative;
+`
+
+const VideoLink = styled(Link)`
+  ${ButtonStyleHover} align-items: center;
+  background: ${props => props.theme.colors.LandingPage.VideoLinkBackground};
+  bottom: ${VIDEOLINK_POSITION};
+  border-radius: 4px;
+  color: ${props => props.theme.colors.LandingPage.VideoLinkColor};
+  display: flex;
+  font-size: 1rem;
+  font-weight: ${props => props.theme.fonts.weight.bold};
+  left: ${VIDEOLINK_POSITION};
+  padding: 16px 24px;
+  position: absolute;
+  overflow: hidden;
+  max-width: 200px;
+
+  svg {
+    margin-right: 10px;
+  }
 `
 
 const HeaderSVGBackground = styled.svg`
@@ -47,9 +70,11 @@ const HeaderContent = styled.div`
   align-items: center;
   background: ${props =>
     props.theme.colors.LandingPage.headerContentBackground};
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: 40px 0;
   max-width: 1200px;
   padding: 100px 40px 30px;
   width: calc(100% - 40px);
@@ -188,7 +213,10 @@ class Landing extends Component<Props, void> {
             </HeaderContentWrapper>
             <FilesUploader white />
           </HeaderContent>
-
+          <VideoLink to="/upload">
+            <SVGIcon icon="icon-player-play" width="13px" height="16px" />
+            <TruncatedText>Video name maybe very big</TruncatedText>
+          </VideoLink>
           <HeaderSVGBackground viewbox="0 0 500 500">
             <defs>
               <filter

@@ -168,8 +168,10 @@ const Themes = {
     },
     LandingPage: {
       headerBackground: Colors.blackLight,
-      videosBackground: Colors.blackDark,
       headerContentBackground: Colors.blackTransparent,
+      VideoLinkBackground: Colors.grayDark,
+      VideoLinkColor: Colors.white,
+      videosBackground: Colors.blackDark,
       listItemBackground: Colors.blackAlt,
       listItemTimeBackground: Colors.blackTransparent,
       listItemTimeColor: Colors.white
