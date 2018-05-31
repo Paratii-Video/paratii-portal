@@ -2686,14 +2686,14 @@ chownr@^1.0.1:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.0.1.tgz#e2a75042a9551908bebd25b8523d5f9769d79181"
 
 chromedriver@^2.28:
-  version "2.38.3"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-2.38.3.tgz#a432a254bc9ed1faa6edfa67cf5d1135aa2468d6"
+  version "2.37.0"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-2.37.0.tgz#e7867c8236f6bb89024737bbffc9a4b33ded658b"
   dependencies:
     del "^3.0.0"
-    extract-zip "^1.6.6"
+    extract-zip "^1.6.5"
     kew "^0.7.0"
     mkdirp "^0.5.1"
-    request "^2.85.0"
+    request "^2.83.0"
 
 chunky@0.0.0:
   version "0.0.0"
