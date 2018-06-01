@@ -63,8 +63,7 @@ class ModalStake extends Component<Props, Object> {
     this.props.notification({ title: 'Processing...' }, 'warning')
     // const stakeAmountBN = await paratii.eth.tcr.getMinDeposit()
     const stakeAmount = this.state.stakeAmount
-    console.log(stakeAmount)
-    const stakeAmountWei = paratii.eth.web3.utils.toWei(stakeAmount.toString())
+    const stakeAmountWei = paratii.eth.web3.utils.toWei(String(stakeAmount))
     const videoIdStaked = this.props.selectedVideo.id
 
     paratii.eth.tcrPlaceholder
@@ -113,8 +112,9 @@ class ModalStake extends Component<Props, Object> {
   }
 
   async componentDidMount () {
-    const stakeAmountBN = await paratii.eth.tcr.getMinDeposit()
-    const stakeAmount = stakeAmountBN.toString()
+    const stakeAmountBN = await paratii.eth.tcrPlaceholder.getMinDeposit()
+    const stakeAmountWei = stakeAmountBN.toString()
+    const stakeAmount = paratii.eth.web3.utils.fromWei(stakeAmountWei)
     this.setState({
       stakeAmount
     })
@@ -131,7 +131,8 @@ class ModalStake extends Component<Props, Object> {
     const balanceInWei = this.props.user.balances.PTI
     const balanceInPTI = paratii.eth.web3.utils.fromWei(String(balanceInWei))
     const minDeposit = this.state.stakeAmount
-    const balanceIsTooLow = balanceInPTI < minDeposit
+    console.log(balanceInPTI, minDeposit)
+    const balanceIsTooLow = Number(balanceInPTI) < Number(minDeposit)
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
