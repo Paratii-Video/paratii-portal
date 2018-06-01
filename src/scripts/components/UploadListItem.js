@@ -304,9 +304,9 @@ class UploadListItem extends Component<Props, Object> {
     e.preventDefault()
     const videoId = this.state.id
     const balance = Number(this.props.user.balances.PTI) // paratii.eth.web3.utils.fromWei(balance)
-    const stakeAmount = this.state.stakeAmount
-    const stakeAmountWei = Number(
-      paratii.eth.web3.utils.toWei(stakeAmount + '')
+    const stakeAmountWei = this.state.stakeAmount
+    const stakeAmount = Number(
+      paratii.eth.web3.utils.fromWei(stakeAmountWei + '')
     )
     this.props.setVideoToPublish(videoId)
     if (balance < stakeAmountWei) {

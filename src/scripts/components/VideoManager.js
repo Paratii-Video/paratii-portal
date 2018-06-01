@@ -15,6 +15,7 @@ type Props = {
   match: Match,
   videos: Map<string, VideoRecord>,
   selectedVideo: ?VideoRecord,
+  isWalletSecured: boolean,
   setSelectedVideo: (id: string) => void,
   showModal: (View: Object) => void,
   closeModal: () => void
@@ -48,7 +49,7 @@ class VideoManager extends Component<Props, void> {
 
   render () {
     const showForm = this.props.selectedVideo
-    const showList = this.props.videos.size > 0 || this.props.selectedVideo
+    const showList = (this.props.videos.size > 0 || this.props.selectedVideo)
     return (
       <Wrapper padding={!showForm} column={!showList}>
         {showList && <UploadList />}
