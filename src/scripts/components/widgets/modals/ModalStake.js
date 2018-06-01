@@ -51,7 +51,8 @@ class ModalStake extends Component<Props, Object> {
     super(props)
     this.state = {
       errorMessage: false,
-      agreedTOC: false // TODO,
+      agreedTOC: false, // TODO,
+      stakeAmount: 0
     }
     this.onSubmit = this.onSubmit.bind(this)
   }
@@ -60,12 +61,13 @@ class ModalStake extends Component<Props, Object> {
     const { loadBalances } = this.props
     event.preventDefault()
     this.props.notification({ title: 'Processing...' }, 'warning')
-    // FIXME we need to manage this globally and not hardcoded
-    const stakeAmount = 5
-    const stakeAmountWei = paratii.eth.web3.utils.toWei(stakeAmount + '')
+    // const stakeAmountBN = await paratii.eth.tcr.getMinDeposit()
+    const stakeAmount = this.state.stakeAmount
+    console.log(stakeAmount)
+    const stakeAmountWei = paratii.eth.web3.utils.toWei(stakeAmount.toString())
     const videoIdStaked = this.props.selectedVideo.id
 
-    paratii.eth.tcr
+    paratii.eth.tcrPlaceholder
       .checkEligiblityAndApply(videoIdStaked, stakeAmountWei)
       .then(resp => {
         if (resp && resp === true) {
@@ -110,6 +112,14 @@ class ModalStake extends Component<Props, Object> {
       })
   }
 
+  async componentDidMount () {
+    const stakeAmountBN = await paratii.eth.tcr.getMinDeposit()
+    const stakeAmount = stakeAmountBN.toString()
+    this.setState({
+      stakeAmount
+    })
+  }
+
   componentWillReceiveProps (nextProps: Props): void {
     this.setState({
       errorMessage: false,
@@ -118,11 +128,10 @@ class ModalStake extends Component<Props, Object> {
   }
 
   render () {
-    const balance = this.props.user.balances.PTI
-    // FIXME: format this better
-    const balanceInPTI = Number(balance) / 10 ** 18
-    const minDeposit = 5
-    const balanceIsTooLow = Number(balance) < minDeposit * 10 ** 18
+    const balanceInWei = this.props.user.balances.PTI
+    const balanceInPTI = paratii.eth.web3.utils.fromWei(String(balanceInWei))
+    const minDeposit = this.state.stakeAmount
+    const balanceIsTooLow = balanceInPTI < minDeposit
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
