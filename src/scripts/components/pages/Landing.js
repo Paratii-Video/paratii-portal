@@ -114,7 +114,7 @@ const LandingVideoItem = styled.article`
   overflow: hidden;
   position: relative;
 
-  &:before {
+  &::before {
     content: '';
     background: linear-gradient(
       to bottom,
@@ -129,7 +129,7 @@ const LandingVideoItem = styled.article`
   }
 
   &:hover {
-    &:before {
+    &::before {
       opacity: 0.8;
     }
   }
@@ -145,11 +145,10 @@ const LandingVideoItemBackground = styled.div`
     0.1s;
   width: 100%;
   z-index: ${ZINDEX_LANDINGVIDEOITEMBACKGROUND};
-
   ${LandingVideoItem}:hover & {
     transform: scale(1.1);
     transition-delay: 0s;
-    ransition-timing-function: ${({ theme }) =>
+    transition-timing-function: ${({ theme }) =>
     theme.animation.ease.easeinexpo};
     transition-duration: 2s;
   }
@@ -190,7 +189,6 @@ const LandingVideoItemIcon = styled.div`
   width: 20px;
   transform: scale(0);
   transition: transform 0.45s ${({ theme }) => theme.animation.ease.smooth};
-
   ${LandingVideoItemLink}:hover & {
     transform: scale(1);
   }
