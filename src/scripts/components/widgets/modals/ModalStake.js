@@ -130,7 +130,6 @@ class ModalStake extends Component<Props, Object> {
     const balanceInWei = this.props.user.balances.PTI
     const balanceInPTI = paratii.eth.web3.utils.fromWei(String(balanceInWei))
     const minDeposit = this.state.stakeAmount
-    console.log(balanceInPTI, minDeposit)
     const balanceIsTooLow = Number(balanceInPTI) < Number(minDeposit)
     return (
       <ModalContentWrapper>
