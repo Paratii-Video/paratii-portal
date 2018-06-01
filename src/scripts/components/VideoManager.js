@@ -49,9 +49,7 @@ class VideoManager extends Component<Props, void> {
 
   render () {
     const showForm = this.props.selectedVideo
-    const showList =
-      this.props.isWalletSecured &&
-      (this.props.videos.size > 0 || this.props.selectedVideo)
+    const showList = (this.props.videos.size > 0 || this.props.selectedVideo)
     return (
       <Wrapper padding={!showForm} column={!showList}>
         {showList && <UploadList />}
