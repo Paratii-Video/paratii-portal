@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
+import { getIsSecure } from 'selectors/UserSelectors'
 import {
   getSelectedUploaderVideo,
   getUploaderVideos
@@ -12,7 +12,8 @@ import VideoManager from 'components/VideoManager'
 
 const mapStateToProps = (state: RootState) => ({
   videos: getUploaderVideos(state),
-  selectedVideo: getSelectedUploaderVideo(state)
+  selectedVideo: getSelectedUploaderVideo(state),
+  isWalletSecured: getIsSecure(state)
 })
 
 const mapDispatchToProps = dispatch => ({
