@@ -9,4 +9,6 @@ const mapStateToProps = (state: RootState) => ({
   videos: getUploaderVideos(state)
 })
 
-export default connect(mapStateToProps, undefined)(Landing)
+const mapDispatchToProps: Object = {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing)
