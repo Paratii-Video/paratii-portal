@@ -61,7 +61,6 @@ class ModalStake extends Component<Props, Object> {
     const { loadBalances } = this.props
     event.preventDefault()
     this.props.notification({ title: 'Processing...' }, 'warning')
-    // const stakeAmountBN = await paratii.eth.tcr.getMinDeposit()
     const stakeAmount = this.state.stakeAmount
     const stakeAmountWei = paratii.eth.web3.utils.toWei(String(stakeAmount))
     const videoIdStaked = this.props.selectedVideo.id
