@@ -46,12 +46,15 @@ class VideoManager extends Component<Props, void> {
   }
 
   componentWillReceiveProps (nextProps: Props): void {
-    if (nextProps.videos !== this.props.videos) {
+    if (
+      nextProps.videos !== this.props.videos ||
+      this.getVideoIdFromUrl(nextProps) !== this.getVideoIdFromUrl(this.props)
+    ) {
       this.props.setSelectedVideo(this.getVideoIdFromUrl())
     }
   }
 
-  getVideoIdFromUrl (): string {
+  getVideoIdFromUrl (props: Props = this.props): string {
     const params: Object = this.props.match.params
     return params.id || ''
   }
