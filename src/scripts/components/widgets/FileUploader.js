@@ -11,7 +11,7 @@ type Props = {
   showCard: boolean,
   margin: string,
   onFileChosen: (file: Object) => void,
-  checkUserWallet: () => void
+  checkUserWallet: (?{ onUnlock?: Function }) => void
 }
 const StyleInput = css`
   height: 100%;
@@ -90,7 +90,6 @@ const UploaderWrapper = styled.div`
 class FilesUploader extends Component<Props, Object> {
   onFileChosen: (e: Object) => void
   onDrag: (e: Object) => void
-  onCheck: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
@@ -100,34 +99,32 @@ class FilesUploader extends Component<Props, Object> {
       fileName: 'No file chosen',
       inputTextError: false
     }
-
-    this.onFileChosen = this.onFileChosen.bind(this)
-    this.onDrag = this.onDrag.bind(this)
-    this.onCheck = this.onCheck.bind(this)
   }
 
-  onCheck (e: Object) {
-    if (!this.props.isWalletSecured) {
-      e.preventDefault()
-      this.props.checkUserWallet()
-    }
+  setSelectedFile (file: File) {
+    this.props.onFileChosen(file)
+    this.setState({
+      file: file,
+      fileName: file.name + ' | ' + file.size + 'bytes'
+    })
   }
 
-  onFileChosen (e: Object) {
+  onFileChosen = (e: Object) => {
+    const file = e.target.files[0]
+
     // If wallet not secure open the modal
     if (this.props.isWalletSecured) {
-      const file = e.target.files[0]
-      this.props.onFileChosen(file)
-      this.setState({
-        file: file,
-        fileName: file.name + ' | ' + file.size + 'bytes'
-      })
+      this.setSelectedFile(file)
     } else {
-      this.props.checkUserWallet()
+      this.props.checkUserWallet({
+        onUnlock: () => {
+          this.setSelectedFile(file)
+        }
+      })
     }
   }
 
-  onDrag (e: Object) {
+  onDrag = (e: Object) => {
     // If wallet not secure open the modal
     if (this.props.isWalletSecured) {
       const status = e.type
@@ -167,7 +164,6 @@ class FilesUploader extends Component<Props, Object> {
       >
         <InputFile
           type="file"
-          onClick={this.onCheck}
           onChange={this.onFileChosen}
           onDragEnd={this.onDrag}
         />
@@ -188,7 +184,6 @@ class FilesUploader extends Component<Props, Object> {
       <UploaderWrapper>
         <InputFile
           type="file"
-          onClick={this.onCheck}
           onChange={this.onFileChosen}
           onDragEnd={this.onDrag}
         />

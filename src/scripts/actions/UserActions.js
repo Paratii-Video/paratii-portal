@@ -56,13 +56,15 @@ export const logout = () => (dispatch: Dispatch) => {
   dispatch(logoutAction())
 }
 
-export const checkUserWallet = () => (dispatch: Dispatch) => {
+export const checkUserWallet = ({ onUnlock }: { onUnlock?: Function } = {}) => (
+  dispatch: Dispatch
+) => {
   if (ACTIVATE_SECURE_WALLET) {
     const walletStringSecure: ?string = localStorage.getItem(WALLET_KEY_SECURE)
     if (walletStringSecure) {
       console.log('Try to open encrypted keystore')
       // Need to ask the PIN
-      dispatch(openModal(MODAL.ASK_PASSWORD))
+      dispatch(openModal(MODAL.ASK_PASSWORD, { onUnlock }))
     } else {
       dispatch(openModal(MODAL.SECURE))
     }
