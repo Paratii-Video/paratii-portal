@@ -138,7 +138,7 @@ class SearchResults extends React.Component<Props, void> {
         <Results>
           {this.props.resultsLoading ? (
             <LoaderWrapper>
-              <Loader height="50px" width="50px" />
+              <Loader />
             </LoaderWrapper>
           ) : (
             this.renderSearchResultsSection()

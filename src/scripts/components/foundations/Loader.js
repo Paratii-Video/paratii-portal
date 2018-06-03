@@ -3,6 +3,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { BASE_LOADER_DIMENSION } from 'constants/UIConstants'
+
 type Props = {
   height?: string,
   width?: string
@@ -10,8 +12,8 @@ type Props = {
 
 const Wrapper = styled.div`
   margin: auto;
-  height: ${({ height }) => height || '100%'};
-  width: ${({ width }) => width || '100%'};
+  height: ${({ height }) => height || BASE_LOADER_DIMENSION};
+  width: ${({ width }) => width || BASE_LOADER_DIMENSION};
   transform: translateY(15%);
 `
 
