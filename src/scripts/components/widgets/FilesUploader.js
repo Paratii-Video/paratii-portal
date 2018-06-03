@@ -1,9 +1,10 @@
 /* @flow */
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
 import TextField from '../widgets/forms/TextField'
 import Card, { CardTitle } from 'components/structures/Card'
+import { SUPPORTED_FILE_TYPES } from 'constants/UploaderConstants'
 
 type Props = {
   isWalletSecured: boolean,
@@ -22,7 +23,10 @@ const Title = CardTitle.extend`
   padding: 40px 42px;
 `
 
-const InputFile = styled.input`
+const InputFile = styled.input.attrs({
+  type: 'file',
+  accept: SUPPORTED_FILE_TYPES.join(' ')
+})`
   ${StyleInput} cursor: pointer;
   left: 0;
   opacity: 0;
@@ -80,11 +84,6 @@ const FooterWrapper = styled.div`
 
 const InputText = styled(TextField)`
   margin: 0 0 30px;
-`
-
-const UploaderWrapper = styled.div`
-  width: 100%;
-  position: relative;
 `
 
 class FilesUploader extends Component<Props, Object> {
@@ -147,9 +146,36 @@ class FilesUploader extends Component<Props, Object> {
     }
   }
 
+  renderUploadTrigger ({ card }: { card: boolean } = {}) {
+    return (
+      <Fragment>
+        <InputFile
+          onClick={this.onCheck}
+          onChange={this.onFileChosen}
+          onDragEnd={this.onDrag}
+        />
+        <UploadCover>
+          {card && <Title>Upload video</Title>}
+          <UploadCoverIcon>
+            {card && (
+              <Icon>
+                <FilesUploaderSvg />
+              </Icon>
+            )}
+          </UploadCoverIcon>
+          <UploadCoverText>
+            <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig>{' '}
+            <p>or choose a file</p>
+            <p> (only .mp4 currently supported)</p>
+          </UploadCoverText>
+        </UploadCover>
+      </Fragment>
+    )
+  }
+
   render () {
-    const showcard = this.props.showCard
-    return showcard ? (
+    const { showCard } = this.props
+    return showCard ? (
       <Card
         {...this.props}
         nopadding
@@ -165,41 +191,10 @@ class FilesUploader extends Component<Props, Object> {
           </FooterWrapper>
         }
       >
-        <InputFile
-          type="file"
-          onClick={this.onCheck}
-          onChange={this.onFileChosen}
-          onDragEnd={this.onDrag}
-        />
-        <UploadCover>
-          <Title>Upload video</Title>
-          <UploadCoverIcon>
-            <Icon>
-              <FilesUploaderSvg />
-            </Icon>
-          </UploadCoverIcon>
-          <UploadCoverText>
-            <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
-            choose a file
-          </UploadCoverText>
-        </UploadCover>
+        {this.renderUploadTrigger({ card: true })}
       </Card>
     ) : (
-      <UploaderWrapper>
-        <InputFile
-          type="file"
-          onClick={this.onCheck}
-          onChange={this.onFileChosen}
-          onDragEnd={this.onDrag}
-        />
-        <UploadCover>
-          <UploadCoverIcon />
-          <UploadCoverText>
-            <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
-            choose a file
-          </UploadCoverText>
-        </UploadCover>
-      </UploaderWrapper>
+      this.renderUploadTrigger()
     )
   }
 }
