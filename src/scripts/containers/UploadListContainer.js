@@ -13,6 +13,6 @@ const mapStateToProps = (state: RootState) => ({
   videos: getUploaderVideos(state)
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = () => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadList)
