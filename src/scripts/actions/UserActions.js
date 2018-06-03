@@ -22,6 +22,7 @@ import {
   WALLET_KEY_SECURE,
   ACTIVATE_SECURE_WALLET
 } from 'constants/ParatiiLibConstants'
+import { SECURE_WALLET_DELAY_MS } from 'constants/ApplicationConstants'
 
 import paratii from 'utils/ParatiiLib'
 import { openModal } from 'actions/ModalActions'
@@ -270,7 +271,7 @@ export const secureKeystore = (password: string) => async (
   dispatch(
     Notifications.warning({
       title: 'Securing your wallet..',
-      onAdd: setTimeout(secureWallet, 500)
+      onAdd: setTimeout(secureWallet, SECURE_WALLET_DELAY_MS)
     })
   )
 }
