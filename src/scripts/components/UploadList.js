@@ -13,13 +13,11 @@ type Props = {
   videos: Map<string, VideoRecord> // maps video ids to upload records
 }
 
-const MIN_HEIGHT: string = '200px'
-
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1 0 100%;
-  min-height: ${MIN_HEIGHT};
+  min-height: 200px;
 `
 
 class UploadList extends Component<Props, void> {
