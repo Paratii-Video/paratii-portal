@@ -15,6 +15,7 @@ type Props = {
   match: Match,
   videos: Map<string, VideoRecord>,
   selectedVideo: ?VideoRecord,
+  isWalletSecured: boolean,
   setSelectedVideo: (id: string) => void,
   showModal: (View: Object) => void,
   closeModal: () => void

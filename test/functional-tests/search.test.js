@@ -13,6 +13,7 @@ describe('🔍 Search:', () => {
   const searchResultThumbnailSelector = `${searchResultSelector} [data-test-id="search-result-thumbnail"]`
   const searchResultDurationSelector = `${searchResultSelector} [data-test-id="search-result-duration"]`
   const searchResultTitleSelector = `${searchResultSelector} [data-test-id="search-result-title"]`
+  const searchResultAuthorSelector = `${searchResultSelector} [data-test-id="search-result-author"]`
   const searchResultDescriptionSelector = `${searchResultSelector} [data-test-id="search-result-description"]`
 
   const mockSearchResponse = ({
@@ -136,6 +137,7 @@ describe('🔍 Search:', () => {
             searchResultThumbnailSelector,
             searchResultDurationSelector,
             searchResultTitleSelector,
+            searchResultAuthorSelector,
             searchResultDescriptionSelector,
             videoResults
           ) => {
@@ -171,12 +173,24 @@ describe('🔍 Search:', () => {
               )
               const titleOk = titleEl.textContent === resultsData[i].title
 
+              const authorEl = searchResult.querySelector(
+                searchResultAuthorSelector
+              )
+              const authorOk = (authorEl.textContent = resultsData[i].author)
+
               const descriptionEl = searchResult.querySelector(
                 searchResultDescriptionSelector
               )
               const descriptionOk =
                 descriptionEl.textContent === resultsData[i].description
-              if (!thumbnailOk || !durationOk || !titleOk || !descriptionOk) {
+
+              if (
+                !thumbnailOk ||
+                !durationOk ||
+                !titleOk ||
+                !descriptionOk ||
+                !authorOk
+              ) {
                 return false
               }
             }
@@ -187,6 +201,7 @@ describe('🔍 Search:', () => {
           searchResultThumbnailSelector,
           searchResultDurationSelector,
           searchResultTitleSelector,
+          searchResultAuthorSelector,
           searchResultDescriptionSelector,
           JSON.stringify(videoResults)
         ).value,

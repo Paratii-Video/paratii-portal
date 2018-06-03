@@ -10,6 +10,7 @@ export const MATH_VIDEO = {
   mimetype: 'video/mp4',
   thumbnails: ['thumbnail-1280x720_2.png'],
   owner: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
+  author: 'mathGenius2k18',
   stats: {
     likes: 0,
     dislikes: 0
@@ -45,6 +46,7 @@ export const DEVCON_VIDEO = {
   mimetype: 'video/mp4',
   thumbnails: ['thumbnail-1280x720_3.png', 'foo.png'],
   owner: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
+  author: 'cryptohacker',
   stats: {
     likes: 0,
     dislikes: 0

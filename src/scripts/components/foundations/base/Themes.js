@@ -147,6 +147,7 @@ const Themes = {
         background: Colors.blackAlt,
         hoverBackground: Colors.grayDark,
         titleColor: Colors.white,
+        authorColor: Colors.whiteTransparent,
         descriptionColor: Colors.gray,
         border: Colors.grayDark,
         duration: {

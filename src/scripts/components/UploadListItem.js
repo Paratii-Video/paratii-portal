@@ -21,7 +21,8 @@ import {
   isVideoPublished,
   isVideoPublishable,
   videoProgress,
-  videoDuration
+  videoDuration,
+  stakedAmount
 } from '../operators/VideoOperators'
 import { MODAL } from 'constants/ModalConstants'
 
@@ -34,7 +35,8 @@ type Props = {
   saveVideoInfo: Object => Object,
   openModal: string => void,
   notification: (Object, string) => void,
-  checkUserWallet: () => void
+  checkUserWallet: () => void,
+  setVideoToPublish: string => void
 }
 
 const PADDING_HORIZONTAL: string = '50px'
@@ -216,7 +218,9 @@ const LabelStake = styled.div`
   background-color: ${props => props.theme.colors.body.background};
   color: white;
   padding: 5px;
-  width: 100px;
+  min-width: 100px;
+  text-align: center;
+  font-size: 14px;
 `
 
 const VideoMediaTimeText = styled.p`
@@ -247,7 +251,8 @@ class UploadListItem extends Component<Props, Object> {
       description: theVideo.description,
       duration: theVideo.duration,
       author: theVideo.author,
-      height: '0px'
+      height: '0px',
+      stakeAmount: 0
     }
 
     this.formWrapperRef = formWrapperRef
@@ -259,6 +264,14 @@ class UploadListItem extends Component<Props, Object> {
     this.publishVideo = this.publishVideo.bind(this)
     this.saveData = this.saveData.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
+  }
+
+  async componentDidMount () {
+    const stakeAmountBN = await paratii.eth.tcrPlaceholder.getMinDeposit()
+    const stakeAmount = stakeAmountBN.toString()
+    this.setState({
+      stakeAmount
+    })
   }
 
   handleInputChange (input: string, e: Object) {
@@ -287,14 +300,15 @@ class UploadListItem extends Component<Props, Object> {
     this.props.saveVideoInfo(videoToSave)
   }
 
-  onPublishVideo (e: Object) {
+  async onPublishVideo (e: Object) {
     e.preventDefault()
+    const videoId = this.state.id
     const balance = Number(this.props.user.balances.PTI) // paratii.eth.web3.utils.fromWei(balance)
-    // FIXME we need to manage this globally and not hardcoded
-    const stakeAmount = 5
-    const stakeAmountWei = Number(
-      paratii.eth.web3.utils.toWei(stakeAmount + '')
+    const stakeAmountWei = this.state.stakeAmount
+    const stakeAmount = Number(
+      paratii.eth.web3.utils.fromWei(stakeAmountWei + '')
     )
+    this.props.setVideoToPublish(videoId)
     if (balance < stakeAmountWei) {
       this.props.notification(
         {
@@ -371,6 +385,9 @@ class UploadListItem extends Component<Props, Object> {
     let poster = ''
     let videoPoster = ''
     const isPublished = isVideoPublished(video)
+    const stakedPTI = paratii.eth.web3.utils.fromWei(
+      String(stakedAmount(video))
+    )
     const isPublishable = isVideoPublishable(video)
     const duration = videoDuration(video)
 
@@ -422,7 +439,7 @@ class UploadListItem extends Component<Props, Object> {
                   Publish
                 </Button>
               ) : (
-                <LabelStake>5 PTI Staked</LabelStake>
+                <LabelStake>{stakedPTI} PTI Staked</LabelStake>
               )}
             </ItemHeaderButtons>
           </ItemHeaderContent>
@@ -529,13 +546,16 @@ class UploadListItem extends Component<Props, Object> {
                   </div>
                 </VideoMedia>
               )}
-              <Text gray small>
-                By clicking on the “Publish” button you acknowledge that you
-                agree to Paratii’s Terms of Service and Community Guidelines.
-                Please be sure not to violate others’ copyright or privacy
-                rights. Learn more
-              </Text>
-              <Text hidden>{urlForSharing}</Text>
+              {!isPublished ? (
+                <Text gray small>
+                  By clicking on the “Publish” button you acknowledge that you
+                  agree to Paratii’s Terms of Service and Community Guidelines.
+                  Please be sure not to violate others’ copyright or privacy
+                  rights. Learn more
+                </Text>
+              ) : (
+                <Text>{urlForSharing}</Text>
+              )}
             </PreviewBox>
           </ItemContentHeight>
         </ItemContent>
