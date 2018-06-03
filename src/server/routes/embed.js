@@ -12,24 +12,6 @@ module.exports = async (req: $Request, res: $Response) => {
   // $FlowFixMe
   const route = req.route.path
 
-  if (process.env.NODE_ENV === 'development' && route === '/play/:id') {
-    // FIXME: this a way just for passing test
-    // this can be removed once we have paratii-db running on circleci
-    res.send(
-      `
-      <!DOCTYPE html>
-      <html>
-        <head>
-
-        </head>
-        <body>
-          <div id="root"></div>
-          <script type="text/javascript" src="/bundle.js"></script>
-        </body>
-      </html>
-    `
-    )
-  }
   const { id } = req.params
   const video = await paratii.vids.get(id)
   // TODO: reaise a 404 at this point
