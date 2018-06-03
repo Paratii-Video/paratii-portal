@@ -117,7 +117,7 @@ class FilesUploader extends Component<Props, Object> {
       this.setSelectedFile(file)
     } else {
       this.props.checkUserWallet({
-        onUnlock: () => {
+        onSuccess: () => {
           this.setSelectedFile(file)
         }
       })

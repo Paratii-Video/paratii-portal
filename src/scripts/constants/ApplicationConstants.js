@@ -50,4 +50,4 @@ export const NOTIFICATION_POSITIONS = {
   BOTTOM_CENTER: 'bc'
 }
 
-export const SECURE_WALLET_DELAY_MS: number = 500
+export const NOTIFICATION_DELAY_MS: number = 500

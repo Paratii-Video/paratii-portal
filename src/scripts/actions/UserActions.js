@@ -22,7 +22,7 @@ import {
   WALLET_KEY_SECURE,
   ACTIVATE_SECURE_WALLET
 } from 'constants/ParatiiLibConstants'
-import { SECURE_WALLET_DELAY_MS } from 'constants/ApplicationConstants'
+import { NOTIFICATION_DELAY_MS } from 'constants/ApplicationConstants'
 
 import paratii from 'utils/ParatiiLib'
 import { openModal } from 'actions/ModalActions'
@@ -57,17 +57,17 @@ export const logout = () => (dispatch: Dispatch) => {
   dispatch(logoutAction())
 }
 
-export const checkUserWallet = ({ onUnlock }: { onUnlock?: Function } = {}) => (
-  dispatch: Dispatch
-) => {
+export const checkUserWallet = ({
+  onSuccess
+}: { onSuccess?: Function } = {}) => (dispatch: Dispatch) => {
   if (ACTIVATE_SECURE_WALLET) {
     const walletStringSecure: ?string = localStorage.getItem(WALLET_KEY_SECURE)
     if (walletStringSecure) {
       console.log('Try to open encrypted keystore')
       // Need to ask the PIN
-      dispatch(openModal(MODAL.ASK_PASSWORD, { onUnlock }))
+      dispatch(openModal(MODAL.ASK_PASSWORD, { onSuccess }))
     } else {
-      dispatch(openModal(MODAL.SECURE))
+      dispatch(openModal(MODAL.SECURE, { onSuccess }))
     }
   }
 }
@@ -271,7 +271,7 @@ export const secureKeystore = (password: string) => async (
   dispatch(
     Notifications.warning({
       title: 'Securing your wallet..',
-      onAdd: setTimeout(secureWallet, SECURE_WALLET_DELAY_MS)
+      onAdd: setTimeout(secureWallet, NOTIFICATION_DELAY_MS)
     })
   )
 }
@@ -286,22 +286,25 @@ export const restoreKeystore = (mnemonic: string) => async (
       title: 'Trying to restore your wallet..'
     })
   )
-  try {
-    sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
-    paratii.eth.wallet.clear()
-    await paratii.eth.wallet.create(1, mnemonic)
-    // Notification
-    dispatch(
-      Notifications.success({
-        title: 'Your wallet has been created'
-      })
-    )
-  } catch (error) {
-    dispatch(
-      Notifications.error({
-        title: error.message,
-        autoDismiss: 0
-      })
-    )
-  }
+
+  setTimeout(async () => {
+    try {
+      sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
+      paratii.eth.wallet.clear()
+      await paratii.eth.wallet.create(1, mnemonic)
+      // Notification
+      dispatch(
+        Notifications.success({
+          title: 'Your wallet has been created'
+        })
+      )
+    } catch (error) {
+      dispatch(
+        Notifications.error({
+          title: error.message,
+          autoDismiss: 0
+        })
+      )
+    }
+  }, NOTIFICATION_DELAY_MS)
 }

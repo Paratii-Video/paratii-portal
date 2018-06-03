@@ -19,7 +19,8 @@ import { copyTextToClipboard } from 'utils/AppUtils'
 import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
 
 type Props = {
-  openModal: string => void,
+  onSuccess: Function,
+  openModal: (string, ?Object) => void,
   showNotification: (Notification, NotificationLevel) => void,
   secureKeystore: string => void
 }
@@ -75,6 +76,10 @@ class ModalShowSeed extends Component<Props, Object> {
   toggleOption: (e: Object) => void
   copyWordsToClipboard: (event: Object) => void
 
+  static defaultProps = {
+    onSuccess: () => {}
+  }
+
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -87,7 +92,9 @@ class ModalShowSeed extends Component<Props, Object> {
   }
 
   goBack () {
-    this.props.openModal(MODAL.CREATE_PASSWORD)
+    this.props.openModal(MODAL.CREATE_PASSWORD, {
+      onSuccess: this.props.onSuccess
+    })
   }
 
   modalContinue () {
@@ -96,7 +103,7 @@ class ModalShowSeed extends Component<Props, Object> {
     console.log('Create new wallet and encrypt with password')
     if (password) {
       // Open the profile modal
-      this.props.openModal(MODAL.PROFILE)
+      this.props.openModal(MODAL.PROFILE, { onSuccess: this.props.onSuccess })
       this.props.secureKeystore(password)
     }
   }

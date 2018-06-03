@@ -10,13 +10,16 @@ import TextField from 'components/widgets/forms/TextField'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
 
+const FORM_ID: string = 'MNEMONIC_FORM'
+
 type Props = {
-  openModal: string => void,
+  onSuccess: Function,
+  openModal: (string, ?Object) => void,
   restoreKeystore: string => void,
   previousModal: string
 }
 
-const FieldContainer = styled.div`
+const MmenomicForm = styled.form`
   margin: 164px 0 220px;
 
   @media (max-width: 767px) {
@@ -40,6 +43,10 @@ class ModalRewriteSeed extends Component<Props, Object> {
   restoreWallet: () => void
   handleMnemonicChange: (e: Object) => void
 
+  static defaultProps = {
+    onSuccess: () => {}
+  }
+
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -55,11 +62,15 @@ class ModalRewriteSeed extends Component<Props, Object> {
     this.props.openModal(this.props.previousModal)
   }
 
-  restoreWallet () {
+  restoreWallet (e: Object) {
+    e.preventDefault()
+
     const mnemonic = this.state.mnemonic
     if (paratii.eth.wallet.isValidMnemonic(mnemonic)) {
       this.props.restoreKeystore(mnemonic)
-      this.props.openModal(MODAL.CREATE_PASSWORD)
+      this.props.openModal(MODAL.CREATE_PASSWORD, {
+        onSuccess: this.props.onSuccess
+      })
     } else {
       this.setState({
         error: 'The 12 words you insert are not valid'
@@ -82,7 +93,7 @@ class ModalRewriteSeed extends Component<Props, Object> {
           <Text small gray>
             Rewrite the 12 words of your recovery phrase to continue the process
           </Text>
-          <FieldContainer>
+          <MmenomicForm id={FORM_ID}>
             <TextField
               label="Mnemonic"
               id="mnemonic"
@@ -98,7 +109,7 @@ class ModalRewriteSeed extends Component<Props, Object> {
                 {this.state.error}
               </Text>
             )}
-          </FieldContainer>
+          </MmenomicForm>
           <Footer>
             <ButtonContainer>
               <Button onClick={this.goBack}>Go Back</Button>
@@ -107,6 +118,8 @@ class ModalRewriteSeed extends Component<Props, Object> {
               <Button
                 data-test-id="restore-wallet"
                 purple
+                form={FORM_ID}
+                type="submit"
                 onClick={this.restoreWallet}
                 disabled={!this.state.mnemonic}
               >

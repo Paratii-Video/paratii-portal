@@ -11,7 +11,7 @@ import {
   WALLET_KEY_SECURE,
   MNEMONIC_KEY_TEMP
 } from 'constants/ParatiiLibConstants'
-import { SECURE_WALLET_DELAY_MS } from 'constants/ApplicationConstants'
+import { NOTIFICATION_DELAY_MS } from 'constants/ApplicationConstants'
 
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
@@ -21,7 +21,7 @@ type Props = {
   openModal: string => void,
   closeModal: () => void,
   notification: (Object, string) => void,
-  onUnlock: Function,
+  onSuccess: Function,
   setWalletData: Object => void,
   setAddressAndBalance: () => void,
   setUserData: () => void,
@@ -49,7 +49,7 @@ const ButtonContainer = styled.div`
 
 class ModalAskPassword extends Component<Props, Object> {
   static defaultProps = {
-    onUnlock: () => {}
+    onSuccess: () => {}
   }
 
   forgotPassword: () => void
@@ -102,7 +102,7 @@ class ModalAskPassword extends Component<Props, Object> {
         // Retrieve your videos
         this.props.fetchOwnedVideos()
         this.props.closeModal()
-        this.props.onUnlock()
+        this.props.onSuccess()
       } catch (err) {
         // Password is not valid
         this.setState({
@@ -116,7 +116,7 @@ class ModalAskPassword extends Component<Props, Object> {
           'error'
         )
       }
-    }, SECURE_WALLET_DELAY_MS)
+    }, NOTIFICATION_DELAY_MS)
   }
 
   handleInputChange (input: string, e: Object) {
