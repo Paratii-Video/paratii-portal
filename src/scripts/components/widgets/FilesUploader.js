@@ -86,6 +86,11 @@ const InputText = styled(TextField)`
   margin: 0 0 30px;
 `
 
+const UploaderWrapper = styled.div`
+  width: 100%;
+  position: relative;
+`
+
 class FilesUploader extends Component<Props, Object> {
   onFileChosen: (e: Object) => void
   onDrag: (e: Object) => void
@@ -150,6 +155,7 @@ class FilesUploader extends Component<Props, Object> {
     return (
       <Fragment>
         <InputFile
+          data-test-id="upload-file-input"
           onClick={this.onCheck}
           onChange={this.onFileChosen}
           onDragEnd={this.onDrag}
@@ -194,7 +200,7 @@ class FilesUploader extends Component<Props, Object> {
         {this.renderUploadTrigger({ card: true })}
       </Card>
     ) : (
-      this.renderUploadTrigger()
+      <UploaderWrapper>{this.renderUploadTrigger()}</UploaderWrapper>
     )
   }
 }
