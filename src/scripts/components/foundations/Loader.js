@@ -12,7 +12,6 @@ const Wrapper = styled.div`
   margin: auto;
   height: ${({ height }) => height || '100%'};
   width: ${({ width }) => width || '100%'};
-  transform: translateY(15%);
 `
 
 const Loader = ({ height, width }: Props) => (
