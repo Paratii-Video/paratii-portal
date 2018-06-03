@@ -17,8 +17,6 @@ import ModalRestoreAccount from 'containers/widgets/modals/ModalRestoreAccountCo
 
 import { MODAL } from 'constants/ModalConstants'
 
-import type { ConnectedComponent } from 'react-reduxredux'
-
 type Props = {
   modalName: string,
   modalProps: ?Object,
@@ -172,7 +170,7 @@ class Modal extends Component<Props, void> {
   renderModal () {
     const { modalName, modalProps } = this.props
 
-    let ModalComponent: ?ConnectedComponent | ?React.Component<any, any>
+    let ModalComponent: any
 
     switch (modalName) {
       case MODAL.STAKE:
