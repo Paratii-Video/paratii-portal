@@ -7,10 +7,10 @@ import VideoManager from 'records/VideoManagerRecords'
 import { getVideoRequestStatus } from 'operators/VideoManagerOperators'
 import { REQUEST_STATUS } from 'constants/ApplicationConstants'
 
-import type { RequestStatus } from 'types/ApplicationTypes'
+import type { RequestStatus, RootState } from 'types/ApplicationTypes'
 
 export const getVideosAreBeingFetched: (
-  state: VideoManager
+  state: RootState
 ) => boolean = createSelector(
   [getVideoManager],
   (videoManager: VideoManager): boolean => {

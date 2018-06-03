@@ -10,7 +10,7 @@ import UploaderRecord from 'records/UploaderRecords'
 import NotificationRecord from 'records/NotificationRecord'
 import ModalRecord from 'records/ModalRecord'
 import SearchRecord from 'records/SearchRecords'
-import VideoManagerRecord from 'records/VideoManagerRecord'
+import VideoManagerRecord from 'records/VideoManagerRecords'
 import {
   REQUEST_STATUS,
   TRANSITION_STATE,
