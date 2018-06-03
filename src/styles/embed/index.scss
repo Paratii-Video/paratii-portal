@@ -1,37 +1,13 @@
-@import '../reset.scss';
+@import '../app.scss';
 
 html {
-  font-size: 16px;
-}
+  body {
+    margin: 0;
+    padding: 0;
 
-body {
-  background: #2E3133;
-  font-family: 'Roboto', sans-serif;
-  font-size: 1rem;
-  margin: 0;
-  padding: 0;
-  text-rendering: geometricPrecision;
-
-  #root {
-    height: 100vh;
-    width: 100vw;
+    #root {
+      height: 100vh;
+      width: 100vw;
+    }
   }
-}
-
-.app-loader {
-  left: 50%;
-  position: fixed;
-  top: 50%;
-  transform: translate3d(-50%, -50%, 0);  
-}
-
-.paratii-loader {
-  background: #2E3133 url('/assets/img/paratii-loader.gif') no-repeat 50%;
-  background-size: cover;
-  height: 100%;
-  width: 100%;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 400;
 }
