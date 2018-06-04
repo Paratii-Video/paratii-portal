@@ -162,7 +162,7 @@ class ModalStake extends Component<Props, Object> {
               Your balance is too low: you need to stake at least {minDeposit}{' '}
               PTI, but you only have {balanceInPTI}. Have no voucher?{' '}
               <Anchor
-                href="mailto:we@player.paratii.video"
+                href="mailto:we@paratii.video"
                 target="_blank"
                 purple
                 anchor
