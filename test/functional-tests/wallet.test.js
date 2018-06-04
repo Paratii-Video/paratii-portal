@@ -13,7 +13,7 @@ import {
 } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
-describe('💰 Wallet: @watch', function () {
+describe('💰 Wallet:', function () {
   let userAccount
 
   beforeEach(function () {
