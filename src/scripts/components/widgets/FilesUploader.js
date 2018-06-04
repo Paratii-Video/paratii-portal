@@ -55,6 +55,11 @@ const UploadCoverIcon = styled.div`
   width: 100%;
 `
 
+const SupportedFileTypes = styled.p`
+  color: ${({ theme }) => theme.colors.FilesUploader.supportedFileTypes.color};
+  font-size: ${props => props.theme.fonts.text.small};
+`
+
 const Icon = styled.div`
   height: 110px;
   margin: 0 auto;
@@ -172,7 +177,10 @@ class FilesUploader extends Component<Props, Object> {
           <UploadCoverText>
             <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig>{' '}
             <p>or choose a file</p>
-            <p> (only .mp4 currently supported)</p>
+            <SupportedFileTypes>
+              {' '}
+              (only .mp4 currently supported)
+            </SupportedFileTypes>
           </UploadCoverText>
         </UploadCover>
       </Fragment>
