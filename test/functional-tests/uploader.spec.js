@@ -17,7 +17,7 @@ describe('🦄 Uploader Tool', function () {
     browser.addCommand('verifyUploadSucceeds', async video => {
       // now we should see a form to fill in
       // the form should contain the id of our video
-      browser.waitAndClick('[data-test-id="uploader-item"]', 2000)
+      browser.waitAndClick('[data-test-id="uploader-item"]', 5000)
       browser.waitForExist('[data-test-id="video-id"]')
       const getVideoId = function () {
         var videoId = browser.getValue('[data-test-id="video-id"]')
