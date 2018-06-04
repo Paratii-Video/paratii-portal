@@ -126,7 +126,7 @@ class RedeemVoucher extends Component<Props, Object> {
             <Text small gray>
               Have no voucher?{' '}
               <Anchor
-                href="mailto:we@player.paratii.video"
+                href="mailto:we@paratii.video"
                 target="_blank"
                 purple
                 anchor
