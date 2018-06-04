@@ -64,3 +64,34 @@ export const DEVCON_VIDEO = {
     'ethereum'
   ]
 }
+
+export const ETHEREUM_VIDEO = {
+  id: 'QmPDG5AxEpfsQ1cfWU6Kcguc9Bn6eDEdKiUbqxUwSRQBi7',
+  title: 'Ethereum: On blockchain interop and scaling',
+  description:
+    'Vlad Zamfir and Vitalik Buterin present their latest research on blockchain interoperability and scaling as part of DEVCON 0.',
+  duration: '05:39',
+  price: 0,
+  ipfsHash: 'hashETH',
+  src: '/ipfs/QmPDG5AxEpfsQ1cfWU6Kcguc9Bn6eDEdKiUbqxUwSRQBi7',
+  mimetype: 'video/mp4',
+  thumbnails: ['thumb.png', 'bar.png'],
+  owner: '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
+  author: 'eth_dude',
+  stats: {
+    likes: 0,
+    dislikes: 0
+  },
+  uploader: {
+    address: '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
+    name: 'Ethereum'
+  },
+  tags: [
+    'ethereum',
+    'smart contracts',
+    'blockchain',
+    'scaling',
+    'vitalik buterin',
+    'vlad zamfir'
+  ]
+}

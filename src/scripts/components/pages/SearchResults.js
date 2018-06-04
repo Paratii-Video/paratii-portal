@@ -56,7 +56,7 @@ const LoaderWrapper = styled.div`
   align-items: center;
 `
 
-const HasNextLink = styled.button`
+const HasNextButton = styled.button`
   width: 100%;
   display: flex;
   align-items: center;
@@ -85,9 +85,12 @@ class SearchResults extends React.Component<Props, void> {
     }
 
     return (
-      <HasNextLink onClick={searchForMoreVideos}>
+      <HasNextButton
+        data-test-id="more-results-button"
+        onClick={searchForMoreVideos}
+      >
         Click for more results
-      </HasNextLink>
+      </HasNextButton>
     )
   }
 
