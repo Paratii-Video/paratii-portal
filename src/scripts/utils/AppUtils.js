@@ -1,6 +1,7 @@
 /* @flow */
 import shortNumber from 'short-number'
 import VideoRecord from 'records/VideoRecords'
+const fs = require('fs')
 
 export const getPasswordValidationErrors = (
   password: ?string
@@ -94,8 +95,10 @@ export const getParatiiConfig = (env: ?string, scope: ?string): Object => {
       try {
         const registryConfigPath = '/tmp/registry.json'
         console.log(`getting registry address from ${registryConfigPath}`)
-        // const registryConfig = JSON.parse(fs.readFileSync(registryConfigPath, 'utf8'))
-        const registryConfig = require(registryConfigPath)
+        const registryConfig = JSON.parse(
+          fs.readFileSync(registryConfigPath, 'utf8')
+        )
+        // const registryConfig = require(registryConfigPath)
         config.eth.registryAddress = registryConfig.registryAddress
       } catch (e) {
         console.log(`WARNING: no registry address configured`)
