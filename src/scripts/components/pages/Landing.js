@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { videoDuration } from '../../operators/VideoOperators'
 import { Link } from 'react-router-dom'
 import Title from '../foundations/Title'
 import Text from '../foundations/Text'
@@ -191,6 +190,7 @@ const LandingVideoItemIcon = styled.div`
 class Landing extends Component<Props, void> {
   headerVideosList: Array
   headerVideositem: String
+  videosList: Array
 
   constructor (props: Props) {
     super(props)
@@ -199,37 +199,45 @@ class Landing extends Component<Props, void> {
       {
         title: 'Vento Na Janela',
         url: 'https://portal.paratii.video/play/65te9Z7bXDM4',
-        image: '/assets/img/landing/header/vento-na-janela.png'
+        image: '/assets/img/landing/header/vento-na-janela.png',
+        time: '02:58'
       },
       {
         title: 'Johnny B. Goode',
         url: 'https://portal.paratii.video/play/cpApjlvwRK8O',
-        image: '/assets/img/landing/header/vento-na-janela.png'
+        image: '/assets/img/landing/header/johnny-b-goode.png',
+        time: '05:37'
       },
       {
         title: 'Yunta',
         url: 'https://portal.paratii.video/play/A9SftW9yaPcJ',
-        image: '/assets/img/landing/header/yunta.png'
+        image: '/assets/img/landing/header/yunta.png',
+        time: '04:03'
       },
       {
         title: 'A Mysterious Clip',
         url: 'https://portal.paratii.video/play/XTCgW0oToNnc',
-        image: '/assets/img/landing/header/a-mysterious-clip.png'
+        image: '/assets/img/landing/header/a-mysterious-clip.png',
+        time: '03:21'
       },
       {
         title: 'CHONPS | Robin & Batman',
         url: 'https://portal.paratii.video/play/rOHszskLtIEy',
-        image: '/assets/img/landing/header/chonps-robin-and-batman.png'
+        image: '/assets/img/landing/header/chonps-robin-and-batman.png',
+        time: '03:54'
       },
       {
         title: 'Venice Beach',
         url: 'https://portal.paratii.video/play/9qMA3KhZir2Z',
-        image: '/assets/img/landing/header/venice-beach.png'
+        image: '/assets/img/landing/header/venice-beach.png',
+        time: '01:06'
       }
     ]
 
     const itemIndex = Math.floor(Math.random() * this.headerVideosList.length)
     this.headerVideositem = this.headerVideosList[itemIndex]
+
+    this.videosList = this.headerVideosList
   }
 
   render () {
@@ -264,39 +272,16 @@ class Landing extends Component<Props, void> {
               </Text>
             </VideosHeader>
             <LandingVideoList>
-              {this.props.videos.entrySeq().map(([videoId, videoInfo]) => {
-                const title = videoInfo.title || videoInfo.filename
-                const urlToPlay = '/play/' + videoInfo.id
-                let poster = ''
-                let videoPoster = ''
-                const duration = videoDuration(videoInfo)
-                let durationNoMillis = '00:00:00'
-
-                if (videoInfo && videoInfo.thumbnails.size === 4) {
-                  poster = videoInfo.thumbnails.get(0)
-                  videoPoster =
-                    'https://gateway.paratii.video/ipfs/' +
-                    videoInfo.ipfsHash +
-                    '/' +
-                    poster
-                }
-
-                if (duration) {
-                  durationNoMillis = duration.substring(
-                    0,
-                    duration.indexOf('.')
-                  )
-                }
-
+              {this.videosList.map((item, index) => {
                 return (
-                  <LandingVideoItem key={videoId}>
-                    <LandingVideoItemBackground background={videoPoster} />
-                    <LandingVideoItemLink to={urlToPlay}>
+                  <LandingVideoItem key={index}>
+                    <LandingVideoItemBackground background={item.image} />
+                    <LandingVideoItemLink to={item.url}>
                       <LandingVideoItemTitle small bold>
-                        <TruncatedText>{title}</TruncatedText>
+                        <TruncatedText>{item.title}</TruncatedText>
                       </LandingVideoItemTitle>
                       <LandingVideoItemTimeText tiny>
-                        {durationNoMillis}
+                        {item.time}
                       </LandingVideoItemTimeText>
                       <LandingVideoItemIcon>
                         <SVGIcon color="white" icon="icon-player-play" />
