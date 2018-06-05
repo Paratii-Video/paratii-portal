@@ -168,6 +168,7 @@ const reducer = {
             description: payload.description,
             author: payload.author,
             owner: payload.owner,
+            ownershipProof: payload.ownershipProof,
             progress: 100
           }
         })
@@ -175,6 +176,7 @@ const reducer = {
       .setIn([payload.id, 'title'], payload.title)
       .setIn([payload.id, 'description'], payload.description)
       .setIn([payload.id, 'author'], payload.author)
+      .setIn([payload.id, 'ownershipProof'], payload.ownershipProof)
     // .setIn([payload.id, 'published'], payload.published)
   },
   [VIDEO_STAKED]: (
