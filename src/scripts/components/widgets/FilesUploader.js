@@ -152,6 +152,7 @@ class FilesUploader extends Component<Props, Object> {
         <UploaderSimpleWrapper>
           <InputFile
             type="file"
+            data-test-id="upload-file-input"
             onClick={this.onCheck}
             onChange={this.onFileChosen}
             onDragEnter={this.onDrag}
