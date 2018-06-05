@@ -68,7 +68,11 @@ export const getParatiiConfig = (env: ?string, scope: ?string): Object => {
       }
       break
     case 'test':
-      config = require('../../../config/test.json')
+      if (scope === 'client') {
+        config = require('../../../config/test-client.json')
+      } else {
+        config = require('../../../config/test-server.json')
+      }
       break
     case 'staging':
       needsScope(scope)
