@@ -49,7 +49,6 @@ function upsertVideo (videoId, dataToUpdate, state) {
   console.log('SAVING:')
   console.log(updatedVideo)
   return paratii.vids.upsert(updatedVideo).catch(error => {
-    console.log(error)
     throw error
   })
 }
