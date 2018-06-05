@@ -23,7 +23,7 @@ import {
   videoProgress,
   videoDuration,
   stakedAmount
-} from '../operators/VideoOperators'
+} from 'operators/VideoOperators'
 import { MODAL } from 'constants/ModalConstants'
 
 type Props = {

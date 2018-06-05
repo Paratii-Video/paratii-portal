@@ -9,8 +9,14 @@ import {
 describe('🦄 Uploader Tool', function () {
   this.timeout(120000)
 
+  const uploadFileInputSelector =
+    'input[type="file"][data-test-id="upload-file-input"]'
+
   before(function () {
     browser.url(`http://localhost:8080`)
+  })
+
+  afterEach(function () {
     browser.execute(nukeLocalStorage)
     browser.execute(nukeSessionStorage)
 
@@ -73,9 +79,17 @@ describe('🦄 Uploader Tool', function () {
     })
   })
 
+  it('should only allow mp4 files', () => {
+    browser.url('http://localhost:8080/upload')
+    browser.isVisible(uploadFileInputSelector)
+    expect(browser.getAttribute(uploadFileInputSelector, 'accept')).to.equal(
+      'video/mp4'
+    )
+  })
+
   it('should upload a video when the wallet is already secured', async function () {
     // Create a secure wallet
-    browser.url(`http://localhost:8080`)
+    browser.url('http://localhost:8080')
     browser.execute(function (password) {
       window.paratii.eth.wallet.clear()
       window.paratii.eth.wallet
@@ -118,33 +132,11 @@ describe('🦄 Uploader Tool', function () {
     browser.verifyUploadSucceeds(video)
   })
 
-  it('should upload a video after prompting to secure an existing wallet', async function () {
-    // Create a secure wallet
-    browser.url(`http://localhost:8080/upload`)
-
-    const video = {
-      title: 'Some title',
-      description:
-        'Description of the video which can be pretty long and may contain dïàcrítics'
-    }
-
-    // Upload file
-    const fileToUpload = `${__dirname}/data/pti-logo.mp4`
-    browser.waitForEnabled('input[type="file"]')
-    browser.chooseFile('input[type="file"]', fileToUpload)
-
-    browser.waitAndClick('[name="wallet-password"]')
-    browser.setValue('[name="wallet-password"]', password)
-    browser.waitAndClick('[data-test-id="continue"]')
-
-    browser.verifyUploadSucceeds(video)
-  })
-
   it.skip('cancel upload should work [but is not yet]', function () {
     // start uploading a file
     browser.url('http://localhost:8080/uploader/upload-file')
     const fileToUpload = `${__dirname}/data/data.txt`
-    browser.chooseFile('input[type="file"]', fileToUpload)
+    browser.chooseFile(uploadFileInputSelector, fileToUpload)
     browser.click('#upload-submit')
     // (the file is small so is immediately done uploading, but the cancel button should be avaiblabel in any case)
     browser.waitForExist('#cancel-upload')

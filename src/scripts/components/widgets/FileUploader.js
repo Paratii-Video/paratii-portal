@@ -1,9 +1,10 @@
 /* @flow */
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
 import TextField from '../widgets/forms/TextField'
 import Card, { CardTitle } from 'components/structures/Card'
+import { SUPPORTED_FILE_TYPES } from 'constants/UploaderConstants'
 
 type Props = {
   isWalletSecured: boolean,
@@ -22,7 +23,10 @@ const Title = CardTitle.extend`
   padding: 40px 42px;
 `
 
-const InputFile = styled.input`
+const InputFile = styled.input.attrs({
+  type: 'file',
+  accept: SUPPORTED_FILE_TYPES.join(' ')
+})`
   ${StyleInput} cursor: pointer;
   left: 0;
   opacity: 0;
@@ -49,6 +53,11 @@ const UploadCover = styled.div`
 const UploadCoverIcon = styled.div`
   margin: 30px 0 20px;
   width: 100%;
+`
+
+const SupportedFileTypes = styled.p`
+  color: ${({ theme }) => theme.colors.FilesUploader.supportedFileTypes.color};
+  font-size: ${props => props.theme.fonts.text.small};
 `
 
 const Icon = styled.div`
@@ -144,9 +153,39 @@ class FilesUploader extends Component<Props, Object> {
     }
   }
 
+  renderUploadTrigger ({ card }: { card: boolean } = {}) {
+    return (
+      <Fragment>
+        <InputFile
+          data-test-id="upload-file-input"
+          onChange={this.onFileChosen}
+          onDragEnd={this.onDrag}
+        />
+        <UploadCover>
+          {card && <Title>Upload video</Title>}
+          <UploadCoverIcon>
+            {card && (
+              <Icon>
+                <FilesUploaderSvg />
+              </Icon>
+            )}
+          </UploadCoverIcon>
+          <UploadCoverText>
+            <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig>{' '}
+            <p>or choose a file</p>
+            <SupportedFileTypes>
+              {' '}
+              (only .mp4 currently supported)
+            </SupportedFileTypes>
+          </UploadCoverText>
+        </UploadCover>
+      </Fragment>
+    )
+  }
+
   render () {
-    const showcard = this.props.showCard
-    return showcard ? (
+    const { showCard } = this.props
+    return showCard ? (
       <Card
         {...this.props}
         nopadding
@@ -162,39 +201,10 @@ class FilesUploader extends Component<Props, Object> {
           </FooterWrapper>
         }
       >
-        <InputFile
-          type="file"
-          onChange={this.onFileChosen}
-          onDragEnd={this.onDrag}
-        />
-        <UploadCover>
-          <Title>Upload video</Title>
-          <UploadCoverIcon>
-            <Icon>
-              <FilesUploaderSvg />
-            </Icon>
-          </UploadCoverIcon>
-          <UploadCoverText>
-            <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
-            choose a file
-          </UploadCoverText>
-        </UploadCover>
+        {this.renderUploadTrigger({ card: true })}
       </Card>
     ) : (
-      <UploaderWrapper>
-        <InputFile
-          type="file"
-          onChange={this.onFileChosen}
-          onDragEnd={this.onDrag}
-        />
-        <UploadCover>
-          <UploadCoverIcon />
-          <UploadCoverText>
-            <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
-            choose a file
-          </UploadCoverText>
-        </UploadCover>
-      </UploaderWrapper>
+      <UploaderWrapper>{this.renderUploadTrigger()}</UploaderWrapper>
     )
   }
 }

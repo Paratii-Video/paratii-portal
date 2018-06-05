@@ -5,7 +5,7 @@ export const Z_INDEX_MODAL: string = '1000'
 export const Z_INDEX_POPUPS: string = '990'
 export const Z_INDEX_HEADER: string = '980'
 
-//
+// Controls
 export const CONTROLS_HEIGHT: string = '48px'
 export const CONTROLS_HEIGHT_TABLET: string = '42px'
 
@@ -23,3 +23,6 @@ export const POPOVER_PADDING: string = '20px'
 
 // Video Overlay
 export const OVERLAY_BUTTONS_HEIGHT: string = '20px'
+
+// Loader
+export const BASE_LOADER_DIMENSION: string = '50px'
