@@ -9,17 +9,13 @@ import { getVideoThumbnailUrl, getVideoPlayUrl } from 'utils/UrlUtils'
 import { formatDuration } from 'utils/VideoUtils'
 import TruncatedText from 'components/foundations/TruncatedText'
 
-const Wrapper = styled.div`
+const LinkWrapper = styled(Link)`
   display: flex;
   width: 100%;
   height: 160px;
   background: ${({ theme }) => theme.colors.Search.results.background};
   align-items: center;
   padding: 10px 20px;
-
-  &:last-child {
-    padding-bottom: 0;
-  }
 
   &:hover {
     background: ${({ theme }) => theme.colors.Search.results.hoverBackground};
@@ -77,6 +73,7 @@ const TopBar = styled.div`
   width: 100%;
   height: ${TOP_BAR_HEIGHT};
   display: flex;
+  flex-direction: column;
 `
 
 const Title = styled.div`
@@ -85,6 +82,11 @@ const Title = styled.div`
   color: ${({ theme }) => theme.colors.Search.results.titleColor};
   font-weight: bold;
   font-size: 18px;
+`
+
+const Author = styled.div`
+  max-width: 60%;
+  color: ${({ theme }) => theme.colors.Search.results.authorColor};
 `
 
 const BottomBar = styled.div`
@@ -114,33 +116,34 @@ class SearchResult extends React.Component<Props, void> {
   render () {
     const { video } = this.props
     return (
-      <Link to={getVideoPlayUrl(video)} data-test-id="search-result">
-        <Wrapper>
-          <ThumbnailWrapper>
-            <ThumbnailImage
-              data-test-id="search-result-thumbnail"
-              src={getVideoThumbnailUrl(video)}
-            />
-            <ThumbnailData>
-              <Duration data-test-id="search-result-duration">
-                {formatDuration(video.get('duration'))}
-              </Duration>
-            </ThumbnailData>
-          </ThumbnailWrapper>
-          <Info>
-            <TopBar>
-              <Title data-test-id="search-result-title">
-                <TruncatedText>{video.get('title')}</TruncatedText>
-              </Title>
-            </TopBar>
-            <BottomBar>
-              <Description data-test-id="search-result-description">
-                {video.get('description')}
-              </Description>
-            </BottomBar>
-          </Info>
-        </Wrapper>
-      </Link>
+      <LinkWrapper to={getVideoPlayUrl(video)} data-test-id="search-result">
+        <ThumbnailWrapper>
+          <ThumbnailImage
+            data-test-id="search-result-thumbnail"
+            src={getVideoThumbnailUrl(video)}
+          />
+          <ThumbnailData>
+            <Duration data-test-id="search-result-duration">
+              {formatDuration(video.get('duration'))}
+            </Duration>
+          </ThumbnailData>
+        </ThumbnailWrapper>
+        <Info>
+          <TopBar>
+            <Title data-test-id="search-result-title">
+              <TruncatedText>{video.get('title')}</TruncatedText>
+            </Title>
+            <Author data-test-id="search-result-author">
+              <TruncatedText>{video.get('author')}</TruncatedText>
+            </Author>
+          </TopBar>
+          <BottomBar>
+            <Description data-test-id="search-result-description">
+              {video.get('description')}
+            </Description>
+          </BottomBar>
+        </Info>
+      </LinkWrapper>
     )
   }
 }

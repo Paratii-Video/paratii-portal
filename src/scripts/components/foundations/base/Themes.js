@@ -147,6 +147,7 @@ const Themes = {
         background: Colors.blackAlt,
         hoverBackground: Colors.grayDark,
         titleColor: Colors.white,
+        authorColor: Colors.whiteTransparent,
         descriptionColor: Colors.gray,
         border: Colors.grayDark,
         duration: {
@@ -171,7 +172,6 @@ const Themes = {
       headerContentBackground: Colors.blackTransparent,
       VideoLinkBackground: Colors.grayDark,
       VideoLinkColor: Colors.white,
-      videosBackground: Colors.blackDark,
       listItemBackground: Colors.blackAlt,
       listItemTimeBackground: Colors.blackTransparent,
       listItemTimeColor: Colors.white

@@ -10,7 +10,7 @@ export const Z_INDEX_HEADER: string = '980'
 export const MAINHEADER_LOGO_WIDTH: string = '98px'
 export const MAINHEADER_LOGO_HEIGHT: string = '69px'
 
-//
+// Controls
 export const CONTROLS_HEIGHT: string = '48px'
 export const CONTROLS_HEIGHT_TABLET: string = '42px'
 
@@ -28,3 +28,6 @@ export const POPOVER_PADDING: string = '20px'
 
 // Video Overlay
 export const OVERLAY_BUTTONS_HEIGHT: string = '20px'
+
+// Loader
+export const BASE_LOADER_DIMENSION: string = '50px'
