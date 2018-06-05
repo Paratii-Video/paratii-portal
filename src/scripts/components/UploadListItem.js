@@ -473,7 +473,7 @@ class UploadListItem extends Component<Props, Object> {
                 margin="0 0 30px"
                 tabIndex="0"
               />
-              <TextField
+              <Textarea
                 label="is this video really yours?"
                 id={'input-video-ownership-proof-' + videoId}
                 type="text"
