@@ -33,6 +33,7 @@ import {
   _getAdditionalSearchRequestStatus
 } from 'records/SearchRecords'
 import Video from 'records/VideoRecords'
+import VideoManager from 'records/VideoManagerRecords'
 
 import type {
   RootState,
@@ -115,3 +116,7 @@ export const getSearchRequestStatus = (state: RootState): RequestStatus =>
 export const getAdditionalSearchRequestStatus = (
   state: RootState
 ): RequestStatus => _getAdditionalSearchRequestStatus(state.search)
+
+/* VideoManager */
+export const getVideoManager = (state: RootState): VideoManager =>
+  state.videoManager

@@ -13,6 +13,7 @@ import type { Match } from 'react-router-dom'
 
 type Props = {
   match: Match,
+  fetchVideos: () => void,
   videos: Map<string, VideoRecord>,
   selectedVideo: ?VideoRecord,
   isWalletSecured: boolean,
@@ -35,21 +36,32 @@ const Wrapper = CardContainer.extend`
 class VideoManager extends Component<Props, void> {
   constructor (props: Props) {
     super(props)
-    this.props.setSelectedVideo(this.getVideoIdFromRequest())
+
+    this.props.setSelectedVideo(this.getVideoIdFromUrl())
+    this.props.fetchVideos()
   }
 
   componentWillUnmount (): void {
     this.props.setSelectedVideo('')
   }
 
-  getVideoIdFromRequest (): string {
+  componentWillReceiveProps (nextProps: Props): void {
+    if (
+      nextProps.videos !== this.props.videos ||
+      this.getVideoIdFromUrl(nextProps) !== this.getVideoIdFromUrl(this.props)
+    ) {
+      this.props.setSelectedVideo(this.getVideoIdFromUrl())
+    }
+  }
+
+  getVideoIdFromUrl (props: Props = this.props): string {
     const params: Object = this.props.match.params
     return params.id || ''
   }
 
   render () {
     const showForm = this.props.selectedVideo
-    const showList = (this.props.videos.size > 0 || this.props.selectedVideo)
+    const showList = this.props.videos.size > 0 || this.props.selectedVideo
     return (
       <Wrapper padding={!showForm} column={!showList}>
         {showList && <UploadList />}

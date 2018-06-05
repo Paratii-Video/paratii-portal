@@ -12,6 +12,10 @@ export const SET_CONTEXT = createActionConstant('SET_CONTEXT')
 export const PLAYER_VIDEO_SELECT = createActionConstant('PLAYER_VIDEO_SELECT')
 export const VIDEOFETCH_ERROR = createActionConstant('VIDEOFETCH_ERROR')
 export const VIDEO_FETCH_SUCCESS = createActionConstant('VIDEO_FETCH_SUCCESS')
+export const VIDEOS_FETCH_REQUESTED = createActionConstant(
+  'VIDEOS_FETCH_REQUESTED'
+)
+export const VIDEOS_FETCH_FAILED = createActionConstant('VIDEOS_FETCH_FAILED')
 export const VIDEOS_FETCH_SUCCESS = createActionConstant('VIDEOS_FETCH_SUCCESS')
 
 /* User Actions */
