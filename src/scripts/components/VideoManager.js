@@ -12,6 +12,7 @@ import UploadList from 'containers/UploadListContainer'
 import type { Match } from 'react-router-dom'
 
 type Props = {
+  checkUserWallet: () => void,
   match: Match,
   fetchVideos: () => void,
   videos: Map<string, VideoRecord>,
@@ -39,6 +40,12 @@ class VideoManager extends Component<Props, void> {
 
     this.props.setSelectedVideo(this.getVideoIdFromUrl())
     this.props.fetchVideos()
+  }
+
+  componentDidMount (): void {
+    if (!this.props.isWalletSecured) {
+      this.props.checkUserWallet()
+    }
   }
 
   componentWillUnmount (): void {
