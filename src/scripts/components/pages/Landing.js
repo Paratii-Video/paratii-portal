@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import type { Map } from 'immutable'
+import type VideoRecord from 'records/VideoRecords'
+import { MAINHEADER_LOGO_HEIGHT } from 'constants/UIConstants'
 import Title from '../foundations/Title'
 import Text from '../foundations/Text'
 import TruncatedText from '../foundations/TruncatedText'
 import { ButtonStyleHover } from '../foundations/Button'
-import FilesUploader from '../../containers/FileUploaderContainer'
 import SVGIcon from '../foundations/SVGIcon'
-import type VideoRecord from 'records/VideoRecords'
-import type { Map } from 'immutable'
-import { MAINHEADER_LOGO_HEIGHT } from 'constants/UIConstants'
+import FilesUploader from '../../containers/FileUploaderContainer'
 
 type Props = {
   videos: Map<string, VideoRecord> // maps video ids to upload records
@@ -34,7 +33,12 @@ const Header = styled.div`
   display: flex;
   min-height: calc(100vh - ${MAINHEADER_LOGO_HEIGHT});
   justify-content: center;
+  padding: 0 20px;
   position: relative;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
 `
 
 const VideoLink = styled.a`
@@ -51,9 +55,18 @@ const VideoLink = styled.a`
   position: absolute;
   overflow: hidden;
   max-width: 200px;
+  width: 100%;
 
   svg {
     margin-right: 10px;
+  }
+
+  @media (max-width: 767px) {
+    bottom: initial;
+    left: initial;
+    margin: 0 0 20px;
+    max-width: initial;
+    position: relative;
   }
 `
 
@@ -70,7 +83,11 @@ const HeaderContent = styled.div`
   margin: 40px 0;
   max-width: 1200px;
   padding: 90px 40px 20px;
-  width: calc(100% - 40px);
+  width: 100%;
+
+  @media (max-width: 767px) {
+    margin: 20px 0;
+  }
 `
 
 const HeaderContentWrapper = styled.div`
@@ -100,6 +117,15 @@ const LandingVideoList = styled.div`
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 15px;
   grid-row-gap: 15px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0 20px;
+  }
+
+  @media (max-width: 650px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `
 
 const LandingVideoItem = styled.article`
@@ -134,8 +160,8 @@ const LandingVideoItemBackground = styled.div`
   background-size: cover;
   height: 100%;
   position: absolute;
-  transition: transform 3s ${({ theme }) => theme.animation.ease.easeoutexpo}
-    0.1s;
+  transition: transform 1.7s;
+  ${({ theme }) => theme.animation.ease.outexpo} 0.1s;
   width: 100%;
   z-index: ${ZINDEX_LANDINGVIDEOITEMBACKGROUND};
   ${LandingVideoItem}:hover & {
@@ -147,7 +173,7 @@ const LandingVideoItemBackground = styled.div`
   }
 `
 
-const LandingVideoItemLink = styled(Link)`
+const LandingVideoItemLink = styled.a`
   align-items: flex-end;
   display: flex;
   flex-direction: column;
@@ -237,9 +263,117 @@ class Landing extends Component<Props, void> {
     const itemIndex = Math.floor(Math.random() * this.headerVideosList.length)
     this.headerVideositem = this.headerVideosList[itemIndex]
 
-    this.videosList = this.headerVideosList
+    this.videosList = [
+      {
+        title: 'Vento Na Janela',
+        url: 'https://portal.paratii.video/play/65te9Z7bXDM4',
+        image: '/assets/img/landing/header/vento-na-janela.png',
+        time: '02:58'
+      },
+      {
+        title: 'Johnny B. Goode',
+        url: 'https://portal.paratii.video/play/cpApjlvwRK8O',
+        image: '/assets/img/landing/header/johnny-b-goode.png',
+        time: '05:37'
+      },
+      {
+        title: 'Yunta',
+        url: 'https://portal.paratii.video/play/A9SftW9yaPcJ',
+        image: '/assets/img/landing/header/yunta.png',
+        time: '04:03'
+      },
+      {
+        title: 'A Mysterious Clip',
+        url: 'https://portal.paratii.video/play/XTCgW0oToNnc',
+        image: '/assets/img/landing/header/a-mysterious-clip.png',
+        time: '03:21'
+      },
+      {
+        title: 'CHONPS | Robin & Batman',
+        url: 'https://portal.paratii.video/play/rOHszskLtIEy',
+        image: '/assets/img/landing/header/chonps-robin-and-batman.png',
+        time: '03:54'
+      },
+      {
+        title: 'Venice Beach',
+        url: 'https://portal.paratii.video/play/9qMA3KhZir2Z',
+        image: '/assets/img/landing/header/venice-beach.png',
+        time: '01:06'
+      },
+      {
+        title: 'O que é Algoritmo',
+        url: 'https://portal.paratii.video/play/D93ftQHK3OXN',
+        image: '/assets/img/landing/header/venice-beach.png',
+        time: '01:06'
+      },
+      {
+        title: 'Around the Block - Trailer',
+        url: 'https://portal.paratii.video/play/a4Dbd26pLu0X',
+        image: '/assets/img/landing/header/venice-beach.png',
+        time: '01:06'
+      },
+      {
+        title: 'Todo Tempo do Mundo - Ep. 1',
+        url: 'https://portal.paratii.video/play/mF7YHwBeGqZq',
+        image: '/assets/img/landing/header/venice-beach.png',
+        time: '01:06'
+      },
+      {
+        title: 'Só Quero Fazer Falta',
+        url: 'https://portal.paratii.video/play/9Jh8KlGxtRIC',
+        image: '/assets/img/landing/header/venice-beach.png',
+        time: '01:06'
+      },
+      {
+        title: 'Vlog 1 - O começo',
+        url: 'https://portal.paratii.video/play/10wBsdyp4biH',
+        image: '/assets/img/landing/header/venice-beach.png',
+        time: '01:06'
+      },
+      {
+        title: 'Palafita Filmes Reel',
+        url: 'https://portal.paratii.video/play/pNK5nsGL2WYw',
+        image: '/assets/img/landing/header/venice-beach.png',
+        time: '01:06'
+      },
+      {
+        title: 'Comece Logo Sua HQ',
+        url: 'https://portal.paratii.video/play/VLOLj6iVhuP8',
+        image: '/assets/img/landing/header/venice-beach.png',
+        time: '01:06'
+      },
+      {
+        title: 'Hipótese do Tempo Fantasma | Beirologia',
+        url: 'https://portal.paratii.video/play/tJxLXRZimSn8',
+        image: '/assets/img/landing/header/venice-beach.png',
+        time: '01:06'
+      },
+      {
+        title: 'Degustando Whisky - Johnnie Walker Red Label',
+        url: 'https://portal.paratii.video/play/TfboklBzSPKa',
+        image: '/assets/img/landing/header/venice-beach.png',
+        time: '01:06'
+      },
+      {
+        title: 'Garage',
+        url: 'https://portal.paratii.video/play/WKj68pwWOm5a',
+        image: '/assets/img/landing/header/venice-beach.png',
+        time: '01:06'
+      },
+      {
+        title: 'Final de Semana Dourado - Rolê com Dom',
+        url: 'https://portal.paratii.video/play/dTyzjCmg5mvc',
+        image: '/assets/img/landing/header/venice-beach.png',
+        time: '01:06'
+      },
+      {
+        title: 'Gurufim Na Mangueira',
+        url: 'https://portal.paratii.video/play/CDjEPRDCO1ED',
+        image: '/assets/img/landing/header/venice-beach.png',
+        time: '01:06'
+      }
+    ]
   }
-
   render () {
     return (
       <Wrapper>
@@ -276,7 +410,7 @@ class Landing extends Component<Props, void> {
                 return (
                   <LandingVideoItem key={index}>
                     <LandingVideoItemBackground background={item.image} />
-                    <LandingVideoItemLink to={item.url}>
+                    <LandingVideoItemLink href={item.url}>
                       <LandingVideoItemTitle small bold>
                         <TruncatedText>{item.title}</TruncatedText>
                       </LandingVideoItemTitle>
