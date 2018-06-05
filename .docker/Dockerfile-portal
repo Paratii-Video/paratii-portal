@@ -1,0 +1,40 @@
+FROM ubuntu:16.04
+
+WORKDIR /build
+
+RUN apt-get update
+RUN apt-get upgrade -y
+
+RUN apt-get install -y \
+  curl \
+  git \
+  apt-utils \
+  sudo \
+  apt-transport-https
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get update
+RUN apt-get install -y nodejs yarn
+RUN apt-get install -y build-essential
+
+# install chrome
+
+#RUN yum -y install chromium
+#RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+#RUN yum -y install ./google-chrome-stable_current_*.rpm
+#RUN export CHROME_BIN=/usr/bin/google-chrome
+#
+#RUN export CHROMEDRIVER_RELEASE=$(curl --location --fail --retry 3 http://chromedriver.storage.googleapis.com/LATEST_RELEASE) \
+#      && curl --silent --show-error --location --fail --retry 3 --output /tmp/chromedriver_linux64.zip "http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_RELEASE/chromedriver_linux64.zip" \
+#      && cd /tmp \
+#      && unzip chromedriver_linux64.zip \
+#      && rm -rf chromedriver_linux64.zip \
+#      && mv chromedriver /usr/local/bin/chromedriver \
+#      && chmod +x /usr/local/bin/chromedriver \
+#      && chromedriver --version
+#
+# paratii-portal
+WORKDIR /paratii-portal
+ADD . /paratii-portal
+RUN yarn install
