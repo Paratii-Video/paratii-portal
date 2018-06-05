@@ -5,11 +5,11 @@ import {
   nukeSessionStorage,
   restoreMnemonic,
   restoredAddress,
-  address,
   password,
   voucherAmount11,
   voucherAmountInitial11,
-  createKeystore
+  createKeystore,
+  getAccountFromBrowser
 } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
@@ -100,63 +100,51 @@ describe('💰 Wallet:', function () {
     browser.waitForExist('[data-test-id="error-password"]')
   })
 
-  it('secure your wallet, transfer data to a new address', async function (done) {
+  it('secure your wallet, transfer data to a new address @watch', async function (done) {
     const username = 'newuser'
     const email = 'newuser@mail.com'
-    let balance = ''
 
     browser.url(`http://localhost:8080`)
     browser.waitUntil(() => {
       return browser.getTitle() === 'Paratii'
     })
 
-    const anonAddress = address
-    paratii.eth.balanceOf(anonAddress, 'PTI').then(function (results) {
-      balance = results
-    })
-
-    browser.waitAndClick('[data-test-id="login-signup"]')
-    // Click on - new here
-    browser.waitForClickable('[data-test-id="new-here"]')
-    browser.waitAndClick('[data-test-id="new-here"]')
-    // Insert the password
-    browser.waitAndClick('[name="input-new-password"]')
-    browser.setValue('[name="input-new-password"]', password)
-    browser.waitAndClick('[name="input-confirm-password"]')
-    browser.setValue('[name="input-confirm-password"]', password)
+    const anonAddress = await getAccountFromBrowser()
+    // send some money here to test with
+    await paratii.eth.transfer(3.14e18, 'PTI')
+    const balanceOfAnon = await paratii.eth.balanceOf(anonAddress, 'PTI')
+    // const expectedBalance = new BigNumber('3.14e18')
+    // assert.equal(balanceOfAnon.toString(), expectedBalance.toString())
     browser.waitAndClick('[data-test-id="continue"]')
     // Show seed and click the checkbox
     browser.waitAndClick('[data-test-id="check-seed"]')
     browser.waitAndClick('[data-test-id="continue"]')
     // Insert username and email
-    browser.waitAndClick('[name="username"]')
-    browser.setValue('[name="username"]', username)
-    browser.waitAndClick('[name="email"]')
-    browser.setValue('[name="email"]', email)
+    browser.waitAndSetValue('[name="username"]', username)
+    browser.waitAndSetValue('[name="email"]', email)
     browser.waitAndClick('[data-test-id="continue"]')
 
-    // We have a new account with all the PTI in the anonymous so 21M
-    browser.waitUntil(
-      () => browser.getText('[data-test-id="pti-balance"]') === '21M'
+    // we have a new account now
+    const newAddress = await getAccountFromBrowser()
+    assert.notEqual(anonAddress, newAddress)
+    assert.equal(
+      (await paratii.eth.balanceOf(newAddress, 'PTI')).toString(),
+      balanceOfAnon.toString()
     )
-    // After the test we resend the money back to the default address
-    // FIXME this is not working, the balance is too high
-    paratii.eth.transfer(anonAddress, balance, 'PTI')
-    // paratii.users.migrateAccount(anonAddress)
-    done()
-  })
+    assert.equal(
+      (await paratii.eth.balanceOf(anonAddress, 'PTI')).toString(),
+      '0'
+    )
 
-  it.skip('should show ETH balance', function () {
-    browser.sendSomeETH(userAccount, 3.1)
-    browser.waitForVisible(
-      '.profile-wallet-item:last-child .profile-wallet-item-balance'
-    )
-    browser.waitUntil(() => {
-      const amount = browser.getText(
-        '.profile-wallet-item:last-child .profile-wallet-item-balance'
-      )
-      return ['3.10 ETH', '3,10 ETH'].indexOf(amount) > -1
+    // the data of the user should be saved
+    const accountInfo = await paratii.users.get(newAddress)
+    assert.equal(accountInfo.username, username)
+    // send the money back to the original account
+    // FIXME: this should be done also if the test fails!
+    await browser.execute(function () {
+      return paratii.eth.transfer(anonAddress, balanceOfAnon, 'PTI')
     })
+    done()
   })
 
   it.skip('should show PTI balance', function () {
