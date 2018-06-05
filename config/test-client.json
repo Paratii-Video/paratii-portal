@@ -1,0 +1,8 @@
+{
+  "eth": {
+    "provider": "http://localhost:8545"
+  },
+  "db": {
+    "provider": "http://localhost:3000/api/v1/"
+  }
+}
