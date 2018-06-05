@@ -234,8 +234,6 @@ class UploadListItem extends Component<Props, Object> {
   handleInputChange: (input: string, e: Object) => void
   onPublishVideo: (e: Object) => void
   onSaveData: (e: Object) => void
-  publishVideo: (publish: boolean) => void
-  saveData: (publish: boolean) => void
   handleHeight: (e: Object) => string
   toggleOpen: (e: Object) => void
 
@@ -247,8 +245,9 @@ class UploadListItem extends Component<Props, Object> {
     this.state = {
       open: false,
       id: theVideo.id,
-      title: theVideo.title,
-      description: theVideo.description,
+      title: theVideo.title || '',
+      description: theVideo.description || '',
+      ownershipProof: theVideo.ownershipProof || '',
       duration: theVideo.duration,
       author: theVideo.author,
       height: '0px',
@@ -261,8 +260,6 @@ class UploadListItem extends Component<Props, Object> {
     this.toggleOpen = this.toggleOpen.bind(this)
     this.onSaveData = this.onSaveData.bind(this)
     this.onPublishVideo = this.onPublishVideo.bind(this)
-    this.publishVideo = this.publishVideo.bind(this)
-    this.saveData = this.saveData.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
   }
 
@@ -283,21 +280,18 @@ class UploadListItem extends Component<Props, Object> {
   onSaveData (e: Object) {
     e.preventDefault()
     if (this.props.isWalletSecured) {
-      this.saveData(false)
+      const videoToSave = {
+        id: this.state.id,
+        title: this.state.title,
+        description: this.state.description,
+        ownershipProof: this.state.ownershipProof,
+        author: this.props.user.name
+      }
+      this.props.saveVideoInfo(videoToSave)
     } else {
       // If wallet not secure open the modal
       this.props.checkUserWallet()
     }
-  }
-
-  saveData (publish: false) {
-    const videoToSave = {
-      id: this.state.id,
-      title: this.state.title,
-      description: this.state.description,
-      author: this.props.user.name
-    }
-    this.props.saveVideoInfo(videoToSave)
   }
 
   async onPublishVideo (e: Object) {
@@ -319,16 +313,12 @@ class UploadListItem extends Component<Props, Object> {
       )
     } else {
       if (this.props.isWalletSecured) {
-        this.publishVideo(true)
+        this.props.openModal(MODAL.STAKE)
       } else {
         // If wallet not secure open the modal for signup / login
         this.props.checkUserWallet()
       }
     }
-  }
-
-  publishVideo (publish: false) {
-    this.props.openModal(MODAL.STAKE)
   }
 
   toggleOpen (e: Object) {
@@ -485,7 +475,7 @@ class UploadListItem extends Component<Props, Object> {
               />
               <TextField
                 label="is this video really yours?"
-                id={'input-video-ownership-proof' + videoId}
+                id={'input-video-ownership-proof-' + videoId}
                 type="text"
                 value={this.state.ownershipProof}
                 onChange={e => this.handleInputChange('ownershipProof', e)}
