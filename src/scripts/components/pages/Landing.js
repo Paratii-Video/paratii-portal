@@ -31,13 +31,14 @@ const Header = styled.div`
   background: ${props => props.theme.colors.LandingPage.headerBackground}
     url(${props => props.background}) no-repeat 50%;
   background-size: cover;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   display: flex;
   min-height: calc(100vh - ${MAINHEADER_LOGO_HEIGHT});
   justify-content: center;
   position: relative;
 `
 
-const VideoLink = styled(Link)`
+const VideoLink = styled.a`
   ${ButtonStyleHover} align-items: center;
   background: ${props => props.theme.colors.LandingPage.VideoLinkBackground};
   bottom: ${VIDEOLINK_POSITION};
@@ -57,19 +58,12 @@ const VideoLink = styled(Link)`
   }
 `
 
-const HeaderSVGBackground = styled.svg`
-  display: none;
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-`
-
 const HeaderContent = styled.div`
   align-items: center;
   background: ${props =>
     props.theme.colors.LandingPage.headerContentBackground};
+  // filter: url('blur.svg#blur');
+  // filter: blur(10px);
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -87,7 +81,7 @@ const HeaderContentWrapper = styled.div`
 `
 
 const Videos = styled.div`
-  background: ${props => props.theme.colors.LandingPage.videosBackground};
+  display: block;
 `
 
 const VideosWrapper = styled.div`
@@ -195,10 +189,54 @@ const LandingVideoItemIcon = styled.div`
 `
 
 class Landing extends Component<Props, void> {
+  headerVideosList: Array
+  headerVideositem: String
+
+  constructor (props: Props) {
+    super(props)
+
+    this.headerVideosList = []
+    this.headerVideosList = [
+      {
+        title: 'Vento Na Janela',
+        url: 'https://portal.paratii.video/play/65te9Z7bXDM4',
+        image: '/assets/img/landing/header/vento-na-janela.png'
+      },
+      {
+        title: 'Johnny B. Goode',
+        url: 'https://portal.paratii.video/play/cpApjlvwRK8O',
+        image: '/assets/img/landing/header/vento-na-janela.png'
+      },
+      {
+        title: 'Yunta',
+        url: 'https://portal.paratii.video/play/A9SftW9yaPcJ',
+        image: '/assets/img/landing/header/yunta.png'
+      },
+      {
+        title: 'A Mysterious Clip',
+        url: 'https://portal.paratii.video/play/XTCgW0oToNnc',
+        image: '/assets/img/landing/header/a-mysterious-clip.png'
+      },
+      {
+        title: 'CHONPS | Robin & Batman',
+        url: 'https://portal.paratii.video/play/rOHszskLtIEy',
+        image: '/assets/img/landing/header/chonps-robin-and-batman.png'
+      },
+      {
+        title: 'Venice Beach',
+        url: 'https://portal.paratii.video/play/9qMA3KhZir2Z',
+        image: '/assets/img/landing/header/venice-beach.png'
+      }
+    ]
+
+    const itemIndex = Math.floor(Math.random() * this.headerVideosList.length)
+    this.headerVideositem = this.headerVideosList[itemIndex]
+  }
+
   render () {
     return (
       <Wrapper>
-        <Header background="https://barkpost.com/wp-content/uploads/2015/03/on-campy-with-max.jpg">
+        <Header background={this.headerVideositem.image}>
           <HeaderContent>
             <HeaderContentWrapper>
               <Title huge bold>
@@ -211,42 +249,10 @@ class Landing extends Component<Props, void> {
             </HeaderContentWrapper>
             <FilesUploader white />
           </HeaderContent>
-          <VideoLink to="/upload">
+          <VideoLink href={this.headerVideositem.url}>
             <SVGIcon icon="icon-player-play" width="13px" height="16px" />
-            <TruncatedText>Video name maybe very big</TruncatedText>
+            <TruncatedText>{this.headerVideositem.title}</TruncatedText>
           </VideoLink>
-          <HeaderSVGBackground viewbox="0 0 500 500">
-            <defs>
-              <filter
-                id="blur"
-                x="0"
-                y="0"
-                height="100%"
-                width="100%"
-                primitiveUnits="userSpaceOnUse"
-              >
-                <feGaussianBlur
-                  x="25%"
-                  y="25%"
-                  width="50%"
-                  height="50%"
-                  stdDeviation="10"
-                  in="SourceGraphic"
-                  result="blurImg"
-                />
-                <feComponentTransfer in="blurImg" result="opaqueBlur">
-                  <feFuncA type="linear" intercept="1" />
-                </feComponentTransfer>
-                <feBlend mode="normal" in="opaqueBlur" in2="SourceGraphic" />
-              </filter>
-            </defs>
-            <image
-              filter="url(#blur)"
-              width="100%"
-              height="100%"
-              xlinkHref="https://barkpost.com/wp-content/uploads/2015/03/on-campy-with-max.jpg"
-            />
-          </HeaderSVGBackground>
         </Header>
         <Videos>
           <VideosWrapper>
