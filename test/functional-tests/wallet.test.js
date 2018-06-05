@@ -115,6 +115,16 @@ describe('💰 Wallet:', function () {
     const balanceOfAnon = await paratii.eth.balanceOf(anonAddress, 'PTI')
     // const expectedBalance = new BigNumber('3.14e18')
     // assert.equal(balanceOfAnon.toString(), expectedBalance.toString())
+
+    browser.waitAndClick('[data-test-id="login-signup"]')
+    // Click on - new here
+    browser.waitForClickable('[data-test-id="new-here"]')
+    browser.waitAndClick('[data-test-id="new-here"]')
+    // Insert the password
+    browser.waitAndClick('[name="input-new-password"]')
+    browser.setValue('[name="input-new-password"]', password)
+    browser.waitAndClick('[name="input-confirm-password"]')
+    browser.setValue('[name="input-confirm-password"]', password)
     browser.waitAndClick('[data-test-id="continue"]')
     // Show seed and click the checkbox
     browser.waitAndClick('[data-test-id="check-seed"]')
