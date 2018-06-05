@@ -21,7 +21,6 @@ type Props = {
   openModal: string => void,
   closeModal: () => void,
   notification: (Object, string) => void,
-  onSuccess: Function,
   setWalletData: Object => void,
   setAddressAndBalance: () => void,
   setUserData: () => void,
@@ -48,10 +47,6 @@ const ButtonContainer = styled.div`
 `
 
 class ModalAskPassword extends Component<Props, Object> {
-  static defaultProps = {
-    onSuccess: () => {}
-  }
-
   forgotPassword: () => void
   setPassword: () => void
   handleInputChange: (input: string, e: Object) => void
@@ -102,7 +97,6 @@ class ModalAskPassword extends Component<Props, Object> {
         // Retrieve your videos
         this.props.fetchOwnedVideos()
         this.props.closeModal()
-        this.props.onSuccess()
       } catch (err) {
         // Password is not valid
         this.setState({

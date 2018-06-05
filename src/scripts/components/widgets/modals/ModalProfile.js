@@ -12,7 +12,6 @@ import { ModalContentWrapper, ModalScrollContent } from './Modal'
 const FORM_ID: string = 'PROFILE_MODAL'
 
 type Props = {
-  onSuccess: Function,
   openModal: string => void,
   closeModal: () => void,
   secureKeystore: string => void,
@@ -42,10 +41,6 @@ class ModalProfile extends Component<Props, Object> {
   sendVerificationMail: (string, string) => void
   handleInputChange: (input: string, e: Object) => void
 
-  static defaultProps = {
-    onSuccess: () => {}
-  }
-
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -58,7 +53,7 @@ class ModalProfile extends Component<Props, Object> {
     this.handleInputChange = this.handleInputChange.bind(this)
   }
 
-  async setProfile (e: Object) {
+  setProfile (e: Object) {
     e.preventDefault()
 
     if (this.state.email) {
@@ -78,7 +73,6 @@ class ModalProfile extends Component<Props, Object> {
       })
     }
     this.props.closeModal()
-    this.props.onSuccess()
 
     // Set profile in the state
     this.props.setUserData()

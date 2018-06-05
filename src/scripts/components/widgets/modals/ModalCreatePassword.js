@@ -19,7 +19,6 @@ import { MODAL } from 'constants/ModalConstants'
 const FORM_ID: string = 'create-password-form'
 
 type Props = {
-  onSuccess: Function,
   openModal: (string, ?Object) => void,
   closeModal: () => void,
   secureKeystore: string => void,
@@ -60,10 +59,6 @@ class ModalSetPassword extends Component<Props, State> {
   secureAccount: () => void
   handleInputChange: (input: string, e: Object) => void
 
-  static defaultProps = {
-    onSuccess: () => {}
-  }
-
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -79,7 +74,7 @@ class ModalSetPassword extends Component<Props, State> {
   }
 
   secureAccount () {
-    this.props.openModal(MODAL.SECURE, { onSuccess: this.props.onSuccess })
+    this.props.openModal(MODAL.SECURE)
   }
 
   setPassword (e: Object) {
@@ -99,13 +94,10 @@ class ModalSetPassword extends Component<Props, State> {
           if (this.state.password === this.state.confirm) {
             if (this.props.context === NEW_ACCOUNT) {
               sessionStorage.setItem(PASSWORD_TEMP, this.state.password)
-              this.props.openModal(MODAL.SHOW_SEED, {
-                onSuccess: this.props.onSuccess
-              })
+              this.props.openModal(MODAL.SHOW_SEED)
             } else if (this.props.context === RESTORE_ACCOUNT) {
               this.props.secureKeystore(this.state.password)
               this.props.closeModal()
-              this.props.onSuccess()
             }
           }
         }

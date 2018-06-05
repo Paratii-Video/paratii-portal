@@ -12,7 +12,7 @@ type Props = {
   showCard: boolean,
   margin: string,
   onFileChosen: (file: Object) => void,
-  checkUserWallet: (?{ onUnlock?: Function }) => void
+  checkUserWallet: () => void
 }
 const StyleInput = css`
   height: 100%;
@@ -125,11 +125,7 @@ class FilesUploader extends Component<Props, Object> {
     if (this.props.isWalletSecured) {
       this.setSelectedFile(file)
     } else {
-      this.props.checkUserWallet({
-        onSuccess: () => {
-          this.setSelectedFile(file)
-        }
-      })
+      this.props.checkUserWallet()
     }
   }
 

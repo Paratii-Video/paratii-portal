@@ -10,7 +10,6 @@ import { MODAL } from 'constants/ModalConstants'
 import { RESTORE_ACCOUNT, NEW_ACCOUNT } from 'constants/ParatiiLibConstants'
 
 type Props = {
-  onSuccess: Function,
   openModal: (string, ?Object) => void,
   setContext: string => void
 }
@@ -36,10 +35,6 @@ class ModalSecure extends Component<Props, Object> {
   restoreAccount: (e: Object) => void
   createPassword: (e: Object) => void
 
-  static defaultProps = {
-    onSuccess: () => {}
-  }
-
   constructor (props: Props) {
     super(props)
     this.restoreAccount = this.restoreAccount.bind(this)
@@ -48,16 +43,12 @@ class ModalSecure extends Component<Props, Object> {
 
   restoreAccount () {
     this.props.setContext(RESTORE_ACCOUNT)
-    this.props.openModal(MODAL.RESTORE_ACCOUNT, {
-      onSuccess: this.props.onSuccess
-    })
+    this.props.openModal(MODAL.RESTORE_ACCOUNT)
   }
 
   createPassword () {
     this.props.setContext(NEW_ACCOUNT)
-    this.props.openModal(MODAL.CREATE_PASSWORD, {
-      onSuccess: this.props.onSuccess
-    })
+    this.props.openModal(MODAL.CREATE_PASSWORD)
   }
 
   render () {

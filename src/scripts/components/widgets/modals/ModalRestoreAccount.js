@@ -13,7 +13,6 @@ import { MODAL } from 'constants/ModalConstants'
 const FORM_ID: string = 'MNEMONIC_FORM'
 
 type Props = {
-  onSuccess: Function,
   openModal: (string, ?Object) => void,
   restoreKeystore: string => void,
   previousModal: string
@@ -43,10 +42,6 @@ class ModalRewriteSeed extends Component<Props, Object> {
   restoreWallet: () => void
   handleMnemonicChange: (e: Object) => void
 
-  static defaultProps = {
-    onSuccess: () => {}
-  }
-
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -68,9 +63,7 @@ class ModalRewriteSeed extends Component<Props, Object> {
     const mnemonic = this.state.mnemonic
     if (paratii.eth.wallet.isValidMnemonic(mnemonic)) {
       this.props.restoreKeystore(mnemonic)
-      this.props.openModal(MODAL.CREATE_PASSWORD, {
-        onSuccess: this.props.onSuccess
-      })
+      this.props.openModal(MODAL.CREATE_PASSWORD)
     } else {
       this.setState({
         error: 'The 12 words you insert are not valid'
