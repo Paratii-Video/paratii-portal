@@ -74,6 +74,9 @@ const Themes = {
       input: {
         background: Colors.blackDark,
         color: Colors.purple
+      },
+      supportedFileTypes: {
+        color: Colors.grayLight
       }
     },
     VideoList: {

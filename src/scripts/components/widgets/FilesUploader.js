@@ -1,14 +1,16 @@
 /* @flow */
-import React, { Component } from 'react'
+
+import React, { Component, Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
 import type { RouterHistory } from 'react-router-dom'
+
 import styled, { css } from 'styled-components'
 import { FILESUPLOADER_PATH_TO } from 'constants/UrlConstants'
-import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
 import TextField from '../widgets/forms/TextField'
-import Card, { CardTitle } from 'components/structures/Card'
+import Card from 'components/structures/Card'
 import Text from '../foundations/Text'
 import SVGIcon from '../foundations/SVGIcon'
+import { SUPPORTED_FILE_TYPES } from 'constants/UploaderConstants'
 
 type Props = {
   history: RouterHistory,
@@ -25,11 +27,10 @@ const StyleInput = css`
   width: 100%;
 `
 
-const Title = CardTitle.extend`
-  padding: 40px 42px;
-`
-
-const InputFile = styled.input`
+const InputFile = styled.input.attrs({
+  type: 'file',
+  accept: SUPPORTED_FILE_TYPES.join(' ')
+})`
   ${StyleInput} cursor: pointer;
   left: 0;
   opacity: 0;
@@ -38,35 +39,9 @@ const InputFile = styled.input`
   z-index: 3;
 `
 
-const UploadCover = styled.div`
-  ${StyleInput} background: 0;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 80px;
-  position: relative;
-  transition: background ${props => props.theme.animation.time.repaint} 0.2s;
-  z-index: 1;
-
-  .dragenter & {
-    background-color: ${props => props.theme.colors.FilesUploader.drag.enter};
-    transition-delay: 0.16s;
-  }
-`
-
-const UploadCoverIcon = styled.div`
-  margin: 30px 0 20px;
-  width: 100%;
-`
-
-const Icon = styled.div`
-  height: 110px;
-  margin: 0 auto;
-  transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
-  width: 190px;
-
-  .dragenter & {
-    transform: scale(0.95);
-  }
+const SupportedFileTypes = styled.span`
+  color: ${({ theme }) => theme.colors.FilesUploader.supportedFileTypes.color};
+  font-size: ${props => props.theme.fonts.text.tiny};
 `
 
 const UploadCoverText = styled(Text)`
@@ -171,45 +146,9 @@ class FilesUploader extends Component<Props, Object> {
     })
   }
 
-  render () {
-    const showcard = this.props.showCard
-    return showcard ? (
-      <Card
-        {...this.props}
-        nopadding
-        className={this.state.dragClass}
-        footer={
-          <FooterWrapper>
-            <InputText
-              label="(Not working yet) Or upload from Youtube or Vimeo"
-              helper="i.e.: http://youtube.com/videoID or http://vimeo.com/videoID"
-              error={this.state.inputTextError}
-              disabled
-            />
-          </FooterWrapper>
-        }
-      >
-        <InputFile
-          type="file"
-          onClick={this.onCheck}
-          onChange={this.onFileChosen}
-          onDragEnd={this.onDrag}
-        />
-        <UploadCover>
-          <Title>Upload video</Title>
-          <UploadCoverIcon>
-            <Icon>
-              <FilesUploaderSvg />
-            </Icon>
-          </UploadCoverIcon>
-          <UploadCoverText>
-            <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
-            choose a file
-          </UploadCoverText>
-        </UploadCover>
-      </Card>
-    ) : (
-      <UploaderWrapper className={this.state.dragClass}>
+  renderUploadTrigger ({ card }: { card: boolean } = {}) {
+    return (
+      <Fragment>
         <UploaderSimpleWrapper>
           <InputFile
             type="file"
@@ -229,9 +168,41 @@ class FilesUploader extends Component<Props, Object> {
               Drag your files here
             </UploadCoverTextBig>{' '}
             or click to find them
+            <SupportedFileTypes>
+              <br />
+              (only .mp4 currently supported)
+            </SupportedFileTypes>
           </UploadCoverText>
         </UploaderSimpleWrapper>
-      </UploaderWrapper>
+      </Fragment>
+    )
+  }
+
+  render () {
+    const { showCard } = this.props
+    return showCard ? (
+      <Card
+        {...this.props}
+        nopadding
+        className={this.state.dragClass}
+        footer={
+          <FooterWrapper>
+            <InputText
+              label="(Not working yet) Or upload from Youtube or Vimeo"
+              helper="i.e.: http://youtube.com/videoID or http://vimeo.com/videoID"
+              error={this.state.inputTextError}
+              disabled
+            />
+          </FooterWrapper>
+        }
+      >
+        {this.renderUploadTrigger({ card: true })}
+      </Card>
+    ) : (
+      <div>
+        <UploaderWrapper className={this.state.dragClass} />
+        <UploaderWrapper>{this.renderUploadTrigger()}</UploaderWrapper>
+      </div>
     )
   }
 }
