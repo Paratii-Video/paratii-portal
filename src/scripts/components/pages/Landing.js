@@ -195,7 +195,6 @@ class Landing extends Component<Props, void> {
   constructor (props: Props) {
     super(props)
 
-    this.headerVideosList = []
     this.headerVideosList = [
       {
         title: 'Vento Na Janela',
