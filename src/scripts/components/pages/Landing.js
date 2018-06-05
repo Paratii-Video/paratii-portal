@@ -74,8 +74,6 @@ const HeaderContent = styled.div`
   align-items: center;
   background: ${props =>
     props.theme.colors.LandingPage.headerContentBackground};
-  // filter: url('blur.svg#blur');
-  // filter: blur(10px);
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -160,8 +158,7 @@ const LandingVideoItemBackground = styled.div`
   background-size: cover;
   height: 100%;
   position: absolute;
-  transition: transform 1.7s;
-  ${({ theme }) => theme.animation.ease.outexpo} 0.1s;
+  transition: transform 1.7s ${({ theme }) => theme.animation.ease.outexpo} 0.1s;
   width: 100%;
   z-index: ${ZINDEX_LANDINGVIDEOITEMBACKGROUND};
   ${LandingVideoItem}:hover & {
