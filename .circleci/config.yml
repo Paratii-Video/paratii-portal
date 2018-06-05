@@ -27,6 +27,9 @@ jobs:
           command: yarn run server:test
           background: true
       - run:
+          command: cd /paratii-db/paratii-db && yarn run dev
+          background: true
+      - run:
           command: node src/scripts/waitForServer.js
           no_output_timeout: 120s
       - run: yarn run chimp-circleci-test
