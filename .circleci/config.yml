@@ -21,10 +21,10 @@ jobs:
           command: yarn run parity
           background: true
       - run:
-          command: yarn run build:test
+          command: yarn run server:test
           background: true
       - run:
-          command: yarn run server:test
+          command: yarn run build:test
           background: true
       - run:
           command: cd /paratii-db/paratii-db && yarn run dev
