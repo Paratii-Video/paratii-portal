@@ -147,7 +147,12 @@ class ModalAskPassword extends Component<Props, Object> {
           </FieldContainer>
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.forgotPassword}>Forgot Password</Button>
+              <Button
+                data-test-id="forgot-password-button"
+                onClick={this.forgotPassword}
+              >
+                Forgot Password
+              </Button>
             </ButtonContainer>
             <ButtonContainer>
               <Button

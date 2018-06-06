@@ -11,19 +11,15 @@ describe('🦄 Uploader Tool', function () {
 
   const uploadFileInputSelector =
     'input[type="file"][data-test-id="upload-file-input"]'
+  const modalCloseButtonSelector = '[data-test-id="modal-close-button"]'
+  const forgotPasswordButtonSelector = '[data-test-id="forgot-password-button"]'
 
   before(function () {
-    browser.url(`http://localhost:8080`)
-  })
-
-  afterEach(function () {
-    browser.execute(nukeLocalStorage)
-    browser.execute(nukeSessionStorage)
-
     browser.addCommand('verifyUploadSucceeds', async video => {
+      browser.waitAndClick('[data-test-id="uploader-item"]', 5000)
+
       // now we should see a form to fill in
       // the form should contain the id of our video
-      browser.waitAndClick('[data-test-id="uploader-item"]', 5000)
       browser.waitForExist('[data-test-id="video-id"]')
       const getVideoId = function () {
         var videoId = browser.getValue('[data-test-id="video-id"]')
@@ -79,6 +75,11 @@ describe('🦄 Uploader Tool', function () {
     })
   })
 
+  afterEach(function () {
+    browser.execute(nukeLocalStorage)
+    browser.execute(nukeSessionStorage)
+  })
+
   it('should only allow mp4 files', () => {
     browser.url('http://localhost:8080/upload')
     browser.isVisible(uploadFileInputSelector)
@@ -88,19 +89,7 @@ describe('🦄 Uploader Tool', function () {
   })
 
   it('should upload a video when the wallet is already secured', async function () {
-    // Create a secure wallet
-    browser.url('http://localhost:8080')
-    browser.execute(function (password) {
-      window.paratii.eth.wallet.clear()
-      window.paratii.eth.wallet
-        .create()
-        .then(
-          localStorage.setItem(
-            'keystore-secure',
-            JSON.stringify(window.paratii.eth.wallet.encrypt(password))
-          )
-        )
-    }, password)
+    browser.createSecureWallet()
 
     // Get address from browser
     const newAddress = browser.execute(function () {
@@ -118,18 +107,54 @@ describe('🦄 Uploader Tool', function () {
     }
 
     browser.url('http://localhost:8080/upload')
-    // Login
-    browser.waitAndClick('[data-test-id="login-signup"]')
     browser.waitAndClick('[name="wallet-password"]')
     browser.setValue('[name="wallet-password"]', password)
     browser.waitAndClick('[data-test-id="continue"]')
 
     // Upload file
     const fileToUpload = `${__dirname}/data/pti-logo.mp4`
-    browser.waitForEnabled('input[type="file"]')
-    browser.chooseFile('input[type="file"]', fileToUpload)
+    browser.waitForEnabled(uploadFileInputSelector)
+    browser.chooseFile(uploadFileInputSelector, fileToUpload)
 
     browser.verifyUploadSucceeds(video)
+  })
+
+  it('should redirect to the homepage if there is a wallet but the secure flow is canceled on the "ask for password" modal', async function () {
+    browser.createSecureWallet()
+
+    browser.url('http://localhost:8080/upload')
+    browser.waitAndClick(modalCloseButtonSelector)
+
+    browser.waitUntil(
+      () =>
+        browser.execute(() => window.location.href === 'http://localhost:8080/')
+          .value
+    )
+  })
+
+  it('should redirect to the homepage if there is a wallet but the secure flow is canceled on the "account recovery" modal', async function () {
+    browser.createSecureWallet()
+
+    browser.url('http://localhost:8080/upload')
+    browser.waitAndClick(forgotPasswordButtonSelector)
+    browser.waitAndClick(modalCloseButtonSelector)
+
+    browser.waitUntil(
+      () =>
+        browser.execute(() => window.location.href === 'http://localhost:8080/')
+          .value
+    )
+  })
+
+  it('should redirect to the homepage if the secure flow is canceled on the secure account modal and there is no wallet', async function () {
+    browser.url('http://localhost:8080/upload')
+    browser.waitAndClick(modalCloseButtonSelector)
+
+    browser.waitUntil(
+      () =>
+        browser.execute(() => window.location.href === 'http://localhost:8080/')
+          .value
+    )
   })
 
   it.skip('cancel upload should work [but is not yet]', function () {

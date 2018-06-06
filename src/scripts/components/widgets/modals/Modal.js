@@ -218,7 +218,7 @@ class Modal extends Component<Props, void> {
       <Wrapper show={isVisible}>
         <Container show={isVisible} width={this.getModalWidth()}>
           {this.canClose() && (
-            <CloseButton onClick={this.close}>
+            <CloseButton data-test-id="modal-close-button" onClick={this.close}>
               <SVGIcon icon="icon-close" />
             </CloseButton>
           )}
