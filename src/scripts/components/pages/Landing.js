@@ -107,7 +107,8 @@ const HeaderContentBackground = styled.span`
     url(${props => props.background}) no-repeat 50%;
   background-size: cover;
   border-radius: 5px;
-  filter: blur(10px);
+  filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   height: 150%;
   left: 50%;
   position: absolute;
@@ -115,6 +116,21 @@ const HeaderContentBackground = styled.span`
   top: 50%;
   width: 150%;
   z-index: 1;
+
+  @media (min-width: 1800px) {
+    height: 200%;
+    width: 200%;
+  }
+
+  @media (max-width: 1366px) {
+    height: 140%;
+    width: 140%;
+  }
+
+  @media (max-width: 767px) {
+    height: 100%;
+    width: 100%;
+  }
 `
 
 const HeaderContentWrapper = styled.div`
