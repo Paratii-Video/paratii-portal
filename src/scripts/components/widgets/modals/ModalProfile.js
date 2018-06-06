@@ -109,7 +109,6 @@ class ModalProfile extends Component<Props, Object> {
 
   render () {
     const enableContinue = this.props.walletKey === WALLET_KEY_SECURE
-    console.log(this.props.walletKey)
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
