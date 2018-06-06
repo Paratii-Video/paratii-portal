@@ -72,26 +72,57 @@ const VideoLink = styled.a`
 
 const HeaderContent = styled.div`
   align-items: center;
-  background: ${props =>
-    props.theme.colors.LandingPage.headerContentBackground};
-  border-radius: 4px;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin: 40px 0;
   max-width: 1200px;
-  padding: 90px 40px 20px;
+  overflow: hidden;
+  padding: 110px 40px 50px;
+  position: relative;
   width: 100%;
 
   @media (max-width: 767px) {
     margin: 20px 0;
   }
+
+  &::before {
+    background: ${props =>
+    props.theme.colors.LandingPage.headerContentBackground};
+    border-radius: 5px;
+    content: '';
+    height: 100%;
+    left: 50%;
+    position: absolute;
+    transform: translate3d(-50%, -50%, 0);
+    top: 50%;
+    width: 100%;
+    z-index: 2;
+  }
+`
+
+const HeaderContentBackground = styled.span`
+  background: ${props => props.theme.colors.LandingPage.headerContentBackground}
+    url(${props => props.background}) no-repeat 50%;
+  background-size: cover;
+  border-radius: 5px;
+  filter: blur(10px);
+  height: 150%;
+  left: 50%;
+  position: absolute;
+  transform: translate3d(-50%, -50%, 0);
+  top: 50%;
+  width: 150%;
+  z-index: 1;
 `
 
 const HeaderContentWrapper = styled.div`
   max-width: 500px;
   text-align: center;
+  position: relative;
   width: 100%;
+  z-index: 4;
 `
 
 const Videos = styled.div`
@@ -345,6 +376,7 @@ class Landing extends Component<Props, void> {
       <Wrapper>
         <Header background={this.headerVideo.image}>
           <HeaderContent>
+            <HeaderContentBackground background={this.headerVideo.image} />
             <HeaderContentWrapper>
               <Title huge bold>
                 Bring your videos<br /> to the future
@@ -353,8 +385,8 @@ class Landing extends Component<Props, void> {
                 Decentralisation is breeding novel monetization models and
                 giving the power back to peers.
               </Text>
+              <FilesUploader white />
             </HeaderContentWrapper>
-            <FilesUploader white />
           </HeaderContent>
           <VideoLink href={this.headerVideo.url}>
             <SVGIcon icon="icon-player-play" width="13px" height="16px" />
