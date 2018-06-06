@@ -62,15 +62,15 @@ class NotFound extends Component<Props, void> {
         </SVG>
         <Text gray>
           This page is not available yet. A passionate team is either building
-          it, or unaware of it, as of now. Want to help us move faster? Why
-          don’t you report the issue on our{' '}
+          it, or unaware of it, as of now. Want to help us move faster? Please
+          report the issue on our Github:
           <NavLink
             href="https://github.com/Paratii-Video/"
             target="_blank"
             anchor
             purple
           >
-            Github
+            Paratii-Video
           </NavLink>?
         </Text>
       </Wrapper>

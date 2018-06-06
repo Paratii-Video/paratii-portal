@@ -74,6 +74,7 @@ const config = {
       adapters: scriptsDir + '/adapters',
       types: scriptsDir + '/types',
       utils: scriptsDir + '/utils',
+      translations: srcDir + '/translations',
       'test-utils': testDir + '/test-utils',
       'unit-tests': unitTestsDir,
       'functional-tests': functionalTestsDir

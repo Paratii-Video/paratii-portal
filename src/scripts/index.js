@@ -8,17 +8,23 @@ import 'promise-polyfill/src/polyfill'
 
 import Root from 'components/Root'
 import { getRoot } from 'utils/AppUtils'
+import { initializeTranslator } from 'utils/TranslationUtils'
 import createStore from 'scripts/createStore'
 import 'styles/app.scss'
 
-export const store = createStore()
+const store = createStore()
+
+const translator = initializeTranslator()
+const TranslationContext = React.createContext()
 
 ReactDOM.render(
-  <Provider store={store}>
-    <AppContainer>
-      <Root />
-    </AppContainer>
-  </Provider>,
+  <TranslationContext.Provider value={translator}>
+    <Provider store={store}>
+      <AppContainer>
+        <Root />
+      </AppContainer>
+    </Provider>
+  </TranslationContext.Provider>,
   getRoot()
 )
 
@@ -26,11 +32,13 @@ if (module.hot) {
   module.hot.accept('components/Root', () => {
     const NextRoot = require('components/Root').default
     ReactDOM.render(
-      <Provider store={store}>
-        <AppContainer>
-          <NextRoot />
-        </AppContainer>
-      </Provider>,
+      <TranslationContext.Provider value={translator}>
+        <Provider store={store}>
+          <AppContainer>
+            <NextRoot />
+          </AppContainer>
+        </Provider>
+      </TranslationContext.Provider>,
       getRoot()
     )
   })
