@@ -65,16 +65,12 @@ const InputText = styled(TextField)`
 `
 
 const UploaderWrapper = styled.div`
-  width: 100%;
-  position: relative;
-`
-
-const UploaderSimpleWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
   padding: 70px 0;
   position: relative;
+  width: 100%;
 `
 const Icon = styled.div`
   height: 110px;
@@ -83,7 +79,7 @@ const Icon = styled.div`
     className === 'dragenter' ? 'scale(0.9)' : 'scale(1)'};
   transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
   width: 190px;
-  ${UploaderSimpleWrapper}:hover & {
+  ${UploaderWrapper}:hover & {
     transform: scale(0.9);
   }
 `
@@ -153,40 +149,38 @@ class FilesUploader extends Component<Props, Object> {
 
   renderUploadTrigger ({ card }: { card: boolean } = {}) {
     return (
-      <Fragment>
-        <UploaderSimpleWrapper>
-          <InputFile
-            type="file"
-            data-test-id="upload-file-input"
-            onClick={this.onCheck}
-            onChange={this.onFileChosen}
-            onDragEnter={this.onDrag}
-            onDragLeave={this.onDrag}
-          />
-          {card ? (
-            <Icon className={this.state.dragClass}>
-              <FilesUploaderSvg />
-            </Icon>
-          ) : (
-            <UploadAddIcon className={this.state.dragClass}>
-              <SVGIcon
-                color={this.props.white ? 'white' : 'gray'}
-                icon="icon-add"
-              />
-            </UploadAddIcon>
-          )}
-          <UploadCoverText gray={!this.props.white} small>
-            <UploadCoverTextBig big gray={!this.props.white}>
-              Drag your files here
-            </UploadCoverTextBig>{' '}
-            or click to find them
-            <SupportedFileTypes>
-              <br />
-              (only .mp4 currently supported)
-            </SupportedFileTypes>
-          </UploadCoverText>
-        </UploaderSimpleWrapper>
-      </Fragment>
+      <UploaderWrapper>
+        <InputFile
+          type="file"
+          data-test-id="upload-file-input"
+          onClick={this.onCheck}
+          onChange={this.onFileChosen}
+          onDragEnter={this.onDrag}
+          onDragLeave={this.onDrag}
+        />
+        {card ? (
+          <Icon className={this.state.dragClass}>
+            <FilesUploaderSvg />
+          </Icon>
+        ) : (
+          <UploadAddIcon className={this.state.dragClass}>
+            <SVGIcon
+              color={this.props.white ? 'white' : 'gray'}
+              icon="icon-add"
+            />
+          </UploadAddIcon>
+        )}
+        <UploadCoverText gray={!this.props.white} small>
+          <UploadCoverTextBig big gray={!this.props.white}>
+            Drag your files here
+          </UploadCoverTextBig>{' '}
+          or click to find them
+          <SupportedFileTypes>
+            <br />
+            (only .mp4 currently supported)
+          </SupportedFileTypes>
+        </UploadCoverText>
+      </UploaderWrapper>
     )
   }
 
@@ -211,10 +205,7 @@ class FilesUploader extends Component<Props, Object> {
         {this.renderUploadTrigger({ card: true })}
       </Card>
     ) : (
-      <div>
-        <UploaderWrapper className={this.state.dragClass} />
-        <UploaderWrapper>{this.renderUploadTrigger()}</UploaderWrapper>
-      </div>
+      <Fragment>{this.renderUploadTrigger()}</Fragment>
     )
   }
 }
