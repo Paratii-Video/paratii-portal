@@ -157,10 +157,9 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
-    return state
-      .setIn(
-        [payload.id, 'storageStatus'],
-        new AsyncTaskStatusRecord({
+    return state.updateIn([payload.id], video =>
+      video.merge({
+        storageStatus: new AsyncTaskStatusRecord({
           name: 'success',
           data: {
             id: payload.id,
@@ -168,14 +167,16 @@ const reducer = {
             description: payload.description,
             author: payload.author,
             owner: payload.owner,
+            ownershipProof: payload.ownershipProof,
             progress: 100
           }
-        })
-      )
-      .setIn([payload.id, 'title'], payload.title)
-      .setIn([payload.id, 'description'], payload.description)
-      .setIn([payload.id, 'author'], payload.author)
-    // .setIn([payload.id, 'published'], payload.published)
+        }),
+        title: payload.title,
+        description: payload.description,
+        author: payload.author,
+        ownershipProof: payload.ownershipProof
+      })
+    )
   },
   [VIDEO_STAKED]: (
     state: VideoRecordMap,
