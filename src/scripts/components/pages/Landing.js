@@ -108,7 +108,7 @@ const HeaderContentBackground = styled.span`
   background-size: cover;
   border-radius: 5px;
   filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   height: 150%;
   left: 50%;
   position: absolute;
