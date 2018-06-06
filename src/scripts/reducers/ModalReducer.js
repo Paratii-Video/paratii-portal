@@ -10,7 +10,7 @@ const reducer = {
   [OPEN_MODAL]: (state: ModalRecord, action: Action<ModalPayload>) => {
     return state.withMutations((mutableState: ModalRecord) => {
       mutableState.merge({
-        name: action.payload.modal,
+        name: action.payload.modalName,
         previousModalName: state.get('name'),
         showModal: true
       })
