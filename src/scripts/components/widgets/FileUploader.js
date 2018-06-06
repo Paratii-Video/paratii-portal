@@ -11,8 +11,7 @@ type Props = {
   onError: boolean,
   showCard: boolean,
   margin: string,
-  onFileChosen: (file: Object) => void,
-  checkUserWallet: () => void
+  onFileChosen: (file: Object) => void
 }
 const StyleInput = css`
   height: 100%;
@@ -124,12 +123,6 @@ class FilesUploader extends Component<Props, Object> {
     // If wallet not secure open the modal
     if (this.props.isWalletSecured) {
       this.setSelectedFile(file)
-    } else {
-      this.props.checkUserWallet({
-        onClose: () => {
-          console.log('wowie')
-        }
-      })
     }
   }
 
@@ -148,8 +141,6 @@ class FilesUploader extends Component<Props, Object> {
       this.setState({
         dragClass: klass
       })
-    } else {
-      this.props.checkUserWallet()
     }
   }
 
