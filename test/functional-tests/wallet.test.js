@@ -86,16 +86,13 @@ describe('💰 Wallet:', function () {
     browser.pause(500)
     browser.waitAndClick('[data-test-id="restore-account"]')
     // Insert the seed
-    browser.waitForClickable('[name="mnemonic-restore"]')
-    browser.setValue('[name="mnemonic-restore"]', restoreMnemonic)
+    browser.waitAndSetValue('[name="mnemonic-restore"]', restoreMnemonic)
     browser.waitAndClick('[data-test-id="restore-wallet"]')
     // Insert the password
-    browser.waitAndClick('[name="input-new-password"]')
-    browser.setValue('[name="input-new-password"]', weakPassword)
-    browser.waitAndClick('[name="input-confirm-password"]')
-    browser.setValue('[name="input-confirm-password"]', weakPassword)
+    browser.waitAndSetValue('[name="input-new-password"]', weakPassword)
+    browser.waitAndSetValue('[name="input-confirm-password"]', weakPassword)
     browser.waitForEnabled('[data-test-id="continue"]')
-    browser.click('[data-test-id="continue"]')
+    browser.waitAndClick('[data-test-id="continue"]')
     // Display error message
     browser.waitForExist('[data-test-id="error-password"]')
   })
@@ -116,26 +113,28 @@ describe('💰 Wallet:', function () {
     // const expectedBalance = new BigNumber('3.14e18')
     // assert.equal(balanceOfAnon.toString(), expectedBalance.toString())
 
-    browser.waitAndClick('[data-test-id="login-signup"]')
+    await browser.waitAndClick('[data-test-id="login-signup"]')
     // Click on - new here
-    browser.waitForClickable('[data-test-id="new-here"]')
-    browser.waitAndClick('[data-test-id="new-here"]')
+    await browser.waitForClickable('[data-test-id="new-here"]')
+    await browser.waitAndClick('[data-test-id="new-here"]')
     // Insert the password
-    browser.waitAndClick('[name="input-new-password"]')
-    browser.setValue('[name="input-new-password"]', password)
-    browser.waitAndClick('[name="input-confirm-password"]')
-    browser.setValue('[name="input-confirm-password"]', password)
-    browser.waitAndClick('[data-test-id="continue"]')
+    await browser.waitAndSetValue('[name="input-new-password"]', password)
+    await browser.waitAndSetValue('[name="input-confirm-password"]', password)
+    await browser.waitAndClick('[data-test-id="continue"]')
     // Show seed and click the checkbox
-    browser.waitAndClick('[data-test-id="check-seed"]')
-    browser.waitAndClick('[data-test-id="continue"]')
+    await browser.waitAndClick('[data-test-id="check-seed"]')
+    await browser.waitAndClick('[data-test-id="continue"]')
     // Insert username and email
-    browser.waitAndSetValue('[name="username"]', username)
-    browser.waitAndSetValue('[name="email"]', email)
-    browser.waitAndClick('[data-test-id="continue"]')
+    await browser.waitAndSetValue('[name="username"]', username)
+    await browser.waitAndSetValue('[name="email"]', email)
+    // Waiting for the secure keystore
+    await browser.waitAndClick('[data-test-id="continue"]', 10000)
 
     // we have a new account now
     const newAddress = await getAccountFromBrowser()
+    // FIXME this newAddress is null!!!!!
+    console.log(newAddress)
+
     assert.notEqual(anonAddress, newAddress)
     assert.equal(
       (await paratii.eth.balanceOf(newAddress, 'PTI')).toString(),
@@ -148,6 +147,7 @@ describe('💰 Wallet:', function () {
 
     // the data of the user should be saved
     const accountInfo = await paratii.users.get(newAddress)
+    console.log(accountInfo)
     assert.equal(accountInfo.username, username)
     // send the money back to the original account
     // FIXME: this should be done also if the test fails!
