@@ -104,6 +104,7 @@ export const hashedVoucherCode11 =
 
 export function getAccountFromBrowser () {
   return browser.execute(function () {
+    console.log('address from browser: ', paratii.getAccount())
     return paratii.getAccount()
   }).value
 }
