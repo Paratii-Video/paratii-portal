@@ -9,11 +9,12 @@ import RedeemVoucher from 'containers/RedeemVoucherContainer'
 import UploadFile from 'containers/FileUploaderContainer'
 import UploadList from 'containers/UploadListContainer'
 
-import type { Match } from 'react-router-dom'
+import type { Match, History } from 'react-router-dom'
 
 type Props = {
   checkUserWallet: () => void,
   match: Match,
+  history: History,
   fetchVideos: () => void,
   videos: Map<string, VideoRecord>,
   selectedVideo: ?VideoRecord,
@@ -44,7 +45,11 @@ class VideoManager extends Component<Props, void> {
 
   componentDidMount (): void {
     if (!this.props.isWalletSecured) {
-      this.props.checkUserWallet()
+      this.props.checkUserWallet({
+        onClose: () => {
+          this.props.history.replace('/')
+        }
+      })
     }
   }
 

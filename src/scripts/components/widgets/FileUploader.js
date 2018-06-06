@@ -125,7 +125,11 @@ class FilesUploader extends Component<Props, Object> {
     if (this.props.isWalletSecured) {
       this.setSelectedFile(file)
     } else {
-      this.props.checkUserWallet()
+      this.props.checkUserWallet({
+        onClose: () => {
+          console.log('wowie')
+        }
+      })
     }
   }
 
@@ -150,10 +154,13 @@ class FilesUploader extends Component<Props, Object> {
   }
 
   renderUploadTrigger ({ card }: { card: boolean } = {}) {
+    const { isWalletSecured } = this.props
+
     return (
       <Fragment>
         <InputFile
           data-test-id="upload-file-input"
+          disabled={!isWalletSecured}
           onChange={this.onFileChosen}
           onDragEnd={this.onDrag}
         />

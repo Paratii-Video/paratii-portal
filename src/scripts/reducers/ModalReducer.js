@@ -14,7 +14,15 @@ const reducer = {
         previousModalName: state.get('name'),
         showModal: true
       })
-      mutableState.set('modalProps', action.payload.modalProps)
+
+      if (mutableState.get('previousModalName')) {
+        mutableState.updateIn(['modalProps'], modalProps => ({
+          ...modalProps,
+          ...action.payload.modalProps
+        }))
+      } else {
+        mutableState.set('modalProps', action.payload.modalProps)
+      }
     })
   },
   [CLOSE_MODAL]: (state: ModalRecord, action: Action<boolean>) => {

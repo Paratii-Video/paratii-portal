@@ -19,7 +19,7 @@ import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
   modalName: string,
-  modalProps: ?Object,
+  modalProps: Object,
   showModal: boolean,
   width: string,
   closeModal: () => null
@@ -122,8 +122,12 @@ class Modal extends Component<Props, void> {
   }
 
   close = () => {
+    const { modalProps: { onClose } } = this.props
     if (this.canClose()) {
       this.props.closeModal()
+      if (onClose) {
+        onClose()
+      }
     }
   }
 
