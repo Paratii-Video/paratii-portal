@@ -1,8 +1,12 @@
+/* @flow */
+
 import React, { Component } from 'react'
-import Button from '../foundations/Button'
-import Title from '../foundations/Title'
-import Text from '../foundations/Text'
 import styled from 'styled-components'
+
+import Button from 'components/foundations/Button'
+import Title from 'components/foundations/Title'
+import Text from 'components/foundations/Text'
+import TranslatedText from 'components/translations/TranslatedText'
 
 const Wrapper = styled.div`
   display: flex;
@@ -30,7 +34,9 @@ class NotFound extends Component<Props, void> {
   render () {
     return (
       <Wrapper>
-        <Title purple>Oooooops, page not found</Title>
+        <Title purple>
+          <TranslatedText message="notFound.title" />
+        </Title>
         <Text gray>{this.props.children}</Text>
         <SVG viewBox="1644 3231.982 710.6 165.593">
           <defs>

@@ -8,14 +8,16 @@ import 'promise-polyfill/src/polyfill'
 
 import Root from 'components/Root'
 import { getRoot } from 'utils/AppUtils'
-import { initializeTranslator } from 'utils/TranslationUtils'
+import {
+  initializeTranslator,
+  TranslationContext
+} from 'utils/TranslationUtils'
 import createStore from 'scripts/createStore'
 import 'styles/app.scss'
 
 const store = createStore()
 
 const translator = initializeTranslator()
-const TranslationContext = React.createContext()
 
 ReactDOM.render(
   <TranslationContext.Provider value={translator}>
