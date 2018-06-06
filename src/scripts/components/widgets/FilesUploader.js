@@ -10,6 +10,7 @@ import TextField from '../widgets/forms/TextField'
 import Card from 'components/structures/Card'
 import Text from '../foundations/Text'
 import SVGIcon from '../foundations/SVGIcon'
+import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
 import { SUPPORTED_FILE_TYPES } from 'constants/UploaderConstants'
 
 type Props = {
@@ -75,17 +76,21 @@ const UploaderSimpleWrapper = styled.div`
   padding: 70px 0;
   position: relative;
 `
-
-const UploadAddIcon = styled.div`
+const Icon = styled.div`
+  height: 110px;
+  margin: 50px auto 30px;
+  transform: ${({ className }) =>
+    className === 'dragenter' ? 'scale(0.9)' : 'scale(1)'};
+  transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
+  width: 190px;
+  ${UploaderSimpleWrapper}:hover & {
+    transform: scale(0.9);
+  }
+`
+const UploadAddIcon = Icon.extend`
   height: 36px;
   margin: 0 0 20px;
-  transform: ${({ className }) =>
-    className === 'dragenter' ? 'scale(1.2)' : 'scale(1)'};
-  transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
   width: 36px;
-  ${UploaderSimpleWrapper}:hover & {
-    transform: scale(1.2);
-  }
 `
 
 class FilesUploader extends Component<Props, Object> {
@@ -158,14 +163,20 @@ class FilesUploader extends Component<Props, Object> {
             onDragEnter={this.onDrag}
             onDragLeave={this.onDrag}
           />
-          <UploadAddIcon className={this.state.dragClass}>
-            <SVGIcon
-              color={this.props.white ? 'white' : 'purple'}
-              icon="icon-add"
-            />
-          </UploadAddIcon>
-          <UploadCoverText purple={!this.props.white} small>
-            <UploadCoverTextBig big purple={!this.props.white}>
+          {card ? (
+            <Icon className={this.state.dragClass}>
+              <FilesUploaderSvg />
+            </Icon>
+          ) : (
+            <UploadAddIcon className={this.state.dragClass}>
+              <SVGIcon
+                color={this.props.white ? 'white' : 'gray'}
+                icon="icon-add"
+              />
+            </UploadAddIcon>
+          )}
+          <UploadCoverText gray={!this.props.white} small>
+            <UploadCoverTextBig big gray={!this.props.white}>
               Drag your files here
             </UploadCoverTextBig>{' '}
             or click to find them
