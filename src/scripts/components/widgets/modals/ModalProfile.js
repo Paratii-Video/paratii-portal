@@ -73,7 +73,6 @@ class ModalProfile extends Component<Props, Object> {
       })
     }
     this.props.closeModal()
-
     // Set profile in the state
     this.props.setUserData()
   }
