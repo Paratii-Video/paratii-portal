@@ -28,4 +28,5 @@ export const initializeTranslator = (): Translator => {
     polyglot.t(key, options) || ''
 }
 
+// $FlowFixMe
 export const TranslationContext = React.createContext()
