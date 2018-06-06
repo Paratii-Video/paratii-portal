@@ -148,6 +148,7 @@
     "cors": "^2.8.4",
     "ethereumjs-util": "^5.2.0",
     "express-handlebars": "^3.0.0",
+    "express-locale": "^1.0.5",
     "hh-mm-ss": "^1.2.0",
     "hlsjs-ipfs-loader": "github:ya7ya/hlsjs-ipfs-loader#bd890b9e78f2c273fcb1dc4e1d43ad0afc69558c",
     "immutable": "^3.8.2",

@@ -7,6 +7,7 @@ const paratii = new Paratii(paratiiConfig)
 exports.default = function (req, res, next) {
   res.render('index', {
     helpers: {
+      locale: req.locale.language,
       title: function () {
         return APP_TITLE
       },
@@ -27,6 +28,7 @@ exports.player = async function player (req, res, next) {
     video: video,
     embed: path === '/embed/:id',
     helpers: {
+      locale: req.locale.language,
       title: function () {
         if (video !== null) {
           if (video.title === '') {
