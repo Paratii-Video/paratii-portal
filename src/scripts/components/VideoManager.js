@@ -59,6 +59,10 @@ class VideoManager extends Component<Props, void> {
     ) {
       this.props.setSelectedVideo(this.getVideoIdFromUrl())
     }
+
+    if (nextProps.isWalletSecured && !this.props.isWalletSecured) {
+      this.props.fetchVideos()
+    }
   }
 
   getVideoIdFromUrl (props: Props = this.props): string {
