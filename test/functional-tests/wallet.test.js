@@ -107,8 +107,9 @@ describe('💰 Wallet:', function () {
     })
 
     const anonAddress = await getAccountFromBrowser()
+    console.log('anonAddress ', anonAddress)
     // send some money here to test with
-    await paratii.eth.transfer(3.14e18, 'PTI')
+    await paratii.eth.transfer(anonAddress, 3.14e18, 'PTI')
     const balanceOfAnon = await paratii.eth.balanceOf(anonAddress, 'PTI')
     // const expectedBalance = new BigNumber('3.14e18')
     // assert.equal(balanceOfAnon.toString(), expectedBalance.toString())
@@ -132,8 +133,8 @@ describe('💰 Wallet:', function () {
 
     // we have a new account now
     const newAddress = await getAccountFromBrowser()
-    // FIXME this newAddress is null!!!!!
-    console.log(newAddress)
+    // FIXME this newAddress is undefined!!!!!
+    console.log('newAddress: ', newAddress)
 
     assert.notEqual(anonAddress, newAddress)
     assert.equal(
