@@ -151,7 +151,7 @@ describe('💰 Wallet: @watch', function () {
 
     // the data of the user should be saved
     await browser.waitUntil(async () => {
-      const accountInfo = await paratii.users.get(newAddress)
+      const accountInfo = await paratii.eth.users.get(newAddress)
       return accountInfo
     })
     const accountInfo = await paratii.eth.users.get(newAddress)
