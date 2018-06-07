@@ -67,17 +67,15 @@ class NotFound extends Component<Props, void> {
           </g>
         </SVG>
         <Text gray>
-          This page is not available yet. A passionate team is either building
-          it, or unaware of it, as of now. Want to help us move faster? Please
-          report the issue on our Github:
+          <TranslatedText message="notFound.description" />{' '}
           <NavLink
             href="https://github.com/Paratii-Video/"
             target="_blank"
             anchor
             purple
           >
-            Paratii-Video
-          </NavLink>?
+            <TranslatedText message="notFound.linkText" />
+          </NavLink>
         </Text>
       </Wrapper>
     )
