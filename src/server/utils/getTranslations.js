@@ -1,24 +1,21 @@
-const mergeDeep = require('merge-deep')
+const fs = require('fs')
+const path = require('path')
 
 const SUPPORTED_LOCALES = {
-  EN: 'en'
+  EN: 'en',
+  ES: 'es'
 }
 
 const getTranslations = ({ locale }) => {
-  const defaultTranslations = require('translations/en.json')
-  let localeTranslations
+  let fileName = 'en.json'
   switch (locale) {
-    case SUPPORTED_LOCALES.EN:
-    default:
-      localeTranslations = null
-      break
+    case SUPPORTED_LOCALES.ES:
+      fileName = 'es.json'
   }
 
-  const finalTranslations = localeTranslations
-    ? mergeDeep(defaultTranslations, localeTranslations)
-    : defaultTranslations
-
-  return JSON.stringify(finalTranslations)
+  return fs.readFileSync(
+    path.resolve(__dirname, `../../../build/translations/${fileName}`)
+  )
 }
 
 module.exports = getTranslations
