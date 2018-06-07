@@ -102,11 +102,11 @@ export const voucherAmountInitial11 = 100 * 10 ** 18
 export const hashedVoucherCode11 =
   '0x182b41b125c1c14efaf188d95b6a7e2074d8b746237fc47b48beb63551d742f9'
 
-export function getAccountFromBrowser () {
-  return browser.execute(function () {
-    console.log('address from browser: ', paratii.getAccount())
+export async function getAccountFromBrowser () {
+  const result = await browser.execute(function () {
     return paratii.getAccount()
-  }).value
+  })
+  return result.value
 }
 //
 // export function login (browser, password = 'password') {
