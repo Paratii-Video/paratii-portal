@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 type Props = {
+  landing: boolean,
   children: Object
 }
 
@@ -11,22 +12,26 @@ const MainWrapper = styled.main`
   flex: 1 1 100%;
   flex-direction: column;
   justify-content: center;
-  margin-top: 72px;
+  margin-top: 69px;
   min-height: 500px;
-  padding: 40px 80px;
+  padding: ${({ landing }) => (landing ? null : '40px 80px')};
 
   @media (max-width: 1024px) {
-    padding: 40px;
+    padding: ${({ landing }) => (landing ? null : '40px')};
   }
 
   @media (max-width: 767px) {
-    padding: 16px 20px 0;
+    padding: ${({ landing }) => (landing ? null : '16px 20px 0')};
   }
 `
 
 class Main extends Component<Props, void> {
   render () {
-    return <MainWrapper>{this.props.children}</MainWrapper>
+    return (
+      <MainWrapper landing={this.props.landing}>
+        {this.props.children}
+      </MainWrapper>
+    )
   }
 }
 

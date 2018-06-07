@@ -76,7 +76,7 @@ const Themes = {
         color: Colors.purple
       },
       supportedFileTypes: {
-        color: Colors.grayMedium
+        color: Colors.grayLight
       }
     },
     VideoList: {
@@ -169,6 +169,15 @@ const Themes = {
     },
     UploadListItem: {
       background: Colors.black
+    },
+    LandingPage: {
+      headerBackground: Colors.blackLight,
+      headerContentBackground: Colors.blackTransparent,
+      VideoLinkBackground: Colors.grayDark,
+      VideoLinkColor: Colors.white,
+      listItemBackground: Colors.blackAlt,
+      listItemTimeBackground: Colors.blackTransparent,
+      listItemTimeColor: Colors.white
     }
   }
 }
