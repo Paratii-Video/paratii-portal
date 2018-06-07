@@ -157,6 +157,7 @@
     "ipfs-bitswap": "^0.19.0",
     "js-cookie": "^2.2.0",
     "lodash.debounce": "^4.0.8",
+    "memoizee": "^0.4.12",
     "merge-deep": "^3.0.1",
     "node-polyglot": "^2.2.2",
     "nodemailer": "^4.6.4",
