@@ -1,13 +1,16 @@
 const { getParatiiConfig, getAppRootUrl } = require('utils/AppUtils')
 const { APP_TITLE } = require('constants/ApplicationConstants')
 const { Paratii } = require('paratii-js')
+const getTranslations = require('../utils/getTranslations')
 const paratiiConfig = getParatiiConfig(process.env.NODE_ENV, 'server')
 const paratii = new Paratii(paratiiConfig)
 
 exports.default = function (req, res, next) {
+  const locale = req.locale.language
+  const translations = getTranslations({ locale })
   res.render('index', {
+    translations,
     helpers: {
-      locale: req.locale.language,
       title: function () {
         return APP_TITLE
       },
@@ -22,13 +25,15 @@ exports.player = async function player (req, res, next) {
   const path = req.route.path
   const video = await paratii.vids.get(id)
   const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
+  const locale = req.locale.language
+  const translations = getTranslations({ locale })
 
   res.render('index', {
     player: true,
     video: video,
     embed: path === '/embed/:id',
+    translations,
     helpers: {
-      locale: req.locale.language,
       title: function () {
         if (video !== null) {
           if (video.title === '') {
