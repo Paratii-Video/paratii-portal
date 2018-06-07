@@ -19,14 +19,22 @@ const store = createStore()
 
 const translator = initializeTranslator()
 
-ReactDOM.render(
+type Props = {
+  children: any
+}
+
+const PortalContainer = ({ children }: Props) => (
   <TranslationContext.Provider value={translator}>
     <Provider store={store}>
-      <AppContainer>
-        <Root />
-      </AppContainer>
+      <AppContainer>{children}</AppContainer>
     </Provider>
-  </TranslationContext.Provider>,
+  </TranslationContext.Provider>
+)
+
+ReactDOM.render(
+  <PortalContainer>
+    <Root />
+  </PortalContainer>,
   getRoot()
 )
 
@@ -34,13 +42,9 @@ if (module.hot) {
   module.hot.accept('components/Root', () => {
     const NextRoot = require('components/Root').default
     ReactDOM.render(
-      <TranslationContext.Provider value={translator}>
-        <Provider store={store}>
-          <AppContainer>
-            <NextRoot />
-          </AppContainer>
-        </Provider>
-      </TranslationContext.Provider>,
+      <PortalContainer>
+        <NextRoot />
+      </PortalContainer>,
       getRoot()
     )
   })
