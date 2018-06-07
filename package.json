@@ -33,7 +33,7 @@
     "prettify": "prettier-standard src/**/*.js test/**/*.js",
     "quality": "yarn run lint:scripts && yarn run lint:styles && yarn run flow",
     "server": "NODE_ENV=production node src/server/index.js",
-    "server:dev": "NODE_ENV=development yarn run setup-dev-env && NODE_ENV=development nodemon src/server/index.js --watch node_modules  --watch src/server",
+    "server:dev": "NODE_ENV=development yarn run setup-dev-env && NODE_ENV=development nodemon src/server/index.js --watch node_modules --watch src/server --watch src/translations -e js,hbs,json",
     "server:staging": "NODE_ENV=staging node src/server/index.js",
     "server:test": "NODE_ENV=test yarn run setup-dev-env && NODE_ENV=test nodemon src/server/index.js --watch node_modules  --watch src/server",
     "setup-dev-env": "node src/scripts/setupDevEnv.js",
