@@ -43,7 +43,7 @@ const Header = styled.div`
 
 const HeaderWrapper = styled.div`
   margin: 40px 100px;
-  max-width: 900px;
+  max-width: 980px;
   width: 100%;
 
   @media (max-width: 767px) {
@@ -73,11 +73,9 @@ const VideoLink = styled.a`
 
 const HeaderContent = styled.div`
   align-items: center;
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  overflow: hidden;
   position: relative;
   width: 100%;
 
@@ -86,7 +84,7 @@ const HeaderContent = styled.div`
     props.theme.colors.LandingPage.headerContentBackground};
     border-radius: 5px;
     box-shadow: inset 0 0 200px
-      ${props => props.theme.colors.LandingPage.headerContentBackground};
+      ${props => props.theme.colors.LandingPage.headerContentBackgroundShadow};
     content: '';
     height: 100%;
     left: 50%;
@@ -101,7 +99,7 @@ const HeaderContent = styled.div`
 const HeaderContentWrapper = styled.div`
   max-width: 500px;
   text-align: center;
-  padding: 80px 40px 0;
+  padding: 90px 40px 10px;
   position: relative;
   width: 100%;
   z-index: 4;
@@ -118,7 +116,7 @@ const VideosWrapper = styled.div`
 `
 
 const VideosHeader = styled.div`
-  padding: 0 100px 100px;
+  padding: 0 248px 100px;
   text-align: center;
   width: 100%;
 `
@@ -364,8 +362,8 @@ class Landing extends Component<Props, void> {
                   Bring your videos<br /> to the future
                 </Title>
                 <Text gray big>
-                  Decentralisation is breeding novel monetization models and
-                  giving the power back to peers.
+                  Decentralisation is changing the business of online video and
+                  giving the power back to peers
                 </Text>
                 <FilesUploader white />
               </HeaderContentWrapper>
@@ -382,8 +380,7 @@ class Landing extends Component<Props, void> {
               <Title big>Meet your fellow pioneers</Title>
               <Text gray>
                 Explore short stories, music clips, and formats that our
-                community is inventing every day. They’re responsible for this
-                curation.
+                community is inventing every day.
               </Text>
             </VideosHeader>
             <LandingVideoList>
