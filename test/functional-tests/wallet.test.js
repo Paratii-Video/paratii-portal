@@ -13,13 +13,19 @@ import {
 } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
-describe('💰 Wallet:', function () {
+describe('💰 Wallet: @watch', function () {
   let userAccount
 
-  beforeEach(function () {
-    browser.url(`http://localhost:8080`)
-    browser.execute(nukeLocalStorage)
-    browser.execute(nukeSessionStorage)
+  beforeEach(async function () {
+    const paratiiToken = await paratii.eth.deployContract('ParatiiToken')
+    const paratiiRegistry = await paratii.eth.getContract('Registry')
+    await paratiiRegistry.methods
+      .registerAddress('ParatiiToken', paratiiToken.options.address)
+      .send()
+
+    await browser.url(`http://localhost:8080`)
+    await browser.execute(nukeLocalStorage)
+    await browser.execute(nukeSessionStorage)
   })
 
   it('If we have a secured wallet in localStorage, we open it with a password', function () {
@@ -97,7 +103,7 @@ describe('💰 Wallet:', function () {
     browser.waitForExist('[data-test-id="error-password"]')
   })
 
-  it('secure your wallet, transfer data to a new address @watch', async function (done) {
+  it('secure your wallet, transfer data to a new address', async function (done) {
     const username = 'newuser'
     const email = 'newuser@mail.com'
 
@@ -107,7 +113,6 @@ describe('💰 Wallet:', function () {
     })
 
     const anonAddress = await getAccountFromBrowser()
-    console.log('anonAddress ', anonAddress)
     // send some money here to test with
     await paratii.eth.transfer(anonAddress, 3.14e18, 'PTI')
     const balanceOfAnon = await paratii.eth.balanceOf(anonAddress, 'PTI')
@@ -133,8 +138,6 @@ describe('💰 Wallet:', function () {
 
     // we have a new account now
     const newAddress = await getAccountFromBrowser()
-    // FIXME this newAddress is undefined!!!!!
-    console.log('newAddress: ', newAddress)
 
     assert.notEqual(anonAddress, newAddress)
     assert.equal(
@@ -147,14 +150,13 @@ describe('💰 Wallet:', function () {
     )
 
     // the data of the user should be saved
-    const accountInfo = await paratii.users.get(newAddress)
-    console.log(accountInfo)
-    assert.equal(accountInfo.username, username)
-    // send the money back to the original account
-    // FIXME: this should be done also if the test fails!
-    await browser.execute(function () {
-      return paratii.eth.transfer(anonAddress, balanceOfAnon, 'PTI')
+    await browser.waitUntil(async () => {
+      const accountInfo = await paratii.users.get(newAddress)
+      return accountInfo
     })
+    const accountInfo = await paratii.eth.users.get(newAddress)
+    assert.equal(accountInfo.name, username)
+
     done()
   })
 
