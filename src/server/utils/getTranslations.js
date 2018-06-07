@@ -1,17 +1,24 @@
+const mergeDeep = require('merge-deep')
+
 const SUPPORTED_LOCALES = {
   EN: 'en'
 }
 
 const getTranslations = ({ locale }) => {
-  let translations
+  const defaultTranslations = require('translations/en.json')
+  let localeTranslations
   switch (locale) {
     case SUPPORTED_LOCALES.EN:
     default:
-      translations = require('translations/en.json')
+      localeTranslations = null
       break
   }
 
-  return JSON.stringify(translations)
+  const finalTranslations = localeTranslations
+    ? mergeDeep(defaultTranslations, localeTranslations)
+    : defaultTranslations
+
+  return JSON.stringify(finalTranslations)
 }
 
 module.exports = getTranslations
