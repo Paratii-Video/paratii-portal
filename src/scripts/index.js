@@ -23,7 +23,7 @@ type Props = {
   children: any
 }
 
-const PortalContainer = ({ children }: Props) => (
+const PortalWrapper = ({ children }: Props) => (
   <TranslationContext.Provider value={translator}>
     <Provider store={store}>
       <AppContainer>{children}</AppContainer>
@@ -32,9 +32,9 @@ const PortalContainer = ({ children }: Props) => (
 )
 
 ReactDOM.render(
-  <PortalContainer>
+  <PortalWrapper>
     <Root />
-  </PortalContainer>,
+  </PortalWrapper>,
   getRoot()
 )
 
@@ -42,9 +42,9 @@ if (module.hot) {
   module.hot.accept('components/Root', () => {
     const NextRoot = require('components/Root').default
     ReactDOM.render(
-      <PortalContainer>
+      <PortalWrapper>
         <NextRoot />
-      </PortalContainer>,
+      </PortalWrapper>,
       getRoot()
     )
   })
