@@ -13,7 +13,7 @@ import {
 } from './test-utils/helpers.js'
 import { assert } from 'chai'
 
-describe('💰 Wallet: @watch', function () {
+describe('💰 Wallet:', function () {
   let userAccount
 
   beforeEach(async function () {
@@ -103,7 +103,7 @@ describe('💰 Wallet: @watch', function () {
     browser.waitForExist('[data-test-id="error-password"]')
   })
 
-  it('secure your wallet, transfer data to a new address', async function (done) {
+  it('secure your wallet, transfer data to a new address @watch', async function (done) {
     const username = 'newuser'
     const email = 'newuser@mail.com'
 
@@ -136,6 +136,9 @@ describe('💰 Wallet: @watch', function () {
     // Waiting for the secure keystore
     await browser.waitAndClick('[data-test-id="continue"]', 10000)
 
+    // We need to wait for migation and user creation
+    await browser.pause(5000)
+
     // we have a new account now
     const newAddress = await getAccountFromBrowser()
 
@@ -148,12 +151,12 @@ describe('💰 Wallet: @watch', function () {
       (await paratii.eth.balanceOf(anonAddress, 'PTI')).toString(),
       '0'
     )
-
     // the data of the user should be saved
     await browser.waitUntil(async () => {
       const accountInfo = await paratii.eth.users.get(newAddress)
       return accountInfo
     })
+    // await browser.pause(5000)
     const accountInfo = await paratii.eth.users.get(newAddress)
     assert.equal(accountInfo.name, username)
 
