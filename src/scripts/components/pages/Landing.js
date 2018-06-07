@@ -31,13 +31,23 @@ const Header = styled.div`
   background-size: cover;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   display: flex;
-  min-height: calc(100vh - ${MAINHEADER_LOGO_HEIGHT});
+  min-height: calc(100vh - (${MAINHEADER_LOGO_HEIGHT} * 2));
   justify-content: center;
   padding: 0 20px;
   position: relative;
 
   @media (max-width: 767px) {
     flex-direction: column;
+  }
+`
+
+const HeaderWrapper = styled.div`
+  margin: 40px 100px;
+  max-width: 900px;
+  width: 100%;
+
+  @media (max-width: 767px) {
+    margin: 20px 0;
   }
 `
 
@@ -50,23 +60,14 @@ const VideoLink = styled.a`
   display: flex;
   font-size: 1rem;
   font-weight: ${props => props.theme.fonts.weight.bold};
-  left: ${VIDEOLINK_POSITION};
   padding: 16px 24px;
-  position: absolute;
   overflow: hidden;
+  margin: 20px 0 0;
   max-width: 200px;
   width: 100%;
 
   svg {
     margin-right: 10px;
-  }
-
-  @media (max-width: 767px) {
-    bottom: initial;
-    left: initial;
-    margin: 0 0 20px;
-    max-width: initial;
-    position: relative;
   }
 `
 
@@ -76,21 +77,16 @@ const HeaderContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 40px 0;
-  max-width: 1200px;
   overflow: hidden;
-  padding: 110px 40px 50px;
   position: relative;
   width: 100%;
-
-  @media (max-width: 767px) {
-    margin: 20px 0;
-  }
 
   &::before {
     background: ${props =>
     props.theme.colors.LandingPage.headerContentBackground};
     border-radius: 5px;
+    box-shadow: inset 0 0 200px
+      ${props => props.theme.colors.LandingPage.headerContentBackground};
     content: '';
     height: 100%;
     left: 50%;
@@ -102,40 +98,10 @@ const HeaderContent = styled.div`
   }
 `
 
-const HeaderContentBackground = styled.span`
-  background: ${props => props.theme.colors.LandingPage.headerContentBackground}
-    url(${props => props.background}) no-repeat 50%;
-  background-size: cover;
-  border-radius: 5px;
-  filter: blur(20px);
-  backdrop-filter: blur(20px);
-  height: 150%;
-  left: 50%;
-  position: absolute;
-  transform: translate3d(-50%, -50%, 0);
-  top: 50%;
-  width: 150%;
-  z-index: 1;
-
-  @media (min-width: 1800px) {
-    height: 200%;
-    width: 200%;
-  }
-
-  @media (max-width: 1366px) {
-    height: 140%;
-    width: 140%;
-  }
-
-  @media (max-width: 767px) {
-    height: 100%;
-    width: 100%;
-  }
-`
-
 const HeaderContentWrapper = styled.div`
   max-width: 500px;
   text-align: center;
+  padding: 80px 40px 0;
   position: relative;
   width: 100%;
   z-index: 4;
@@ -391,23 +357,24 @@ class Landing extends Component<Props, void> {
     return (
       <Wrapper>
         <Header background={this.headerVideo.image}>
-          <HeaderContent>
-            <HeaderContentBackground background={this.headerVideo.image} />
-            <HeaderContentWrapper>
-              <Title huge bold>
-                Bring your videos<br /> to the future
-              </Title>
-              <Text gray big>
-                Decentralisation is breeding novel monetization models and
-                giving the power back to peers.
-              </Text>
-              <FilesUploader white />
-            </HeaderContentWrapper>
-          </HeaderContent>
-          <VideoLink href={this.headerVideo.url}>
-            <SVGIcon icon="icon-player-play" width="13px" height="16px" />
-            <TruncatedText>{this.headerVideo.title}</TruncatedText>
-          </VideoLink>
+          <HeaderWrapper>
+            <HeaderContent>
+              <HeaderContentWrapper>
+                <Title huge bold>
+                  Bring your videos<br /> to the future
+                </Title>
+                <Text gray big>
+                  Decentralisation is breeding novel monetization models and
+                  giving the power back to peers.
+                </Text>
+                <FilesUploader white />
+              </HeaderContentWrapper>
+            </HeaderContent>
+            <VideoLink href={this.headerVideo.url}>
+              <SVGIcon icon="icon-player-play" width="13px" height="16px" />
+              <TruncatedText>{this.headerVideo.title}</TruncatedText>
+            </VideoLink>
+          </HeaderWrapper>
         </Header>
         <Videos>
           <VideosWrapper>
