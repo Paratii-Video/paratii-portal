@@ -103,7 +103,7 @@ describe('💰 Wallet:', function () {
     browser.waitForExist('[data-test-id="error-password"]')
   })
 
-  it('secure your wallet, transfer data to a new address @watch', async function (done) {
+  it('secure your wallet, transfer data to a new address', async function () {
     const username = 'newuser'
     const email = 'newuser@mail.com'
 
@@ -137,12 +137,16 @@ describe('💰 Wallet:', function () {
     await browser.waitAndClick('[data-test-id="continue"]', 10000)
 
     // We need to wait for migation and user creation
-    await browser.pause(5000)
+    // await browser.pause(5000)
 
-    // we have a new account now
+    await browser.waitUntil(async () => {
+      // we have a new account now
+      const newAddress = await getAccountFromBrowser()
+      return newAddress !== anonAddress
+    })
     const newAddress = await getAccountFromBrowser()
-
     assert.notEqual(anonAddress, newAddress)
+
     assert.equal(
       (await paratii.eth.balanceOf(newAddress, 'PTI')).toString(),
       balanceOfAnon.toString()
@@ -154,13 +158,10 @@ describe('💰 Wallet:', function () {
     // the data of the user should be saved
     await browser.waitUntil(async () => {
       const accountInfo = await paratii.eth.users.get(newAddress)
-      return accountInfo
+      return accountInfo.name === username
     })
-    // await browser.pause(5000)
     const accountInfo = await paratii.eth.users.get(newAddress)
     assert.equal(accountInfo.name, username)
-
-    done()
   })
 
   it.skip('should show PTI balance', function () {
