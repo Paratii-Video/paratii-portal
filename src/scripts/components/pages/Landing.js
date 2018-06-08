@@ -233,37 +233,37 @@ class Landing extends Component<Props, void> {
       {
         title: 'Vento Na Janela',
         url: 'https://portal.paratii.video/play/65te9Z7bXDM4',
-        image: '/assets/img/landing/header/vento-na-janela.png',
+        image: 'vento-na-janela.png',
         time: '02:58'
       },
       {
         title: 'Johnny B. Goode',
         url: 'https://portal.paratii.video/play/cpApjlvwRK8O',
-        image: '/assets/img/landing/header/johnny-b-goode.png',
+        image: 'johnny-b-goode.png',
         time: '05:37'
       },
       {
         title: 'Yunta',
         url: 'https://portal.paratii.video/play/A9SftW9yaPcJ',
-        image: '/assets/img/landing/header/yunta.png',
+        image: 'yunta.png',
         time: '04:03'
       },
       {
         title: 'A Mysterious Clip',
         url: 'https://portal.paratii.video/play/XTCgW0oToNnc',
-        image: '/assets/img/landing/header/a-mysterious-clip.png',
+        image: 'a-mysterious-clip.png',
         time: '03:21'
       },
       {
         title: 'CHONPS | Robin & Batman',
         url: 'https://portal.paratii.video/play/rOHszskLtIEy',
-        image: '/assets/img/landing/header/chonps-robin-and-batman.png',
+        image: 'chonps-robin-and-batman.png',
         time: '03:54'
       },
       {
         title: 'Venice Beach',
         url: 'https://portal.paratii.video/play/9qMA3KhZir2Z',
-        image: '/assets/img/landing/header/venice-beach.png',
+        image: 'venice-beach.png',
         time: '01:06'
       }
     ]
@@ -277,69 +277,67 @@ class Landing extends Component<Props, void> {
       {
         title: 'O que é Algoritmo',
         url: 'https://portal.paratii.video/play/D93ftQHK3OXN',
-        image: '/assets/img/landing/list/o-que-e-algoritimo.png',
+        image: 'o-que-e-algoritimo.png',
         time: '02:48'
       },
       {
         title: 'Around the Block - Trailer',
         url: 'https://portal.paratii.video/play/a4Dbd26pLu0X',
-        image: '/assets/img/landing/list/around-the-block-trailer.png',
+        image: 'around-the-block-trailer.png',
         time: '02:56'
       },
       {
         title: 'Todo Tempo do Mundo - Ep. 1',
         url: 'https://portal.paratii.video/play/mF7YHwBeGqZq',
-        image: '/assets/img/landing/list/todo-tempo-do-mundo-ep-1.png',
+        image: 'todo-tempo-do-mundo-ep-1.png',
         time: '18:38'
       },
       {
         title: 'Só Quero Fazer Falta',
         url: 'https://portal.paratii.video/play/9Jh8KlGxtRIC',
-        image: '/assets/img/landing/list/so-quero-fazer-falta.png',
+        image: 'so-quero-fazer-falta.png',
         time: '02:03'
       },
       {
         title: 'Vlog 1 - O começo',
         url: 'https://portal.paratii.video/play/10wBsdyp4biH',
-        image: '/assets/img/landing/list/vlog-1-o-comeco.png',
+        image: 'vlog-1-o-comeco.png',
         time: '05:46'
       },
       {
         title: 'Palafita Filmes Reel',
         url: 'https://portal.paratii.video/play/pNK5nsGL2WYw',
-        image: '/assets/img/landing/list/palafita-filmes-reel.png',
+        image: 'palafita-filmes-reel.png',
         time: '01:28'
       },
       {
         title: 'Comece Logo Sua HQ',
         url: 'https://portal.paratii.video/play/VLOLj6iVhuP8',
-        image: '/assets/img/landing/list/comece-logo-sua-hq.png',
+        image: 'comece-logo-sua-hq.png',
         time: '04:14'
       },
       {
         title: 'Hipótese do Tempo Fantasma | Beirologia',
         url: 'https://portal.paratii.video/play/tJxLXRZimSn8',
-        image:
-          '/assets/img/landing/list/hipotese-do-tempo-fantasma-beirologia.png',
+        image: 'hipotese-do-tempo-fantasma-beirologia.png',
         time: '04:55'
       },
       {
         title: 'Garage',
         url: 'https://portal.paratii.video/play/WKj68pwWOm5a',
-        image: '/assets/img/landing/list/garage.png',
+        image: 'garage.png',
         time: '00:30'
       },
       {
         title: 'Final de Semana Dourado - Rolê com Dom',
         url: 'https://portal.paratii.video/play/dTyzjCmg5mvc',
-        image:
-          '/assets/img/landing/list/final-de-semana-dourado-role-com-dom.png',
+        image: 'final-de-semana-dourado-role-com-dom.png',
         time: '02:17'
       },
       {
         title: 'Gurufim Na Mangueira',
         url: 'https://portal.paratii.video/play/CDjEPRDCO1ED',
-        image: '/assets/img/landing/list/gurufim-na-mangueira.png',
+        image: 'gurufim-na-mangueira.png',
         time: '25:14'
       }
     ]
@@ -354,7 +352,9 @@ class Landing extends Component<Props, void> {
   render () {
     return (
       <Wrapper>
-        <Header background={this.headerVideo.image}>
+        <Header
+          background={'/assets/img/landing/big/' + this.headerVideo.image}
+        >
           <HeaderWrapper>
             <HeaderContent>
               <HeaderContentWrapper>
@@ -387,7 +387,9 @@ class Landing extends Component<Props, void> {
               {this.videosList.map((item, index) => {
                 return (
                   <LandingVideoItem key={index}>
-                    <LandingVideoItemBackground background={item.image} />
+                    <LandingVideoItemBackground
+                      background={'/assets/img/landing/small/' + item.image}
+                    />
                     <LandingVideoItemLink href={item.url}>
                       <LandingVideoItemTitle small bold>
                         <TruncatedText>{item.title}</TruncatedText>
