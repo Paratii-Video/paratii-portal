@@ -3,8 +3,9 @@ import {
   DEVCON_VIDEO,
   ETHEREUM_VIDEO
 } from './data/fixtures/videos'
+import { paratii } from './test-utils/helpers.js'
 
-import mockEndpoint from '../../mock-server/mockEndpoint'
+// import mockEndpoint from '../../mock-server/mockEndpoint'
 
 const SEARCH_RESULTS = [MATH_VIDEO, DEVCON_VIDEO, ETHEREUM_VIDEO]
 
@@ -23,21 +24,25 @@ describe('🔍 Search:', () => {
   const searchResultDescriptionSelector = `${searchResultSelector} [data-test-id="search-result-description"]`
   const moreResultsButtonSelector = '[data-test-id="more-results-button"]'
 
-  const mockSearchResponse = ({
-    query = '',
-    limit = 12,
-    offset = 0,
-    hasNext = false,
-    results = [],
-    statusCode = 200
-  }) => {
-    mockEndpoint({
-      endpoint: `/api/v1/videos/?keyword=${query}&limit=${limit}&offset=${offset}&staked=true`,
-      response: { hasNext, results }
-    })
-  }
+  // const mockSearchResponse = ({
+  //   query = '',
+  //   limit = 12,
+  //   offset = 0,
+  //   hasNext = false,
+  //   results = [],
+  //   statusCode = 200
+  // }) => {
+  //   mockEndpoint({
+  //     endpoint: `/api/v1/videos/?keyword=${query}&limit=${limit}&offset=${offset}&staked=true`,
+  //     response: { hasNext, results }
+  //   })
+  // }
 
-  before(() => {
+  before(async () => {
+    await paratii.vids.create(MATH_VIDEO)
+    await paratii.vids.create(DEVCON_VIDEO)
+    await paratii.vids.create(ETHEREUM_VIDEO)
+
     browser.addCommand('waitUntilIsOnSearchRoute', ({ query = '' } = {}) => {
       browser.waitUntil(
         () =>
@@ -155,10 +160,10 @@ describe('🔍 Search:', () => {
 
   it('should navigate to the /search route after searching on another page and render no results', () => {
     const query = 'video'
-    mockSearchResponse({
-      query,
-      results: []
-    })
+    // mockSearchResponse({
+    //   query,
+    //   results: []
+    // })
 
     browser.url('http://localhost:8080')
 
@@ -171,12 +176,12 @@ describe('🔍 Search:', () => {
     browser.waitUntilNoResultsZeroStateIsVisible({ query })
   })
 
-  it('should navigate to the /search route after searching on another page and render results', () => {
+  it('should navigate to the /search route after searching on another page and render results @watch', () => {
     const query = 'math'
-    mockSearchResponse({
-      query,
-      results: SEARCH_RESULTS
-    })
+    // mockSearchResponse({
+    //   query,
+    //   results: SEARCH_RESULTS
+    // })
 
     browser.url('http://localhost:8080')
 
@@ -204,10 +209,10 @@ describe('🔍 Search:', () => {
 
   it('should render info about each search result', () => {
     const query = 'math'
-    mockSearchResponse({
-      query,
-      results: SEARCH_RESULTS
-    })
+    // mockSearchResponse({
+    //   query,
+    //   results: SEARCH_RESULTS
+    // })
 
     navigateToSearch()
 
@@ -224,10 +229,10 @@ describe('🔍 Search:', () => {
 
   it('should render a default thumbnail url for a search result that is missing thumbnails', () => {
     const query = 'math'
-    mockSearchResponse({
-      query,
-      results: [{ ...MATH_VIDEO, thumbnails: [] }, DEVCON_VIDEO]
-    })
+    // mockSearchResponse({
+    //   query,
+    //   results: [{ ...MATH_VIDEO, thumbnails: [] }, DEVCON_VIDEO]
+    // })
 
     navigateToSearch()
 
@@ -270,10 +275,10 @@ describe('🔍 Search:', () => {
 
   it("should take you to the video's page when a search result is clicked on", () => {
     const query = 'math'
-    mockSearchResponse({
-      query,
-      results: [{ ...MATH_VIDEO, thumbnails: [] }, DEVCON_VIDEO]
-    })
+    // mockSearchResponse({
+    //   query,
+    //   results: [{ ...MATH_VIDEO, thumbnails: [] }, DEVCON_VIDEO]
+    // })
 
     navigateToSearch()
 
@@ -294,18 +299,18 @@ describe('🔍 Search:', () => {
   it('should fetch additional search results when there are more results present', () => {
     const query = 'something'
 
-    mockSearchResponse({
-      query,
-      results: SEARCH_RESULTS.slice(0, 2),
-      hasNext: true
-    })
-
-    mockSearchResponse({
-      query,
-      results: [ETHEREUM_VIDEO],
-      offset: 2,
-      hasNext: false
-    })
+    // mockSearchResponse({
+    //   query,
+    //   results: SEARCH_RESULTS.slice(0, 2),
+    //   hasNext: true
+    // })
+    //
+    // mockSearchResponse({
+    //   query,
+    //   results: [ETHEREUM_VIDEO],
+    //   offset: 2,
+    //   hasNext: false
+    // })
 
     browser.url('http://localhost:8080')
 

@@ -1,9 +1,8 @@
 import { assert } from 'chai'
 import queryString from 'query-string'
+import { paratii, address } from './test-utils/helpers.js'
 
 import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
-
-import mockEndpoint from '../../mock-server/mockEndpoint'
 
 describe('🎥 Player:', function () {
   const videoElementSelector = '#player video'
@@ -13,33 +12,12 @@ describe('🎥 Player:', function () {
   const controlsSelector = '[data-test-id="player-controls"]'
   const playpauseButtonSelector = '[data-test-id="playpause-button"]'
 
-  before(() => {
-    mockEndpoint({
-      endpoint: `/api/v1/videos/${ID}`,
-      response: {
-        author: '',
-        blockNumber: 1167,
-        createBlockNumber: 1166,
-        description: '',
-        duration: '00:00:05.31',
-        filename: 'city.mp4',
-        filesize: '2989735',
-        id: ID,
-        ipfsData: 'QmZeRT7KNid9UAWhpncFPgiungZYtvzdnRodqtE66AuFR7',
-        ipfsHash: IPFS_HASH,
-        ipfsHashOrig: 'Qmd6t5arM98ShdmHXvYzjT7ku4Z8xtKbM8AY3oN5Cs7oSi',
-        owner: '0x7d1Cbbd813b1a865CDf1476d112a21dC5d643B8b',
-        price: 0,
-        published: '',
-        stats: { likers: [], dislikers: [] },
-        thumbnails: [
-          'thumbnail-1920x1080_1.png',
-          'thumbnail-1920x1080_2.png',
-          'thumbnail-1920x1080_3.png'
-        ],
-        title: TITLE,
-        uploader: { address: '0x7d1Cbbd813b1a865CDf1476d112a21dC5d643B8b' }
-      }
+  before(async () => {
+    await paratii.vids.create({
+      id: ID,
+      owner: address,
+      title: TITLE,
+      ipfsHash: IPFS_HASH
     })
 
     browser.addCommand(
