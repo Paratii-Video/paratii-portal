@@ -17,11 +17,6 @@ export const MAINFOOTER_HEIGHT = '72px'
 // UserNav
 export const USERNAV_WIDTH = '312px'
 
-// Header
-
-export const MAINHEADER_LOGO_WIDTH: string = '98px'
-export const MAINHEADER_LOGO_HEIGHT: string = '69px'
-
 // Controls
 export const CONTROLS_HEIGHT: string = '48px'
 export const CONTROLS_HEIGHT_TABLET: string = '42px'
