@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { TranslationContext } from 'utils/TranslationUtils'
+import TranslationContext from 'utils/translations/TranslationContext'
 
 const ConnectToTranslator = Component => {
   const WrappedComponent = props => (

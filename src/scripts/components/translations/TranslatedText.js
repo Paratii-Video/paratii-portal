@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import ConnectToTranslator from './ConnectToTranslator'
+import ConnectToTranslator from 'utils/translations/ConnectToTranslator'
 
 import type { Translator } from 'types/TranslationTypes'
 

@@ -1,11 +1,10 @@
 /* @flow */
 
-import React from 'react'
 import Polyglot from 'node-polyglot'
 
 import type { Translator, TranslatorParams } from 'types/TranslationTypes'
 
-export const initializeTranslator = (): Translator => {
+const initializeTranslator = (): Translator => {
   const translations: Object = window.paratiiPortal.translations
   const polyglot = new Polyglot({ phrases: translations })
 
@@ -13,5 +12,4 @@ export const initializeTranslator = (): Translator => {
     polyglot.t(key, options) || ''
 }
 
-// $FlowFixMe
-export const TranslationContext = React.createContext()
+export default initializeTranslator
