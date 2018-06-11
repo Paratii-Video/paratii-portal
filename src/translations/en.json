@@ -1,4 +1,12 @@
 {
+  "navigation": {
+    "voucher": "Get PTI",
+    "myVideos": "My videos",
+    "upload": "Upload",
+    "about": "About Paratii",
+    "logIn": "Log In",
+    "signUp": "Sign Up"
+  },
   "notFound": {
     "title": "Oooooops, page not found",
     "description": "This page is not available yet. A passionate team is either building it, or unaware of it, as of now. Want to help us move faster? Please report the issue on our Github:",
