@@ -5,6 +5,8 @@ export default styled.h1`
   ${ColorText} font-size: ${props => {
   if (props.big) {
     return props.theme.fonts.title.big
+  } else if (props.huge) {
+    return props.theme.fonts.title.huge
   } else if (props.small) {
     return props.theme.fonts.title.small
   } else {
@@ -18,6 +20,8 @@ export default styled.h1`
   line-height: ${props => {
     if (props.big) {
       return props.theme.fonts.title.bigLineHeight
+    } else if (props.huge) {
+      return props.theme.fonts.title.hugeLineHeight
     } else if (props.small) {
       return props.theme.fonts.title.smallLineHeight
     } else {
