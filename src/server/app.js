@@ -11,6 +11,7 @@ const mailRoute = require('./routes/mailer')
 const oembedRoute = require('./routes/oembed')
 const cors = require('cors')
 const createLocaleMiddleware = require('express-locale')
+const createTranslationsMiddleware = require('./middleware/TranslationsMiddleware')
 
 const app = express()
 
@@ -34,6 +35,7 @@ app.engine(
 
 app.use(compression())
 app.use(createLocaleMiddleware())
+app.use(createTranslationsMiddleware())
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, '/views'))
 app.use(express.static(path.resolve(__dirname, '../../', 'build')))
