@@ -104,7 +104,7 @@ class SearchResults extends React.Component<Props, void> {
           <TranslatedText
             message="search.results.resultsFor"
             options={{ term: searchTerm }}
-          />{' '}
+          />
         </SearchTermPrompt>
       </SearchTerm>
     )
