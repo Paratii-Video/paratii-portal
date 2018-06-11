@@ -7,7 +7,7 @@ const SUPPORTED_LOCALES = {
   ES: 'es'
 }
 
-const getTranslations = memoize(({ locale }) => {
+const getTranslations = locale => {
   let fileName = 'en.json'
   switch (locale) {
     case SUPPORTED_LOCALES.ES:
@@ -17,6 +17,9 @@ const getTranslations = memoize(({ locale }) => {
   return fs.readFileSync(
     path.resolve(__dirname, `../../../build/translations/${fileName}`)
   )
-})
+}
 
-module.exports = getTranslations
+module.exports =
+  process.env.NODE_ENV === 'development'
+    ? getTranslations
+    : memoize(getTranslations)

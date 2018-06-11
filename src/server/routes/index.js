@@ -7,7 +7,7 @@ const paratii = new Paratii(paratiiConfig)
 
 exports.default = function (req, res, next) {
   const locale = req.locale.language
-  const translations = getTranslations({ locale })
+  const translations = getTranslations(locale)
   res.render('index', {
     translations,
     helpers: {
@@ -26,7 +26,7 @@ exports.player = async function player (req, res, next) {
   const video = await paratii.vids.get(id)
   const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
   const locale = req.locale.language
-  const translations = getTranslations({ locale })
+  const translations = getTranslations(locale)
 
   res.render('index', {
     player: true,
