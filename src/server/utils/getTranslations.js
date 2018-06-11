@@ -1,6 +1,5 @@
 const fs = require('fs')
 const path = require('path')
-const memoize = require('memoizee')
 
 const SUPPORTED_LOCALES = {
   EN: 'en',
@@ -19,7 +18,4 @@ const getTranslations = locale => {
   )
 }
 
-module.exports =
-  process.env.NODE_ENV === 'development'
-    ? getTranslations
-    : memoize(getTranslations)
+module.exports = getTranslations
