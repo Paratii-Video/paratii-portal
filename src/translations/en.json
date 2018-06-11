@@ -7,6 +7,12 @@
   "search": {
     "input": {
       "placeholder": "Search"
+    },
+    "results": {
+      "resultsFor": "Results for: %{term}",
+      "noResultsFor": "No results found for \"%{term}\"",
+      "moreResults": "Click for more results",
+      "zeroState": "Enter some keywords above to search!"
     }
   }
 }
