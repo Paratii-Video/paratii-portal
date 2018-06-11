@@ -3,7 +3,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Blockies from 'react-blockies'
-
 import SearchInputContainer from 'containers/widgets/SearchInputContainer'
 import Button from 'components/foundations/Button'
 import SVGIcon from 'components/foundations/SVGIcon'

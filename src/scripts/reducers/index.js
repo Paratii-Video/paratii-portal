@@ -10,6 +10,7 @@ import user from 'reducers/UserReducer'
 import videos from 'reducers/VideosReducer'
 import search from 'reducers/SearchReducer'
 import userNav from 'reducers/UserNavReducer'
+import videoManager from 'reducers/VideoManagerReducer'
 
 export default combineReducers({
   global,
@@ -20,5 +21,6 @@ export default combineReducers({
   modal,
   notifications,
   search,
-  userNav
+  userNav,
+  videoManager
 })

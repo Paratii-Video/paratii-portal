@@ -9,15 +9,25 @@ import {
 describe('🦄 Uploader Tool', function () {
   this.timeout(120000)
 
-  beforeEach(function () {
-    browser.url(`http://localhost:8080`)
+  const uploadFileInputSelector =
+    'input[type="file"][data-test-id="upload-file-input"]'
+
+  afterEach(function () {
     browser.execute(nukeLocalStorage)
     browser.execute(nukeSessionStorage)
   })
 
+  it('should only allow mp4 files', () => {
+    browser.url('http://localhost:8080/upload')
+    browser.isVisible(uploadFileInputSelector)
+    expect(browser.getAttribute(uploadFileInputSelector, 'accept')).to.equal(
+      'video/mp4'
+    )
+  })
+
   it('should have basic flow in place', async function () {
     // Create a secure wallet
-    browser.url(`http://localhost:8080`)
+    browser.url('http://localhost:8080')
     browser.execute(function (password) {
       window.paratii.eth.wallet.clear()
       window.paratii.eth.wallet
@@ -42,7 +52,8 @@ describe('🦄 Uploader Tool', function () {
     const video = {
       title: 'Some title',
       description:
-        'Description of the video which can be pretty long and may contain dïàcrítics'
+        'Description of the video which can be pretty long and may contain dïàcrítics',
+      ownershipProof: 'this is my video'
     }
 
     browser.url('http://localhost:8080/upload')
@@ -54,11 +65,12 @@ describe('🦄 Uploader Tool', function () {
 
     // Upload file
     const fileToUpload = `${__dirname}/data/pti-logo.mp4`
-    browser.waitForExist('input[type="file"]')
-    browser.chooseFile('input[type="file"]', fileToUpload)
+    browser.waitForExist(uploadFileInputSelector)
+    browser.chooseFile(uploadFileInputSelector, fileToUpload)
 
     // now we should see a form to fill in
     // the form should contain the id of our video
+    browser.waitForVisible('[data-test-id="uploader-item"]')
     browser.waitAndClick('[data-test-id="uploader-item"]')
     browser.waitForExist('[data-test-id="video-id"]')
     const getVideoId = function () {
@@ -76,6 +88,10 @@ describe('🦄 Uploader Tool', function () {
     // set title and video in the form
     browser.setValue('#input-video-title-' + videoId, video.title)
     browser.setValue('#input-video-description-' + videoId, video.description)
+    browser.setValue(
+      '#input-video-ownership-proof-' + videoId,
+      video.ownershipProof
+    )
     // submit the form
     browser.waitAndClick('[data-test-id="video-submit-save"]')
     // we now should be on the status screen
@@ -111,7 +127,7 @@ describe('🦄 Uploader Tool', function () {
     // start uploading a file
     browser.url('http://localhost:8080/uploader/upload-file')
     const fileToUpload = `${__dirname}/data/data.txt`
-    browser.chooseFile('input[type="file"]', fileToUpload)
+    browser.chooseFile(uploadFileInputSelector, fileToUpload)
     browser.click('#upload-submit')
     // (the file is small so is immediately done uploading, but the cancel button should be avaiblabel in any case)
     browser.waitForExist('#cancel-upload')

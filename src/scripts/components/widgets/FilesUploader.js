@@ -1,15 +1,25 @@
 /* @flow */
-import React, { Component } from 'react'
+
+import React, { Component, Fragment } from 'react'
+import { withRouter } from 'react-router-dom'
+import type { RouterHistory } from 'react-router-dom'
+
 import styled, { css } from 'styled-components'
-import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
+import { FILESUPLOADER_PATH_TO } from 'constants/UrlConstants'
 import TextField from '../widgets/forms/TextField'
-import Card, { CardTitle } from 'components/structures/Card'
+import Card from 'components/structures/Card'
+import Text from '../foundations/Text'
+import SVGIcon from '../foundations/SVGIcon'
+import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
+import { SUPPORTED_FILE_TYPES } from 'constants/UploaderConstants'
 
 type Props = {
+  history: RouterHistory,
   isWalletSecured: boolean,
+  margin: string,
   onError: boolean,
   showCard: boolean,
-  margin: string,
+  white: Boolean,
   onFileChosen: (file: Object) => void,
   checkUserWallet: () => void
 }
@@ -18,11 +28,10 @@ const StyleInput = css`
   width: 100%;
 `
 
-const Title = CardTitle.extend`
-  padding: 40px 42px;
-`
-
-const InputFile = styled.input`
+const InputFile = styled.input.attrs({
+  type: 'file',
+  accept: SUPPORTED_FILE_TYPES.join(' ')
+})`
   ${StyleInput} cursor: pointer;
   left: 0;
   opacity: 0;
@@ -31,47 +40,20 @@ const InputFile = styled.input`
   z-index: 3;
 `
 
-const UploadCover = styled.div`
-  ${StyleInput} background: 0;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 80px;
-  position: relative;
-  transition: background ${props => props.theme.animation.time.repaint} 0.2s;
-  z-index: 1;
-
-  .dragenter & {
-    background-color: ${props => props.theme.colors.FilesUploader.drag.enter};
-    transition-delay: 0.16s;
-  }
+const SupportedFileTypes = styled.span`
+  color: ${({ theme }) => theme.colors.FilesUploader.supportedFileTypes.color};
+  font-size: ${props => props.theme.fonts.text.tiny};
 `
 
-const UploadCoverIcon = styled.div`
-  margin: 30px 0 20px;
-  width: 100%;
-`
-
-const Icon = styled.div`
-  height: 110px;
-  margin: 0 auto;
-  transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
-  width: 190px;
-
-  .dragenter & {
-    transform: scale(0.95);
-  }
-`
-
-const UploadCoverText = styled.p`
-  color: ${props => props.theme.colors.FilesUploader.drag.color};
-  font-size: ${props => props.theme.fonts.text.small};
+const UploadCoverText = styled(Text)`
   text-align: center;
 `
 
-const UploadCoverTextBig = styled.span`
+const TextBig = Text.withComponent('span')
+
+const UploadCoverTextBig = styled(TextBig)`
   display: block;
-  font-size: ${props => props.theme.fonts.text.big};
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 `
 
 const FooterWrapper = styled.div`
@@ -83,8 +65,28 @@ const InputText = styled(TextField)`
 `
 
 const UploaderWrapper = styled.div`
-  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 70px 0;
   position: relative;
+  width: 100%;
+`
+const Icon = styled.div`
+  height: 110px;
+  margin: 50px auto 30px;
+  transform: ${({ className }) =>
+    className === 'dragenter' ? 'scale(0.9)' : 'scale(1)'};
+  transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
+  width: 190px;
+  ${UploaderWrapper}:hover & {
+    transform: scale(0.9);
+  }
+`
+const UploadAddIcon = Icon.extend`
+  height: 36px;
+  margin: 0 0 20px;
+  width: 36px;
 `
 
 class FilesUploader extends Component<Props, Object> {
@@ -122,34 +124,69 @@ class FilesUploader extends Component<Props, Object> {
         file: file,
         fileName: file.name + ' | ' + file.size + 'bytes'
       })
+
+      this.props.history.push(FILESUPLOADER_PATH_TO)
     } else {
       this.props.checkUserWallet()
     }
   }
 
   onDrag (e: Object) {
-    // If wallet not secure open the modal
-    if (this.props.isWalletSecured) {
-      const status = e.type
-      let klass = ''
-      if (status === 'dragenter' || status === 'mouseover') {
-        klass = 'dragenter'
-      } else if (status === 'drop') {
-        klass = 'drop'
-      } else {
-        klass = ''
-      }
-      this.setState({
-        dragClass: klass
-      })
+    const status = e.type
+    let klass = ''
+    if (status === 'dragenter' || status === 'mouseover') {
+      klass = 'dragenter'
+    } else if (status === 'drop') {
+      klass = 'drop'
     } else {
-      this.props.checkUserWallet()
+      klass = ''
     }
+
+    this.setState({
+      dragClass: klass
+    })
+  }
+
+  renderUploadTrigger ({ card }: { card: boolean } = {}) {
+    return (
+      <UploaderWrapper>
+        <InputFile
+          type="file"
+          data-test-id="upload-file-input"
+          onClick={this.onCheck}
+          onChange={this.onFileChosen}
+          onDragEnter={this.onDrag}
+          onDragLeave={this.onDrag}
+        />
+        {card ? (
+          <Icon className={this.state.dragClass}>
+            <FilesUploaderSvg />
+          </Icon>
+        ) : (
+          <UploadAddIcon className={this.state.dragClass}>
+            <SVGIcon
+              color={this.props.white ? 'white' : 'gray'}
+              icon="icon-add"
+            />
+          </UploadAddIcon>
+        )}
+        <UploadCoverText gray={!this.props.white} small>
+          <UploadCoverTextBig big gray={!this.props.white}>
+            Drag your files here
+          </UploadCoverTextBig>{' '}
+          or click to find them
+          <SupportedFileTypes>
+            <br />
+            (only .mp4 currently supported)
+          </SupportedFileTypes>
+        </UploadCoverText>
+      </UploaderWrapper>
+    )
   }
 
   render () {
-    const showcard = this.props.showCard
-    return showcard ? (
+    const { showCard } = this.props
+    return showCard ? (
       <Card
         {...this.props}
         nopadding
@@ -165,43 +202,12 @@ class FilesUploader extends Component<Props, Object> {
           </FooterWrapper>
         }
       >
-        <InputFile
-          type="file"
-          onClick={this.onCheck}
-          onChange={this.onFileChosen}
-          onDragEnd={this.onDrag}
-        />
-        <UploadCover>
-          <Title>Upload video</Title>
-          <UploadCoverIcon>
-            <Icon>
-              <FilesUploaderSvg />
-            </Icon>
-          </UploadCoverIcon>
-          <UploadCoverText>
-            <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
-            choose a file
-          </UploadCoverText>
-        </UploadCover>
+        {this.renderUploadTrigger({ card: true })}
       </Card>
     ) : (
-      <UploaderWrapper>
-        <InputFile
-          type="file"
-          onClick={this.onCheck}
-          onChange={this.onFileChosen}
-          onDragEnd={this.onDrag}
-        />
-        <UploadCover>
-          <UploadCoverIcon />
-          <UploadCoverText>
-            <UploadCoverTextBig>Drag & drop to upload</UploadCoverTextBig> or
-            choose a file
-          </UploadCoverText>
-        </UploadCover>
-      </UploaderWrapper>
+      <Fragment>{this.renderUploadTrigger()}</Fragment>
     )
   }
 }
 
-export default FilesUploader
+export default withRouter(FilesUploader)

@@ -6,6 +6,8 @@ export const isVideoUploaded = video =>
 export const isVideoPublished = video =>
   video && video.getIn(['staked', 'deposit']) !== ''
 
+export const stakedAmount = video => video.getIn(['staked', 'deposit'])
+
 export const isVideoPublishable = video =>
   video &&
   video.getIn(['transcodingStatus', 'name']) === 'success' &&

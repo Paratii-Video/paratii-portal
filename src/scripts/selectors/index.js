@@ -33,6 +33,7 @@ import {
   _getAdditionalSearchRequestStatus
 } from 'records/SearchRecords'
 import Video from 'records/VideoRecords'
+import VideoManager from 'records/VideoManagerRecords'
 
 import type {
   RootState,
@@ -119,3 +120,8 @@ export const getAdditionalSearchRequestStatus = (
 /* UserNav */
 export const getUserNavStatus = (state: RootState): boolean =>
   state.userNav.showUserNav
+
+/* VideoManager */
+export const getVideoManager = (state: RootState): VideoManager =>
+  state.videoManager
+

@@ -76,6 +76,9 @@ const Themes = {
       input: {
         background: Colors.blackDark,
         color: Colors.purple
+      },
+      supportedFileTypes: {
+        color: Colors.grayLight
       }
     },
     VideoList: {
@@ -149,6 +152,7 @@ const Themes = {
         background: Colors.blackAlt,
         hoverBackground: Colors.grayDark,
         titleColor: Colors.white,
+        authorColor: Colors.whiteTransparent,
         descriptionColor: Colors.gray,
         border: Colors.grayDark,
         duration: {
@@ -196,6 +200,16 @@ const Themes = {
     MyVideoItem: {
       background: Colors.black,
       imageBackground: Colors.blackAlt
+    },
+    LandingPage: {
+      headerBackground: Colors.blackLight,
+      headerContentBackground: Colors.blackTransparent,
+      headerContentBackgroundShadow: Colors.blackDark,
+      VideoLinkBackground: Colors.grayDark,
+      VideoLinkColor: Colors.white,
+      listItemBackground: Colors.blackAlt,
+      listItemTimeBackground: Colors.blackTransparent,
+      listItemTimeColor: Colors.white
     }
   }
 }
