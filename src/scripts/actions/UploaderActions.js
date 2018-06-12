@@ -95,8 +95,8 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
   uploader.on('done', function (files) {
     dispatch(
       Notifications.success({
-        title: 'Local upload',
-        message: 'The local upload has been done'
+        title: "File's ready!",
+        message: 'Your file is ready for uploading to Web3!'
       })
     )
     const file = files[0]
