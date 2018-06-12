@@ -22,9 +22,9 @@ type Props = {
   balance: string,
   children: Object,
   user: User,
-  userAddress: String,
-  isWalletSecured: Boolean,
-  showUserNav: Boolean,
+  userAddress: string,
+  isWalletSecured: boolean,
+  showUserNav: boolean,
   checkUserWallet: () => void,
   closeUserNav: () => void,
   loadBalances: () => void
@@ -94,10 +94,10 @@ const UserPTIBar = styled.div`
   flex: 1 1 ${props => props.percentage};
   height: 100%;
   text-align: center;
+`
 
-  ${Text} {
-    margin-top: 5px;
-  }
+const UserPTIBarText = Text.extend`
+  margin-top: 5px;
 `
 
 // User navigation
@@ -156,11 +156,7 @@ const UserSubNavListItemLink = styled(Link)`
 `
 
 class UserNav extends Component<Props, void> {
-  componentDidUpdate () {
-    if (this.props.showUserNav) {
-      this.UserNavWrapper.scrollTo(0, 0)
-    }
-  }
+  UserNavWrapper: HTMLElement
 
   render () {
     const { balance, user } = this.props
@@ -213,14 +209,14 @@ class UserNav extends Component<Props, void> {
             </UserPTIValuesWrapper>
             <UserPTIBarWrapper>
               <UserPTIBar percentage="70%">
-                <Text purple tiny>
+                <UserPTIBarText purple tiny>
                   70%
-                </Text>
+                </UserPTIBarText>
               </UserPTIBar>
               <UserPTIBar red percentage="30%">
-                <Text pink tiny>
+                <UserPTIBarText pink tiny>
                   30%
-                </Text>
+                </UserPTIBarText>
               </UserPTIBar>
             </UserPTIBarWrapper>
           </UserPTI>

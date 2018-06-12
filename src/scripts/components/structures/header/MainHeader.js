@@ -19,9 +19,9 @@ import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 
 type Props = {
   children: Object,
-  userAddress: String,
-  isWalletSecured: Boolean,
-  showUserNav: Boolean,
+  userAddress: string,
+  isWalletSecured: boolean,
+  showUserNav: boolean,
   checkUserWallet: () => void,
   openUserNav: () => void,
   closeUserNav: () => void
@@ -130,7 +130,7 @@ class MainHeader extends Component<Props, State> {
   toggleNav: () => void
   secureWallet: (e: Object) => void
   toggleUserNav: () => void
-  closeNavAndUserNav: (e: Object) => void
+  closeNavAndUserNav: () => void
 
   constructor (props: Props) {
     super(props)

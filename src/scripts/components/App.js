@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components'
 import ProfileContainer from 'containers/ProfileContainer'
 
 import ProfileEditContainer from 'containers/ProfileEditContainer'
+import ProfileCurationContainer from 'containers/ProfileCurationContainer'
 import ProfileMyVideosContainer from 'containers/ProfileMyVideosContainer'
 
 import PlayContainer from 'containers/PlayContainer'
@@ -98,6 +99,10 @@ class App extends Component<Props, State> {
                 <Route
                   path={`${match.url}profile/edit`}
                   component={ProfileEditContainer}
+                />
+                <Route
+                  path={`${match.url}profile/curation`}
+                  component={ProfileCurationContainer}
                 />
                 <Route
                   path={`${match.url}profile/my-videos`}

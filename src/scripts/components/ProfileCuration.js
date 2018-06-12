@@ -98,13 +98,14 @@ const InfoStatusContent = styled.div`
   margin: 0 0 20px;
 `
 
-const InfoStatusButtons = styled.div`
+const InfoStatusButtonWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  ${ButtonColor} {
-    flex: 0 0 49%;
-  }
+`
+
+const InfoStatusButton = ButtonColor.extend`
+  flex: 0 0 49%;
 `
 
 const Voting = styled.div`
@@ -212,16 +213,15 @@ const ChallengeSequenceDot = styled.span`
   position: relative;
   width: ${props => (props.active ? '12px' : '8px')};
   z-index: 2;
-
   ${props =>
     props.active
       ? css`
-          &:before,
-          &:after {
+          &::before,
+          &::after {
             content: '';
           }
         `
-      : null} &:before, &:after {
+      : null} &::before, &::after {
     border: 2px solid
       ${props => props.theme.colors.ProfileCuration.ChallengeSequenceDot};
     border-radius: 100%;
@@ -230,14 +230,12 @@ const ChallengeSequenceDot = styled.span`
     top: 50%;
     transform: translate3d(-50%, -50%, 0);
   }
-
-  &:before {
+  &::before {
     height: 22px;
     opacity: 0.5;
     width: 22px;
   }
-
-  &:after {
+  &::after {
     height: 36px;
     opacity: 0.2;
     width: 36px;
@@ -394,10 +392,10 @@ class Profile extends Component<Props, void> {
             <InfoStatusContent>
               <InfoStatusTitle>Choose wise</InfoStatusTitle>
             </InfoStatusContent>
-            <InfoStatusButtons>
-              <ButtonColor green>Support</ButtonColor>
-              <ButtonColor pink>Oppose</ButtonColor>
-            </InfoStatusButtons>
+            <InfoStatusButtonWrapper>
+              <InfoStatusButton green>Support</InfoStatusButton>
+              <InfoStatusButton pink>Oppose</InfoStatusButton>
+            </InfoStatusButtonWrapper>
           </InfoStatus>
 
           <InfoStatus>
