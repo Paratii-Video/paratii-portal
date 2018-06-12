@@ -6,63 +6,24 @@ export const MATH_VIDEO = {
   duration: '23:19',
   price: 14,
   ipfsHash: 'hash1',
-  // src: '/ipfs/QmQvhvzMXKX71jLGjSfM9iKiWVKETXDmkPaQXhe4WrMmZ9',
-  // mimetype: 'video/mp4',
   thumbnails: ['thumbnail-1280x720_2.png'],
   owner: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
-  author: 'mathGenius2k18'
-  // stats: {
-  //   likes: 0,
-  //   dislikes: 0
-  // },
-  // uploader: {
-  //   address: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
-  //   name: 'TED'
-  // },
-  // tags: [
-  //   'TEDTalk',
-  //   'TEDTalks',
-  //   'TED Talk',
-  //   'TED Talks',
-  //   'Jim Simons',
-  //   'TED2015',
-  //   'Human origins',
-  //   'Investment',
-  //   'Math',
-  //   'Philanthropy',
-  //   'Physics'
-  // ]
+  author: 'mathGenius2k18',
+  staked: true
 }
 
 export const DEVCON_VIDEO = {
   id: 'QmNhyQjsFW2Tvuz7CFwDTBPo3dfBQ3S4StEpfUZPSpK9FY',
   title: 'Devcon2: Ethereum in 25 Minutes',
   description:
-    'Presentation Slides Download: https://ethereumfoundation.org/devcon...\n\nDevcon2: Ethereum in 25 Minutes. Ethereum Foundation Chief Scientist, Vitalik Buterin, describes Ethereum.\nSpeakers: Vitalik Buterin\n\nEthereum Developer Conference, 2016 September 19 - 21,\nShanghai, China',
+    'Presentation Slides Download: https://ethereumfoundation.org/devcon...\n\nDevcon2: Ethereum in 25 Minutes. Ethereum Foundation Chief Scientist, Vitalik Buterin, describes Ethereum.\nSpeakers: Vitalik Buterin\n\nEthereum Developer Conference, 2016 September 19 - 21,\nShanghai, China (and math!)',
   duration: '11:11',
   price: 0,
   ipfsHash: 'hash2',
-  // src: '/ipfs/QmU1f8mKebPzCHskk3DDsFUJLxFLVeCxJ1BqyhQvkV8FyJ',
-  // mimetype: 'video/mp4',
   thumbnails: ['thumbnail-1280x720_3.png', 'foo.png'],
   owner: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
-  author: 'cryptohacker'
-  // stats: {
-  //   likes: 0,
-  //   dislikes: 0
-  // },
-  // uploader: {
-  //   address: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
-  //   name: 'Ethereum Foundation'
-  // },
-  // tags: [
-  //   'blockchain',
-  //   'smart contracts',
-  //   'distributed ledger',
-  //   'Vitalik Buterin',
-  //   'devcon2',
-  //   'ethereum'
-  // ]
+  author: 'cryptohacker',
+  staked: true
 }
 
 export const ETHEREUM_VIDEO = {
@@ -73,25 +34,8 @@ export const ETHEREUM_VIDEO = {
   duration: '05:39',
   price: 0,
   ipfsHash: 'hashETH',
-  // src: '/ipfs/QmPDG5AxEpfsQ1cfWU6Kcguc9Bn6eDEdKiUbqxUwSRQBi7',
-  // mimetype: 'video/mp4',
   thumbnails: ['thumb.png', 'bar.png'],
   owner: '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
-  author: 'eth_dude'
-  // stats: {
-  //   likes: 0,
-  //   dislikes: 0
-  // },
-  // uploader: {
-  //   address: '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
-  //   name: 'Ethereum'
-  // },
-  // tags: [
-  //   'ethereum',
-  //   'smart contracts',
-  //   'blockchain',
-  //   'scaling',
-  //   'vitalik buterin',
-  //   'vlad zamfir'
-  // ]
+  author: 'eth_dude',
+  staked: true
 }

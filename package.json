@@ -19,6 +19,7 @@
     "compile:sass": "node_modules/.bin/node-sass --output-style compressed src/styles/embed/index.scss > build/embed/index.css",
     "chimp:setup": "rm -rf ./mock-server/routes && mkdir ./mock-server/routes && yarn run mock-server:start",
     "chimp:teardown": "rm -rf ./mock-server/routes",
+    "db": "NODE_ENV=development node node_modules/paratii-db/src/server.js",
     "dev": "concurrently \"yarn run build:dev\" \"yarn run server:dev\" \"yarn run parity\"",
     "diagnose": "node src/scripts/diagnose.js",
     "flow": "flow",
@@ -122,6 +123,7 @@
     "mocha": "^4.0.1",
     "node-sass": "^4.9.0",
     "nodemon": "^1.14.11",
+
     "postcss-cssnext": "^3.0.2",
     "postcss-loader": "^2.0.9",
     "prettier-standard": "^8.0.0",

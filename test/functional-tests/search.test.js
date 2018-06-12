@@ -9,7 +9,7 @@ import { paratii } from './test-utils/helpers.js'
 
 const SEARCH_RESULTS = [MATH_VIDEO, DEVCON_VIDEO, ETHEREUM_VIDEO]
 
-describe('🔍 Search:', () => {
+describe('🔍 Search: @watch', () => {
   const navigateToSearch = () => browser.url('http://localhost:8080/search')
   const searchResultsWrapperSelector = '[data-test-id="search-results"]'
   const enterKeywordsZeroStateSelector = `${searchResultsWrapperSelector} [data-test-id="enter-keywords-zero-state"]`
@@ -159,7 +159,7 @@ describe('🔍 Search:', () => {
   })
 
   it('should navigate to the /search route after searching on another page and render no results', () => {
-    const query = 'video'
+    const query = 'doesnotexist'
     // mockSearchResponse({
     //   query,
     //   results: []
