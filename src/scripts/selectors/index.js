@@ -124,4 +124,3 @@ export const getUserNavStatus = (state: RootState): boolean =>
 /* VideoManager */
 export const getVideoManager = (state: RootState): VideoManager =>
   state.videoManager
-

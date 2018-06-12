@@ -102,7 +102,6 @@ const InfoStatusButtons = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-
   ${ButtonColor} {
     flex: 0 0 49%;
   }
