@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 import SVGIcon from 'components/foundations/SVGIcon'
 import { SEARCH_PATH } from 'constants/UrlConstants'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import type { RouterHistory } from 'react-router-dom'
 
@@ -69,7 +70,9 @@ class SearchInput extends Component<Props, void> {
           onChange={(e: Object) => {
             onSearchInputChange({ value: e.target.value })
           }}
-          placeholder="Search"
+          placeholder={RawTranslatedText({
+            message: 'search.input.placeholder'
+          })}
           value={currentSearchText}
         />
         <SearchInputButton>
