@@ -15,6 +15,10 @@ type Props = {
 }
 
 class TranslatedText extends React.Component<Props> {
+  static defaultProps = {
+    options: {}
+  }
+
   render () {
     const { message, options, translator } = this.props
 
@@ -23,10 +27,10 @@ class TranslatedText extends React.Component<Props> {
     }
 
     if (HTML_KEY_REGEX.test(message)) {
-      // $FlowFixMe
       const processOptions: Object = !options
         ? {}
         : Object.keys(options).reduce(
+          // $FlowFixMe
           (reducedOptions: Object, optionsKey: string): Object => {
             reducedOptions[optionsKey] = renderRawTranslatable(
               options[optionsKey]
@@ -45,10 +49,6 @@ class TranslatedText extends React.Component<Props> {
 
     return translator({ key: message, options })
   }
-}
-
-TranslatedText.defaultProps = {
-  options: {}
 }
 
 export default ConnectToTranslator(TranslatedText)
