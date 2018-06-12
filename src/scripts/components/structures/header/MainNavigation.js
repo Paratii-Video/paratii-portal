@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import Button from 'components/foundations/Button'
 import Hidden from 'components/foundations/Hidden'
+import TranslatedText from 'components/translations/TranslatedText'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
 
@@ -78,19 +79,19 @@ class MainNavigation extends Component<Props, Object> {
         <NavList>
           <NavItem>
             <NavLink onClick={this.props.closeNavAndUserNav} to="/voucher">
-              Get PTI
+              <TranslatedText message="navigation.voucher" />
             </NavLink>
           </NavItem>
           <Hidden>
             <NavItem>
               <NavLink onClick={this.props.closeNavAndUserNav} to="/my-videos">
-                My videos
+                <TranslatedText message="navigation.myVideos" />
               </NavLink>
             </NavItem>
           </Hidden>
           <NavItem>
             <NavLink onClick={this.props.closeNavAndUserNav} to="/upload">
-              Upload
+              <TranslatedText message="navigation.upload" />
             </NavLink>
           </NavItem>
           <NavItem>
@@ -99,7 +100,7 @@ class MainNavigation extends Component<Props, Object> {
               href="http://paratii.video/"
               target="_blank"
             >
-              About Paratii
+              <TranslatedText message="navigation.about" />
             </Anchor>
           </NavItem>
 
@@ -110,7 +111,11 @@ class MainNavigation extends Component<Props, Object> {
                 onClick={this.secureWallet}
                 to="#"
               >
-                {walletStringSecure ? 'Log In' : 'Sign Up'}
+                {walletStringSecure ? (
+                  <TranslatedText message="navigation.logIn" />
+                ) : (
+                  <TranslatedText message="navigation.signUp" />
+                )}
               </NavLinkPurple>
             </NavItem>
           ) : (

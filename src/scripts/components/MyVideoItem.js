@@ -18,6 +18,18 @@ export const MyVideosWrapper = styled.ul`
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 24px;
   grid-row-gap: 24px;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 800px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 550px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `
 
 const Wrapper = styled.li`

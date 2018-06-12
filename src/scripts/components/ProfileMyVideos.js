@@ -50,7 +50,8 @@ class ProfileMyVideos extends Component<Props, void> {
               name="myvideos-published"
               margin="0 20px 0 0"
               value="published"
-              disabled={false}
+              disabled={true}
+              defaultChecked
               checkbox
             >
               Published
@@ -59,7 +60,8 @@ class ProfileMyVideos extends Component<Props, void> {
               name="myvideos-published"
               margin="0 20px 0 0"
               value="challenged"
-              disabled={false}
+              disabled={true}
+              defaultChecked
               checkbox
             >
               Challenged
@@ -68,7 +70,8 @@ class ProfileMyVideos extends Component<Props, void> {
               name="myvideos-published"
               margin="0 20px 0 0"
               value="voting,"
-              disabled={false}
+              disabled={true}
+              defaultChecked
               checkbox
               nomargin
             >

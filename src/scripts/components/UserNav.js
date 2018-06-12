@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import { add0x } from 'utils/AppUtils'
 import Blockies from 'react-blockies'
+import User from 'records/UserRecords'
+import { getName } from 'operators/UserOperators'
 import {
   USERNAV_WIDTH,
   MAINHEADER_LOGO_HEIGHT,
@@ -17,12 +19,15 @@ import SVGIcon from './foundations/SVGIcon'
 import UserBadge from './widgets/UserBadge'
 
 type Props = {
+  balance: string,
   children: Object,
+  user: User,
   userAddress: String,
   isWalletSecured: Boolean,
   showUserNav: Boolean,
   checkUserWallet: () => void,
-  closeUserNav: () => void
+  closeUserNav: () => void,
+  loadBalances: () => void
 }
 
 const Wrapper = styled.div`
@@ -30,7 +35,7 @@ const Wrapper = styled.div`
   height: 100%;
   left: 0;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
   padding: 0 0 ${MAINFOOTER_HEIGHT};
   position: fixed;
   top: 0;
@@ -158,7 +163,9 @@ class UserNav extends Component<Props, void> {
   }
 
   render () {
+    const { balance, user } = this.props
     let avatarUser = ''
+
     if (this.props.userAddress) {
       const lowerAddress = add0x(this.props.userAddress)
       if (ACTIVATE_SECURE_WALLET && this.props.isWalletSecured) {
@@ -176,7 +183,7 @@ class UserNav extends Component<Props, void> {
         <UserWrapper>
           <UserBadge
             userAvatar={avatarUser}
-            userName="User 12610549"
+            userName={getName(user)}
             userDate="Since 2018"
           />
           <UserPTI>
@@ -186,7 +193,7 @@ class UserNav extends Component<Props, void> {
                   Available PTI
                 </Text>
                 <UserPTIValueBox>
-                  <Text purple>10 PTI</Text>
+                  <Text purple>{balance} PTI</Text>
                   <Text gray tiny>
                     US$ 3.00
                   </Text>
@@ -221,7 +228,10 @@ class UserNav extends Component<Props, void> {
         <UserNavListWrapper>
           <UserNavList>
             <UserNavListItem>
-              <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
+              <UserNavListItemLink
+                to="/profile"
+                onClick={this.props.closeUserNav}
+              >
                 <UserNavListItemIcon>
                   <SVGIcon icon="icon-profile" />
                 </UserNavListItemIcon>
@@ -239,7 +249,7 @@ class UserNav extends Component<Props, void> {
                 My Videos
               </UserNavListItemLink>
             </UserNavListItem>
-            <UserNavListItem>
+            <UserNavListItem hidden>
               <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
                 <UserNavListItemIcon>
                   <SVGIcon icon="icon-fav" />
@@ -247,7 +257,7 @@ class UserNav extends Component<Props, void> {
                 My Favorites
               </UserNavListItemLink>
             </UserNavListItem>
-            <UserNavListItem>
+            <UserNavListItem hidden>
               <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
                 <UserNavListItemIcon>
                   <SVGIcon icon="icon-myvideos" />
@@ -255,7 +265,7 @@ class UserNav extends Component<Props, void> {
                 Finances
               </UserNavListItemLink>
             </UserNavListItem>
-            <UserNavListItem>
+            <UserNavListItem hidden>
               <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
                 <UserNavListItemIcon>
                   <SVGIcon icon="icon-settings" />
@@ -263,7 +273,7 @@ class UserNav extends Component<Props, void> {
                 Settings
               </UserNavListItemLink>
             </UserNavListItem>
-            <UserNavListItem>
+            <UserNavListItem hidden>
               <UserNavListItemNoLink>
                 <UserNavListItemIcon>
                   <SVGIcon icon="icon-myvideos" />
