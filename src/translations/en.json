@@ -1,4 +1,11 @@
 {
+  "footer": {
+    "discover_html": "Discover all about Paratii on %{homePageLink}",
+    "homePage": "paratii.video",
+    "betaTool_html": "v0.0.1: This is a beta tool! We &hearts; to get feedback on Telegram %{telegramBrazilLink} or %{telegramEnglishLink}",
+    "brazil": "BR",
+    "english": "EN"
+  },
   "navigation": {
     "voucher": "Get PTI",
     "myVideos": "My videos",
