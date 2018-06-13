@@ -1,0 +1,33 @@
+{
+  "footer": {
+    "discover_html": "Saiba tudo sobre a paratii em %{homePageLink}",
+    "homePage": "paratii.video",
+    "betaTool_html": "v0.0.1: Este portal está em desenvolvimento! Nós &hearts; ouvir seu feedback no Telegram: %{telegramBrazilLink} ou %{telegramEnglishLink}",
+    "brazil": "Português",
+    "english": "Inglês"
+  },
+  "navigation": {
+    "voucher": "Obter PTI",
+    "myVideos": "Meus vídeos",
+    "upload": "Upload",
+    "about": "Sobre a Paratii",
+    "logIn": "Entrar",
+    "signUp": "Registrar"
+  },
+  "notFound": {
+    "title": "Oooooops, página não encontrada!",
+    "description": "Esta página não está disponível ainda. Nossa equipe está desenvolvendo-a ou talvez nem saiba que ela existe. Se quiser nos ajudar a consertar isso mais rápido, conte-nos como veio parar aqui com uma issue no Github:",
+    "linkText": "Paratii-Video"
+  },
+  "search": {
+    "input": {
+      "placeholder": "Buscar"
+    },
+    "results": {
+      "resultsFor": "Resultados para: %{term}",
+      "noResultsFor": "Não foram encontrados resultados para \"%{term}\"",
+      "moreResults": "Mais resultados",
+      "zeroState": "Insira palavras-chave acima para buscar!"
+    }
+  }
+}
