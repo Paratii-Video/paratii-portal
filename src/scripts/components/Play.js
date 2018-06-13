@@ -796,10 +796,7 @@ class Play extends Component<Props, State> {
                     this.wrapperRef = ref
                   }}
                 >
-                  <Transition
-                    in={true || this.shouldShowVideoOverlay()}
-                    timeout={0}
-                  >
+                  <Transition in={this.shouldShowVideoOverlay()} timeout={0}>
                     {(transitionState: ?string) => (
                       <OverlayWrapper
                         onMouseLeave={this.onMouseLeave}
@@ -853,7 +850,11 @@ class Play extends Component<Props, State> {
                   ) : null}
                   {this.state.showTipOverlay ? (
                     <TipOverlayWrapper>
-                      <TipOverlay onClose={this.closeTipOverlay} />
+                      <TipOverlay
+                        addressToTip=""
+                        onClose={this.closeTipOverlay}
+                        usernameToTip=""
+                      />
                     </TipOverlayWrapper>
                   ) : null}
                 </PlayerWrapper>
