@@ -52,7 +52,8 @@ describe('🦄 Uploader Tool', function () {
     const video = {
       title: 'Some title',
       description:
-        'Description of the video which can be pretty long and may contain dïàcrítics'
+        'Description of the video which can be pretty long and may contain dïàcrítics',
+      ownershipProof: 'this is my video'
     }
 
     browser.url('http://localhost:8080/upload')
@@ -87,6 +88,10 @@ describe('🦄 Uploader Tool', function () {
     // set title and video in the form
     browser.setValue('#input-video-title-' + videoId, video.title)
     browser.setValue('#input-video-description-' + videoId, video.description)
+    browser.setValue(
+      '#input-video-ownership-proof-' + videoId,
+      video.ownershipProof
+    )
     // submit the form
     browser.waitAndClick('[data-test-id="video-submit-save"]')
     // we now should be on the status screen

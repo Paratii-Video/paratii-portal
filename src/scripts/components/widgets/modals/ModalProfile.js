@@ -8,10 +8,12 @@ import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import NotepadSvg from 'components/foundations/svgs/NotepadSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
+import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
 
 const FORM_ID: string = 'PROFILE_MODAL'
 
 type Props = {
+  walletKey: string,
   openModal: string => void,
   closeModal: () => void,
   secureKeystore: string => void,
@@ -53,22 +55,21 @@ class ModalProfile extends Component<Props, Object> {
     this.handleInputChange = this.handleInputChange.bind(this)
   }
 
-  setProfile (e: Object) {
+  async setProfile (e: Object) {
     e.preventDefault()
-
+    const userAddress = paratii.eth.getAccount()
     if (this.state.email) {
-      const userAddress = paratii.eth.getAccount()
       // Send Email Verification
       this.sendVerificationMail(this.state.email, userAddress)
       // Create the user
-      paratii.users.create({
+      await paratii.users.create({
         id: userAddress,
         name: this.state.username,
         email: this.state.email
       })
     } else {
-      paratii.users.create({
-        id: paratii.eth.getAccount(), // must be a valid ethereum address
+      await paratii.users.create({
+        id: userAddress, // must be a valid ethereum address
         name: this.state.username
       })
     }
@@ -107,6 +108,7 @@ class ModalProfile extends Component<Props, Object> {
   }
 
   render () {
+    const enableContinue = this.props.walletKey === WALLET_KEY_SECURE
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
@@ -147,15 +149,21 @@ class ModalProfile extends Component<Props, Object> {
           )}
           <Footer>
             <ButtonContainer>
-              <Button
-                type="submit"
-                form={FORM_ID}
-                data-test-id="continue"
-                purple
-                disabled={!this.state.username}
-              >
-                Continue
-              </Button>
+              {enableContinue ? (
+                <Button
+                  type="submit"
+                  form={FORM_ID}
+                  data-test-id="continue"
+                  purple
+                  disabled={!this.state.username}
+                >
+                  Continue
+                </Button>
+              ) : (
+                <Button type="submit" form={FORM_ID} purple disabled="true">
+                  Please wait, we are creating your wallet
+                </Button>
+              )}
             </ButtonContainer>
           </Footer>
         </ModalScrollContent>

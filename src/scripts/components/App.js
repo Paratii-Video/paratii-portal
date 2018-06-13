@@ -22,9 +22,9 @@ import Modal from 'containers/widgets/modals/ModalContainer'
 import MailVerifyContainer from 'containers/pages/MailVerifyContainer'
 import Main from './structures/Main'
 import MainFooter from './structures/footer/MainFooter'
-import Home from './pages/Home'
 import Voucher from './pages/Voucher'
 import NotFound from './pages/NotFound'
+import LandingContainer from 'containers/pages/LandingContainer'
 
 import { APP_TITLE, paratiiTheme } from 'constants/ApplicationConstants'
 
@@ -80,9 +80,9 @@ class App extends Component<Props, State> {
             <Notifications />
             <MainHeader />
 
-            <Main>
+            <Main landing={match.isExact}>
               <Switch>
-                <Route exact path="/" component={Home} />
+                <Route exact path="/" component={LandingContainer} />
                 <Route
                   path={`${match.url}verify`}
                   component={MailVerifyContainer}

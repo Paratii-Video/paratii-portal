@@ -4,15 +4,17 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
-
 import SearchInputContainer from 'containers/widgets/SearchInputContainer'
 import Button from 'components/foundations/Button'
 import SVGIcon from 'components/foundations/SVGIcon'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
 import MainNavigation from 'components/structures/header/MainNavigation'
 import { add0x } from 'utils/AppUtils'
-
-import { Z_INDEX_HEADER } from 'constants/UIConstants'
+import {
+  MAINHEADER_LOGO_HEIGHT,
+  MAINHEADER_LOGO_WIDTH,
+  Z_INDEX_HEADER
+} from 'constants/UIConstants'
 import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 
 type Props = {
@@ -58,11 +60,8 @@ const HeaderWrapper = styled.div`
 
 const LogoWrapper = styled.div`
   margin-right: 40px;
-  flex: 0 0
-    ${props =>
-    props.theme.sizes ? props.theme.sizes.mainHeaderLogo.width : ''};
-  height: ${props =>
-    props.theme.sizes ? props.theme.sizes.mainHeaderLogo.height : ''};
+  flex: 0 0 ${MAINHEADER_LOGO_WIDTH};
+  height: ${MAINHEADER_LOGO_HEIGHT};
 `
 
 const HeaderContent = styled.div`
