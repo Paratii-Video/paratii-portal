@@ -207,6 +207,13 @@ const ChallengeLine = styled.span`
   width: ${({ width }) => width || '100%'};
 `
 
+const DotActive = css`
+  &::before,
+  &::after {
+    content: '';
+  }
+`
+
 const ChallengeSequenceDot = styled.span`
   background: ${props =>
     props.theme.colors.ProfileCuration.ChallengeSequenceDot};
@@ -215,15 +222,7 @@ const ChallengeSequenceDot = styled.span`
   position: relative;
   width: ${props => (props.active ? '12px' : '8px')};
   z-index: 2;
-  ${props =>
-    props.active
-      ? css`
-          &::before,
-          &::after {
-            content: '';
-          }
-        `
-      : null} &::before, &::after {
+  ${props => (props.active ? DotActive : null)} &::before, &::after {
     border: 2px solid
       ${props => props.theme.colors.ProfileCuration.ChallengeSequenceDot};
     border-radius: 100%;
