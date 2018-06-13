@@ -11,6 +11,8 @@ import Card from 'components/structures/Card'
 import Text from '../foundations/Text'
 import SVGIcon from '../foundations/SVGIcon'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
+import TranslatedText from '../translations/TranslatedText'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
 import { SUPPORTED_FILE_TYPES } from 'constants/UploaderConstants'
 
 type Props = {
@@ -171,13 +173,19 @@ class FilesUploader extends Component<Props, Object> {
           </UploadAddIcon>
         )}
         <UploadCoverText gray={!this.props.white} small>
-          <UploadCoverTextBig big gray={!this.props.white}>
-            Drag your files here
-          </UploadCoverTextBig>{' '}
-          or click to find them
+          <TranslatedText
+            message="uploader.filesInstructions_html"
+            options={{
+              dragFiles: (
+                <UploadCoverTextBig big gray={!this.props.white}>
+                  <TranslatedText message="uploader.dragFiles" />
+                </UploadCoverTextBig>
+              )
+            }}
+          />
           <SupportedFileTypes>
             <br />
-            (only .mp4 currently supported)
+            <TranslatedText message="uploader.supportedFileTypes" />
           </SupportedFileTypes>
         </UploadCoverText>
       </UploaderWrapper>
@@ -194,7 +202,9 @@ class FilesUploader extends Component<Props, Object> {
         footer={
           <FooterWrapper>
             <InputText
-              label="(Not working yet) Or upload from Youtube or Vimeo"
+              label={RawTranslatedText({
+                message: 'uploader.youtubeOrVimeo'
+              })}
               helper="i.e.: http://youtube.com/videoID or http://vimeo.com/videoID"
               error={this.state.inputTextError}
               disabled

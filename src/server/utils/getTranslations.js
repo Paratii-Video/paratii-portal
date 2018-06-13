@@ -3,14 +3,14 @@ const path = require('path')
 
 const SUPPORTED_LOCALES = {
   EN: 'en',
-  ES: 'es'
+  PT_BR: 'pt'
 }
 
 const getTranslations = locale => {
   let fileName = 'en.json'
   switch (locale) {
-    case SUPPORTED_LOCALES.ES:
-      fileName = 'es.json'
+    case SUPPORTED_LOCALES.PT_BR:
+      fileName = 'pt-BR.json'
   }
 
   return fs.readFileSync(
