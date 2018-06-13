@@ -1,13 +1,10 @@
 /* @flow */
 
 import { createAction } from 'redux-actions'
-import Cookies from 'js-cookie'
 import bip39 from 'bip39'
 
 import {
-  LOGIN_REQUESTED,
   LOGIN_SUCCESS,
-  LOGOUT,
   SET_WALLET_DATA,
   SET_WALLET_ADDRESS,
   BALANCES_LOADED
@@ -30,31 +27,10 @@ import type { RootState, Dispatch } from 'types/ApplicationTypes'
 import { MODAL } from 'constants/ModalConstants'
 import UserRecord from 'records/UserRecords'
 
-const loginRequested = createAction(LOGIN_REQUESTED)
 const loginSuccess = createAction(LOGIN_SUCCESS)
-const logoutAction = createAction(LOGOUT)
 const balancesLoaded = createAction(BALANCES_LOADED)
 export const setWalletData = createAction(SET_WALLET_DATA)
 export const setWalletAddress = createAction(SET_WALLET_ADDRESS)
-
-const sleep = ms => {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
-
-export const login = (email: string, password: string) => (
-  dispatch: Dispatch
-) => {
-  dispatch(loginRequested())
-  sleep(200).then(() => {
-    Cookies.set('email', email)
-    dispatch(loginSuccess({ email }))
-  })
-}
-
-export const logout = () => (dispatch: Dispatch) => {
-  Cookies.remove('email')
-  dispatch(logoutAction())
-}
 
 export const checkUserWallet = () => (dispatch: Dispatch) => {
   if (ACTIVATE_SECURE_WALLET) {

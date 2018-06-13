@@ -8,6 +8,7 @@ import Text from '../foundations/Text'
 import TruncatedText from '../foundations/TruncatedText'
 import { ButtonStyleHover } from '../foundations/Button'
 import SVGIcon from '../foundations/SVGIcon'
+import TranslatedText from '../translations/TranslatedText'
 import FilesUploader from '../../containers/FileUploaderContainer'
 
 type Props = {
@@ -367,11 +368,10 @@ class Landing extends Component<Props, void> {
             <HeaderContent>
               <HeaderContentWrapper>
                 <Title huge bold>
-                  Bring your videos<br /> to the future
+                  <TranslatedText message="landingPage.header.title_html" />
                 </Title>
                 <Text gray big>
-                  Decentralisation is changing the business of online video and
-                  giving the power back to peers
+                  <TranslatedText message="landingPage.header.description" />
                 </Text>
                 <FilesUploader white />
               </HeaderContentWrapper>
@@ -385,10 +385,11 @@ class Landing extends Component<Props, void> {
         <Videos>
           <VideosWrapper>
             <VideosHeader>
-              <Title big>Meet your fellow pioneers</Title>
+              <Title big>
+                <TranslatedText message="landingPage.videos.title" />
+              </Title>
               <Text gray>
-                Explore short stories, music clips, and formats that our
-                community is inventing every day.
+                <TranslatedText message="landingPage.videos.description" />
               </Text>
             </VideosHeader>
             <LandingVideoList>

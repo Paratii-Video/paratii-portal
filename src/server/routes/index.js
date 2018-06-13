@@ -6,6 +6,7 @@ const paratii = new Paratii(paratiiConfig)
 
 exports.default = function (req, res, next) {
   res.render('index', {
+    translations: req.translations,
     helpers: {
       title: function () {
         return APP_TITLE
@@ -21,11 +22,13 @@ exports.player = async function player (req, res, next) {
   const path = req.route.path
   const video = await paratii.vids.get(id)
   const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
+  const translations = req.translations
 
   res.render('index', {
     player: true,
     video: video,
     embed: path === '/embed/:id',
+    translations,
     helpers: {
       title: function () {
         if (video !== null) {

@@ -3,10 +3,12 @@ const fs = require('fs')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
+const TranslationsWebpackPlugin = require('./webpack-utils/TranslationsWebpackPlugin')
 const path = require('path')
 
 const srcDir = path.resolve(__dirname, 'src')
 const configDir = path.resolve(__dirname, 'config')
+const translationsDir = srcDir + '/translations'
 const scriptsDir = srcDir + '/scripts'
 const embedDir = scriptsDir + '/embed'
 const assetsDir = srcDir + '/assets'
@@ -74,6 +76,7 @@ const config = {
       adapters: scriptsDir + '/adapters',
       types: scriptsDir + '/types',
       utils: scriptsDir + '/utils',
+      translations: translationsDir,
       'test-utils': testDir + '/test-utils',
       'unit-tests': unitTestsDir,
       'functional-tests': functionalTestsDir
@@ -130,6 +133,7 @@ const config = {
     },
   plugins: [
     new webpack.DefinePlugin(definedVariables),
+    TranslationsWebpackPlugin(),
     prod || staging
       ? new UglifyJsPlugin({
         sourceMap: false,
