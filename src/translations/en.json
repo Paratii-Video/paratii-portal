@@ -19,6 +19,7 @@
     "description": "This page is not available yet. A passionate team is either building it, or unaware of it, as of now. Want to help us move faster? Please report the issue on our Github:",
     "linkText": "Paratii-Video"
   },
+  "PTI": "PTI",
   "search": {
     "input": {
       "placeholder": "Search"
@@ -28,6 +29,17 @@
       "noResultsFor": "No results found for \"%{term}\"",
       "moreResults": "Click for more results",
       "zeroState": "Enter some keywords above to search!"
+    }
+  },
+  "tipping": {
+    "giveTip": "Give a tip",
+    "header": "Feeling generous today?",
+    "chooseTip": "Choose how much to tip %{username}",
+    "amounts": {
+      "10": "10",
+      "15": "15",
+      "20": "20",
+      "25": "25"
     }
   }
 }

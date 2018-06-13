@@ -9,7 +9,10 @@ import CloseButton from 'components/foundations/buttons/CloseButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import Popover from 'components/foundations/Popover'
 import Colors from 'components/foundations/base/Colors'
-import { POPOVER_PADDING, OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
+import {
+  VIDEO_OVERLAY_PADDING,
+  VIDEO_OVERLAY_BUTTONS_HEIGHT
+} from 'constants/UIConstants'
 import {
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS
@@ -23,7 +26,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 250px;
-  padding: ${POPOVER_PADDING};
+  padding: ${VIDEO_OVERLAY_PADDING};
 `
 
 const TopBar = styled.div`
@@ -107,7 +110,7 @@ class WalletInfo extends React.Component<Props> {
     return (
       <Popover
         open={open}
-        top={OVERLAY_BUTTONS_HEIGHT}
+        top={VIDEO_OVERLAY_BUTTONS_HEIGHT}
         right={0}
         data-test-id="wallet-info-popover"
       >

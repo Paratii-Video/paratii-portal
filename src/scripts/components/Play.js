@@ -17,6 +17,7 @@ import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
+import TipOverlay from 'components/tipping/TipOverlay'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
 import {
@@ -66,6 +67,7 @@ type State = {
   mouseInOverlay: boolean,
   shouldShowVideoOverlay: boolean,
   showShareModal: boolean,
+  showTipOverlay: boolean,
   videoHasNeverPlayed: boolean,
   videoNotFound: boolean
 }
@@ -166,6 +168,15 @@ const DescriptionWrapper = styled.div`
   margin-top: 30px;
 `
 
+const TipOverlayWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: ${Z_INDEX_OVERLAY};
+`
+
 const HIDE_CONTROLS_THRESHOLD: number = 2000
 
 class Play extends Component<Props, State> {
@@ -190,7 +201,8 @@ class Play extends Component<Props, State> {
       playerCreated: '',
       isEmbed: this.props.isEmbed || false,
       showShareModal: false,
-      videoHasNeverPlayed: true
+      videoHasNeverPlayed: true,
+      showTipOverlay: false
     }
 
     this.lastMouseMove = 0
@@ -327,9 +339,20 @@ class Play extends Component<Props, State> {
   }
 
   toggleShareModal (): void {
-    this.setState({
-      showShareModal: !this.state.showShareModal
-    })
+    this.setState((prevState: State) => ({
+      showShareModal: !prevState.showShareModal
+    }))
+  }
+
+  onTipButtonClick = (e: Object): void => {
+    e.stopPropagation()
+    this.setState((prevState: State) => ({
+      showTipOverlay: !prevState.showTipOverlay
+    }))
+  }
+
+  closeTipOverlay = (): void => {
+    this.setState({ showTipOverlay: false })
   }
 
   onMouseEnter = (): void => {
@@ -773,7 +796,10 @@ class Play extends Component<Props, State> {
                     this.wrapperRef = ref
                   }}
                 >
-                  <Transition in={this.shouldShowVideoOverlay()} timeout={0}>
+                  <Transition
+                    in={true || this.shouldShowVideoOverlay()}
+                    timeout={0}
+                  >
                     {(transitionState: ?string) => (
                       <OverlayWrapper
                         onMouseLeave={this.onMouseLeave}
@@ -785,6 +811,7 @@ class Play extends Component<Props, State> {
                           isEmbed={isEmbed}
                           showStartScreen={this.shouldShowStartScreen()}
                           toggleShareModal={this.toggleShareModal}
+                          onTipButtonClick={this.onTipButtonClick}
                           showShareModal={this.state.showShareModal}
                           onScrub={this.scrubVideo}
                           onVolumeChange={this.changeVolume}
@@ -823,6 +850,11 @@ class Play extends Component<Props, State> {
                       }
                       shareOptions={shareOptions}
                     />
+                  ) : null}
+                  {this.state.showTipOverlay ? (
+                    <TipOverlayWrapper>
+                      <TipOverlay onClose={this.closeTipOverlay} />
+                    </TipOverlayWrapper>
                   ) : null}
                 </PlayerWrapper>
               </VideoCover>
