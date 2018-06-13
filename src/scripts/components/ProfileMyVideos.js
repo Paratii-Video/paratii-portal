@@ -3,8 +3,7 @@ import styled from 'styled-components'
 import type { VideoRecord } from 'records/VideoRecords'
 import Title from './foundations/Title'
 import RadioCheck, { RadioWrapper } from './widgets/forms/RadioCheck'
-import MyVideoItem from '../containers/MyVideoItemContainer'
-import { MyVideosWrapper } from './MyVideoItem'
+import MyVideoItem, { MyVideosWrapper } from './MyVideoItem'
 
 type Props = {
   videos: Map<string, VideoRecord> // maps video ids to upload records
