@@ -1,3 +1,5 @@
+/* @flow */
+
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import Colors from './foundations/base/Colors'
