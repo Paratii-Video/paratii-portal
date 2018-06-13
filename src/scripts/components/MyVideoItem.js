@@ -5,6 +5,7 @@ import Text, { Strong } from './foundations/Text'
 import Button from './foundations/Button'
 import SVGIcon from './foundations/SVGIcon'
 import { videoDuration } from '../operators/VideoOperators'
+import { formatDuration } from '../utils/VideoUtils'
 import type VideoRecord from 'records/VideoRecords'
 
 type Props = {
@@ -60,7 +61,6 @@ const MyVideoItemImage = styled.div`
   width: 100%;
 `
 
-// <export or import from Videoform>
 const VideoMediaTime = styled.div`
   bottom: 10px;
   padding: 10px;
@@ -114,7 +114,7 @@ class MyVideoItem extends Component<Props, void> {
     let poster = ''
     let videoPoster = ''
     const duration = videoDuration(video)
-    let durationNoMillis = '00:00:00'
+    let durationNoMillis = '00:00'
 
     if (video && video.thumbnails.size === 4) {
       poster = video.thumbnails.get(0)
@@ -123,7 +123,7 @@ class MyVideoItem extends Component<Props, void> {
     }
 
     if (duration) {
-      durationNoMillis = duration.substring(0, duration.indexOf('.'))
+      durationNoMillis = formatDuration(duration)
     }
 
     return (
