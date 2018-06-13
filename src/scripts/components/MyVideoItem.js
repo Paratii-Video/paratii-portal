@@ -88,7 +88,6 @@ const VideoMediaTimeText = styled.p`
   position: relative;
   z-index: 1;
 `
-// </export or import from Videoform>
 
 const MyVideoItemInfo = styled.div`
   background: ${props => props.theme.colors.MyVideoItem.background};
