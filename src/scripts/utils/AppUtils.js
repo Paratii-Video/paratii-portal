@@ -99,7 +99,7 @@ export const getParatiiConfig = (env: ?string, scope: ?string): Object => {
 
         // Get content from file
         const contents = fs.readFileSync('/tmp/registry.json')
-        const registryConfig = JSON.parse(contents)
+        const registryConfig = JSON.parse(contents.toString())
         config.eth.registryAddress = registryConfig.registryAddress
       } catch (e) {
         console.log(`WARNING: no registry address configured`)
