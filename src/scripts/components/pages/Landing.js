@@ -119,6 +119,14 @@ const VideosHeader = styled.div`
   padding: 0 248px 100px;
   text-align: center;
   width: 100%;
+
+  @media (max-width: 900px) {
+    padding: 0 100px 100px;
+  }
+
+  @media (max-width: 650px) {
+    padding: 0 40px 100px;
+  }
 `
 
 const LandingVideoList = styled.div`
