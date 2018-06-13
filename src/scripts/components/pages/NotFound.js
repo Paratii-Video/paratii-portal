@@ -1,8 +1,12 @@
+/* @flow */
+
 import React, { Component } from 'react'
-import Button from '../foundations/Button'
-import Title from '../foundations/Title'
-import Text from '../foundations/Text'
 import styled from 'styled-components'
+
+import Button from 'components/foundations/Button'
+import Title from 'components/foundations/Title'
+import Text from 'components/foundations/Text'
+import TranslatedText from 'components/translations/TranslatedText'
 
 const Wrapper = styled.div`
   display: flex;
@@ -30,7 +34,9 @@ class NotFound extends Component<Props, void> {
   render () {
     return (
       <Wrapper>
-        <Title purple>Oooooops, page not found</Title>
+        <Title purple>
+          <TranslatedText message="notFound.title" />
+        </Title>
         <Text gray>{this.props.children}</Text>
         <SVG viewBox="1644 3231.982 710.6 165.593">
           <defs>
@@ -61,17 +67,15 @@ class NotFound extends Component<Props, void> {
           </g>
         </SVG>
         <Text gray>
-          This page is not available yet. A passionate team is either building
-          it, or unaware of it, as of now. Want to help us move faster? Why
-          don’t you report the issue on our{' '}
+          <TranslatedText message="notFound.description" />{' '}
           <NavLink
             href="https://github.com/Paratii-Video/"
             target="_blank"
             anchor
             purple
           >
-            Github
-          </NavLink>?
+            <TranslatedText message="notFound.linkText" />
+          </NavLink>
         </Text>
       </Wrapper>
     )
