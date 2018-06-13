@@ -12,6 +12,7 @@
     "build:production": "yarn run clean && yarn run prep && yarn run compile:sass && NODE_ENV=production node --max_old_space_size=4096 node_modules/.bin/webpack --progress --colors",
     "build:test": "yarn run clean && yarn run prep && NODE_ENV=test node --max_old_space_size=4096 node_modules/.bin/webpack --progress --colors",
     "build:staging": "yarn run clean && yarn run prep && yarn run compile:sass && NODE_ENV=staging node --max_old_space_size=4096 node_modules/.bin/webpack --progress --colors",
+    "bundlesize": "bundlesize",
     "clean": "rm -rf build/",
     "chimp-test": "yarn run chimp:setup & chimp chimp.config.js && yarn run chimp:teardown",
     "chimp-circleci-test": "yarn run chimp:setup & chimp .circleci/chimp.circleci.config.js && yarn run chimp:teardown",
@@ -90,6 +91,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
+    "bundlesize": "^0.17.0",
     "chai": "^4.1.2",
     "chimp": "^0.50.2",
     "concurrently": "^3.5.1",
@@ -184,5 +186,11 @@
     "styled-components": "^2.3.3",
     "stylelint-config-prettier": "^2.0.0",
     "web3": "^1.0.0-beta.29"
-  }
+  },
+  "bundlesize": [
+    {
+      "path": "./build/*bundle.js",
+      "maxSize": "1 MB"
+    }
+  ]
 }
