@@ -1,7 +1,6 @@
 /* @flow */
 
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { checkUserWallet, loadBalances } from 'actions/UserActions'
 import { getUser, getUserNavStatus } from 'selectors/index'
 import { closeUserNav } from 'actions/UserNavActions'
@@ -22,10 +21,10 @@ const mapStateToProps = (state: RootState) => ({
   showUserNav: getUserNavStatus(state)
 })
 
-const mapDispatchToProps = dispatch => ({
-  checkUserWallet: bindActionCreators(checkUserWallet, dispatch),
-  closeUserNav: bindActionCreators(closeUserNav, dispatch),
-  loadBalances: bindActionCreators(loadBalances, dispatch)
-})
+const mapDispatchToProps = {
+  checkUserWallet,
+  closeUserNav,
+  loadBalances
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserNav)
