@@ -13,8 +13,6 @@ import ProgressBar, {
 } from 'components/foundations/ProgressBar'
 import UserBadge from './widgets/UserBadge'
 
-type Props = {}
-
 const INFOSTATUS_CARD_MARGIN_BOTTOM: string = '15px'
 
 const Wrapper = styled.div`
@@ -243,7 +241,7 @@ const ChallengeSequenceDot = styled.span`
   }
 `
 
-class Profile extends Component<Props, void> {
+class Profile extends Component<void> {
   render () {
     const MockAvatar = (
       <img src="http://www.onrouteforward.com/uploads/6/0/0/8/60080487/6808024.jpg" />
