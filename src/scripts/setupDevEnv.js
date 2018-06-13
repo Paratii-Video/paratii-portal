@@ -29,8 +29,8 @@ async function deployContracts () {
   const msg = `Registry address written to ${registryFilename}`
   console.log(msg)
 
-  const diagnosis = await paratii.diagnose()
-  console.log(diagnosis)
+  // const diagnosis = await paratii.diagnose()
+  // console.log(diagnosis)
 }
 
 async function fundDistributor () {
