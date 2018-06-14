@@ -4,6 +4,7 @@ import type { VideoRecord } from 'records/VideoRecords'
 import Title from './foundations/Title'
 import RadioCheck, { RadioWrapper } from './widgets/forms/RadioCheck'
 import MyVideoItem, { MyVideosWrapper } from './MyVideoItem'
+import TranslatedText from './translations/TranslatedText'
 
 type Props = {
   videos: Map<string, VideoRecord> // maps video ids to upload records
@@ -43,7 +44,9 @@ class ProfileMyVideos extends Component<Props, void> {
     return (
       <Wrapper>
         <ProfileFilterVideos>
-          <ProfileFilterTitle small>My videos</ProfileFilterTitle>
+          <ProfileFilterTitle small>
+            <TranslatedText message="MyVideos.title" />
+          </ProfileFilterTitle>
           <ProfileFilterRadioWrapper>
             <RadioCheck
               name="myvideos-published"

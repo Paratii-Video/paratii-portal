@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom'
 import Text from './foundations/Text'
 import SVGIcon from './foundations/SVGIcon'
 import UserBadge from './widgets/UserBadge'
+import TranslatedText from './translations/TranslatedText'
 
 type Props = {
   balance: string,
@@ -180,13 +181,13 @@ class UserNav extends Component<Props, void> {
           <UserBadge
             userAvatar={avatarUser}
             userName={getName(user)}
-            userDate="Since 2018"
+            userDate={<TranslatedText message="UserNav.dataLabel" />}
           />
           <UserPTI>
             <UserPTIValuesWrapper>
               <UserPTIValue>
                 <Text gray tiny>
-                  Available PTI
+                  <TranslatedText message="UserNav.leftBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
                   <Text purple>{balance} PTI</Text>
@@ -197,7 +198,7 @@ class UserNav extends Component<Props, void> {
               </UserPTIValue>
               <UserPTIValue>
                 <Text gray tiny>
-                  Staked PTI
+                  <TranslatedText message="UserNav.rightBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
                   <Text pink>10 PTI</Text>

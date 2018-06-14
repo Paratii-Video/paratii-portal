@@ -16,6 +16,9 @@
       "description": "Explore short stories, music clips, and formats that our community is inventing every day."
     }
   },
+  "MyVideos": {
+    "title": "My videos"
+  },
   "navigation": {
     "voucher": "Get PTI",
     "myVideos": "My videos",
@@ -45,5 +48,10 @@
     "filesInstructions_html": "%{dragFiles} or click to find them",
     "supportedFileTypes": "(only .mp4 currently supported)",
     "youtubeOrVimeo": "(Not working yet) Or upload from Youtube or Vimeo"
+  },
+  "UserNav": {
+    "dataLabel": "Since",
+    "leftBoxTitle": "Available PTI",
+    "rightBoxTitle": "Staked PTI"
   }
 }
