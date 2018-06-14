@@ -11773,7 +11773,7 @@ parallel-transform@^1.1.0:
 
 "paratii-js@github:Paratii-Video/paratii-js#fix/wallet-refactor":
   version "0.2.6"
-  resolved "https://codeload.github.com/Paratii-Video/paratii-js/tar.gz/be0b0543aa0b497ad0cea88d8efe05c9c9379d31"
+  resolved "https://codeload.github.com/Paratii-Video/paratii-js/tar.gz/a453e36df604bd38d9e8a7c7d3c446cf4cdb1514"
   dependencies:
     async "^2.6.0"
     babel-runtime "^6.26.0"
