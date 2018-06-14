@@ -33,13 +33,17 @@
   },
   "tipping": {
     "giveTip": "Give a tip",
-    "header": "Feeling generous today?",
-    "chooseTip": "Choose how much to tip %{username}",
-    "amounts": {
-      "10": "10",
-      "15": "15",
-      "20": "20",
-      "25": "25"
+    "steps": {
+      "chooseAmount": {
+        "header": "Feeling generous today?",
+        "chooseTip": "Choose how much to tip %{username}",
+        "amounts": {
+          "10": "10",
+          "15": "15",
+          "20": "20",
+          "25": "25"
+        }
+      }
     }
   }
 }
