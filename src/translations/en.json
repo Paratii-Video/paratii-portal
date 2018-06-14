@@ -6,6 +6,16 @@
     "brazil": "Portuguese",
     "english": "English"
   },
+  "landingPage": {
+    "header": {
+      "title_html": "Bring your videos<br /> to the future",
+      "description": "Decentralisation is changing the business of online video and giving the power back to peers"
+    },
+    "videos": {
+      "title": "Meet your fellow pioneers",
+      "description": "Explore short stories, music clips, and formats that our community is inventing every day."
+    }
+  },
   "navigation": {
     "voucher": "Get PTI",
     "myVideos": "My videos",
@@ -50,5 +60,11 @@
         "continue": "Continue"
       }
     }
+  },
+  "uploader": {
+    "dragFiles": "Drag your files here",
+    "filesInstructions_html": "%{dragFiles} or click to find them",
+    "supportedFileTypes": "(only .mp4 currently supported)",
+    "youtubeOrVimeo": "(Not working yet) Or upload from Youtube or Vimeo"
   }
 }

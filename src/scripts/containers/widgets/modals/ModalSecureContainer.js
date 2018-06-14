@@ -9,7 +9,7 @@ import ModalSecure from 'components/widgets/modals/ModalSecure'
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState) => ({
-  previousModal: state.modal.previousModalContent
+  previousModal: state.modal.previousModalName
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 
 import { uploadAndTranscode } from 'actions/UploaderActions'
 import type { RootState } from 'types/ApplicationTypes'
-import FilesUploader from '../components/widgets/FilesUploader'
+import FileUploader from '../components/widgets/FileUploader'
 import { getIsSecure } from 'selectors/UserSelectors'
 import { checkUserWallet } from 'actions/UserActions'
 
@@ -16,4 +16,4 @@ const mapDispatchToProps = dispatch => ({
   checkUserWallet: bindActionCreators(checkUserWallet, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(FilesUploader)
+export default connect(mapStateToProps, mapDispatchToProps)(FileUploader)

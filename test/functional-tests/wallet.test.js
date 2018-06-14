@@ -35,6 +35,7 @@ describe('💰 Wallet:', function () {
     browser.waitAndClick('[name="wallet-password"]')
     browser.setValue('[name="wallet-password"]', password)
     browser.waitAndClick('[data-test-id="continue"]')
+    browser.waitUntil(() => browser.isVisible('[data-test-id="pti-balance"]'))
     const balance = browser.getText('[data-test-id="pti-balance"]')
     // We have a new account so the balance should be zero
     assert.equal(balance, '0')
@@ -75,7 +76,7 @@ describe('💰 Wallet:', function () {
       return window.paratii.eth.getAccount()
     }).value
 
-    browser.waitForClickable('[data-test-id="pti-balance"]')
+    browser.waitForClickable('[data-test-id="pti-balance"]', 5000)
     const balance = browser.getText('[data-test-id="pti-balance"]')
     // Check the if the address is the restored one
     assert.equal(newAddress, restoredAddress)
@@ -294,7 +295,7 @@ describe('Voucher:', function () {
     // We need to wait the voucher be redeem
     browser.pause(2000)
     // Then we check the balance
-    const balance = browser.getText('[data-test-id="pti-balance"]')
+    const balance = browser.getText('[data-test-id="pti-balance"]', 5000)
     assert.equal(paratii.eth.web3.utils.toWei(balance), voucherAmount11)
     done()
   })

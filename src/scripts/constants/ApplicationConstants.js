@@ -49,3 +49,5 @@ export const NOTIFICATION_POSITIONS = {
   BOTTOM_LEFT: 'bl',
   BOTTOM_CENTER: 'bc'
 }
+
+export const NOTIFICATION_DELAY_MS: number = 500
