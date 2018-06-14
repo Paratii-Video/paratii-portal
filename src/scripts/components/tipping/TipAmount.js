@@ -3,7 +3,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Button from 'components/foundations/Button'
 import Icon from 'components/foundations/Icon'
 import Colors from 'components/foundations/base/Colors'
 import TranslatedText from 'components/translations/TranslatedText'
@@ -15,7 +14,7 @@ type Props = {
   onClick: (e: Object) => void
 }
 
-const WrappedButton = styled(Button)`
+const WrappedButton = styled.button`
   border: 1px solid ${Colors.grayLight};
   display: flex;
   align-items: center;
@@ -26,6 +25,14 @@ const WrappedButton = styled(Button)`
   width: 152px;
   border-radius: 30px;
   font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  &:active,
+  &:hover {
+    border-color: ${Colors.purple};
+    opacity: 1;
+  }
 `
 
 const IconWrapper = styled.span`
