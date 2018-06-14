@@ -30,6 +30,7 @@ jobs:
           command: node src/scripts/waitForServer.js
           no_output_timeout: 120s
       - run: yarn run chimp-circleci-test
+      - run: yarn bundlesize
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
