@@ -12,7 +12,7 @@ import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
 
 type Props = {
   isWalletSecured: boolean,
-  closeNavAndUserNav: () => void,
+  closeMainNavAndUserNav: () => void,
   checkUserWallet: () => void
 }
 
@@ -68,7 +68,7 @@ class MainNavigation extends Component<Props, Object> {
   secureWallet (e: Object) {
     e.preventDefault()
     this.props.checkUserWallet()
-    this.props.closeNavAndUserNav()
+    this.props.closeMainNavAndUserNav()
   }
 
   render () {
@@ -78,25 +78,28 @@ class MainNavigation extends Component<Props, Object> {
       <Nav>
         <NavList>
           <NavItem>
-            <NavLink onClick={this.props.closeNavAndUserNav} to="/voucher">
+            <NavLink onClick={this.props.closeMainNavAndUserNav} to="/voucher">
               <TranslatedText message="navigation.voucher" />
             </NavLink>
           </NavItem>
           <Hidden>
             <NavItem>
-              <NavLink onClick={this.props.closeNavAndUserNav} to="/my-videos">
+              <NavLink
+                onClick={this.props.closeMainNavAndUserNav}
+                to="/my-videos"
+              >
                 <TranslatedText message="navigation.myVideos" />
               </NavLink>
             </NavItem>
           </Hidden>
           <NavItem>
-            <NavLink onClick={this.props.closeNavAndUserNav} to="/upload">
+            <NavLink onClick={this.props.closeMainNavAndUserNav} to="/upload">
               <TranslatedText message="navigation.upload" />
             </NavLink>
           </NavItem>
           <NavItem>
             <Anchor
-              onClick={this.props.closeNavAndUserNav}
+              onClick={this.props.closeMainNavAndUserNav}
               href="http://paratii.video/"
               target="_blank"
             >
