@@ -48,10 +48,11 @@ export const getContext = (state: RootState): string => state.global.context
 /* Modal */
 export const getModalStatus = (state: RootState): boolean =>
   state.modal.showModal
-export const getModalContent = (state: RootState): string =>
-  state.modal.modalContent
-export const getPreviousModal = (state: RootState): string =>
-  state.modal.previousModalContent
+export const getModalName = (state: RootState): string => state.modal.name
+export const getPreviousModalName = (state: RootState): string =>
+  state.modal.previousModalName
+export const getModalProps = (state: RootState): ?Object =>
+  state.modal.modalProps
 
 /* Users */
 export const getUser = (state: RootState): UserRecord => state.user
