@@ -189,8 +189,20 @@
   },
   "bundlesize": [
     {
-      "path": "./build/*bundle.js",
-      "maxSize": "1 MB"
+      "path": "./build/bundle.js",
+      "maxSize": "5 MB"
+    },
+    {
+      "path": "./build/1.bundle.js",
+      "maxSize": "5 MB"
+    },
+    {
+      "path": "./build/ipfs.bundle.js",
+      "maxSize": "5 MB"
+    },
+    {
+      "path": "./build/embed/bundle.js",
+      "maxSize": "5 MB"
     }
   ]
 }
