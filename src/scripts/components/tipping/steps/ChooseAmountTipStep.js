@@ -9,17 +9,12 @@ import TranslatedText from 'components/translations/TranslatedText'
 import Colors from 'components/foundations/base/Colors'
 
 import TipAmount from '../TipAmount'
+import TippingStepHeader from '../utils/TippingStepHeader'
 
 type Props = {
   onChooseAmount: (amount: number) => void,
   usernameToTip: string
 }
-
-const Header = styled.div`
-  color: ${Colors.white};
-  font-weight: bold;
-  font-size: 25px;
-`
 
 const ChoosePrompt = styled.div`
   margin-top: 10px;
@@ -44,9 +39,9 @@ class ChooseAmountToTipStep extends React.Component<Props> {
 
     return (
       <Fragment>
-        <Header>
+        <TippingStepHeader>
           <TranslatedText message="tipping.steps.chooseAmount.header" />
-        </Header>
+        </TippingStepHeader>
         <ChoosePrompt>
           <TranslatedText
             message="tipping.steps.chooseAmount.chooseTip"

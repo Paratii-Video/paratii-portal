@@ -9,6 +9,7 @@ import { TIPPING_UI_STEPS } from 'constants/TippingConstants'
 import CloseButton from 'components/foundations/buttons/CloseButton'
 import Colors from 'components/foundations/base/Colors'
 import ChooseAmountTipStep from './steps/ChooseAmountTipStep'
+import EnterPasswordTipStep from './steps/EnterPasswordTipStep'
 
 import type { TippingUIStep } from 'types/TippingTypes'
 
@@ -53,6 +54,7 @@ class TipOverlay extends React.Component<Props, State> {
 
   onChooseAmount = (amount: number) => {
     this.setState({
+      currentStep: TIPPING_UI_STEPS.ENTER_PASSWORD,
       selectedAmount: amount
     })
   }
@@ -64,6 +66,13 @@ class TipOverlay extends React.Component<Props, State> {
           <ChooseAmountTipStep
             usernameToTip={this.props.usernameToTip || 'bent0b0x'}
             onChooseAmount={this.onChooseAmount}
+          />
+        )
+      case TIPPING_UI_STEPS.ENTER_PASSWORD:
+        return (
+          <EnterPasswordTipStep
+            tipAmount={this.state.selectedAmount}
+            onSuccessfulAuth={() => {}}
           />
         )
     }

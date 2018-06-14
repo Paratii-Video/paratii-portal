@@ -43,6 +43,11 @@
           "20": "20",
           "25": "25"
         }
+      },
+      "enterPassword": {
+        "header": "You are about to tip",
+        "inputPlaceholder": "Password",
+        "continue": "Continue"
       }
     }
   }
