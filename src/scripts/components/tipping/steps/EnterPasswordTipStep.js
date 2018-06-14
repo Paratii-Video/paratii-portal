@@ -10,13 +10,17 @@ import Input from 'components/foundations/forms/Input'
 import TranslatedText from 'components/translations/TranslatedText'
 
 import TippingStepHeader from '../utils/TippingStepHeader'
-
-const FORM_ID: string = 'PASSWORD_FORM'
+import TipAmount from '../utils/TipAmount'
 
 const PasswordForm = styled.div`
   display: flex;
   flex-direction: column;
   width: 65%;
+  align-items: center;
+`
+
+const TipAmountWrapper = styled.div`
+  margin-top: 10px;
 `
 
 const ContinueButton = styled(Button)`
@@ -56,7 +60,10 @@ class EnterPasswordTipStep extends React.Component<Props, State> {
         <TippingStepHeader>
           <TranslatedText message="tipping.steps.enterPassword.header" />
         </TippingStepHeader>
-        <PasswordForm id={FORM_ID}>
+        <TipAmountWrapper>
+          <TipAmount amount={this.props.tipAmount} />
+        </TipAmountWrapper>
+        <PasswordForm>
           <Input
             placeholder={RawTranslatedText({
               message: 'tipping.steps.enterPassword.inputPlaceholder'

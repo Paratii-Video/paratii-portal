@@ -8,7 +8,7 @@ import { TIPPING_PTI_AMOUNTS } from 'constants/TippingConstants'
 import TranslatedText from 'components/translations/TranslatedText'
 import Colors from 'components/foundations/base/Colors'
 
-import TipAmount from '../TipAmount'
+import TipAmountButton from '../utils/TipAmountButton'
 import TippingStepHeader from '../utils/TippingStepHeader'
 
 type Props = {
@@ -50,7 +50,7 @@ class ChooseAmountToTipStep extends React.Component<Props> {
         </ChoosePrompt>
         <TipAmounts>
           {TIPPING_PTI_AMOUNTS.map((amount: number) => (
-            <TipAmount
+            <TipAmountButton
               key={amount}
               amount={amount}
               onClick={() => {

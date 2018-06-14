@@ -11,28 +11,15 @@ import coinDataUrl from 'assets/svg/coin.svg'
 
 type Props = {
   amount: number,
-  onClick: (e: Object) => void
 }
 
-const WrappedButton = styled.button`
-  border: 1px solid ${Colors.grayLight};
+const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding: 10px;
-  color: ${Colors.grayLight};
-  height: 60px;
-  width: 152px;
-  border-radius: 30px;
+  justify-content: center;
   font-size: 20px;
   font-weight: bold;
-  text-transform: uppercase;
-
-  &:active,
-  &:hover {
-    border-color: ${Colors.purple};
-    opacity: 1;
-  }
+  color: ${Colors.white};
 `
 
 const IconWrapper = styled.span`
@@ -45,15 +32,15 @@ const UnitWrapper = styled.span`
   font-size: 15px;
   color: ${Colors.purple};
   position: relative;
-  top: 1px;
+  top: 3px;
 `
 
-class TipButton extends React.Component<Props> {
+class TipAmount extends React.Component<Props> {
   render () {
-    const { amount, onClick } = this.props
+    const { amount } = this.props
 
     return (
-      <WrappedButton onClick={onClick}>
+      <Wrapper>
         <IconWrapper>
           <Icon color={Colors.grayLight} url={coinDataUrl} />
         </IconWrapper>
@@ -61,9 +48,9 @@ class TipButton extends React.Component<Props> {
         <UnitWrapper>
           <TranslatedText message="PTI" />
         </UnitWrapper>
-      </WrappedButton>
+      </Wrapper>
     )
   }
 }
 
-export default TipButton
+export default TipAmount
