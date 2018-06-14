@@ -11,6 +11,7 @@ import {
   WALLET_KEY_SECURE,
   MNEMONIC_KEY_TEMP
 } from 'constants/ParatiiLibConstants'
+import { NOTIFICATION_DELAY_MS } from 'constants/ApplicationConstants'
 
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
@@ -76,37 +77,40 @@ class ModalAskPassword extends Component<Props, Object> {
       { title: 'Trying to unlock your keystore...' },
       'warning'
     )
-    try {
-      paratii.eth.wallet.clear()
-      paratii.eth.wallet.decrypt(JSON.parse(walletString), password)
-      this.props.notification(
-        {
-          title: 'Success!',
-          message: 'Your keystore has been unlocked.'
-        },
-        'success'
-      )
-      // Set the balance
-      this.props.setAddressAndBalance()
-      this.props.setWalletData({ walletKey: WALLET_KEY_SECURE })
-      /// Update user data in redux state
-      this.props.setUserData()
-      // Retrieve your videos
-      this.props.fetchOwnedVideos()
-      this.props.closeModal()
-    } catch (err) {
-      // Password is not valid
-      this.setState({
-        error: 'The password is not valid, please retype the password'
-      })
-      this.props.notification(
-        {
-          title: 'The password is not valid',
-          message: 'Please retype the password.'
-        },
-        'error'
-      )
-    }
+
+    setTimeout(() => {
+      try {
+        paratii.eth.wallet.clear()
+        paratii.eth.wallet.decrypt(JSON.parse(walletString), password)
+        this.props.notification(
+          {
+            title: 'Success!',
+            message: 'Your keystore has been unlocked.'
+          },
+          'success'
+        )
+        // Set the balance
+        this.props.setAddressAndBalance()
+        this.props.setWalletData({ walletKey: WALLET_KEY_SECURE })
+        /// Update user data in redux state
+        this.props.setUserData()
+        // Retrieve your videos
+        this.props.fetchOwnedVideos()
+        this.props.closeModal()
+      } catch (err) {
+        // Password is not valid
+        this.setState({
+          error: 'The password is not valid, please retype the password'
+        })
+        this.props.notification(
+          {
+            title: 'The password is not valid',
+            message: 'Please retype the password.'
+          },
+          'error'
+        )
+      }
+    }, NOTIFICATION_DELAY_MS)
   }
 
   handleInputChange (input: string, e: Object) {
@@ -143,7 +147,12 @@ class ModalAskPassword extends Component<Props, Object> {
           </FieldContainer>
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.forgotPassword}>Forgot Password</Button>
+              <Button
+                data-test-id="forgot-password-button"
+                onClick={this.forgotPassword}
+              >
+                Forgot Password
+              </Button>
             </ButtonContainer>
             <ButtonContainer>
               <Button

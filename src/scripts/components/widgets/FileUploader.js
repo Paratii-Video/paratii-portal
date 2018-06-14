@@ -21,10 +21,11 @@ type Props = {
   margin: string,
   onError: boolean,
   showCard: boolean,
-  white: Boolean,
+  white: boolean,
   onFileChosen: (file: Object) => void,
   checkUserWallet: () => void
 }
+
 const StyleInput = css`
   height: 100%;
   width: 100%;
@@ -94,7 +95,6 @@ const UploadAddIcon = Icon.extend`
 class FilesUploader extends Component<Props, Object> {
   onFileChosen: (e: Object) => void
   onDrag: (e: Object) => void
-  onCheck: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
@@ -104,20 +104,17 @@ class FilesUploader extends Component<Props, Object> {
       fileName: 'No file chosen',
       inputTextError: false
     }
-
-    this.onFileChosen = this.onFileChosen.bind(this)
-    this.onDrag = this.onDrag.bind(this)
-    this.onCheck = this.onCheck.bind(this)
   }
 
-  onCheck (e: Object) {
-    if (!this.props.isWalletSecured) {
-      e.preventDefault()
-      this.props.checkUserWallet()
-    }
+  setSelectedFile (file: File) {
+    this.props.onFileChosen(file)
+    this.setState({
+      file: file,
+      fileName: file.name + ' | ' + file.size + 'bytes'
+    })
   }
 
-  onFileChosen (e: Object) {
+  onFileChosen = (e: Object) => {
     // If wallet not secure open the modal
     if (this.props.isWalletSecured) {
       const file = e.target.files[0]
@@ -149,14 +146,21 @@ class FilesUploader extends Component<Props, Object> {
     })
   }
 
+  onFileInputClick = (e: Object) => {
+    if (!this.props.isWalletSecured) {
+      e.preventDefault()
+      this.props.checkUserWallet()
+    }
+  }
+
   renderUploadTrigger ({ card }: { card: boolean } = {}) {
     return (
       <UploaderWrapper>
         <InputFile
           type="file"
           data-test-id="upload-file-input"
-          onClick={this.onCheck}
           onChange={this.onFileChosen}
+          onClick={this.onFileInputClick}
           onDragEnter={this.onDrag}
           onDragLeave={this.onDrag}
         />

@@ -10,7 +10,7 @@ import { MODAL } from 'constants/ModalConstants'
 import { RESTORE_ACCOUNT, NEW_ACCOUNT } from 'constants/ParatiiLibConstants'
 
 type Props = {
-  openModal: string => void,
+  openModal: (string, ?Object) => void,
   setContext: string => void
 }
 

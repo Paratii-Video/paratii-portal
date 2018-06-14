@@ -5,6 +5,7 @@ import {
   getUploaderVideos
 } from 'selectors/UploaderSelectors'
 import { selectVideoToPublish } from 'actions/UploaderActions'
+import { checkUserWallet } from 'actions/UserActions'
 import { fetchOwnedVideos } from 'actions/VideoActions'
 import type { RootState } from 'types/ApplicationTypes'
 
@@ -17,6 +18,7 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = {
+  checkUserWallet,
   fetchVideos: fetchOwnedVideos,
   setSelectedVideo: selectVideoToPublish
 }

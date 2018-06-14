@@ -5,5 +5,8 @@
   },
   "db": {
     "provider": "https://db.paratii.video/api/v1/"
+  },
+  "ipfs": {
+    "repo": "/tmp/paratii-repo-v0.2.6"
   }
 }
