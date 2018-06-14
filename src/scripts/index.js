@@ -2,23 +2,24 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { AppContainer } from 'react-hot-loader'
-import { Provider } from 'react-redux'
 import 'promise-polyfill/src/polyfill'
 
 import Root from 'components/Root'
+import PortalWrapper from 'components/PortalWrapper'
 import { getRoot } from 'utils/AppUtils'
+import initializeTranslator from 'utils/translations/initializeTranslator'
 import createStore from 'scripts/createStore'
+
 import 'styles/app.scss'
 
-export const store = createStore()
+const store = createStore()
+
+const translator = initializeTranslator()
 
 ReactDOM.render(
-  <Provider store={store}>
-    <AppContainer>
-      <Root />
-    </AppContainer>
-  </Provider>,
+  <PortalWrapper store={store} translator={translator}>
+    <Root />
+  </PortalWrapper>,
   getRoot()
 )
 
@@ -26,11 +27,9 @@ if (module.hot) {
   module.hot.accept('components/Root', () => {
     const NextRoot = require('components/Root').default
     ReactDOM.render(
-      <Provider store={store}>
-        <AppContainer>
-          <NextRoot />
-        </AppContainer>
-      </Provider>,
+      <PortalWrapper store={store} translator={translator}>
+        <NextRoot />
+      </PortalWrapper>,
       getRoot()
     )
   })

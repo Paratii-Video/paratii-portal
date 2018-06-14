@@ -6,7 +6,7 @@ import {
   nukeSessionStorage
 } from './test-utils/helpers'
 
-describe('🦄 Uploader Tool', function () {
+describe('🦄 Uploader Tool @watch', function () {
   this.timeout(120000)
 
   const uploadFileInputSelector =
@@ -20,6 +20,8 @@ describe('🦄 Uploader Tool', function () {
 
       // now we should see a form to fill in
       // the form should contain the id of our video
+      browser.waitForVisible('[data-test-id="uploader-item"]')
+      browser.waitAndClick('[data-test-id="uploader-item"]')
       browser.waitForExist('[data-test-id="video-id"]')
       const getVideoId = function () {
         var videoId = browser.getValue('[data-test-id="video-id"]')
@@ -36,6 +38,10 @@ describe('🦄 Uploader Tool', function () {
       // set title and video in the form
       browser.setValue('#input-video-title-' + videoId, video.title)
       browser.setValue('#input-video-description-' + videoId, video.description)
+      browser.setValue(
+        '#input-video-ownership-proof-' + videoId,
+        video.ownershipProof
+      )
       // submit the form
       browser.waitAndClick('[data-test-id="video-submit-save"]')
       // we now should be on the status screen
@@ -55,8 +61,11 @@ describe('🦄 Uploader Tool', function () {
       browser.waitUntil(() => {
         return browser.getValue('#input-video-title-' + videoId) === video.title
       })
+      const address = browser.execute(() => window.paratii.eth.getAccount())
+        .value
       const videoInfoFromBlockchain = await getVideoInfoFromBlockchain()
       assert.isOk(videoInfoFromBlockchain)
+      assert.equal(videoInfoFromBlockchain.owner, address)
       browser.waitUntil(
         () =>
           browser.execute(
@@ -103,7 +112,8 @@ describe('🦄 Uploader Tool', function () {
     const video = {
       title: 'Some title',
       description:
-        'Description of the video which can be pretty long and may contain dïàcrítics'
+        'Description of the video which can be pretty long and may contain dïàcrítics',
+      ownershipProof: 'this is my video'
     }
 
     browser.url('http://localhost:8080/upload')

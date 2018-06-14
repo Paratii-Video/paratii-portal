@@ -1,0 +1,49 @@
+{
+  "footer": {
+    "discover_html": "Discover all about Paratii at %{homePageLink}",
+    "homePage": "paratii.video",
+    "betaTool_html": "v0.0.1: This is a beta tool! We &hearts; to get feedback on Telegram: %{telegramBrazilLink} or %{telegramEnglishLink}",
+    "brazil": "Portuguese",
+    "english": "English"
+  },
+  "landingPage": {
+    "header": {
+      "title_html": "Bring your videos<br /> to the future",
+      "description": "Decentralisation is changing the business of online video and giving the power back to peers"
+    },
+    "videos": {
+      "title": "Meet your fellow pioneers",
+      "description": "Explore short stories, music clips, and formats that our community is inventing every day."
+    }
+  },
+  "navigation": {
+    "voucher": "Get PTI",
+    "myVideos": "My videos",
+    "upload": "Upload",
+    "about": "About Paratii",
+    "logIn": "Log In",
+    "signUp": "Sign Up"
+  },
+  "notFound": {
+    "title": "Oooooops, page not found",
+    "description": "This page is not available yet. A passionate team is either building it or doesn't know about it. Want to help us move faster? Please tell us how you got here with an issue on our Github:",
+    "linkText": "Paratii-Video"
+  },
+  "search": {
+    "input": {
+      "placeholder": "Search"
+    },
+    "results": {
+      "resultsFor": "Results for: %{term}",
+      "noResultsFor": "No results found for \"%{term}\"",
+      "moreResults": "See more results",
+      "zeroState": "Enter some keywords above to search!"
+    }
+  },
+  "uploader": {
+    "dragFiles": "Drag your files here",
+    "filesInstructions_html": "%{dragFiles} or click to find them",
+    "supportedFileTypes": "(only .mp4 currently supported)",
+    "youtubeOrVimeo": "(Not working yet) Or upload from Youtube or Vimeo"
+  }
+}

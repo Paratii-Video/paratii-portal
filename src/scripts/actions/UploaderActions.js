@@ -49,7 +49,6 @@ function upsertVideo (videoId, dataToUpdate, state) {
   console.log('SAVING:')
   console.log(updatedVideo)
   return paratii.vids.upsert(updatedVideo).catch(error => {
-    console.log(error)
     throw error
   })
 }
@@ -87,7 +86,8 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
     dispatch(
       Notifications.error({
         title: 'Upload Error',
-        message: 'Something went wrong with your file. May you retry?',
+        message:
+          'Something went wrong with your file. We are so sorry. Please retry?',
         autoDismiss: 0
       })
     )
@@ -96,8 +96,8 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
   uploader.on('done', function (files) {
     dispatch(
       Notifications.success({
-        title: 'Local upload',
-        message: 'The local upload has been done'
+        title: "File's uploaded",
+        message: 'Now we need to transcode your pixels'
       })
     )
     const file = files[0]

@@ -9,8 +9,11 @@ const path = require('path')
 const routeHelper = require('./routes/')
 const mailRoute = require('./routes/mailer')
 const oembedRoute = require('./routes/oembed')
-const app = express()
 const cors = require('cors')
+const createLocaleMiddleware = require('express-locale')
+const createTranslationsMiddleware = require('./middleware/TranslationsMiddleware')
+
+const app = express()
 
 if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
   const compiler = webpack(webpackConfig)
@@ -31,6 +34,8 @@ app.engine(
 )
 
 app.use(compression())
+app.use(createLocaleMiddleware())
+app.use(createTranslationsMiddleware())
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, '/views'))
 app.use(express.static(path.resolve(__dirname, '../../', 'build')))
