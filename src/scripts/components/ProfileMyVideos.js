@@ -45,7 +45,7 @@ class ProfileMyVideos extends Component<Props, void> {
       <Wrapper>
         <ProfileFilterVideos>
           <ProfileFilterTitle small>
-            <TranslatedText message="MyVideos.title" />
+            <TranslatedText message="myVideos.title" />
           </ProfileFilterTitle>
           <ProfileFilterRadioWrapper>
             <RadioCheck

@@ -181,13 +181,13 @@ class UserNav extends Component<Props, void> {
           <UserBadge
             userAvatar={avatarUser}
             userName={getName(user)}
-            userDate={<TranslatedText message="UserNav.dataLabel" />}
+            userDate={<TranslatedText message="userNav.dataLabel" />}
           />
           <UserPTI>
             <UserPTIValuesWrapper>
               <UserPTIValue>
                 <Text gray tiny>
-                  <TranslatedText message="UserNav.leftBoxTitle" />
+                  <TranslatedText message="userNav.leftBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
                   <Text purple>{balance} PTI</Text>
@@ -198,7 +198,7 @@ class UserNav extends Component<Props, void> {
               </UserPTIValue>
               <UserPTIValue>
                 <Text gray tiny>
-                  <TranslatedText message="UserNav.rightBoxTitle" />
+                  <TranslatedText message="userNav.leftBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
                   <Text pink>10 PTI</Text>
