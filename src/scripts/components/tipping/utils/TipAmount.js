@@ -10,7 +10,7 @@ import TranslatedText from 'components/translations/TranslatedText'
 import coinDataUrl from 'assets/svg/coin.svg'
 
 type Props = {
-  amount: number,
+  amount: number
 }
 
 const Wrapper = styled.div`
@@ -32,7 +32,7 @@ const UnitWrapper = styled.span`
   font-size: 15px;
   color: ${Colors.purple};
   position: relative;
-  top: 3px;
+  top: 2px;
 `
 
 class TipAmount extends React.Component<Props> {
