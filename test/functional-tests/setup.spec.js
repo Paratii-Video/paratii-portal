@@ -14,7 +14,7 @@ before(async function (done) {
     browser.execute(function (password) {
       window.paratii.eth.wallet.clear()
       window.paratii.eth.wallet
-        .create()
+        .createFromMnemonic()
         .then(
           localStorage.setItem(
             'keystore-secure',
