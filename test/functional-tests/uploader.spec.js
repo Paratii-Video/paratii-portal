@@ -97,7 +97,7 @@ describe('🦄 Uploader Tool @watch', function () {
     )
   })
 
-  it('should upload a video when the wallet is already secured', async function () {
+  it.only('should upload a video when the wallet is already secured', async function () {
     browser.createSecureWallet()
 
     // Get address from browser
@@ -123,7 +123,11 @@ describe('🦄 Uploader Tool @watch', function () {
 
     // Upload file
     const fileToUpload = `${__dirname}/data/pti-logo.mp4`
-    browser.waitForEnabled(uploadFileInputSelector)
+    browser.waitUntil(
+      () =>
+        browser.execute(() => !!localStorage.getItem('keystore-secure')).value
+    )
+    browser.pause(1000)
     browser.chooseFile(uploadFileInputSelector, fileToUpload)
 
     browser.verifyUploadSucceeds(video)
