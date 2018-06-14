@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import Text, { Strong } from './foundations/Text'
-import Button from './foundations/Button'
+import Text from './foundations/Text'
 import SVGIcon from './foundations/SVGIcon'
 import { videoDuration } from '../operators/VideoOperators'
 import { formatDuration } from '../utils/VideoUtils'
@@ -11,8 +10,6 @@ import type VideoRecord from 'records/VideoRecords'
 type Props = {
   video: VideoRecord
 }
-
-const Z_INDEX_TIME = 2
 
 export const MyVideosWrapper = styled.ul`
   display: grid;
@@ -40,25 +37,65 @@ const Wrapper = styled.li`
 
 const MyVideoItemLink = styled(Link)`
   display: block;
-  transition: opacity 0.3s;
-
-  &:hover {
-    opacity: 0.5;
-  }
 `
 
+const ZINDEX_MYVIDEOSITEM_COVER: number = 3
+const ZINDEX_MYVIDEOSITEM_IMAGE: number = 1
+const ZINDEX_MYVIDEOSITEM_PLAY: number = 4
+const ZINDEX_MYVIDEOSITEM_TIME: number = 2
+
 const MyVideoItemMedia = styled.div`
+  align-items: center;
   background: ${props => props.theme.colors.MyVideoItem.imageBackground};
+  display: flex;
   height: 200px;
+  justify-content: center;
   position: relative;
   width: 100%;
+
+  &::before {
+    background: ${props => props.theme.colors.MyVideoItem.coverMediaBackground};
+    content: '';
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    transition: opacity 0.2s linear 0.2s;
+    width: 100%;
+    z-index: ${ZINDEX_MYVIDEOSITEM_COVER};
+
+    ${MyVideoItemLink}:hover & {
+      opacity: 1;
+      transition-delay: 0;
+    }
+  }
 `
 
 const MyVideoItemImage = styled.div`
   background: url(${({ source }) => source}) no-repeat 50%;
   background-size: cover;
   height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
   width: 100%;
+  z-index: ${ZINDEX_MYVIDEOSITEM_IMAGE};
+`
+
+const IconPlay = styled.span`
+  height: 33px;
+  position: relative;
+  width: 26px;
+  transform: scale(0);
+  transition: transform 0.5s ${({ theme }) => theme.animation.ease.smooth};
+  z-index: ${ZINDEX_MYVIDEOSITEM_PLAY};
+
+  ${MyVideoItemLink}:hover & {
+    transform: scale(1);
+    transition-duration: 0.65s;
+    transition-delay: 0.2s;
+  }
 `
 
 const VideoMediaTime = styled.div`
@@ -66,7 +103,7 @@ const VideoMediaTime = styled.div`
   padding: 10px;
   position: absolute;
   right: 10px;
-  z-index: ${Z_INDEX_TIME};
+  z-index: ${ZINDEX_MYVIDEOSITEM_TIME};
 
   &::before {
     background-color: ${props =>
@@ -94,17 +131,11 @@ const MyVideoItemInfo = styled.div`
   padding: 20px;
 `
 
-const MyVideoItemButtons = styled.div`
-  align-items: center;
-  bottom: 20px;
-  display: flex;
-  position: absolute;
-  right: 20px;
+const MyVideoItemsTitle = Text.extend`
+  margin-bottom: 15px;
 `
 
-const MyVideoItemButton = styled(Button)`
-  margin-left: 10px;
-`
+const MyVideoItemsStatus = Text.withComponent('span')
 
 class MyVideoItem extends Component<Props, void> {
   render () {
@@ -131,42 +162,25 @@ class MyVideoItem extends Component<Props, void> {
         <MyVideoItemLink to={urlToPlay}>
           <MyVideoItemMedia>
             <MyVideoItemImage source={videoPoster} />
-
             <VideoMediaTime>
               <VideoMediaTimeText>{durationNoMillis}</VideoMediaTimeText>
             </VideoMediaTime>
+            <IconPlay>
+              <SVGIcon color="white" icon="icon-player-play" />
+            </IconPlay>
           </MyVideoItemMedia>
           <MyVideoItemInfo>
-            <Text small>{title}</Text>
-            <Text small gray>
-              10 000 views
-            </Text>
-            <Text small>
-              Status: <Strong purple>Published</Strong>
-            </Text>
-            <Text small gray>
-              11 months ago
+            <MyVideoItemsTitle small bold>
+              {title}
+            </MyVideoItemsTitle>
+            <Text gray small>
+              Status:{' '}
+              <MyVideoItemsStatus purple small>
+                Published
+              </MyVideoItemsStatus>
             </Text>
           </MyVideoItemInfo>
         </MyVideoItemLink>
-        <MyVideoItemButtons>
-          <MyVideoItemButton>
-            <SVGIcon
-              icon="icon-player-share"
-              color="gray"
-              width="24px"
-              height="15px"
-            />
-          </MyVideoItemButton>
-          <MyVideoItemButton>
-            <SVGIcon
-              icon="icon-settings"
-              color="gray"
-              width="17px"
-              height="17px"
-            />
-          </MyVideoItemButton>
-        </MyVideoItemButtons>
       </Wrapper>
     )
   }

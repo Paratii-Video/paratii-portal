@@ -199,7 +199,8 @@ const Themes = {
     },
     MyVideoItem: {
       background: Colors.black,
-      imageBackground: Colors.blackAlt
+      imageBackground: Colors.blackAlt,
+      coverMediaBackground: Colors.blackTransparent
     },
     LandingPage: {
       headerBackground: Colors.blackLight,
