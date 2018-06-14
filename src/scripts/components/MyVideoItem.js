@@ -64,7 +64,6 @@ const MyVideoItemMedia = styled.div`
     transition: opacity 0.2s linear 0.2s;
     width: 100%;
     z-index: ${ZINDEX_MYVIDEOSITEM_COVER};
-
     ${MyVideoItemLink}:hover & {
       opacity: 1;
       transition-delay: 0;
@@ -90,7 +89,6 @@ const IconPlay = styled.span`
   transform: scale(0);
   transition: transform 0.5s ${({ theme }) => theme.animation.ease.smooth};
   z-index: ${ZINDEX_MYVIDEOSITEM_PLAY};
-
   ${MyVideoItemLink}:hover & {
     transform: scale(1);
     transition-duration: 0.65s;
