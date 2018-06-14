@@ -43,7 +43,6 @@ export const StyleAnchor = css`
 export const ButtonStyleHover = css`
   backface-visibility: hidden;
   transition: opacity ${props => props.theme.animation.time.repaint};
-  opacity: 1;
 
   &:focus,
   &:hover {
