@@ -10,7 +10,7 @@ import ModalCreatePassword from 'components/widgets/modals/ModalCreatePassword'
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState) => ({
-  getContext: getContext(state)
+  context: getContext(state)
 })
 
 const mapDispatchToProps = dispatch => ({
