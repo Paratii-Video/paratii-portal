@@ -97,7 +97,7 @@ describe('🦄 Uploader Tool @watch', function () {
     )
   })
 
-  it.only('should upload a video when the wallet is already secured', async function () {
+  it('should upload a video when the wallet is already secured', async function () {
     browser.createSecureWallet()
 
     // Get address from browser
