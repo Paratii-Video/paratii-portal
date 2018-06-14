@@ -11,6 +11,7 @@ import Colors from 'components/foundations/base/Colors'
 import TipAmount from '../TipAmount'
 
 type Props = {
+  onChooseAmount: (amount: number) => void,
   usernameToTip: string
 }
 
@@ -39,7 +40,7 @@ class ChooseAmountToTipStep extends React.Component<Props> {
   }
 
   render () {
-    const { usernameToTip } = this.props
+    const { onChooseAmount, usernameToTip } = this.props
 
     return (
       <Fragment>
@@ -54,7 +55,13 @@ class ChooseAmountToTipStep extends React.Component<Props> {
         </ChoosePrompt>
         <TipAmounts>
           {TIPPING_PTI_AMOUNTS.map((amount: number) => (
-            <TipAmount key={amount} amount={amount} onClick={() => {}} />
+            <TipAmount
+              key={amount}
+              amount={amount}
+              onClick={() => {
+                onChooseAmount(amount)
+              }}
+            />
           ))}
         </TipAmounts>
       </Fragment>

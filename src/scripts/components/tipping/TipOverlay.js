@@ -4,16 +4,23 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { VIDEO_OVERLAY_PADDING } from 'constants/UIConstants'
+import { TIPPING_UI_STEPS } from 'constants/TippingConstants'
 
 import CloseButton from 'components/foundations/buttons/CloseButton'
 import Colors from 'components/foundations/base/Colors'
-
 import ChooseAmountTipStep from './steps/ChooseAmountTipStep'
+
+import type { TippingUIStep } from 'types/TippingTypes'
 
 type Props = {
   addressToTip: string,
   onClose: () => void,
   usernameToTip: string
+}
+
+type State = {
+  currentStep: TippingUIStep,
+  selectedAmount: number
 }
 
 const Wrapper = styled.div`
@@ -34,16 +41,41 @@ const CloseButtonWrapper = styled.div`
   right: ${VIDEO_OVERLAY_PADDING};
 `
 
-class TipOverlay extends React.Component<Props> {
-  render () {
-    const { onClose, usernameToTip } = this.props
+class TipOverlay extends React.Component<Props, State> {
+  constructor (props: Props) {
+    super(props)
 
+    this.state = {
+      currentStep: TIPPING_UI_STEPS.CHOOSE_AMOUNT,
+      selectedAmount: 0
+    }
+  }
+
+  onChooseAmount = (amount: number) => {
+    this.setState({
+      selectedAmount: amount
+    })
+  }
+
+  renderStep () {
+    switch (this.state.currentStep) {
+      case TIPPING_UI_STEPS.CHOOSE_AMOUNT:
+        return (
+          <ChooseAmountTipStep
+            usernameToTip={this.props.usernameToTip || 'bent0b0x'}
+            onChooseAmount={this.onChooseAmount}
+          />
+        )
+    }
+  }
+
+  render () {
     return (
       <Wrapper>
         <CloseButtonWrapper>
-          <CloseButton onClick={onClose} />
+          <CloseButton onClick={this.props.onClose} />
         </CloseButtonWrapper>
-        <ChooseAmountTipStep usernameToTip={usernameToTip || 'bent0b0x'} />
+        {this.renderStep()}
       </Wrapper>
     )
   }
