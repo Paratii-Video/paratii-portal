@@ -10,3 +10,8 @@ export const PASSWORD_TEMP = 'password-temp'
 export const RESTORE_ACCOUNT = 'restore account flow'
 export const NEW_ACCOUNT = 'new account flow'
 export const ACTIVATE_SECURE_WALLET = true // a flag for activating the secure wallet
+
+export const TOKEN_UNITS: { [key: string]: string } = {
+  PTI: 'PTI',
+  ETH: 'ETH'
+}

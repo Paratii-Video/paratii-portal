@@ -18,6 +18,7 @@ import {
   NOTIFICATION_POSITIONS
 } from 'constants/ApplicationConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
+import { TOKEN_UNITS } from 'constants/ParatiiLibConstants'
 
 export type Location = {
   pathname: string,
@@ -127,6 +128,8 @@ export type ClapprPlayer = EventEmitter & {
   clappr: ClapprModule
 }
 
+export type TokenUnit = $Values<typeof TOKEN_UNITS>
+
 // TODO move this into paratii-js repo
 export type ParatiiLib = {
   config: {
@@ -184,7 +187,8 @@ export type ParatiiLib = {
       apply: (string, number) => Promise<Object>,
       checkEligiblityAndApply: (string, number) => Promise<Object>,
       getMinDeposit: () => string
-    }
+    },
+    transfer: (address: string, amount: number, unit: TokenUnit) => void
   },
   ipfs: {
     local: {

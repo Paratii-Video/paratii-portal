@@ -3,6 +3,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import ParatiiLib from 'utils/ParatiiLib'
+import { PTI_UNIT } from 'constants/ParatiiLibConstants'
+
 import { VIDEO_OVERLAY_PADDING } from 'constants/UIConstants'
 import { TIPPING_UI_STEPS } from 'constants/TippingConstants'
 
@@ -10,6 +13,7 @@ import CloseButton from 'components/foundations/buttons/CloseButton'
 import Colors from 'components/foundations/base/Colors'
 import ChooseAmountTipStep from './steps/ChooseAmountTipStep'
 import EnterPasswordTipStep from './steps/EnterPasswordTipStep'
+import TipCompleteStep from './steps/TipCompleteStep'
 
 import type { TippingUIStep } from 'types/TippingTypes'
 
@@ -21,7 +25,7 @@ type Props = {
 
 type State = {
   currentStep: TippingUIStep,
-  selectedAmount: number
+  tipAmount: number
 }
 
 const Wrapper = styled.div`
@@ -48,14 +52,25 @@ class TipOverlay extends React.Component<Props, State> {
 
     this.state = {
       currentStep: TIPPING_UI_STEPS.CHOOSE_AMOUNT,
-      selectedAmount: 0
+      tipAmount: 0
     }
+  }
+
+  onTip = async () => {
+    await ParatiiLib.eth.transfer(
+      this.props.addressToTip,
+      this.state.tipAmount,
+      PTI_UNIT
+    )
+    this.setState({
+      currentStep: TIPPING_UI_STEPS.TIP_COMPLETE
+    })
   }
 
   onChooseAmount = (amount: number) => {
     this.setState({
       currentStep: TIPPING_UI_STEPS.ENTER_PASSWORD,
-      selectedAmount: amount
+      tipAmount: amount
     })
   }
 
@@ -71,8 +86,15 @@ class TipOverlay extends React.Component<Props, State> {
       case TIPPING_UI_STEPS.ENTER_PASSWORD:
         return (
           <EnterPasswordTipStep
-            tipAmount={this.state.selectedAmount}
+            tipAmount={this.state.tipAmount}
             onSuccessfulAuth={() => {}}
+          />
+        )
+      case TIPPING_UI_STEPS.TIP_COMPLETE:
+        return (
+          <TipCompleteStep
+            onComplete={this.props.onClose}
+            usernameToTip={this.props.usernameToTip || 'bent0b0x'}
           />
         )
     }

@@ -58,6 +58,12 @@
         "header": "You are about to tip",
         "inputPlaceholder": "Password",
         "continue": "Continue"
+      },
+      "completed": {
+        "header1": "%{username} appreciates that.",
+        "header2": "Thanks for making %{username}'s day happier.",
+        "header3": "Tips are like hugs. Without all the touching.",
+        "continueWatching": "Continue watching"
       }
     }
   },
