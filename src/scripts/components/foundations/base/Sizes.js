@@ -12,7 +12,7 @@ const Sizes = {
     padding: '40px 42px'
   },
   mainInput: {
-    height: '44px'
+    height: '40px'
   },
   radio: '18px'
 }

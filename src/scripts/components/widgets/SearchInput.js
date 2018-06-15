@@ -19,10 +19,11 @@ type Props = {
 
 const SearchInputForm = styled.form`
   align-items: center;
+  background-color: ${props => props.theme.colors.Nav.search.background};
+  border-radius: 4px;
   display: inline-flex;
   flex-direction: row-reverse;
   width: 100%;
-  background-color: ${props => props.theme.colors.Nav.search.background};
 `
 
 const SearchInputField = styled.input`
@@ -76,7 +77,7 @@ class SearchInput extends Component<Props, void> {
           value={currentSearchText}
         />
         <SearchInputButton>
-          <SVGIcon icon="icon-search" />
+          <SVGIcon color="gray" icon="icon-search" />
         </SearchInputButton>
       </SearchInputForm>
     )

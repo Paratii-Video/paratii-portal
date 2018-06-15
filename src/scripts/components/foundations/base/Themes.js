@@ -10,7 +10,7 @@ const Themes = {
       primary: Colors.purple
     },
     header: {
-      background: Colors.blackLight,
+      background: Colors.blackAlt,
       icon: Colors.grayLight,
       logo: Colors.white
     },
@@ -22,7 +22,7 @@ const Themes = {
     },
     button: {
       white: Colors.white,
-      gray: Colors.grayLight,
+      gray: Colors.gray,
       purple: Colors.purple,
       pink: Colors.pink
     },
