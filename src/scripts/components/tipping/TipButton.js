@@ -11,7 +11,7 @@ import TranslatedText from 'components/translations/TranslatedText'
 import coinDataUrl from 'assets/svg/coin.svg'
 
 type Props = {
-  onClick: (e: Object) => void
+  setUserIsTipping: (isTipping: boolean) => void
 }
 
 const WrappedButton = styled(Button)`
@@ -32,10 +32,15 @@ const IconWrapper = styled.span`
 `
 
 class TipButton extends React.Component<Props> {
+  onClick = (e: Object) => {
+    this.props.setUserIsTipping(true)
+  }
+
+  onClose = (e: Object) => {}
+
   render () {
-    const { onClick } = this.props
     return (
-      <WrappedButton onClick={onClick}>
+      <WrappedButton onClick={this.onClick}>
         <IconWrapper>
           <Icon color={Colors.white} url={coinDataUrl} />
         </IconWrapper>

@@ -34,7 +34,7 @@ import {
 } from 'records/SearchRecords'
 import Video from 'records/VideoRecords'
 import VideoManager from 'records/VideoManagerRecords'
-import { _getTippedVideoIds } from 'records/TippingRecords'
+import { _getDoNotTipVideoIds, _getUserIsTipping } from 'records/TippingRecords'
 
 import type {
   RootState,
@@ -124,6 +124,9 @@ export const getVideoManager = (state: RootState): VideoManager =>
   state.videoManager
 
 /* Tipping */
-export const getTippedVideoIds = (
+export const getDoNotTipVideoIds = (
   state: RootState
-): ImmutableMap<string, boolean> => _getTippedVideoIds(state.tipping)
+): ImmutableMap<string, boolean> => _getDoNotTipVideoIds(state.tipping)
+
+export const getUserIsTipping = (state: RootState): boolean =>
+  _getUserIsTipping(state.tipping)

@@ -58,7 +58,7 @@ type Props = {
   currentPlaybackLevel: ?PlaybackLevel,
   playerReset: () => void,
   activePlugin: ?PlayerPlugin,
-  askForTip: boolean
+  userIsTipping: boolean
 }
 
 type State = {
@@ -849,14 +849,9 @@ class Play extends Component<Props, State> {
                       shareOptions={shareOptions}
                     />
                   ) : null}
-                  {this.state.showTipOverlay && this.props.video ? (
+                  {this.props.userIsTipping && this.props.video ? (
                     <TipOverlayWrapper>
-                      <TipOverlayContainer
-                        addressToTip=""
-                        onClose={this.closeTipOverlay}
-                        usernameToTip=""
-                        videoId={this.props.video.get('id')}
-                      />
+                      <TipOverlayContainer />
                     </TipOverlayWrapper>
                   ) : null}
                 </PlayerWrapper>

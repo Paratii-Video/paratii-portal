@@ -102,3 +102,7 @@ export const ADDITIONAL_SEARCH_FAILED = createActionConstant(
 export const TIP_VIDEO_COMPLETED: string = createActionConstant(
   'TIP_VIDEO_COMPLETED'
 )
+
+export const SET_USER_IS_TIPPING: string = createActionConstant(
+  'SET_USER_IS_TIPPING'
+)

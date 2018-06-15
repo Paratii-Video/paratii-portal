@@ -9,7 +9,10 @@ import { TOKEN_UNITS } from 'constants/ParatiiLibConstants'
 import { VIDEO_OVERLAY_PADDING } from 'constants/UIConstants'
 import { TIPPING_UI_STEPS } from 'constants/TippingConstants'
 
+import Video from 'records/VideoRecords'
+
 import TranslatedText from 'components/translations/TranslatedText'
+import BackButton from 'components/foundations/buttons/BackButton'
 import CloseButton from 'components/foundations/buttons/CloseButton'
 import Colors from 'components/foundations/base/Colors'
 import ChooseAmountTipStep from './steps/ChooseAmountTipStep'
@@ -19,12 +22,10 @@ import TipCompleteStep from './steps/TipCompleteStep'
 import type { TippingUIStep } from 'types/TippingTypes'
 
 type Props = {
-  addressToTip: string,
   notification: (Object, string) => void,
-  onClose: () => void,
-  tipVideoCompleted: (id: string) => void,
-  usernameToTip: string,
-  videoId: string
+  setUserIsTipping: (isTipping: boolean) => void,
+  tipVideoCompleted: (videoId: string) => void,
+  video: Video
 }
 
 type State = {
@@ -44,6 +45,12 @@ const Wrapper = styled.div`
   position: relative;
 `
 
+const BackButtonWrapper = styled.div`
+  position: absolute;
+  top: ${VIDEO_OVERLAY_PADDING};
+  left: ${VIDEO_OVERLAY_PADDING};
+`
+
 const CloseButtonWrapper = styled.div`
   position: absolute;
   top: ${VIDEO_OVERLAY_PADDING};
@@ -60,17 +67,23 @@ class TipOverlay extends React.Component<Props, State> {
     }
   }
 
+  backToChooseAmountStep = () => {
+    this.setState({
+      currentStep: TIPPING_UI_STEPS.CHOOSE_AMOUNT
+    })
+  }
+
   transferTip = async () => {
     try {
       await ParatiiLib.eth.transfer(
-        this.props.addressToTip,
+        this.props.video.get('owner'),
         this.state.tipAmount,
         TOKEN_UNITS.PTI
       )
       this.setState({
         currentStep: TIPPING_UI_STEPS.TIP_COMPLETE
       })
-      this.props.tipVideoCompleted(this.props.videoId)
+      this.props.tipVideoCompleted(this.props.video.get('id'))
     } catch (e) {
       this.props.notification(
         {
@@ -82,7 +95,7 @@ class TipOverlay extends React.Component<Props, State> {
     this.setState({
       currentStep: TIPPING_UI_STEPS.TIP_COMPLETE
     })
-    this.props.tipVideoCompleted(this.props.videoId)
+    this.props.tipVideoCompleted(this.props.video.get('id'))
   }
 
   onChooseAmount = (amount: number) => {
@@ -92,12 +105,23 @@ class TipOverlay extends React.Component<Props, State> {
     })
   }
 
+  onClose = () => {
+    this.props.setUserIsTipping(false)
+  }
+
+  onComplete = () => {
+    this.props.setUserIsTipping(false)
+  }
+
+  showBackButton = () =>
+    this.state.currentStep === TIPPING_UI_STEPS.ENTER_PASSWORD
+
   renderStep () {
     switch (this.state.currentStep) {
       case TIPPING_UI_STEPS.CHOOSE_AMOUNT:
         return (
           <ChooseAmountTipStep
-            usernameToTip={this.props.usernameToTip || 'bent0b0x'}
+            usernameToTip={this.props.video.get('author') || 'bent0b0x'}
             onChooseAmount={this.onChooseAmount}
           />
         )
@@ -111,8 +135,8 @@ class TipOverlay extends React.Component<Props, State> {
       case TIPPING_UI_STEPS.TIP_COMPLETE:
         return (
           <TipCompleteStep
-            onComplete={this.props.onClose}
-            usernameToTip={this.props.usernameToTip || 'bent0b0x'}
+            onComplete={this.onComplete}
+            usernameToTip={this.props.video.get('author') || 'bent0b0x'}
           />
         )
     }
@@ -121,8 +145,13 @@ class TipOverlay extends React.Component<Props, State> {
   render () {
     return (
       <Wrapper>
+        <BackButtonWrapper>
+          {this.showBackButton() && (
+            <BackButton onClick={this.backToChooseAmountStep} />
+          )}
+        </BackButtonWrapper>
         <CloseButtonWrapper>
-          <CloseButton onClick={this.props.onClose} />
+          <CloseButton onClick={this.onClose} />
         </CloseButtonWrapper>
         {this.renderStep()}
       </Wrapper>

@@ -3,12 +3,17 @@
 import { Map, Record } from 'immutable'
 
 class Tipping extends Record({
-  tippedVideoIds: Map()
+  userIsTipping: false,
+  doNotTipVideoIds: Map()
 }) {
-  tippedVideoIds: Map<string, boolean>
+  userIsTipping: boolean
+  doNotTipVideoIds: Map<string, boolean>
 }
 
-export const _getTippedVideoIds = (state: Tipping): Map<string, boolean> =>
-  state.get('tippedVideoIds')
+export const _getDoNotTipVideoIds = (state: Tipping): Map<string, boolean> =>
+  state.get('doNotTipVideoIds')
+
+export const _getUserIsTipping = (state: Tipping): boolean =>
+  state.get('userIsTipping')
 
 export default Tipping

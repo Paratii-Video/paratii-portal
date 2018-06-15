@@ -17,14 +17,8 @@ import PlaybackLevels from 'components/widgets/PlaybackLevels'
 import WalletInfoContainer from 'containers/widgets/WalletInfoContainer'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
-import {
-  VIDEO_OVERLAY_BUTTONS_HEIGHT,
-  VIDEO_OVERLAY_PADDING,
-  CONTROLS_HEIGHT,
-  CONTROLS_HEIGHT_TABLET
-} from 'constants/UIConstants'
+import { VIDEO_OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
 import Colors from 'components/foundations/base/Colors'
-import TipButton from 'components/tipping/TipButton'
 
 import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
 
@@ -176,26 +170,6 @@ const StartScreenIcon = styled.span`
   }
 `
 
-const BASE_TIP_BUTTON_MARGIN: string = '40px'
-
-const TipButtonWrapper = styled.div`
-  position: absolute;
-  bottom: ${({ controlsRaised }) =>
-    `calc(${BASE_TIP_BUTTON_MARGIN} + ${VIDEO_OVERLAY_PADDING} + ${
-      controlsRaised ? CONTROLS_HEIGHT : '0px'
-    } )`};
-  right: ${VIDEO_OVERLAY_PADDING};
-  transition: all 250ms linear;
-  z-index: ${Z_INDEX_BUTTONS};
-
-  @media (max-width: 768px) {
-    bottom: ${({ controlsRaised }) =>
-    `calc(${BASE_TIP_BUTTON_MARGIN} + ${VIDEO_OVERLAY_PADDING} + ${
-      controlsRaised ? CONTROLS_HEIGHT_TABLET : '0px'
-    } )`};
-  }
-`
-
 class VideoOverlay extends Component<Props> {
   getVideoTitle (): string {
     const { video } = this.props
@@ -232,13 +206,11 @@ class VideoOverlay extends Component<Props> {
   render () {
     const {
       activePlugin,
-      askForTip,
       isEmbed,
       showStartScreen,
       onClick,
       onScrub,
       onVolumeChange,
-      onTipButtonClick,
       onToggleMute,
       onPlaybackLevelChange,
       togglePlayPause,
@@ -313,13 +285,6 @@ class VideoOverlay extends Component<Props> {
             }
           </CentralizedContent>
         </Overlay>
-        {askForTip && (
-          <TipButtonWrapper
-            controlsRaised={transitionState === TRANSITION_STATE.ENTERED}
-          >
-            <TipButton onClick={onTipButtonClick} />
-          </TipButtonWrapper>
-        )}
         <PlayerControlsWrapper showStartScreen={showStartScreen}>
           <PlayerControlsContainer
             onScrub={onScrub}

@@ -8,12 +8,10 @@ import {
   getCurrentPlaybackLevel,
   getPlaybackLevelsSorted
 } from 'selectors/PlayerSelectors'
-import { askForTip } from 'selectors/TippingSelectors'
 import { playerToggleActivePlugin } from 'actions/PlayerActions'
 
 const mapStateToProps = state => ({
   activePlugin: getActivePlugin(state),
-  askForTip: askForTip(state),
   currentPlaybackLevel: getCurrentPlaybackLevel(state),
   playbackLevels: getPlaybackLevelsSorted(state)
 })
