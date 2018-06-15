@@ -97,3 +97,8 @@ export const ADDITIONAL_SEARCH_RESULTS_LOADED = createActionConstant(
 export const ADDITIONAL_SEARCH_FAILED = createActionConstant(
   'ADDITIONAL_SEARCH_FAILED'
 )
+
+/* Tipping actions */
+export const TIP_VIDEO_COMPLETED: string = createActionConstant(
+  'TIP_VIDEO_COMPLETED'
+)

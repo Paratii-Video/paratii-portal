@@ -22,7 +22,9 @@ type Props = {
   addressToTip: string,
   notification: (Object, string) => void,
   onClose: () => void,
-  usernameToTip: string
+  tipVideoCompleted: (id: string) => void,
+  usernameToTip: string,
+  videoId: string
 }
 
 type State = {
@@ -68,6 +70,7 @@ class TipOverlay extends React.Component<Props, State> {
       this.setState({
         currentStep: TIPPING_UI_STEPS.TIP_COMPLETE
       })
+      this.props.tipVideoCompleted(this.props.videoId)
     } catch (e) {
       this.props.notification(
         {
@@ -76,6 +79,10 @@ class TipOverlay extends React.Component<Props, State> {
         'error'
       )
     }
+    this.setState({
+      currentStep: TIPPING_UI_STEPS.TIP_COMPLETE
+    })
+    this.props.tipVideoCompleted(this.props.videoId)
   }
 
   onChooseAmount = (amount: number) => {

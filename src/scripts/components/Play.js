@@ -848,12 +848,13 @@ class Play extends Component<Props, State> {
                       shareOptions={shareOptions}
                     />
                   ) : null}
-                  {this.state.showTipOverlay ? (
+                  {this.state.showTipOverlay && this.props.video ? (
                     <TipOverlayWrapper>
                       <TipOverlayContainer
                         addressToTip=""
                         onClose={this.closeTipOverlay}
                         usernameToTip=""
+                        videoId={this.props.video.get('id')}
                       />
                     </TipOverlayWrapper>
                   ) : null}
