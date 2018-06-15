@@ -47,7 +47,7 @@ type Props = {
   toggleActivePlugin: (plugin: PlayerPlugin) => void,
   currentPlaybackLevel: ?PlaybackLevel,
   activePlugin: ?PlayerPlugin,
-  showTippingButton: boolean
+  askForTip: boolean
 }
 
 const Z_INDEX_OVERLAY: string = '1'
@@ -197,10 +197,6 @@ const TipButtonWrapper = styled.div`
 `
 
 class VideoOverlay extends Component<Props> {
-  static defaultProps = {
-    showTippingButton: true
-  }
-
   getVideoTitle (): string {
     const { video } = this.props
 
@@ -236,6 +232,7 @@ class VideoOverlay extends Component<Props> {
   render () {
     const {
       activePlugin,
+      askForTip,
       isEmbed,
       showStartScreen,
       onClick,
@@ -316,11 +313,13 @@ class VideoOverlay extends Component<Props> {
             }
           </CentralizedContent>
         </Overlay>
-        <TipButtonWrapper
-          controlsRaised={transitionState === TRANSITION_STATE.ENTERED}
-        >
-          <TipButton onClick={onTipButtonClick} />
-        </TipButtonWrapper>
+        {askForTip && (
+          <TipButtonWrapper
+            controlsRaised={transitionState === TRANSITION_STATE.ENTERED}
+          >
+            <TipButton onClick={onTipButtonClick} />
+          </TipButtonWrapper>
+        )}
         <PlayerControlsWrapper showStartScreen={showStartScreen}>
           <PlayerControlsContainer
             onScrub={onScrub}

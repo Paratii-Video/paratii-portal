@@ -11,6 +11,7 @@ import NotificationRecord from 'records/NotificationRecord'
 import ModalRecord from 'records/ModalRecord'
 import SearchRecord from 'records/SearchRecords'
 import VideoManagerRecord from 'records/VideoManagerRecords'
+import TippingRecord from 'records/TippingRecords'
 import {
   REQUEST_STATUS,
   TRANSITION_STATE,
@@ -74,6 +75,7 @@ export type RootState = {
   notifications: NotificationsArray,
   modal: ModalRecord,
   search: SearchRecord,
+  tipping: TippingRecord,
   videoManager: VideoManagerRecord
 }
 

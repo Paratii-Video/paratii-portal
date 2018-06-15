@@ -57,7 +57,8 @@ type Props = {
   currentBufferedTimeSeconds: number,
   currentPlaybackLevel: ?PlaybackLevel,
   playerReset: () => void,
-  activePlugin: ?PlayerPlugin
+  activePlugin: ?PlayerPlugin,
+  askForTip: boolean
 }
 
 type State = {

@@ -1,6 +1,6 @@
 /* @flow */
 
-import { List as ImmutableList } from 'immutable'
+import { Map as ImmutableMap, List as ImmutableList } from 'immutable'
 
 import UserRecord, {
   Balances,
@@ -34,6 +34,7 @@ import {
 } from 'records/SearchRecords'
 import Video from 'records/VideoRecords'
 import VideoManager from 'records/VideoManagerRecords'
+import { _getTippedVideoIds } from 'records/TippingRecords'
 
 import type {
   RootState,
@@ -121,3 +122,8 @@ export const getAdditionalSearchRequestStatus = (
 /* VideoManager */
 export const getVideoManager = (state: RootState): VideoManager =>
   state.videoManager
+
+/* Tipping */
+export const getTippedVideoIds = (
+  state: RootState
+): ImmutableMap<string, boolean> => _getTippedVideoIds(state.tipping)

@@ -25,6 +25,7 @@ import {
   getActivePlugin
 } from 'selectors/index'
 import { getPlayingVideo, getDurationSeconds } from 'selectors/PlayerSelectors'
+
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (

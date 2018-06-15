@@ -25,7 +25,7 @@ const TipAmounts = styled.div`
   margin-top: 30px;
   display: flex;
   justify-content: space-between;
-  width: 78%;
+  width: 100%;
   max-width: 640px;
 `
 
