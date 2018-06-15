@@ -43,21 +43,22 @@
   },
   "tipping": {
     "giveTip": "Give a tip",
+    "amounts": {
+      "10": "10",
+      "15": "15",
+      "20": "20",
+      "25": "25"
+    },
     "steps": {
       "chooseAmount": {
         "header": "Feeling generous today?",
-        "chooseTip": "Choose how much to tip %{username}",
-        "amounts": {
-          "10": "10",
-          "15": "15",
-          "20": "20",
-          "25": "25"
-        }
+        "chooseTip": "Choose how much to tip %{username}"
       },
       "enterPassword": {
         "header": "You are about to tip",
         "inputPlaceholder": "Password",
-        "continue": "Continue"
+        "continue": "Continue",
+        "error": "Wrong password"
       },
       "completed": {
         "header1": "%{username} appreciates that.",
