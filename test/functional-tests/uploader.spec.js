@@ -6,7 +6,7 @@ import {
   nukeSessionStorage
 } from './test-utils/helpers'
 
-describe('🦄 Uploader Tool @watch', function () {
+describe('🦄 Uploader Tool', function () {
   this.timeout(120000)
 
   const uploadFileInputSelector =
