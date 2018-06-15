@@ -1,5 +1,5 @@
 /* @flow */
-import paratii from 'utils/ParatiiLib'
+import paratii, { getSecureWallet } from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Title from 'components/foundations/Title'
@@ -72,7 +72,7 @@ class ModalAskPassword extends Component<Props, Object> {
     sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
     // Decrypt Keystore
     const password = this.state.password
-    const walletString = localStorage.getItem(WALLET_KEY_SECURE) || ''
+    const walletString = getSecureWallet()
     this.props.notification(
       { title: 'Trying to unlock your keystore...' },
       'warning'
