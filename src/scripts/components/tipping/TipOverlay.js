@@ -4,7 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import ParatiiLib from 'utils/ParatiiLib'
-import { PTI_UNIT } from 'constants/ParatiiLibConstants'
+import { TOKEN_UNITS } from 'constants/ParatiiLibConstants'
 
 import { VIDEO_OVERLAY_PADDING } from 'constants/UIConstants'
 import { TIPPING_UI_STEPS } from 'constants/TippingConstants'
@@ -60,7 +60,7 @@ class TipOverlay extends React.Component<Props, State> {
     await ParatiiLib.eth.transfer(
       this.props.addressToTip,
       this.state.tipAmount,
-      PTI_UNIT
+      TOKEN_UNITS.PTI
     )
     this.setState({
       currentStep: TIPPING_UI_STEPS.TIP_COMPLETE
