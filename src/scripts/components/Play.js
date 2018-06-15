@@ -17,7 +17,7 @@ import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
-import TipOverlay from 'components/tipping/TipOverlay'
+import TipOverlayContainer from 'containers/tipping/TipOverlayContainer'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
 import {
@@ -850,7 +850,7 @@ class Play extends Component<Props, State> {
                   ) : null}
                   {this.state.showTipOverlay ? (
                     <TipOverlayWrapper>
-                      <TipOverlay
+                      <TipOverlayContainer
                         addressToTip=""
                         onClose={this.closeTipOverlay}
                         usernameToTip=""

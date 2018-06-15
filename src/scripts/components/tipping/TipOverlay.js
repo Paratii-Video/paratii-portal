@@ -9,6 +9,7 @@ import { TOKEN_UNITS } from 'constants/ParatiiLibConstants'
 import { VIDEO_OVERLAY_PADDING } from 'constants/UIConstants'
 import { TIPPING_UI_STEPS } from 'constants/TippingConstants'
 
+import TranslatedText from 'components/translations/TranslatedText'
 import CloseButton from 'components/foundations/buttons/CloseButton'
 import Colors from 'components/foundations/base/Colors'
 import ChooseAmountTipStep from './steps/ChooseAmountTipStep'
@@ -19,6 +20,7 @@ import type { TippingUIStep } from 'types/TippingTypes'
 
 type Props = {
   addressToTip: string,
+  notification: (Object, string) => void,
   onClose: () => void,
   usernameToTip: string
 }
@@ -56,15 +58,24 @@ class TipOverlay extends React.Component<Props, State> {
     }
   }
 
-  onTip = async () => {
-    await ParatiiLib.eth.transfer(
-      this.props.addressToTip,
-      this.state.tipAmount,
-      TOKEN_UNITS.PTI
-    )
-    this.setState({
-      currentStep: TIPPING_UI_STEPS.TIP_COMPLETE
-    })
+  transferTip = async () => {
+    try {
+      await ParatiiLib.eth.transfer(
+        this.props.addressToTip,
+        this.state.tipAmount,
+        TOKEN_UNITS.PTI
+      )
+      this.setState({
+        currentStep: TIPPING_UI_STEPS.TIP_COMPLETE
+      })
+    } catch (e) {
+      this.props.notification(
+        {
+          title: <TranslatedText message="tipping.tippingError" />
+        },
+        'error'
+      )
+    }
   }
 
   onChooseAmount = (amount: number) => {
@@ -87,7 +98,7 @@ class TipOverlay extends React.Component<Props, State> {
         return (
           <EnterPasswordTipStep
             tipAmount={this.state.tipAmount}
-            onSuccessfulAuth={() => {}}
+            onSuccessfulAuth={this.transferTip}
           />
         )
       case TIPPING_UI_STEPS.TIP_COMPLETE:

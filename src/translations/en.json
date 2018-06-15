@@ -49,6 +49,7 @@
       "20": "20",
       "25": "25"
     },
+    "tippingError": "Unfortunately, something went wrong with the tipping process",
     "steps": {
       "chooseAmount": {
         "header": "Feeling generous today?",
@@ -58,7 +59,7 @@
         "header": "You are about to tip",
         "inputPlaceholder": "Password",
         "continue": "Continue",
-        "error": "Wrong password"
+        "wrongPassword": "Wrong password"
       },
       "completed": {
         "header1": "%{username} appreciates that.",

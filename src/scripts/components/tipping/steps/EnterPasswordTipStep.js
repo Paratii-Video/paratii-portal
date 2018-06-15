@@ -49,7 +49,7 @@ const ContinueButton = styled(Button)`
 `
 
 type Props = {
-  onSuccessfulAuth: () => void,
+  onSuccessfulAuth: () => Promise<void>,
   tipAmount: number
 }
 
@@ -114,7 +114,7 @@ class EnterPasswordTipStep extends React.Component<Props, State> {
           <BottomBar>
             {this.state.showPasswordError && (
               <PasswordError>
-                <TranslatedText message="tipping.steps.enterPassword.error" />
+                <TranslatedText message="tipping.steps.enterPassword.wrongPassword" />
               </PasswordError>
             )}
             <ContinueButton
