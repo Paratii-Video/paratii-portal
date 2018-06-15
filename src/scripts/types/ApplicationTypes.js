@@ -153,14 +153,14 @@ export type ParatiiLib = {
   eth: {
     getAccount: () => string,
     wallet: {
+      clear: () => void,
+      createFromMnemonic: (num: ?number, mnemonic: ?string) => Object,
       decrypt: (string, password: string) => Object,
       encrypt: (password: string) => Object,
-      newMnemonic: () => string,
       getMnemonic: () => Promise<string>,
-      create: (num: ?number, mnemonic: ?string) => Object,
-      clear: () => void,
       isValidMnemonic: string => boolean,
-      length: number
+      length: number,
+      newMnemonic: () => string
     },
     vids: {
       get: (id: string) => ?Object,
