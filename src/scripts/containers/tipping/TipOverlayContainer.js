@@ -6,7 +6,7 @@ import { show } from 'react-notification-system-redux'
 
 import { getPlayingVideo } from 'selectors/PlayerSelectors'
 
-import { setUserIsTipping, tipVideoCompleted } from 'actions/TippingActions'
+import { setUserIsTipping, addDoNotTipVideo } from 'actions/TippingActions'
 
 import TipOverlay from 'components/tipping/TipOverlay'
 
@@ -19,7 +19,7 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = {
   notification: show,
   setUserIsTipping,
-  tipVideoCompleted
+  addDoNotTipVideo
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TipOverlay)

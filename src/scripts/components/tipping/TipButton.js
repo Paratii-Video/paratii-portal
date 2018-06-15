@@ -3,22 +3,28 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Button from 'components/foundations/Button'
+import CloseButton from 'components/foundations/buttons/CloseButton'
 import Icon from 'components/foundations/Icon'
 import Colors from 'components/foundations/base/Colors'
 import TranslatedText from 'components/translations/TranslatedText'
 
+import Video from 'records/VideoRecords'
+
 import coinDataUrl from 'assets/svg/coin.svg'
 
 type Props = {
-  setUserIsTipping: (isTipping: boolean) => void
+  addDoNotTipVideo: (videoId: string) => void,
+  setUserIsTipping: (isTipping: boolean) => void,
+  video: Video
 }
 
-const WrappedButton = styled(Button)`
+const WrappedButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 5px 20px;
   background-color: ${Colors.purple};
   color: ${Colors.white};
   height: 56px;
@@ -29,6 +35,17 @@ const WrappedButton = styled(Button)`
 
 const IconWrapper = styled.span`
   margin-right: 10px;
+  flex: 0 0 auto;
+`
+
+const TextWrapper = styled.span`
+  flex: 0 0 auto;
+`
+
+const CloseButtonWrapper = styled.span`
+  flex: 0 1 100%;
+  display: flex;
+  justify-content: flex-end;
 `
 
 class TipButton extends React.Component<Props> {
@@ -36,7 +53,11 @@ class TipButton extends React.Component<Props> {
     this.props.setUserIsTipping(true)
   }
 
-  onClose = (e: Object) => {}
+  onClose = (e: Object) => {
+    this.props.addDoNotTipVideo(this.props.video.get('id'))
+
+    e.stopPropagation()
+  }
 
   render () {
     return (
@@ -44,7 +65,12 @@ class TipButton extends React.Component<Props> {
         <IconWrapper>
           <Icon color={Colors.white} url={coinDataUrl} />
         </IconWrapper>
-        <TranslatedText message="tipping.giveTip" />
+        <TextWrapper>
+          <TranslatedText message="tipping.giveTip" />
+        </TextWrapper>
+        <CloseButtonWrapper>
+          <CloseButton onClick={this.onClose} />
+        </CloseButtonWrapper>
       </WrappedButton>
     )
   }

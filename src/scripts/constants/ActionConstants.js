@@ -99,8 +99,8 @@ export const ADDITIONAL_SEARCH_FAILED = createActionConstant(
 )
 
 /* Tipping actions */
-export const TIP_VIDEO_COMPLETED: string = createActionConstant(
-  'TIP_VIDEO_COMPLETED'
+export const ADD_DO_NOT_TIP_VIDEO: string = createActionConstant(
+  'ADD_DO_NOT_TIP_VIDEO'
 )
 
 export const SET_USER_IS_TIPPING: string = createActionConstant(

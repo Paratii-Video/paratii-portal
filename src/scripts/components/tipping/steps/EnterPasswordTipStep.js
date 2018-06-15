@@ -49,7 +49,6 @@ const ContinueButton = styled(Button)`
 `
 
 type Props = {
-  onBack: () => void,
   onSuccessfulAuth: () => Promise<void>,
   tipAmount: number
 }

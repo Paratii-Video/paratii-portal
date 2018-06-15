@@ -24,7 +24,7 @@ import type { TippingUIStep } from 'types/TippingTypes'
 type Props = {
   notification: (Object, string) => void,
   setUserIsTipping: (isTipping: boolean) => void,
-  tipVideoCompleted: (videoId: string) => void,
+  addDoNotTipVideo: (videoId: string) => void,
   video: Video
 }
 
@@ -83,7 +83,7 @@ class TipOverlay extends React.Component<Props, State> {
       this.setState({
         currentStep: TIPPING_UI_STEPS.TIP_COMPLETE
       })
-      this.props.tipVideoCompleted(this.props.video.get('id'))
+      this.props.addDoNotTipVideo(this.props.video.get('id'))
     } catch (e) {
       this.props.notification(
         {
@@ -92,10 +92,6 @@ class TipOverlay extends React.Component<Props, State> {
         'error'
       )
     }
-    this.setState({
-      currentStep: TIPPING_UI_STEPS.TIP_COMPLETE
-    })
-    this.props.tipVideoCompleted(this.props.video.get('id'))
   }
 
   onChooseAmount = (amount: number) => {
@@ -121,7 +117,7 @@ class TipOverlay extends React.Component<Props, State> {
       case TIPPING_UI_STEPS.CHOOSE_AMOUNT:
         return (
           <ChooseAmountTipStep
-            usernameToTip={this.props.video.get('author') || 'bent0b0x'}
+            usernameToTip={this.props.video.get('author')}
             onChooseAmount={this.onChooseAmount}
           />
         )
@@ -136,7 +132,7 @@ class TipOverlay extends React.Component<Props, State> {
         return (
           <TipCompleteStep
             onComplete={this.onComplete}
-            usernameToTip={this.props.video.get('author') || 'bent0b0x'}
+            usernameToTip={this.props.video.get('author')}
           />
         )
     }
