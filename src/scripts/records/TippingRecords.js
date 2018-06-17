@@ -3,11 +3,11 @@
 import { Map, Record } from 'immutable'
 
 class Tipping extends Record({
-  userIsTipping: false,
-  doNotTipVideoIds: Map()
+  doNotTipVideoIds: Map(),
+  userIsTipping: false
 }) {
-  userIsTipping: boolean
   doNotTipVideoIds: Map<string, boolean>
+  userIsTipping: boolean
 }
 
 export const _getDoNotTipVideoIds = (state: Tipping): Map<string, boolean> =>
