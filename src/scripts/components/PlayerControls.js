@@ -129,22 +129,24 @@ const Shadow = styled.span`
   }};
 `
 
-const BASE_TIP_BUTTON_MARGIN: string = '40px'
+const BASE_TIP_BUTTON_MARGIN: string = '20px'
+const BASE_TIP_BUTTON_BOTTOM: string = `calc(${CONTROLS_HEIGHT} * -1 - ${BASE_TIP_BUTTON_MARGIN})`
 
 const TipButtonWrapper = styled.div`
   position: absolute;
   bottom: ${({ controlsRaised }) =>
     `calc(${BASE_TIP_BUTTON_MARGIN} + ${VIDEO_OVERLAY_PADDING} + ${
-      controlsRaised ? CONTROLS_HEIGHT : '0px'
+      controlsRaised ? CONTROLS_HEIGHT : BASE_TIP_BUTTON_BOTTOM
     } )`};
   right: ${VIDEO_OVERLAY_PADDING};
-  transition: all 250ms linear;
+  transition: all ${({ theme }) => theme.animation.time.repaint}
+    ${({ theme }) => theme.animation.ease.smooth};
   z-index: ${Z_INDEX_BUTTONS};
 
   @media (max-width: 768px) {
     bottom: ${({ controlsRaised }) =>
     `calc(${BASE_TIP_BUTTON_MARGIN} + ${VIDEO_OVERLAY_PADDING} + ${
-      controlsRaised ? CONTROLS_HEIGHT_TABLET : '0px'
+      controlsRaised ? CONTROLS_HEIGHT_TABLET : BASE_TIP_BUTTON_BOTTOM
     } )`};
   }
 `
