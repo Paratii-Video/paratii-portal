@@ -178,7 +178,7 @@ const LandingVideoItemBackground = styled.div`
   background-size: cover;
   height: 100%;
   position: absolute;
-  transition: transform 1.7s ${({ theme }) => theme.animation.ease.outexpo} 0.1s;
+  transition: transform 7s ${({ theme }) => theme.animation.ease.outexpo} 0.1s;
   width: 100%;
   z-index: ${ZINDEX_LANDINGVIDEOITEMBACKGROUND};
   ${LandingVideoItem}:hover & {
@@ -186,7 +186,7 @@ const LandingVideoItemBackground = styled.div`
     transition-delay: 0s;
     transition-timing-function: ${({ theme }) =>
     theme.animation.ease.easeinexpo};
-    transition-duration: 2s;
+    transition-duration: 3s;
   }
 `
 

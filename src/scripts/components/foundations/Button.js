@@ -1,5 +1,32 @@
 import styled, { css } from 'styled-components'
 
+export const ButtonStyleBackground = css`
+  ${props => {
+    let _background: String
+
+    if (props.white) {
+      _background = props.theme.colors.button.white
+    } else if (props.gray) {
+      _background = props.theme.colors.button.gray
+    } else if (props.pink) {
+      _background = props.theme.colors.button.pink
+    } else if (props.green) {
+      _background = props.theme.colors.button.green
+    } else {
+      _background =
+        'linear-gradient(135deg, ' +
+        props.theme.colors.VideoForm.info.progress.barFrom +
+        ' 0%, ' +
+        props.theme.colors.VideoForm.info.progress.barTo +
+        ' 100%)'
+    }
+
+    return css`
+      background: ${_background};
+`
+  }};
+`
+
 export const ButtonStyleColor = css`
   ${props => {
     let _color: String
@@ -10,6 +37,8 @@ export const ButtonStyleColor = css`
       _color = props.theme.colors.button.purple
     } else if (props.pink) {
       _color = props.theme.colors.button.pink
+    } else if (props.green) {
+      _color = props.theme.colors.button.green
     } else {
       _color = props.theme.colors.button.gray
     }
@@ -40,14 +69,36 @@ export const StyleAnchor = css`
   }};
 `
 
+export const ButtonStyle = css`
+  box-shadow: ${props => props.theme.colors.button.shadow};
+  cursor: ${props => (props.disabled ? 'initial' : 'pointer')};
+  font-size: ${props => (props.anchor ? null : props.theme.fonts.button)};
+  font-weight: ${props =>
+    props.anchor
+      ? props.theme.fonts.weight.regular
+      : props.theme.fonts.weight.bold};
+  margin: ${props => props.margin};
+  opacity: ${props => (props.disabled ? 0.5 : null)};
+  pointer-events: ${props => (props.disabled ? 'none' : null)};
+  text-transform: ${props => (props.anchor ? null : 'uppercase')};
+  user-select: ${props => (props.anchor ? null : 'none')};
+  text-rendering: geometricPrecision;
+`
+
 export const ButtonStyleHover = css`
   backface-visibility: hidden;
-  transition: opacity ${props => props.theme.animation.time.repaint};
+  transition: all 0.5s;
 
   &:focus,
   &:hover {
-    opacity: ${props => props.theme.animation.opacity.hover};
+    filter: brightness(1.3);
   }
+`
+
+export const ButtonColor = styled.button`
+  ${ButtonStyle} ${ButtonStyleHover} ${ButtonStyleBackground} border-radius: 2px;
+  color: ${props => props.theme.colors.button.white};
+  padding: 8px 18px;
 `
 
 const Button = styled.button.attrs({

@@ -21,10 +21,14 @@ const Themes = {
       logoFill: Colors.white
     },
     button: {
+      from: Colors.purpleGradientFrom,
+      top: Colors.purpleGradientTo,
       white: Colors.white,
       gray: Colors.gray,
       purple: Colors.purple,
-      pink: Colors.pink
+      pink: Colors.pink,
+      green: Colors.green,
+      shadow: '0 3px 6px rgba(0, 0, 0, 0.2)'
     },
     Modal: {
       background: Colors.blackLight,
@@ -42,7 +46,7 @@ const Themes = {
     TextField: {
       border: Colors.grayLight,
       borderFocus: Colors.purple,
-      color: Colors.white,
+      color: Colors.gray,
       placeholder: Colors.grayLight,
       error: Colors.pink
     },
