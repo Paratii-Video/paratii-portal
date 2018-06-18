@@ -4,8 +4,8 @@ import { createSelector } from 'reselect'
 import { Map } from 'immutable'
 
 import {
-  getPlayerCurrentTimeSeconds,
-  getDoNotTipVideoIds
+  getDoNotTipVideoIds,
+  getPlayerTotalTimeViewedSeconds
 } from 'selectors/index'
 import { getPlayingVideo } from 'selectors/PlayerSelectors'
 import { getIsSecure } from 'selectors/UserSelectors'
@@ -17,15 +17,17 @@ import type { RootState } from 'types/ApplicationTypes'
 export const askForTip: (state: RootState) => boolean = createSelector(
   [
     getIsSecure,
-    getPlayerCurrentTimeSeconds,
+    getPlayerTotalTimeViewedSeconds,
     getDoNotTipVideoIds,
     getPlayingVideo
   ],
   (
     isSecure: boolean,
-    currentTimeSeconds: number,
+    totalTimeViewedSeconds: number,
     doNotTipVideoIds: Map<string, boolean>,
     video: Video
   ) =>
-    isSecure && currentTimeSeconds > 3 && !doNotTipVideoIds.get(video.get('id'))
+    isSecure &&
+    totalTimeViewedSeconds > 3 &&
+    !doNotTipVideoIds.get(video.get('id'))
 )

@@ -15,6 +15,7 @@ import {
   _getIsFullscreen,
   _getPlayerVideoId,
   _getPlayerCurrentTimeSeconds,
+  _getPlayerTotalTimeViewedSeconds,
   _getPlayerCurrentBufferedTimeSeconds,
   _getPlayerCurrentVolume,
   _getPlaybackLevels,
@@ -81,6 +82,8 @@ export const getPlayerVideoId = (state: RootState): string =>
   _getPlayerVideoId(state.player)
 export const getPlayerCurrentTimeSeconds = (state: RootState): number =>
   _getPlayerCurrentTimeSeconds(state.player)
+export const getPlayerTotalTimeViewedSeconds = (state: RootState): number =>
+  _getPlayerTotalTimeViewedSeconds(state.player)
 export const getPlayerCurrentBufferedTimeSeconds = (state: RootState): number =>
   _getPlayerCurrentBufferedTimeSeconds(state.player)
 export const getPlayerCurrentVolume = (state: RootState): number =>
