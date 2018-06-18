@@ -33,7 +33,8 @@ const reducer = {
       loginRequestStatus: REQUEST_STATUS.SUCCEEDED,
       name: payload.name,
       email: payload.email,
-      emailIsVerified: payload.emailIsVerified
+      emailIsVerified: payload.emailIsVerified,
+      lastSecuredTimestamp: Date.now()
     })
   },
   [LOGOUT]: (state: UserRecord): UserRecord => {

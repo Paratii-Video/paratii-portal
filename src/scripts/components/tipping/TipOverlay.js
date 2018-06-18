@@ -7,7 +7,10 @@ import ParatiiLib from 'utils/ParatiiLib'
 import { TOKEN_UNITS } from 'constants/ParatiiLibConstants'
 
 import { VIDEO_OVERLAY_PADDING } from 'constants/UIConstants'
-import { TIPPING_UI_STEPS } from 'constants/TippingConstants'
+import {
+  TIPPING_UI_STEPS,
+  MAXIMUM_LAST_SECURED_FOR_PASSWORD_PROMPT_SECONDS
+} from 'constants/TippingConstants'
 
 import Video from 'records/VideoRecords'
 
@@ -16,12 +19,13 @@ import BackButton from 'components/foundations/buttons/BackButton'
 import CloseButton from 'components/foundations/buttons/CloseButton'
 import Colors from 'components/foundations/base/Colors'
 import ChooseAmountTipStep from './steps/ChooseAmountTipStep'
-import EnterPasswordTipStep from './steps/EnterPasswordTipStep'
+import ConfirmTipStep from './steps/ConfirmTipStep'
 import TipCompleteStep from './steps/TipCompleteStep'
 
 import type { TippingUIStep } from 'types/TippingTypes'
 
 type Props = {
+  lastSecuredTimestamp: number,
   notification: (Object, string) => void,
   setUserIsTipping: (isTipping: boolean) => void,
   addDoNotTipVideo: (videoId: string) => void,
@@ -123,9 +127,13 @@ class TipOverlay extends React.Component<Props, State> {
         )
       case TIPPING_UI_STEPS.ENTER_PASSWORD:
         return (
-          <EnterPasswordTipStep
+          <ConfirmTipStep
+            passwordRequired={
+              (Date.now() - this.props.lastSecuredTimestamp) / 1000 >
+              MAXIMUM_LAST_SECURED_FOR_PASSWORD_PROMPT_SECONDS
+            }
             tipAmount={this.state.tipAmount}
-            onSuccessfulAuth={this.transferTip}
+            transferTip={this.transferTip}
           />
         )
       case TIPPING_UI_STEPS.TIP_COMPLETE:

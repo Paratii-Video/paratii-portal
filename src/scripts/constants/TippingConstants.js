@@ -7,3 +7,7 @@ export const TIPPING_UI_STEPS: { [key: string]: string } = {
   ENTER_PASSWORD: 'ENTER_PASSWORD',
   TIP_COMPLETE: 'TIP_COMPLETE'
 }
+
+export const MINIMUM_VIEWED_SECONDS_FOR_TIP_PROMPT: number = 3
+
+export const MAXIMUM_LAST_SECURED_FOR_PASSWORD_PROMPT_SECONDS: number = 60

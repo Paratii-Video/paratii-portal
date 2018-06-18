@@ -49,7 +49,8 @@ const ContinueButton = styled(Button)`
 `
 
 type Props = {
-  onSuccessfulAuth: () => Promise<void>,
+  passwordRequired: boolean,
+  transferTip: () => Promise<void>,
   tipAmount: number
 }
 
@@ -58,7 +59,7 @@ type State = {
   showPasswordError: boolean
 }
 
-class EnterPasswordTipStep extends React.Component<Props, State> {
+class ConfirmTipStep extends React.Component<Props, State> {
   constructor (props: Props) {
     super(props)
 
@@ -80,11 +81,14 @@ class EnterPasswordTipStep extends React.Component<Props, State> {
     const walletString: string = getSecureWallet()
 
     try {
-      paratii.eth.wallet.decrypt(JSON.parse(walletString), this.state.password)
-      this.setState({
-        showPasswordError: false
-      })
-      this.props.onSuccessfulAuth()
+      if (this.props.passwordRequired) {
+        paratii.eth.wallet.decrypt(JSON.parse(walletString), this.state.password)
+        this.setState({
+          showPasswordError: false
+        })
+      }
+
+      this.props.transferTip()
     } catch (e) {
       this.setState({
         showPasswordError: true
@@ -102,15 +106,16 @@ class EnterPasswordTipStep extends React.Component<Props, State> {
           <TipAmount amount={this.props.tipAmount} />
         </TipAmountWrapper>
         <PasswordForm id={FORM_ID} onSubmit={this.onSubmitPassword}>
-          <Input
-            type="password"
-            error={this.state.showPasswordError}
-            placeholder={RawTranslatedText({
-              message: 'tipping.steps.enterPassword.inputPlaceholder'
-            })}
-            onChange={this.onPasswordChange}
-            value={this.state.password}
-          />
+          {
+            this.props.passwordRequired && <Input
+              type="password"
+              error={this.state.showPasswordError}
+              placeholder={RawTranslatedText({
+                message: 'tipping.steps.enterPassword.inputPlaceholder'
+              })}
+              onChange={this.onPasswordChange}
+              value={this.state.password}
+            />}
           <BottomBar>
             {this.state.showPasswordError && (
               <PasswordError>
@@ -119,7 +124,7 @@ class EnterPasswordTipStep extends React.Component<Props, State> {
             )}
             <ContinueButton
               form={FORM_ID}
-              disabled={!this.state.password.trim()}
+              disabled={this.props.passwordRequired && !this.state.password.trim()}
               type="submit"
             >
               <TranslatedText message="tipping.steps.enterPassword.continue" />
@@ -131,4 +136,4 @@ class EnterPasswordTipStep extends React.Component<Props, State> {
   }
 }
 
-export default EnterPasswordTipStep
+export default ConfirmTipStep
