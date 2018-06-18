@@ -104,6 +104,9 @@ class FilesUploader extends Component<Props, Object> {
       fileName: 'No file chosen',
       inputTextError: false
     }
+
+    this.onFileChosen = this.onFileChosen.bind(this)
+    this.onDrag = this.onDrag.bind(this)
   }
 
   setSelectedFile (file: File) {
@@ -115,16 +118,16 @@ class FilesUploader extends Component<Props, Object> {
   }
 
   onFileChosen = (e: Object) => {
-    // If wallet not secure open the modal
     if (this.props.isWalletSecured) {
       const file = e.target.files[0]
-      this.props.onFileChosen(file)
-      this.setState({
-        file: file,
-        fileName: file.name + ' | ' + file.size + 'bytes'
-      })
-
-      this.props.history.push(FILESUPLOADER_PATH_TO)
+      if (file) {
+        this.props.onFileChosen(file)
+        this.setState({
+          file: file,
+          fileName: file.name + ' | ' + file.size + 'bytes'
+        })
+        this.props.history.push(FILESUPLOADER_PATH_TO)
+      }
     } else {
       this.props.checkUserWallet()
     }
@@ -161,6 +164,7 @@ class FilesUploader extends Component<Props, Object> {
           data-test-id="upload-file-input"
           onChange={this.onFileChosen}
           onClick={this.onFileInputClick}
+          onDrop={this.onFileChosen}
           onDragEnter={this.onDrag}
           onDragLeave={this.onDrag}
         />
