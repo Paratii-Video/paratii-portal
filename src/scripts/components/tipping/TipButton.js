@@ -14,7 +14,7 @@ import coinDataUrl from 'assets/svg/coin.svg'
 
 type Props = {
   addDoNotTipVideo: (videoId: string) => void,
-  checkUserWallet: ({ onClose: ?Function }) => void,
+  checkUserWallet: ({ onComplete: ?Function }) => void,
   setUserIsTipping: (isTipping: boolean) => void,
   walletIsSecure: boolean,
   video: Video
