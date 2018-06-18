@@ -15,6 +15,7 @@ const FORM_ID: string = 'PROFILE_MODAL'
 type Props = {
   walletKey: string,
   openModal: string => void,
+  onComplete: Function,
   closeModal: () => void,
   secureKeystore: string => void,
   setUserData: () => void,
@@ -42,6 +43,10 @@ class ModalProfile extends Component<Props, Object> {
   setProfile: () => void
   sendVerificationMail: (string, string) => void
   handleInputChange: (input: string, e: Object) => void
+
+  static defaultProps = {
+    onComplete: () => {}
+  }
 
   constructor (props: Props) {
     super(props)
@@ -74,6 +79,7 @@ class ModalProfile extends Component<Props, Object> {
       })
     }
     this.props.closeModal()
+    this.props.onComplete()
     // Set profile in the state
     this.props.setUserData()
   }

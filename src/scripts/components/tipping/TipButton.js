@@ -14,7 +14,9 @@ import coinDataUrl from 'assets/svg/coin.svg'
 
 type Props = {
   addDoNotTipVideo: (videoId: string) => void,
+  checkUserWallet: ({ onClose: ?Function }) => void,
   setUserIsTipping: (isTipping: boolean) => void,
+  walletIsSecure: boolean,
   video: Video
 }
 
@@ -50,7 +52,15 @@ const CloseButtonWrapper = styled.span`
 
 class TipButton extends React.Component<Props> {
   onClick = (e: Object) => {
-    this.props.setUserIsTipping(true)
+    if (!this.props.walletIsSecure) {
+      this.props.checkUserWallet({
+        onComplete: () => {
+          this.props.setUserIsTipping(true)
+        }
+      })
+    } else {
+      this.props.setUserIsTipping(true)
+    }
   }
 
   onClose = (e: Object) => {

@@ -7,7 +7,8 @@ import UserRecord, {
   _getWalletKey,
   _getMnemonicKey,
   _getLoginRequestStatus,
-  _getBalances
+  _getBalances,
+  _getLastSecuredTimestamp
 } from 'records/UserRecords'
 import {
   _getIsPlaying,
@@ -64,6 +65,8 @@ export const getMnemonicKey = (state: RootState): string =>
   _getMnemonicKey(getUser(state))
 export const getBalances = (state: RootState): Balances =>
   _getBalances(getUser(state))
+export const getLastSecuredTimestamp = (state: RootState): number =>
+  _getLastSecuredTimestamp(getUser(state))
 
 export const getLoginRequestStatus = (state: RootState): RequestStatus =>
   _getLoginRequestStatus(state.user)

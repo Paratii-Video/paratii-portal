@@ -33,7 +33,7 @@ const balancesLoaded = createAction(BALANCES_LOADED)
 export const setWalletData = createAction(SET_WALLET_DATA)
 export const setWalletAddress = createAction(SET_WALLET_ADDRESS)
 
-export const checkUserWallet = ({ onClose }: Object = {}) => (
+export const checkUserWallet = ({ onClose, onComplete }: Object = {}) => (
   dispatch: Dispatch
 ) => {
   if (ACTIVATE_SECURE_WALLET) {
@@ -41,9 +41,9 @@ export const checkUserWallet = ({ onClose }: Object = {}) => (
     if (walletStringSecure) {
       console.log('Try to open encrypted keystore')
       // Need to ask the PIN
-      dispatch(openModal(MODAL.ASK_PASSWORD, { onClose }))
+      dispatch(openModal(MODAL.ASK_PASSWORD, { onClose, onComplete }))
     } else {
-      dispatch(openModal(MODAL.SECURE, { onClose }))
+      dispatch(openModal(MODAL.SECURE, { onClose, onComplete }))
     }
   }
 }

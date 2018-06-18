@@ -75,6 +75,10 @@ class ModalShowSeed extends Component<Props, Object> {
   toggleOption: (e: Object) => void
   copyWordsToClipboard: (event: Object) => void
 
+  static defaultProps = {
+    onComplete: () => {}
+  }
+
   constructor (props: Props) {
     super(props)
     this.state = {
