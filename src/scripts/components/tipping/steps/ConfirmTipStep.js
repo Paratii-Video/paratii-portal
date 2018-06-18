@@ -45,7 +45,8 @@ const PasswordError = styled.div`
 
 const ContinueButton = styled(Button)`
   align-self: baseline;
-  justify-self: flex-end;
+  justify-self: 'flex-end';
+  margin: ${({ centered }) => (centered ? 'auto' : undefined)};
 `
 
 type Props = {
@@ -69,6 +70,8 @@ class ConfirmTipStep extends React.Component<Props, State> {
     }
   }
 
+  showPasswordInput = (): boolean => !!this.props.passwordRequired
+
   onPasswordChange = (e: Object): void => {
     this.setState({
       password: e.target.value
@@ -82,7 +85,10 @@ class ConfirmTipStep extends React.Component<Props, State> {
 
     try {
       if (this.props.passwordRequired) {
-        paratii.eth.wallet.decrypt(JSON.parse(walletString), this.state.password)
+        paratii.eth.wallet.decrypt(
+          JSON.parse(walletString),
+          this.state.password
+        )
         this.setState({
           showPasswordError: false
         })
@@ -106,8 +112,8 @@ class ConfirmTipStep extends React.Component<Props, State> {
           <TipAmount amount={this.props.tipAmount} />
         </TipAmountWrapper>
         <PasswordForm id={FORM_ID} onSubmit={this.onSubmitPassword}>
-          {
-            this.props.passwordRequired && <Input
+          {this.showPasswordInput() && (
+            <Input
               type="password"
               error={this.state.showPasswordError}
               placeholder={RawTranslatedText({
@@ -115,7 +121,8 @@ class ConfirmTipStep extends React.Component<Props, State> {
               })}
               onChange={this.onPasswordChange}
               value={this.state.password}
-            />}
+            />
+          )}
           <BottomBar>
             {this.state.showPasswordError && (
               <PasswordError>
@@ -123,8 +130,11 @@ class ConfirmTipStep extends React.Component<Props, State> {
               </PasswordError>
             )}
             <ContinueButton
+              centered={!this.showPasswordInput()}
               form={FORM_ID}
-              disabled={this.props.passwordRequired && !this.state.password.trim()}
+              disabled={
+                this.props.passwordRequired && !this.state.password.trim()
+              }
               type="submit"
             >
               <TranslatedText message="tipping.steps.enterPassword.continue" />
