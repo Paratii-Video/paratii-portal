@@ -32,6 +32,7 @@ const Header = styled.div`
   background-size: cover;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   display: flex;
+  flex-direction: column;
   min-height: calc(100vh - (${MAINHEADER_LOGO_HEIGHT} * 2));
   justify-content: center;
   padding: 0 20px;
@@ -52,10 +53,18 @@ const HeaderWrapper = styled.div`
   }
 `
 
+const HeaderLinkWrapper = styled.div`
+  padding: 0 ${VIDEOLINK_POSITION} ${VIDEOLINK_POSITION};
+  width: 100%;
+
+  @media (max-width: 1024px) {
+    padding: 0 0 ${VIDEOLINK_POSITION} 0;
+  }
+`
+
 const VideoLink = styled.a`
   ${ButtonStyleHover} align-items: center;
   background: ${props => props.theme.colors.LandingPage.VideoLinkBackground};
-  bottom: ${VIDEOLINK_POSITION};
   border-radius: 4px;
   color: ${props => props.theme.colors.LandingPage.VideoLinkColor};
   display: flex;
@@ -63,9 +72,12 @@ const VideoLink = styled.a`
   font-weight: ${props => props.theme.fonts.weight.bold};
   padding: 16px 24px;
   overflow: hidden;
-  margin: 20px 0 0;
   max-width: 200px;
   width: 100%;
+
+  @media (max-width: 767px) {
+    max-width: initial;
+  }
 
   svg {
     margin-right: 10px;
@@ -101,7 +113,6 @@ const HeaderContentWrapper = styled.div`
   max-width: 500px;
   text-align: center;
   padding: 90px 40px 10px;
-  position: relative;
   width: 100%;
   z-index: 4;
 `
@@ -376,11 +387,13 @@ class Landing extends Component<Props, void> {
                 <FilesUploader white />
               </HeaderContentWrapper>
             </HeaderContent>
+          </HeaderWrapper>
+          <HeaderLinkWrapper>
             <VideoLink href={this.headerVideo.url}>
               <SVGIcon icon="icon-player-play" width="13px" height="16px" />
               <TruncatedText>{this.headerVideo.title}</TruncatedText>
             </VideoLink>
-          </HeaderWrapper>
+          </HeaderLinkWrapper>
         </Header>
         <Videos>
           <VideosWrapper>
