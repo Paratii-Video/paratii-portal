@@ -287,6 +287,7 @@ class VideoOverlay extends Component<Props> {
         </Overlay>
         <PlayerControlsWrapper showStartScreen={showStartScreen}>
           <PlayerControlsContainer
+            isEmbed={isEmbed}
             onScrub={onScrub}
             onVolumeChange={onVolumeChange}
             onToggleMute={onToggleMute}

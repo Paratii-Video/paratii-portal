@@ -41,6 +41,7 @@ import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
 
 type Props = {
   askForTip: boolean,
+  isEmbed: boolean,
   video: ?VideoRecord,
   videoDurationSeconds: number,
   isPlaying: boolean,
@@ -307,6 +308,7 @@ class PlayerControls extends Component<Props, State> {
     const {
       activePlugin,
       askForTip,
+      isEmbed,
       isPlaying,
       isFullscreen,
       showStartScreen,
@@ -338,7 +340,8 @@ class PlayerControls extends Component<Props, State> {
           showShareModal={showShareModal}
           showStartScreen={showStartScreen}
         />
-        {askForTip && (
+        {askForTip &&
+          !isEmbed && (
           <TipButtonWrapper
             controlsRaised={transitionState === TRANSITION_STATE.ENTERED}
           >
