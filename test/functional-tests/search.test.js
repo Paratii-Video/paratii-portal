@@ -1,15 +1,17 @@
-import {
-  MATH_VIDEO,
-  DEVCON_VIDEO,
-  ETHEREUM_VIDEO
-} from './data/fixtures/videos'
-import { paratii } from './test-utils/helpers.js'
+// import {
+//   MATH_VIDEO,
+//   DEVCON_VIDEO,
+//   ETHEREUM_VIDEO
+// } from './data/fixtures/videos'
+// import { paratii } from './test-utils/helpers.js'
 
 // import mockEndpoint from '../../mock-server/mockEndpoint'
 
-const SEARCH_RESULTS = [MATH_VIDEO, DEVCON_VIDEO, ETHEREUM_VIDEO]
+import SEARCH_RESULTS from './data/fixtures/videos'
 
-describe('🔍 Search: @watch', () => {
+// const SEARCH_RESULTS = [MATH_VIDEO, DEVCON_VIDEO, ETHEREUM_VIDEO]
+
+describe('🔍 Search:', () => {
   const navigateToSearch = () => browser.url('http://localhost:8080/search')
   const searchResultsWrapperSelector = '[data-test-id="search-results"]'
   const enterKeywordsZeroStateSelector = `${searchResultsWrapperSelector} [data-test-id="enter-keywords-zero-state"]`
@@ -39,9 +41,9 @@ describe('🔍 Search: @watch', () => {
   // }
 
   before(async () => {
-    await paratii.vids.create(MATH_VIDEO)
-    await paratii.vids.create(DEVCON_VIDEO)
-    await paratii.vids.create(ETHEREUM_VIDEO)
+    // await paratii.vids.create(MATH_VIDEO)
+    // await paratii.vids.create(DEVCON_VIDEO)
+    // await paratii.vids.create(ETHEREUM_VIDEO)
 
     browser.addCommand('waitUntilIsOnSearchRoute', ({ query = '' } = {}) => {
       browser.waitUntil(
@@ -79,7 +81,9 @@ describe('🔍 Search: @watch', () => {
               searchResultDescriptionSelector,
               results
             ) => {
+              console.log('results', results)
               const resultsData = JSON.parse(results)
+              console.log('resultsData', resultsData)
               const searchResults = document.querySelectorAll(
                 searchResultSelector
               )
@@ -176,7 +180,7 @@ describe('🔍 Search: @watch', () => {
     browser.waitUntilNoResultsZeroStateIsVisible({ query })
   })
 
-  it('should navigate to the /search route after searching on another page and render results @watch', () => {
+  it('should navigate to the /search route after searching on another page and render results', () => {
     const query = 'math'
     // mockSearchResponse({
     //   query,
@@ -198,7 +202,7 @@ describe('🔍 Search: @watch', () => {
       () =>
         browser.execute(
           searchResultSelector =>
-            document.querySelectorAll(searchResultSelector).length === 3,
+            document.querySelectorAll(searchResultSelector).length === 2,
           searchResultSelector
         ).value,
       undefined,
@@ -291,12 +295,12 @@ describe('🔍 Search: @watch', () => {
       () =>
         browser.execute(
           videoId => window.location.pathname === `/play/${videoId}`,
-          MATH_VIDEO.id
+          SEARCH_RESULTS[0].id
         ).value
     )
   })
 
-  it('should fetch additional search results when there are more results present', () => {
+  it('should fetch additional search results when there are more results present @watch', () => {
     const query = 'something'
 
     // mockSearchResponse({

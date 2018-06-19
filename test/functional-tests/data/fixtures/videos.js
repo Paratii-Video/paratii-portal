@@ -1,5 +1,5 @@
-export const MATH_VIDEO = {
-  id: 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ',
+const MATH_VIDEO = {
+  _id: 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ',
   title: 'The mathematician who cracked Wall Street | Jim Simons',
   description:
     "Jim Simons was a mathematician and cryptographer who realized: the complex math he used to break codes could help explain patterns in the world of finance. Billions later, he’s working to support the next generation of math teachers and scholars. TED’s Chris Anderson sits down with Simons to talk about his extraordinary life in numbers.\n\nTEDTalks is a daily video podcast of the best talks and performances from the TED Conference, where the world'sleading thinkers and doers give the talk of their lives in 18 minutes (or less). Look for talks on Technology, Entertainment and Design -- plus science, business, global issues, the arts and much more.\nFind closed captions and translated subtitles in many languages at http://www.ted.com/translate\n\nFollow TED news on Twitter: http://www.twitter.com/tednews\nLike TED on Facebook: https://www.facebook.com/TED\n\nSubscribe to our channel: http://www.youtube.com/user/TEDtalksD...",
@@ -12,8 +12,8 @@ export const MATH_VIDEO = {
   staked: true
 }
 
-export const DEVCON_VIDEO = {
-  id: 'QmNhyQjsFW2Tvuz7CFwDTBPo3dfBQ3S4StEpfUZPSpK9FY',
+const DEVCON_VIDEO = {
+  _id: 'QmNhyQjsFW2Tvuz7CFwDTBPo3dfBQ3S4StEpfUZPSpK9FY',
   title: 'Devcon2: Ethereum in 25 Minutes',
   description:
     'Presentation Slides Download: https://ethereumfoundation.org/devcon...\n\nDevcon2: Ethereum in 25 Minutes. Ethereum Foundation Chief Scientist, Vitalik Buterin, describes Ethereum.\nSpeakers: Vitalik Buterin\n\nEthereum Developer Conference, 2016 September 19 - 21,\nShanghai, China (and math!)',
@@ -26,8 +26,8 @@ export const DEVCON_VIDEO = {
   staked: true
 }
 
-export const ETHEREUM_VIDEO = {
-  id: 'QmPDG5AxEpfsQ1cfWU6Kcguc9Bn6eDEdKiUbqxUwSRQBi7',
+const ETHEREUM_VIDEO = {
+  _id: 'QmPDG5AxEpfsQ1cfWU6Kcguc9Bn6eDEdKiUbqxUwSRQBi7',
   title: 'Ethereum: On blockchain interop and scaling',
   description:
     'Vlad Zamfir and Vitalik Buterin present their latest research on blockchain interoperability and scaling as part of DEVCON 0.',
@@ -39,3 +39,6 @@ export const ETHEREUM_VIDEO = {
   author: 'eth_dude',
   staked: true
 }
+
+module.exports = [MATH_VIDEO, DEVCON_VIDEO, ETHEREUM_VIDEO]
+// export {MATH_VIDEO, DEVCON_VIDEO, ETHEREUM_VIDEO}
