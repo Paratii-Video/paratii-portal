@@ -6,7 +6,7 @@ import {
   nukeSessionStorage
 } from './test-utils/helpers'
 
-describe('🦄 Uploader Tool @watch', function () {
+describe('🦄 Uploader Tool', function () {
   this.timeout(120000)
 
   const uploadFileInputSelector =
@@ -97,7 +97,7 @@ describe('🦄 Uploader Tool @watch', function () {
     )
   })
 
-  it.only('should upload a video when the wallet is already secured', async function () {
+  it('should upload a video when the wallet is already secured', async function () {
     browser.createSecureWallet()
 
     // Get address from browser
