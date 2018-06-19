@@ -26,15 +26,17 @@ jobs:
       - run:
           command: yarn run server:test
           background: true
-      - run: node src/scripts/waitForServer.js
+      - run:
+          command: node src/scripts/waitForServer.js
+          no_output_timeout: 120s
       - run: yarn run chimp-circleci-test
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              yarn build:staging
+              yarn build:production
               ./deploy.sh production
             fi
             if [ "${CIRCLE_BRANCH}" == "dev" ]; then
-              yarn build
+              yarn build:staging
               ./deploy.sh staging
             fi

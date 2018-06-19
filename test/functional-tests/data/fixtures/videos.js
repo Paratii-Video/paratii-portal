@@ -10,6 +10,7 @@ export const MATH_VIDEO = {
   mimetype: 'video/mp4',
   thumbnails: ['thumbnail-1280x720_2.png'],
   owner: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
+  author: 'mathGenius2k18',
   stats: {
     likes: 0,
     dislikes: 0
@@ -45,6 +46,7 @@ export const DEVCON_VIDEO = {
   mimetype: 'video/mp4',
   thumbnails: ['thumbnail-1280x720_3.png', 'foo.png'],
   owner: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
+  author: 'cryptohacker',
   stats: {
     likes: 0,
     dislikes: 0
@@ -60,5 +62,36 @@ export const DEVCON_VIDEO = {
     'Vitalik Buterin',
     'devcon2',
     'ethereum'
+  ]
+}
+
+export const ETHEREUM_VIDEO = {
+  id: 'QmPDG5AxEpfsQ1cfWU6Kcguc9Bn6eDEdKiUbqxUwSRQBi7',
+  title: 'Ethereum: On blockchain interop and scaling',
+  description:
+    'Vlad Zamfir and Vitalik Buterin present their latest research on blockchain interoperability and scaling as part of DEVCON 0.',
+  duration: '05:39',
+  price: 0,
+  ipfsHash: 'hashETH',
+  src: '/ipfs/QmPDG5AxEpfsQ1cfWU6Kcguc9Bn6eDEdKiUbqxUwSRQBi7',
+  mimetype: 'video/mp4',
+  thumbnails: ['thumb.png', 'bar.png'],
+  owner: '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
+  author: 'eth_dude',
+  stats: {
+    likes: 0,
+    dislikes: 0
+  },
+  uploader: {
+    address: '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
+    name: 'Ethereum'
+  },
+  tags: [
+    'ethereum',
+    'smart contracts',
+    'blockchain',
+    'scaling',
+    'vitalik buterin',
+    'vlad zamfir'
   ]
 }

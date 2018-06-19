@@ -1,24 +1,19 @@
 @import 'reset.scss';
-
-html, body, #root {
-  width: 100%;
-}
-
-.full-block {
-  display: block;
-  height: 100%;
-  width: 100%;
-}
+@import 'colors.scss';
 
 html {
   font-size: 16px;
-}
+  
+  body {
+    background: $black-medium;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    text-rendering: geometricPrecision;
 
-body {
-  background: #2E3133;
-  font-family: 'Roboto', sans-serif;
-  font-size: 1rem;
-  text-rendering: geometricPrecision;
+    #root {
+      width: 100%;
+    }
+  } 
 }
 
 .app-loader {
@@ -29,7 +24,7 @@ body {
 }
 
 .paratii-loader {
-  background: #2E3133 url('/assets/img/paratii-loader.gif') no-repeat 50%;
+  background: url('/assets/svg/spinner.svg') no-repeat 50%;
   background-size: cover;
   height: 100%;
   width: 100%;

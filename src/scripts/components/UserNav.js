@@ -1,5 +1,5 @@
 /* @flow */
-
+/* stylelint-disable */
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import { add0x } from 'utils/AppUtils'
@@ -89,7 +89,6 @@ const UserPTIBar = styled.div`
   flex: 1 1 ${props => props.percentage};
   height: 100%;
   text-align: center;
-
   ${Text} {
     margin-top: 5px;
   }

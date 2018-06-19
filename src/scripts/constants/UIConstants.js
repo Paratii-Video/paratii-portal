@@ -17,7 +17,7 @@ export const MAINFOOTER_HEIGHT = '72px'
 // UserNav
 export const USERNAV_WIDTH = '312px'
 
-//
+// Controls
 export const CONTROLS_HEIGHT: string = '48px'
 export const CONTROLS_HEIGHT_TABLET: string = '42px'
 
@@ -38,3 +38,6 @@ export const OVERLAY_BUTTONS_HEIGHT: string = '20px'
 
 // Card(not imported to structures/Card default, just for CardStyle)
 export const CARD_PADDING: string = '40px 42px'
+
+// Loader
+export const BASE_LOADER_DIMENSION: string = '50px'

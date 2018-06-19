@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+
 import Button from 'components/foundations/Button'
 import { MAINFOOTER_HEIGHT, Z_INDEX_FOOTER } from 'constants/UIConstants'
+import TranslatedText from 'components/translations/TranslatedText'
 
 type Props = {}
 
@@ -51,30 +53,48 @@ class MainFooter extends Component<Props, void> {
     return (
       <Footer>
         <FooterOpenSourceText>
-          Discover all about Paratii on{' '}
-          <Anchor anchor purple href="http://paratii.video/" target="_blank">
-            paratii.video
-          </Anchor>
+          <TranslatedText
+            message="footer.discover_html"
+            options={{
+              homePageLink: (
+                <Anchor
+                  anchor
+                  purple
+                  href="http://paratii.video/"
+                  target="_blank"
+                >
+                  <TranslatedText message="footer.homePage" />
+                </Anchor>
+              )
+            }}
+          />
         </FooterOpenSourceText>
         <FooterOpenSourceText2>
-          v0.0.1: This is a beta tool! We &hearts; to get feedback on Telegram{' '}
-          <Anchor
-            anchor
-            href="https://t.me/paratiivideo"
-            target="_blank"
-            underline
-          >
-            BR
-          </Anchor>{' '}
-          or{' '}
-          <Anchor
-            anchor
-            href="https://t.me/joinchat/EWZMBQ9mnqJ1--NKHpyF8A"
-            target="_blank"
-            underline
-          >
-            EN
-          </Anchor>
+          <TranslatedText
+            message="footer.betaTool_html"
+            options={{
+              telegramBrazilLink: (
+                <Anchor
+                  anchor
+                  href="https://t.me/paratiivideo"
+                  target="_blank"
+                  underline
+                >
+                  <TranslatedText message="footer.brazil" />
+                </Anchor>
+              ),
+              telegramEnglishLink: (
+                <Anchor
+                  anchor
+                  href="https://t.me/joinchat/EWZMBQ9mnqJ1--NKHpyF8A"
+                  target="_blank"
+                  underline
+                >
+                  <TranslatedText message="footer.english" />
+                </Anchor>
+              )
+            }}
+          />
         </FooterOpenSourceText2>
       </Footer>
     )

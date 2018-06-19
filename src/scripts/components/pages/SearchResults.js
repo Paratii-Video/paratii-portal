@@ -6,6 +6,7 @@ import { List as ImmutableList } from 'immutable'
 
 import Loader from 'components/foundations/Loader'
 import SearchResult from 'components/widgets/SearchResult'
+import TranslatedText from 'components/translations/TranslatedText'
 import Video from 'records/VideoRecords'
 
 const Wrapper = styled.div`
@@ -56,7 +57,7 @@ const LoaderWrapper = styled.div`
   align-items: center;
 `
 
-const HasNextLink = styled.button`
+const HasNextButton = styled.button`
   width: 100%;
   display: flex;
   align-items: center;
@@ -85,9 +86,12 @@ class SearchResults extends React.Component<Props, void> {
     }
 
     return (
-      <HasNextLink onClick={searchForMoreVideos}>
-        Click for more results
-      </HasNextLink>
+      <HasNextButton
+        data-test-id="more-results-button"
+        onClick={searchForMoreVideos}
+      >
+        <TranslatedText message="search.results.moreResults" />
+      </HasNextButton>
     )
   }
 
@@ -96,8 +100,12 @@ class SearchResults extends React.Component<Props, void> {
 
     return (
       <SearchTerm>
-        <SearchTermPrompt>Results for: </SearchTermPrompt>
-        {searchTerm}
+        <SearchTermPrompt>
+          <TranslatedText
+            message="search.results.resultsFor"
+            options={{ term: searchTerm }}
+          />
+        </SearchTermPrompt>
       </SearchTerm>
     )
   }
@@ -106,9 +114,12 @@ class SearchResults extends React.Component<Props, void> {
     if (this.props.searchTerm) {
       if (!this.props.results.size) {
         return (
-          <ZeroState data-test-id="no-results-zero-state">{`No results found for "${
-            this.props.searchTerm
-          }"`}</ZeroState>
+          <ZeroState data-test-id="no-results-zero-state">
+            <TranslatedText
+              message="search.results.noResultsFor"
+              options={{ term: this.props.searchTerm }}
+            />
+          </ZeroState>
         )
       }
 
@@ -124,7 +135,7 @@ class SearchResults extends React.Component<Props, void> {
 
     return (
       <ZeroState data-test-id="enter-keywords-zero-state">
-        Enter some keywords above to search!
+        <TranslatedText message="search.results.zeroState" />
       </ZeroState>
     )
   }
@@ -135,7 +146,7 @@ class SearchResults extends React.Component<Props, void> {
         <Results>
           {this.props.resultsLoading ? (
             <LoaderWrapper>
-              <Loader height="50px" width="50px" />
+              <Loader />
             </LoaderWrapper>
           ) : (
             this.renderSearchResultsSection()

@@ -9,12 +9,16 @@ import RedeemVoucher from 'containers/RedeemVoucherContainer'
 import UploadFile from 'containers/FileUploaderContainer'
 import UploadList from 'containers/UploadListContainer'
 
-import type { Match } from 'react-router-dom'
+import type { Match, History } from 'react-router-dom'
 
 type Props = {
+  checkUserWallet: () => void,
   match: Match,
+  history: History,
+  fetchVideos: () => void,
   videos: Map<string, VideoRecord>,
   selectedVideo: ?VideoRecord,
+  isWalletSecured: boolean,
   setSelectedVideo: (id: string) => void,
   showModal: (View: Object) => void,
   closeModal: () => void
@@ -34,14 +38,39 @@ const Wrapper = CardContainer.extend`
 class VideoManager extends Component<Props, void> {
   constructor (props: Props) {
     super(props)
-    this.props.setSelectedVideo(this.getVideoIdFromRequest())
+
+    this.props.setSelectedVideo(this.getVideoIdFromUrl())
+    this.props.fetchVideos()
+  }
+
+  componentDidMount (): void {
+    if (!this.props.isWalletSecured) {
+      this.props.checkUserWallet({
+        onClose: () => {
+          this.props.history.replace('/')
+        }
+      })
+    }
   }
 
   componentWillUnmount (): void {
     this.props.setSelectedVideo('')
   }
 
-  getVideoIdFromRequest (): string {
+  componentWillReceiveProps (nextProps: Props): void {
+    if (
+      nextProps.videos !== this.props.videos ||
+      this.getVideoIdFromUrl(nextProps) !== this.getVideoIdFromUrl(this.props)
+    ) {
+      this.props.setSelectedVideo(this.getVideoIdFromUrl())
+    }
+
+    if (nextProps.isWalletSecured && !this.props.isWalletSecured) {
+      this.props.fetchVideos()
+    }
+  }
+
+  getVideoIdFromUrl (props: Props = this.props): string {
     const params: Object = this.props.match.params
     return params.id || ''
   }

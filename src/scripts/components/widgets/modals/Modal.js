@@ -18,7 +18,8 @@ import ModalRestoreAccount from 'containers/widgets/modals/ModalRestoreAccountCo
 import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
-  modalContent: string,
+  modalName: string,
+  modalProps: Object,
   showModal: boolean,
   width: string,
   closeModal: () => null
@@ -112,19 +113,27 @@ export const ModalScrollContent = styled.div`
 `
 
 class Modal extends Component<Props, void> {
+  static defaultProps = {
+    modalProps: {}
+  }
+
   canClose = () => {
-    return this.props.modalContent !== MODAL.PROFILE
+    return this.props.modalName !== MODAL.PROFILE
   }
 
   close = () => {
+    const { modalProps: { onClose } } = this.props
     if (this.canClose()) {
       this.props.closeModal()
+      if (onClose) {
+        onClose()
+      }
     }
   }
 
   getModalWidth () {
-    const { modalContent } = this.props
-    switch (modalContent) {
+    const { modalName } = this.props
+    switch (modalName) {
       case MODAL.STAKE:
         return '490px'
       case MODAL.SECURE:
@@ -163,26 +172,42 @@ class Modal extends Component<Props, void> {
   }
 
   renderModal () {
-    const { modalContent } = this.props
-    switch (modalContent) {
+    const { modalName, modalProps } = this.props
+
+    let ModalComponent: any
+
+    switch (modalName) {
       case MODAL.STAKE:
-        return <ModalStake />
+        ModalComponent = ModalStake
+        break
       case MODAL.SECURE:
-        return <ModalSecure />
+        ModalComponent = ModalSecure
+        break
       case MODAL.GREAT_POWER:
-        return <ModalGreatPower />
+        ModalComponent = ModalGreatPower
+        break
       case MODAL.CREATE_PASSWORD:
-        return <ModalCreatePassword />
+        ModalComponent = ModalCreatePassword
+        break
       case MODAL.ASK_PASSWORD:
-        return <ModalAskPassword />
+        ModalComponent = ModalAskPassword
+        break
       case MODAL.SHOW_SEED:
-        return <ModalShowSeed />
+        ModalComponent = ModalShowSeed
+        break
       case MODAL.PROFILE:
-        return <ModalProfile />
+        ModalComponent = ModalProfile
+        break
       case MODAL.REWRITE_SEED:
-        return <ModalRewriteSeed />
+        ModalComponent = ModalRewriteSeed
+        break
       case MODAL.RESTORE_ACCOUNT:
-        return <ModalRestoreAccount />
+        ModalComponent = ModalRestoreAccount
+        break
+    }
+
+    if (ModalComponent) {
+      return <ModalComponent {...modalProps} />
     }
   }
 
@@ -193,7 +218,7 @@ class Modal extends Component<Props, void> {
       <Wrapper show={isVisible}>
         <Container show={isVisible} width={this.getModalWidth()}>
           {this.canClose() && (
-            <CloseButton onClick={this.close}>
+            <CloseButton data-test-id="modal-close-button" onClick={this.close}>
               <SVGIcon icon="icon-close" />
             </CloseButton>
           )}

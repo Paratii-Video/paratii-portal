@@ -3,14 +3,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Blockies from 'react-blockies'
-
 import SearchInputContainer from 'containers/widgets/SearchInputContainer'
 import Button from 'components/foundations/Button'
 import SVGIcon from 'components/foundations/SVGIcon'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
 import MainNavigation from 'components/structures/header/MainNavigation'
 import { add0x } from 'utils/AppUtils'
-
 import {
   MAINHEADER_LOGO_HEIGHT,
   MAINHEADER_LOGO_WIDTH,

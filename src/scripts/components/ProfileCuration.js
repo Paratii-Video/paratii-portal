@@ -1,3 +1,5 @@
+/* @flow */
+/* stylelint-disable */
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import Colors from './foundations/base/Colors'
@@ -102,7 +104,6 @@ const InfoStatusButtons = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-
   ${ButtonColor} {
     flex: 0 0 49%;
   }
@@ -245,7 +246,7 @@ const ChallengeSequenceDot = styled.span`
   }
 `
 
-class Profile extends Component<Props, void> {
+class ProfileCuration extends Component<Props, void> {
   render () {
     const MockAvatar = (
       <img src="http://www.onrouteforward.com/uploads/6/0/0/8/60080487/6808024.jpg" />
@@ -521,4 +522,4 @@ class Profile extends Component<Props, void> {
   }
 }
 
-export default Profile
+export default ProfileCuration

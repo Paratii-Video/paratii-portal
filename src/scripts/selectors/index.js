@@ -33,6 +33,7 @@ import {
   _getAdditionalSearchRequestStatus
 } from 'records/SearchRecords'
 import Video from 'records/VideoRecords'
+import VideoManager from 'records/VideoManagerRecords'
 
 import type {
   RootState,
@@ -47,10 +48,11 @@ export const getContext = (state: RootState): string => state.global.context
 /* Modal */
 export const getModalStatus = (state: RootState): boolean =>
   state.modal.showModal
-export const getModalContent = (state: RootState): string =>
-  state.modal.modalContent
-export const getPreviousModal = (state: RootState): string =>
-  state.modal.previousModalContent
+export const getModalName = (state: RootState): string => state.modal.name
+export const getPreviousModalName = (state: RootState): string =>
+  state.modal.previousModalName
+export const getModalProps = (state: RootState): ?Object =>
+  state.modal.modalProps
 
 /* Users */
 export const getUser = (state: RootState): UserRecord => state.user
@@ -119,3 +121,7 @@ export const getAdditionalSearchRequestStatus = (
 /* UserNav */
 export const getUserNavStatus = (state: RootState): boolean =>
   state.userNav.showUserNav
+
+/* VideoManager */
+export const getVideoManager = (state: RootState): VideoManager =>
+  state.videoManager

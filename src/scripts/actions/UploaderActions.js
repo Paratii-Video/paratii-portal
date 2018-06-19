@@ -24,7 +24,7 @@ import type { RootState } from 'types/ApplicationTypes'
 
 import Notifications from 'react-notification-system-redux'
 
-export const selectUploaderVideo = createAction(UPLOAD_VIDEO_SELECT)
+export const selectVideoToPublish = createAction(UPLOAD_VIDEO_SELECT)
 const uploadRequested = createAction(UPLOAD_REQUESTED)
 const uploadProgress = createAction(UPLOAD_PROGRESS)
 const uploadRemoteSuccess = createAction(UPLOAD_REMOTE_SUCCESS)
@@ -49,7 +49,6 @@ function upsertVideo (videoId, dataToUpdate, state) {
   console.log('SAVING:')
   console.log(updatedVideo)
   return paratii.vids.upsert(updatedVideo).catch(error => {
-    console.log(error)
     throw error
   })
 }
@@ -71,7 +70,6 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
     videoId = paratii.eth.vids.makeId()
   }
   dispatch(videoFetchSuccess({ id: videoId, owner: paratii.eth.getAccount() }))
-  dispatch(selectUploaderVideo(videoId))
   dispatch(
     uploadRequested({
       id: videoId,
@@ -88,7 +86,8 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
     dispatch(
       Notifications.error({
         title: 'Upload Error',
-        message: 'Something went wrong with your file. May you retry?',
+        message:
+          'Something went wrong with your file. We are so sorry. Please retry?',
         autoDismiss: 0
       })
     )
@@ -97,8 +96,8 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
   uploader.on('done', function (files) {
     dispatch(
       Notifications.success({
-        title: 'Local upload',
-        message: 'The local upload has been done'
+        title: "File's uploaded",
+        message: 'Now we need to transcode your pixels'
       })
     )
     const file = files[0]

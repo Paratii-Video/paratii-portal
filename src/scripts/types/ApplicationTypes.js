@@ -10,6 +10,7 @@ import UploaderRecord from 'records/UploaderRecords'
 import NotificationRecord from 'records/NotificationRecord'
 import ModalRecord from 'records/ModalRecord'
 import SearchRecord from 'records/SearchRecords'
+import VideoManagerRecord from 'records/VideoManagerRecords'
 import {
   REQUEST_STATUS,
   TRANSITION_STATE,
@@ -71,7 +72,8 @@ export type RootState = {
   player: PlayerRecord,
   notifications: NotificationsArray,
   modal: ModalRecord,
-  search: SearchRecord
+  search: SearchRecord,
+  videoManager: VideoManagerRecord
 }
 
 type _ThunkAction<R> = (dispatch: Dispatch, getState?: () => RootState) => R
@@ -149,14 +151,14 @@ export type ParatiiLib = {
   eth: {
     getAccount: () => string,
     wallet: {
+      clear: () => void,
+      createFromMnemonic: (num: ?number, mnemonic: ?string) => Object,
       decrypt: (string, password: string) => Object,
       encrypt: (password: string) => Object,
-      newMnemonic: () => string,
       getMnemonic: () => Promise<string>,
-      create: (num: ?number, mnemonic: ?string) => Object,
-      clear: () => void,
       isValidMnemonic: string => boolean,
-      length: number
+      length: number,
+      newMnemonic: () => string
     },
     vids: {
       get: (id: string) => ?Object,
@@ -175,7 +177,13 @@ export type ParatiiLib = {
     },
     tcr: {
       apply: (string, number) => Promise<Object>,
-      checkEligiblityAndApply: (string, number) => Promise<Object>
+      checkEligiblityAndApply: (string, number) => Promise<Object>,
+      getMinDeposit: () => string
+    },
+    tcrPlaceholder: {
+      apply: (string, number) => Promise<Object>,
+      checkEligiblityAndApply: (string, number) => Promise<Object>,
+      getMinDeposit: () => string
     }
   },
   ipfs: {

@@ -101,10 +101,13 @@ export const voucherAmount11 = 5 * 10 ** 18
 export const voucherAmountInitial11 = 100 * 10 ** 18
 export const hashedVoucherCode11 =
   '0x182b41b125c1c14efaf188d95b6a7e2074d8b746237fc47b48beb63551d742f9'
-//
-// export function getProvider () {
-//   return Meteor.settings.public.http_provider
-// }
+
+export async function getAccountFromBrowser () {
+  const result = await browser.execute(function () {
+    return paratii.getAccount()
+  })
+  return result.value
+}
 //
 // export function login (browser, password = 'password') {
 //   browser.execute(function (loginPassword) {
@@ -246,7 +249,7 @@ export function createKeystore (userpassword = password) {
   browser.execute(function (userpassword) {
     window.paratii.eth.wallet.clear()
     window.paratii.eth.wallet
-      .create()
+      .createFromMnemonic()
       .then(
         localStorage.setItem(
           'keystore-secure',

@@ -1,22 +1,26 @@
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
+import { getIsSecure } from 'selectors/UserSelectors'
 import {
   getSelectedUploaderVideo,
   getUploaderVideos
 } from 'selectors/UploaderSelectors'
-import { selectUploaderVideo } from 'actions/UploaderActions'
+import { selectVideoToPublish } from 'actions/UploaderActions'
+import { checkUserWallet } from 'actions/UserActions'
+import { fetchOwnedVideos } from 'actions/VideoActions'
 import type { RootState } from 'types/ApplicationTypes'
 
 import VideoManager from 'components/VideoManager'
 
 const mapStateToProps = (state: RootState) => ({
   videos: getUploaderVideos(state),
-  selectedVideo: getSelectedUploaderVideo(state)
+  selectedVideo: getSelectedUploaderVideo(state),
+  isWalletSecured: getIsSecure(state)
 })
 
-const mapDispatchToProps = dispatch => ({
-  setSelectedVideo: bindActionCreators(selectUploaderVideo, dispatch)
-})
+const mapDispatchToProps = {
+  checkUserWallet,
+  fetchVideos: fetchOwnedVideos,
+  setSelectedVideo: selectVideoToPublish
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoManager)

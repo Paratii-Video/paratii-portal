@@ -10,7 +10,7 @@ const Colors: Object = {
   blackLight: '#262933',
   blackLightTransparent: 'rgba(40, 46, 51, 0.95)',
   black: '#20232E',
-  blackTransparent: 'rgba(27, 31, 36, 0.5)',
+  blackTransparent: 'rgba(27, 31, 36, 0.6)',
   blackMedium: '#2E3133',
   blackDark: '#1B1F26',
   blackDarkTransparent: 'rgba(27, 31, 36, 0.7)',
