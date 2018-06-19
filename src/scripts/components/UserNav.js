@@ -191,9 +191,6 @@ class UserNav extends Component<Props, void> {
                 </Text>
                 <UserPTIValueBox>
                   <Text purple>{balance} PTI</Text>
-                  <Text gray tiny>
-                    US$ 3.00
-                  </Text>
                 </UserPTIValueBox>
               </UserPTIValue>
               <UserPTIValue>
@@ -202,9 +199,6 @@ class UserNav extends Component<Props, void> {
                 </Text>
                 <UserPTIValueBox>
                   <Text pink>10 PTI</Text>
-                  <Text gray tiny>
-                    US$ 3.00
-                  </Text>
                 </UserPTIValueBox>
               </UserPTIValue>
             </UserPTIValuesWrapper>
