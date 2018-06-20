@@ -19,20 +19,12 @@ import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
+import SidebarTCR from 'components/widgets/tcr/SidebarTCR'
 import {
   requestFullscreen,
   requestCancelFullscreen,
   getAppRootUrl
 } from 'utils/AppUtils'
-
-import ChallengePeriod from './widgets/tcr/ChallengePeriod'
-import WhiteListed from './widgets/tcr/WhiteListed'
-import CommitYourVote from './widgets/tcr/CommitYourVote'
-import SendYourVoteBack from './widgets/tcr/SendYourVoteBack'
-import VideoApproved from './widgets/tcr/VideoApproved'
-import VideoRejected from './widgets/tcr/VideoRejected'
-import VoteCommitted from './widgets/tcr/VoteCommitted'
-import Voting from './widgets/tcr/Voting'
 
 import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 import { APP_TITLE } from 'constants/ApplicationConstants'
@@ -78,13 +70,6 @@ type State = {
   videoHasNeverPlayed: boolean,
   videoNotFound: boolean
 }
-
-// Sidebar
-const Sidebar = styled.div`
-  display: flex;
-  flex: 1 1 410px;
-  flex-direction: column;
-`
 
 const Wrapper = styled.div`
   display: flex;
@@ -911,26 +896,7 @@ class Play extends Component<Props, State> {
                 </PlayInfo>
               )}
             </VideoWrapperContent>
-            {!isEmbed &&
-              video && (
-              <Sidebar>
-                <ChallengePeriod inReveal />
-
-                <WhiteListed />
-
-                <CommitYourVote />
-
-                <VoteCommitted />
-
-                <Voting />
-
-                <SendYourVoteBack />
-
-                <VideoApproved />
-
-                <VideoRejected />
-              </Sidebar>
-            )}
+            {!isEmbed && video && <SidebarTCR videoId={video && video.id} />}
           </Wrapper>
         </DocumentTitle>
       )

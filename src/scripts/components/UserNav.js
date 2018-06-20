@@ -150,13 +150,13 @@ const UserSubNavListItemLink = styled(Link)`
 `
 
 class UserNav extends Component<Props, void> {
-  UserNavWrapper: Object
-
-  constructor (props: Props) {
-    super(props)
-
-    this.UserNavWrapper = this.UserNavWrapper.bind(this)
-  }
+  // UserNavWrapper: Object
+  //
+  // constructor (props: Props) {
+  //   super(props)
+  //
+  //   this.UserNavWrapper = this.UserNavWrapper.bind(this)
+  // }
 
   componentDidUpdate () {
     if (this.props.showUserNav) {
