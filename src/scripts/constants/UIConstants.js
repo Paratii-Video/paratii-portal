@@ -8,8 +8,8 @@ export const Z_INDEX_FOOTER: string = '980'
 export const Z_INDEX_USERNAV: string = '970'
 
 // MainHeader
-export const MAINHEADER_LOGO_HEIGHT = '69px'
-export const MAINHEADER_LOGO_WIDTH = '98px'
+export const MAINHEADER_LOGO_WIDTH: string = '98px'
+export const MAINHEADER_LOGO_HEIGHT: string = '62px'
 
 // MainFooter
 export const MAINFOOTER_HEIGHT = '72px'
@@ -20,7 +20,6 @@ export const USERNAV_WIDTH = '312px'
 // Controls
 export const CONTROLS_HEIGHT: string = '48px'
 export const CONTROLS_HEIGHT_TABLET: string = '42px'
-
 export const VIDEO_MANAGER_MAX_HEIGHT: string = '600px'
 
 // Player

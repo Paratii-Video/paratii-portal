@@ -13,7 +13,12 @@ export const ButtonStyleBackground = css`
     } else if (props.green) {
       _background = props.theme.colors.button.green
     } else {
-      _background = props.theme.colors.button.purple
+      _background =
+        'linear-gradient(135deg, ' +
+        props.theme.colors.VideoForm.info.progress.barFrom +
+        ' 0%, ' +
+        props.theme.colors.VideoForm.info.progress.barTo +
+        ' 100%)'
     }
 
     return css`
@@ -65,6 +70,7 @@ export const StyleAnchor = css`
 `
 
 export const ButtonStyle = css`
+  box-shadow: ${props => props.theme.colors.button.shadow};
   cursor: ${props => (props.disabled ? 'initial' : 'pointer')};
   font-size: ${props => (props.anchor ? null : props.theme.fonts.button)};
   font-weight: ${props =>
@@ -76,22 +82,23 @@ export const ButtonStyle = css`
   pointer-events: ${props => (props.disabled ? 'none' : null)};
   text-transform: ${props => (props.anchor ? null : 'uppercase')};
   user-select: ${props => (props.anchor ? null : 'none')};
+  text-rendering: geometricPrecision;
 `
 
 export const ButtonStyleHover = css`
   backface-visibility: hidden;
-  transition: opacity ${props => props.theme.animation.time.repaint};
+  transition: all 0.5s;
 
   &:focus,
   &:hover {
-    opacity: ${props => props.theme.animation.opacity.hover};
+    filter: brightness(1.3);
   }
 `
 
 export const ButtonColor = styled.button`
   ${ButtonStyle} ${ButtonStyleHover} ${ButtonStyleBackground} border-radius: 2px;
   color: ${props => props.theme.colors.button.white};
-  padding: 12px;
+  padding: 8px 18px;
 `
 
 const Button = styled.button.attrs({
