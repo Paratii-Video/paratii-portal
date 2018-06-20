@@ -75,26 +75,11 @@ const ChallengeLine = styled.span`
   width: ${({ width }) => width || '100%'};
 `
 
-const ChallengeSequenceDot = styled.span`
-  background: ${props =>
-    props.theme.colors.ProfileCuration.ChallengeSequenceDot};
-  border-radius: 100%;
-  height: ${props => (props.active ? '12px' : '8px')};
-  position: relative;
-  width: ${props => (props.active ? '12px' : '8px')};
-  z-index: 2;
-
-  ${props =>
-    props.active
-      ? css`
-          &:before,
-          &:after {
-            content: '';
-          }
-        `
-      : null} &:before, &:after {
-    border: 2px solid
-      ${props => props.theme.colors.ProfileCuration.ChallengeSequenceDot};
+const circles = `
+  &:before,
+  &:after {
+    content: '';
+    border: 2px solid white;
     border-radius: 100%;
     left: 50%;
     position: absolute;
@@ -113,6 +98,20 @@ const ChallengeSequenceDot = styled.span`
     opacity: 0.2;
     width: 36px;
   }
+`
+const ChallengeSequenceDot = styled.span`
+  background: ${props =>
+    props.theme.colors.ProfileCuration.ChallengeSequenceDot};
+  border-radius: 100%;
+  height: ${props => (props.active ? '12px' : '8px')};
+  position: relative;
+  width: ${props => (props.active ? '12px' : '8px')};
+  z-index: 2;
+  ${props =>
+    props.active &&
+    css`
+      ${circles};
+    `};
 `
 
 class ChallengePeriodComponent extends Component<Props, void> {

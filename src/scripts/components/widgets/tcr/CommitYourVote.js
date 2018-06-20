@@ -1,4 +1,5 @@
 /* @flow */
+/* stylelint-disable */
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import ButtonColor from 'components/foundations/Button'
