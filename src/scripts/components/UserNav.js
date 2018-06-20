@@ -18,9 +18,9 @@ import UserBadge from './widgets/UserBadge'
 
 type Props = {
   children: Object,
-  userAddress: String,
-  isWalletSecured: Boolean,
-  showUserNav: Boolean,
+  userAddress: string,
+  isWalletSecured: boolean,
+  showUserNav: boolean,
   checkUserWallet: () => void,
   closeUserNav: () => void
 }
@@ -150,6 +150,14 @@ const UserSubNavListItemLink = styled(Link)`
 `
 
 class UserNav extends Component<Props, void> {
+  UserNavWrapper: Object
+
+  constructor (props: Props) {
+    super(props)
+
+    this.UserNavWrapper = this.UserNavWrapper.bind(this)
+  }
+
   componentDidUpdate () {
     if (this.props.showUserNav) {
       this.UserNavWrapper.scrollTo(0, 0)

@@ -5,7 +5,7 @@ import { Record as ImmutableRecord } from 'immutable'
 class ModalRecord extends ImmutableRecord({
   showUserNav: false
 }) {
-  showUserNav: Boolean
+  showUserNav: boolean
 }
 
 export default ModalRecord
