@@ -25,6 +25,15 @@ import {
   getAppRootUrl
 } from 'utils/AppUtils'
 
+import ChallengePeriod from './widgets/tcr/ChallengePeriod'
+import WhiteListed from './widgets/tcr/WhiteListed'
+import CommitYourVote from './widgets/tcr/CommitYourVote'
+import SendYourVoteBack from './widgets/tcr/SendYourVoteBack'
+import VideoApproved from './widgets/tcr/VideoApproved'
+import VideoRejected from './widgets/tcr/VideoRejected'
+import VoteCommitted from './widgets/tcr/VoteCommitted'
+import Voting from './widgets/tcr/Voting'
+
 import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 import { APP_TITLE } from 'constants/ApplicationConstants'
 
@@ -70,15 +79,21 @@ type State = {
   videoNotFound: boolean
 }
 
+// Sidebar
+const Sidebar = styled.div`
+  display: flex;
+  flex: 1 1 410px;
+  flex-direction: column;
+`
+
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
   margin: 0 auto;
   width: ${props => (props.isEmbed ? '100%' : '1280px')};
   height: ${props => (props.isEmbed ? '100%' : null)};
 
   @media (max-width: 1440px) {
-    width: ${props => (props.isEmbed ? null : '1024px')};
+    width: ${props => (props.isEmbed ? null : '1285px')};
   }
 
   @media (max-width: 1200px) {
@@ -99,6 +114,13 @@ const VideoWrapper = styled.div`
   @media (max-width: 930px) {
     margin: ${props => (props.isEmbed ? null : '0 0 25px')};
   }
+`
+
+const VideoWrapperContent = styled.div`
+  display: flex;
+  flex: 1 1 840px;
+  flex-direction: column;
+  margin-right: 20px;
 `
 
 const VideoCover = styled.div`
@@ -763,127 +785,151 @@ class Play extends Component<Props, State> {
       return (
         <DocumentTitle title={videoName || APP_TITLE}>
           <Wrapper isEmbed={isEmbed}>
-            <VideoWrapper isEmbed={isEmbed}>
-              <VideoCover isEmbed={isEmbed}>
-                <PlayerWrapper
-                  data-test-id="player-wrapper"
-                  onClick={this.onPlayerClick}
-                  onMouseEnter={this.onMouseEnter}
-                  innerRef={(ref: HTMLElement) => {
-                    this.wrapperRef = ref
-                  }}
-                >
-                  <Transition in={this.shouldShowVideoOverlay()} timeout={0}>
-                    {(transitionState: ?string) => (
-                      <OverlayWrapper
-                        onMouseLeave={this.onMouseLeave}
-                        onMouseMove={this.onMouseMove}
-                      >
-                        <VideoOverlayContainer
-                          onClick={this.onOverlayClick}
-                          video={video}
-                          isEmbed={isEmbed}
-                          showStartScreen={this.shouldShowStartScreen()}
-                          toggleShareModal={this.toggleShareModal}
-                          showShareModal={this.state.showShareModal}
-                          onScrub={this.scrubVideo}
-                          onVolumeChange={this.changeVolume}
-                          onToggleMute={this.toggleMute}
-                          onPlaybackLevelChange={this.changePlaybackLevel}
-                          transitionState={transitionState}
-                          togglePlayPause={this.togglePlayPause}
-                          toggleFullscreen={(goToFullscreen: boolean): void => {
-                            if (goToFullscreen && this.wrapperRef) {
-                              requestFullscreen(this.wrapperRef)
-                            } else {
-                              requestCancelFullscreen()
-                            }
-                          }}
-                        />
-                      </OverlayWrapper>
-                    )}
-                  </Transition>
-                  <Player
-                    datat-test-id={PLAYER_ID}
-                    id={PLAYER_ID}
+            <VideoWrapperContent isEmbed={isEmbed}>
+              <VideoWrapper isEmbed={isEmbed}>
+                <VideoCover isEmbed={isEmbed}>
+                  <PlayerWrapper
+                    data-test-id="player-wrapper"
+                    onClick={this.onPlayerClick}
+                    onMouseEnter={this.onMouseEnter}
                     innerRef={(ref: HTMLElement) => {
-                      this.playerWrapperRef = ref
+                      this.wrapperRef = ref
                     }}
-                  />
-                  {this.props.video ? (
-                    <ShareOverlay
-                      show={this.state.showShareModal}
-                      onToggle={this.toggleShareModal}
-                      portalUrl={getAppRootUrl(process.env.NODE_ENV)}
-                      videoId={video && video.id}
-                      videoLabelUrl={
-                        getAppRootUrl(process.env.NODE_ENV) +
-                        '/play/' +
-                        ((video && video.id) || '')
-                      }
-                      shareOptions={shareOptions}
+                  >
+                    <Transition in={this.shouldShowVideoOverlay()} timeout={0}>
+                      {(transitionState: ?string) => (
+                        <OverlayWrapper
+                          onMouseLeave={this.onMouseLeave}
+                          onMouseMove={this.onMouseMove}
+                        >
+                          <VideoOverlayContainer
+                            onClick={this.onOverlayClick}
+                            video={video}
+                            isEmbed={isEmbed}
+                            showStartScreen={this.shouldShowStartScreen()}
+                            toggleShareModal={this.toggleShareModal}
+                            showShareModal={this.state.showShareModal}
+                            onScrub={this.scrubVideo}
+                            onVolumeChange={this.changeVolume}
+                            onToggleMute={this.toggleMute}
+                            onPlaybackLevelChange={this.changePlaybackLevel}
+                            transitionState={transitionState}
+                            togglePlayPause={this.togglePlayPause}
+                            toggleFullscreen={(
+                              goToFullscreen: boolean
+                            ): void => {
+                              if (goToFullscreen && this.wrapperRef) {
+                                requestFullscreen(this.wrapperRef)
+                              } else {
+                                requestCancelFullscreen()
+                              }
+                            }}
+                          />
+                        </OverlayWrapper>
+                      )}
+                    </Transition>
+                    <Player
+                      datat-test-id={PLAYER_ID}
+                      id={PLAYER_ID}
+                      innerRef={(ref: HTMLElement) => {
+                        this.playerWrapperRef = ref
+                      }}
                     />
-                  ) : null}
-                </PlayerWrapper>
-              </VideoCover>
-            </VideoWrapper>
+                    {this.props.video ? (
+                      <ShareOverlay
+                        show={this.state.showShareModal}
+                        onToggle={this.toggleShareModal}
+                        portalUrl={getAppRootUrl(process.env.NODE_ENV)}
+                        videoId={video && video.id}
+                        videoLabelUrl={
+                          getAppRootUrl(process.env.NODE_ENV) +
+                          '/play/' +
+                          ((video && video.id) || '')
+                        }
+                        shareOptions={shareOptions}
+                      />
+                    ) : null}
+                  </PlayerWrapper>
+                </VideoCover>
+              </VideoWrapper>
+              {!isEmbed &&
+                video && (
+                <PlayInfo>
+                  {videoName && <Title small>{videoName}</Title>}
+                  {video.author && <Text>By {video.author}</Text>}
+                  {video.share && (
+                    <PlayInfoButtons>
+                      <ButtonIcon>
+                        <SVGIcon
+                          color="white"
+                          width="20px"
+                          height="20px"
+                          margin="0 20px 0 0"
+                          icon="#icon-play-view"
+                        />
+                        <Text small gray>
+                            0
+                        </Text>
+                      </ButtonIcon>
+                      <ButtonIcon>
+                        <SVGIcon
+                          color="white"
+                          width="20px"
+                          height="20px"
+                          margin="0 20px 0 0"
+                          icon="#icon-play-like"
+                        />
+                        <Text small gray>
+                            0
+                        </Text>
+                      </ButtonIcon>
+                      <ButtonIcon>
+                        <SVGIcon
+                          color="white"
+                          width="20px"
+                          height="20px"
+                          margin="0 20px 0 0"
+                          icon="#icon-play-dislike"
+                        />
+                        <Text small gray>
+                            0
+                        </Text>
+                      </ButtonIcon>
+                    </PlayInfoButtons>
+                  )}
+                  <Text gray>
+                      Price{' '}
+                    <PlayInfoHighlight purple>
+                      {video.free ? 'Free' : 'Free'}
+                    </PlayInfoHighlight>
+                  </Text>
+                  {video.description && (
+                    <DescriptionWrapper>
+                      <Text>{video.description}</Text>
+                    </DescriptionWrapper>
+                  )}
+                </PlayInfo>
+              )}
+            </VideoWrapperContent>
             {!isEmbed &&
               video && (
-              <PlayInfo>
-                {videoName && <Title small>{videoName}</Title>}
-                {video.author && <Text>By {video.author}</Text>}
-                {video.share && (
-                  <PlayInfoButtons>
-                    <ButtonIcon>
-                      <SVGIcon
-                        color="white"
-                        width="20px"
-                        height="20px"
-                        margin="0 20px 0 0"
-                        icon="#icon-play-view"
-                      />
-                      <Text small gray>
-                          0
-                      </Text>
-                    </ButtonIcon>
-                    <ButtonIcon>
-                      <SVGIcon
-                        color="white"
-                        width="20px"
-                        height="20px"
-                        margin="0 20px 0 0"
-                        icon="#icon-play-like"
-                      />
-                      <Text small gray>
-                          0
-                      </Text>
-                    </ButtonIcon>
-                    <ButtonIcon>
-                      <SVGIcon
-                        color="white"
-                        width="20px"
-                        height="20px"
-                        margin="0 20px 0 0"
-                        icon="#icon-play-dislike"
-                      />
-                      <Text small gray>
-                          0
-                      </Text>
-                    </ButtonIcon>
-                  </PlayInfoButtons>
-                )}
-                <Text gray>
-                    Price{' '}
-                  <PlayInfoHighlight purple>
-                    {video.free ? 'Free' : 'Free'}
-                  </PlayInfoHighlight>
-                </Text>
-                {video.description && (
-                  <DescriptionWrapper>
-                    <Text>{video.description}</Text>
-                  </DescriptionWrapper>
-                )}
-              </PlayInfo>
+              <Sidebar>
+                <ChallengePeriod inReveal />
+
+                <WhiteListed />
+
+                <CommitYourVote />
+
+                <VoteCommitted />
+
+                <Voting />
+
+                <SendYourVoteBack />
+
+                <VideoApproved />
+
+                <VideoRejected />
+              </Sidebar>
             )}
           </Wrapper>
         </DocumentTitle>
