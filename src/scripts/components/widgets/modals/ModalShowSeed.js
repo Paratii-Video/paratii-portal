@@ -19,7 +19,7 @@ import { copyTextToClipboard } from 'utils/AppUtils'
 import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
 
 type Props = {
-  openModal: string => void,
+  openModal: (string, ?Object) => void,
   showNotification: (Notification, NotificationLevel) => void,
   secureKeystore: string => void
 }

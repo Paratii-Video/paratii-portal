@@ -140,11 +140,13 @@ const Controls = styled.div`
   }
 `
 
+const CONTROL_BUTTONS_PADDING_X: string = '24px'
+
 const ProgressWrapper = styled.div`
   position: absolute;
   top: -9px;
   height: 20px;
-  width: 100%;
+  width: calc(100% - ${CONTROL_BUTTONS_PADDING_X});
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -156,7 +158,7 @@ const ControlButtons = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
-  padding: 2px 24px 0;
+  padding: 2px ${CONTROL_BUTTONS_PADDING_X} 0;
   height: ${CONTROL_BUTTONS_HEIGHT};
 `
 

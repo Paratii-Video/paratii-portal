@@ -163,7 +163,7 @@
     "merge-deep": "^3.0.1",
     "node-polyglot": "^2.2.2",
     "nodemailer": "^4.6.4",
-    "paratii-js": "github:Paratii-Video/paratii-js#master",
+    "paratii-js": "github:Paratii-Video/paratii-js#019291409c80c34a473dba37cd658dcf186cbda7",
     "paratii-mediaplayer": "3.1.2",
     "player.js": "^0.1.0",
     "promise-polyfill": "^7.1.2",

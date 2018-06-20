@@ -2,12 +2,28 @@
 
 import chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
+import { password } from './test-utils/helpers'
 
 declare var browser: Object
 
 chai.use(chaiAsPromised)
 
 before(async function (done) {
+  browser.addCommand('createSecureWallet', () => {
+    browser.url('http://localhost:8080')
+    browser.execute(function (password) {
+      window.paratii.eth.wallet.clear()
+      window.paratii.eth.wallet
+        .createFromMnemonic()
+        .then(
+          localStorage.setItem(
+            'keystore-secure',
+            JSON.stringify(window.paratii.eth.wallet.encrypt(password))
+          )
+        )
+    }, password)
+  })
+
   browser.addCommand('waitForClickable', function (selector, timeout) {
     this.waitForVisible(selector, timeout)
     this.waitForEnabled(selector, timeout)

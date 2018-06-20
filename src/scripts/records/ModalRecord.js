@@ -3,12 +3,14 @@
 import { Record as ImmutableRecord } from 'immutable'
 
 class ModalRecord extends ImmutableRecord({
-  modalContent: '',
-  previousModalContent: '',
+  name: '',
+  previousModalName: '',
+  modalProps: {},
   showModal: false
 }) {
-  modalContent: string
-  previousModalContent: string
+  name: string
+  previousModalName: string
+  modalProps: Object
   showModal: boolean
 }
 
