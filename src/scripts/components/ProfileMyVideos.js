@@ -4,6 +4,7 @@ import type { VideoRecord } from 'records/VideoRecords'
 import Title from './foundations/Title'
 import RadioCheck, { RadioWrapper } from './widgets/forms/RadioCheck'
 import MyVideoItem, { MyVideosWrapper } from './MyVideoItem'
+import FilesUploader from '../containers/FileUploaderContainer'
 import TranslatedText from './translations/TranslatedText'
 
 type Props = {
@@ -87,6 +88,7 @@ class ProfileMyVideos extends Component<Props, void> {
             .map(([videoId, videoInfo]) => (
               <MyVideoItem key={videoId} videoId={videoId} video={videoInfo} />
             ))}
+          <FilesUploader />
         </ProfileMyVideosList>
       </Wrapper>
     )
