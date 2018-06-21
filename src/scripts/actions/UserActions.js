@@ -7,6 +7,7 @@ import {
   LOGIN_SUCCESS,
   SET_WALLET_DATA,
   SET_WALLET_ADDRESS,
+  LOAD_BALANCES_STARTED,
   BALANCES_LOADED,
   WALLET_SECURED
 } from 'constants/ActionConstants'
@@ -59,9 +60,12 @@ export const checkUserWallet = ({ onClose, onComplete }: Object = {}) => (
   }
 }
 
+export const loadBalancesStarted = createAction(LOAD_BALANCES_STARTED)
+
 export const loadBalances = () => (dispatch: Dispatch) => {
   const address: string = paratii.eth.getAccount()
   if (address) {
+    dispatch(loadBalancesStarted())
     paratii.eth.balanceOf(address).then(({ ETH, PTI }) => {
       const ETHAsString = ETH.toString()
       const PTIAsString = PTI.toString()

@@ -12,7 +12,10 @@ import {
   WALLET_SECURED
 } from 'constants/ActionConstants'
 import UserRecord, { Balances } from 'records/UserRecords'
-import { BALANCES_LOADED } from '../constants/ActionConstants'
+import {
+  BALANCES_LOADED,
+  LOAD_BALANCES_STARTED
+} from '../constants/ActionConstants'
 
 import type { Action } from 'types/ApplicationTypes'
 
@@ -61,6 +64,8 @@ const reducer = {
     state.merge({
       address
     }),
+  [LOAD_BALANCES_STARTED]: (state: UserRecord): UserRecord =>
+    state.setIn(['balances', 'requestStatus'], REQUEST_STATUS.PENDING),
   [BALANCES_LOADED]: (
     state: UserRecord,
     { payload: { ETH, PTI } }
@@ -69,7 +74,8 @@ const reducer = {
       'balances',
       new Balances({
         ETH,
-        PTI
+        PTI,
+        requestStatus: REQUEST_STATUS.SUCCEEDED
       })
     )
 }

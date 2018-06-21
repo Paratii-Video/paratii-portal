@@ -9,6 +9,7 @@ import TipAmount from './TipAmount'
 
 type Props = {
   amount: number,
+  disabled?: boolean,
   onClick: (e: Object) => void
 }
 
@@ -18,7 +19,6 @@ const WrappedButton = styled.button`
   align-items: center;
   justify-content: flex-start;
   padding: 10px;
-  color: ${Colors.grayLight};
   height: 60px;
   width: 152px;
   border-radius: 30px;
@@ -27,18 +27,24 @@ const WrappedButton = styled.button`
 
   &:active,
   &:hover {
-    border-color: ${Colors.purple};
-    opacity: 1;
+    &:not([disabled]) {
+      border-color: Colors.purple;
+    }
+  }
+
+  &[disabled] {
+    background-color: ${Colors.whiteTransparent};
+    cursor: not-allowed;
   }
 `
 
 class TipButton extends React.Component<Props> {
   render () {
-    const { amount, onClick } = this.props
+    const { amount, disabled, onClick } = this.props
 
     return (
-      <WrappedButton onClick={onClick}>
-        <TipAmount amount={amount} />
+      <WrappedButton disabled={disabled} onClick={onClick}>
+        <TipAmount amount={amount} disabled={disabled} />
       </WrappedButton>
     )
   }

@@ -33,6 +33,14 @@ export const getUserAddress: (state: RootState) => string = createSelector(
   (user: User): string => user.get('address')
 )
 
+export const balancesAreBeingLoaded: (
+  state: RootState
+) => boolean = createSelector(
+  [getBalances],
+  (balances: Balances): boolean =>
+    balances.get('requestStatus') === REQUEST_STATUS.PENDING
+)
+
 const getEthBalance: (state: RootState) => string = createSelector(
   [getBalances],
   (balances: Balances): string => balances.get('ETH')

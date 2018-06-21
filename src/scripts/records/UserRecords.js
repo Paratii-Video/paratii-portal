@@ -6,10 +6,12 @@ import type { RequestStatus } from 'types/ApplicationTypes'
 
 export class Balances extends Immutable.Record({
   ETH: '0',
-  PTI: '0'
+  PTI: '0',
+  requestStatus: REQUEST_STATUS.NOT_STARTED
 }) {
   ETH: string
   PTI: string
+  requestStatus: RequestStatus
 }
 
 class User extends Immutable.Record({

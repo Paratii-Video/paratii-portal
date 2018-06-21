@@ -7,6 +7,7 @@ import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import { TIPPING_PTI_AMOUNTS } from 'constants/TippingConstants'
 
+import Loader from 'components/foundations/Loader'
 import TranslatedText from 'components/translations/TranslatedText'
 import Colors from 'components/foundations/base/Colors'
 
@@ -14,6 +15,8 @@ import TipAmountButton from '../utils/TipAmountButton'
 import TippingStepHeader from '../utils/TippingStepHeader'
 
 type Props = {
+  balancesAreLoading: boolean,
+  ethBalance: string,
   onChooseAmount: (amount: number) => void,
   usernameToTip: string
 }
@@ -48,26 +51,33 @@ class ChooseAmountToTipStep extends React.Component<Props> {
 
     return (
       <Fragment>
-        <TippingStepHeader>
-          <TranslatedText message="tipping.steps.chooseAmount.header" />
-        </TippingStepHeader>
-        <ChoosePrompt>
-          <TranslatedText
-            message="tipping.steps.chooseAmount.chooseTip"
-            options={{ username: this.usernameToTipOrDefault() }}
-          />
-        </ChoosePrompt>
-        <TipAmounts>
-          {TIPPING_PTI_AMOUNTS.map((amount: number) => (
-            <TipAmountButton
-              key={amount}
-              amount={amount}
-              onClick={() => {
-                onChooseAmount(amount)
-              }}
-            />
-          ))}
-        </TipAmounts>
+        {this.props.balancesAreLoading ? (
+          <Loader />
+        ) : (
+          <Fragment>
+            <TippingStepHeader>
+              <TranslatedText message="tipping.steps.chooseAmount.header" />
+            </TippingStepHeader>
+            <ChoosePrompt>
+              <TranslatedText
+                message="tipping.steps.chooseAmount.chooseTip"
+                options={{ username: this.usernameToTipOrDefault() }}
+              />
+            </ChoosePrompt>
+            <TipAmounts>
+              {TIPPING_PTI_AMOUNTS.map((amount: number) => (
+                <TipAmountButton
+                  disabled={this.props.ethBalance < `${amount}`}
+                  key={amount}
+                  amount={amount}
+                  onClick={() => {
+                    onChooseAmount(amount)
+                  }}
+                />
+              ))}
+            </TipAmounts>
+          </Fragment>
+        )}
       </Fragment>
     )
   }

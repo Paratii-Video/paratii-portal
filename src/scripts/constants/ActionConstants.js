@@ -25,6 +25,9 @@ export const LOGIN_REQUESTED = createActionConstant('LOGIN_REQUESTED')
 export const LOGIN_SUCCESS = createActionConstant('LOGIN_SUCCESS')
 export const LOGIN_FAILURE = createActionConstant('LOGIN_FAILURE')
 export const LOGOUT = createActionConstant('LOGOUT')
+export const LOAD_BALANCES_STARTED = createActionConstant(
+  'LOAD_BALANCES_STARTED'
+)
 export const BALANCES_LOADED = createActionConstant('BALANCES_LOADED')
 export const WALLET_SECURED = createActionConstant('WALLET_SECURED')
 

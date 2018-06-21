@@ -25,10 +25,13 @@ import TipCompleteStep from './steps/TipCompleteStep'
 import type { TippingUIStep } from 'types/TippingTypes'
 
 type Props = {
+  addDoNotTipVideo: (videoId: string) => void,
+  balancesAreBeingLoaded: boolean,
+  ethBalance: string,
   lastSecuredTimestamp: number,
+  loadBalances: () => void,
   notification: (Object, string) => void,
   setUserIsTipping: (isTipping: boolean) => void,
-  addDoNotTipVideo: (videoId: string) => void,
   video: Video
 }
 
@@ -69,6 +72,8 @@ class TipOverlay extends React.Component<Props, State> {
       currentStep: TIPPING_UI_STEPS.CHOOSE_AMOUNT,
       tipAmount: 0
     }
+
+    this.props.loadBalances()
   }
 
   backToChooseAmountStep = () => {
@@ -121,6 +126,8 @@ class TipOverlay extends React.Component<Props, State> {
       case TIPPING_UI_STEPS.CHOOSE_AMOUNT:
         return (
           <ChooseAmountTipStep
+            balancesAreBeingLoaded={this.props.balancesAreBeingLoaded}
+            ethBalance={this.props.ethBalance}
             usernameToTip={this.props.video.get('author')}
             onChooseAmount={this.onChooseAmount}
           />
