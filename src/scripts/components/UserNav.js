@@ -71,13 +71,13 @@ const UserPTIValue = styled.div`
 `
 
 const UserPTIValueBox = styled.div`
-  align-content: center;
+  align-items: center;
   background-color: ${props => props.theme.colors.UserNav.UserPTIValueBox};
   display: flex;
   flex-direction: column;
-  justify-items: center;
+  justify-content: center;
+  min-height: 90px;
   padding: 14px 14px 16px;
-  text-align: center;
 `
 
 const UserPTIBarWrapper = styled.div`
@@ -95,10 +95,13 @@ const UserPTIBar = styled.div`
   flex: 1 1 ${props => props.percentage};
   height: 100%;
   text-align: center;
+  position: relative;
 `
 
 const UserPTIBarText = Text.extend`
-  margin-top: 5px;
+  position: absolute;
+  left: 50%;
+  transform: translate3d(-50%, 5px, 0);
 `
 
 // User navigation
@@ -171,10 +174,12 @@ class UserNav extends Component<Props, void> {
     }
 
     // FIXME we need to get value from paratijs
-    const stakedPTI = 10
+    const stakedPTI = 2
     const totalMoney = balance + stakedPTI
-    const percentagePTI = (balance > 0 ? totalMoney / balance * 100 : 0) + '%'
-    const percentageStaked = totalMoney / stakedPTI * 100 + '%'
+    const percStaked = Math.round(stakedPTI / totalMoney * 100)
+    const percPTI = 100 - percStaked
+    const percentageStaked = percStaked + '%'
+    const percentagePTI = percPTI + '%'
 
     return (
       <Wrapper
