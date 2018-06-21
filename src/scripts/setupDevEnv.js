@@ -3,8 +3,13 @@ const path = require('path')
 const { Paratii } = require('paratii-js')
 
 const env = process.env.NODE_ENV || 'development'
+let configFilename
 
-const configFilename = path.join(__dirname, `/../../config/${env}.json`)
+if (env === 'test') {
+  configFilename = path.join(__dirname, `/../../config/test-server.json`)
+} else {
+  configFilename = path.join(__dirname, `/../../config/${env}.json`)
+}
 
 const registryFilename = '/tmp/registry.json'
 

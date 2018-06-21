@@ -1,5 +1,5 @@
 import { Paratii } from 'paratii-js'
-import testConfig from '../../../config/test.json'
+import testConfig from '../../../config/test-server.json'
 
 const fs = require('fs')
 const path = require('path')
