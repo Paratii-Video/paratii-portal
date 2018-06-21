@@ -3,6 +3,8 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
 
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
+
 import { TIPPING_PTI_AMOUNTS } from 'constants/TippingConstants'
 
 import TranslatedText from 'components/translations/TranslatedText'
@@ -30,12 +32,19 @@ const TipAmounts = styled.div`
 `
 
 class ChooseAmountToTipStep extends React.Component<Props> {
-  static defaultProps = {
-    usernameToTip: 'foobar'
+  usernameToTipOrDefault () {
+    const { usernameToTip } = this.props
+
+    return (
+      usernameToTip ||
+      RawTranslatedText({
+        message: 'tipping.defaultAuthor'
+      })
+    )
   }
 
   render () {
-    const { onChooseAmount, usernameToTip } = this.props
+    const { onChooseAmount } = this.props
 
     return (
       <Fragment>
@@ -45,7 +54,7 @@ class ChooseAmountToTipStep extends React.Component<Props> {
         <ChoosePrompt>
           <TranslatedText
             message="tipping.steps.chooseAmount.chooseTip"
-            options={{ username: usernameToTip }}
+            options={{ username: this.usernameToTipOrDefault() }}
           />
         </ChoosePrompt>
         <TipAmounts>

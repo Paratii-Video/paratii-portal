@@ -49,6 +49,7 @@
       "20": "20",
       "25": "25"
     },
+    "defaultAuthor": "the author",
     "tippingError": "Unfortunately, something went wrong with the tipping process",
     "steps": {
       "chooseAmount": {

@@ -3,6 +3,8 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
 
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
+
 import Colors from 'components/foundations/base/Colors'
 import TranslatedText from 'components/translations/TranslatedText'
 import Icon from 'components/foundations/Icon'
@@ -44,6 +46,17 @@ class TipCompleteStep extends React.Component<Props, State> {
     }
   }
 
+  usernameToTipOrDefault () {
+    const { usernameToTip } = this.props
+
+    return (
+      usernameToTip ||
+      RawTranslatedText({
+        message: 'tipping.defaultAuthor'
+      })
+    )
+  }
+
   randomHeaderMessageIndex (): number {
     return Math.floor(Math.random() * (NUMBER_OF_HEADERS - 1)) + 1
   }
@@ -57,7 +70,7 @@ class TipCompleteStep extends React.Component<Props, State> {
               this.state.headerMessageIndex
             }`}
             options={{
-              username: this.props.usernameToTip
+              username: this.usernameToTipOrDefault()
             }}
           />
         </TippingStepHeader>
