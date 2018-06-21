@@ -71,13 +71,14 @@ const UploaderWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 70px 0;
+  justify-content: center;
+  padding: ${props => (props.card ? '100px 0' : null)};
   position: relative;
   width: 100%;
 `
 const Icon = styled.div`
   height: 110px;
-  margin: 50px auto 30px;
+  margin: 0 auto 30px;
   transform: ${({ className }) =>
     className === 'dragenter' ? 'scale(0.9)' : 'scale(1)'};
   transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
@@ -158,7 +159,7 @@ class FilesUploader extends Component<Props, Object> {
 
   renderUploadTrigger ({ card }: { card: boolean } = {}) {
     return (
-      <UploaderWrapper>
+      <UploaderWrapper card={card}>
         <InputFile
           type="file"
           data-test-id="upload-file-input"

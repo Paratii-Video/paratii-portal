@@ -113,9 +113,14 @@ const HeaderContent = styled.div`
 const HeaderContentWrapper = styled.div`
   max-width: 500px;
   text-align: center;
-  padding: 90px 40px 10px;
+  padding: 90px 40px;
   width: 100%;
   z-index: 4;
+`
+
+const HeaderText = Text.extend`
+  margin: 15px 0 60px;
+  opacity: 0.7;
 `
 
 const Videos = styled.div`
@@ -382,9 +387,9 @@ class Landing extends Component<Props, void> {
                 <Title huge bold>
                   <TranslatedText message="landingPage.header.title_html" />
                 </Title>
-                <Text gray big>
+                <HeaderText big>
                   <TranslatedText message="landingPage.header.description" />
-                </Text>
+                </HeaderText>
                 <FilesUploader white />
               </HeaderContentWrapper>
             </HeaderContent>
