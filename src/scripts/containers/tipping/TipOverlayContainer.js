@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { show } from 'react-notification-system-redux'
 
 import {
-  balancesAreBeingLoaded,
+  balancesAreLoading,
   getFormattedPtiBalance
 } from 'selectors/UserSelectors'
 import { getPlayingVideo } from 'selectors/PlayerSelectors'
@@ -19,7 +19,7 @@ import TipOverlay from 'components/tipping/TipOverlay'
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState) => ({
-  balancesAreBeingLoaded: balancesAreBeingLoaded(state),
+  balancesAreLoading: balancesAreLoading(state),
   ptiBalance: getFormattedPtiBalance(state),
   lastSecuredTimestamp: getLastSecuredTimestamp(state),
   video: getPlayingVideo(state)
