@@ -27,7 +27,7 @@ import type { TippingUIStep } from 'types/TippingTypes'
 type Props = {
   addDoNotTipVideo: (videoId: string) => void,
   balancesAreBeingLoaded: boolean,
-  ethBalance: string,
+  ptiBalance: string,
   lastSecuredTimestamp: number,
   loadBalances: () => void,
   notification: (Object, string) => void,
@@ -127,7 +127,7 @@ class TipOverlay extends React.Component<Props, State> {
         return (
           <ChooseAmountTipStep
             balancesAreBeingLoaded={this.props.balancesAreBeingLoaded}
-            ethBalance={this.props.ethBalance}
+            ptiBalance={this.props.ptiBalance}
             usernameToTip={this.props.video.get('author')}
             onChooseAmount={this.onChooseAmount}
           />

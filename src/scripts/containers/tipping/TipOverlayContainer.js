@@ -6,7 +6,7 @@ import { show } from 'react-notification-system-redux'
 
 import {
   balancesAreBeingLoaded,
-  getFormattedEthBalance
+  getFormattedPtiBalance
 } from 'selectors/UserSelectors'
 import { getPlayingVideo } from 'selectors/PlayerSelectors'
 import { getLastSecuredTimestamp } from 'selectors/index'
@@ -20,7 +20,7 @@ import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState) => ({
   balancesAreBeingLoaded: balancesAreBeingLoaded(state),
-  ethBalance: getFormattedEthBalance(state),
+  ptiBalance: getFormattedPtiBalance(state),
   lastSecuredTimestamp: getLastSecuredTimestamp(state),
   video: getPlayingVideo(state)
 })

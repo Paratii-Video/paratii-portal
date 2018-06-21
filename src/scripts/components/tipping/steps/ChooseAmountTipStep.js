@@ -16,7 +16,7 @@ import TippingStepHeader from '../utils/TippingStepHeader'
 
 type Props = {
   balancesAreLoading: boolean,
-  ethBalance: string,
+  ptiBalance: string,
   onChooseAmount: (amount: number) => void,
   usernameToTip: string
 }
@@ -67,7 +67,9 @@ class ChooseAmountToTipStep extends React.Component<Props> {
             <TipAmounts>
               {TIPPING_PTI_AMOUNTS.map((amount: number) => (
                 <TipAmountButton
-                  disabled={this.props.ethBalance < `${amount}`}
+                  disabled={
+                    amount !== 10 && this.props.ptiBalance < `${amount}`
+                  }
                   key={amount}
                   amount={amount}
                   onClick={() => {
