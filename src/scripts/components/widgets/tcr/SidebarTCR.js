@@ -30,7 +30,11 @@ class SidebarTCR extends Component<Props, void> {
 
     return (
       <Sidebar>
-        {whiteListed ? <WhiteListed /> : <CommitYourVote />}
+        {whiteListed ? (
+          <WhiteListed videoId={this.props.videoId} />
+        ) : (
+          <CommitYourVote />
+        )}
 
         {voteCommited && <VoteCommitted />}
 
