@@ -21,10 +21,13 @@ jobs:
           command: yarn run parity
           background: true
       - run:
+          command: yarn run server:test
+          background: true
+      - run:
           command: yarn run build:test
           background: true
       - run:
-          command: yarn run server:test
+          command: cd /paratii-db/paratii-db && yarn run dev
           background: true
       - run:
           command: node src/scripts/waitForServer.js
