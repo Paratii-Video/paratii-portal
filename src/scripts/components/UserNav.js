@@ -170,6 +170,12 @@ class UserNav extends Component<Props, void> {
       }
     }
 
+    // FIXME we need to get value from paratijs
+    const stakedPTI = 10
+    const totalMoney = balance + stakedPTI
+    const percentagePTI = (balance > 0 ? totalMoney / balance * 100 : 0) + '%'
+    const percentageStaked = totalMoney / stakedPTI * 100 + '%'
+
     return (
       <Wrapper
         show={this.props.showUserNav}
@@ -195,22 +201,22 @@ class UserNav extends Component<Props, void> {
               </UserPTIValue>
               <UserPTIValue>
                 <Text gray tiny>
-                  <TranslatedText message="userNav.leftBoxTitle" />
+                  <TranslatedText message="userNav.rightBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text pink>10 PTI</Text>
+                  <Text pink>{stakedPTI} PTI</Text>
                 </UserPTIValueBox>
               </UserPTIValue>
             </UserPTIValuesWrapper>
             <UserPTIBarWrapper>
-              <UserPTIBar percentage="70%">
+              <UserPTIBar percentage={percentagePTI}>
                 <UserPTIBarText purple tiny>
-                  70%
+                  {percentagePTI}
                 </UserPTIBarText>
               </UserPTIBar>
-              <UserPTIBar red percentage="30%">
+              <UserPTIBar red percentage={percentageStaked}>
                 <UserPTIBarText pink tiny>
-                  30%
+                  {percentageStaked}
                 </UserPTIBarText>
               </UserPTIBar>
             </UserPTIBarWrapper>
