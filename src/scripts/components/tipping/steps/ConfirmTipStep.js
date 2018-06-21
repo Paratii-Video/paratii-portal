@@ -131,6 +131,7 @@ class ConfirmTipStep extends React.Component<Props, State> {
             )}
             <ContinueButton
               centered={!this.showPasswordInput()}
+              white
               form={FORM_ID}
               disabled={
                 this.props.passwordRequired && !this.state.password.trim()
