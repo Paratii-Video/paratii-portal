@@ -175,7 +175,7 @@ class UserNav extends Component<Props, void> {
 
     // FIXME we need to get value from paratijs
     const stakedPTI = 2
-    const totalMoney = balance + stakedPTI
+    const totalMoney = Number(balance + stakedPTI)
     const percStaked = Math.round(stakedPTI / totalMoney * 100)
     const percPTI = 100 - percStaked
     const percentageStaked = percStaked + '%'
