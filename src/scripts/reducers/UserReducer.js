@@ -8,7 +8,8 @@ import {
   LOGIN_SUCCESS,
   LOGOUT,
   SET_WALLET_DATA,
-  SET_WALLET_ADDRESS
+  SET_WALLET_ADDRESS,
+  WALLET_SECURED
 } from 'constants/ActionConstants'
 import UserRecord, { Balances } from 'records/UserRecords'
 import { BALANCES_LOADED } from '../constants/ActionConstants'
@@ -33,10 +34,11 @@ const reducer = {
       loginRequestStatus: REQUEST_STATUS.SUCCEEDED,
       name: payload.name,
       email: payload.email,
-      emailIsVerified: payload.emailIsVerified,
-      lastSecuredTimestamp: Date.now()
+      emailIsVerified: payload.emailIsVerified
     })
   },
+  [WALLET_SECURED]: (state: UserRecord): UserRecord =>
+    state.set('lastSecuredTimestamp', Date.now()),
   [LOGOUT]: (state: UserRecord): UserRecord => {
     return state.merge({
       loginRequestStatus: REQUEST_STATUS.NOT_STARTED,

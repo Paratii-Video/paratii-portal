@@ -7,7 +7,8 @@ import {
   LOGIN_SUCCESS,
   SET_WALLET_DATA,
   SET_WALLET_ADDRESS,
-  BALANCES_LOADED
+  BALANCES_LOADED,
+  WALLET_SECURED
 } from 'constants/ActionConstants'
 
 import {
@@ -30,20 +31,30 @@ import UserRecord from 'records/UserRecords'
 
 const loginSuccess = createAction(LOGIN_SUCCESS)
 const balancesLoaded = createAction(BALANCES_LOADED)
+const walletSecured = createAction(WALLET_SECURED)
 export const setWalletData = createAction(SET_WALLET_DATA)
 export const setWalletAddress = createAction(SET_WALLET_ADDRESS)
 
 export const checkUserWallet = ({ onClose, onComplete }: Object = {}) => (
   dispatch: Dispatch
 ) => {
+  const completeCallback = (...args) => {
+    dispatch(walletSecured())
+    onComplete(...args)
+  }
+
   if (ACTIVATE_SECURE_WALLET) {
     const walletStringSecure: ?string = localStorage.getItem(WALLET_KEY_SECURE)
     if (walletStringSecure) {
       console.log('Try to open encrypted keystore')
       // Need to ask the PIN
-      dispatch(openModal(MODAL.ASK_PASSWORD, { onClose, onComplete }))
+      dispatch(
+        openModal(MODAL.ASK_PASSWORD, { onClose, onComplete: completeCallback })
+      )
     } else {
-      dispatch(openModal(MODAL.SECURE, { onClose, onComplete }))
+      dispatch(
+        openModal(MODAL.SECURE, { onClose, onComplete: completeCallback })
+      )
     }
   }
 }
