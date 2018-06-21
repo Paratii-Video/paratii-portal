@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { MAINHEADER_LOGO_HEIGHT } from 'constants/UIConstants'
 
 type Props = {
   landing: boolean,
@@ -12,7 +13,7 @@ const MainWrapper = styled.main`
   flex: 1 1 100%;
   flex-direction: column;
   justify-content: center;
-  margin-top: 69px;
+  margin-top: ${MAINHEADER_LOGO_HEIGHT};
   min-height: 500px;
   padding: ${({ landing }) => (landing ? null : '40px 80px')};
 

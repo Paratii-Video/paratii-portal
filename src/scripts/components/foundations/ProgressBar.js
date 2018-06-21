@@ -10,7 +10,11 @@ export const ProgressBarWrapper = styled.div`
   position: relative;
   background: ${props => props.theme.colors.bar.base};`
 
-const ProgressBar = styled.div`
+const ProgressBar = styled.div.attrs({
+  style: ({ current, total }) => ({
+    transform: `translateX(${Math.min(current / total * 100, 100)}%)`
+  })
+})`
   left: -100%;
   position: absolute;
   height: 100%;
@@ -20,11 +24,6 @@ const ProgressBar = styled.div`
   );
   background: ${props =>
     props.colorful ? null : props.theme.colors.bar.buffer};
-  transform: translate3d(
-    ${props => Math.min(props.current / props.total * 100, 100) + '%'},
-    0,
-    0
-  );
   width: 100%;
 `
 

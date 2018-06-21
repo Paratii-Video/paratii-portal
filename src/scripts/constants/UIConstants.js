@@ -8,7 +8,7 @@ export const Z_INDEX_HEADER: string = '980'
 // Header
 
 export const MAINHEADER_LOGO_WIDTH: string = '98px'
-export const MAINHEADER_LOGO_HEIGHT: string = '69px'
+export const MAINHEADER_LOGO_HEIGHT: string = '62px'
 
 // Controls
 export const CONTROLS_HEIGHT: string = '48px'
