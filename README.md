@@ -28,7 +28,7 @@ If you are on a Mac, you may need to set the path to parity:
     $ git clone https://github.com/Paratii-Video/paratii-portal
     $ cd paratii-portal
     $ yarn
-    
+
 ⚠️ If `yarn` is installing the wrong versions of any dependencies, run the following:
 
     $ yarn cache clean
@@ -161,3 +161,19 @@ Run the following code to fix the port issue:
     $ echo fs.inotify.max_user_watches=582222 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
 Explanation [here](https://stackoverflow.com/questions/34662574/node-js-getting-error-nodemon-internal-watch-failed-watch-enospc)
+
+
+# Building and size of build
+
+
+build:
+
+    yarn build
+
+Quick list of releveant bundles and sizes:
+
+    yarn bundlesize
+
+Detailed analysis of build and weight of packages:
+
+    yarn analyze
