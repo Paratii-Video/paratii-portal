@@ -36,9 +36,10 @@ const walletSecured = createAction(WALLET_SECURED)
 export const setWalletData = createAction(SET_WALLET_DATA)
 export const setWalletAddress = createAction(SET_WALLET_ADDRESS)
 
-export const checkUserWallet = ({ onClose, onComplete }: Object = {}) => (
-  dispatch: Dispatch
-) => {
+export const checkUserWallet = ({
+  onClose = () => {},
+  onComplete = () => {}
+}: Object = {}) => (dispatch: Dispatch) => {
   const completeCallback = (...args) => {
     dispatch(walletSecured())
     onComplete(...args)
