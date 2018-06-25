@@ -364,7 +364,7 @@ class UploadListItem extends Component<Props, Object> {
         statusMessage = 'Your video could not be uploaded'
       } else if (video.transcodingStatus.name === 'failed') {
         statusMessage = 'Your video could not be transcoded'
-      } else if (video.uploadStatus.name === 'success') {
+      } else if (video.transcodingStatus.name === 'requested') {
         statusMessage = 'Transcoding your video'
       } else {
         statusMessage = 'Uploading your video'
