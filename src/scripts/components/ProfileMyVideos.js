@@ -4,7 +4,7 @@ import type { VideoRecord } from 'records/VideoRecords'
 import Title from './foundations/Title'
 import RadioCheck, { RadioWrapper } from './widgets/forms/RadioCheck'
 import MyVideoItem, { MyVideosWrapper } from './MyVideoItem'
-import FilesUploader from '../containers/FileUploaderContainer'
+import FileUploader from '../containers/FileUploaderContainer'
 import TranslatedText from './translations/TranslatedText'
 
 type Props = {
@@ -38,6 +38,12 @@ const ProfileFilterRadioWrapper = styled(RadioWrapper)`
 
 const ProfileMyVideosList = MyVideosWrapper.extend`
   margin-top: 24px;
+`
+
+const FileUploaderWrapper = styled.li`
+  display: block;
+  height: 100%;
+  min-height: 297px;
 `
 
 class ProfileMyVideos extends Component<Props, void> {
@@ -88,7 +94,9 @@ class ProfileMyVideos extends Component<Props, void> {
             .map(([videoId, videoInfo]) => (
               <MyVideoItem key={videoId} videoId={videoId} video={videoInfo} />
             ))}
-          <FilesUploader />
+          <FileUploaderWrapper>
+            <FileUploader />
+          </FileUploaderWrapper>
         </ProfileMyVideosList>
       </Wrapper>
     )
