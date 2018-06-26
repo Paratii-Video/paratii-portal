@@ -45,5 +45,8 @@
     "filesInstructions_html": "%{dragFiles} or click to find them",
     "supportedFileTypes": "(only .mp4 currently supported)",
     "youtubeOrVimeo": "(Not working yet) Or upload from Youtube or Vimeo"
+  },
+  "player": {
+    "free": "Free"
   }
 }

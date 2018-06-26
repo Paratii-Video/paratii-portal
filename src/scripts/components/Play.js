@@ -17,6 +17,7 @@ import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
+import TranslatedText from 'components/translations/TranslatedText'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
 import {
@@ -875,7 +876,11 @@ class Play extends Component<Props, State> {
                 <Text gray>
                     Price{' '}
                   <PlayInfoHighlight purple>
-                    {video.free ? 'Free' : 'Free'}
+                    {video.free ? (
+                      <TranslatedText message="player.free" />
+                    ) : (
+                      <TranslatedText message="player.free" />
+                    )}
                   </PlayInfoHighlight>
                 </Text>
                 {video.description && (
