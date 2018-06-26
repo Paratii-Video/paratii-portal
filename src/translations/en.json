@@ -87,6 +87,12 @@
       "continue": "Continue",
       "goBack": "Go Back",
       "errorMessage": "The 12 words you entered are not valid"
+    },
+    "secureAccount": {
+      "title": "Before you proceed your account needs to be secure",
+      "description": "It won't take more than a minute",
+      "alreadyHaveAccount": "I already have an account",
+      "secureThisAccount": "Secure this account"
     }
   }
 }
