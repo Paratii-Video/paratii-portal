@@ -65,6 +65,11 @@
   "wallet": {
     "unlockingKeystore": "Trying to unlock your keystore...",
     "enterPassword": {
+      "title": "Enter your password",
+      "description": "Please enter your password to use all the features of Paratii",
+      "inputPlaceholder": "Enter your password",
+      "forgotPassword": "Forgot Password",
+      "continue": "Continue",
       "success": {
         "title": "Success!",
         "description": "Your keystore has been unlocked."

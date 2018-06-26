@@ -86,9 +86,12 @@ class ModalAskPassword extends Component<Props, Object> {
         paratii.eth.wallet.decrypt(JSON.parse(walletString), password)
         this.props.notification(
           {
-            title: <TranslatedText message="wallet.enterPassword.success.title" />,
-            message: <TranslatedText message='wallet.enterPassword.success.description' />
-
+            title: (
+              <TranslatedText message="wallet.enterPassword.success.title" />
+            ),
+            message: (
+              <TranslatedText message="wallet.enterPassword.success.description" />
+            )
           },
           'success'
         )
@@ -103,12 +106,18 @@ class ModalAskPassword extends Component<Props, Object> {
       } catch (err) {
         // Password is not valid
         this.setState({
-          error: <TranslatedText message="wallet.enterPassword.error.formErrorMessage" />
+          error: (
+            <TranslatedText message="wallet.enterPassword.error.formErrorMessage" />
+          )
         })
         this.props.notification(
           {
-            title: <TranslatedText message='wallet.enterPassword.error.title' />,
-            message: <TranslatedText message='wallet.enterPassword.error.description' />
+            title: (
+              <TranslatedText message="wallet.enterPassword.error.title" />
+            ),
+            message: (
+              <TranslatedText message="wallet.enterPassword.error.description" />
+            )
           },
           'error'
         )
@@ -127,14 +136,18 @@ class ModalAskPassword extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Insert your Password</Title>
+          <Title>
+            <TranslatedText message="wallet.enterPassword.title" />
+          </Title>
           <Text small gray>
-            Please insert your password to use all the features of Paratii
+            <TranslatedText message="wallet.enterPassword.description" />
           </Text>
           <FieldContainer id={FORM_ID} onSubmit={this.setPassword}>
             <TextField
               error={this.state.error.length > 0}
-              label="Insert your Password"
+              label={RawTranslatedText({
+                message: 'wallet.enterPassword.inputPlaceholder'
+              })}
               id={'wallet-password'}
               name="wallet-password"
               type="password"
@@ -154,7 +167,7 @@ class ModalAskPassword extends Component<Props, Object> {
                 data-test-id="forgot-password-button"
                 onClick={this.forgotPassword}
               >
-                Forgot Password
+                <TranslatedText message="wallet.enterPassword.forgotPassword" />
               </Button>
             </ButtonContainer>
             <ButtonContainer>
@@ -165,7 +178,7 @@ class ModalAskPassword extends Component<Props, Object> {
                 purple
                 disabled={!this.state.password}
               >
-                Continue
+                <TranslatedText message="wallet.enterPassword.continue" />
               </Button>
             </ButtonContainer>
           </Footer>
