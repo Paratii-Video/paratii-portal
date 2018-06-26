@@ -4,7 +4,9 @@ import styled, { css } from 'styled-components'
 import Text, { Strong } from 'components/foundations/Text'
 import Title from 'components/foundations/Title'
 
-type Props = {}
+type Props = {
+  status: string
+}
 
 const INFOSTATUS_CARD_MARGIN_BOTTOM: string = '15px'
 
@@ -13,12 +15,12 @@ const ChallengePeriod = styled.div`
   background: linear-gradient(
     135deg,
     ${props =>
-    props.inReveal
+    props.status === 'inReveal'
       ? props.theme.colors.ProfileCuration.ChallengeBackgroundTwoFrom
       : props.theme.colors.ProfileCuration.ChallengeBackgroundOneFrom}
       0%,
     ${props =>
-    props.inReveal
+    props.status === 'inReveal'
       ? props.theme.colors.ProfileCuration.ChallengeBackgroundTwoTo
       : props.theme.colors.ProfileCuration.ChallengeBackgroundOneTo}
       100%
@@ -117,10 +119,17 @@ const ChallengeSequenceDot = styled.span`
 class ChallengePeriodComponent extends Component<Props, void> {
   render () {
     return (
-      <ChallengePeriod inReveal>
-        <Text big>
-          <Strong>challenged period</Strong> ends in
-        </Text>
+      <ChallengePeriod status={this.props.status}>
+        {this.props.status === 'inReveal' ? (
+          <Text big>
+            <Strong>Time to reveal</Strong> ends in
+          </Text>
+        ) : (
+          <Text big>
+            <Strong>Challenged period</Strong> ends in
+          </Text>
+        )}
+
         <ChallengeTimeWrapper>
           <ChallengeTime>
             <Text tiny>hours</Text>
@@ -152,20 +161,39 @@ class ChallengePeriodComponent extends Component<Props, void> {
           </ChallengeTime>
         </ChallengeTimeWrapper>
 
-        <ChallengeSequence>
-          <ChallengeSequenceText disabled>whitelisted</ChallengeSequenceText>
-          <ChallengeSequenceText bold>challenged</ChallengeSequenceText>
-          <ChallengeSequenceText disabled>in reveal</ChallengeSequenceText>
-        </ChallengeSequence>
+        {this.props.status === 'inReveal' ? (
+          <ChallengeSequence>
+            <ChallengeSequenceText disabled>whitelisted</ChallengeSequenceText>
+            <ChallengeSequenceText disabled>challenged</ChallengeSequenceText>
+            <ChallengeSequenceText bold>in reveal</ChallengeSequenceText>
+          </ChallengeSequence>
+        ) : (
+          <ChallengeSequence>
+            <ChallengeSequenceText disabled>whitelisted</ChallengeSequenceText>
+            <ChallengeSequenceText bold>challenged</ChallengeSequenceText>
+            <ChallengeSequenceText disabled>in reveal</ChallengeSequenceText>
+          </ChallengeSequence>
+        )}
 
-        <ChallengeTimeline>
-          <ChallengeSequenceDot />
-          <ChallengeSequenceDot active />
-          <ChallengeSequenceDot future />
+        {this.props.status === 'inReveal' ? (
+          <ChallengeTimeline>
+            <ChallengeSequenceDot />
+            <ChallengeSequenceDot />
+            <ChallengeSequenceDot active />
 
-          <ChallengeLine dashed />
-          <ChallengeLine width="50%" />
-        </ChallengeTimeline>
+            <ChallengeLine dashed />
+            <ChallengeLine width="100%" />
+          </ChallengeTimeline>
+        ) : (
+          <ChallengeTimeline>
+            <ChallengeSequenceDot />
+            <ChallengeSequenceDot active />
+            <ChallengeSequenceDot future />
+
+            <ChallengeLine dashed />
+            <ChallengeLine width="50%" />
+          </ChallengeTimeline>
+        )}
       </ChallengePeriod>
     )
   }
