@@ -1,7 +1,6 @@
 /* @flow */
 
 import Immutable from 'immutable'
-import React from 'react'
 
 import GlobalRecord from 'records/GlobalRecord'
 import VideoRecord from 'records/VideoRecords'
@@ -379,7 +378,7 @@ export type NotificationPosition = $Values<typeof NOTIFICATION_POSITIONS>
 export type NotificationLevel = $Values<typeof NOTIFICATION_LEVELS>
 
 export type Notification = {
-  title: string | React.Node,
-  message?: string | React.Node,
+  title: string | any,
+  message?: string | any,
   position?: NotificationPosition
 }

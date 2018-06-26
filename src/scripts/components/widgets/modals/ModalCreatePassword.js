@@ -128,7 +128,7 @@ class ModalSetPassword extends Component<Props, State> {
   }
 
   getPasswordErrors () {
-    const passwordErrors: Array<string> =
+    const passwordErrors: Array<*> =
       (this.state.hasBlurredPasswordInput && this.state.errors) || []
     return passwordErrors
   }
