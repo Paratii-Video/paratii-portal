@@ -175,10 +175,10 @@ class UserNav extends Component<Props, void> {
     const totalStakeBN = await paratii.eth.tcr.getTotalStaked(
       this.props.userAddress
     )
-    // const stakeAmountWei = totalStakeBN.toString()
-    // const stakeAmount = paratii.eth.web3.utils.fromWei(stakeAmountWei)
+    const balanceBN = await paratii.eth.balanceOf(this.props.userAddress, 'PTI')
     this.setState({
-      totalStakeBN
+      totalStakeBN,
+      balanceBN
     })
   }
 
@@ -197,20 +197,16 @@ class UserNav extends Component<Props, void> {
     let percentageStaked = '0%'
     let percentagePTI = '100%'
 
-    if (this.state.totalStakeBN) {
-      const stakedBN = this.state.totalStakeBN
+    if (this.state.balanceBN || this.state.totalStakeBN) {
+      const stakedBN = Number(this.state.totalStakeBN.toFixed())
       const balanceN = Number(rawBalance)
-      const totalBN = stakedBN.plus(balanceN)
-      const percStaked = Math.round(
-        stakedBN.dividedBy(totalBN).multipliedBy(100) * 100
-      )
+      const totalBN = balanceN + stakedBN
+      const percStaked = Math.round(stakedBN / totalBN * 100)
       const percPTI = 100 - percStaked
 
       percentageStaked = percStaked + '%'
       percentagePTI = percPTI + '%'
     }
-
-    console.log(percentageStaked, percentagePTI)
 
     return (
       <Wrapper
