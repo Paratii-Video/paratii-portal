@@ -79,6 +79,14 @@
         "description": "Please reypte the password",
         "formErrorMessage": "The password is not valid, please retype the password"
       }
+    },
+    "restoreAccount": {
+      "title": "Rewrite your account recovery phrase",
+      "description": "Rewrite the 12 words of your recovery phrase to continue the process",
+      "mnemonic": "Mnemonic",
+      "continue": "Continue",
+      "goBack": "Go Back",
+      "errorMessage": "The 12 words you entered are not valid"
     }
   }
 }
