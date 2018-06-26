@@ -2,7 +2,8 @@
 
 import chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
-import { paratii, address } from './test-utils/helpers'
+import { paratii, address, password } from './test-utils/helpers'
+import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
 
 // declare var browser: Object
 
@@ -16,15 +17,27 @@ describe('TCR:', function () {
   })
 
   it('you can challenge a publish video @watch', async function () {
+    // Create a secure wallet
+    browser.createSecureWallet()
     // Create a publish video
-    const videoid = 'tcrtest'
     await paratii.vids.create({
-      id: videoid,
+      id: ID,
       owner: address,
-      title: 'Paratii Test Video',
-      ipfsHash: 'QmQP5SJzEBKy1uAGASDfEPqeFJ3HUbEp4eZzxvTLdZZYwB'
+      title: TITLE,
+      ipfsHash: IPFS_HASH
     })
 
-    await browser.url(`http://localhost:8080/play/${videoid}`)
+    const stakeAmount = 5
+    const stakeAmountWei = paratii.eth.web3.utils.toWei(String(stakeAmount))
+    // Publish the video
+    await paratii.eth.tcr.checkEligiblityAndApply(ID, stakeAmountWei)
+
+    await browser.url(`http://localhost:8080/play/${ID}`)
+    // Login
+    // Click on login and insert the password
+    browser.waitAndClick('[data-test-id="login-signup"]')
+    browser.waitAndClick('[name="wallet-password"]')
+    browser.setValue('[name="wallet-password"]', password)
+    browser.waitAndClick('[data-test-id="continue"]')
   })
 })
