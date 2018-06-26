@@ -1,12 +1,15 @@
 /* @flow */
 /* stylelint-disable */
+import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import ButtonColor from 'components/foundations/Button'
 import Text from 'components/foundations/Text'
 import { CardStyle } from 'components/structures/Card'
 
-type Props = {}
+type Props = {
+  videoId: string
+}
 const INFOSTATUS_CARD_MARGIN_BOTTOM: string = '15px'
 
 const InfoStatus = styled.div`
@@ -34,6 +37,24 @@ const InfoStatusButtons = styled.div`
 `
 
 class CommitYourVote extends Component<Props, void> {
+  voteVideo: number => void
+
+  constructor (props: Props) {
+    super(props)
+
+    this.state = {}
+    this.voteVideo = this.voteVideo.bind(this)
+  }
+
+  async voteVideo (vote: number) {
+    const amountInWei = paratii.eth.web3.utils.toWei('10')
+    await paratii.eth.tcr.approveAndGetRightsAndCommitVote(
+      this.props.videoId,
+      vote,
+      amountInWei
+    )
+  }
+
   render () {
     return (
       <InfoStatus>
@@ -50,8 +71,12 @@ class CommitYourVote extends Component<Props, void> {
           <InfoStatusTitle>Choose wise</InfoStatusTitle>
         </InfoStatusContent>
         <InfoStatusButtons>
-          <ButtonColor green>Support</ButtonColor>
-          <ButtonColor pink>Oppose</ButtonColor>
+          <ButtonColor green onClick={() => this.voteVideo(1)}>
+            Support
+          </ButtonColor>
+          <ButtonColor pink onClick={() => this.voteVideo(0)}>
+            Oppose
+          </ButtonColor>
         </InfoStatusButtons>
       </InfoStatus>
     )
