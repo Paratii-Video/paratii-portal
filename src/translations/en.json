@@ -61,5 +61,19 @@
       },
       "embedVideo": "Embed this video"
     }
+  },
+  "wallet": {
+    "unlockingKeystore": "Trying to unlock your keystore...",
+    "enterPassword": {
+      "success": {
+        "title": "Success!",
+        "description": "Your keystore has been unlocked."
+      },
+      "error": {
+        "title": "The password is not valid",
+        "description": "Please reypte the password",
+        "formErrorMessage": "The password is not valid, please retype the password"
+      }
+    }
   }
 }
