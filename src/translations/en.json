@@ -63,6 +63,8 @@
     }
   },
   "wallet": {
+    "securingWallet": "Securing your wallet...",
+    "walletSecured": "Your wallet is now secured",
     "unlockingKeystore": "Trying to unlock your keystore...",
     "enterPassword": {
       "title": "Enter your password",
