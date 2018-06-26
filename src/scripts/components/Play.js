@@ -885,12 +885,12 @@ class Play extends Component<Props, State> {
                     </PlayInfoButtons>
                   )}
                   <Text gray>
-                      Price{' '}
+                    <TranslatedText message="player.price" />{' '}
                     <PlayInfoHighlight purple>
                       {video.free ? (
-                        <TranslatedText message="wallet.free" />
+                        <TranslatedText message="player.free" />
                       ) : (
-                        <TranslatedText message="wallet.free" />
+                        <TranslatedText message="player.free" />
                       )}
                     </PlayInfoHighlight>
                   </Text>
