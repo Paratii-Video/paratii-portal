@@ -107,6 +107,21 @@
         "numericCharacter": "The password must contain at least 1 numeric character",
         "uppercaseCharacter": "The password must contain at least 1 uppercase alphabetical character"
       }
+    },
+    "showSeed": {
+      "title": "Your account recovery key",
+      "description_html": "This is your recovery key. It's like a password that will restore your account. %{keepSafe}",
+      "keepSafe": "Keep it secret. Keep it safe",
+      "copy": {
+        "buttonText": "Copy",
+        "confirmCopy": "I have copied the 12 words. They are secret, safe and sound",
+        "notification": {
+          "title": "Copied!",
+          "description": "Your key has been copied to the clipboard"
+        }
+      },
+      "goBack": "Back",
+      "continue": "Continue"
     }
   }
 }
