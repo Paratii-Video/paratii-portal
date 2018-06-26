@@ -38,7 +38,7 @@ describe('👤 Profile:', function () {
     assert.equal(loginText, 'SIGN UP')
   })
 
-  it('if there is secure wallet, in the header we have a login button @watch', function () {
+  it('if there is secure wallet, in the header we have a login button', function () {
     createKeystore()
     browser.url(`http://localhost:8080`)
     const loginText = browser.getText('[data-test-id="login-signup"]')
