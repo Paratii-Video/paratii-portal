@@ -17,6 +17,9 @@ export const VIDEOS_FETCH_REQUESTED = createActionConstant(
 )
 export const VIDEOS_FETCH_FAILED = createActionConstant('VIDEOS_FETCH_FAILED')
 export const VIDEOS_FETCH_SUCCESS = createActionConstant('VIDEOS_FETCH_SUCCESS')
+export const VIDEO_FETCH_WHITELIST = createActionConstant(
+  'VIDEO_FETCH_WHITELIST'
+)
 
 /* User Actions */
 export const SET_WALLET_DATA = createActionConstant('SET_WALLET_DATA')

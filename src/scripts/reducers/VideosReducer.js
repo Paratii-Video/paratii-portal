@@ -18,7 +18,8 @@ import {
   TRANSCODING_FAILURE,
   VIDEOFETCH_ERROR,
   VIDEO_FETCH_SUCCESS,
-  VIDEOS_FETCH_SUCCESS
+  VIDEOS_FETCH_SUCCESS,
+  VIDEO_FETCH_WHITELIST
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
@@ -192,6 +193,16 @@ const reducer = {
         deposit: payload.deposit
       })
     )
+  },
+  [VIDEO_FETCH_WHITELIST]: (
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord> = {}
+  ): VideoRecordMap => {
+    if (!payload || !payload.id) {
+      return state
+    }
+    console.log(payload.whiteListed)
+    return state.setIn([payload.id, 'whiteListed'], payload.whiteListed)
   },
   [TRANSCODING_REQUESTED]: (
     state: VideoRecordMap,
