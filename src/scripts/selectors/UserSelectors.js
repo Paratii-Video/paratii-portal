@@ -62,3 +62,10 @@ export const getFormattedPtiBalance: (
   )
   return (!isNaN(balance) && formatBalance(balance)) || '0'
 })
+
+export const getRawPtiBalance: (state: RootState) => string = createSelector(
+  [getPtiBalance],
+  (ptiBalance: string): string => {
+    return ptiBalance || 0
+  }
+)

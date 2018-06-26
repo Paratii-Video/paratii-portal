@@ -1,8 +1,8 @@
 /* @flow */
-
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import { add0x } from 'utils/AppUtils'
+import paratii from 'utils/ParatiiLib'
 import Blockies from 'react-blockies'
 import User from 'records/UserRecords'
 import { getName } from 'operators/UserOperators'
@@ -21,6 +21,7 @@ import TranslatedText from './translations/TranslatedText'
 
 type Props = {
   balance: string,
+  rawBalance: number,
   children: Object,
   user: User,
   userAddress: string,
@@ -162,24 +163,54 @@ const UserSubNavListItemLink = styled(Link)`
 class UserNav extends Component<Props, void> {
   UserNavWrapper: HTMLElement
 
+  constructor (props: Props) {
+    super(props)
+
+    this.state = {
+      totalStaked: -1
+    }
+  }
+
+  async componentDidMount () {
+    const totalStakeBN = await paratii.eth.tcr.getTotalStaked(
+      this.props.userAddress
+    )
+    // const stakeAmountWei = totalStakeBN.toString()
+    // const stakeAmount = paratii.eth.web3.utils.fromWei(stakeAmountWei)
+    this.setState({
+      totalStakeBN
+    })
+  }
+
   render () {
-    const { balance, user } = this.props
+    const { rawBalance, balance, user, userAddress } = this.props
     let avatarUser = ''
 
-    if (this.props.userAddress) {
-      const lowerAddress = add0x(this.props.userAddress)
+    if (userAddress) {
+      const lowerAddress = add0x(userAddress)
       if (ACTIVATE_SECURE_WALLET && this.props.isWalletSecured) {
         avatarUser = <Blockies seed={lowerAddress} size={10} scale={4} />
       }
     }
 
     // FIXME we need to get value from paratijs
-    const stakedPTI = 2
-    const totalMoney = Number(balance + stakedPTI)
-    const percStaked = Math.round(stakedPTI / totalMoney * 100)
-    const percPTI = 100 - percStaked
-    const percentageStaked = percStaked + '%'
-    const percentagePTI = percPTI + '%'
+    let percentageStaked = '0%'
+    let percentagePTI = '100%'
+
+    if (this.state.totalStakeBN) {
+      const stakedBN = this.state.totalStakeBN
+      const balanceN = Number(rawBalance)
+      const totalBN = stakedBN.plus(balanceN)
+      const percStaked = Math.round(
+        stakedBN.dividedBy(totalBN).multipliedBy(100) * 100
+      )
+      const percPTI = 100 - percStaked
+
+      percentageStaked = percStaked + '%'
+      percentagePTI = percPTI + '%'
+    }
+
+    console.log(percentageStaked, percentagePTI)
 
     return (
       <Wrapper
@@ -209,7 +240,7 @@ class UserNav extends Component<Props, void> {
                   <TranslatedText message="userNav.rightBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text pink>{stakedPTI} PTI</Text>
+                  <Text pink>{balance} PTI</Text>
                 </UserPTIValueBox>
               </UserPTIValue>
             </UserPTIValuesWrapper>
