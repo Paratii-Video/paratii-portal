@@ -7,6 +7,8 @@ import { Provider, connect } from 'react-redux'
 import styled, { ThemeProvider } from 'styled-components'
 
 import { getRoot } from 'utils/AppUtils'
+import TranslationContext from 'utils/translations/TranslationContext'
+import initializeTranslator from 'utils/translations/initializeTranslator'
 import PlayContainer from 'containers/PlayContainer'
 import Notifications from 'containers/NotificationContainer'
 import MainSvg from 'components/foundations/svgs/MainSvg'
@@ -70,11 +72,15 @@ class EmbedApp extends React.Component<Props, void> {
 
 const EmbedContainer = connect(undefined, mapDispatchToProps)(EmbedApp)
 
+const translator = initializeTranslator()
+
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <Route path="/" component={EmbedContainer} />
-    </BrowserRouter>
-  </Provider>,
+  <TranslationContext.Provider value={translator}>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Route path="/" component={EmbedContainer} />
+      </BrowserRouter>
+    </Provider>
+  </TranslationContext.Provider>,
   getRoot()
 )
