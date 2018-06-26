@@ -1,30 +1,8 @@
 /* @flow */
 import shortNumber from 'short-number'
-import VideoRecord from 'records/VideoRecords'
 import fs from 'fs'
 
-export const getPasswordValidationErrors = (
-  password: ?string
-): Array<string> => {
-  const longRegex = new RegExp('^(?=.{8,})')
-  const numberRegex = new RegExp('^(?=.*[0-9])')
-  const uppercaseRegex = new RegExp('^(?=.*[A-Z])')
-  const errors = []
-  if (password) {
-    if (!longRegex.test(password)) {
-      errors.push('The password must be eight characters or longer')
-    }
-    if (!numberRegex.test(password)) {
-      errors.push('The password must contain at least 1 numeric character')
-    }
-    if (!uppercaseRegex.test(password)) {
-      errors.push(
-        'The password must contain at least 1 uppercase alphabetical character'
-      )
-    }
-  }
-  return errors
-}
+import VideoRecord from 'records/VideoRecords'
 
 export const getRoot = (): Element => {
   let root: ?Element = document.getElementById('root')

@@ -93,6 +93,20 @@
       "description": "It won't take more than a minute",
       "alreadyHaveAccount": "I already have an account",
       "secureThisAccount": "Secure this account"
+    },
+    "choosePassword": {
+      "title": "Choose a password",
+      "description_html": "Please insert a password of <strong>eight</strong> characters or longer, containing at least one <strong>uppercase</strong> letter and one <strong>number</strong>",
+      "newPasswordLabel": "New Password",
+      "confirmPasswordLabel": "Confirm Password",
+      "continue": "Continue",
+      "back": "Back",
+      "errors": {
+        "passwordMismatch": "Hey, your password do not match",
+        "eightCharacters": "The password must be eight characters or longer",
+        "numericCharacter": "The password must contain at least 1 numeric character",
+        "uppercaseCharacter": "The password must contain at least 1 uppercase alphabetical character"
+      }
     }
   }
 }
