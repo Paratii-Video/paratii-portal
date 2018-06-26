@@ -18,6 +18,7 @@ import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
 import TipOverlayContainer from 'containers/tipping/TipOverlayContainer'
+import TranslatedText from 'components/translations/TranslatedText'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
 import {
@@ -25,6 +26,7 @@ import {
   requestCancelFullscreen,
   getAppRootUrl
 } from 'utils/AppUtils'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 import { APP_TITLE } from 'constants/ApplicationConstants'
@@ -765,17 +767,17 @@ class Play extends Component<Props, State> {
       {
         href: this.getTelegramHref(),
         icon: 'telegram',
-        label: 'Telegram'
+        label: RawTranslatedText({ message: 'player.share.options.telegram' })
       },
       {
         href: this.getTwitterHref(),
         icon: 'twitter',
-        label: 'Twitter'
+        label: RawTranslatedText({ message: 'player.share.options.twitter' })
       },
       {
         href: this.getWhatsAppMobileHref(),
         icon: 'whatsapp',
-        label: 'WhatsApp'
+        label: RawTranslatedText({ message: 'player.share.options.whatsapp' })
       }
     ]
 
@@ -873,7 +875,7 @@ class Play extends Component<Props, State> {
                         icon="#icon-play-view"
                       />
                       <Text small gray>
-                          0
+                        <TranslatedText message="player.views.zero" />
                       </Text>
                     </ButtonIcon>
                     <ButtonIcon>
@@ -885,7 +887,7 @@ class Play extends Component<Props, State> {
                         icon="#icon-play-like"
                       />
                       <Text small gray>
-                          0
+                        <TranslatedText message="player.views.zero" />
                       </Text>
                     </ButtonIcon>
                     <ButtonIcon>
@@ -897,7 +899,7 @@ class Play extends Component<Props, State> {
                         icon="#icon-play-dislike"
                       />
                       <Text small gray>
-                          0
+                        <TranslatedText message="player.views.zero" />
                       </Text>
                     </ButtonIcon>
                   </PlayInfoButtons>
@@ -905,7 +907,11 @@ class Play extends Component<Props, State> {
                 <Text gray>
                     Price{' '}
                   <PlayInfoHighlight purple>
-                    {video.free ? 'Free' : 'Free'}
+                    {video.free ? (
+                      <TranslatedText message="player.free" />
+                    ) : (
+                      <TranslatedText message="player.free" />
+                    )}
                   </PlayInfoHighlight>
                 </Text>
                 {video.description && (

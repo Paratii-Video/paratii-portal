@@ -1,5 +1,6 @@
 /* @flow */
 
+import React from 'react'
 import { createAction } from 'redux-actions'
 import bip39 from 'bip39'
 
@@ -23,6 +24,7 @@ import {
 } from 'constants/ParatiiLibConstants'
 import { NOTIFICATION_DELAY_MS } from 'constants/ApplicationConstants'
 
+import TranslatedText from 'components/translations/TranslatedText'
 import paratii from 'utils/ParatiiLib'
 import { openModal } from 'actions/ModalActions'
 import Notifications from 'react-notification-system-redux'
@@ -186,7 +188,7 @@ export const secureKeystore = (password: string) => async (
         // Open Notification
         dispatch(
           Notifications.success({
-            title: 'Your wallet is now secured'
+            title: <TranslatedText message="wallet.walletSecured" />
           })
         )
       }
@@ -262,7 +264,7 @@ export const secureKeystore = (password: string) => async (
 
   dispatch(
     Notifications.warning({
-      title: 'Securing your wallet..',
+      title: <TranslatedText message="wallet.securingWallet" />,
       onAdd: setTimeout(secureWallet, NOTIFICATION_DELAY_MS)
     })
   )

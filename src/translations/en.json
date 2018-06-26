@@ -75,5 +75,99 @@
     "filesInstructions_html": "%{dragFiles} or click to find them",
     "supportedFileTypes": "(only .mp4 currently supported)",
     "youtubeOrVimeo": "(Not working yet) Or upload from Youtube or Vimeo"
+  },
+  "player": {
+    "free": "Free",
+    "views": {
+      "zero": "0"
+    },
+    "share": {
+      "title": "Share this video",
+      "options": {
+        "telegram": "Telegram",
+        "twitter": "Twitter",
+        "whatsapp": "WhatsApp",
+        "embed": "Embed"
+      },
+      "embedVideo": "Embed this video"
+    }
+  },
+  "profile": {
+    "modal": {
+      "title": "Profile",
+      "description": "This is how you'll be known on the Paratii network. Enter your email if you'd like to receive updates about the community and your activity.",
+      "usernameLabel": "Username",
+      "emailLabel": "Email",
+      "continue": "Continue",
+      "pleaseWait": "Please wait, we are creating your wallet",
+      "verificationEmail": {
+        "title": "Check your email",
+        "description": "We sent you a confirmation link"
+      }
+    }
+  },
+  "wallet": {
+    "securingWallet": "Securing your wallet...",
+    "walletSecured": "Your wallet is now secured",
+    "unlockingKeystore": "Trying to unlock your keystore...",
+    "enterPassword": {
+      "title": "Enter your password",
+      "description": "Please enter your password to use all the features of Paratii",
+      "inputPlaceholder": "Enter your password",
+      "forgotPassword": "Forgot Password",
+      "continue": "Continue",
+      "success": {
+        "title": "Success!",
+        "description": "Your keystore has been unlocked."
+      },
+      "error": {
+        "title": "The password is not valid",
+        "description": "Please reypte the password",
+        "formErrorMessage": "The password is not valid, please retype the password"
+      }
+    },
+    "restoreAccount": {
+      "title": "Rewrite your account recovery phrase",
+      "description": "Rewrite the 12 words of your recovery phrase to continue the process",
+      "mnemonic": "Mnemonic",
+      "continue": "Continue",
+      "goBack": "Go Back",
+      "errorMessage": "The 12 words you entered are not valid"
+    },
+    "secureAccount": {
+      "title": "Before you proceed your account needs to be secure",
+      "description": "It won't take more than a minute",
+      "alreadyHaveAccount": "I already have an account",
+      "secureThisAccount": "Secure this account"
+    },
+    "choosePassword": {
+      "title": "Choose a password",
+      "description_html": "Please insert a password of <strong>eight</strong> characters or longer, containing at least one <strong>uppercase</strong> letter and one <strong>number</strong>",
+      "newPasswordLabel": "New Password",
+      "confirmPasswordLabel": "Confirm Password",
+      "continue": "Continue",
+      "back": "Back",
+      "errors": {
+        "passwordMismatch": "Hey, your password do not match",
+        "eightCharacters": "The password must be eight characters or longer",
+        "numericCharacter": "The password must contain at least 1 numeric character",
+        "uppercaseCharacter": "The password must contain at least 1 uppercase alphabetical character"
+      }
+    },
+    "showSeed": {
+      "title": "Your account recovery key",
+      "description_html": "This is your recovery key. It's like a password that will restore your account. %{keepSafe}",
+      "keepSafe": "Keep it secret. Keep it safe",
+      "copy": {
+        "buttonText": "Copy",
+        "confirmCopy": "I have copied the 12 words. They are secret, safe and sound",
+        "notification": {
+          "title": "Copied!",
+          "description": "Your key has been copied to the clipboard"
+        }
+      },
+      "goBack": "Back",
+      "continue": "Continue"
+    }
   }
 }
