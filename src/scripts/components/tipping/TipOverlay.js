@@ -84,8 +84,8 @@ class TipOverlay extends React.Component<Props, State> {
 
   transferTip = async () => {
     try {
-      const tipAmountWei: number = Number(
-        ParatiiLib.eth.web3.utils.toWei(`${this.state.tipAmount}`)
+      const tipAmountWei: number = ParatiiLib.eth.web3.utils.toWei(
+        `${this.state.tipAmount}`
       )
       await ParatiiLib.eth.transfer(
         this.props.video.get('owner'),
