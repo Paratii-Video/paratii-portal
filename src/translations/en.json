@@ -62,6 +62,20 @@
       "embedVideo": "Embed this video"
     }
   },
+  "profile": {
+    "modal": {
+      "title": "Profile",
+      "description": "This is how you'll be known on the Paratii network. Enter your email if you'd like to receive updates about the community and your activity.",
+      "usernameLabel": "Username",
+      "emailLabel": "Email",
+      "continue": "Continue",
+      "pleaseWait": "Please wait, we are creating your wallet",
+      "verificationEmail": {
+        "title": "Check your email",
+        "description": "We sent you a confirmation link"
+      }
+    }
+  },
   "wallet": {
     "securingWallet": "Securing your wallet...",
     "walletSecured": "Your wallet is now secured",
