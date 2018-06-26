@@ -833,7 +833,7 @@ class Play extends Component<Props, State> {
               <PlayInfo>
                 {videoName && <Title small>{videoName}</Title>}
                 {video.author && <Text>By {video.author}</Text>}
-                {video.share && (
+                {(video.share || true) && (
                   <PlayInfoButtons>
                     <ButtonIcon>
                       <SVGIcon
@@ -844,7 +844,7 @@ class Play extends Component<Props, State> {
                         icon="#icon-play-view"
                       />
                       <Text small gray>
-                          0
+                        <TranslatedText message="player.views.zero" />
                       </Text>
                     </ButtonIcon>
                     <ButtonIcon>
@@ -856,7 +856,7 @@ class Play extends Component<Props, State> {
                         icon="#icon-play-like"
                       />
                       <Text small gray>
-                          0
+                        <TranslatedText message="player.views.zero" />
                       </Text>
                     </ButtonIcon>
                     <ButtonIcon>
@@ -868,7 +868,7 @@ class Play extends Component<Props, State> {
                         icon="#icon-play-dislike"
                       />
                       <Text small gray>
-                          0
+                        <TranslatedText message="player.views.zero" />
                       </Text>
                     </ButtonIcon>
                   </PlayInfoButtons>

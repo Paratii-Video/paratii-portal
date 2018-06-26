@@ -47,6 +47,9 @@
     "youtubeOrVimeo": "(Not working yet) Or upload from Youtube or Vimeo"
   },
   "player": {
-    "free": "Free"
+    "free": "Free",
+    "views": {
+      "zero": "0"
+    }
   }
 }
