@@ -9,10 +9,16 @@ const AutofillFix = props => keyframes`
 
 export const StyleFieldText = css`
   background-color: transparent;
+  color: ${props => props.theme.colors.TextField.color};
   font-family: ${props => props.theme.fonts.family}, sans-serif;
   font-size: ${props => props.theme.fonts.form.input};
   font-weight: ${props => props.theme.fonts.weight.regular};
   width: 100%;
+
+  &:-webkit-autofill {
+    animation-name: ${AutofillFix};
+    animation-fill-mode: both;
+  }
 `
 
 export const StyleFieldTextStates = css`
@@ -22,18 +28,12 @@ export const StyleFieldTextStates = css`
     props.error
       ? props.theme.colors.TextField.error
       : props.theme.colors.TextField.border};
-  color: ${props => props.theme.colors.TextField.color};
   display: block;
   transition: border-color ${props => props.theme.animation.time.repaint};
   width: 100%;
 
   &:focus {
     border-color: ${props => props.theme.colors.TextField.borderFocus};
-  }
-
-  &:-webkit-autofill {
-    animation-name: ${AutofillFix};
-    animation-fill-mode: both;
   }
 `
 

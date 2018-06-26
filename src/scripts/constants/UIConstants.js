@@ -8,14 +8,8 @@ export const Z_INDEX_FOOTER: string = '980'
 export const Z_INDEX_USERNAV: string = '970'
 
 // MainHeader
-export const MAINHEADER_LOGO_HEIGHT = '69px'
+export const MAINHEADER_LOGO_HEIGHT = '62px'
 export const MAINHEADER_LOGO_WIDTH = '98px'
-
-// MainFooter
-export const MAINFOOTER_HEIGHT = '72px'
-
-// UserNav
-export const USERNAV_WIDTH = '312px'
 
 // Controls
 export const CONTROLS_HEIGHT: string = '48px'

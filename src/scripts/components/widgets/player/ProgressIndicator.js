@@ -28,17 +28,15 @@ const WrapperMove = styled.div`
   display: flex;
   align-items: center;
 `
-const Move = styled.div`
+const Move = styled.div.attrs({
+  style: ({ current, total }) => ({
+    transform: `translateX(${Math.max(Math.min(current / total * 100, 100))}%)`
+  })
+})`
   width: 100%;
   height: 0;
   top: 50%;
   position: absolute;
-  transform: translate3d(
-    ${props =>
-    Math.max(Math.min(props.current / props.total * 100, 100), 0) + '%'},
-    0,
-    0
-  );
 `
 
 export const Circle = styled.div`

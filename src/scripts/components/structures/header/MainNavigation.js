@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import Button from 'components/foundations/Button'
+import Button, { ButtonColor } from 'components/foundations/Button'
 import Hidden from 'components/foundations/Hidden'
 import TranslatedText from 'components/translations/TranslatedText'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
@@ -45,15 +45,7 @@ const StyleNavLink = Button.extend`
   text-transform: initial;
 `
 
-const StyleNavLinkPurple = Button.extend`
-  font-size: 14px;
-  font-weight: ${props => props.theme.fonts.weight.bold};
-  text-transform: initial;
-  color: ${props => props.theme.colors.body.primary};
-`
-
 const NavLink = StyleNavLink.withComponent(Link)
-const NavLinkPurple = StyleNavLinkPurple.withComponent(Link)
 
 const Anchor = StyleNavLink.withComponent('a')
 
@@ -106,7 +98,7 @@ class MainNavigation extends Component<Props, Object> {
 
           {!this.props.isWalletSecured ? (
             <NavItem>
-              <NavLinkPurple
+              <ButtonColor
                 data-test-id="login-signup"
                 onClick={this.secureWallet}
                 to="#"
@@ -116,7 +108,7 @@ class MainNavigation extends Component<Props, Object> {
                 ) : (
                   <TranslatedText message="navigation.signUp" />
                 )}
-              </NavLinkPurple>
+              </ButtonColor>
             </NavItem>
           ) : (
             <NavItem>

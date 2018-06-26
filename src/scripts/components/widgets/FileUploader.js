@@ -71,13 +71,14 @@ const UploaderWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 70px 0;
+  justify-content: center;
+  padding: ${props => (props.card ? '100px 0' : null)};
   position: relative;
   width: 100%;
 `
 const Icon = styled.div`
   height: 110px;
-  margin: 50px auto 30px;
+  margin: 0 auto 30px;
   transform: ${({ className }) =>
     className === 'dragenter' ? 'scale(0.9)' : 'scale(1)'};
   transition: transform 0.5s ${props => props.theme.animation.ease.smooth};
@@ -104,6 +105,9 @@ class FilesUploader extends Component<Props, Object> {
       fileName: 'No file chosen',
       inputTextError: false
     }
+
+    this.onFileChosen = this.onFileChosen.bind(this)
+    this.onDrag = this.onDrag.bind(this)
   }
 
   setSelectedFile (file: File) {
@@ -115,16 +119,16 @@ class FilesUploader extends Component<Props, Object> {
   }
 
   onFileChosen = (e: Object) => {
-    // If wallet not secure open the modal
     if (this.props.isWalletSecured) {
       const file = e.target.files[0]
-      this.props.onFileChosen(file)
-      this.setState({
-        file: file,
-        fileName: file.name + ' | ' + file.size + 'bytes'
-      })
-
-      this.props.history.push(FILESUPLOADER_PATH_TO)
+      if (file) {
+        this.props.onFileChosen(file)
+        this.setState({
+          file: file,
+          fileName: file.name + ' | ' + file.size + 'bytes'
+        })
+        this.props.history.push(FILESUPLOADER_PATH_TO)
+      }
     } else {
       this.props.checkUserWallet()
     }
@@ -155,12 +159,13 @@ class FilesUploader extends Component<Props, Object> {
 
   renderUploadTrigger ({ card }: { card: boolean } = {}) {
     return (
-      <UploaderWrapper>
+      <UploaderWrapper card={card}>
         <InputFile
           type="file"
           data-test-id="upload-file-input"
           onChange={this.onFileChosen}
           onClick={this.onFileInputClick}
+          onDrop={this.onFileChosen}
           onDragEnter={this.onDrag}
           onDragLeave={this.onDrag}
         />

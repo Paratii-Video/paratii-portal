@@ -17,6 +17,7 @@ import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
+import TranslatedText from 'components/translations/TranslatedText'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
 import SidebarTCR from 'components/widgets/tcr/SidebarTCR'
@@ -25,6 +26,7 @@ import {
   requestCancelFullscreen,
   getAppRootUrl
 } from 'utils/AppUtils'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 import { APP_TITLE } from 'constants/ApplicationConstants'
@@ -748,17 +750,17 @@ class Play extends Component<Props, State> {
       {
         href: this.getTelegramHref(),
         icon: 'telegram',
-        label: 'Telegram'
+        label: RawTranslatedText({ message: 'player.share.options.telegram' })
       },
       {
         href: this.getTwitterHref(),
         icon: 'twitter',
-        label: 'Twitter'
+        label: RawTranslatedText({ message: 'player.share.options.twitter' })
       },
       {
         href: this.getWhatsAppMobileHref(),
         icon: 'whatsapp',
-        label: 'WhatsApp'
+        label: RawTranslatedText({ message: 'player.share.options.whatsapp' })
       }
     ]
 
@@ -885,7 +887,11 @@ class Play extends Component<Props, State> {
                   <Text gray>
                       Price{' '}
                     <PlayInfoHighlight purple>
-                      {video.free ? 'Free' : 'Free'}
+                      {video.free ? (
+                        <TranslatedText message="wallet.free" />
+                      ) : (
+                        <TranslatedText message="wallet.free" />
+                      )}
                     </PlayInfoHighlight>
                   </Text>
                   {video.description && (

@@ -8,6 +8,7 @@ import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import SVGIcon from 'components/foundations/SVGIcon'
 import RadioCheck from 'components/widgets/forms/RadioCheck'
+import TranslatedText from 'components/translations/TranslatedText'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MNEMONIC_KEY_TEMP, PASSWORD_TEMP } from 'constants/ParatiiLibConstants'
 import { MODAL } from 'constants/ModalConstants'
@@ -109,8 +110,12 @@ class ModalShowSeed extends Component<Props, Object> {
     copyTextToClipboard(this.KeyWords)
     this.props.showNotification(
       {
-        title: 'Copied!',
-        message: 'Your key has been copied to the clipboard',
+        title: (
+          <TranslatedText message="wallet.showSeed.copy.notification.title" />
+        ),
+        message: (
+          <TranslatedText message="wallet.showSeed.copy.notification.description" />
+        ),
         position: NOTIFICATION_POSITIONS.TOP_RIGHT
       },
       NOTIFICATION_LEVELS.SUCCESS
@@ -131,16 +136,23 @@ class ModalShowSeed extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Your account recovery key</Title>
+          <Title>
+            <TranslatedText message="wallet.showSeed.title" />
+          </Title>
           <Text>
             <AlertIcon>
               <SVGIcon color="purple" icon="icon-alert" />
             </AlertIcon>
-            This is you recovery key. It’ like a password that will restore your
-            accont.{' '}
-            <Strong purple bold>
-              Keep it secret. Keep it safe.
-            </Strong>
+            <TranslatedText
+              message="wallet.showSeed.description_html"
+              options={{
+                keepSafe: (
+                  <Strong purple bold>
+                    <TranslatedText message="wallet.showSeed.keepSafe" />
+                  </Strong>
+                )
+              }}
+            />
           </Text>
           <WordsWrapper>
             <Text
@@ -167,7 +179,7 @@ class ModalShowSeed extends Component<Props, Object> {
                 width="20px"
                 margin="0 5px 0 0"
               />
-              Copy
+              <TranslatedText message="wallet.showSeed.copy.buttonText" />
             </CopyButton>
           </WordsWrapper>
           <CheckWrapper>
@@ -177,13 +189,15 @@ class ModalShowSeed extends Component<Props, Object> {
               value={this.state.checkSeed}
               onChange={this.toggleOption}
             >
-              I have copied the 12 words, they are secret, safe and sound
+              <TranslatedText message="wallet.showSeed.copy.confirmCopy" />
             </RadioCheck>
           </CheckWrapper>
 
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.goBack}>Back</Button>
+              <Button onClick={this.goBack}>
+                <TranslatedText message="wallet.showSeed.goBack" />
+              </Button>
             </ButtonContainer>
             <ButtonContainer>
               <Button
@@ -192,7 +206,7 @@ class ModalShowSeed extends Component<Props, Object> {
                 onClick={this.modalContinue}
                 disabled={!this.state.seedCheck}
               >
-                Continue
+                <TranslatedText message="wallet.showSeed.continue" />
               </Button>
             </ButtonContainer>
           </Footer>
