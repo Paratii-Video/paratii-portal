@@ -50,6 +50,16 @@
     "free": "Free",
     "views": {
       "zero": "0"
+    },
+    "share": {
+      "title": "Share this video",
+      "options": {
+        "telegram": "Telegram",
+        "twitter": "Twitter",
+        "whatsapp": "WhatsApp",
+        "embed": "Embed"
+      },
+      "embedVideo": "Embed this video"
     }
   }
 }

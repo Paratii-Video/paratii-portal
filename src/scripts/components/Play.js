@@ -25,6 +25,7 @@ import {
   requestCancelFullscreen,
   getAppRootUrl
 } from 'utils/AppUtils'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 import { APP_TITLE } from 'constants/ApplicationConstants'
@@ -742,17 +743,17 @@ class Play extends Component<Props, State> {
       {
         href: this.getTelegramHref(),
         icon: 'telegram',
-        label: 'Telegram'
+        label: RawTranslatedText({ message: 'player.share.options.telegram' })
       },
       {
         href: this.getTwitterHref(),
         icon: 'twitter',
-        label: 'Twitter'
+        label: RawTranslatedText({ message: 'player.share.options.twitter' })
       },
       {
         href: this.getWhatsAppMobileHref(),
         icon: 'whatsapp',
-        label: 'WhatsApp'
+        label: RawTranslatedText({ message: 'player.share.options.whatsapp' })
       }
     ]
 
