@@ -205,7 +205,7 @@ class InfoBox extends Component<Props, Object> {
           type="text"
           margin="0 0 25px"
           value={urlForSharing}
-          label="Share this video"
+          label="<TranslatedText message='player.share.title' />"
           onChange={() => null}
           readonly
         />
