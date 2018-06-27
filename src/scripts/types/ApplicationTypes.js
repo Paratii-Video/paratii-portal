@@ -381,7 +381,7 @@ export type NotificationPosition = $Values<typeof NOTIFICATION_POSITIONS>
 export type NotificationLevel = $Values<typeof NOTIFICATION_LEVELS>
 
 export type Notification = {
-  title: string,
-  message?: string,
+  title: string | any,
+  message?: string | any,
   position?: NotificationPosition
 }

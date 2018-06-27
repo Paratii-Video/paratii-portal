@@ -6,6 +6,8 @@ import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import TextField from 'components/widgets/forms/TextField'
+import TranslatedText from 'components/translations/TranslatedText'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
@@ -37,7 +39,7 @@ const ButtonContainer = styled.div`
   margin-left: 10px;
 `
 
-class ModalRewriteSeed extends Component<Props, Object> {
+class ModalRestoreAccount extends Component<Props, Object> {
   goBack: () => void
   restoreWallet: () => void
   handleMnemonicChange: (e: Object) => void
@@ -66,7 +68,7 @@ class ModalRewriteSeed extends Component<Props, Object> {
       this.props.openModal(MODAL.CREATE_PASSWORD)
     } else {
       this.setState({
-        error: 'The 12 words you insert are not valid'
+        error: <TranslatedText message="wallet.restoreAccount.errorMessage" />
       })
     }
   }
@@ -82,13 +84,17 @@ class ModalRewriteSeed extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Rewrite your account recovery phrase</Title>
+          <Title>
+            <TranslatedText message="wallet.restoreAccount.title" />
+          </Title>
           <Text small gray>
-            Rewrite the 12 words of your recovery phrase to continue the process
+            <TranslatedText message="wallet.restoreAccount.description" />
           </Text>
           <MmenomicForm id={FORM_ID}>
             <TextField
-              label="Mnemonic"
+              label={RawTranslatedText({
+                message: 'wallet.restoreAccount.mnemonic'
+              })}
               id="mnemonic"
               name="mnemonic-restore"
               type="text"
@@ -105,7 +111,9 @@ class ModalRewriteSeed extends Component<Props, Object> {
           </MmenomicForm>
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.goBack}>Go Back</Button>
+              <Button onClick={this.goBack}>
+                <TranslatedText message="wallet.restoreAccount.goBack" />
+              </Button>
             </ButtonContainer>
             <ButtonContainer>
               <Button
@@ -116,7 +124,7 @@ class ModalRewriteSeed extends Component<Props, Object> {
                 onClick={this.restoreWallet}
                 disabled={!this.state.mnemonic}
               >
-                Continue
+                <TranslatedText message="wallet.restoreAccount.continue" />
               </Button>
             </ButtonContainer>
           </Footer>
@@ -126,4 +134,4 @@ class ModalRewriteSeed extends Component<Props, Object> {
   }
 }
 
-export default ModalRewriteSeed
+export default ModalRestoreAccount

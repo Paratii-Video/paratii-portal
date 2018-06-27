@@ -6,11 +6,14 @@ import Button from 'components/foundations/Button'
 import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import RadioCheck, { RadioWrapper } from 'components/widgets/forms/RadioCheck'
+import TranslatedText from 'components/translations/TranslatedText'
 import {
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS
 } from 'constants/ApplicationConstants'
 import { copyTextToClipboard } from 'utils/AppUtils'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
+
 import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
 
 type Props = {
@@ -308,7 +311,9 @@ class ShareOverlay extends Component<Props, State> {
           <SVGIcon color="white" icon="icon-close" />
         </CloseButton>
         <Content show={!this.state.showEmbed}>
-          <ShareTitle small>Share this video</ShareTitle>
+          <ShareTitle small>
+            <TranslatedText message="player.share.title" />
+          </ShareTitle>
           <AnchorLink
             data-test-id="share-anchor-link"
             href={this.getUrl()}
@@ -334,13 +339,20 @@ class ShareOverlay extends Component<Props, State> {
                   />
                 </Anchor>
               ))}
-            <ShareLink onClick={this.toggleShareContent} title="Embed">
+            <ShareLink
+              onClick={this.toggleShareContent}
+              title={RawTranslatedText({
+                message: 'player.share.options.embed'
+              })}
+            >
               <ShareLinkIcon src="/assets/svg/icons-embed-link.svg" />
             </ShareLink>
           </ShareButtons>
         </Content>
         <Content show={this.state.showEmbed}>
-          <ShareTitle small>Embed this video</ShareTitle>
+          <ShareTitle small>
+            <TranslatedText message="player.share.embedVideo" />
+          </ShareTitle>
           <ShareContent>
             <CopyEmbed anchor white onClick={this.copyCodeToClipboard}>
               {this.getEmbedCode()}
