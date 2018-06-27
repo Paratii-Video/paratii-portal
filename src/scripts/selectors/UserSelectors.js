@@ -66,6 +66,6 @@ export const getFormattedPtiBalance: (
 export const getRawPtiBalance: (state: RootState) => string = createSelector(
   [getPtiBalance],
   (ptiBalance: string): string => {
-    return ptiBalance || 0
+    return ptiBalance || '0'
   }
 )

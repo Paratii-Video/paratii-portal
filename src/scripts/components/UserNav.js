@@ -160,14 +160,15 @@ const UserSubNavListItemLink = styled(Link)`
   }
 `
 
-class UserNav extends Component<Props, void> {
+class UserNav extends Component<Props, Object> {
   UserNavWrapper: HTMLElement
 
   constructor (props: Props) {
     super(props)
 
     this.state = {
-      totalStaked: -1
+      totalStaked: '',
+      balanceBN: ''
     }
   }
 
