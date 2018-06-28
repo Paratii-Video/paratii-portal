@@ -12,7 +12,6 @@ import {
   MAINFOOTER_HEIGHT,
   Z_INDEX_USERNAV
 } from '../constants/UIConstants'
-import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 import { Link } from 'react-router-dom'
 import Text from './foundations/Text'
 import SVGIcon from './foundations/SVGIcon'
@@ -21,8 +20,8 @@ import TranslatedText from './translations/TranslatedText'
 
 type Props = {
   balance: string,
-  rawBalance: number,
-  children: Object,
+  formattedBalance: string,
+  stakedPTI: string,
   user: User,
   userAddress: string,
   isWalletSecured: boolean,
@@ -163,51 +162,41 @@ const UserSubNavListItemLink = styled(Link)`
 class UserNav extends Component<Props, Object> {
   UserNavWrapper: HTMLElement
 
-  constructor (props: Props) {
-    super(props)
-
-    this.state = {
-      totalStaked: '',
-      balanceBN: ''
-    }
-  }
-
-  async componentDidMount () {
-    const totalStakeBN = await paratii.eth.tcr.getTotalStaked(
-      this.props.userAddress
-    )
-    const balanceBN = await paratii.eth.balanceOf(this.props.userAddress, 'PTI')
-    this.setState({
-      totalStakeBN,
-      balanceBN
-    })
-  }
-
   render () {
-    const { rawBalance, balance, user, userAddress } = this.props
-    let avatarUser = ''
+    const {
+      formattedBalance,
+      balance,
+      stakedPTI,
+      user,
+      userAddress,
+      loadBalances
+    } = this.props
+    // Reload user balance
+    loadBalances()
 
+    let avatarUser = ''
     if (userAddress) {
       const lowerAddress = add0x(userAddress)
-      if (ACTIVATE_SECURE_WALLET && this.props.isWalletSecured) {
+      if (this.props.isWalletSecured) {
         avatarUser = <Blockies seed={lowerAddress} size={10} scale={4} />
       }
     }
 
-    // FIXME we need to get value from paratijs
     let percentageStaked = '0%'
     let percentagePTI = '100%'
+    const stakedNumber = stakedPTI ? Number(stakedPTI) : 0
+    const balanceNumber = balance ? Number(balance) : 0
+    const formattedStakedPTI = paratii.eth.web3.utils.fromWei(
+      stakedNumber.toString(),
+      'ether'
+    )
 
-    if (this.state.balanceBN || this.state.totalStakeBN) {
-      const stakedBN = Number(this.state.totalStakeBN.toFixed())
-      const balanceN = Number(rawBalance)
-      const totalBN = balanceN + stakedBN
-      const percStaked = Math.round(stakedBN / totalBN * 100)
-      const percPTI = 100 - percStaked
+    const totalPTI = balanceNumber + stakedNumber
+    const percStaked = Math.round(stakedNumber / totalPTI * 100)
+    const percPTI = 100 - percStaked
 
-      percentageStaked = percStaked + '%'
-      percentagePTI = percPTI + '%'
-    }
+    percentageStaked = percStaked + '%'
+    percentagePTI = percPTI + '%'
 
     return (
       <Wrapper
@@ -229,7 +218,7 @@ class UserNav extends Component<Props, Object> {
                   <TranslatedText message="userNav.leftBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text purple>{balance} PTI</Text>
+                  <Text purple>{formattedBalance} PTI</Text>
                 </UserPTIValueBox>
               </UserPTIValue>
               <UserPTIValue>
@@ -237,7 +226,7 @@ class UserNav extends Component<Props, Object> {
                   <TranslatedText message="userNav.rightBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text pink>{balance} PTI</Text>
+                  <Text pink>{formattedStakedPTI} PTI</Text>
                 </UserPTIValueBox>
               </UserPTIValue>
             </UserPTIValuesWrapper>

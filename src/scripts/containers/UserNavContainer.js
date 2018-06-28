@@ -5,8 +5,9 @@ import { checkUserWallet, loadBalances } from 'actions/UserActions'
 import { getUser, getUserNavStatus } from 'selectors/index'
 import { closeUserNav } from 'actions/UserNavActions'
 import {
-  getRawPtiBalance,
+  getPtiBalance,
   getFormattedPtiBalance,
+  getTotalStakedPti,
   getUserAddress,
   getIsSecure
 } from 'selectors/UserSelectors'
@@ -15,8 +16,9 @@ import UserNav from 'components/UserNav'
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState) => ({
-  rawBalance: getRawPtiBalance(state),
-  balance: getFormattedPtiBalance(state),
+  balance: getPtiBalance(state),
+  formattedBalance: getFormattedPtiBalance(state),
+  stakedPTI: getTotalStakedPti(state),
   user: getUser(state),
   userAddress: getUserAddress(state),
   isWalletSecured: getIsSecure(state),
