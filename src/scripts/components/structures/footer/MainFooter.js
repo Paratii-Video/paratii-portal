@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
 import Button from 'components/foundations/Button'
 import { MAINFOOTER_HEIGHT, Z_INDEX_FOOTER } from 'constants/UIConstants'
 import TranslatedText from 'components/translations/TranslatedText'

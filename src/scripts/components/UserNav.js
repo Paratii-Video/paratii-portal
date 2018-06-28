@@ -1,28 +1,34 @@
 /* @flow */
-/* stylelint-disable */
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import { add0x } from 'utils/AppUtils'
+import paratii from 'utils/ParatiiLib'
 import Blockies from 'react-blockies'
+import User from 'records/UserRecords'
+import { getName } from 'operators/UserOperators'
 import {
   USERNAV_WIDTH,
   MAINHEADER_LOGO_HEIGHT,
   MAINFOOTER_HEIGHT,
   Z_INDEX_USERNAV
 } from '../constants/UIConstants'
-import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 import { Link } from 'react-router-dom'
 import Text from './foundations/Text'
 import SVGIcon from './foundations/SVGIcon'
 import UserBadge from './widgets/UserBadge'
+import TranslatedText from './translations/TranslatedText'
 
 type Props = {
-  children: Object,
+  balance: string,
+  formattedBalance: string,
+  stakedPTI: string,
+  user: User,
   userAddress: string,
   isWalletSecured: boolean,
   showUserNav: boolean,
   checkUserWallet: () => void,
-  closeUserNav: () => void
+  closeUserNav: () => void,
+  loadBalances: () => void
 }
 
 const Wrapper = styled.div`
@@ -30,7 +36,7 @@ const Wrapper = styled.div`
   height: 100%;
   left: 0;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
   padding: 0 0 ${MAINFOOTER_HEIGHT};
   position: fixed;
   top: 0;
@@ -65,13 +71,13 @@ const UserPTIValue = styled.div`
 `
 
 const UserPTIValueBox = styled.div`
-  align-content: center;
+  align-items: center;
   background-color: ${props => props.theme.colors.UserNav.UserPTIValueBox};
   display: flex;
   flex-direction: column;
-  justify-items: center;
+  justify-content: center;
+  min-height: 90px;
   padding: 14px 14px 16px;
-  text-align: center;
 `
 
 const UserPTIBarWrapper = styled.div`
@@ -89,9 +95,13 @@ const UserPTIBar = styled.div`
   flex: 1 1 ${props => props.percentage};
   height: 100%;
   text-align: center;
-  ${Text} {
-    margin-top: 5px;
-  }
+  position: relative;
+`
+
+const UserPTIBarText = Text.extend`
+  position: absolute;
+  left: 50%;
+  transform: translate3d(-50%, 5px, 0);
 `
 
 // User navigation
@@ -149,29 +159,44 @@ const UserSubNavListItemLink = styled(Link)`
   }
 `
 
-class UserNav extends Component<Props, void> {
-  // UserNavWrapper: Object
-  //
-  // constructor (props: Props) {
-  //   super(props)
-  //
-  //   this.UserNavWrapper = this.UserNavWrapper.bind(this)
-  // }
-
-  componentDidUpdate () {
-    if (this.props.showUserNav) {
-      this.UserNavWrapper.scrollTo(0, 0)
-    }
-  }
+class UserNav extends Component<Props, Object> {
+  UserNavWrapper: HTMLElement
 
   render () {
+    const {
+      formattedBalance,
+      balance,
+      stakedPTI,
+      user,
+      userAddress,
+      loadBalances
+    } = this.props
+    // Reload user balance
+    loadBalances()
+
     let avatarUser = ''
-    if (this.props.userAddress) {
-      const lowerAddress = add0x(this.props.userAddress)
-      if (ACTIVATE_SECURE_WALLET && this.props.isWalletSecured) {
+    if (userAddress) {
+      const lowerAddress = add0x(userAddress)
+      if (this.props.isWalletSecured) {
         avatarUser = <Blockies seed={lowerAddress} size={10} scale={4} />
       }
     }
+
+    let percentageStaked = '0%'
+    let percentagePTI = '100%'
+    const stakedNumber = stakedPTI ? Number(stakedPTI) : 0
+    const balanceNumber = balance ? Number(balance) : 0
+    const formattedStakedPTI = paratii.eth.web3.utils.fromWei(
+      stakedNumber.toString(),
+      'ether'
+    )
+
+    const totalPTI = balanceNumber + stakedNumber
+    const percStaked = Math.round(stakedNumber / totalPTI * 100)
+    const percPTI = 100 - percStaked
+
+    percentageStaked = percStaked + '%'
+    percentagePTI = percPTI + '%'
 
     return (
       <Wrapper
@@ -183,44 +208,38 @@ class UserNav extends Component<Props, void> {
         <UserWrapper>
           <UserBadge
             userAvatar={avatarUser}
-            userName="User 12610549"
-            userDate="Since 2018"
+            userName={getName(user)}
+            userDate={<TranslatedText message="userNav.dataLabel" />}
           />
           <UserPTI>
             <UserPTIValuesWrapper>
               <UserPTIValue>
                 <Text gray tiny>
-                  Available PTI
+                  <TranslatedText message="userNav.leftBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text purple>10 PTI</Text>
-                  <Text gray tiny>
-                    US$ 3.00
-                  </Text>
+                  <Text purple>{formattedBalance} PTI</Text>
                 </UserPTIValueBox>
               </UserPTIValue>
               <UserPTIValue>
                 <Text gray tiny>
-                  Staked PTI
+                  <TranslatedText message="userNav.rightBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text pink>10 PTI</Text>
-                  <Text gray tiny>
-                    US$ 3.00
-                  </Text>
+                  <Text pink>{formattedStakedPTI} PTI</Text>
                 </UserPTIValueBox>
               </UserPTIValue>
             </UserPTIValuesWrapper>
             <UserPTIBarWrapper>
-              <UserPTIBar percentage="70%">
-                <Text purple tiny>
-                  70%
-                </Text>
+              <UserPTIBar percentage={percentagePTI}>
+                <UserPTIBarText purple tiny>
+                  {percentagePTI}
+                </UserPTIBarText>
               </UserPTIBar>
-              <UserPTIBar red percentage="30%">
-                <Text pink tiny>
-                  30%
-                </Text>
+              <UserPTIBar red percentage={percentageStaked}>
+                <UserPTIBarText pink tiny>
+                  {percentageStaked}
+                </UserPTIBarText>
               </UserPTIBar>
             </UserPTIBarWrapper>
           </UserPTI>
@@ -228,7 +247,10 @@ class UserNav extends Component<Props, void> {
         <UserNavListWrapper>
           <UserNavList>
             <UserNavListItem>
-              <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
+              <UserNavListItemLink
+                to="/profile"
+                onClick={this.props.closeUserNav}
+              >
                 <UserNavListItemIcon>
                   <SVGIcon icon="icon-profile" />
                 </UserNavListItemIcon>
@@ -236,14 +258,17 @@ class UserNav extends Component<Props, void> {
               </UserNavListItemLink>
             </UserNavListItem>
             <UserNavListItem>
-              <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
+              <UserNavListItemLink
+                to="/profile/my-videos"
+                onClick={this.props.closeUserNav}
+              >
                 <UserNavListItemIcon>
                   <SVGIcon icon="icon-myvideos" />
                 </UserNavListItemIcon>
                 My Videos
               </UserNavListItemLink>
             </UserNavListItem>
-            <UserNavListItem>
+            <UserNavListItem hidden>
               <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
                 <UserNavListItemIcon>
                   <SVGIcon icon="icon-fav" />
@@ -251,7 +276,7 @@ class UserNav extends Component<Props, void> {
                 My Favorites
               </UserNavListItemLink>
             </UserNavListItem>
-            <UserNavListItem>
+            <UserNavListItem hidden>
               <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
                 <UserNavListItemIcon>
                   <SVGIcon icon="icon-myvideos" />
@@ -259,7 +284,7 @@ class UserNav extends Component<Props, void> {
                 Finances
               </UserNavListItemLink>
             </UserNavListItem>
-            <UserNavListItem>
+            <UserNavListItem hidden>
               <UserNavListItemLink to="/" onClick={this.props.closeUserNav}>
                 <UserNavListItemIcon>
                   <SVGIcon icon="icon-settings" />
@@ -267,7 +292,7 @@ class UserNav extends Component<Props, void> {
                 Settings
               </UserNavListItemLink>
             </UserNavListItem>
-            <UserNavListItem>
+            <UserNavListItem hidden>
               <UserNavListItemNoLink>
                 <UserNavListItemIcon>
                   <SVGIcon icon="icon-myvideos" />

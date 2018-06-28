@@ -191,8 +191,19 @@ const Themes = {
       VotingBarTwo: Colors.pink,
       ChallengeSequenceDot: Colors.white
     },
+    ProfileMyVideos: {
+      headerImageBackground: Colors.blackDark,
+      headerInfoBackground: Colors.blackAlt,
+      ProfilePictureBackground: Colors.blackAlt,
+      filterBackground: Colors.blackDark
+    },
     UploadListItem: {
       background: Colors.black
+    },
+    MyVideoItem: {
+      background: Colors.black,
+      imageBackground: Colors.blackAlt,
+      coverMediaBackground: Colors.blackTransparent
     },
     LandingPage: {
       headerBackground: Colors.blackLight,

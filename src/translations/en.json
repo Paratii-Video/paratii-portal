@@ -16,6 +16,9 @@
       "description": "Explore short stories, music clips, and formats that our community is inventing every day."
     }
   },
+  "myVideos": {
+    "title": "My videos"
+  },
   "navigation": {
     "voucher": "Get PTI",
     "myVideos": "My videos",
@@ -28,6 +31,28 @@
     "title": "Oooooops, page not found",
     "description": "This page is not available yet. A passionate team is either building it or doesn't know about it. Want to help us move faster? Please tell us how you got here with an issue on our Github:",
     "linkText": "Paratii-Video"
+  },
+  "profile": {
+    "title": "Profile",
+    "editButton": "Edit",
+    "dataLabel": "Since",
+    "balanceTitle": "Current balance: ",
+    "emailLabel": "E-mail",
+    "addressLabel": "Address",
+    "copyLabel": "Copy"
+  },
+  "profileEdit": {
+    "title": "Edit Profile",
+    "avatarLabel": "Change avatar",
+    "usernameLabel": "Username",
+    "emailLabel": "E-mail",
+    "cancelButton": "Cancel",
+    "saveButton": "Save"
+  },
+  "profileLogOut": {
+    "title": "Profile",
+    "text": "Perhaps you want to login to see this content",
+    "button": "Log in"
   },
   "search": {
     "input": {
@@ -46,6 +71,11 @@
     "supportedFileTypes": "(only .mp4 currently supported)",
     "youtubeOrVimeo": "(Not working yet) Or upload from Youtube or Vimeo"
   },
+  "userNav": {
+    "dataLabel": "Since",
+    "leftBoxTitle": "Available PTI",
+    "rightBoxTitle": "Staked PTI"
+  },
   "player": {
     "price": "Price",
     "free": "Free",
@@ -63,8 +93,8 @@
       "embedVideo": "Embed this video"
     }
   },
-  "profile": {
-    "modal": {
+  "modal": {
+    "profile": {
       "title": "Profile",
       "description": "This is how you'll be known on the Paratii network. Enter your email if you'd like to receive updates about the community and your activity.",
       "usernameLabel": "Username",

@@ -180,7 +180,8 @@ export type ParatiiLib = {
     tcr: {
       apply: (string, number) => Promise<Object>,
       checkEligiblityAndApply: (string, number) => Promise<Object>,
-      getMinDeposit: () => string
+      getMinDeposit: () => string,
+      getTotalStaked: string => Promise<Object>
     },
     tcrPlaceholder: {
       apply: (string, number) => Promise<Object>,

@@ -8,7 +8,7 @@ import { ThemeProvider } from 'styled-components'
 import ProfileContainer from 'containers/ProfileContainer'
 
 import ProfileEditContainer from 'containers/ProfileEditContainer'
-import ProfileCurationContainer from 'containers/ProfileCurationContainer'
+import ProfileMyVideosContainer from 'containers/ProfileMyVideosContainer'
 
 import PlayContainer from 'containers/PlayContainer'
 import VideoManager from 'containers/VideoManagerContainer'
@@ -82,7 +82,7 @@ class App extends Component<Props, State> {
             <Modal />
             <Notifications />
             <MainHeader />
-            <UserNav />
+            {isWalletSecured ? <UserNav /> : null}
             <Main landing={match.isExact}>
               <Switch>
                 <Route exact path="/" component={LandingContainer} />
@@ -100,8 +100,8 @@ class App extends Component<Props, State> {
                   component={ProfileEditContainer}
                 />
                 <Route
-                  path={`${match.url}profile/curation`}
-                  component={ProfileCurationContainer}
+                  path={`${match.url}profile/my-videos`}
+                  component={ProfileMyVideosContainer}
                 />
                 <Route
                   path={`${match.url}upload/:id`}
