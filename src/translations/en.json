@@ -92,8 +92,8 @@
       "embedVideo": "Embed this video"
     }
   },
-  "profile": {
-    "modal": {
+  "modal": {
+    "profile": {
       "title": "Profile",
       "description": "This is how you'll be known on the Paratii network. Enter your email if you'd like to receive updates about the community and your activity.",
       "usernameLabel": "Username",
