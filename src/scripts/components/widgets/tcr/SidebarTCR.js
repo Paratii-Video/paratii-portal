@@ -12,7 +12,7 @@ import VoteRevealed from './VoteRevealed'
 import Voting from './Voting'
 
 type Props = {
-  videoId: number,
+  videoId: string,
   whiteListed: boolean
 }
 
