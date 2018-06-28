@@ -8,7 +8,8 @@ import {
   LOGIN_SUCCESS,
   SET_WALLET_DATA,
   SET_WALLET_ADDRESS,
-  BALANCES_LOADED
+  BALANCES_LOADED,
+  STAKED_PTI
 } from 'constants/ActionConstants'
 
 import {
@@ -32,6 +33,7 @@ import UserRecord from 'records/UserRecords'
 
 const loginSuccess = createAction(LOGIN_SUCCESS)
 const balancesLoaded = createAction(BALANCES_LOADED)
+const totalStaked = createAction(STAKED_PTI)
 export const setWalletData = createAction(SET_WALLET_DATA)
 export const setWalletAddress = createAction(SET_WALLET_ADDRESS)
 
@@ -66,6 +68,19 @@ export const loadBalances = () => (dispatch: Dispatch) => {
   }
 }
 
+export const totalStakedPTI = () => async (dispatch: Dispatch) => {
+  const address: string = paratii.eth.getAccount()
+  if (address) {
+    const totalBN = await paratii.eth.tcr.getTotalStaked(address)
+    const totalStakedPTI = totalBN.toString()
+    dispatch(
+      totalStaked({
+        totalStaked: totalStakedPTI
+      })
+    )
+  }
+}
+
 export const setAddressAndBalance = () => (dispatch: Dispatch) => {
   const address: string = paratii.eth.getAccount()
   dispatch(setWalletAddress({ address: address }))
@@ -86,6 +101,8 @@ export const setUserData = () => async (dispatch: Dispatch) => {
         emailIsVerified: emailIsVerified
       })
     )
+    // Get total Pti staked
+    dispatch(totalStakedPTI())
   }
 }
 

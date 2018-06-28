@@ -11,6 +11,7 @@ import NotificationRecord from 'records/NotificationRecord'
 import ModalRecord from 'records/ModalRecord'
 import SearchRecord from 'records/SearchRecords'
 import VideoManagerRecord from 'records/VideoManagerRecords'
+import UserNavRecord from 'records/UserNavRecord'
 import {
   REQUEST_STATUS,
   TRANSITION_STATE,
@@ -73,7 +74,8 @@ export type RootState = {
   notifications: NotificationsArray,
   modal: ModalRecord,
   search: SearchRecord,
-  videoManager: VideoManagerRecord
+  videoManager: VideoManagerRecord,
+  userNav: UserNavRecord
 }
 
 type _ThunkAction<R> = (dispatch: Dispatch, getState?: () => RootState) => R
@@ -178,7 +180,8 @@ export type ParatiiLib = {
     tcr: {
       apply: (string, number) => Promise<Object>,
       checkEligiblityAndApply: (string, number) => Promise<Object>,
-      getMinDeposit: () => string
+      getMinDeposit: () => string,
+      getTotalStaked: string => Promise<Object>
     },
     tcrPlaceholder: {
       apply: (string, number) => Promise<Object>,

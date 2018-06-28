@@ -16,6 +16,7 @@ import {
   NOTIFICATION_POSITIONS
 } from 'constants/ApplicationConstants'
 import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
+import TranslatedText from './translations/TranslatedText'
 
 type Props = {
   user: {
@@ -194,10 +195,10 @@ class Profile extends Component<Props, void> {
     const cardFooter = (
       <FooterWrapper>
         <CancelButton gray="true" to="/profile">
-          Cancel
+          <TranslatedText message="profileEdit.cancelButton" />
         </CancelButton>
         <Button purple disabled={!updated} onClick={this.saveUserData}>
-          Save
+          <TranslatedText message="profileEdit.saveButton" />
         </Button>
         {saved && <Redirect to={'/profile'} />}
       </FooterWrapper>
@@ -205,15 +206,21 @@ class Profile extends Component<Props, void> {
     return (
       <div>
         {isWalletSecured ? (
-          <Card nobackground title="Edit Profile" footer={cardFooter}>
+          <Card
+            nobackground
+            title={<TranslatedText message="profileEdit.title" />}
+            footer={cardFooter}
+          >
             <Wrapper>
               <ProfileAvatar>{userAvatar}</ProfileAvatar>
-              <Button>Change avatar</Button>
+              <Button>
+                <TranslatedText message="profileEdit.avatarLabel" />
+              </Button>
               <HR />
               <Form onSubmit={this.submitForm}>
                 <TextField
                   type="text"
-                  label="Username"
+                  label={<TranslatedText message="profileEdit.usernameLabel" />}
                   tabIndex="1"
                   value={username}
                   disabled={this.formDisabled}
@@ -223,7 +230,7 @@ class Profile extends Component<Props, void> {
                 />
                 <TextField
                   type="text"
-                  label="Email"
+                  label={<TranslatedText message="profileEdit.emailLabel" />}
                   tabIndex="2"
                   value={email}
                   disabled={this.formDisabled}
@@ -231,21 +238,23 @@ class Profile extends Component<Props, void> {
                   onChange={e => this.handleInputChange('email', e)}
                 />
                 <Button hidden disabled={!updated} onClick={this.saveUserData}>
-                  Save
+                  <TranslatedText message="profileEdit.saveButton" />
                 </Button>
               </Form>
             </Wrapper>
           </Card>
         ) : (
           <Card
-            title="Edit Profile"
+            title={<TranslatedText message="profileLogOut.title" />}
             footer={
               <Button purple onClick={this.secureWallet}>
-                Log in
+                <TranslatedText message="profileLogOut.button" />
               </Button>
             }
           >
-            <Text gray>Perhaps you want to login to see this content</Text>
+            <Text gray>
+              <TranslatedText message="profileLogOut.text" />
+            </Text>
           </Card>
         )}
       </div>

@@ -29,7 +29,7 @@ const Bar = styled.span`
   height: 100%;
   left: 0;
   position: absolute;
-  transition: width 0.1s ${props => props.theme.animation.ease.smooth};
+  transition: width 0.5s ${props => props.theme.animation.ease.smooth};
   width: ${props => (props.progress ? props.progress : '0%')};
 `
 

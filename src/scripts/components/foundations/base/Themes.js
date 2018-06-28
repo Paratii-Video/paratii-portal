@@ -58,6 +58,7 @@ const Themes = {
     },
     MainCard: {
       background: Colors.black,
+      border: Colors.grayDark,
       color: Colors.white,
       title: Colors.white,
       subtitle: Colors.white,
@@ -171,8 +172,38 @@ const Themes = {
       },
       nextButton: Colors.gray
     },
+    UserNav: {
+      background: Colors.black,
+      Userbackground: Colors.blackDark,
+      UserPTIValueBox: Colors.blackLight,
+      UserPTIBarOne: Colors.purple,
+      UserPTIBarTwo: Colors.pink,
+      Navigation: Colors.black,
+      NavigationText: Colors.grayLight,
+      SubNavigation: Colors.blackLight
+    },
+    ProfileCuration: {
+      ChallengeBackgroundOneFrom: Colors.purpleGradientFrom,
+      ChallengeBackgroundOneTo: Colors.purpleGradientTo,
+      ChallengeBackgroundTwoFrom: Colors.pink,
+      ChallengeBackgroundTwoTo: Colors.purple,
+      VotingBarOne: Colors.green,
+      VotingBarTwo: Colors.pink,
+      ChallengeSequenceDot: Colors.white
+    },
+    ProfileMyVideos: {
+      headerImageBackground: Colors.blackDark,
+      headerInfoBackground: Colors.blackAlt,
+      ProfilePictureBackground: Colors.blackAlt,
+      filterBackground: Colors.blackDark
+    },
     UploadListItem: {
       background: Colors.black
+    },
+    MyVideoItem: {
+      background: Colors.black,
+      imageBackground: Colors.blackAlt,
+      coverMediaBackground: Colors.blackTransparent
     },
     LandingPage: {
       headerBackground: Colors.blackLight,

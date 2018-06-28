@@ -71,6 +71,7 @@ const UploaderWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
+  height: 100%;
   justify-content: center;
   padding: ${props => (props.card ? '100px 0' : null)};
   position: relative;

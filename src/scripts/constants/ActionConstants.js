@@ -26,6 +26,7 @@ export const LOGIN_SUCCESS = createActionConstant('LOGIN_SUCCESS')
 export const LOGIN_FAILURE = createActionConstant('LOGIN_FAILURE')
 export const LOGOUT = createActionConstant('LOGOUT')
 export const BALANCES_LOADED = createActionConstant('BALANCES_LOADED')
+export const STAKED_PTI = createActionConstant('STAKED_PTI')
 
 /* Upload Actions */
 export const UPLOAD_REQUESTED = createActionConstant('UPLOAD_REQUESTED')
@@ -97,3 +98,7 @@ export const ADDITIONAL_SEARCH_RESULTS_LOADED = createActionConstant(
 export const ADDITIONAL_SEARCH_FAILED = createActionConstant(
   'ADDITIONAL_SEARCH_FAILED'
 )
+
+// User nav
+export const OPEN_USERNAV = createActionConstant('OPEN_USERNAV')
+export const CLOSE_USERNAV = createActionConstant('CLOSE_USERNAV')
