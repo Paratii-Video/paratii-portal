@@ -20,7 +20,7 @@ import Card from 'components/structures/Card'
 import TranslatedText from 'components/translations/TranslatedText'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
-import SidebarTCR from 'components/widgets/tcr/SidebarTCR'
+import SidebarTCR from 'containers/widgets/tcr/SidebarTCRContainer'
 import {
   requestFullscreen,
   requestCancelFullscreen,
