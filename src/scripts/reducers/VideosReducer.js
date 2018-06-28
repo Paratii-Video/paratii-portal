@@ -201,7 +201,6 @@ const reducer = {
     if (!payload || !payload.id) {
       return state
     }
-    console.log(payload.whiteListed)
     return state.setIn([payload.id, 'whiteListed'], payload.whiteListed)
   },
   [TRANSCODING_REQUESTED]: (
