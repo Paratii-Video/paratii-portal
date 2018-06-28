@@ -7,7 +7,7 @@ import Text, { Strong } from 'components/foundations/Text'
 import { CardStyle } from 'components/structures/Card'
 
 type Props = {
-  videoId: number
+  videoId: string
 }
 const INFOSTATUS_CARD_MARGIN_BOTTOM: string = '15px'
 
