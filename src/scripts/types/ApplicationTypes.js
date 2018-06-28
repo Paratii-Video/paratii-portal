@@ -181,7 +181,10 @@ export type ParatiiLib = {
       apply: (string, number) => Promise<Object>,
       checkEligiblityAndApply: (string, number) => Promise<Object>,
       getMinDeposit: () => string,
-      getTotalStaked: string => Promise<Object>
+      getTotalStaked: string => Promise<Object>,
+      isWhitelisted: string => Promise<Object>,
+      approveAndStartChallenge: string => void,
+      approveAndGetRightsAndCommitVote: (string, number, number) => void
     },
     tcrPlaceholder: {
       apply: (string, number) => Promise<Object>,
