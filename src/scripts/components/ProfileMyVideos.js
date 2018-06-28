@@ -94,9 +94,11 @@ class ProfileMyVideos extends Component<Props, void> {
             .map(([videoId, videoInfo]) => (
               <MyVideoItem key={videoId} videoId={videoId} video={videoInfo} />
             ))}
-          <FileUploaderWrapper>
-            <FileUploader />
-          </FileUploaderWrapper>
+          {!this.props.videos && (
+            <FileUploaderWrapper>
+              <FileUploader />
+            </FileUploaderWrapper>
+          )}
         </ProfileMyVideosList>
       </Wrapper>
     )
