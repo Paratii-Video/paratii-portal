@@ -26,6 +26,7 @@ export const LOGIN_SUCCESS = createActionConstant('LOGIN_SUCCESS')
 export const LOGIN_FAILURE = createActionConstant('LOGIN_FAILURE')
 export const LOGOUT = createActionConstant('LOGOUT')
 export const BALANCES_LOADED = createActionConstant('BALANCES_LOADED')
+export const STAKED_PTI = createActionConstant('STAKED_PTI')
 
 /* Upload Actions */
 export const UPLOAD_REQUESTED = createActionConstant('UPLOAD_REQUESTED')
