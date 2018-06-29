@@ -34,8 +34,7 @@ type State = {
 
 const Header = styled.header`
   background-color: ${props => props.theme.colors.header.background};
-  box-shadow: ${({ displayShadow }) =>
-    displayShadow ? '0 3px 5px rgba(0,0,0,0.16)' : ''};
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.16);
   display: flex;
   padding: 0 80px;
   position: fixed;
@@ -136,7 +135,7 @@ class MainHeader extends Component<Props, State> {
     super(props)
     this.state = {
       navOpen: false,
-      displayShadow: false
+      displayShadow: true
     }
 
     this.openNav = this.openNav.bind(this)

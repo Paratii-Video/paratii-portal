@@ -9,7 +9,7 @@ type Props = {}
 const Footer = styled.footer`
   align-items: center;
   background-color: ${props => props.theme.colors.footer.background};
-  box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.16);
   display: flex;
   flex: 0 0 ${MAINFOOTER_HEIGHT};
   justify-content: space-between;
