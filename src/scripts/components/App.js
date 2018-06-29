@@ -83,7 +83,7 @@ class App extends Component<Props, State> {
             <Notifications />
             <MainHeader />
             {isWalletSecured ? <UserNav /> : null}
-            <Main landing={match.isExact}>
+            <Main landing={match.isExact} isWalletSecured={isWalletSecured}>
               <Switch>
                 <Route exact path="/" component={LandingContainer} />
                 <Route
