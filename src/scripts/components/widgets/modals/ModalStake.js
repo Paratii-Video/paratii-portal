@@ -46,6 +46,7 @@ const Footer = styled.div`
 
 class ModalStake extends Component<Props, Object> {
   onSubmit: (e: Object) => void
+  disableButton: (e: Object) => void
 
   constructor (props: Props) {
     super(props)
@@ -53,9 +54,14 @@ class ModalStake extends Component<Props, Object> {
       errorMessage: false,
       agreedTOC: false, // TODO,
       stakeAmount: 0,
-      disableButton: false
+      isStaking: false
     }
     this.onSubmit = this.onSubmit.bind(this)
+    this.disableButton = this.disableButton.bind(this)
+  }
+
+  disableButton = () => {
+    return this.state.isStaking
   }
 
   onSubmit (event: Object) {
@@ -67,7 +73,7 @@ class ModalStake extends Component<Props, Object> {
     const videoIdStaked = this.props.selectedVideo.id
 
     this.setState({
-      disableButton: true
+      isStaking: true
     })
 
     paratii.eth.tcrPlaceholder
@@ -100,7 +106,7 @@ class ModalStake extends Component<Props, Object> {
             'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
           this.setState({
             errorMessage: msg,
-            disableButton: false
+            isStaking: false
           })
           console.log(msg)
         }
@@ -110,7 +116,7 @@ class ModalStake extends Component<Props, Object> {
           const msg = String(e)
           this.setState({
             errorMessage: msg,
-            disableButton: false
+            isStaking: false
           })
           console.log(msg)
         }
@@ -184,7 +190,7 @@ class ModalStake extends Component<Props, Object> {
               <Button
                 purple
                 onClick={this.onSubmit}
-                disabled={this.state.disableButton}
+                disabled={this.disableButton()}
                 data-test-id="button-stake"
               >
                 Continue
