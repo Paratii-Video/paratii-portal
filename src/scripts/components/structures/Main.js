@@ -23,6 +23,10 @@ const MainWrapper = styled.main`
     padding: ${({ landing }) => (landing ? null : '40px')};
   }
 
+  @media (max-width: 768px) {
+    margin-left: 0;
+  }
+
   @media (max-width: 767px) {
     padding: ${({ landing }) => (landing ? null : '16px 20px 0')};
   }

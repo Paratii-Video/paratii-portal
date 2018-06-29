@@ -40,10 +40,13 @@ const Wrapper = styled.div`
   padding: 0 0 ${MAINFOOTER_HEIGHT};
   position: fixed;
   top: 0;
-  transform: translate3d(${({ show }) => (show ? 0 : '0%')}, 0, 0);
   transition: transform 0.6s ${({ theme }) => theme.animation.ease.smooth};
   width: ${USERNAV_WIDTH};
   z-index: ${Z_INDEX_USERNAV};
+
+  @media (max-width: 768px) {
+    transform: translate3d(${({ show }) => (show ? 0 : '-100%')}, 0, 0);
+  }
 `
 
 // User
