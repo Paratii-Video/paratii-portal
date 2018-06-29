@@ -52,7 +52,8 @@ class ModalStake extends Component<Props, Object> {
     this.state = {
       errorMessage: false,
       agreedTOC: false, // TODO,
-      stakeAmount: 0
+      stakeAmount: 0,
+      disableButton: false
     }
     this.onSubmit = this.onSubmit.bind(this)
   }
@@ -64,6 +65,10 @@ class ModalStake extends Component<Props, Object> {
     const stakeAmount = this.state.stakeAmount
     const stakeAmountWei = paratii.eth.web3.utils.toWei(String(stakeAmount))
     const videoIdStaked = this.props.selectedVideo.id
+
+    this.setState({
+      disableButton: true
+    })
 
     paratii.eth.tcrPlaceholder
       .checkEligiblityAndApply(videoIdStaked, stakeAmountWei)
@@ -94,7 +99,8 @@ class ModalStake extends Component<Props, Object> {
           const msg =
             'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
           this.setState({
-            errorMessage: msg
+            errorMessage: msg,
+            disableButton: false
           })
           console.log(msg)
         }
@@ -103,7 +109,8 @@ class ModalStake extends Component<Props, Object> {
         if (e) {
           const msg = String(e)
           this.setState({
-            errorMessage: msg
+            errorMessage: msg,
+            disableButton: false
           })
           console.log(msg)
         }
@@ -177,6 +184,7 @@ class ModalStake extends Component<Props, Object> {
               <Button
                 purple
                 onClick={this.onSubmit}
+                disabled={this.state.disableButton}
                 data-test-id="button-stake"
               >
                 Continue
