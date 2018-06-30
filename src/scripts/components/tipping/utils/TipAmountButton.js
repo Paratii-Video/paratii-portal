@@ -14,7 +14,7 @@ type Props = {
 }
 
 const WrappedButton = styled.button`
-  border: 1px solid ${Colors.grayLight};
+  border: 2px solid ${Colors.grayLight};
   display: flex;
   align-items: center;
   justify-content: flex-start;
