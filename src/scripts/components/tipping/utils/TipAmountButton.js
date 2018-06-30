@@ -33,7 +33,7 @@ const WrappedButton = styled.button`
   }
 
   &[disabled] {
-    background-color: ${Colors.whiteTransparent};
+    opacity: 0.4;
     cursor: not-allowed;
   }
 `

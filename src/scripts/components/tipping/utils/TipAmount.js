@@ -10,8 +10,7 @@ import TranslatedText from 'components/translations/TranslatedText'
 import coinDataUrl from 'assets/svg/coin.svg'
 
 type Props = {
-  amount: number,
-  disabled?: boolean
+  amount: number
 }
 
 const Wrapper = styled.div`
@@ -21,10 +20,6 @@ const Wrapper = styled.div`
   font-size: 20px;
   font-weight: bold;
   color: ${Colors.white};
-
-  &[disabled] {
-    color: ${Colors.grayLight};
-  }
 `
 
 const IconWrapper = styled.span`
@@ -46,15 +41,15 @@ const UnitWrapper = styled.span`
 
 class TipAmount extends React.Component<Props> {
   render () {
-    const { amount, disabled } = this.props
+    const { amount } = this.props
 
     return (
-      <Wrapper disabled={disabled}>
+      <Wrapper>
         <IconWrapper>
           <Icon color={Colors.grayLight} url={coinDataUrl} />
         </IconWrapper>
         <TranslatedText message={`tipping.amounts.${amount}`} />
-        <UnitWrapper disabled={disabled}>
+        <UnitWrapper>
           <TranslatedText message="PTI" />
         </UnitWrapper>
       </Wrapper>
