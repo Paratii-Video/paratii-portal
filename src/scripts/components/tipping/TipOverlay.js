@@ -43,7 +43,7 @@ type State = {
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${Colors.black};
+  background-color: ${Colors.blackMediumTransparent};
   display: flex;
   flex-direction: column;
   justify-content: center;
