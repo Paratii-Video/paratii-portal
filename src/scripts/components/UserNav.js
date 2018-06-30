@@ -162,17 +162,20 @@ const UserSubNavListItemLink = styled(Link)`
 class UserNav extends Component<Props, Object> {
   UserNavWrapper: HTMLElement
 
+  constructor (props: Props) {
+    super(props)
+
+    props.loadBalances()
+  }
+
   render () {
     const {
       formattedBalance,
       balance,
       stakedPTI,
       user,
-      userAddress,
-      loadBalances
+      userAddress
     } = this.props
-    // Reload user balance
-    loadBalances()
 
     let avatarUser = ''
     if (userAddress) {
