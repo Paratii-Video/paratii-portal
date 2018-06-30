@@ -25,8 +25,8 @@ type State = {
 const VERIFIED_ICON_DIMENSION: string = '100px'
 
 const VerifiedIconWrapper = styled.div`
-  margin-top: 20px;
-  margin-bottom: 30px;
+  margin-top: 30px;
+  margin-bottom: 40px;
 `
 
 const ContinueButton = styled.button`
