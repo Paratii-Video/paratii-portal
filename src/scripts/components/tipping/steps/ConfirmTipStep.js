@@ -25,7 +25,7 @@ const PasswordForm = styled.form`
 `
 
 const TipAmountWrapper = styled.div`
-  margin-top: 10px;
+  margin-top: 25px;
 `
 
 const BottomBar = styled.div`
