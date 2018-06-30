@@ -97,10 +97,10 @@ class ModalProfile extends Component<Props, Object> {
         this.props.notification(
           {
             title: (
-              <TranslatedText message="profile.modal.verificationEmail.title" />
+              <TranslatedText message="modal.profile.verificationEmail.title" />
             ),
             message: (
-              <TranslatedText message="profile.modal.verificationEmail.description" />
+              <TranslatedText message="modal.profile.verificationEmail.description" />
             ),
             autoDismiss: 0
           },
@@ -125,10 +125,10 @@ class ModalProfile extends Component<Props, Object> {
       <ModalContentWrapper>
         <ModalScrollContent>
           <Title>
-            <TranslatedText message="profile.modal.title" />
+            <TranslatedText message="modal.profile.title" />
           </Title>
           <Text small gray>
-            <TranslatedText message="profile.modal.description" />
+            <TranslatedText message="modal.profile.description" />
           </Text>
           <Icon>
             <NotepadSvg />
@@ -137,7 +137,7 @@ class ModalProfile extends Component<Props, Object> {
             <TextField
               error={this.state.error.length > 0}
               label={RawTranslatedText({
-                message: 'profile.modal.usernameLabel'
+                message: 'modal.profile.usernameLabel'
               })}
               name="username"
               type="text"
@@ -147,7 +147,7 @@ class ModalProfile extends Component<Props, Object> {
             />
             <TextField
               error={this.state.error.length > 0}
-              label={RawTranslatedText({ message: 'profile.modal.emailLabel' })}
+              label={RawTranslatedText({ message: 'modal.profile.emailLabel' })}
               name="email"
               type="text"
               value={this.state.email}
@@ -171,11 +171,11 @@ class ModalProfile extends Component<Props, Object> {
                   purple
                   disabled={!this.state.username}
                 >
-                  <TranslatedText message="profile.modal.continue" />
+                  <TranslatedText message="modal.profile.continue" />
                 </Button>
               ) : (
                 <Button type="submit" form={FORM_ID} purple disabled="true">
-                  <TranslatedText message="profile.modal.pleaseWait" />
+                  <TranslatedText message="modal.profile.pleaseWait" />
                 </Button>
               )}
             </ButtonContainer>

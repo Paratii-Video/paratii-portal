@@ -54,7 +54,7 @@ export const getFormattedEthBalance: (
   return (!isNaN(balance) && formatBalance(balance)) || '0'
 })
 
-const getPtiBalance: (state: RootState) => string = createSelector(
+export const getPtiBalance: (state: RootState) => string = createSelector(
   [getBalances],
   (balances: Balances): string => balances.get('PTI')
 )
@@ -68,3 +68,8 @@ export const getFormattedPtiBalance: (
   )
   return (!isNaN(balance) && formatBalance(balance)) || '0'
 })
+
+export const getTotalStakedPti: (state: RootState) => string = createSelector(
+  [getUser],
+  (user: User): string => user.get('totalStaked')
+)

@@ -9,13 +9,12 @@ import {
   LOGOUT,
   SET_WALLET_DATA,
   SET_WALLET_ADDRESS,
-  WALLET_SECURED
+  WALLET_SECURED,
+  BALANCES_LOADED,
+  LOAD_BALANCES_STARTED,
+  STAKED_PTI
 } from 'constants/ActionConstants'
 import UserRecord, { Balances } from 'records/UserRecords'
-import {
-  BALANCES_LOADED,
-  LOAD_BALANCES_STARTED
-} from '../constants/ActionConstants'
 
 import type { Action } from 'types/ApplicationTypes'
 
@@ -77,7 +76,11 @@ const reducer = {
         PTI,
         requestStatus: REQUEST_STATUS.SUCCEEDED
       })
-    )
+    ),
+  [STAKED_PTI]: (state: UserRecord, { payload: { totalStaked } }): UserRecord =>
+    state.merge({
+      totalStaked
+    })
 }
 
 export default handleActions(reducer, new UserRecord())

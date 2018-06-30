@@ -24,7 +24,8 @@ class User extends Immutable.Record({
   mnemonicKey: 'mnemonic-anon',
   loginRequestStatus: REQUEST_STATUS.NOT_STARTED,
   balances: new Balances(),
-  lastSecuredTimestamp: 0
+  lastSecuredTimestamp: 0,
+  totalStaked: '0'
 }) {
   address: string
   name: string
@@ -36,6 +37,7 @@ class User extends Immutable.Record({
   loginRequestStatus: RequestStatus
   balances: Balances
   lastSecuredTimestamp: number
+  totalStaked: string
 }
 
 export const _getWalletKey = (state: User): string => state.get('walletKey')

@@ -39,7 +39,10 @@ const RadioInput = styled.label`
   cursor: ${props => (props.disabled ? 'initial' : 'pointer')};
   display: inline-flex;
   font-size: ${props => props.theme.fonts.form.input};
-  margin: 0 ${props => (props.nomargin ? '0' : '20px')} 20px 0;
+  margin: ${props =>
+    props.margin
+      ? props.margin
+      : props.nomargin ? '0 0 20px 0' : '0 20px 20px 0'};
   opacity: ${props => (props.disabled ? '0.2' : '')};
   pointer-events: ${props => (props.disabled ? 'none' : '')};
   position: relative;
@@ -96,6 +99,7 @@ class RadioCheck extends Component<Props, void> {
         data-test-id={this.props.name}
         disabled={this.props.disabled}
         nomargin={this.props.nomargin}
+        margin={this.props.margin}
       >
         <input
           type={this.props.checkbox ? 'checkbox' : 'radio'}

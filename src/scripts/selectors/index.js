@@ -125,6 +125,10 @@ export const getAdditionalSearchRequestStatus = (
   state: RootState
 ): RequestStatus => _getAdditionalSearchRequestStatus(state.search)
 
+/* UserNav */
+export const getUserNavStatus = (state: RootState): boolean =>
+  state.userNav.showUserNav
+
 /* VideoManager */
 export const getVideoManager = (state: RootState): VideoManager =>
   state.videoManager

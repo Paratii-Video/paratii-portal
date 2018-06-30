@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
 import SearchInputContainer from 'containers/widgets/SearchInputContainer'
 import Button from 'components/foundations/Button'
@@ -10,6 +9,7 @@ import SVGIcon from 'components/foundations/SVGIcon'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
 import MainNavigation from 'components/structures/header/MainNavigation'
 import { add0x } from 'utils/AppUtils'
+
 import {
   MAINHEADER_LOGO_HEIGHT,
   MAINHEADER_LOGO_WIDTH,
@@ -21,7 +21,10 @@ type Props = {
   children: Object,
   userAddress: string,
   isWalletSecured: boolean,
-  checkUserWallet: () => void
+  showUserNav: boolean,
+  checkUserWallet: () => void,
+  openUserNav: () => void,
+  closeUserNav: () => void
 }
 
 type State = {
@@ -94,7 +97,7 @@ const HeaderButtons = styled.div`
   }
 `
 
-const ProfileAvatarLink = styled(Link)`
+const ProfileAvatarButton = styled.button`
   background-color: ${props => props.theme.colors.header.color};
   border-radius: 100%;
   flex: 0 0 40px;
@@ -126,6 +129,8 @@ class MainHeader extends Component<Props, State> {
   closeNav: () => void
   toggleNav: () => void
   secureWallet: (e: Object) => void
+  toggleUserNav: () => void
+  closeMainNavAndUserNav: () => void
 
   constructor (props: Props) {
     super(props)
@@ -138,6 +143,8 @@ class MainHeader extends Component<Props, State> {
     this.closeNav = this.closeNav.bind(this)
     this.toggleNav = this.toggleNav.bind(this)
     this.secureWallet = this.secureWallet.bind(this)
+    this.toggleUserNav = this.toggleUserNav.bind(this)
+    this.closeMainNavAndUserNav = this.closeMainNavAndUserNav.bind(this)
   }
 
   openNav () {
@@ -152,10 +159,25 @@ class MainHeader extends Component<Props, State> {
     })
   }
 
+  closeMainNavAndUserNav () {
+    this.closeNav()
+    this.props.closeUserNav()
+  }
+
   toggleNav () {
     this.setState((prevState: State) => ({
       navOpen: !prevState.navOpen
     }))
+  }
+
+  toggleUserNav () {
+    this.closeNav()
+
+    if (this.props.showUserNav) {
+      this.props.closeUserNav()
+    } else {
+      this.props.openUserNav()
+    }
   }
 
   secureWallet (e: Object) {
@@ -169,9 +191,12 @@ class MainHeader extends Component<Props, State> {
       const lowerAddress = add0x(this.props.userAddress)
       if (ACTIVATE_SECURE_WALLET && this.props.isWalletSecured) {
         userAvatar = (
-          <ProfileAvatarLink data-test-id="address-avatar" to="/profile">
+          <ProfileAvatarButton
+            data-test-id="address-avatar"
+            onClick={this.toggleUserNav}
+          >
             <Blockies seed={lowerAddress} size={10} scale={4} />
-          </ProfileAvatarLink>
+          </ProfileAvatarButton>
         )
       }
     }
@@ -184,7 +209,7 @@ class MainHeader extends Component<Props, State> {
         {this.props.children}
         <HeaderWrapper open={this.state.navOpen}>
           <LogoWrapper>
-            <MainHeaderLogo />
+            <MainHeaderLogo clickOnLogo={this.closeMainNavAndUserNav} />
           </LogoWrapper>
           <HeaderContent open={this.state.navOpen}>
             <SearchWrapper>
@@ -194,7 +219,7 @@ class MainHeader extends Component<Props, State> {
               <MainNavigation
                 isWalletSecured={this.props.isWalletSecured}
                 checkUserWallet={this.props.checkUserWallet}
-                closeNav={this.closeNav}
+                closeMainNavAndUserNav={this.closeMainNavAndUserNav}
               />
               {userAvatar}
             </HeaderButtons>

@@ -30,6 +30,7 @@ export const LOAD_BALANCES_STARTED = createActionConstant(
 )
 export const BALANCES_LOADED = createActionConstant('BALANCES_LOADED')
 export const WALLET_SECURED = createActionConstant('WALLET_SECURED')
+export const STAKED_PTI = createActionConstant('STAKED_PTI')
 
 /* Upload Actions */
 export const UPLOAD_REQUESTED = createActionConstant('UPLOAD_REQUESTED')
@@ -110,3 +111,7 @@ export const ADD_DO_NOT_TIP_VIDEO: string = createActionConstant(
 export const SET_USER_IS_TIPPING: string = createActionConstant(
   'SET_USER_IS_TIPPING'
 )
+
+// User nav
+export const OPEN_USERNAV = createActionConstant('OPEN_USERNAV')
+export const CLOSE_USERNAV = createActionConstant('CLOSE_USERNAV')

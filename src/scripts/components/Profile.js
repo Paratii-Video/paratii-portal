@@ -20,6 +20,7 @@ import {
 import User from 'records/UserRecords'
 import { getEmail, getEmailIsVerified, getName } from 'operators/UserOperators'
 import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
+import TranslatedText from './translations/TranslatedText'
 
 type Props = {
   user: User,
@@ -140,7 +141,7 @@ class Profile extends Component<Props, void> {
         {getEmail(user) && (
           <Fragment>
             <Text gray small>
-              Email
+              <TranslatedText message="profile.emailLabel" />
             </Text>
             <Text data-test-id="profile-email" margin="0 0 20px 0">
               <EmailDataWrapper>
@@ -151,7 +152,7 @@ class Profile extends Component<Props, void> {
           </Fragment>
         )}
         <Text gray small>
-          Address
+          <TranslatedText message="profile.addressLabel" />
         </Text>
         <WordsWrapper>
           <CopyText
@@ -169,7 +170,7 @@ class Profile extends Component<Props, void> {
               width="20px"
               margin="0 5px 0 0"
             />
-            Copy
+            <TranslatedText message="profile.copyLabel" />
           </CopyButton>
         </WordsWrapper>
       </FooterWrapper>
@@ -177,33 +178,41 @@ class Profile extends Component<Props, void> {
     return (
       <div>
         {isWalletSecured ? (
-          <Card nobackground title="Profile" footer={cardFooter}>
+          <Card
+            nobackground
+            title={<TranslatedText message="profile.title" />}
+            footer={cardFooter}
+          >
             <Wrapper>
-              <EditProfileButton to="/profile/edit">Edit</EditProfileButton>
+              <EditProfileButton to="/profile/edit">
+                <TranslatedText message="profile.editButton" />
+              </EditProfileButton>
               <ProfileAvatar>{userAvatar}</ProfileAvatar>
               <Text bold small>
                 {getName(user)}
               </Text>
               <Text tiny gray>
-                Since 2018
+                <TranslatedText message="profile.dataLabel" /> 2018
               </Text>
               <HR />
               <Text tiny gray>
-                Current balance:
+                <TranslatedText message="profile.balanceTitle" />
               </Text>
               <PTIBalanceContainer />
             </Wrapper>
           </Card>
         ) : (
           <Card
-            title="Profile"
+            title={<TranslatedText message="profileLogOut.title" />}
             footer={
               <Button purple onClick={this.secureWallet}>
-                Log in
+                <TranslatedText message="profileLogOut.button" />
               </Button>
             }
           >
-            <Text gray>Perhaps you want to login to see this content</Text>
+            <Text gray>
+              <TranslatedText message="profileLogOut.text" />
+            </Text>
           </Card>
         )}
       </div>
