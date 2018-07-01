@@ -4,6 +4,7 @@ import PTIGuideSvg from '../foundations/svgs/PTIGuideSvg'
 import Button from 'components/foundations/Button'
 import SVGIcon from 'components/foundations/SVGIcon'
 import Text from 'components/foundations/Text'
+import TranslatedText from 'components/translations/TranslatedText'
 import Card, { CardTitle } from 'components/structures/Card'
 
 type Props = {
@@ -128,12 +129,14 @@ class PTIGuide extends Component<Props, void> {
           <List page={this.state.page}>
             <Item active={this.state.page === 0}>
               <Header>
-                <CardTitle>What is PTI?</CardTitle>
+                <CardTitle>
+                  <TranslatedText message="ptiGuide.title" />
+                </CardTitle>
                 <Subtitle tiny>
                   <AlertIcon>
                     <SVGIcon color="purple" icon="icon-alert" />
                   </AlertIcon>
-                  Suggested reading before you upload any content
+                  <TranslatedText message="ptiGuide.description" />
                 </Subtitle>
               </Header>
               <Icon>
@@ -141,102 +144,81 @@ class PTIGuide extends Component<Props, void> {
               </Icon>
               <Content>
                 <ContentTitle big purple>
-                  Discover how to use your PTI
+                  <TranslatedText message="ptiGuide.callToAction" />
                 </ContentTitle>
               </Content>
             </Item>
             <Item active={this.state.page === 1}>
               <Header>
-                <CardTitle>PTI Guide</CardTitle>
+                <CardTitle>
+                  <TranslatedText message="ptiGuide.ptiGuide" />
+                </CardTitle>
               </Header>
               <Content>
                 <TextStrong>
-                  PTI is the native token of the Paratii open system. We call it
-                  a &ldquo;system&rdquo; because the network executes operations
-                  with PTI although nobody &ldquo;owns&rdquo; the machinery who
-                  does the job.
+                  <TranslatedText message="ptiGuide.steps.token.mainContent" />
                 </TextStrong>
                 <Text gray small>
-                  PTI tokens are issued, distributed and collected by smart
-                  contracts that live on the Ethereum blockchain. Every new
-                  registered user on Paratii earns some tokens to experiment
-                  with. They show up on the top right of this page (click that
-                  icon!) or in our embedded player, when one is watching through
-                  other sites. Let’s see what you can do with PTI?
+                  <TranslatedText message="ptiGuide.steps.token.subContent" />
                 </Text>
               </Content>
             </Item>
             <Item active={this.state.page === 2}>
               <Header>
-                <CardTitle>PTI Guide</CardTitle>
+                <CardTitle>
+                  <TranslatedText message="ptiGuide.ptiGuide" />
+                </CardTitle>
               </Header>
               <Content>
                 <TextStrong>
-                  The basic operation here is staking. Whenever you upload a
-                  video, 5 of your tokens will be automatically &ldquo;attached
-                  to it&rdquo;, as it enters the system. Think of it as a
-                  security deposit.
+                  <TranslatedText message="ptiGuide.steps.staking.mainContent" />
                 </TextStrong>
                 <Text gray small>
-                  At any time, you will be able to retrieve your tokens back,
-                  which also delists the video from this web portal and related
-                  interfaces. On the other hand, those who leave tokens staked
-                  are continuously granted rewards, issued through inflation,
-                  and can also earn profits if the playlists their videos belong
-                  to are performing well (these two functions are not live yet).
-                  So uploading content and staking are forms of active
-                  participation in this economy.
+                  <TranslatedText message="ptiGuide.steps.staking.subContent" />
                 </Text>
               </Content>
             </Item>
             <Item active={this.state.page === 3}>
               <Header>
-                <CardTitle>PTI Guide</CardTitle>
+                <CardTitle>
+                  <TranslatedText message="ptiGuide.ptiGuide" />
+                </CardTitle>
               </Header>
               <Content>
                 <TextStrong>
-                  Videos will be subject to “flags”. Flagging a video means
-                  matching its stake, by putting up an equivalent amount for
-                  challenge.
+                  <TranslatedText message="ptiGuide.steps.flagging.mainContent" />
                 </TextStrong>
                 <Text gray small>
-                  Any user can then go in favour or disfavour that video’s
-                  presence on the system. Videos collectively rejected lose
-                  their stakes - forfeited PTI go to voters in the challenge
-                  (people who flagged or disapproved) and to all people actively
-                  staking tokens in the system, at the moment. That means that
-                  keeping a well curated record of videos - one that keeps
-                  attracting creators and spitting out harmful content - can be
-                  a profitable activity to the system&apos;s participants.
+                  <TranslatedText message="ptiGuide.steps.flagging.subContent" />
                 </Text>
               </Content>
             </Item>
             <Item active={this.state.page === 4}>
               <Header>
-                <CardTitle>PTI Guide</CardTitle>
+                <CardTitle>
+                  <TranslatedText message="ptiGuide.ptiGuide" />
+                </CardTitle>
               </Header>
               <Content>
                 <TextStrong>
-                  Soon, PTI will also be usable for facilitating micro payments.
-                  Creators will have monetisation options to directly receive
-                  value from their audiences and/or advertisers.
+                  <TranslatedText message="ptiGuide.steps.conclusion.mainContent" />
                 </TextStrong>
                 <Text gray small>
-                  Most important for now is that you understand PTI as an entry
-                  ticket to take part in an economy that belongs to you as much
-                  as you are willing to belong to it. Tokens displayed here are
-                  in a test environment still, and have no monetary value. If
-                  you&apos;re willing to claim some extra test PTI, ask
-                  questions, or make suggestions about the token&apos;s feature
-                  set itself, don&apos;t hesitate to{' '}
-                  <Anchor
-                    anchor
-                    purple
-                    href="mailto:we@paratii.video"
-                    target="_blank"
-                  >
-                    get in touch.
-                  </Anchor>
+                  <TranslatedText
+                    message="ptiGuide.steps.conclusion.subContent_html"
+                    options={{
+                      getInTouchEmailLink: (
+                        <Anchor
+                          anchor
+                          purple
+                          href="mailto:we@paratii.video"
+                          target="_blank"
+                        >
+                          <TranslatedText message="ptiGuide.steps.conclusion.getInTouch" />
+                        </Anchor>
+                      )
+                    }}
+                  />
                 </Text>
               </Content>
             </Item>
