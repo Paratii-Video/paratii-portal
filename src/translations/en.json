@@ -69,7 +69,43 @@
     "dragFiles": "Drag your files here",
     "filesInstructions_html": "%{dragFiles} or click to find them",
     "supportedFileTypes": "(only .mp4 currently supported)",
-    "youtubeOrVimeo": "(Not working yet) Or upload from Youtube or Vimeo"
+    "youtubeOrVimeo": "(Not working yet) Or upload from Youtube or Vimeo",
+    "notifications": {
+      "starting": {
+        "title": "Be Patient!",
+        "description": "We are preparing your file."
+      },
+      "uploadError": {
+        "title": "Upload Error",
+        "description": "Something went wrong with your file. We are so sorry. Please retry?"
+      },
+      "uploaded": {
+        "title": "File uploaded",
+        "description": "Now we need to transcode your pixels"
+      },
+      "transcodeError": {
+        "title": "Trascoder Error",
+        "description": "The machines are not cooperating. Please refresh?"
+      },
+      "transcoding": {
+        "title": "Transcoding",
+        "description": "The transcoding has started"
+      },
+      "transcoded": {
+        "title": "Transcoder done",
+        "description": "Your video is ready to be published!"
+      },
+      "saving": {
+        "title": "We are saving your data"
+      },
+      "saved": {
+        "title": "Saved",
+        "description": "Data saved!!"
+      },
+      "saveError": {
+        "title": "Saving Error"
+      }
+    }
   },
   "userNav": {
     "dataLabel": "Since",
@@ -193,6 +229,33 @@
         "subContent_html": "Most important for now is that you understand PTI as an entry ticket to take part in an economy that belongs to you as much as you are willing to belong to it. Tokens displayed here are in a test environment still, and have no monetary value. If you're willing to claim some extra test PTI, ask questions, or make suggestions about the token's feature set itself, don't hesitate to %{getInTouchEmailLink}.",
         "getInTouch": "get in touch"
       }
+    }
+  },
+  "uploadListItem": {
+    "statusMessage": {
+      "needsTitle": "Please provide a title and description",
+      "videoReady": "Your video is ready",
+      "uploadFailed": "Your video could not be uploaded",
+      "transcodeFailed": "Your video could not be transcoded",
+      "transcoding": "Transcoding your video",
+      "uploading": "Uploading your video"
+    },
+    "title": "Title",
+    "description": "Description",
+    "ownership": "Is this video really yours?",
+    "videoId": "Video Id",
+    "contentType": {
+      "title": "What kind of content?",
+      "free": "Free",
+      "paid": "Paid (not available yet)"
+    },
+    "publish": "Publish",
+    "termsOfService": "By clicking on the \"Publish\" button you acknowledge that you agree to Paratii’s Terms of Service and Community Guidelines. Please be sure not to violate others’ copyright or privacy rights.",
+    "save": "Save",
+    "noVideo": "No video selected!",
+    "insufficientBalance": {
+      "title": "Not enough tokens",
+      "description": "You need at least %{amount} PTI to stake."
     }
   }
 }

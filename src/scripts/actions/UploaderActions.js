@@ -1,6 +1,9 @@
 /* @flow */
 
+import React from 'react'
 import { createAction } from 'redux-actions'
+import Notifications from 'react-notification-system-redux'
+
 import paratii from 'utils/ParatiiLib'
 
 import {
@@ -19,10 +22,10 @@ import {
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import { videoFetchSuccess } from 'actions/VideoActions'
-import type { Dispatch } from 'redux'
-import type { RootState } from 'types/ApplicationTypes'
+import TranslatedText from 'components/translations/TranslatedText'
 
-import Notifications from 'react-notification-system-redux'
+import type { RootState } from 'types/ApplicationTypes'
+import type { Dispatch } from 'redux'
 
 export const selectVideoToPublish = createAction(UPLOAD_VIDEO_SELECT)
 const uploadRequested = createAction(UPLOAD_REQUESTED)
@@ -61,8 +64,10 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
   console.log('STARTING FILE UPLOAD')
   dispatch(
     Notifications.success({
-      title: 'Be Patient!',
-      message: 'We are preparing your file.'
+      title: <TranslatedText message="uploader.notifications.starting.title" />,
+      message: (
+        <TranslatedText message="uploader.notifications.starting.description" />
+      )
     })
   )
   // create a new Id if none was given
@@ -85,21 +90,18 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
     console.log('[UPLOAD error]', error)
     dispatch(
       Notifications.error({
-        title: 'Upload Error',
-        message:
-          'Something went wrong with your file. We are so sorry. Please retry?',
+        title: (
+          <TranslatedText message="uploader.notifications.uploadError.title" />
+        ),
+        message: (
+          <TranslatedText message="uploader.notifications.uploadError.description" />
+        ),
         autoDismiss: 0
       })
     )
     throw error
   })
   uploader.on('done', function (files) {
-    dispatch(
-      Notifications.success({
-        title: "File's uploaded",
-        message: 'Now we need to transcode your pixels'
-      })
-    )
     const file = files[0]
     upsertVideo(
       videoId,
@@ -121,8 +123,12 @@ export const uploadAndTranscode = (file: Object, videoId: string) => (
   uploader.on('local:fileReady', function (file) {
     dispatch(
       Notifications.success({
-        title: 'File uploaded',
-        message: 'Now we need to transcode your pixels'
+        title: (
+          <TranslatedText message="uploader.notifications.uploaded.title" />
+        ),
+        message: (
+          <TranslatedText message="uploader.notifications.uploaded.description" />
+        )
       })
     )
     dispatch(
@@ -153,8 +159,12 @@ const _handleTrancoderEvents = (transcoder, videoId, dispatch, getState) => {
     console.log('TRANSCODER ERROR', error)
     dispatch(
       Notifications.error({
-        title: 'Transcoder Error',
-        message: 'The machines are not cooperating. Can you refresh?',
+        title: (
+          <TranslatedText message="uploader.notifications.transcodeError.title" />
+        ),
+        message: (
+          <TranslatedText message="uploader.notifications.transcodeError.description" />
+        ),
         autoDismiss: 0
       })
     )
@@ -172,8 +182,12 @@ const _handleTrancoderEvents = (transcoder, videoId, dispatch, getState) => {
     console.log('TRANSCODER STARTED', hash, author)
     dispatch(
       Notifications.success({
-        title: 'Transcoding',
-        message: 'The transcoding has started.'
+        title: (
+          <TranslatedText message="uploader.notifications.transcoding.title" />
+        ),
+        message: (
+          <TranslatedText message="uploader.notifications.transcoding.description" />
+        )
       })
     )
   })
@@ -192,8 +206,12 @@ const _handleTrancoderEvents = (transcoder, videoId, dispatch, getState) => {
     // if transcoding is done, apparently we have uploaded the file first
     dispatch(
       Notifications.success({
-        title: 'Transcoder done',
-        message: 'Your video is ready to be published!'
+        title: (
+          <TranslatedText message="uploader.notifications.transcoded.title" />
+        ),
+        message: (
+          <TranslatedText message="uploader.notifications.transcoded.description" />
+        )
       })
     )
     dispatch(uploadRemoteSuccess({ id: videoId, hash: hash }))
@@ -237,7 +255,7 @@ export const saveVideoInfo = (videoInfo: Object) => async (
   // the owner is the user that is logged in
   dispatch(
     Notifications.warning({
-      title: 'We are saving your data.'
+      title: <TranslatedText message="uploader.notifications.saving.title" />
     })
   )
 
@@ -256,15 +274,21 @@ export const saveVideoInfo = (videoInfo: Object) => async (
       dispatch(videoDataSaved(videoInfo))
       dispatch(
         Notifications.success({
-          title: 'Saved',
-          message: 'Data saved!!'
+          title: (
+            <TranslatedText message="uploader.notifications.saved.title" />
+          ),
+          message: (
+            <TranslatedText message="uploader.notifications.saved.description" />
+          )
         })
       )
     })
     .catch(error => {
       dispatch(
         Notifications.error({
-          title: 'Saving Error',
+          title: (
+            <TranslatedText message="uploader.notifications.saveError.title" />
+          ),
           message: error.message,
           autoDismiss: 0
         })
