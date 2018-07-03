@@ -3,6 +3,7 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
 
+import ParatiiLib from 'utils/ParatiiLib'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import { TIPPING_PTI_AMOUNTS } from 'constants/TippingConstants'
@@ -67,7 +68,10 @@ class ChooseAmountToTipStep extends React.Component<Props> {
             <TipAmounts>
               {TIPPING_PTI_AMOUNTS.map((amount: number) => (
                 <TipAmountButton
-                  disabled={this.props.ptiBalance < `${amount}`}
+                  disabled={
+                    this.props.ptiBalance <
+                    ParatiiLib.eth.web3.utils.fromWei(`${amount}`)
+                  }
                   key={amount}
                   amount={amount}
                   onClick={() => {

@@ -2,13 +2,14 @@
 
 import { createSelector } from 'reselect'
 import { Map } from 'immutable'
+import ParatiiLib from 'utils/ParatiiLib'
 
 import {
   getDoNotTipVideoIds,
   getPlayerTotalTimeViewedSeconds
 } from 'selectors/index'
 import { getPlayingVideo } from 'selectors/PlayerSelectors'
-import { getFormattedPtiBalance } from 'selectors/UserSelectors'
+import { getPtiBalance } from 'selectors/UserSelectors'
 
 import Video from 'records/VideoRecords'
 
@@ -29,8 +30,9 @@ const getSortedTippingAmounts: (
 )
 
 const userHasEnoughPtiToTip: (state: RootState) => boolean = createSelector(
-  [getSortedTippingAmounts, getFormattedPtiBalance],
-  (amounts: Array<number>, ptiBalance: string) => `${amounts[0]}` <= ptiBalance
+  [getSortedTippingAmounts, getPtiBalance],
+  (amounts: Array<number>, ptiBalance: string) =>
+    `${amounts[0]}` <= ParatiiLib.eth.web3.utils.fromWei(ptiBalance)
 )
 
 export const askForTip: (state: RootState) => boolean = createSelector(
