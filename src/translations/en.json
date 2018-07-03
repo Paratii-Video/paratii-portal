@@ -69,7 +69,43 @@
     "dragFiles": "Drag your files here",
     "filesInstructions_html": "%{dragFiles} or click to find them",
     "supportedFileTypes": "(only .mp4 currently supported)",
-    "youtubeOrVimeo": "(Not working yet) Or upload from Youtube or Vimeo"
+    "youtubeOrVimeo": "(Not working yet) Or upload from Youtube or Vimeo",
+    "notifications": {
+      "starting": {
+        "title": "Be Patient!",
+        "description": "We are preparing your file."
+      },
+      "uploadError": {
+        "title": "Upload Error",
+        "description": "Something went wrong with your file. We are so sorry. Please retry?"
+      },
+      "uploaded": {
+        "title": "File uploaded",
+        "description": "Now we need to transcode your pixels"
+      },
+      "transcodeError": {
+        "title": "Trascoder Error",
+        "description": "The machines are not cooperating. Please refresh?"
+      },
+      "transcoding": {
+        "title": "Transcoding",
+        "description": "The transcoding has started"
+      },
+      "transcoded": {
+        "title": "Transcoder done",
+        "description": "Your video is ready to be published!"
+      },
+      "saving": {
+        "title": "We are saving your data"
+      },
+      "saved": {
+        "title": "Saved",
+        "description": "Data saved!!"
+      },
+      "saveError": {
+        "title": "Saving Error"
+      }
+    }
   },
   "userNav": {
     "dataLabel": "Since",
@@ -169,6 +205,58 @@
       },
       "goBack": "Back",
       "continue": "Continue"
+    }
+  },
+  "ptiGuide": {
+    "title": "What is PTI?",
+    "description": "Suggested reading before you upload any content",
+    "callToAction": "Discover how to use your PTI",
+    "ptiGuide": "PTI Guide",
+    "steps": {
+      "token": {
+        "mainContent": "PTI is the native token of the Paratii open system. We call it a \"system\" because the network executes operations with PTI although nobody \"owns\" the machinery who does the job.",
+        "subContent": "PTI tokens are issued, distributed and collected by smart contracts that live on the Ethereum blockchain. Every new registered user on Paratii earns some tokens to experiment with. They show up on the top right of this page (click that icon!) or in our embedded player, when one is watching through other sites. Let's see what you can do with PTI?"
+      },
+      "staking": {
+        "mainContent": "The basic operation here is staking. Whenever you upload a video, 5 of your tokens will be automatically \"attached to it\", as it enters the system. Think of it as a security deposit.",
+        "subContent": "At any time, you will be able to retrieve your tokens back, which also delists the video from this web portal and related interfaces. On the other hand, those who leave tokens staked are continuously granted rewards, issued through inflation, and can also earn profits if the playlists their videos belong to are performing well (these two functions are not live yet). So uploading content and staking are forms of active participation in this economy."
+      },
+      "flagging": {
+        "mainContent": "Videos will be subject to \"flags\". Flagging a video means matching its stake, by putting up an equivalent amount for challenge.",
+        "subContent": "Any user can then go in favour or disfavour that video’s presence on the system. Videos collectively rejected lose their stakes - forfeited PTI go to voters in the challenge (people who flagged or disapproved) and to all people actively staking tokens in the system, at the moment. That means that keeping a well curated record of videos - one that keeps attracting creators and spitting out harmful content - can be a profitable activity to the system's participants."
+      },
+      "conclusion": {
+        "mainContent": "Soon, PTI will also be usable for facilitating micro payments. Creators will have monetisation options to directly receive value from their audiences and/or advertisers.",
+        "subContent_html": "Most important for now is that you understand PTI as an entry ticket to take part in an economy that belongs to you as much as you are willing to belong to it. Tokens displayed here are in a test environment still, and have no monetary value. If you're willing to claim some extra test PTI, ask questions, or make suggestions about the token's feature set itself, don't hesitate to %{getInTouchEmailLink}.",
+        "getInTouch": "get in touch"
+      }
+    }
+  },
+  "uploadListItem": {
+    "statusMessage": {
+      "needsTitle": "Please provide a title and description",
+      "videoReady": "Your video is ready",
+      "uploadFailed": "Your video could not be uploaded",
+      "transcodeFailed": "Your video could not be transcoded",
+      "transcoding": "Transcoding your video",
+      "uploading": "Uploading your video"
+    },
+    "title": "Title",
+    "description": "Description",
+    "ownership": "Is this video really yours?",
+    "videoId": "Video Id",
+    "contentType": {
+      "title": "What kind of content?",
+      "free": "Free",
+      "paid": "Paid (not available yet)"
+    },
+    "publish": "Publish",
+    "termsOfService": "By clicking on the \"Publish\" button you acknowledge that you agree to Paratii’s Terms of Service and Community Guidelines. Please be sure not to violate others’ copyright or privacy rights.",
+    "save": "Save",
+    "noVideo": "No video selected!",
+    "insufficientBalance": {
+      "title": "Not enough tokens",
+      "description": "You need at least %{amount} PTI to stake."
     }
   }
 }
