@@ -96,6 +96,7 @@ class TipOverlay extends React.Component<Props, State> {
         currentStep: TIPPING_UI_STEPS.TIP_COMPLETE
       })
       this.props.addDoNotTipVideo(this.props.video.get('id'))
+      this.props.loadBalances()
     } catch (e) {
       this.props.notification(
         {
