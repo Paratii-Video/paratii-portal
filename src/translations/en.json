@@ -194,5 +194,32 @@
         "getInTouch": "get in touch"
       }
     }
+  },
+  "uploadListItem": {
+    "statusMessage": {
+      "needsTitle": "Please provide a title and description",
+      "videoReady": "Your video is ready",
+      "uploadFailed": "Your video could not be uploaded",
+      "transcodeFailed": "Your video could not be transcoded",
+      "transcoding": "Transcoding your video",
+      "uploading": "Uploading your video"
+    },
+    "title": "Title",
+    "description": "Description",
+    "ownership": "Is this video really yours?",
+    "videoId": "Video Id",
+    "contentType": {
+      "title": "What kind of content?",
+      "free": "Free",
+      "paid": "Paid (not available yet)"
+    },
+    "publish": "Publish",
+    "termsOfService": "By clicking on the \"Publish\" button you acknowledge that you agree to Paratii’s Terms of Service and Community Guidelines. Please be sure not to violate others’ copyright or privacy rights.",
+    "save": "Save",
+    "noVideo": "No video selected!",
+    "insufficientBalance": {
+      "title": "Not enough tokens",
+      "description": "You need at least %{amount} PTI to stake."
+    }
   }
 }
