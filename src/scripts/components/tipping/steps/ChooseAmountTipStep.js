@@ -67,9 +67,7 @@ class ChooseAmountToTipStep extends React.Component<Props> {
             <TipAmounts>
               {TIPPING_PTI_AMOUNTS.map((amount: number) => (
                 <TipAmountButton
-                  disabled={
-                    amount !== 10 && this.props.ptiBalance < `${amount}`
-                  }
+                  disabled={this.props.ptiBalance < `${amount}`}
                   key={amount}
                   amount={amount}
                   onClick={() => {
