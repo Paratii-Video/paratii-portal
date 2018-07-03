@@ -45,6 +45,7 @@ const PasswordError = styled.div`
 
 const ContinueButton = styled(Button)`
   align-self: baseline;
+  font-size: ${({ big }) => (big ? '20px' : undefined)};
   justify-self: 'flex-end';
   margin: ${({ centered }) => (centered ? 'auto' : undefined)};
 `
@@ -130,6 +131,7 @@ class ConfirmTipStep extends React.Component<Props, State> {
               </PasswordError>
             )}
             <ContinueButton
+              big={!this.showPasswordInput()}
               centered={!this.showPasswordInput()}
               white
               form={FORM_ID}
