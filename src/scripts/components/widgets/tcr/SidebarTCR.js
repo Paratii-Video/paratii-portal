@@ -52,7 +52,8 @@ class SidebarTCR extends Component<Props, void> {
           </div>
         )}
 
-        {endVote && (
+        {!whiteListed &&
+          endVote && (
           <div>
             <Voting />
             {videoApproved ? <VideoApproved /> : <VideoRejected />}
