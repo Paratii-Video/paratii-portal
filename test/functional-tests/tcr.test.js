@@ -29,15 +29,6 @@ describe('TCR:', function () {
       ipfsHash: IPFS_HASH
     })
 
-    // Get address from browser and send it som PTI
-    const userAddress = browser.execute(function () {
-      console.log(window.paratii.getAccount())
-      return window.paratii.getAccount()
-    }).value
-    const value = paratii.eth.web3.utils.toWei('1000')
-    await paratii.eth.transfer(userAddress, value, 'PTI')
-    console.log(userAddress)
-
     const stakeAmount = 5
     const stakeAmountWei = paratii.eth.web3.utils.toWei(String(stakeAmount))
     // Publish the video
@@ -59,9 +50,18 @@ describe('TCR:', function () {
     await browser.url(`http://localhost:8080/play/${ID}`)
     // Login
     // Click on login and insert the password
-    await browser.waitAndClick('[data-test-id="login-signup"]')
-    await browser.waitAndClick('[name="wallet-password"]')
+    await browser.waitAndClick('[data-test-id="login-signup"]', 5000)
+    await browser.waitAndClick('[name="wallet-password"]', 5000)
     await browser.setValue('[name="wallet-password"]', password)
     await browser.waitAndClick('[data-test-id="continue"]')
+
+    // Get address from browser and send it som PTI
+    const userAddress = browser.execute(function () {
+      console.log(window.paratii.eth.getAccount())
+      return window.paratii.eth.getAccount()
+    }).value
+    const value = paratii.eth.web3.utils.toWei('1000')
+    await paratii.eth.transfer(userAddress, value, 'PTI')
+    console.log(userAddress)
   })
 })
