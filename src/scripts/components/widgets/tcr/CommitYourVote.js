@@ -1,14 +1,18 @@
 /* @flow */
 /* stylelint-disable */
-import paratii from 'utils/ParatiiLib'
+// import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import ButtonColor from 'components/foundations/Button'
 import Text from 'components/foundations/Text'
 import { CardStyle } from 'components/structures/Card'
+import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
-  videoId: string
+  videoId: string,
+  isWalletSecured: boolean,
+  openModal: string => void,
+  checkUserWallet: () => void
 }
 const INFOSTATUS_CARD_MARGIN_BOTTOM: string = '15px'
 
@@ -47,12 +51,19 @@ class CommitYourVote extends Component<Props, void> {
   }
 
   async voteVideo (vote: number) {
-    const amountInWei = paratii.eth.web3.utils.toWei('10')
-    await paratii.eth.tcr.approveAndGetRightsAndCommitVote(
-      this.props.videoId,
-      vote,
-      amountInWei
-    )
+    if (this.props.isWalletSecured) {
+      this.props.openModal(MODAL.VOTE)
+      // paratii.eth.tcr.approveAndStartChallenge(this.props.videoId)
+    } else {
+      // If wallet not secure open the modal for signup / login
+      this.props.checkUserWallet()
+    }
+    // const amountInWei = paratii.eth.web3.utils.toWei('10')
+    // await paratii.eth.tcr.approveAndGetRightsAndCommitVote(
+    //   this.props.videoId,
+    //   vote,
+    //   amountInWei
+    // )
   }
 
   render () {

@@ -1,13 +1,17 @@
 /* @flow */
 import React, { Component } from 'react'
-import paratii from 'utils/ParatiiLib'
+// import paratii from 'utils/ParatiiLib'
 import styled from 'styled-components'
 import ButtonColor from 'components/foundations/Button'
 import Text, { Strong } from 'components/foundations/Text'
 import { CardStyle } from 'components/structures/Card'
+import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
-  videoId: string
+  videoId: string,
+  isWalletSecured: boolean,
+  openModal: string => void,
+  checkUserWallet: () => void
 }
 const INFOSTATUS_CARD_MARGIN_BOTTOM: string = '15px'
 
@@ -36,7 +40,13 @@ class WhiteListed extends Component<Props, void> {
   }
 
   challengeVideo () {
-    paratii.eth.tcr.approveAndStartChallenge(this.props.videoId)
+    if (this.props.isWalletSecured) {
+      this.props.openModal(MODAL.CHALLENGE)
+      // paratii.eth.tcr.approveAndStartChallenge(this.props.videoId)
+    } else {
+      // If wallet not secure open the modal for signup / login
+      this.props.checkUserWallet()
+    }
   }
 
   render () {
