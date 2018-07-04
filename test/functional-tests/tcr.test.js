@@ -33,9 +33,9 @@ describe('TCR:', function () {
     await browser.url(`http://localhost:8080/play/${ID}`)
     // Login
     // Click on login and insert the password
-    browser.waitAndClick('[data-test-id="login-signup"]')
-    browser.waitAndClick('[name="wallet-password"]')
-    browser.setValue('[name="wallet-password"]', password)
-    browser.waitAndClick('[data-test-id="continue"]')
+    await browser.waitAndClick('[data-test-id="login-signup"]')
+    await browser.waitAndClick('[name="wallet-password"]')
+    await browser.setValue('[name="wallet-password"]', password)
+    await browser.waitAndClick('[data-test-id="continue"]')
   })
 })
