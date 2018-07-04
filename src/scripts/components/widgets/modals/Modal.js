@@ -14,6 +14,8 @@ import ModalShowSeed from 'containers/widgets/modals/ModalShowSeedContainer'
 import ModalProfile from 'containers/widgets/modals/ModalProfileContainer'
 import ModalRewriteSeed from 'containers/widgets/modals/ModalRewriteSeedContainer'
 import ModalRestoreAccount from 'containers/widgets/modals/ModalRestoreAccountContainer'
+import ModalChallenge from 'containers/widgets/modals/ModalChallengeContainer'
+import ModalVote from 'containers/widgets/modals/ModalVoteContainer'
 
 import { MODAL } from 'constants/ModalConstants'
 
@@ -152,6 +154,10 @@ class Modal extends Component<Props, void> {
         return '490px'
       case MODAL.PROFILE:
         return '900px'
+      case MODAL.CHALLENGE:
+        return '490px'
+      case MODAL.VOTE:
+        return '490px'
       default:
         return '490px'
     }
@@ -203,6 +209,12 @@ class Modal extends Component<Props, void> {
         break
       case MODAL.RESTORE_ACCOUNT:
         ModalComponent = ModalRestoreAccount
+        break
+      case MODAL.CHALLENGE:
+        ModalComponent = ModalChallenge
+        break
+      case MODAL.VOTE:
+        ModalComponent = ModalVote
         break
     }
 

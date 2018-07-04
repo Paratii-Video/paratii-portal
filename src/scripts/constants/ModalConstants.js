@@ -13,5 +13,7 @@ export const MODAL: Object = {
   GREAT_POWER: makeModalConstant('GreatPower'),
   SET_PIN: makeModalConstant('SetPin'),
   SHOW_SEED: makeModalConstant('ShowSeed'),
-  STAKE: makeModalConstant('Stake')
+  STAKE: makeModalConstant('Stake'),
+  CHALLENGE: makeModalConstant('Challenge'),
+  VOTE: makeModalConstant('Vote')
 }
