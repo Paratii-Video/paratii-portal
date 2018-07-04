@@ -5,8 +5,8 @@ import styled from 'styled-components'
 import Text, { Strong } from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import UserRecord from 'records/UserRecords'
+import { MIN_VOTE_PTI } from 'constants/TCRConstants'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
-import { MIN_VOTE_PTI } from 'constants/TCRconstants'
 
 type Props = {
   id: string,

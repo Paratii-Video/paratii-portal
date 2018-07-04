@@ -1,6 +1,11 @@
 import chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
-import { paratii, address, password } from './test-utils/helpers'
+import {
+  paratii,
+  address,
+  password,
+  getAccountFromBrowser
+} from './test-utils/helpers'
 import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
 // declare var browser: Object
 
@@ -56,12 +61,8 @@ describe('TCR:', function () {
     await browser.waitAndClick('[data-test-id="continue"]')
 
     // Get address from browser and send it som PTI
-    const userAddress = browser.execute(function () {
-      console.log(window.paratii.eth.getAccount())
-      return window.paratii.eth.getAccount()
-    }).value
+    const userAddress = await getAccountFromBrowser()
     const value = paratii.eth.web3.utils.toWei('1000')
     await paratii.eth.transfer(userAddress, value, 'PTI')
-    console.log(userAddress)
   })
 })
