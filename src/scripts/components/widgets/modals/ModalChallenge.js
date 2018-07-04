@@ -2,7 +2,7 @@
 import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Text from 'components/foundations/Text'
+import Text, { Strong } from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import UserRecord from 'records/UserRecords'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
@@ -13,9 +13,8 @@ type Props = {
   description: string,
   author: string,
   user: UserRecord,
+  selectedVideoId: string,
   closeModal: () => void,
-  saveVideoStaked: Object => Object,
-  selectedVideo: Object => Object,
   notification: (Object, string) => void,
   loadBalances: () => void
 }
@@ -54,73 +53,24 @@ class ModalChallenge extends Component<Props, Object> {
       errorMessage: false,
       agreedTOC: false, // TODO,
       stakeAmount: 0,
-      isStaking: false
+      isChallenging: false
     }
     this.onSubmit = this.onSubmit.bind(this)
     this.disableButton = this.disableButton.bind(this)
   }
 
   disableButton = () => {
-    return this.state.isStaking
+    return this.state.isChallenging
   }
 
-  onSubmit (event: Object) {
-    const { loadBalances } = this.props
+  async onSubmit (event: Object) {
     event.preventDefault()
-    this.props.notification({ title: 'Processing...' }, 'warning')
-    const stakeAmount = this.state.stakeAmount
-    const stakeAmountWei = paratii.eth.web3.utils.toWei(String(stakeAmount))
-    const videoIdStaked = this.props.selectedVideo.id
+    this.props.notification({ title: 'Processing the challenge...' }, 'warning')
+    await paratii.eth.tcr.approveAndStartChallenge(this.props.selectedVideoId)
 
     this.setState({
-      isStaking: true
+      isChallenging: true
     })
-
-    paratii.eth.tcrPlaceholder
-      .checkEligiblityAndApply(videoIdStaked, stakeAmountWei)
-      .then(resp => {
-        if (resp && resp === true) {
-          this.setState({
-            errorMessage: false
-          })
-          const videoToSave = {
-            id: videoIdStaked,
-            deposit: stakeAmountWei
-          }
-          this.props.saveVideoStaked(videoToSave)
-
-          this.props.closeModal()
-          console.log(
-            `video ${videoIdStaked} successfully applied to TCR Listing`
-          )
-          this.props.notification(
-            {
-              title: 'Stake well done',
-              message: `You have staked ${stakeAmount} PTI.`
-            },
-            'success'
-          )
-          loadBalances()
-        } else {
-          const msg =
-            'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
-          this.setState({
-            errorMessage: msg,
-            isStaking: false
-          })
-          console.log(msg)
-        }
-      })
-      .catch(e => {
-        if (e) {
-          const msg = String(e)
-          this.setState({
-            errorMessage: msg,
-            isStaking: false
-          })
-          console.log(msg)
-        }
-      })
   }
 
   async componentDidMount () {
@@ -147,11 +97,11 @@ class ModalChallenge extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Stake {minDeposit} PTI</Title>
+          <Title>Challenge this video</Title>
           <Highlight>
-            By publishing this video you agree to make a stake deposit of{' '}
-            {minDeposit} PTI. The tokens still belong to you, and can be
-            retrieved, along with the video, at any time.
+            By challenging this video you agree to make a stake deposit of{' '}
+            <Strong purple>{minDeposit} PTI</Strong>. This will trigger the{' '}
+            <strong>voting period</strong>.
           </Highlight>
           {!balanceIsTooLow ? (
             <MainText small gray>
@@ -172,8 +122,9 @@ class ModalChallenge extends Component<Props, Object> {
           )}
           {balanceIsTooLow ? (
             <MainText pink>
-              Your balance is too low: you need to stake at least {minDeposit}{' '}
-              PTI, but you only have {balanceInPTI}. Have no voucher?{' '}
+              Your balance is too low: to challenge this video you need at least{' '}
+              {minDeposit} PTI, but you only have {balanceInPTI}. Have no
+              voucher?{' '}
               <Anchor
                 href="mailto:we@paratii.video"
                 target="_blank"
@@ -193,7 +144,7 @@ class ModalChallenge extends Component<Props, Object> {
                 disabled={this.disableButton()}
                 data-test-id="button-stake"
               >
-                Continue
+                Challenge
               </Button>
             </Footer>
           )}

@@ -42,7 +42,6 @@ class WhiteListed extends Component<Props, void> {
   challengeVideo () {
     if (this.props.isWalletSecured) {
       this.props.openModal(MODAL.CHALLENGE)
-      // paratii.eth.tcr.approveAndStartChallenge(this.props.videoId)
     } else {
       // If wallet not secure open the modal for signup / login
       this.props.checkUserWallet()

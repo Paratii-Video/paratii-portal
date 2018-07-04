@@ -2,10 +2,11 @@
 import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Text from 'components/foundations/Text'
+import Text, { Strong } from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import UserRecord from 'records/UserRecords'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
+import { MIN_VOTE_PTI } from 'constants/TCRconstants'
 
 type Props = {
   id: string,
@@ -13,9 +14,9 @@ type Props = {
   description: string,
   author: string,
   user: UserRecord,
+  selectedVideoId: string,
   closeModal: () => void,
   saveVideoStaked: Object => Object,
-  selectedVideo: Object => Object,
   notification: (Object, string) => void,
   loadBalances: () => void
 }
@@ -54,73 +55,31 @@ class ModalVote extends Component<Props, Object> {
       errorMessage: false,
       agreedTOC: false, // TODO,
       stakeAmount: 0,
-      isStaking: false
+      isVoting: false
     }
     this.onSubmit = this.onSubmit.bind(this)
     this.disableButton = this.disableButton.bind(this)
   }
 
   disableButton = () => {
-    return this.state.isStaking
+    return this.state.isVoting
   }
 
-  onSubmit (event: Object) {
-    const { loadBalances } = this.props
+  async onSubmit (event: Object) {
+    // FIXME We need to get thsi value from redux
+    const vote = 1
     event.preventDefault()
-    this.props.notification({ title: 'Processing...' }, 'warning')
-    const stakeAmount = this.state.stakeAmount
-    const stakeAmountWei = paratii.eth.web3.utils.toWei(String(stakeAmount))
-    const videoIdStaked = this.props.selectedVideo.id
+    this.props.notification({ title: 'Processing your vote...' }, 'warning')
+    const amountInWei = paratii.eth.web3.utils.toWei(MIN_VOTE_PTI)
+    await paratii.eth.tcr.approveAndGetRightsAndCommitVote(
+      this.props.selectedVideoId,
+      vote,
+      amountInWei
+    )
 
     this.setState({
-      isStaking: true
+      isVoting: true
     })
-
-    paratii.eth.tcrPlaceholder
-      .checkEligiblityAndApply(videoIdStaked, stakeAmountWei)
-      .then(resp => {
-        if (resp && resp === true) {
-          this.setState({
-            errorMessage: false
-          })
-          const videoToSave = {
-            id: videoIdStaked,
-            deposit: stakeAmountWei
-          }
-          this.props.saveVideoStaked(videoToSave)
-
-          this.props.closeModal()
-          console.log(
-            `video ${videoIdStaked} successfully applied to TCR Listing`
-          )
-          this.props.notification(
-            {
-              title: 'Stake well done',
-              message: `You have staked ${stakeAmount} PTI.`
-            },
-            'success'
-          )
-          loadBalances()
-        } else {
-          const msg =
-            'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
-          this.setState({
-            errorMessage: msg,
-            isStaking: false
-          })
-          console.log(msg)
-        }
-      })
-      .catch(e => {
-        if (e) {
-          const msg = String(e)
-          this.setState({
-            errorMessage: msg,
-            isStaking: false
-          })
-          console.log(msg)
-        }
-      })
   }
 
   async componentDidMount () {
@@ -142,16 +101,15 @@ class ModalVote extends Component<Props, Object> {
   render () {
     const balanceInWei = this.props.user.balances.PTI
     const balanceInPTI = paratii.eth.web3.utils.fromWei(String(balanceInWei))
-    const minDeposit = this.state.stakeAmount
-    const balanceIsTooLow = Number(balanceInPTI) < Number(minDeposit)
+    const balanceIsTooLow = Number(balanceInPTI) < Number(MIN_VOTE_PTI)
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Stake {minDeposit} PTI</Title>
+          <Title>Vote this video</Title>
           <Highlight>
-            By publishing this video you agree to make a stake deposit of{' '}
-            {minDeposit} PTI. The tokens still belong to you, and can be
-            retrieved, along with the video, at any time.
+            By voting to support/oppose this video you agree to make a stake
+            deposit of <Strong purple>{MIN_VOTE_PTI} PTI</Strong>. This will
+            trigger the voting period.
           </Highlight>
           {!balanceIsTooLow ? (
             <MainText small gray>
@@ -172,7 +130,7 @@ class ModalVote extends Component<Props, Object> {
           )}
           {balanceIsTooLow ? (
             <MainText pink>
-              Your balance is too low: you need to stake at least {minDeposit}{' '}
+              Your balance is too low: you need to stake at least {MIN_VOTE_PTI}{' '}
               PTI, but you only have {balanceInPTI}. Have no voucher?{' '}
               <Anchor
                 href="mailto:we@paratii.video"
