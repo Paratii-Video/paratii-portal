@@ -7,6 +7,7 @@ import Blockies from 'react-blockies'
 import User from 'records/UserRecords'
 import { getName } from 'operators/UserOperators'
 import {
+  BORDER_RADIUS,
   USERNAV_WIDTH,
   MAINHEADER_LOGO_HEIGHT,
   MAINFOOTER_HEIGHT,
@@ -78,6 +79,7 @@ const UserPTIValue = styled.div`
 const UserPTIValueBox = styled.div`
   align-items: center;
   background-color: ${props => props.theme.colors.UserNav.UserPTIValueBox};
+  border-radius: ${BORDER_RADIUS};
   display: flex;
   flex-direction: column;
   justify-content: center;
