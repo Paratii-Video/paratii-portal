@@ -3,12 +3,12 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-
+import { MEDIAQUERY_BREAKPOINT } from 'constants/UIConstants'
+import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
 import Button, { ButtonColor } from 'components/foundations/Button'
 import Hidden from 'components/foundations/Hidden'
 import TranslatedText from 'components/translations/TranslatedText'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
-import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
 
 type Props = {
   isWalletSecured: boolean,
@@ -24,7 +24,7 @@ const NavList = styled.ul`
   display: flex;
   align-items: center;
 
-  @media (max-width: 768px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-start;
@@ -34,7 +34,7 @@ const NavList = styled.ul`
 const NavItem = styled.li`
   padding-left: 45px;
 
-  @media (max-width: 768px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     padding: 20px 0;
   }
 `
