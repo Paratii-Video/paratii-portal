@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
+import SingleCardWrapper from '../foundations/SingleCardWrapper'
 import RedeemVoucher from 'containers/RedeemVoucherContainer'
 
 class Voucher extends Component {
   render () {
-    return <RedeemVoucher />
+    return (
+      <SingleCardWrapper>
+        <RedeemVoucher maxWidth />
+      </SingleCardWrapper>
+    )
   }
 }
 

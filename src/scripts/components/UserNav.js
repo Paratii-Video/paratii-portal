@@ -10,6 +10,7 @@ import {
   USERNAV_WIDTH,
   MAINHEADER_LOGO_HEIGHT,
   MAINFOOTER_HEIGHT,
+  MEDIAQUERY_BREAKPOINT,
   Z_INDEX_USERNAV
 } from '../constants/UIConstants'
 import { Link } from 'react-router-dom'
@@ -44,7 +45,7 @@ const Wrapper = styled.div`
   width: ${USERNAV_WIDTH};
   z-index: ${Z_INDEX_USERNAV};
 
-  @media (max-width: 768px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     transform: translate3d(${({ show }) => (show ? 0 : '-100%')}, 0, 0);
   }
 `

@@ -91,7 +91,6 @@ const IconPlay = styled.span`
   z-index: ${ZINDEX_MYVIDEOSITEM_PLAY};
   ${MyVideoItemLink}:hover & {
     transform: scale(1);
-    transition-duration: 0.65s;
     transition-delay: 0.2s;
   }
 `

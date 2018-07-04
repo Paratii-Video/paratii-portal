@@ -1,12 +1,12 @@
 import { Map } from 'immutable'
 
 import React, { Component } from 'react'
-
-import { CardContainer } from 'components/structures/Card'
+import styled from 'styled-components'
+import { MAX_WIDTH, MEDIAQUERY_BREAKPOINT } from '../constants/UIConstants'
 import PTIGuide from 'components/widgets/PTIGuide'
 import VideoRecord from 'records/VideoRecords'
 import RedeemVoucher from 'containers/RedeemVoucherContainer'
-import UploadFile from 'containers/FileUploaderContainer'
+import FileUploader from 'containers/FileUploaderContainer'
 import UploadList from 'containers/UploadListContainer'
 
 import type { Match, History } from 'react-router-dom'
@@ -24,14 +24,28 @@ type Props = {
   closeModal: () => void
 }
 
-const Wrapper = CardContainer.extend`
-  flex-direction: ${props => (props.column ? 'initial' : 'column')};
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: ${({ column }) => (column ? 'column' : null)};
+  justify-content: space-between;
   margin: 0 auto;
-  max-width: 1080px;
+  max-width: ${MAX_WIDTH};
   width: 100%;
 
-  @media (max-width: 1280px) {
-    justify-content: ${props => (props.padding ? 'space-between' : 'center')};
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    flex-wrap: wrap;
+  }
+`
+
+const CardWrapper = styled.div`
+  flex: 0 0 ${({ column }) => (column ? '100%' : '32%')};
+  width: ${({ column }) => (column ? '100%' : '32%')};
+  box-sizing: border-box;
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    flex: 0 0 100%;
+    margin-bottom: 40px;
+    width: 100%;
   }
 `
 
@@ -76,14 +90,30 @@ class VideoManager extends Component<Props, void> {
   }
 
   render () {
-    const showForm = this.props.selectedVideo
-    const showList = this.props.videos.size > 0 || this.props.selectedVideo
+    let showList = this.props.videos.size > 0 || this.props.selectedVideo
+
+    showList = false
+
     return (
-      <Wrapper padding={!showForm} column={!showList}>
-        {showList && <UploadList />}
-        <UploadFile showCard={!showList} />
-        {!showList ? <RedeemVoucher marginLeft /> : ''}
-        {!showList && <PTIGuide marginLeft />}
+      <Wrapper column={showList}>
+        {showList && (
+          <CardWrapper column={showList}>
+            <UploadList />
+          </CardWrapper>
+        )}
+        <CardWrapper column={showList}>
+          <FileUploader showCard={!showList} height="100%" />
+        </CardWrapper>
+        {!showList && (
+          <CardWrapper>
+            <RedeemVoucher height="100%" />
+          </CardWrapper>
+        )}
+        {!showList && (
+          <CardWrapper>
+            <PTIGuide height="100%" />
+          </CardWrapper>
+        )}
       </Wrapper>
     )
   }

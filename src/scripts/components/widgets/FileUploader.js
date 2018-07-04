@@ -22,6 +22,7 @@ type Props = {
   onError: boolean,
   showCard: boolean,
   white: boolean,
+  height: string,
   onFileChosen: (file: Object) => void,
   checkUserWallet: () => void
 }
@@ -209,6 +210,7 @@ class FilesUploader extends Component<Props, Object> {
         {...this.props}
         nopadding
         className={this.state.dragClass}
+        height={this.props.height}
         footer={
           <FooterWrapper>
             <InputText

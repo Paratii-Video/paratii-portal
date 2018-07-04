@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
 import { add0x, copyTextToClipboard } from 'utils/AppUtils'
 import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
+import {
+  NOTIFICATION_LEVELS,
+  NOTIFICATION_POSITIONS
+} from 'constants/ApplicationConstants'
 import Colors from './foundations/base/Colors'
 import Button from './foundations/Button'
 import Text from './foundations/Text'
@@ -11,12 +15,9 @@ import CheckIcon from './widgets/CheckIcon'
 import TruncatedText from './foundations/TruncatedText'
 import SVGIcon from './foundations/SVGIcon'
 import HR from './foundations/HR'
+import SingleCardWrapper from './foundations/SingleCardWrapper'
 import Card from './structures/Card'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
-import {
-  NOTIFICATION_LEVELS,
-  NOTIFICATION_POSITIONS
-} from 'constants/ApplicationConstants'
 import User from 'records/UserRecords'
 import { getEmail, getEmailIsVerified, getName } from 'operators/UserOperators'
 import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
@@ -32,7 +33,7 @@ type Props = {
 
 const WORDSWRAPPER_HORIZONTAL_PADDING = '24px'
 
-const Wrapper = styled.div`
+const CardContent = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -175,47 +176,48 @@ class Profile extends Component<Props, void> {
         </WordsWrapper>
       </FooterWrapper>
     )
-    return (
-      <div>
-        {isWalletSecured ? (
-          <Card
-            nobackground
-            title={<TranslatedText message="profile.title" />}
-            footer={cardFooter}
-          >
-            <Wrapper>
-              <EditProfileButton to="/profile/edit">
-                <TranslatedText message="profile.editButton" />
-              </EditProfileButton>
-              <ProfileAvatar>{userAvatar}</ProfileAvatar>
-              <Text bold small>
-                {getName(user)}
-              </Text>
-              <Text tiny gray>
-                <TranslatedText message="profile.dataLabel" /> 2018
-              </Text>
-              <HR />
-              <Text tiny gray>
-                <TranslatedText message="profile.balanceTitle" />
-              </Text>
-              <PTIBalanceContainer />
-            </Wrapper>
-          </Card>
-        ) : (
-          <Card
-            title={<TranslatedText message="profileLogOut.title" />}
-            footer={
-              <Button purple onClick={this.secureWallet}>
-                <TranslatedText message="profileLogOut.button" />
-              </Button>
-            }
-          >
-            <Text gray>
-              <TranslatedText message="profileLogOut.text" />
+    return isWalletSecured ? (
+      <SingleCardWrapper>
+        <Card
+          title={<TranslatedText message="profile.title" />}
+          footer={cardFooter}
+          maxWidth
+        >
+          <CardContent>
+            <EditProfileButton to="/profile/edit">
+              <TranslatedText message="profile.editButton" />
+            </EditProfileButton>
+            <ProfileAvatar>{userAvatar}</ProfileAvatar>
+            <Text bold small>
+              {getName(user)}
             </Text>
-          </Card>
-        )}
-      </div>
+            <Text tiny gray>
+              <TranslatedText message="profile.dataLabel" /> 2018
+            </Text>
+            <HR />
+            <Text tiny gray>
+              <TranslatedText message="profile.balanceTitle" />
+            </Text>
+            <PTIBalanceContainer />
+          </CardContent>
+        </Card>
+      </SingleCardWrapper>
+    ) : (
+      <SingleCardWrapper>
+        <Card
+          title={<TranslatedText message="profileLogOut.title" />}
+          footer={
+            <Button purple onClick={this.secureWallet}>
+              <TranslatedText message="profileLogOut.button" />
+            </Button>
+          }
+          maxWidth
+        >
+          <Text gray>
+            <TranslatedText message="profileLogOut.text" />
+          </Text>
+        </Card>
+      </SingleCardWrapper>
     )
   }
 }

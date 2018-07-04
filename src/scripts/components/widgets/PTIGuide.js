@@ -7,7 +7,8 @@ import Text from 'components/foundations/Text'
 import Card, { CardTitle } from 'components/structures/Card'
 
 type Props = {
-  margin: String
+  margin: string,
+  height: string
 }
 
 const Wrapper = styled.div`
@@ -123,7 +124,7 @@ class PTIGuide extends Component<Props, void> {
 
   render () {
     return (
-      <Card nopadding {...this.props} fullAtFirstBreak>
+      <Card nopadding {...this.props} height={this.props.height}>
         <Wrapper>
           <List page={this.state.page}>
             <Item active={this.state.page === 0}>

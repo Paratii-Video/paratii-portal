@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { MAINHEADER_LOGO_HEIGHT, USERNAV_WIDTH } from 'constants/UIConstants'
+import {
+  MAINHEADER_LOGO_HEIGHT,
+  MEDIAQUERY_BREAKPOINT,
+  USERNAV_WIDTH
+} from 'constants/UIConstants'
 
 type Props = {
   landing: boolean,
@@ -13,11 +17,14 @@ const MainWrapper = styled.main`
   display: flex;
   flex: 1 1 100%;
   flex-direction: column;
-  justify-content: center;
   margin: ${MAINHEADER_LOGO_HEIGHT} 0 0
     ${({ isWalletSecured }) => (isWalletSecured ? USERNAV_WIDTH : '0')};
   min-height: 500px;
   padding: ${({ landing }) => (landing ? null : '40px 80px')};
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    margin-left: 0;
+  }
 
   @media (max-width: 1024px) {
     padding: ${({ landing }) => (landing ? null : '40px')};

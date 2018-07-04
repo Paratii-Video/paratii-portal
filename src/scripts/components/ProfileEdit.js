@@ -8,6 +8,7 @@ import { add0x } from 'utils/AppUtils'
 import Button from './foundations/Button'
 import Text from './foundations/Text'
 import HR from './foundations/HR'
+import SingleCardWrapper from './foundations/SingleCardWrapper'
 import TextField from './widgets/forms/TextField'
 import Card from './structures/Card'
 import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
@@ -30,7 +31,7 @@ type Props = {
   setUserData: () => void
 }
 
-const Wrapper = styled.div`
+const CardContent = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -203,61 +204,63 @@ class Profile extends Component<Props, void> {
         {saved && <Redirect to={'/profile'} />}
       </FooterWrapper>
     )
-    return (
-      <div>
-        {isWalletSecured ? (
-          <Card
-            nobackground
-            title={<TranslatedText message="profileEdit.title" />}
-            footer={cardFooter}
-          >
-            <Wrapper>
-              <ProfileAvatar>{userAvatar}</ProfileAvatar>
-              <Button>
-                <TranslatedText message="profileEdit.avatarLabel" />
+    return isWalletSecured ? (
+      <SingleCardWrapper>
+        <Card
+          nobackground
+          title={<TranslatedText message="profileEdit.title" />}
+          footer={cardFooter}
+          maxWidth
+        >
+          <CardContent>
+            <ProfileAvatar>{userAvatar}</ProfileAvatar>
+            <Button>
+              <TranslatedText message="profileEdit.avatarLabel" />
+            </Button>
+            <HR />
+            <Form onSubmit={this.submitForm}>
+              <TextField
+                type="text"
+                label={<TranslatedText message="profileEdit.usernameLabel" />}
+                tabIndex="1"
+                value={username}
+                disabled={this.formDisabled}
+                margin="0 0 30px"
+                data-test-id="profile-username"
+                onChange={e => this.handleInputChange('username', e)}
+              />
+              <TextField
+                type="text"
+                label={<TranslatedText message="profileEdit.emailLabel" />}
+                tabIndex="2"
+                value={email}
+                disabled={this.formDisabled}
+                data-test-id="profile-email"
+                onChange={e => this.handleInputChange('email', e)}
+              />
+              <Button hidden disabled={!updated} onClick={this.saveUserData}>
+                <TranslatedText message="profileEdit.saveButton" />
               </Button>
-              <HR />
-              <Form onSubmit={this.submitForm}>
-                <TextField
-                  type="text"
-                  label={<TranslatedText message="profileEdit.usernameLabel" />}
-                  tabIndex="1"
-                  value={username}
-                  disabled={this.formDisabled}
-                  margin="0 0 30px"
-                  data-test-id="profile-username"
-                  onChange={e => this.handleInputChange('username', e)}
-                />
-                <TextField
-                  type="text"
-                  label={<TranslatedText message="profileEdit.emailLabel" />}
-                  tabIndex="2"
-                  value={email}
-                  disabled={this.formDisabled}
-                  data-test-id="profile-email"
-                  onChange={e => this.handleInputChange('email', e)}
-                />
-                <Button hidden disabled={!updated} onClick={this.saveUserData}>
-                  <TranslatedText message="profileEdit.saveButton" />
-                </Button>
-              </Form>
-            </Wrapper>
-          </Card>
-        ) : (
-          <Card
-            title={<TranslatedText message="profileLogOut.title" />}
-            footer={
-              <Button purple onClick={this.secureWallet}>
-                <TranslatedText message="profileLogOut.button" />
-              </Button>
-            }
-          >
-            <Text gray>
-              <TranslatedText message="profileLogOut.text" />
-            </Text>
-          </Card>
-        )}
-      </div>
+            </Form>
+          </CardContent>
+        </Card>
+      </SingleCardWrapper>
+    ) : (
+      <SingleCardWrapper>
+        <Card
+          title={<TranslatedText message="profileLogOut.title" />}
+          footer={
+            <Button purple onClick={this.secureWallet}>
+              <TranslatedText message="profileLogOut.button" />
+            </Button>
+          }
+          maxWidth
+        >
+          <Text gray>
+            <TranslatedText message="profileLogOut.text" />
+          </Text>
+        </Card>
+      </SingleCardWrapper>
     )
   }
 }

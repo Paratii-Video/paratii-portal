@@ -7,6 +7,13 @@ export const Z_INDEX_HEADER: string = '980'
 export const Z_INDEX_FOOTER: string = '980'
 export const Z_INDEX_USERNAV: string = '970'
 
+// Layout
+export const MAX_WIDTH: string = '1264px'
+export const MEDIAQUERY_BREAKPOINT: string = '(max-width: 1440px)'
+export const BORDER_RADIUS: string = '2px'
+
+// Components
+
 // MainHeader
 export const MAINHEADER_LOGO_WIDTH: string = '98px'
 export const MAINHEADER_LOGO_HEIGHT: string = '62px'
@@ -35,8 +42,9 @@ export const POPOVER_PADDING: string = '20px'
 // Video Overlay
 export const OVERLAY_BUTTONS_HEIGHT: string = '20px'
 
-// Card(not imported to structures/Card default, just for CardStyle)
+// Card
 export const CARD_PADDING: string = '40px 42px'
+export const CARD_MAX_WIDTH: string = '650px'
 
 // Loader
 export const BASE_LOADER_DIMENSION: string = '50px'

@@ -245,7 +245,7 @@ class VideoForm extends Component<Props, Object> {
     )
 
     return (
-      <Card full innerRef={this.props.innerRef} nobackground>
+      <Card full innerRef={this.props.innerRef}>
         <VideoFormHeader>
           <VideoFormTitle id="video-title">{title}</VideoFormTitle>
           <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>

@@ -8,7 +8,8 @@ import Text from '../foundations/Text'
 import Card from '../structures/Card'
 
 type Props = {
-  isWalletSecured: Boolean,
+  isWalletSecured: boolean,
+  height: boolean,
   openModal: string => void,
   loadBalances: () => void,
   notification: (Object, string) => void,
@@ -121,6 +122,7 @@ class RedeemVoucher extends Component<Props, Object> {
       <Card
         {...this.props}
         title="Redeem your voucher"
+        height={this.props.height}
         footer={
           <FooterWrapper>
             <Text small gray>
