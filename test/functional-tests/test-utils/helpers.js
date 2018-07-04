@@ -60,6 +60,42 @@ export const SEED =
 export const USERADDRESS = '0xdef933d2d0203821af2a1579d77fb42b4f8dcf7b'
 
 testConfig.eth.registryAddress = registryAddressConfig.registryAddress
+// testConfig.eth.tcrConfig = {
+//   'paramDefaults': {
+//     'minDeposit': 5,
+//     'pMinDeposit': 100,
+//     'applyStageLength': 0, // we set apply stage to 0 in Paratii
+//     'pApplyStageLength': 0,
+//     'commitStageLength': 600,
+//     'pCommitStageLength': 1200,
+//     'revealStageLength': 600,
+//     'pRevealStageLength': 1200,
+//     'dispensationPct': 50,
+//     'pDispensationPct': 50,
+//     'voteQuorum': 50,
+//     'pVoteQuorum': 50
+//   },
+//   'name': 'The TestChain Registry',
+//   'token': {
+//     'address': '0x337cDDa6D41A327c5ad456166CCB781a9722AFf9',
+//     'deployToken': true,
+//     'decimals': '18',
+//     'name': 'TestCoin',
+//     'symbol': 'TEST',
+//     'supply': '1000000000000000000000000000',
+//     'tokenHolders': [
+//       { 'address': '0x627306090abaB3A6e1400e9345bC60c78a8BEf57',
+//         'amount': '250000000000000000000000000' },
+//       { 'address': '0xf17f52151EbEF6C7334FAD080c5704D77216b732',
+//         'amount': '250000000000000000000000000' },
+//       { 'address': '0xC5fdf4076b8F3A5357c5E395ab970B5B54098Fef',
+//         'amount': '250000000000000000000000000' },
+//       { 'address': '0x821aEa9a577a9b44299B9c15c88cf3087F3b5544',
+//         'amount': '250000000000000000000000000' }
+//     ]
+//   }
+// }
+
 export const paratii = new Paratii({
   ...testConfig
 })
