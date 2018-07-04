@@ -29,13 +29,26 @@ describe('TCR:', function () {
       ipfsHash: IPFS_HASH
     })
 
+    // Get address from browser and send it som PTI
+    const userAddress = browser.execute(function () {
+      console.log(window.paratii.getAccount())
+      return window.paratii.getAccount()
+    }).value
+    const value = paratii.eth.web3.utils.toWei('1000')
+    await paratii.eth.transfer(userAddress, value, 'PTI')
+    console.log(userAddress)
+
     const stakeAmount = 5
     const stakeAmountWei = paratii.eth.web3.utils.toWei(String(stakeAmount))
     // Publish the video
     await paratii.eth.tcr.checkEligiblityAndApply(ID, stakeAmountWei)
+
+    // FIXME this must be move inside checkEligiblityAndApply
     const contract = await paratii.eth.tcr.getTcrContract()
     const hash = await paratii.eth.tcr.getHash(ID)
     await contract.methods.updateStatus(hash).send()
+    //
+
     chai.assert.equal(
       await paratii.eth.tcr.appWasMade(ID),
       true,
