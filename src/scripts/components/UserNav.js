@@ -34,6 +34,7 @@ type Props = {
 
 const Wrapper = styled.div`
   background: ${props => props.theme.colors.UserNav.background};
+  box-shadow: -11px 0 40px rgba(0, 0, 0, 0.7);
   height: 100%;
   left: 0;
   overflow-x: hidden;
