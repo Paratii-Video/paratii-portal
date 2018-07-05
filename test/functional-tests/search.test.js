@@ -19,7 +19,7 @@ const [
   SPORTS_VIDEO_14
 ] = require('./data/fixtures/videos')
 
-describe('🔍 Search:', () => {
+describe.only('🔍 Search:', () => {
   const navigateToSearch = () => browser.url('http://localhost:8080/search')
   const searchResultsWrapperSelector = '[data-test-id="search-results"]'
   const enterKeywordsZeroStateSelector = `${searchResultsWrapperSelector} [data-test-id="enter-keywords-zero-state"]`
