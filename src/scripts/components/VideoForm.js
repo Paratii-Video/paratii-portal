@@ -5,7 +5,7 @@ import VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
 
 import Card from './structures/Card'
-import Button from './foundations/Button'
+import TextButton from './foundations/TextButton'
 import TextField from './widgets/forms/TextField'
 import Textarea from './widgets/forms/TextareaField'
 import RadioCheck, {
@@ -17,8 +17,6 @@ import { prettyBytes } from 'utils/AppUtils'
 import { MODAL } from 'constants/ModalConstants'
 
 const VideoFormHeader = styled.div`
-  border-bottom: 1px solid
-    ${props => props.theme.colors.VideoForm.header.border};
   margin-bottom: 40px;
   padding-bottom: 20px;
 `
@@ -217,7 +215,7 @@ class VideoForm extends Component<Props, Object> {
     if (isPublishable && !isPublished) {
       publishButton = (
         <ButtonWrapper>
-          <Button
+          <TextButton
             data-test-id="video-submit-publish"
             type="submit"
             onClick={this.onPublishVideo}
@@ -225,14 +223,14 @@ class VideoForm extends Component<Props, Object> {
             purple
           >
             Publish
-          </Button>
+          </TextButton>
         </ButtonWrapper>
       )
     }
 
     const saveButton = (
       <ButtonWrapper>
-        <Button
+        <TextButton
           data-test-id="video-submit-save"
           type="submit"
           onClick={this.onSaveData}
@@ -240,7 +238,7 @@ class VideoForm extends Component<Props, Object> {
           disabled={this.props.selectedVideo.storageStatus.name === 'running'}
         >
           Save Changes
-        </Button>
+        </TextButton>
       </ButtonWrapper>
     )
 

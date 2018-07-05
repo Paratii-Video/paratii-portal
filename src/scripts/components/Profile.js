@@ -9,10 +9,9 @@ import {
   NOTIFICATION_POSITIONS
 } from 'constants/ApplicationConstants'
 import Colors from './foundations/base/Colors'
-import Button from './foundations/Button'
+import TextButton from './foundations/TextButton'
 import Text from './foundations/Text'
 import CheckIcon from './widgets/CheckIcon'
-import TruncatedText from './foundations/TruncatedText'
 import SVGIcon from './foundations/SVGIcon'
 import HR from './foundations/HR'
 import SingleCardWrapper from './foundations/SingleCardWrapper'
@@ -39,7 +38,7 @@ const CardContent = styled.div`
   flex-direction: column;
 `
 
-const NavLink = Button.withComponent(Link)
+const NavLink = TextButton.withComponent(Link)
 
 const EditProfileButton = styled(NavLink)`
   position: absolute;
@@ -78,9 +77,7 @@ const WordsWrapper = styled.div`
   padding: 22px ${WORDSWRAPPER_HORIZONTAL_PADDING};
 `
 
-const CopyText = TruncatedText.withComponent('p')
-
-const CopyButton = styled(Button)`
+const CopyButton = styled(TextButton)`
   align-items: flex-end;
   display: flex;
   margin-left: 20px;
@@ -141,10 +138,10 @@ class Profile extends Component<Props, void> {
       <FooterWrapper>
         {getEmail(user) && (
           <Fragment>
-            <Text gray small>
+            <Text small>
               <TranslatedText message="profile.emailLabel" />
             </Text>
-            <Text data-test-id="profile-email" margin="0 0 20px 0">
+            <Text accent data-test-id="profile-email" margin="0 0 20px 0">
               <EmailDataWrapper>
                 <EmailAddressWrapper>{getEmail(user)}</EmailAddressWrapper>{' '}
                 {getEmailIsVerified(user) && <CheckIcon />}
@@ -152,20 +149,20 @@ class Profile extends Component<Props, void> {
             </Text>
           </Fragment>
         )}
-        <Text gray small>
+        <Text small>
           <TranslatedText message="profile.addressLabel" />
         </Text>
         <WordsWrapper>
-          <CopyText
+          <Text
+            accent
             innerRef={(ref: HTMLElement) => {
               this.KeyWords = ref
             }}
           >
             {userAddress}
-          </CopyText>
-          <CopyButton gray small onClick={this.copyWordsToClipboard}>
+          </Text>
+          <CopyButton small onClick={this.copyWordsToClipboard}>
             <SVGIcon
-              color="gray"
               icon="icon-copy"
               height="20px"
               width="20px"
@@ -191,11 +188,11 @@ class Profile extends Component<Props, void> {
             <Text bold small>
               {getName(user)}
             </Text>
-            <Text tiny gray>
+            <Text tiny>
               <TranslatedText message="profile.dataLabel" /> 2018
             </Text>
             <HR />
-            <Text tiny gray>
+            <Text tiny>
               <TranslatedText message="profile.balanceTitle" />
             </Text>
             <PTIBalanceContainer />
@@ -207,13 +204,13 @@ class Profile extends Component<Props, void> {
         <Card
           title={<TranslatedText message="profileLogOut.title" />}
           footer={
-            <Button purple onClick={this.secureWallet}>
+            <TextButton accent onClick={this.secureWallet}>
               <TranslatedText message="profileLogOut.button" />
-            </Button>
+            </TextButton>
           }
           maxWidth
         >
-          <Text gray>
+          <Text>
             <TranslatedText message="profileLogOut.text" />
           </Text>
         </Card>

@@ -8,7 +8,7 @@ import styled, { css } from 'styled-components'
 import { FILESUPLOADER_PATH_TO } from 'constants/UrlConstants'
 import TextField from '../widgets/forms/TextField'
 import Card from 'components/structures/Card'
-import Text from '../foundations/Text'
+import Text, { TextColor, Span } from '../foundations/Text'
 import SVGIcon from '../foundations/SVGIcon'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
 import TranslatedText from '../translations/TranslatedText'
@@ -42,11 +42,6 @@ const InputFile = styled.input.attrs({
   position: absolute;
   top: 0;
   z-index: 3;
-`
-
-const SupportedFileTypes = styled.span`
-  color: ${({ theme }) => theme.colors.FilesUploader.supportedFileTypes.color};
-  font-size: ${props => props.theme.fonts.text.tiny};
 `
 
 const UploadCoverText = styled(Text)`
@@ -90,7 +85,7 @@ const Icon = styled.div`
   }
 `
 const UploadAddIcon = Icon.extend`
-  height: 36px;
+  ${TextColor} height: 36px;
   margin: 0 0 20px;
   width: 36px;
 `
@@ -176,28 +171,25 @@ class FilesUploader extends Component<Props, Object> {
             <FilesUploaderSvg />
           </Icon>
         ) : (
-          <UploadAddIcon className={this.state.dragClass}>
-            <SVGIcon
-              color={this.props.white ? 'white' : 'gray'}
-              icon="icon-add"
-            />
+          <UploadAddIcon primary className={this.state.dragClass}>
+            <SVGIcon icon="icon-add" />
           </UploadAddIcon>
         )}
-        <UploadCoverText gray={!this.props.white} small>
+        <UploadCoverText small primary>
           <TranslatedText
             message="uploader.filesInstructions_html"
             options={{
               dragFiles: (
-                <UploadCoverTextBig big gray={!this.props.white}>
+                <UploadCoverTextBig big primary>
                   <TranslatedText message="uploader.dragFiles" />
                 </UploadCoverTextBig>
               )
             }}
           />
-          <SupportedFileTypes>
+          <Span tiny>
             <br />
             <TranslatedText message="uploader.supportedFileTypes" />
-          </SupportedFileTypes>
+          </Span>
         </UploadCoverText>
       </UploaderWrapper>
     )

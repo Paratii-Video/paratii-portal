@@ -1,10 +1,8 @@
 /* @flow */
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
 import UploadListItem from 'containers/UploadListItemContainer'
 import Loader from 'components/foundations/Loader'
-
 import type { Map } from 'immutable'
 import type VideoRecord from 'records/VideoRecords'
 

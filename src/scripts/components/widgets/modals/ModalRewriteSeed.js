@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import TextField from 'components/widgets/forms/TextField'
 import { MNEMONIC_KEY_TEMP } from 'constants/ParatiiLibConstants'
 
@@ -78,8 +78,8 @@ class ModalRewriteSeed extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Rewrite your account recovery phrase</Title>
-          <Text small gray>
+          <Title accent>Rewrite your account recovery phrase</Title>
+          <Text small>
             Rewrite the 12 words to continue the process. You may need them
             later to restore your account or to use it on other devices.
           </Text>
@@ -97,18 +97,22 @@ class ModalRewriteSeed extends Component<Props, Object> {
           </FieldContainer>
 
           {this.state.error && (
-            <Text pink small>
+            <Text error small>
               {this.state.error}
             </Text>
           )}
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.showSeed}>Go Back</Button>
+              <TextButton onClick={this.showSeed}>Go Back</TextButton>
             </ButtonContainer>
             <ButtonContainer>
-              <Button data-test-id="check-seed" purple onClick={this.checkSeed}>
+              <TextButton
+                data-test-id="check-seed"
+                accent
+                onClick={this.checkSeed}
+              >
                 Continue
-              </Button>
+              </TextButton>
             </ButtonContainer>
           </Footer>
         </ModalScrollContent>

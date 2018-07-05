@@ -46,11 +46,11 @@ const HashPin = styled.div`
     ${props =>
     props.error
       ? props.theme.colors.TextField.error
-      : props.theme.colors.body.primary};
+      : props.theme.colors.button.text.primary};
   color: ${props =>
     props.error
       ? props.theme.colors.TextField.error
-      : props.theme.colors.body.primary};
+      : props.theme.colors.button.text.primary};
   text-align: center;
   padding: 10px;
   height: 40px;

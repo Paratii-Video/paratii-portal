@@ -6,7 +6,7 @@ import paratii from 'utils/ParatiiLib'
 
 import { getAppRootUrl } from 'utils/AppUtils'
 import Text from './foundations/Text'
-import Button from './foundations/Button'
+import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
 import VideoProgressBar from './widgets/VideoForm/VideoProgressBar'
 import TextField from './widgets/forms/TextField'
@@ -44,7 +44,7 @@ const Z_INDEX_TIME = 1
 const Z_INDEX_MEDIAICON = 2
 
 const Item = styled.div`
-  background: ${props => props.theme.colors.UploadListItem.background};
+  background: ${props => props.theme.colors.background.secondary};
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -67,6 +67,10 @@ const ItemHeaderContent = styled.div`
 `
 
 const Icon = styled.span`
+  color: ${props =>
+    props.open
+      ? props.theme.colors.text.secondary
+      : props.theme.colors.text.warn};
   flex: 0 0 22px;
   height: 12px;
   transition: transform 0.7s ${({ theme }) => theme.animation.ease.smooth};
@@ -83,8 +87,8 @@ const ItemHeaderData = styled.div`
 const ItemHeaderStatus = styled.div`
   color: ${props =>
     props.done
-      ? props.theme.colors.VideoList.done
-      : props.theme.colors.VideoList.status};
+      ? props.theme.colors.text.warn
+      : props.theme.colors.text.secondary};
   font-size: ${props => props.theme.fonts.video.list.status};
   font-weight: ${props =>
     props.done
@@ -148,7 +152,7 @@ const VideoMediaLink = styled(Link)`
 `
 
 const VideoImage = styled.div`
-  background-color: ${props => props.theme.colors.body.background};
+  background-color: ${props => props.theme.colors.background.body};
   background-image: url(${({ source }) => source});
   background-size: cover;
   background-position: center center;
@@ -167,8 +171,7 @@ const VideoMediaOverlay = styled.div`
   width: 100%;
 
   &::before {
-    background-color: ${props =>
-    props.theme.colors.VideoForm.info.imageBackground};
+    background-color: ${props => props.theme.colors.background.body};
     content: '';
     height: 100%;
     left: 0;
@@ -183,6 +186,7 @@ const VideoMediaOverlay = styled.div`
   }
 `
 const VideoMediaIcon = styled.div`
+  color: ${props => props.theme.colors.button.color};
   height: 20%;
   transition: transform 0.3s ${props => props.theme.animation.ease.smooth};
   position: relative;
@@ -201,8 +205,7 @@ const VideoMediaTime = styled.div`
   z-index: ${Z_INDEX_TIME};
 
   &::before {
-    background-color: ${props =>
-    props.theme.colors.VideoForm.info.time.background};
+    background-color: ${props => props.theme.colors.background.body};
     border-radius: 2px;
     content: '';
     height: 100%;
@@ -215,7 +218,7 @@ const VideoMediaTime = styled.div`
 `
 
 const LabelStake = styled.div`
-  background-color: ${props => props.theme.colors.body.background};
+  background-color: ${props => props.theme.colors.background.body};
   color: white;
   padding: 5px;
   min-width: 100px;
@@ -224,8 +227,8 @@ const LabelStake = styled.div`
 `
 
 const VideoMediaTimeText = styled.p`
-  color: ${props => props.theme.colors.VideoForm.info.time.color};
-  font-size: ${props => props.theme.fonts.video.info.time};
+  color: ${props => props.theme.colors.text.accent};
+  font-size: ${props => props.theme.fonts.text.tiny};
   position: relative;
   z-index: 1;
 `
@@ -405,29 +408,26 @@ class UploadListItem extends Component<Props, Object> {
       <Item data-test-id="uploader-item">
         <ItemHeader open={this.state.open} onClick={this.toggleOpen}>
           <ItemHeaderContent>
-            <Icon flip={!this.state.open}>
-              <SVGIcon
-                icon="icon-arrow-vertical"
-                color={this.state.open ? 'gray' : 'purple'}
-              />
+            <Icon open={this.state.open} flip={!this.state.open}>
+              <SVGIcon icon="icon-arrow-vertical" />
             </Icon>
             <ItemHeaderData>
-              <Text>{title}</Text>
+              <Text accent>{title}</Text>
               <ItemHeaderStatus done={videoIsReady}>
                 {statusMessage}
               </ItemHeaderStatus>
             </ItemHeaderData>
             <ItemHeaderButtons>
               {!isPublished ? (
-                <Button
+                <TextButton
                   data-test-id="video-submit-publish"
                   type="submit"
                   onClick={this.onPublishVideo}
                   disabled={!isPublishable}
-                  purple
+                  accent
                 >
                   Publish
-                </Button>
+                </TextButton>
               ) : (
                 <LabelStake>{stakedPTI} PTI Staked</LabelStake>
               )}
@@ -504,15 +504,15 @@ class UploadListItem extends Component<Props, Object> {
                 </RadioCheck>
               </RadioWrapper>
               <FormButtons>
-                <Button
+                <TextButton
                   data-test-id="video-submit-save"
                   type="submit"
                   onClick={this.onSaveData}
-                  purple
+                  accent
                   disabled={this.props.video.storageStatus.name === 'running'}
                 >
                   Save
-                </Button>
+                </TextButton>
               </FormButtons>
             </Form>
             <PreviewBox>
@@ -521,7 +521,7 @@ class UploadListItem extends Component<Props, Object> {
                   <VideoMediaLink to={urlToPlay}>
                     <VideoMediaOverlay>
                       <VideoMediaIcon>
-                        <SVGIcon color="white" icon="icon-player-play" />
+                        <SVGIcon icon="icon-player-play" />
                       </VideoMediaIcon>
                       {durationBox}
                     </VideoMediaOverlay>

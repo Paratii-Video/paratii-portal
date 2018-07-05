@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import BaseTitle from '../foundations/Title'
-import styled, { css } from 'styled-components'
+import Title from '../foundations/Title'
+import styled from 'styled-components'
 import {
   BORDER_RADIUS,
   CARD_PADDING,
   CARD_MAX_WIDTH,
+  CARD_MARGIN_LEFT,
   MEDIAQUERY_BREAKPOINT
 } from 'constants/UIConstants'
 
@@ -23,12 +24,13 @@ type Props = {
 
 export const CardWrapper = styled.div`
   border-radius: ${BORDER_RADIUS};
+  box-shadow: ${({ theme }) => theme.colors.Card.shadow};
   display: flex;
   flex: 1 1 100%;
   flex-direction: column;
   height: ${({ height }) => height};
-  margin-left: ${({ marginLeft }) => (marginLeft ? '25px' : null)};
-  margin-right: ${({ marginRight }) => (marginRight ? '25px' : null)};
+  margin-left: ${({ marginLeft }) => (marginLeft ? CARD_MARGIN_LEFT : null)};
+  margin-right: ${({ marginRight }) => (marginRight ? CARD_MARGIN_LEFT : null)};
   max-width: ${({ maxWidth }) => (maxWidth ? CARD_MAX_WIDTH : null)};
   overflow: hidden;
   position: relative;
@@ -44,13 +46,13 @@ export const CardWrapper = styled.div`
 `
 
 const Main = styled.div`
-  background: ${props => props.theme.colors.MainCard.background};
-  color: ${props => props.theme.colors.MainCard.color};
+  background: ${props => props.theme.colors.background.primary};
+  color: ${props => props.theme.colors.text.accent};
   display: flex;
   flex: 1;
   flex-direction: column;
   height: 100%;
-  padding: ${props => (props.nopadding ? '' : props.theme.sizes.card.padding)};
+  padding: ${props => (props.nopadding ? '' : CARD_PADDING)};
   position: relative;
   width: 100%;
 `
@@ -59,33 +61,17 @@ const Header = styled.div`
   margin-bottom: 50px;
 `
 
-const Title = BaseTitle.extend`
-  color: ${props => props.theme.colors.MainCard.title};
-  font-size: ${props => props.theme.fonts.card.title};
-  font-weight: ${props => props.theme.fonts.weight.regular};
-`
-
 export const CardTitle = Title.withComponent('h2')
 
 const Footer = styled.div`
   align-items: flex-end;
-  background-color: ${props => props.theme.colors.MainCard.footer.background};
-  color: ${props => props.theme.colors.MainCard.footer.color};
+  background-color: ${props => props.theme.colors.background.secondary};
+  color: ${props => props.theme.colors.text.secondary};
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  padding: ${props => props.theme.sizes.card.padding};
+  padding: ${CARD_PADDING};
   width: 100%;
-`
-
-// Need to recreate this component because there's no rule about the aligment
-
-export const CardStyle = css`
-  background-color: ${props => props.theme.colors.MainCard.background};
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  padding: ${props => (props.nopadding ? null : CARD_PADDING)};
 `
 
 class Card extends Component<Props, void> {
@@ -102,7 +88,7 @@ class Card extends Component<Props, void> {
         <Main nopadding={this.props.nopadding}>
           {this.props.title && (
             <Header>
-              <CardTitle>{this.props.title}</CardTitle>
+              <CardTitle accent>{this.props.title}</CardTitle>
             </Header>
           )}
           {this.props.children}

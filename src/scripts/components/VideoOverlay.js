@@ -3,7 +3,7 @@
 import React, { Component, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import PlayerControlsContainer from 'containers/PlayerControlsContainer'
@@ -12,7 +12,6 @@ import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
 import { List as ImmutableList } from 'immutable'
 
-import IconButton from 'components/foundations/buttons/IconButton'
 import PlaybackLevels from 'components/widgets/PlaybackLevels'
 import WalletInfoContainer from 'containers/widgets/WalletInfoContainer'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
@@ -126,7 +125,7 @@ const ButtonWrapper = styled.div`
   z-index: ${Z_INDEX_BUTTONS};
 `
 
-const ShareButton = Button.extend`
+const ShareButton = TextButton.extend`
   height: ${OVERLAY_BUTTONS_HEIGHT};
   margin-left: 10px;
   width: 26px;
@@ -159,6 +158,7 @@ const CentralizedContent = styled.div`
 `
 
 const StartScreenIcon = styled.span`
+  color: ${props => props.theme.colors.button.warn};
   height: 20%;
   opacity: ${props => (props.showStartScreen ? 1 : 0)};
   transition: transform 0.3s ${props => props.theme.animation.ease.smooth};
@@ -245,7 +245,8 @@ class VideoOverlay extends Component<Props> {
           >
             {isEmbed && (
               <ProfileButtonWrapper>
-                <IconButton
+                <TextButton
+                  warn
                   color={
                     activePlugin === PLAYER_PLUGIN.WALLET ? Colors.purple : ''
                   }
@@ -259,13 +260,14 @@ class VideoOverlay extends Component<Props> {
               </ProfileButtonWrapper>
             )}
             <ShareButton
+              warn
               data-test-id="share-button"
               onClick={(e: Object) => {
                 e.stopPropagation()
                 toggleShareModal(e)
               }}
             >
-              <SVGIcon icon="icon-player-share" color="white" />
+              <SVGIcon icon="icon-player-share" />
             </ShareButton>
           </ButtonWrapper>
           <CentralizedContent
@@ -277,7 +279,7 @@ class VideoOverlay extends Component<Props> {
                 data-test-id="start-screen-icon"
                 showStartScreen={showStartScreen}
               >
-                <SVGIcon color="white" icon="icon-player-play" />
+                <SVGIcon icon="icon-player-play" />
               </StartScreenIcon>
             }
           </CentralizedContent>

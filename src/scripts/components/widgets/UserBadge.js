@@ -37,9 +37,8 @@ class UserBadge extends Component<Props> {
       <UserInfo>
         <UserAvatar>{this.props.userAvatar}</UserAvatar>
         <UserText>
-          <Text small>{this.props.userName}</Text>
-          <Text tiny gray>
-            {this.props.userDate}
+          <Text accent bold small>
+            {this.props.userName}
           </Text>
         </UserText>
       </UserInfo>

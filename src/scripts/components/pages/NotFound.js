@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import TranslatedText from 'components/translations/TranslatedText'
@@ -28,16 +28,16 @@ type Props = {
   children: any
 }
 
-const NavLink = Button.withComponent('a')
+const NavLink = TextButton.withComponent('a')
 
 class NotFound extends Component<Props, void> {
   render () {
     return (
       <Wrapper>
-        <Title purple>
+        <Title accent>
           <TranslatedText message="notFound.title" />
         </Title>
-        <Text gray>{this.props.children}</Text>
+        <Text>{this.props.children}</Text>
         <SVG viewBox="1644 3231.982 710.6 165.593">
           <defs>
             <linearGradient
@@ -66,13 +66,13 @@ class NotFound extends Component<Props, void> {
             />
           </g>
         </SVG>
-        <Text gray>
+        <Text>
           <TranslatedText message="notFound.description" />{' '}
           <NavLink
             href="https://github.com/Paratii-Video/"
             target="_blank"
             anchor
-            purple
+            accent
           >
             <TranslatedText message="notFound.linkText" />
           </NavLink>

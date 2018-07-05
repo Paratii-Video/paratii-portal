@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import type { VideoRecord } from 'records/VideoRecords'
 import Wrapper from './foundations/Wrapper'
-import Button from './foundations/Button'
+import TextButton from './foundations/TextButton'
 
 type Props = {
   progress: number,
@@ -26,13 +26,13 @@ class UploadProgress extends Component<Props, void> {
         {this.props.state.transcodingStatus.name}
         <br />
         <b>progress: {progress} [THIS SHOULD BECOME A NICE BAR]</b>
-        <Button
+        <TextButton
           id="cancel-upload"
           type="submit"
           onClick={this.props.onCancelUpload}
         >
           Cancel upload [NOT WORKING YET]
-        </Button>
+        </TextButton>
       </Wrapper>
     )
   }

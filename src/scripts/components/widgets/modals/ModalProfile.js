@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Title from 'components/foundations/Title'
 import TextField from 'components/widgets/forms/TextField'
 import Text from 'components/foundations/Text'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import NotepadSvg from 'components/foundations/svgs/NotepadSvg'
 import TranslatedText from 'components/translations/TranslatedText'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
@@ -118,10 +118,10 @@ class ModalProfile extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>
+          <Title accent>
             <TranslatedText message="modal.profile.title" />
           </Title>
-          <Text small gray>
+          <Text small>
             <TranslatedText message="modal.profile.description" />
           </Text>
           <Icon>
@@ -151,26 +151,26 @@ class ModalProfile extends Component<Props, Object> {
           </form>
 
           {this.state.error && (
-            <Text pink small>
+            <Text error small>
               {this.state.error}
             </Text>
           )}
           <Footer>
             <ButtonContainer>
               {enableContinue ? (
-                <Button
+                <TextButton
                   type="submit"
                   form={FORM_ID}
                   data-test-id="continue"
-                  purple
+                  accent
                   disabled={!this.state.username}
                 >
                   <TranslatedText message="modal.profile.continue" />
-                </Button>
+                </TextButton>
               ) : (
-                <Button type="submit" form={FORM_ID} purple disabled="true">
+                <TextButton type="submit" form={FORM_ID} accent disabled="true">
                   <TranslatedText message="modal.profile.pleaseWait" />
-                </Button>
+                </TextButton>
               )}
             </ButtonContainer>
           </Footer>

@@ -13,7 +13,7 @@ type Props = {
 }
 
 const MainWrapper = styled.main`
-  background-color: ${props => props.theme.colors.body.background};
+  background-color: ${props => props.theme.colors.background.body};
   display: flex;
   flex: 1 1 100%;
   flex-direction: column;

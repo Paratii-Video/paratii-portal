@@ -7,11 +7,13 @@ import {
   MEDIAQUERY_BREAKPOINT,
   MAINHEADER_LOGO_HEIGHT,
   MAINHEADER_LOGO_WIDTH,
+  MAINHEADER_PADDING_LEFT,
+  MAINHEADER_PADDING_LEFT_BP,
   Z_INDEX_HEADER
 } from 'constants/UIConstants'
 import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 import SearchInputContainer from 'containers/widgets/SearchInputContainer'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
 import MainNavigation from 'components/structures/header/MainNavigation'
@@ -33,10 +35,10 @@ type State = {
 }
 
 const Header = styled.header`
-  background-color: ${props => props.theme.colors.header.background};
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.16);
+  background-color: ${props => props.theme.colors.background.secondary};
+  box-shadow: ${props => props.theme.colors.header.shadow};
   display: flex;
-  padding: 0 80px;
+  padding: 0 ${MAINHEADER_PADDING_LEFT};
   position: fixed;
   transition: box-shadow 0.3s;
   width: 100%;
@@ -44,7 +46,7 @@ const Header = styled.header`
 
   @media ${MEDIAQUERY_BREAKPOINT} {
     height: ${props => (props.open ? '100vh' : null)};
-    padding: 0 40px;
+    padding: 0 ${MAINHEADER_PADDING_LEFT_BP};
   }
 `
 
@@ -109,12 +111,12 @@ const ProfileAvatarButton = styled.button`
   }
 `
 
-const MobileButton = styled(Button)`
+const MobileButton = styled(TextButton)`
   display: none;
   height: 20px;
   position: absolute;
   right: 30px;
-  top: 24px;
+  top: 20px;
   width: 20px;
   z-index: 3;
 
@@ -224,10 +226,7 @@ class MainHeader extends Component<Props, State> {
             </HeaderButtons>
           </HeaderContent>
           <MobileButton onClick={this.toggleNav} open={this.state.navOpen}>
-            <SVGIcon
-              color="white"
-              icon={this.state.navOpen ? 'icon-close' : 'icon-menu'}
-            />
+            <SVGIcon icon={this.state.navOpen ? 'icon-close' : 'icon-menu'} />
           </MobileButton>
         </HeaderWrapper>
       </Header>

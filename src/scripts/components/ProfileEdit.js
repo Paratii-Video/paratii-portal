@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Blockies from 'react-blockies'
 import { add0x } from 'utils/AppUtils'
-import Button from './foundations/Button'
+import TextButton from './foundations/TextButton'
 import Text from './foundations/Text'
 import HR from './foundations/HR'
 import SingleCardWrapper from './foundations/SingleCardWrapper'
@@ -57,7 +57,7 @@ const FooterWrapper = styled.div`
   width: 100%;
 `
 
-const NavLink = Button.withComponent(Link)
+const NavLink = TextButton.withComponent(Link)
 
 const CancelButton = styled(NavLink)`
   margin-right: 10px;
@@ -195,12 +195,12 @@ class Profile extends Component<Props, void> {
     }
     const cardFooter = (
       <FooterWrapper>
-        <CancelButton gray="true" to="/profile">
+        <CancelButton to="/profile">
           <TranslatedText message="profileEdit.cancelButton" />
         </CancelButton>
-        <Button purple disabled={!updated} onClick={this.saveUserData}>
+        <TextButton accent disabled={!updated} onClick={this.saveUserData}>
           <TranslatedText message="profileEdit.saveButton" />
-        </Button>
+        </TextButton>
         {saved && <Redirect to={'/profile'} />}
       </FooterWrapper>
     )
@@ -214,9 +214,9 @@ class Profile extends Component<Props, void> {
         >
           <CardContent>
             <ProfileAvatar>{userAvatar}</ProfileAvatar>
-            <Button>
+            <TextButton>
               <TranslatedText message="profileEdit.avatarLabel" />
-            </Button>
+            </TextButton>
             <HR />
             <Form onSubmit={this.submitForm}>
               <TextField
@@ -238,9 +238,13 @@ class Profile extends Component<Props, void> {
                 data-test-id="profile-email"
                 onChange={e => this.handleInputChange('email', e)}
               />
-              <Button hidden disabled={!updated} onClick={this.saveUserData}>
+              <TextButton
+                hidden
+                disabled={!updated}
+                onClick={this.saveUserData}
+              >
                 <TranslatedText message="profileEdit.saveButton" />
-              </Button>
+              </TextButton>
             </Form>
           </CardContent>
         </Card>
@@ -250,9 +254,9 @@ class Profile extends Component<Props, void> {
         <Card
           title={<TranslatedText message="profileLogOut.title" />}
           footer={
-            <Button purple onClick={this.secureWallet}>
+            <TextButton accent onClick={this.secureWallet}>
               <TranslatedText message="profileLogOut.button" />
-            </Button>
+            </TextButton>
           }
           maxWidth
         >

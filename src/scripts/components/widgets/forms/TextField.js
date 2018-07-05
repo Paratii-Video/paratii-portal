@@ -6,13 +6,13 @@ import styled, { css } from 'styled-components'
 import InputField, { StyleFieldText } from 'components/foundations/forms/Input'
 
 export const StyleInputFilled = css`
-  transform: translate3d(0, -22px, 0) scale(0.8);
+  transform: translate3d(0, -22px, 0) scale(0.9);
   transition-duration: 0.4s;
   transition-delay: 0s;
 `
 
 export const StylePlaceholder = css`
-  color: ${props => props.theme.colors.TextField.placeholder};
+  color: ${props => props.theme.colors.text.secondary};
   height: ${props => props.theme.sizes.mainInput.height};
   line-height: ${props => props.theme.sizes.mainInput.height};
   left: 0;
@@ -21,7 +21,7 @@ export const StylePlaceholder = css`
   transform-origin: left;
   transform: ${props =>
     props.filled || props.readonly
-      ? 'translate3d(0, -22px, 0) scale(0.8)'
+      ? 'translate3d(0, -22px, 0) scale(0.9)'
       : 'translate3d(0, 0, 0) scale(1)'};
   transition-delay: ${props =>
     props.filled || props.readonly ? '0s' : '0.1s'};
@@ -47,7 +47,7 @@ const Placeholder = styled.span`
 `
 
 const HelperLabel = styled.span`
-  color: ${props => props.theme.colors.TextField.placeholder};
+  color: ${props => props.theme.colors.text.secondary};
   display: block;
   font-size: ${props => props.theme.fonts.form.helper};
   padding: 8px 1px 0 0;

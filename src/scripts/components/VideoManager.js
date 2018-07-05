@@ -38,13 +38,13 @@ const Wrapper = styled.div`
 `
 
 const CardWrapper = styled.div`
-  flex: 0 0 ${({ column }) => (column ? '100%' : '32%')};
-  width: ${({ column }) => (column ? '100%' : '32%')};
   box-sizing: border-box;
+  flex: 0 0 ${({ column }) => (column ? '100%' : '32%')};
+  margin-bottom: 40px;
+  width: ${({ column }) => (column ? '100%' : '32%')};
 
   @media ${MEDIAQUERY_BREAKPOINT} {
     flex: 0 0 100%;
-    margin-bottom: 40px;
     width: 100%;
   }
 `
@@ -90,9 +90,7 @@ class VideoManager extends Component<Props, void> {
   }
 
   render () {
-    let showList = this.props.videos.size > 0 || this.props.selectedVideo
-
-    showList = false
+    const showList = this.props.videos.size > 0 || this.props.selectedVideo
 
     return (
       <Wrapper column={showList}>

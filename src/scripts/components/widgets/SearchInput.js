@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { StyleFieldText } from 'components/foundations/forms/Input'
-import Button from 'components/foundations/Button'
+import { ButtonStyleHover } from 'components/foundations/Button'
 import SVGIcon from 'components/foundations/SVGIcon'
 import { SEARCH_PATH } from 'constants/UrlConstants'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
@@ -20,7 +20,7 @@ type Props = {
 
 const SearchInputForm = styled.form`
   align-items: center;
-  background-color: ${props => props.theme.colors.Nav.search.background};
+  background-color: ${props => props.theme.colors.background.body};
   border-radius: 4px;
   display: inline-flex;
   flex-direction: row-reverse;
@@ -35,7 +35,9 @@ const SearchInputField = styled.input`
 
 const SEARCH_BUTTON_DIMENSION: string = '27px'
 
-const SearchInputButton = styled(Button)`
+const SearchInputButton = styled.button`
+  ${ButtonStyleHover};
+  color: ${({ theme }) => theme.colors.text.primary};
   flex: 0 0 ${SEARCH_BUTTON_DIMENSION};
   height: ${SEARCH_BUTTON_DIMENSION};
   padding-left: 10px;

@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { CARD_PADDING } from 'constants/UIConstants'
 import PTIGuideSvg from '../foundations/svgs/PTIGuideSvg'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import Text from 'components/foundations/Text'
-import Card, { CardTitle } from 'components/structures/Card'
+import Title from 'components/foundations/Title'
+import Card from 'components/structures/Card'
 
 type Props = {
   margin: string,
@@ -30,15 +32,16 @@ const Item = styled.section`
 `
 
 const Header = styled.div`
-  padding: ${props => props.theme.sizes.card.padding};
+  padding: ${CARD_PADDING};
   padding-bottom: 0;
 `
 
 const Subtitle = Text.extend`
-  color: ${props => props.theme.colors.MainCard.subtitle};
+  color: ${props => props.theme.colors.text.secondary};
 `
 
 const AlertIcon = styled.span`
+  color: ${props => props.theme.colors.text.warn};
   display: inline-block;
   height: 12px;
   margin: 0 5px 0 0;
@@ -70,9 +73,9 @@ const Footer = styled.div`
   padding: 40px 48px;
 `
 
-const ArrowButton = styled(Button)`
+const ArrowButton = styled(TextButton)`
   height: 20px;
-  width: 20px;
+  width: 11px;
 `
 
 const ButtonIcon = styled.div`
@@ -82,15 +85,15 @@ const ButtonIcon = styled.div`
 `
 
 const Index = styled.div`
-  font-size: ${props => props.theme.fonts.card.index};
+  font-size: ${props => props.theme.fonts.text.tiny};
   height: 20px;
-  line-height: 20px;
-  padding: 0 5px;
+  line-height: 22px;
+  padding: 0 10px;
   pointer-events: none;
   user-select: none;
 `
 
-const Anchor = Button.withComponent('a')
+const Anchor = TextButton.withComponent('a')
 
 class PTIGuide extends Component<Props, void> {
   constructor (props) {
@@ -129,10 +132,10 @@ class PTIGuide extends Component<Props, void> {
           <List page={this.state.page}>
             <Item active={this.state.page === 0}>
               <Header>
-                <CardTitle>What is PTI?</CardTitle>
+                <Title accent>What is PTI?</Title>
                 <Subtitle tiny>
                   <AlertIcon>
-                    <SVGIcon color="purple" icon="icon-alert" />
+                    <SVGIcon icon="icon-alert" />
                   </AlertIcon>
                   Suggested reading before you upload any content
                 </Subtitle>
@@ -141,14 +144,14 @@ class PTIGuide extends Component<Props, void> {
                 <PTIGuideSvg />
               </Icon>
               <Content>
-                <ContentTitle big purple>
+                <ContentTitle big warn>
                   Discover how to use your PTI
                 </ContentTitle>
               </Content>
             </Item>
             <Item active={this.state.page === 1}>
               <Header>
-                <CardTitle>PTI Guide</CardTitle>
+                <Title accent>PTI Guide</Title>
               </Header>
               <Content>
                 <TextStrong>
@@ -169,7 +172,7 @@ class PTIGuide extends Component<Props, void> {
             </Item>
             <Item active={this.state.page === 2}>
               <Header>
-                <CardTitle>PTI Guide</CardTitle>
+                <Title accent>PTI Guide</Title>
               </Header>
               <Content>
                 <TextStrong>
@@ -192,7 +195,7 @@ class PTIGuide extends Component<Props, void> {
             </Item>
             <Item active={this.state.page === 3}>
               <Header>
-                <CardTitle>PTI Guide</CardTitle>
+                <Title accent>PTI Guide</Title>
               </Header>
               <Content>
                 <TextStrong>
@@ -214,7 +217,7 @@ class PTIGuide extends Component<Props, void> {
             </Item>
             <Item active={this.state.page === 4}>
               <Header>
-                <CardTitle>PTI Guide</CardTitle>
+                <Title accent>PTI Guide</Title>
               </Header>
               <Content>
                 <TextStrong>
@@ -232,7 +235,7 @@ class PTIGuide extends Component<Props, void> {
                   set itself, don&apos;t hesitate to{' '}
                   <Anchor
                     anchor
-                    purple
+                    accent
                     href="mailto:we@paratii.video"
                     target="_blank"
                   >

@@ -28,10 +28,10 @@ const Wrapper = styled.div`
 
 const Header = styled.div`
   align-items: center;
-  background: ${props => props.theme.colors.LandingPage.headerBackground}
+  background: ${props => props.theme.colors.background.primary}
     url(${props => props.background}) no-repeat 50%;
   background-size: cover;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: ${props => props.theme.colors.LandingPage.secondary};
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - (${MAINHEADER_LOGO_HEIGHT} * 2));
@@ -65,9 +65,9 @@ const HeaderLinkWrapper = styled.div`
 
 const VideoLink = styled(Link)`
   ${ButtonStyleHover} align-items: center;
-  background: ${props => props.theme.colors.LandingPage.VideoLinkBackground};
+  background: ${props => props.theme.colors.background.body};
   border-radius: 4px;
-  color: ${props => props.theme.colors.LandingPage.VideoLinkColor};
+  color: ${props => props.theme.colors.button.color};
   display: flex;
   font-size: 1rem;
   font-weight: ${props => props.theme.fonts.weight.bold};
@@ -94,11 +94,10 @@ const HeaderContent = styled.div`
   width: 100%;
 
   &::before {
-    background: ${props =>
-    props.theme.colors.LandingPage.headerContentBackground};
+    background: ${props => props.theme.colors.background.transparent};
     border-radius: 5px;
     box-shadow: inset 0 0 200px
-      ${props => props.theme.colors.LandingPage.headerContentBackgroundShadow};
+      ${props => props.theme.colors.background.secondary};
     content: '';
     height: 100%;
     left: 50%;
@@ -190,7 +189,7 @@ const LandingVideoItem = styled.article`
 `
 
 const LandingVideoItemBackground = styled.div`
-  background: ${props => props.theme.colors.LandingPage.listItemBackground}
+  background: ${props => props.theme.colors.background.primary}
     url(${props => props.background}) no-repeat 50%;
   background-size: cover;
   height: 100%;
@@ -225,15 +224,15 @@ const LandingVideoItemTitle = styled(Text)`
 
 const LandingVideoItemTimeText = styled(Text)`
   justify-content: center;
-  background: ${props => props.theme.colors.LandingPage.listItemTimeBackground};
+  background: ${props => props.theme.colors.background.transparent};
   border-radius: 4px;
-  color: ${props => props.theme.colors.LandingPage.listItemTimeColor};
   display: flex;
   padding: 4px 6px 2px;
   text-align: center;
 `
 
 const LandingVideoItemIcon = styled.div`
+  color: ${props => props.theme.colors.text.accent};
   height: 20px;
   left: 50%;
   margin: -10px 0 0 -10px;
@@ -249,7 +248,7 @@ const LandingVideoItemIcon = styled.div`
 
 class Landing extends Component<Props, void> {
   headerVideosList: Array
-  headerVideo: String
+  headerVideo: string
   videosList: Array
 
   constructor (props: Props) {
@@ -384,10 +383,10 @@ class Landing extends Component<Props, void> {
           <HeaderWrapper>
             <HeaderContent>
               <HeaderContentWrapper>
-                <Title huge bold>
+                <Title huge bold accent>
                   <TranslatedText message="landingPage.header.title_html" />
                 </Title>
-                <HeaderText big>
+                <HeaderText big primary>
                   <TranslatedText message="landingPage.header.description" />
                 </HeaderText>
                 <FilesUploader white />
@@ -404,7 +403,7 @@ class Landing extends Component<Props, void> {
         <Videos>
           <VideosWrapper>
             <VideosHeader>
-              <Title big>
+              <Title big accent>
                 <TranslatedText message="landingPage.videos.title" />
               </Title>
               <Text gray>
@@ -419,14 +418,14 @@ class Landing extends Component<Props, void> {
                       background={'/assets/img/landing/small/' + item.image}
                     />
                     <LandingVideoItemLink to={item.url}>
-                      <LandingVideoItemTitle small bold>
+                      <LandingVideoItemTitle small bold accent>
                         <TruncatedText>{item.title}</TruncatedText>
                       </LandingVideoItemTitle>
-                      <LandingVideoItemTimeText tiny>
+                      <LandingVideoItemTimeText tiny accent>
                         {item.time}
                       </LandingVideoItemTimeText>
                       <LandingVideoItemIcon>
-                        <SVGIcon color="white" icon="icon-player-play" />
+                        <SVGIcon icon="icon-player-play" />
                       </LandingVideoItemIcon>
                     </LandingVideoItemLink>
                   </LandingVideoItem>

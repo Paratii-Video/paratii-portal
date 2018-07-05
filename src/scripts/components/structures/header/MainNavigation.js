@@ -4,8 +4,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { MEDIAQUERY_BREAKPOINT } from 'constants/UIConstants'
-import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
-import Button, { ButtonColor } from 'components/foundations/Button'
+import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import Hidden from 'components/foundations/Hidden'
 import TranslatedText from 'components/translations/TranslatedText'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
@@ -39,17 +39,17 @@ const NavItem = styled.li`
   }
 `
 
-const StyleNavLink = Button.extend`
-  font-size: 14px;
+const NavStyled = TextButton.extend`
   font-weight: ${props => props.theme.fonts.weight.regular};
   text-transform: initial;
 `
 
-const NavLink = StyleNavLink.withComponent(Link)
+const NavLink = NavStyled.withComponent(Link)
 
-const Anchor = StyleNavLink.withComponent('a')
+const Anchor = NavStyled.withComponent('a')
 
 class MainNavigation extends Component<Props, Object> {
+  main: Array
   secureWallet: (e: Object) => void
 
   constructor (props: Props) {
@@ -64,8 +64,6 @@ class MainNavigation extends Component<Props, Object> {
   }
 
   render () {
-    const walletStringSecure: ?string = localStorage.getItem(WALLET_KEY_SECURE)
-
     return (
       <Nav>
         <NavList>
@@ -101,17 +99,13 @@ class MainNavigation extends Component<Props, Object> {
 
           {!this.props.isWalletSecured ? (
             <NavItem>
-              <ButtonColor
+              <Button
                 data-test-id="login-signup"
                 onClick={this.secureWallet}
                 to="#"
               >
-                {walletStringSecure ? (
-                  <TranslatedText message="navigation.logIn" />
-                ) : (
-                  <TranslatedText message="navigation.signUp" />
-                )}
-              </ButtonColor>
+                <TranslatedText message="navigation.logIn" />
+              </Button>
             </NavItem>
           ) : (
             <NavItem>

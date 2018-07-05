@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import TextField from 'components/widgets/forms/TextField'
 import TranslatedText from 'components/translations/TranslatedText'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
@@ -84,10 +84,10 @@ class ModalRestoreAccount extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>
+          <Title accent>
             <TranslatedText message="wallet.restoreAccount.title" />
           </Title>
-          <Text small gray>
+          <Text small>
             <TranslatedText message="wallet.restoreAccount.description" />
           </Text>
           <MmenomicForm id={FORM_ID}>
@@ -104,28 +104,28 @@ class ModalRestoreAccount extends Component<Props, Object> {
               margin="0 0 30px"
             />
             {this.state.error && (
-              <Text pink small>
+              <Text error small>
                 {this.state.error}
               </Text>
             )}
           </MmenomicForm>
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.goBack}>
+              <TextButton onClick={this.goBack}>
                 <TranslatedText message="wallet.restoreAccount.goBack" />
-              </Button>
+              </TextButton>
             </ButtonContainer>
             <ButtonContainer>
-              <Button
+              <TextButton
                 data-test-id="restore-wallet"
-                purple
+                accent
                 form={FORM_ID}
                 type="submit"
                 onClick={this.restoreWallet}
                 disabled={!this.state.mnemonic}
               >
                 <TranslatedText message="wallet.restoreAccount.continue" />
-              </Button>
+              </TextButton>
             </ButtonContainer>
           </Footer>
         </ModalScrollContent>

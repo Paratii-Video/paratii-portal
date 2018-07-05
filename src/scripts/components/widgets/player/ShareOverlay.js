@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import RadioCheck, { RadioWrapper } from 'components/widgets/forms/RadioCheck'
@@ -38,7 +38,7 @@ const Z_INDEX_ARROWBUTTON: number = 2
 const Z_INDEX_CLOSEBUTTON: number = 3
 
 const Wrapper = styled.div`
-  background-color: ${props => props.theme.colors.VideoPlayer.share.background};
+  background-color: ${props => props.theme.colors.background.transparent};
   height: 100%;
   left: 0;
   opacity: ${props => (props.show ? 1 : 0)};
@@ -51,7 +51,7 @@ const Wrapper = styled.div`
   z-index: 15;
 `
 
-const ArrowButton = styled(Button)`
+const ArrowButton = styled(TextButton)`
   height: 20px;
   left: 30px;
   opacity: ${props => (props.show ? 1 : 0)};
@@ -69,7 +69,7 @@ const ArrowButtonIcon = styled.div`
   width: 100%;
 `
 
-const CloseButton = Button.extend`
+const CloseButton = TextButton.extend`
   height: 20px;
   position: absolute;
   right: 30px;
@@ -118,7 +118,7 @@ const ShareContent = styled.div`
   width: 100%;
 `
 
-const CopyEmbed = Button.extend`
+const CopyEmbed = TextButton.extend`
   font-size: ${props => props.theme.fonts.text.small};
   font-weight: ${props => props.theme.fonts.weight.bold};
   overflow-wrap: break-word;
@@ -156,7 +156,7 @@ const ShareButtons = styled.div`
   }
 `
 
-const ShareLink = Button.extend`
+const ShareLink = TextButton.extend`
   height: 30px;
   margin: 0 5px;
   width: 30px;
@@ -165,7 +165,7 @@ const ShareLink = Button.extend`
 const Anchor = ShareLink.withComponent('a')
 
 const AnchorLink = Anchor.extend`
-  font-size: ${props => props.theme.fonts.video.share.link};
+  font-size: ${props => props.theme.fonts.title.small};
   padding: 0 10%;
   text-align: center;
   width: 100%;
@@ -297,6 +297,7 @@ class ShareOverlay extends Component<Props, State> {
     return (
       <Wrapper data-test-id="share-overlay" show={this.props.show}>
         <ArrowButton
+          warn
           show={this.state.showEmbed}
           onClick={this.toggleShareContent}
         >
@@ -307,11 +308,12 @@ class ShareOverlay extends Component<Props, State> {
         <CloseButton
           data-test-id="share-close-button"
           onClick={this.props.onToggle}
+          warn
         >
-          <SVGIcon color="white" icon="icon-close" />
+          <SVGIcon icon="icon-close" />
         </CloseButton>
         <Content show={!this.state.showEmbed}>
-          <ShareTitle small>
+          <ShareTitle small accent>
             <TranslatedText message="player.share.title" />
           </ShareTitle>
           <AnchorLink
@@ -319,7 +321,7 @@ class ShareOverlay extends Component<Props, State> {
             href={this.getUrl()}
             target="_blank"
             anchor
-            white
+            warn
           >
             {this.props.videoLabelUrl}
           </AnchorLink>
@@ -340,6 +342,7 @@ class ShareOverlay extends Component<Props, State> {
                 </Anchor>
               ))}
             <ShareLink
+              warn
               onClick={this.toggleShareContent}
               title={RawTranslatedText({
                 message: 'player.share.options.embed'
@@ -350,11 +353,11 @@ class ShareOverlay extends Component<Props, State> {
           </ShareButtons>
         </Content>
         <Content show={this.state.showEmbed}>
-          <ShareTitle small>
+          <ShareTitle small accent>
             <TranslatedText message="player.share.embedVideo" />
           </ShareTitle>
           <ShareContent>
-            <CopyEmbed anchor white onClick={this.copyCodeToClipboard}>
+            <CopyEmbed anchor warn onClick={this.copyCodeToClipboard}>
               {this.getEmbedCode()}
             </CopyEmbed>
           </ShareContent>
