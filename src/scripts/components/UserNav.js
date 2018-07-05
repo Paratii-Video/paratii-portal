@@ -16,6 +16,7 @@ import {
 } from '../constants/UIConstants'
 import { Link } from 'react-router-dom'
 import Text from './foundations/Text'
+import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
 import UserBadge from './widgets/UserBadge'
 import TranslatedText from './translations/TranslatedText'
@@ -34,7 +35,7 @@ type Props = {
 }
 
 const Wrapper = styled.div`
-  background: ${props => props.theme.colors.UserNav.background};
+  background: ${props => props.theme.colors.background.primary};
   box-shadow: -11px 0 40px rgba(0, 0, 0, 0.7);
   height: 100%;
   left: 0;
@@ -54,7 +55,6 @@ const Wrapper = styled.div`
 
 // User
 const UserWrapper = styled.div`
-  background: ${props => props.theme.colors.UserNav.Userbackground};
   display: flex;
   flex-direction: column;
   margin-top: ${MAINHEADER_LOGO_HEIGHT};
@@ -78,13 +78,12 @@ const UserPTIValue = styled.div`
 
 const UserPTIValueBox = styled.div`
   align-items: center;
-  background-color: ${props => props.theme.colors.UserNav.UserPTIValueBox};
+  background-color: ${props => props.theme.colors.background.tertiary};
   border-radius: ${BORDER_RADIUS};
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 90px;
-  padding: 14px 14px 16px;
+  padding: 14px;
 `
 
 const UserPTIBarWrapper = styled.div`
@@ -96,9 +95,7 @@ const UserPTIBarWrapper = styled.div`
 
 const UserPTIBar = styled.div`
   background: ${props =>
-    props.red
-      ? props.theme.colors.UserNav.UserPTIBarTwo
-      : props.theme.colors.UserNav.UserPTIBarOne};
+    props.red ? props.theme.colors.text.error : props.theme.colors.text.warn};
   flex: 1 1 ${props => props.percentage};
   height: 100%;
   text-align: center;
@@ -122,25 +119,26 @@ const UserNavList = styled.ul`
 `
 
 const UserNavListItem = styled.li`
-  background-color: ${props => props.theme.colors.UserNav.Navigation};
+  opacity: 1;
 `
 
 const UserNavListItemStyle = css`
   align-items: center;
-  color: ${props => props.theme.colors.UserNav.NavigationText};
   display: flex;
+  font-size: ${props => props.theme.fonts.text.main};
+  font-weight: ${props => props.theme.fonts.weight.regular};
   padding: 25px 30px;
+  text-transform: initial;
 `
 
 const UserNavListItemNoLink = styled.div`
   ${UserNavListItemStyle};
 `
 
-const UserNavListItemLink = styled(Link)`
-  ${UserNavListItemStyle} transition: opacity .3s;
-  &:hover {
-    opacity: 0.5;
-  }
+const UserTextButton = TextButton.withComponent(Link)
+
+const UserNavListItemLink = styled(UserTextButton)`
+  ${UserNavListItemStyle};
 `
 
 const UserNavListItemIcon = styled.span`
@@ -155,7 +153,7 @@ const UserSubNavList = styled.ul`
 `
 
 const UserSubNavListItem = styled.li`
-  background-color: ${props => props.theme.colors.UserNav.SubNavigation};
+  background-color: ${props => props.theme.colors.background.tertiary};
 `
 
 const UserSubNavListItemLink = styled(Link)`
@@ -221,30 +219,30 @@ class UserNav extends Component<Props, Object> {
           <UserPTI>
             <UserPTIValuesWrapper>
               <UserPTIValue>
-                <Text gray tiny>
+                <Text secondary small>
                   <TranslatedText message="userNav.leftBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text purple>{formattedBalance} PTI</Text>
+                  <Text warn>{formattedBalance} PTI</Text>
                 </UserPTIValueBox>
               </UserPTIValue>
               <UserPTIValue>
-                <Text gray tiny>
+                <Text secondary small>
                   <TranslatedText message="userNav.rightBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text pink>{formattedStakedPTI} PTI</Text>
+                  <Text error>{formattedStakedPTI} PTI</Text>
                 </UserPTIValueBox>
               </UserPTIValue>
             </UserPTIValuesWrapper>
             <UserPTIBarWrapper>
               <UserPTIBar percentage={percentagePTI}>
-                <UserPTIBarText purple tiny>
+                <UserPTIBarText warn tiny>
                   {percentagePTI}
                 </UserPTIBarText>
               </UserPTIBar>
               <UserPTIBar red percentage={percentageStaked}>
-                <UserPTIBarText pink tiny>
+                <UserPTIBarText error tiny>
                   {percentageStaked}
                 </UserPTIBarText>
               </UserPTIBar>
