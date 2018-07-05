@@ -8,9 +8,6 @@ const Sizes = {
     width: '98px'
   },
   searchInputButton: '17px',
-  card: {
-    padding: '40px 42px'
-  },
   mainInput: {
     height: '38px'
   },

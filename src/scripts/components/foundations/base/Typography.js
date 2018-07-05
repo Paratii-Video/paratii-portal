@@ -8,7 +8,11 @@ const Typography = {
     bold: 700
   },
   anchor: '0.75rem',
-  button: '0.8rem',
+  button: {
+    big: '1rem',
+    main: '0.82rem',
+    small: '0.75rem'
+  },
   footer: {
     text: '0.7rem'
   },
@@ -32,7 +36,6 @@ const Typography = {
       subtitle: '0.8rem'
     },
     info: {
-      time: '0.8rem',
       progress: '0.8rem',
       percentual: '0.7rem'
     },
@@ -42,7 +45,6 @@ const Typography = {
       status: '0.8rem'
     },
     share: {
-      title: '1.5rem',
       link: '1.3rem'
     },
     quality: {

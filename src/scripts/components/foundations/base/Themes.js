@@ -4,51 +4,73 @@ import Colors from 'components/foundations/base/Colors'
 
 const Themes = {
   dark: {
-    body: {
-      background: Colors.grayDark,
-      color: Colors.grayLight,
-      primary: Colors.purple
-    },
-    header: {
-      background: Colors.blackAlt,
-      icon: Colors.grayLight,
-      logo: Colors.white
-    },
-    footer: {
-      background: Colors.black,
-      color: Colors.white,
-      color2: Colors.grayLight,
-      logoFill: Colors.white
+    background: {
+      body: Colors.grayDark,
+      primary: Colors.blackAlt,
+      secondary: Colors.blackDark,
+      tertiary: Colors.blackLight,
+      transparent: Colors.blackTransparent
     },
     button: {
-      from: Colors.purpleGradientFrom,
-      top: Colors.purpleGradientTo,
-      white: Colors.white,
-      gray: Colors.gray,
-      purple: Colors.purple,
-      pink: Colors.pink,
-      green: Colors.green,
-      shadow: '0 3px 6px rgba(0, 0, 0, 0.2)'
+      color: Colors.white,
+      primary: Colors.grayAlt,
+      accent: Colors.purple,
+      warn: Colors.white,
+      primaryFrom: Colors.purpleGradientFrom,
+      primaryTo: Colors.purpleGradientTo,
+      accentFrom: Colors.greenGradientFrom,
+      accentTo: Colors.greenGradientTo,
+      warnFrom: Colors.redGradientFrom,
+      warnTo: Colors.redGradientTo,
+      shadow: '0 1px 6px rgba(0, 0, 0, 0.2)'
+    },
+    text: {
+      primary: Colors.grayLight,
+      secondary: Colors.gray,
+      accent: Colors.white,
+      warn: Colors.purple,
+      error: Colors.red
+    },
+    header: {
+      logo: Colors.white,
+      shadow: '0 0 20px rgba(0,0,0,0.16)'
+    },
+    footer: {
+      logo: Colors.white
+    },
+    LandingPage: {
+      headerShadow: '0 4px 20px rgba(0, 0, 0, 0.5)'
+    },
+    Card: {
+      shadow: '0 0 6px rgba(0, 0, 0, 0.2)'
     },
     Modal: {
-      background: Colors.blackLight,
-      content: Colors.blackDark,
-      close: Colors.grayLight,
-      title: Colors.purple,
-      hightlight: Colors.white,
-      color: Colors.grayLight
+      shadow: '0 0 6px rgba(0, 0, 0, 0.2)'
+    },
+    TextField: {
+      border: Colors.grayLight,
+      borderFocus: Colors.purple,
+      color: Colors.grayLight,
+      placeholder: Colors.grayLight,
+      error: Colors.pink
+    },
+    VideoPlayer: {
+      header: {
+        title: Colors.white,
+        icons: Colors.white
+      },
+      controls: {
+        time: Colors.white
+      },
+      levels: {
+        color: Colors.white,
+        selectedBackground: Colors.blackDark
+      }
     },
     Popover: {
       background: Colors.blackLightTransparent,
       color: Colors.white,
       shadow: '0 3px 6px rgba(32, 35, 46, 0.7)'
-    },
-    TextField: {
-      border: Colors.grayLight,
-      borderFocus: Colors.purple,
-      color: Colors.gray,
-      placeholder: Colors.grayLight,
-      error: Colors.pink
     },
     Radio: {
       title: Colors.grayLight,
@@ -56,44 +78,9 @@ const Themes = {
       border: Colors.grayLight,
       active: Colors.purple
     },
-    MainCard: {
-      background: Colors.black,
-      border: Colors.grayDark,
-      color: Colors.white,
-      title: Colors.white,
-      subtitle: Colors.white,
-      subtitleIcon: Colors.purple,
-      footer: {
-        background: Colors.blackDark,
-        color: Colors.grayLight
-      }
-    },
-    FilesUploader: {
-      drag: {
-        background: Colors.black,
-        color: Colors.purple,
-        color2: Colors.grayLight,
-        info: Colors.purple,
-        enter: Colors.blackTransparent
-      },
-      input: {
-        background: Colors.blackDark,
-        color: Colors.purple
-      },
-      supportedFileTypes: {
-        color: Colors.grayLight
-      }
-    },
-    VideoList: {
-      selectedBackground: Colors.blackLight,
-      title: Colors.purple,
-      filename: Colors.white,
-      status: Colors.grayLight,
-      done: Colors.purple
-    },
     VideoForm: {
       header: {
-        border: Colors.grayMedium,
+        border: Colors.blackAlt,
         title: Colors.white,
         subtitle: Colors.grayLight,
         subtitle2: Colors.purple
@@ -123,24 +110,6 @@ const Themes = {
       scrubber: Colors.white,
       base: Colors.gray,
       buffer: Colors.grayLight
-    },
-    VideoPlayer: {
-      background: Colors.black,
-      header: {
-        title: Colors.white,
-        icons: Colors.white
-      },
-      controls: {
-        background: 'transparent',
-        time: Colors.white
-      },
-      levels: {
-        color: Colors.white,
-        selectedBackground: Colors.blackDark
-      },
-      share: {
-        background: Colors.blackDarkTransparent
-      }
     },
     VideoDescription: {
       icon: Colors.grayLight
@@ -172,16 +141,6 @@ const Themes = {
       },
       nextButton: Colors.gray
     },
-    UserNav: {
-      background: Colors.black,
-      Userbackground: Colors.blackDark,
-      UserPTIValueBox: Colors.blackLight,
-      UserPTIBarOne: Colors.purple,
-      UserPTIBarTwo: Colors.pink,
-      Navigation: Colors.black,
-      NavigationText: Colors.grayLight,
-      SubNavigation: Colors.blackLight
-    },
     ProfileCuration: {
       ChallengeBackgroundOneFrom: Colors.purpleGradientFrom,
       ChallengeBackgroundOneTo: Colors.purpleGradientTo,
@@ -197,23 +156,10 @@ const Themes = {
       ProfilePictureBackground: Colors.blackAlt,
       filterBackground: Colors.blackDark
     },
-    UploadListItem: {
-      background: Colors.black
-    },
     MyVideoItem: {
       background: Colors.black,
       imageBackground: Colors.blackAlt,
       coverMediaBackground: Colors.blackTransparent
-    },
-    LandingPage: {
-      headerBackground: Colors.blackLight,
-      headerContentBackground: Colors.blackTransparent,
-      headerContentBackgroundShadow: Colors.blackDark,
-      VideoLinkBackground: Colors.grayDark,
-      VideoLinkColor: Colors.white,
-      listItemBackground: Colors.blackAlt,
-      listItemTimeBackground: Colors.blackTransparent,
-      listItemTimeColor: Colors.white
     }
   }
 }

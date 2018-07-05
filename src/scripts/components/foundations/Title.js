@@ -1,33 +1,29 @@
-import styled from 'styled-components'
-import { ColorText } from './Text'
+import styled, { css } from 'styled-components'
+import { TextColor, TextStyle } from './Text'
 
-export default styled.p`
-  ${ColorText} font-size: ${props => {
-  if (props.big) {
-    return props.theme.fonts.title.big
-  } else if (props.bigger) {
-    return props.theme.fonts.title.bigger
-  } else if (props.huge) {
-    return props.theme.fonts.title.huge
-  } else if (props.small) {
-    return props.theme.fonts.title.small
-  } else {
-    return props.theme.fonts.title.main
-  }
-}};
-  font-weight: ${props =>
-    props.bold
-      ? props.theme.fonts.weight.bold
-      : props.theme.fonts.weight.regular};
-  line-height: ${props => {
+export const TitleSize = css`
+  ${props => {
+    let _size: String
+    let _line: String
+
     if (props.big) {
-      return props.theme.fonts.title.bigLineHeight
-    } else if (props.huge) {
-      return props.theme.fonts.title.hugeLineHeight
+      _size = props.theme.fonts.title.big
+      _line = props.theme.fonts.title.bigLineHeight
     } else if (props.small) {
-      return props.theme.fonts.title.smallLineHeight
+      _size = props.theme.fonts.title.small
+      _line = props.theme.fonts.title.smallLineHeight
     } else {
-      return props.theme.fonts.title.mainLineHeight
+      _size = props.theme.fonts.title.main
+      _line = props.theme.fonts.title.mainLineHeight
     }
+
+    return css`
+      font-size: ${_size};
+      line-height: ${_line};
+    `
   }};
+`
+
+export default styled.h1`
+  ${TextColor} ${TextStyle} ${TitleSize};
 `

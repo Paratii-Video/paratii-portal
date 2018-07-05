@@ -9,7 +9,7 @@ const AutofillFix = props => keyframes`
 
 export const StyleFieldText = css`
   background-color: transparent;
-  color: ${props => props.theme.colors.TextField.color};
+  color: ${props => props.theme.colors.text.primary};
   font-family: ${props => props.theme.fonts.family}, sans-serif;
   font-size: ${props => props.theme.fonts.form.input};
   font-weight: ${props => props.theme.fonts.weight.regular};
@@ -26,14 +26,14 @@ export const StyleFieldTextStates = css`
   border-bottom: 1px solid
     ${props =>
     props.error
-      ? props.theme.colors.TextField.error
-      : props.theme.colors.TextField.border};
+      ? props.theme.colors.text.error
+      : props.theme.colors.text.secondary};
   display: block;
-  transition: border-color ${props => props.theme.animation.time.repaint};
+  transition: border-color 0.3s;
   width: 100%;
 
   &:focus {
-    border-color: ${props => props.theme.colors.TextField.borderFocus};
+    border-color: ${props => props.theme.colors.text.warn};
   }
 `
 
