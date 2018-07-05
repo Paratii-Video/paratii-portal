@@ -6,16 +6,15 @@ import { List as ImmutableList } from 'immutable'
 
 import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
+import TextButton from 'components/foundations/TextButton'
 import Text from 'components/foundations/Text'
+import SVGIcon from 'components/foundations/SVGIcon'
 import VolumeBar from 'components/widgets/VolumeBar'
 
 import ProgressBar, {
   ProgressBarWrapper
 } from 'components/foundations/ProgressBar'
 import ProgressIndicator from 'components/widgets/player/ProgressIndicator'
-
-import IconButton from 'components/foundations/buttons/IconButton'
-import Colors from 'components/foundations/base/Colors'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 import {
   CONTROLS_BUTTON_DIMENSION,
@@ -28,13 +27,6 @@ import {
 } from 'constants/UIConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { getFullscreenEnabled } from 'utils/AppUtils'
-
-import playIcon from 'assets/svg/icon-player-play.svg'
-import pauseIcon from 'assets/svg/icon-player-pause.svg'
-import normalscreenIcon from 'assets/img/normalscreen-icon.svg'
-import fullscreenIcon from 'assets/img/fullscreen-icon.svg'
-import qualityIcon from 'assets/img/quality-icon.svg'
-
 import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
 
 type Props = {
@@ -133,7 +125,6 @@ const Controls = styled.div`
   position: relative;
   z-index: ${Z_INDEX_CONTENT};
   align-items: center;
-  background: ${({ theme }) => theme.colors.VideoPlayer.controls.background};
 
   @media (max-width: 768px) {
     height: ${CONTROLS_HEIGHT_TABLET};
@@ -185,7 +176,7 @@ const VolumeBarWrapper = styled.div`
   position: relative;
 `
 
-const ControlButtonWrapper = styled.div`
+const ControlButtonWrapper = TextButton.extend`
   display: flex;
   flex: 0 0 ${CONTROLS_BUTTON_DIMENSION};
   height: ${CONTROLS_BUTTON_DIMENSION};
@@ -351,16 +342,19 @@ class PlayerControls extends Component<Props, State> {
           </ProgressWrapper>
           <ControlButtons>
             <LeftControls>
-              <ControlButtonWrapper>
-                <IconButton
-                  data-test-id="playpause-button"
-                  icon={isPlaying ? pauseIcon : playIcon}
-                  onClick={togglePlayPause}
+              <ControlButtonWrapper
+                warn
+                data-test-id="playpause-button"
+                onClick={togglePlayPause}
+              >
+                <SVGIcon
+                  icon={isPlaying ? 'icon-player-pause' : 'icon-player-play'}
                 />
               </ControlButtonWrapper>
               <Time>
                 <Text
                   small
+                  accent
                 >{`${formattedCurrentTime} / ${formattedDuration}`}</Text>
               </Time>
               <VolumeBarWrapper>
@@ -372,29 +366,31 @@ class PlayerControls extends Component<Props, State> {
               </VolumeBarWrapper>
             </LeftControls>
             <RightControls>
-              <ControlButtonWrapper>
-                <IconButton
-                  color={
-                    activePlugin === PLAYER_PLUGIN.PLAYBACK_LEVELS
-                      ? Colors.purple
-                      : undefined
-                  }
-                  data-test-id="playback-levels-button"
-                  disabled={!playbackLevels.size}
-                  icon={qualityIcon}
-                  onClick={() => {
-                    toggleActivePlugin(PLAYER_PLUGIN.PLAYBACK_LEVELS)
-                  }}
-                />
+              <ControlButtonWrapper
+                accent={activePlugin === PLAYER_PLUGIN.PLAYBACK_LEVELS}
+                warn={activePlugin !== PLAYER_PLUGIN.PLAYBACK_LEVELS}
+                data-test-id="playback-levels-button"
+                disabled={!playbackLevels.size}
+                onClick={() => {
+                  toggleActivePlugin(PLAYER_PLUGIN.PLAYBACK_LEVELS)
+                }}
+              >
+                <SVGIcon icon="icon-settings" />
               </ControlButtonWrapper>
               {getFullscreenEnabled() && (
-                <ControlButtonWrapper>
-                  <IconButton
-                    data-test-id="fullscreen-button"
-                    icon={isFullscreen ? normalscreenIcon : fullscreenIcon}
-                    onClick={() => {
-                      toggleFullscreen(!isFullscreen)
-                    }}
+                <ControlButtonWrapper
+                  warn
+                  data-test-id="fullscreen-button"
+                  onClick={() => {
+                    toggleFullscreen(!isFullscreen)
+                  }}
+                >
+                  <SVGIcon
+                    icon={
+                      isFullscreen
+                        ? 'icon-player-normalscreen'
+                        : 'icon-player-fullscreen'
+                    }
                   />
                 </ControlButtonWrapper>
               )}
