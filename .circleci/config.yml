@@ -18,6 +18,9 @@ jobs:
       - run: yarn run quality
       - run: yarn run unit-test-circleci
       - run:
+          command: mongod
+          background: true
+      - run:
           command: yarn run parity
           background: true
       - run:
