@@ -49,7 +49,6 @@ const NavLink = NavStyled.withComponent(Link)
 const Anchor = NavStyled.withComponent('a')
 
 class MainNavigation extends Component<Props, Object> {
-  main: Array
   secureWallet: (e: Object) => void
 
   constructor (props: Props) {
