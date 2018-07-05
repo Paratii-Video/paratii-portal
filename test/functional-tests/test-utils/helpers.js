@@ -60,41 +60,6 @@ export const SEED =
 export const USERADDRESS = '0xdef933d2d0203821af2a1579d77fb42b4f8dcf7b'
 
 testConfig.eth.registryAddress = registryAddressConfig.registryAddress
-// testConfig.eth.tcrConfig = {
-//   'paramDefaults': {
-//     'minDeposit': 5,
-//     'pMinDeposit': 100,
-//     'applyStageLength': 0, // we set apply stage to 0 in Paratii
-//     'pApplyStageLength': 0,
-//     'commitStageLength': 600,
-//     'pCommitStageLength': 1200,
-//     'revealStageLength': 600,
-//     'pRevealStageLength': 1200,
-//     'dispensationPct': 50,
-//     'pDispensationPct': 50,
-//     'voteQuorum': 50,
-//     'pVoteQuorum': 50
-//   },
-//   'name': 'The TestChain Registry',
-//   'token': {
-//     'address': '0x337cDDa6D41A327c5ad456166CCB781a9722AFf9',
-//     'deployToken': true,
-//     'decimals': '18',
-//     'name': 'TestCoin',
-//     'symbol': 'TEST',
-//     'supply': '1000000000000000000000000000',
-//     'tokenHolders': [
-//       { 'address': '0x627306090abaB3A6e1400e9345bC60c78a8BEf57',
-//         'amount': '250000000000000000000000000' },
-//       { 'address': '0xf17f52151EbEF6C7334FAD080c5704D77216b732',
-//         'amount': '250000000000000000000000000' },
-//       { 'address': '0xC5fdf4076b8F3A5357c5E395ab970B5B54098Fef',
-//         'amount': '250000000000000000000000000' },
-//       { 'address': '0x821aEa9a577a9b44299B9c15c88cf3087F3b5544',
-//         'amount': '250000000000000000000000000' }
-//     ]
-//   }
-// }
 
 export const paratii = new Paratii({
   ...testConfig
@@ -144,63 +109,7 @@ export async function getAccountFromBrowser () {
   })
   return result.value
 }
-//
-// export function login (browser, password = 'password') {
-//   browser.execute(function (loginPassword) {
-//     Meteor.loginWithPassword('guildenstern@rosencrantz.com', loginPassword)
-//   }, password)
-// }
-//
-// export function logout (browser) {
-//   browser.execute(function () {
-//     Meteor.logout()
-//   })
-// }
-//
-// export function createUserAndLogin (browser) {
-//   let userId = server.execute(createUser)voucherAmount11
-//   browser.execute(createKeystore, null, userId)
-//   browser.waitUntil(function () {
-//     return browser.execute(function (userId) {
-//       return localStorage.getItem(`keystore-${userId}`)
-//     }, userId).value
-//   })
-//   login(browser)
-//   waitForUserIsLoggedIn(browser)
-//
-//   // set the user's account to that of the wallet -
-//   // TODO: this should be done on login, automagically, I suppose
-//
-//   // account is the address generated from the keystore
-//   browser.waitUntil(function () {
-//     let account = getEthAccountFromApp()
-//     return account
-//   })
-//   let account = getEthAccountFromApp()
-//   server.execute(function (userId, account) {
-//     Meteor.users.update(userId, {$set: { 'profile.ptiAddress': account }})
-//   }, userId, account)
-//   return account
-// }
-//
 
-// export function assertUserIsLoggedIn (browser) {
-//   // assert that the user is logged in
-//   let userId = browser.execute(function () {
-//     return Meteor.userId()
-//   }).value
-//   assert.isOk(userId)
-// }
-//
-// export function waitForUserIsLoggedIn (browser) {
-//   // wait until the user is logged in
-//   browser.waitUntil(function () {
-//     return browser.execute(function () {
-//       return Meteor.userId()
-//     }).value
-//   })
-// }
-//
 export function waitForKeystore (browser, key = 'keystore-anon') {
   browser.waitUntil(function () {
     return browser.execute(function (key) {
@@ -211,76 +120,7 @@ export function waitForKeystore (browser, key = 'keystore-anon') {
     return localStorage.getItem(key)
   }, key).value
 }
-// export function assertUserIsNotLoggedIn (browser) {
-//   // assert that the user is logged in
-//   let userId = browser.execute(function () {
-//     return Meteor.userId()
-//   }).value
-//   assert.isNotOk(userId)
-// }
-//
-// export function getEthAccountFromApp () {
-//   return browser.execute(function () {
-//     const users = require('./imports/api/users.js')
-//     let address = users.getUserPTIAddress()
-//     return address
-//   }).value
-// }
-//
-// export function getAnonymousAddress () {
-//   return browser.execute(function () {
-//     const wallet = require('./imports/lib/ethereum/wallet.js')
-//     const keystore = wallet.getKeystore('anonymous')
-//     return keystore.getAddresses()[0]
-//   }).value
-// }
-//
-// export function createAnonymousAddress () {
-//   return browser.execute(function () {
-//     const wallet = require('./imports/lib/ethereum/wallet.js')
-//     wallet.createAnonymousKeystoreIfNotExists()
-//   }).value
-// }
-//
-// export function getRegistryAddressFromBrowser () {
-//   return browser.executeAsync(async function (done) {
-//     const contracts = require('./imports/lib/ethereum/contracts.js')
-//     return done(await contracts.getRegistryAddress())
-//   })
-// }
-//
 
-// export async function getOrDeployParatiiContracts (server, browser) {
-//   let contracts
-//   let paratiiRegistryAddress = await server.execute(function () {
-//     return Meteor.settings.public.ParatiiRegistry
-//   })
-//   if (paratiiRegistryAddress) {
-//     paratii = new Paratii({
-//       provider: 'http://127.0.0.1:8545',
-//       registryAddress: paratiiRegistryAddress
-//     })
-//
-//     setRegistryAddress(browser, paratiiRegistryAddress)
-//     contracts = await paratii.eth.getContracts()
-//   } else {
-//     contracts = await paratii.eth.deployContracts()
-//     setRegistryAddress(browser, contracts.ParatiiRegistry.address)
-//   }
-//   return contracts
-// }
-//
-// export function createUser () {
-//   return Accounts.createUser({
-//     email: 'guildenstern@rosencrantz.com',
-//     password: 'password',
-//     profile: {
-//       name: 'foobar baz',
-//       image: 'https://google.com/images/stock.jpg'
-//     }
-//   })
-// }
-//
 export function createKeystore (userpassword = password) {
   browser.execute(function (userpassword) {
     window.paratii.eth.wallet.clear()
@@ -298,74 +138,6 @@ export function createKeystore (userpassword = password) {
 export function clearUserKeystoreFromLocalStorage () {
   localStorage.removeItem(`keystore-secure`)
 }
-//
-// // export function createVideo (id, title, price) {
-// //   const video = {
-// //     id: id,
-// //     title: title,
-// //     price: price,
-// //     src: 'https://raw.githubusercontent.com/Paratii-Video/paratiisite/master/imagens/Paratii_UI_v5_mobile.webm',
-// //     mimetype: 'video/mp4',
-// //     stats: {
-// //       likes: 150,
-// //       dislikes: 10
-// //     }
-// //   }
-// //   Meteor.call('videos.create', video)
-// // }
-//
-// export function createVideo (id, title, description, uploaderName, tags, price) {
-//   const video = {
-//     id: id,
-//     title: title,
-//     price: price,
-//     description: description,
-//     uploader: {
-//       name: uploaderName
-//     },
-//     tags: tags,
-//     src: 'https://raw.githubusercontent.com/Paratii-Video/paratiisite/master/imagens/Paratii_UI_v5_mobile.webm',
-//     mimetype: 'video/mp4',
-//     stats: {
-//       likes: 0,
-//       likers: [],
-//       dislikes: 0,
-//       dislikers: []
-//     }
-//   }
-//   Meteor.call('videos.create', video)
-// }
-//
-// export function createPlaylist (id, title, videos) {
-//   const playlist = {
-//     id: id,
-//     title: title,
-//     description: 'A playlist for tests!',
-//     url: 'test-playlist',
-//     videos: videos
-//   }
-//   Meteor.call('playlists.create', playlist)
-// }
-//
-// export function mustBeTestChain () {
-//   let host = server.execute(function () { return paratii.web3.currentProvider.host })
-//   let localNodes = 'http://localhost:8545'
-//   if (host !== localNodes) {
-//     let msg = `These tests can only be run on a local test node (e.g. ${localNodes})- your app is using ${host} instead.`
-//     throw Error(msg)
-//   }
-// }
-//
-// export function setRegistryAddress (browser, address) {
-//   // console.log('setting registry address to', address)
-//   global.Meteor = {settings: {public: {ParatiiRegistry: address}}}
-//
-//   browser.execute(function (address) {
-//     const contracts = require('./imports/lib/ethereum/contracts.js')
-//     contracts.setRegistryAddress(address)
-//     Meteor.settings.public.ParatiiRegistry = address
-//   }, address)
-// }
 
 // next line copied from old uploader as a quick workaround to get thetests workign
 export function uploadFilesToIPFS (ipfs, files) {
