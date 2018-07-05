@@ -1,15 +1,23 @@
-// import {
-//   MATH_VIDEO,
-//   DEVCON_VIDEO,
-//   ETHEREUM_VIDEO
-// } from './data/fixtures/videos'
-// import { paratii } from './test-utils/helpers.js'
-
-// import mockEndpoint from '../../mock-server/mockEndpoint'
-
-import SEARCH_RESULTS from './data/fixtures/videos'
-
-// const SEARCH_RESULTS = [MATH_VIDEO, DEVCON_VIDEO, ETHEREUM_VIDEO]
+const [
+  SCIENCE_VIDEO,
+  ,
+  DEVCON_VIDEO,
+  ETHEREUM_VIDEO,
+  SPORTS_VIDEO_1,
+  SPORTS_VIDEO_2,
+  SPORTS_VIDEO_3,
+  SPORTS_VIDEO_4,
+  SPORTS_VIDEO_5,
+  SPORTS_VIDEO_6,
+  SPORTS_VIDEO_7,
+  SPORTS_VIDEO_8,
+  SPORTS_VIDEO_9,
+  SPORTS_VIDEO_10,
+  SPORTS_VIDEO_11,
+  SPORTS_VIDEO_12,
+  SPORTS_VIDEO_13,
+  SPORTS_VIDEO_14
+] = require('./data/fixtures/videos')
 
 describe('🔍 Search:', () => {
   const navigateToSearch = () => browser.url('http://localhost:8080/search')
@@ -26,25 +34,7 @@ describe('🔍 Search:', () => {
   const searchResultDescriptionSelector = `${searchResultSelector} [data-test-id="search-result-description"]`
   const moreResultsButtonSelector = '[data-test-id="more-results-button"]'
 
-  // const mockSearchResponse = ({
-  //   query = '',
-  //   limit = 12,
-  //   offset = 0,
-  //   hasNext = false,
-  //   results = [],
-  //   statusCode = 200
-  // }) => {
-  //   mockEndpoint({
-  //     endpoint: `/api/v1/videos/?keyword=${query}&limit=${limit}&offset=${offset}&staked=true`,
-  //     response: { hasNext, results }
-  //   })
-  // }
-
   before(async () => {
-    // await paratii.vids.create(MATH_VIDEO)
-    // await paratii.vids.create(DEVCON_VIDEO)
-    // await paratii.vids.create(ETHEREUM_VIDEO)
-
     browser.addCommand('waitUntilIsOnSearchRoute', ({ query = '' } = {}) => {
       browser.waitUntil(
         () =>
@@ -81,9 +71,7 @@ describe('🔍 Search:', () => {
               searchResultDescriptionSelector,
               results
             ) => {
-              console.log('results', results)
               const resultsData = JSON.parse(results)
-              console.log('resultsData', resultsData)
               const searchResults = document.querySelectorAll(
                 searchResultSelector
               )
@@ -164,10 +152,6 @@ describe('🔍 Search:', () => {
 
   it('should navigate to the /search route after searching on another page and render no results', () => {
     const query = 'doesnotexist'
-    // mockSearchResponse({
-    //   query,
-    //   results: []
-    // })
 
     browser.url('http://localhost:8080')
 
@@ -181,11 +165,7 @@ describe('🔍 Search:', () => {
   })
 
   it('should navigate to the /search route after searching on another page and render results', () => {
-    const query = 'math'
-    // mockSearchResponse({
-    //   query,
-    //   results: SEARCH_RESULTS
-    // })
+    const query = 'science'
 
     browser.url('http://localhost:8080')
 
@@ -212,11 +192,7 @@ describe('🔍 Search:', () => {
   })
 
   it('should render info about each search result', () => {
-    const query = 'math'
-    // mockSearchResponse({
-    //   query,
-    //   results: SEARCH_RESULTS
-    // })
+    const query = 'ethereum'
 
     navigateToSearch()
 
@@ -227,16 +203,12 @@ describe('🔍 Search:', () => {
     expect(browser.isVisible(enterKeywordsZeroStateSelector)).to.equal(false)
     expect(browser.isVisible(noResultsZeroStateSelector)).to.equal(false)
 
-    browser.validateSearchResults({ results: SEARCH_RESULTS })
+    browser.validateSearchResults({ results: [ETHEREUM_VIDEO, DEVCON_VIDEO] })
     browser.waitUntil(() => !browser.isVisible(moreResultsButtonSelector))
   })
 
   it('should render a default thumbnail url for a search result that is missing thumbnails', () => {
-    const query = 'math'
-    // mockSearchResponse({
-    //   query,
-    //   results: [{ ...MATH_VIDEO, thumbnails: [] }, DEVCON_VIDEO]
-    // })
+    const query = 'science'
 
     navigateToSearch()
 
@@ -259,7 +231,7 @@ describe('🔍 Search:', () => {
               return false
             }
 
-            const searchResult = searchResults[0]
+            const searchResult = searchResults[1]
 
             const thumbnailEl = searchResult.querySelector(
               searchResultThumbnailSelector
@@ -278,11 +250,7 @@ describe('🔍 Search:', () => {
   })
 
   it("should take you to the video's page when a search result is clicked on", () => {
-    const query = 'math'
-    // mockSearchResponse({
-    //   query,
-    //   results: [{ ...MATH_VIDEO, thumbnails: [] }, DEVCON_VIDEO]
-    // })
+    const query = 'science'
 
     navigateToSearch()
 
@@ -295,26 +263,13 @@ describe('🔍 Search:', () => {
       () =>
         browser.execute(
           videoId => window.location.pathname === `/play/${videoId}`,
-          SEARCH_RESULTS[0].id
+          SCIENCE_VIDEO._id
         ).value
     )
   })
 
-  it('should fetch additional search results when there are more results present @watch', () => {
-    const query = 'something'
-
-    // mockSearchResponse({
-    //   query,
-    //   results: SEARCH_RESULTS.slice(0, 2),
-    //   hasNext: true
-    // })
-    //
-    // mockSearchResponse({
-    //   query,
-    //   results: [ETHEREUM_VIDEO],
-    //   offset: 2,
-    //   hasNext: false
-    // })
+  it('should fetch additional search results when there are more results present', () => {
+    const query = 'sports'
 
     browser.url('http://localhost:8080')
 
@@ -327,31 +282,49 @@ describe('🔍 Search:', () => {
     expect(browser.isVisible(enterKeywordsZeroStateSelector)).to.equal(false)
     expect(browser.isVisible(noResultsZeroStateSelector)).to.equal(false)
 
-    browser.waitUntil(
-      () =>
-        browser.execute(
-          searchResultSelector =>
-            document.querySelectorAll(searchResultSelector).length === 2,
-          searchResultSelector
-        ).value,
-      undefined,
-      'Could not verify that two search results appeared'
-    )
-    browser.validateSearchResults({ results: SEARCH_RESULTS.slice(0, 2) })
+    browser.validateSearchResults({
+      results: [
+        SPORTS_VIDEO_1,
+        SPORTS_VIDEO_2,
+        SPORTS_VIDEO_3,
+        SPORTS_VIDEO_4,
+        SPORTS_VIDEO_5,
+        SPORTS_VIDEO_6,
+        SPORTS_VIDEO_7,
+        SPORTS_VIDEO_8,
+        SPORTS_VIDEO_9,
+        SPORTS_VIDEO_10,
+        SPORTS_VIDEO_11,
+        SPORTS_VIDEO_12
+      ]
+    })
+
+    const browserHeight = browser.execute(
+      () => document.body.getBoundingClientRect().height
+    ).value
+
+    browser.scroll(0, browserHeight)
 
     browser.waitAndClick(moreResultsButtonSelector)
 
-    browser.waitUntil(
-      () =>
-        browser.execute(
-          searchResultSelector =>
-            document.querySelectorAll(searchResultSelector).length === 3,
-          searchResultSelector
-        ).value,
-      undefined,
-      'Could not verify that one additional search result appeared'
-    )
-    browser.validateSearchResults({ results: SEARCH_RESULTS })
+    browser.validateSearchResults({
+      results: [
+        SPORTS_VIDEO_1,
+        SPORTS_VIDEO_2,
+        SPORTS_VIDEO_3,
+        SPORTS_VIDEO_4,
+        SPORTS_VIDEO_5,
+        SPORTS_VIDEO_6,
+        SPORTS_VIDEO_7,
+        SPORTS_VIDEO_8,
+        SPORTS_VIDEO_9,
+        SPORTS_VIDEO_10,
+        SPORTS_VIDEO_11,
+        SPORTS_VIDEO_12,
+        SPORTS_VIDEO_13,
+        SPORTS_VIDEO_14
+      ]
+    })
 
     browser.waitUntil(() => !browser.isVisible(moreResultsButtonSelector))
   })
