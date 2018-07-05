@@ -19,9 +19,9 @@ class Video extends ImmutableRecord({
   title: '',
   author: '',
   free: '',
-  // published: '',
   staked: new StakingRecord(),
   whiteListed: true,
+  vote: null,
   storageStatus: new AsyncTaskStatusRecord(),
   transcodingStatus: new AsyncTaskStatusRecord(),
   uploadStatus: new AsyncTaskStatusRecord(),
@@ -41,9 +41,9 @@ class Video extends ImmutableRecord({
   title: string
   author: string
   free: string
-  // published: string
   staked: StakingRecord
   whiteListed: boolean
+  vote: number
   storageStatus: AsyncTaskStatusRecord
   transcodingStatus: AsyncTaskStatusRecord
   uploadStatus: AsyncTaskStatusRecord

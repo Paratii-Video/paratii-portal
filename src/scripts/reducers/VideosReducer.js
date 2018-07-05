@@ -19,7 +19,8 @@ import {
   VIDEOFETCH_ERROR,
   VIDEO_FETCH_SUCCESS,
   VIDEOS_FETCH_SUCCESS,
-  VIDEO_FETCH_WHITELIST
+  VIDEO_FETCH_WHITELIST,
+  VOTE_VIDEO
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
@@ -202,6 +203,15 @@ const reducer = {
       return state
     }
     return state.setIn([payload.id, 'whiteListed'], payload.whiteListed)
+  },
+  [VOTE_VIDEO]: (
+    state: VideoRecordMap,
+    { payload }: Action<{ id: string, vote: number }> = {}
+  ): VideoRecordMap => {
+    if (!payload || !payload.id) {
+      return state
+    }
+    return state.setIn([payload.id, 'vote'], payload.vote)
   },
   [TRANSCODING_REQUESTED]: (
     state: VideoRecordMap,
