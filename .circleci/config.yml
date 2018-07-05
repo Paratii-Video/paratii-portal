@@ -4,6 +4,7 @@ jobs:
     docker:
       - image: leeaandrob/paratii-portal:0.0.6
       - image: circleci/mongo:latest
+        command: [mongod]
     working_directory: ~/repo
     steps:
       - checkout
