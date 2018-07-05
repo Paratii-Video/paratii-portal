@@ -12,7 +12,7 @@ import queryString from 'query-string'
 import { PlaybackLevel } from 'records/PlayerRecords'
 import VideoRecord from 'records/VideoRecords'
 import VideoOverlayContainer from 'containers/VideoOverlayContainer'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
@@ -76,19 +76,20 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  width: ${props => (props.isEmbed ? '100%' : '1280px')};
-  height: ${props => (props.isEmbed ? '100%' : null)};
+  max-width: ${props => (props.isEmbed ? null : '1280px')};
+  height: ${props => (props.isEmbed ? null : null)};
+  width: 100%;
 
   @media (max-width: 1440px) {
-    width: ${props => (props.isEmbed ? null : '1024px')};
+    max-width: ${props => (props.isEmbed ? null : '1024px')};
   }
 
   @media (max-width: 1200px) {
-    width: ${props => (props.isEmbed ? null : '768px')};
+    max-width: ${props => (props.isEmbed ? null : '768px')};
   }
 
   @media (max-width: 930px) {
-    width: 100%;
+    max-width: initial;
   }
 `
 
@@ -123,7 +124,7 @@ const VideoCover = styled.div`
 `
 
 const PlayerWrapper = styled.div`
-  background-color: ${props => props.theme.colors.VideoPlayer.background};
+  background-color: ${props => props.theme.colors.background.primary};
   position: absolute;
   top: 0;
   left: 0;
@@ -157,7 +158,7 @@ const PlayInfoButtons = styled.div`
   margin: 15px 0 15px;
 `
 
-const ButtonIcon = styled(Button)`
+const ButtonIcon = styled(TextButton)`
   display: flex;
   margin-right: 10px;
 `
@@ -832,51 +833,48 @@ class Play extends Component<Props, State> {
             {!isEmbed &&
               video && (
               <PlayInfo>
-                {videoName && <Title small>{videoName}</Title>}
+                {videoName && <Title accent>{videoName}</Title>}
                 {video.author && <Text>By {video.author}</Text>}
                 {video.share && (
                   <PlayInfoButtons>
-                    <ButtonIcon>
+                    <ButtonIcon color>
                       <SVGIcon
-                        color="white"
                         width="20px"
                         height="20px"
                         margin="0 20px 0 0"
                         icon="#icon-play-view"
                       />
-                      <Text small gray>
+                      <Text small accent>
                         <TranslatedText message="player.views.zero" />
                       </Text>
                     </ButtonIcon>
-                    <ButtonIcon>
+                    <ButtonIcon color>
                       <SVGIcon
-                        color="white"
                         width="20px"
                         height="20px"
                         margin="0 20px 0 0"
                         icon="#icon-play-like"
                       />
-                      <Text small gray>
+                      <Text small>
                         <TranslatedText message="player.views.zero" />
                       </Text>
                     </ButtonIcon>
-                    <ButtonIcon>
+                    <ButtonIcon color>
                       <SVGIcon
-                        color="white"
                         width="20px"
                         height="20px"
                         margin="0 20px 0 0"
                         icon="#icon-play-dislike"
                       />
-                      <Text small gray>
+                      <Text small>
                         <TranslatedText message="player.views.zero" />
                       </Text>
                     </ButtonIcon>
                   </PlayInfoButtons>
                 )}
-                <Text gray>
+                <Text>
                     Price{' '}
-                  <PlayInfoHighlight purple>
+                  <PlayInfoHighlight warn>
                     {video.free ? (
                       <TranslatedText message="player.free" />
                     ) : (
