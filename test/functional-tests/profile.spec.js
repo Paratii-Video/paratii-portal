@@ -35,14 +35,14 @@ describe('👤 Profile:', function () {
 
   it('if there is anonymous wallet, in the header we have a signup button', function () {
     const loginText = browser.getText('[data-test-id="login-signup"]')
-    assert.equal(loginText, 'Sign Up')
+    assert.equal(loginText, 'SIGN UP')
   })
 
   it('if there is secure wallet, in the header we have a login button', function () {
     createKeystore()
     browser.url(`http://localhost:8080`)
     const loginText = browser.getText('[data-test-id="login-signup"]')
-    assert.equal(loginText, 'Log In')
+    assert.equal(loginText, 'LOG IN')
   })
 
   // it.skip('send ether dialog works', function () {

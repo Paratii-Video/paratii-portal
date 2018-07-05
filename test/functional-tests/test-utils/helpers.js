@@ -249,7 +249,7 @@ export function createKeystore (userpassword = password) {
   browser.execute(function (userpassword) {
     window.paratii.eth.wallet.clear()
     window.paratii.eth.wallet
-      .create()
+      .createFromMnemonic()
       .then(
         localStorage.setItem(
           'keystore-secure',

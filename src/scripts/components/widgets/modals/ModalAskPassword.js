@@ -1,16 +1,19 @@
 /* @flow */
-import paratii from 'utils/ParatiiLib'
+import paratii, { getSecureWallet } from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import TextField from 'components/widgets/forms/TextField'
 import Button from 'components/foundations/Button'
+import TranslatedText from 'components/translations/TranslatedText'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
 import { MODAL } from 'constants/ModalConstants'
 import {
   WALLET_KEY_SECURE,
   MNEMONIC_KEY_TEMP
 } from 'constants/ParatiiLibConstants'
+import { NOTIFICATION_DELAY_MS } from 'constants/ApplicationConstants'
 
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
@@ -19,6 +22,7 @@ const FORM_ID: string = 'ask-password-form'
 type Props = {
   openModal: string => void,
   closeModal: () => void,
+  onComplete: Function,
   notification: (Object, string) => void,
   setWalletData: Object => void,
   setAddressAndBalance: () => void,
@@ -50,6 +54,10 @@ class ModalAskPassword extends Component<Props, Object> {
   setPassword: () => void
   handleInputChange: (input: string, e: Object) => void
 
+  static defaultProps = {
+    onComplete: () => {}
+  }
+
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -71,42 +79,56 @@ class ModalAskPassword extends Component<Props, Object> {
     sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
     // Decrypt Keystore
     const password = this.state.password
-    const walletString = localStorage.getItem(WALLET_KEY_SECURE) || ''
+    const walletString = getSecureWallet()
     this.props.notification(
-      { title: 'Trying to unlock your keystore...' },
+      { title: <TranslatedText message="wallet.unlockingKeystore" /> },
       'warning'
     )
-    try {
-      paratii.eth.wallet.clear()
-      paratii.eth.wallet.decrypt(JSON.parse(walletString), password)
-      this.props.notification(
-        {
-          title: 'Success!',
-          message: 'Your keystore has been unlocked.'
-        },
-        'success'
-      )
-      // Set the balance
-      this.props.setAddressAndBalance()
-      this.props.setWalletData({ walletKey: WALLET_KEY_SECURE })
-      /// Update user data in redux state
-      this.props.setUserData()
-      // Retrieve your videos
-      this.props.fetchOwnedVideos()
-      this.props.closeModal()
-    } catch (err) {
-      // Password is not valid
-      this.setState({
-        error: 'The password is not valid, please retype the password'
-      })
-      this.props.notification(
-        {
-          title: 'The password is not valid',
-          message: 'Please retype the password.'
-        },
-        'error'
-      )
-    }
+
+    setTimeout(() => {
+      try {
+        paratii.eth.wallet.clear()
+        paratii.eth.wallet.decrypt(JSON.parse(walletString), password)
+        this.props.notification(
+          {
+            title: (
+              <TranslatedText message="wallet.enterPassword.success.title" />
+            ),
+            message: (
+              <TranslatedText message="wallet.enterPassword.success.description" />
+            )
+          },
+          'success'
+        )
+        // Set the balance
+        this.props.setAddressAndBalance()
+        this.props.setWalletData({ walletKey: WALLET_KEY_SECURE })
+        /// Update user data in redux state
+        this.props.setUserData()
+        // Retrieve your videos
+        this.props.fetchOwnedVideos()
+        this.props.onComplete()
+        this.props.closeModal()
+      } catch (err) {
+        // Password is not valid
+        this.setState({
+          error: (
+            <TranslatedText message="wallet.enterPassword.error.formErrorMessage" />
+          )
+        })
+        this.props.notification(
+          {
+            title: (
+              <TranslatedText message="wallet.enterPassword.error.title" />
+            ),
+            message: (
+              <TranslatedText message="wallet.enterPassword.error.description" />
+            )
+          },
+          'error'
+        )
+      }
+    }, NOTIFICATION_DELAY_MS)
   }
 
   handleInputChange (input: string, e: Object) {
@@ -120,14 +142,18 @@ class ModalAskPassword extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Insert your Password</Title>
+          <Title>
+            <TranslatedText message="wallet.enterPassword.title" />
+          </Title>
           <Text small gray>
-            Please insert your password to use all the features of Paratii
+            <TranslatedText message="wallet.enterPassword.description" />
           </Text>
           <FieldContainer id={FORM_ID} onSubmit={this.setPassword}>
             <TextField
               error={this.state.error.length > 0}
-              label="Insert your Password"
+              label={RawTranslatedText({
+                message: 'wallet.enterPassword.inputPlaceholder'
+              })}
               id={'wallet-password'}
               name="wallet-password"
               type="password"
@@ -143,7 +169,12 @@ class ModalAskPassword extends Component<Props, Object> {
           </FieldContainer>
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.forgotPassword}>Forgot Password</Button>
+              <Button
+                data-test-id="forgot-password-button"
+                onClick={this.forgotPassword}
+              >
+                <TranslatedText message="wallet.enterPassword.forgotPassword" />
+              </Button>
             </ButtonContainer>
             <ButtonContainer>
               <Button
@@ -153,7 +184,7 @@ class ModalAskPassword extends Component<Props, Object> {
                 purple
                 disabled={!this.state.password}
               >
-                Continue
+                <TranslatedText message="wallet.enterPassword.continue" />
               </Button>
             </ButtonContainer>
           </Footer>

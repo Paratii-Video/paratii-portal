@@ -1,5 +1,6 @@
 /* @flow */
 
+import React from 'react'
 import { createAction } from 'redux-actions'
 import bip39 from 'bip39'
 
@@ -7,7 +8,10 @@ import {
   LOGIN_SUCCESS,
   SET_WALLET_DATA,
   SET_WALLET_ADDRESS,
-  BALANCES_LOADED
+  LOAD_BALANCES_STARTED,
+  BALANCES_LOADED,
+  WALLET_SECURED,
+  STAKED_PTI
 } from 'constants/ActionConstants'
 
 import {
@@ -19,7 +23,9 @@ import {
   WALLET_KEY_SECURE,
   ACTIVATE_SECURE_WALLET
 } from 'constants/ParatiiLibConstants'
+import { NOTIFICATION_DELAY_MS } from 'constants/ApplicationConstants'
 
+import TranslatedText from 'components/translations/TranslatedText'
 import paratii from 'utils/ParatiiLib'
 import { openModal } from 'actions/ModalActions'
 import Notifications from 'react-notification-system-redux'
@@ -29,25 +35,42 @@ import UserRecord from 'records/UserRecords'
 
 const loginSuccess = createAction(LOGIN_SUCCESS)
 const balancesLoaded = createAction(BALANCES_LOADED)
+const walletSecured = createAction(WALLET_SECURED)
+const totalStaked = createAction(STAKED_PTI)
 export const setWalletData = createAction(SET_WALLET_DATA)
 export const setWalletAddress = createAction(SET_WALLET_ADDRESS)
 
-export const checkUserWallet = () => (dispatch: Dispatch) => {
+export const checkUserWallet = ({
+  onClose = () => {},
+  onComplete = () => {}
+}: Object = {}) => (dispatch: Dispatch) => {
+  const completeCallback = (...args) => {
+    dispatch(walletSecured())
+    onComplete(...args)
+  }
+
   if (ACTIVATE_SECURE_WALLET) {
     const walletStringSecure: ?string = localStorage.getItem(WALLET_KEY_SECURE)
     if (walletStringSecure) {
       console.log('Try to open encrypted keystore')
       // Need to ask the PIN
-      dispatch(openModal(MODAL.ASK_PASSWORD))
+      dispatch(
+        openModal(MODAL.ASK_PASSWORD, { onClose, onComplete: completeCallback })
+      )
     } else {
-      dispatch(openModal(MODAL.SECURE))
+      dispatch(
+        openModal(MODAL.SECURE, { onClose, onComplete: completeCallback })
+      )
     }
   }
 }
 
+export const loadBalancesStarted = createAction(LOAD_BALANCES_STARTED)
+
 export const loadBalances = () => (dispatch: Dispatch) => {
   const address: string = paratii.eth.getAccount()
   if (address) {
+    dispatch(loadBalancesStarted())
     paratii.eth.balanceOf(address).then(({ ETH, PTI }) => {
       const ETHAsString = ETH.toString()
       const PTIAsString = PTI.toString()
@@ -58,6 +81,19 @@ export const loadBalances = () => (dispatch: Dispatch) => {
         })
       )
     })
+  }
+}
+
+export const totalStakedPTI = () => async (dispatch: Dispatch) => {
+  const address: string = paratii.eth.getAccount()
+  if (address) {
+    const totalBN = await paratii.eth.tcr.getTotalStaked(address)
+    const totalStakedPTI = totalBN.toString()
+    dispatch(
+      totalStaked({
+        totalStaked: totalStakedPTI
+      })
+    )
   }
 }
 
@@ -81,6 +117,8 @@ export const setUserData = () => async (dispatch: Dispatch) => {
         emailIsVerified: emailIsVerified
       })
     )
+    // Get total Pti staked
+    dispatch(totalStakedPTI())
   }
 }
 
@@ -135,7 +173,7 @@ export const setupKeystore = () => async (
   ) {
     // console.log('Create a new wallet')
     mnemonic = bip39.generateMnemonic()
-    await paratii.eth.wallet.create(1, mnemonic)
+    await paratii.eth.wallet.createFromMnemonic(1, mnemonic)
     const encryptedWallet = paratii.eth.wallet.encrypt(DEFAULT_PASSWORD)
     localStorage.setItem(WALLET_KEY_ANON, JSON.stringify(encryptedWallet))
   }
@@ -167,7 +205,7 @@ export const secureKeystore = (password: string) => async (
         // Open Notification
         dispatch(
           Notifications.success({
-            title: 'Your wallet is now secured'
+            title: <TranslatedText message="wallet.walletSecured" />
           })
         )
       }
@@ -176,7 +214,7 @@ export const secureKeystore = (password: string) => async (
       try {
         // Create the new wallet based on the generated mnemonic
         paratii.eth.wallet.clear()
-        await paratii.eth.wallet.create(1, mnemonicFromSession)
+        await paratii.eth.wallet.createFromMnemonic(1, mnemonicFromSession)
         newWalletAddress = paratii.eth.wallet[0].address
         encryptedSecuredWallet = await paratii.eth.wallet.encrypt(password)
         if (encryptedSecuredWallet) {
@@ -243,8 +281,8 @@ export const secureKeystore = (password: string) => async (
 
   dispatch(
     Notifications.warning({
-      title: 'Securing your wallet..',
-      onAdd: setTimeout(secureWallet, 500)
+      title: <TranslatedText message="wallet.securingWallet" />,
+      onAdd: setTimeout(secureWallet, NOTIFICATION_DELAY_MS)
     })
   )
 }
@@ -259,22 +297,25 @@ export const restoreKeystore = (mnemonic: string) => async (
       title: 'Trying to restore your wallet..'
     })
   )
-  try {
-    sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
-    paratii.eth.wallet.clear()
-    await paratii.eth.wallet.create(1, mnemonic)
-    // Notification
-    dispatch(
-      Notifications.success({
-        title: 'Your wallet has been created'
-      })
-    )
-  } catch (error) {
-    dispatch(
-      Notifications.error({
-        title: error.message,
-        autoDismiss: 0
-      })
-    )
-  }
+
+  setTimeout(async () => {
+    try {
+      sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
+      paratii.eth.wallet.clear()
+      await paratii.eth.wallet.createFromMnemonic(1, mnemonic)
+      // Notification
+      dispatch(
+        Notifications.success({
+          title: 'Your wallet has been created'
+        })
+      )
+    } catch (error) {
+      dispatch(
+        Notifications.error({
+          title: error.message,
+          autoDismiss: 0
+        })
+      )
+    }
+  }, NOTIFICATION_DELAY_MS)
 }

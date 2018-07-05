@@ -6,11 +6,14 @@ import Button from 'components/foundations/Button'
 import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import RadioCheck, { RadioWrapper } from 'components/widgets/forms/RadioCheck'
+import TranslatedText from 'components/translations/TranslatedText'
 import {
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS
 } from 'constants/ApplicationConstants'
 import { copyTextToClipboard } from 'utils/AppUtils'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
+
 import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
 
 type Props = {
@@ -39,6 +42,7 @@ const Wrapper = styled.div`
   height: 100%;
   left: 0;
   opacity: ${props => (props.show ? 1 : 0)};
+  overflow: hidden;
   position: absolute;
   pointer-events: ${props => (!props.show ? 'none' : null)};
   transition: opacity ${props => props.theme.animation.time.repaint};
@@ -99,6 +103,11 @@ const ShareTitle = Title.extend`
   @media (max-width: 767px) {
     margin: 18px 0 24px;
   }
+
+  @media (max-width: 400px) {
+    font-size: ${props => props.theme.fonts.text.big};
+    margin: 0;
+  }
 `
 
 const ShareContent = styled.div`
@@ -123,6 +132,15 @@ const CopyEmbed = Button.extend`
     margin-bottom: 10px;
     overflow: hidden;
   }
+
+  @media (max-width: 400px) {
+    font-size: ${props => props.theme.fonts.text.small};
+    height: auto;
+    margin: 10px 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 `
 
 const ShareButtons = styled.div`
@@ -131,6 +149,10 @@ const ShareButtons = styled.div`
 
   @media (max-width: 767px) {
     margin-top: 50px;
+  }
+
+  @media (max-width: 400px) {
+    margin-top: 2%;
   }
 `
 
@@ -151,6 +173,12 @@ const AnchorLink = Anchor.extend`
 
   @media (max-width: 767px) {
     margin: 0;
+  }
+
+  @media (max-width: 400px) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `
 
@@ -283,7 +311,9 @@ class ShareOverlay extends Component<Props, State> {
           <SVGIcon color="white" icon="icon-close" />
         </CloseButton>
         <Content show={!this.state.showEmbed}>
-          <ShareTitle small>Share this video</ShareTitle>
+          <ShareTitle small>
+            <TranslatedText message="player.share.title" />
+          </ShareTitle>
           <AnchorLink
             data-test-id="share-anchor-link"
             href={this.getUrl()}
@@ -309,13 +339,20 @@ class ShareOverlay extends Component<Props, State> {
                   />
                 </Anchor>
               ))}
-            <ShareLink onClick={this.toggleShareContent} title="Embed">
+            <ShareLink
+              onClick={this.toggleShareContent}
+              title={RawTranslatedText({
+                message: 'player.share.options.embed'
+              })}
+            >
               <ShareLinkIcon src="/assets/svg/icons-embed-link.svg" />
             </ShareLink>
           </ShareButtons>
         </Content>
         <Content show={this.state.showEmbed}>
-          <ShareTitle small>Embed this video</ShareTitle>
+          <ShareTitle small>
+            <TranslatedText message="player.share.embedVideo" />
+          </ShareTitle>
           <ShareContent>
             <CopyEmbed anchor white onClick={this.copyCodeToClipboard}>
               {this.getEmbedCode()}

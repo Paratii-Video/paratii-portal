@@ -6,8 +6,9 @@ import Title from 'components/foundations/Title'
 import TextField from 'components/widgets/forms/TextField'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
-import { getPasswordValidationErrors } from 'utils/AppUtils'
 import PadLockSvg from 'components/foundations/svgs/PadlockSvg'
+import TranslatedText from 'components/translations/TranslatedText'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import {
   PASSWORD_TEMP,
@@ -19,16 +20,17 @@ import { MODAL } from 'constants/ModalConstants'
 const FORM_ID: string = 'create-password-form'
 
 type Props = {
-  openModal: string => void,
+  openModal: (string, ?Object) => void,
+  onComplete: Function,
   closeModal: () => void,
   secureKeystore: string => void,
-  getContext: string
+  context: string
 }
 
 type State = {
   password: string,
   confirm: string,
-  errors: Array<string>,
+  errors: Array<*>,
   hasBlurredPasswordInput: boolean,
   hasAttemptedToSubmit: boolean
 }
@@ -59,6 +61,10 @@ class ModalSetPassword extends Component<Props, State> {
   secureAccount: () => void
   handleInputChange: (input: string, e: Object) => void
 
+  static defaultProps = {
+    onComplete: () => {}
+  }
+
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -79,7 +85,7 @@ class ModalSetPassword extends Component<Props, State> {
 
   setPassword (e: Object) {
     e.preventDefault()
-    const errors: Array<string> = getPasswordValidationErrors(
+    const errors: Array<*> = this.getPasswordValidationErrors(
       this.state.password
     )
 
@@ -92,12 +98,13 @@ class ModalSetPassword extends Component<Props, State> {
         const { errors } = this.state
         if (!errors.length) {
           if (this.state.password === this.state.confirm) {
-            if (this.props.getContext === NEW_ACCOUNT) {
+            if (this.props.context === NEW_ACCOUNT) {
               sessionStorage.setItem(PASSWORD_TEMP, this.state.password)
               this.props.openModal(MODAL.SHOW_SEED)
-            } else if (this.props.getContext === RESTORE_ACCOUNT) {
+            } else if (this.props.context === RESTORE_ACCOUNT) {
               this.props.secureKeystore(this.state.password)
               this.props.closeModal()
+              this.props.onComplete()
             }
           }
         }
@@ -111,7 +118,7 @@ class ModalSetPassword extends Component<Props, State> {
       [input]: value
     }
     if (input === 'password') {
-      stateToMerge.errors = getPasswordValidationErrors(value)
+      stateToMerge.errors = this.getPasswordValidationErrors(value)
     }
     this.setState(stateToMerge)
   }
@@ -127,20 +134,48 @@ class ModalSetPassword extends Component<Props, State> {
   }
 
   getPasswordErrors () {
-    const passwordErrors: Array<string> =
+    const passwordErrors: Array<*> =
       (this.state.hasBlurredPasswordInput && this.state.errors) || []
     return passwordErrors
   }
 
   getConfirmErrors () {
-    const confirmErrors: Array<string> =
+    const confirmErrors: Array<*> =
       (this.state.hasAttemptedToSubmit &&
         this.state.password !== this.state.confirm && [
-        'Hey, your passwords do not match'
+        <TranslatedText
+          key="passwordMismatch"
+          message="wallet.choosePassword.errors.passwordMismatch"
+        />
       ]) ||
       []
 
     return confirmErrors
+  }
+
+  getPasswordValidationErrors = (password: ?string): Array<*> => {
+    const longRegex = new RegExp('^(?=.{8,})')
+    const numberRegex = new RegExp('^(?=.*[0-9])')
+    const uppercaseRegex = new RegExp('^(?=.*[A-Z])')
+    const errors = []
+    if (password) {
+      if (!longRegex.test(password)) {
+        errors.push(
+          <TranslatedText message="wallet.choosePassword.errors.eightCharacters" />
+        )
+      }
+      if (!numberRegex.test(password)) {
+        errors.push(
+          <TranslatedText message="wallet.choosePassword.errors.numericCharacter" />
+        )
+      }
+      if (!uppercaseRegex.test(password)) {
+        errors.push(
+          <TranslatedText message="wallet.choosePassword.errors.uppercaseCharacter" />
+        )
+      }
+    }
+    return errors
   }
 
   getAllErrors () {
@@ -150,7 +185,7 @@ class ModalSetPassword extends Component<Props, State> {
   renderErrors () {
     return (
       <Errors>
-        {this.getAllErrors().map((error: string) => (
+        {this.getAllErrors().map((error: any) => (
           <Text pink small key={error} data-test-id="error-password">
             {error}
           </Text>
@@ -164,19 +199,20 @@ class ModalSetPassword extends Component<Props, State> {
       <ModalContentWrapper>
         <ModalScrollContent>
           <form id={FORM_ID} onSubmit={this.setPassword}>
-            <Title>Choose a password</Title>
+            <Title>
+              <TranslatedText message="wallet.choosePassword.title" />
+            </Title>
             <Text small gray>
-              Please insert a password of <strong>eight</strong> characters or
-              longer, and it must contain at least one{' '}
-              <strong>uppercase</strong>
-              letter and one <strong>number</strong>
+              <TranslatedText message="wallet.choosePassword.description_html" />
             </Text>
             <Icon>
               <PadLockSvg />
             </Icon>
             <TextField
               error={this.getPasswordErrors().length > 0}
-              label="New Password"
+              label={RawTranslatedText({
+                message: 'wallet.choosePassword.newPasswordLabel'
+              })}
               id="input-new-password"
               name="input-new-password"
               type="password"
@@ -187,7 +223,9 @@ class ModalSetPassword extends Component<Props, State> {
             />
             <TextField
               error={this.getConfirmErrors().length > 0}
-              label="Confirm Password"
+              label={RawTranslatedText({
+                message: 'wallet.choosePassword.confirmPasswordLabel'
+              })}
               id="input-confirm-password"
               name="input-confirm-password"
               type="password"
@@ -199,7 +237,9 @@ class ModalSetPassword extends Component<Props, State> {
           {this.renderErrors()}
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.secureAccount}>Back</Button>
+              <Button onClick={this.secureAccount}>
+                <TranslatedText message="wallet.choosePassword.back" />
+              </Button>
             </ButtonContainer>
             <ButtonContainer>
               <Button
@@ -209,7 +249,7 @@ class ModalSetPassword extends Component<Props, State> {
                 purple
                 disabled={!this.state.confirm}
               >
-                Continue
+                <TranslatedText message="wallet.choosePassword.continue" />
               </Button>
             </ButtonContainer>
           </Footer>

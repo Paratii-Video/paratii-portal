@@ -8,12 +8,15 @@ import { ThemeProvider } from 'styled-components'
 import ProfileContainer from 'containers/ProfileContainer'
 
 import ProfileEditContainer from 'containers/ProfileEditContainer'
+import ProfileMyVideosContainer from 'containers/ProfileMyVideosContainer'
+
 import PlayContainer from 'containers/PlayContainer'
 import VideoManager from 'containers/VideoManagerContainer'
 import DebugContainer from 'containers/DebugContainer'
 import WalletContainer from 'containers/WalletContainer'
 import SearchResultsContainer from 'containers/pages/SearchResultsContainer'
 import MainHeader from 'containers/MainHeaderContainer'
+import UserNav from 'containers/UserNavContainer'
 import Notifications from 'containers/NotificationContainer'
 
 import type { Match } from 'react-router-dom'
@@ -22,9 +25,9 @@ import Modal from 'containers/widgets/modals/ModalContainer'
 import MailVerifyContainer from 'containers/pages/MailVerifyContainer'
 import Main from './structures/Main'
 import MainFooter from './structures/footer/MainFooter'
-import Home from './pages/Home'
 import Voucher from './pages/Voucher'
 import NotFound from './pages/NotFound'
+import LandingContainer from 'containers/pages/LandingContainer'
 
 import { APP_TITLE, paratiiTheme } from 'constants/ApplicationConstants'
 
@@ -79,10 +82,10 @@ class App extends Component<Props, State> {
             <Modal />
             <Notifications />
             <MainHeader />
-
-            <Main>
+            {isWalletSecured ? <UserNav /> : null}
+            <Main landing={match.isExact}>
               <Switch>
-                <Route exact path="/" component={Home} />
+                <Route exact path="/" component={LandingContainer} />
                 <Route
                   path={`${match.url}verify`}
                   component={MailVerifyContainer}
@@ -95,6 +98,10 @@ class App extends Component<Props, State> {
                 <Route
                   path={`${match.url}profile/edit`}
                   component={ProfileEditContainer}
+                />
+                <Route
+                  path={`${match.url}profile/my-videos`}
+                  component={ProfileMyVideosContainer}
                 />
                 <Route
                   path={`${match.url}upload/:id`}

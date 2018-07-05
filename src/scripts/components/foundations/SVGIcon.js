@@ -11,20 +11,22 @@ type Props = {
 
 export const IconFillStyleColor = css`
   ${props => {
-    let _color: String
+    let _fill: String
 
     if (props.color === 'white') {
-      _color = props.theme.colors.button.white
+      _fill = props.theme.colors.button.white
     } else if (props.color === 'purple') {
-      _color = props.theme.colors.button.purple
+      _fill = props.theme.colors.button.purple
     } else if (props.color === 'pink') {
-      _color = props.theme.colors.button.pink
+      _fill = props.theme.colors.button.pink
+    } else if (props.color === 'green') {
+      _fill = props.theme.colors.button.green
     } else {
-      _color = props.theme.colors.button.gray
+      _fill = props.theme.colors.button.gray
     }
 
     return css`
-      fill: ${_color};
+      fill: ${_fill};
 `
   }};
 `

@@ -17,6 +17,8 @@ import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Card from 'components/structures/Card'
+import TipOverlayContainer from 'containers/tipping/TipOverlayContainer'
+import TranslatedText from 'components/translations/TranslatedText'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
 import {
@@ -24,6 +26,7 @@ import {
   requestCancelFullscreen,
   getAppRootUrl
 } from 'utils/AppUtils'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 import { APP_TITLE } from 'constants/ApplicationConstants'
@@ -56,7 +59,8 @@ type Props = {
   currentBufferedTimeSeconds: number,
   currentPlaybackLevel: ?PlaybackLevel,
   playerReset: () => void,
-  activePlugin: ?PlayerPlugin
+  activePlugin: ?PlayerPlugin,
+  userIsTipping: boolean
 }
 
 type State = {
@@ -66,6 +70,7 @@ type State = {
   mouseInOverlay: boolean,
   shouldShowVideoOverlay: boolean,
   showShareModal: boolean,
+  showTipOverlay: boolean,
   videoHasNeverPlayed: boolean,
   videoNotFound: boolean
 }
@@ -166,6 +171,15 @@ const DescriptionWrapper = styled.div`
   margin-top: 30px;
 `
 
+const TipOverlayWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: ${Z_INDEX_OVERLAY};
+`
+
 const HIDE_CONTROLS_THRESHOLD: number = 2000
 
 class Play extends Component<Props, State> {
@@ -190,7 +204,8 @@ class Play extends Component<Props, State> {
       playerCreated: '',
       isEmbed: this.props.isEmbed || false,
       showShareModal: false,
-      videoHasNeverPlayed: true
+      videoHasNeverPlayed: true,
+      showTipOverlay: false
     }
 
     this.lastMouseMove = 0
@@ -327,9 +342,20 @@ class Play extends Component<Props, State> {
   }
 
   toggleShareModal (): void {
-    this.setState({
-      showShareModal: !this.state.showShareModal
-    })
+    this.setState((prevState: State) => ({
+      showShareModal: !prevState.showShareModal
+    }))
+  }
+
+  onTipButtonClick = (e: Object): void => {
+    e.stopPropagation()
+    this.setState((prevState: State) => ({
+      showTipOverlay: !prevState.showTipOverlay
+    }))
+  }
+
+  closeTipOverlay = (): void => {
+    this.setState({ showTipOverlay: false })
   }
 
   onMouseEnter = (): void => {
@@ -741,17 +767,17 @@ class Play extends Component<Props, State> {
       {
         href: this.getTelegramHref(),
         icon: 'telegram',
-        label: 'Telegram'
+        label: RawTranslatedText({ message: 'player.share.options.telegram' })
       },
       {
         href: this.getTwitterHref(),
         icon: 'twitter',
-        label: 'Twitter'
+        label: RawTranslatedText({ message: 'player.share.options.twitter' })
       },
       {
         href: this.getWhatsAppMobileHref(),
         icon: 'whatsapp',
-        label: 'WhatsApp'
+        label: RawTranslatedText({ message: 'player.share.options.whatsapp' })
       }
     ]
 
@@ -785,6 +811,7 @@ class Play extends Component<Props, State> {
                           isEmbed={isEmbed}
                           showStartScreen={this.shouldShowStartScreen()}
                           toggleShareModal={this.toggleShareModal}
+                          onTipButtonClick={this.onTipButtonClick}
                           showShareModal={this.state.showShareModal}
                           onScrub={this.scrubVideo}
                           onVolumeChange={this.changeVolume}
@@ -824,6 +851,11 @@ class Play extends Component<Props, State> {
                       shareOptions={shareOptions}
                     />
                   ) : null}
+                  {this.props.userIsTipping && this.props.video ? (
+                    <TipOverlayWrapper>
+                      <TipOverlayContainer />
+                    </TipOverlayWrapper>
+                  ) : null}
                 </PlayerWrapper>
               </VideoCover>
             </VideoWrapper>
@@ -843,7 +875,7 @@ class Play extends Component<Props, State> {
                         icon="#icon-play-view"
                       />
                       <Text small gray>
-                          0
+                        <TranslatedText message="player.views.zero" />
                       </Text>
                     </ButtonIcon>
                     <ButtonIcon>
@@ -855,7 +887,7 @@ class Play extends Component<Props, State> {
                         icon="#icon-play-like"
                       />
                       <Text small gray>
-                          0
+                        <TranslatedText message="player.views.zero" />
                       </Text>
                     </ButtonIcon>
                     <ButtonIcon>
@@ -867,7 +899,7 @@ class Play extends Component<Props, State> {
                         icon="#icon-play-dislike"
                       />
                       <Text small gray>
-                          0
+                        <TranslatedText message="player.views.zero" />
                       </Text>
                     </ButtonIcon>
                   </PlayInfoButtons>
@@ -875,7 +907,11 @@ class Play extends Component<Props, State> {
                 <Text gray>
                     Price{' '}
                   <PlayInfoHighlight purple>
-                    {video.free ? 'Free' : 'Free'}
+                    {video.free ? (
+                      <TranslatedText message="player.free" />
+                    ) : (
+                      <TranslatedText message="player.free" />
+                    )}
                   </PlayInfoHighlight>
                 </Text>
                 {video.description && (

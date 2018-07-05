@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom'
 import paratii from 'utils/ParatiiLib'
 
 import { getAppRootUrl } from 'utils/AppUtils'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
+
+import TranslatedText from './translations/TranslatedText'
 import Text from './foundations/Text'
 import Button from './foundations/Button'
 import SVGIcon from './foundations/SVGIcon'
@@ -234,8 +237,6 @@ class UploadListItem extends Component<Props, Object> {
   handleInputChange: (input: string, e: Object) => void
   onPublishVideo: (e: Object) => void
   onSaveData: (e: Object) => void
-  publishVideo: (publish: boolean) => void
-  saveData: (publish: boolean) => void
   handleHeight: (e: Object) => string
   toggleOpen: (e: Object) => void
 
@@ -247,8 +248,9 @@ class UploadListItem extends Component<Props, Object> {
     this.state = {
       open: false,
       id: theVideo.id,
-      title: theVideo.title,
-      description: theVideo.description,
+      title: theVideo.title || '',
+      description: theVideo.description || '',
+      ownershipProof: theVideo.ownershipProof || '',
       duration: theVideo.duration,
       author: theVideo.author,
       height: '0px',
@@ -261,8 +263,6 @@ class UploadListItem extends Component<Props, Object> {
     this.toggleOpen = this.toggleOpen.bind(this)
     this.onSaveData = this.onSaveData.bind(this)
     this.onPublishVideo = this.onPublishVideo.bind(this)
-    this.publishVideo = this.publishVideo.bind(this)
-    this.saveData = this.saveData.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
   }
 
@@ -283,21 +283,18 @@ class UploadListItem extends Component<Props, Object> {
   onSaveData (e: Object) {
     e.preventDefault()
     if (this.props.isWalletSecured) {
-      this.saveData(false)
+      const videoToSave = {
+        id: this.state.id,
+        title: this.state.title,
+        description: this.state.description,
+        ownershipProof: this.state.ownershipProof,
+        author: this.props.user.name
+      }
+      this.props.saveVideoInfo(videoToSave)
     } else {
       // If wallet not secure open the modal
       this.props.checkUserWallet()
     }
-  }
-
-  saveData (publish: false) {
-    const videoToSave = {
-      id: this.state.id,
-      title: this.state.title,
-      description: this.state.description,
-      author: this.props.user.name
-    }
-    this.props.saveVideoInfo(videoToSave)
   }
 
   async onPublishVideo (e: Object) {
@@ -319,16 +316,12 @@ class UploadListItem extends Component<Props, Object> {
       )
     } else {
       if (this.props.isWalletSecured) {
-        this.publishVideo(true)
+        this.props.openModal(MODAL.STAKE)
       } else {
         // If wallet not secure open the modal for signup / login
         this.props.checkUserWallet()
       }
     }
-  }
-
-  publishVideo (publish: false) {
-    this.props.openModal(MODAL.STAKE)
   }
 
   toggleOpen (e: Object) {
@@ -364,20 +357,32 @@ class UploadListItem extends Component<Props, Object> {
       video.transcodingStatus.name === 'success'
     ) {
       if (video.title.length < 1) {
-        statusMessage = 'Please provide a title and description'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.needsTitle" />
+        )
       } else {
-        statusMessage = 'Your video is ready'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.videoReady" />
+        )
         videoIsReady = true
       }
     } else {
       if (video.uploadStatus.name === 'failed') {
-        statusMessage = 'Your video could not be uploaded'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.uploadFailed" />
+        )
       } else if (video.transcodingStatus.name === 'failed') {
-        statusMessage = 'Your video could not be transcoded'
-      } else if (video.uploadStatus.name === 'success') {
-        statusMessage = 'Transcoding your video'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.transcodeFailed" />
+        )
+      } else if (video.transcodingStatus.name === 'requested') {
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.transcoding" />
+        )
       } else {
-        statusMessage = 'Uploading your video'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.uploading" />
+        )
       }
     }
 
@@ -436,7 +441,7 @@ class UploadListItem extends Component<Props, Object> {
                   disabled={!isPublishable}
                   purple
                 >
-                  Publish
+                  <TranslatedText message="uploadListItem.publish" />
                 </Button>
               ) : (
                 <LabelStake>{stakedPTI} PTI Staked</LabelStake>
@@ -462,10 +467,10 @@ class UploadListItem extends Component<Props, Object> {
                 id={'video-id-' + videoId}
                 type="hidden"
                 value={this.state.id}
-                label="Video Id"
+                label={RawTranslatedText({ message: 'uploadListItem.videoId' })}
               />
               <TextField
-                label="Title"
+                label={RawTranslatedText({ message: 'uploadListItem.title' })}
                 id={'input-video-title-' + videoId}
                 type="text"
                 value={this.state.title}
@@ -478,14 +483,18 @@ class UploadListItem extends Component<Props, Object> {
                 id={'input-video-description-' + videoId}
                 value={this.state.description}
                 onChange={e => this.handleInputChange('description', e)}
-                label="Description"
+                label={RawTranslatedText({
+                  message: 'uploadListItem.description'
+                })}
                 rows="1"
                 margin="0 0 30px"
                 tabIndex="0"
               />
-              <TextField
-                label="is this video really yours?"
-                id={'input-video-ownership-proof' + videoId}
+              <Textarea
+                label={RawTranslatedText({
+                  message: 'uploadListItem.ownership'
+                })}
+                id={'input-video-ownership-proof-' + videoId}
                 type="text"
                 value={this.state.ownershipProof}
                 onChange={e => this.handleInputChange('ownershipProof', e)}
@@ -494,14 +503,16 @@ class UploadListItem extends Component<Props, Object> {
                 tabIndex="0"
               />
               <RadioWrapper>
-                <RadioTitle>What kind of content?</RadioTitle>
+                <RadioTitle>
+                  <TranslatedText message="uploadListItem.contentType.title" />
+                </RadioTitle>
                 <RadioCheck
                   name="content-type"
                   value="free"
                   tabIndex="0"
                   defaultChecked
                 >
-                  Free
+                  <TranslatedText message="uploadListItem.contentType.free" />
                 </RadioCheck>
                 <RadioCheck
                   name="content-type"
@@ -510,7 +521,7 @@ class UploadListItem extends Component<Props, Object> {
                   nomargin
                   disabled
                 >
-                  Paid (not available yet)
+                  <TranslatedText message="uploadListItem.contentType.paid" />
                 </RadioCheck>
               </RadioWrapper>
               <FormButtons>
@@ -521,7 +532,7 @@ class UploadListItem extends Component<Props, Object> {
                   purple
                   disabled={this.props.video.storageStatus.name === 'running'}
                 >
-                  Save
+                  <TranslatedText message="uploadListItem.save" />
                 </Button>
               </FormButtons>
             </Form>
@@ -548,10 +559,7 @@ class UploadListItem extends Component<Props, Object> {
               )}
               {!isPublished ? (
                 <Text gray small>
-                  By clicking on the “Publish” button you acknowledge that you
-                  agree to Paratii’s Terms of Service and Community Guidelines.
-                  Please be sure not to violate others’ copyright or privacy
-                  rights. Learn more
+                  <TranslatedText message="uploadListItem.termsOfService" />
                 </Text>
               ) : (
                 <Text>{urlForSharing}</Text>

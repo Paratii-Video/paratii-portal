@@ -17,7 +17,7 @@ import PlaybackLevels from 'components/widgets/PlaybackLevels'
 import WalletInfoContainer from 'containers/widgets/WalletInfoContainer'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
-import { OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
+import { VIDEO_OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
 import Colors from 'components/foundations/base/Colors'
 
 import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
@@ -35,11 +35,13 @@ type Props = {
   onScrub: (percentage: number) => void,
   onVolumeChange: (percentage: number) => void,
   onToggleMute: (mute: boolean) => void,
+  onTipButtonClick: (e: Object) => void,
   playbackLevels: ImmutableList<PlaybackLevel>,
   onPlaybackLevelChange: (levelId: number) => void,
   toggleActivePlugin: (plugin: PlayerPlugin) => void,
   currentPlaybackLevel: ?PlaybackLevel,
-  activePlugin: ?PlayerPlugin
+  activePlugin: ?PlayerPlugin,
+  askForTip: boolean
 }
 
 const Z_INDEX_OVERLAY: string = '1'
@@ -87,6 +89,7 @@ const Overlay = styled.div`
 `
 
 const OverlayShadow = styled.span`
+  display: none;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   height: 100%;
   opacity: ${({ transitionState, showShareModal }) =>
@@ -127,7 +130,7 @@ const ButtonWrapper = styled.div`
 `
 
 const ShareButton = Button.extend`
-  height: ${OVERLAY_BUTTONS_HEIGHT};
+  height: ${VIDEO_OVERLAY_BUTTONS_HEIGHT};
   margin-left: 10px;
   width: 26px;
 
@@ -137,7 +140,7 @@ const ShareButton = Button.extend`
 `
 
 const ProfileButtonWrapper = styled.div`
-  height: ${OVERLAY_BUTTONS_HEIGHT};
+  height: ${VIDEO_OVERLAY_BUTTONS_HEIGHT};
   margin-left: 10px;
   width: 26px;
 
@@ -284,6 +287,7 @@ class VideoOverlay extends Component<Props> {
         </Overlay>
         <PlayerControlsWrapper showStartScreen={showStartScreen}>
           <PlayerControlsContainer
+            isEmbed={isEmbed}
             onScrub={onScrub}
             onVolumeChange={onVolumeChange}
             onToggleMute={onToggleMute}

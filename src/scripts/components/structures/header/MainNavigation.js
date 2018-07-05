@@ -4,14 +4,15 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import Button from 'components/foundations/Button'
+import Button, { ButtonColor } from 'components/foundations/Button'
 import Hidden from 'components/foundations/Hidden'
+import TranslatedText from 'components/translations/TranslatedText'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
 
 type Props = {
   isWalletSecured: boolean,
-  closeNav: () => void,
+  closeMainNavAndUserNav: () => void,
   checkUserWallet: () => void
 }
 
@@ -44,15 +45,7 @@ const StyleNavLink = Button.extend`
   text-transform: initial;
 `
 
-const StyleNavLinkPurple = Button.extend`
-  font-size: 14px;
-  font-weight: ${props => props.theme.fonts.weight.bold};
-  text-transform: initial;
-  color: ${props => props.theme.colors.body.primary};
-`
-
 const NavLink = StyleNavLink.withComponent(Link)
-const NavLinkPurple = StyleNavLinkPurple.withComponent(Link)
 
 const Anchor = StyleNavLink.withComponent('a')
 
@@ -67,7 +60,7 @@ class MainNavigation extends Component<Props, Object> {
   secureWallet (e: Object) {
     e.preventDefault()
     this.props.checkUserWallet()
-    this.props.closeNav()
+    this.props.closeMainNavAndUserNav()
   }
 
   render () {
@@ -77,41 +70,48 @@ class MainNavigation extends Component<Props, Object> {
       <Nav>
         <NavList>
           <NavItem>
-            <NavLink onClick={this.props.closeNav} to="/voucher">
-              Get PTI
+            <NavLink onClick={this.props.closeMainNavAndUserNav} to="/voucher">
+              <TranslatedText message="navigation.voucher" />
             </NavLink>
           </NavItem>
           <Hidden>
             <NavItem>
-              <NavLink onClick={this.props.closeNav} to="/my-videos">
-                My videos
+              <NavLink
+                onClick={this.props.closeMainNavAndUserNav}
+                to="/my-videos"
+              >
+                <TranslatedText message="navigation.myVideos" />
               </NavLink>
             </NavItem>
           </Hidden>
           <NavItem>
-            <NavLink onClick={this.props.closeNav} to="/upload">
-              Upload
+            <NavLink onClick={this.props.closeMainNavAndUserNav} to="/upload">
+              <TranslatedText message="navigation.upload" />
             </NavLink>
           </NavItem>
           <NavItem>
             <Anchor
-              onClick={this.props.closeNav}
+              onClick={this.props.closeMainNavAndUserNav}
               href="http://paratii.video/"
               target="_blank"
             >
-              About Paratii
+              <TranslatedText message="navigation.about" />
             </Anchor>
           </NavItem>
 
           {!this.props.isWalletSecured ? (
             <NavItem>
-              <NavLinkPurple
+              <ButtonColor
                 data-test-id="login-signup"
                 onClick={this.secureWallet}
                 to="#"
               >
-                {walletStringSecure ? 'Log In' : 'Sign Up'}
-              </NavLinkPurple>
+                {walletStringSecure ? (
+                  <TranslatedText message="navigation.logIn" />
+                ) : (
+                  <TranslatedText message="navigation.signUp" />
+                )}
+              </ButtonColor>
             </NavItem>
           ) : (
             <NavItem>

@@ -10,8 +10,9 @@ const Colors: Object = {
   blackLight: '#262933',
   blackLightTransparent: 'rgba(40, 46, 51, 0.95)',
   black: '#20232E',
-  blackTransparent: 'rgba(27, 31, 36, 0.5)',
+  blackTransparent: 'rgba(27, 31, 36, 0.6)',
   blackMedium: '#2E3133',
+  blackMediumTransparent: 'rgba(0, 0, 0, 0.8)',
   blackDark: '#1B1F26',
   blackDarkTransparent: 'rgba(27, 31, 36, 0.7)',
   blackAlt: '#1F222C',
@@ -21,7 +22,8 @@ const Colors: Object = {
   purpleGradientTo: '#7D70FF',
   pink: '#E13D84',
   pinkGradientFrom: '#E72061',
-  pinkGradientTo: '#DC3DCC'
+  pinkGradientTo: '#DC3DCC',
+  green: '#24BF71'
 }
 
 export default Colors

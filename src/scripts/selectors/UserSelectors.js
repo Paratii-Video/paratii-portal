@@ -33,6 +33,12 @@ export const getUserAddress: (state: RootState) => string = createSelector(
   (user: User): string => user.get('address')
 )
 
+export const balancesAreLoading: (state: RootState) => boolean = createSelector(
+  [getBalances],
+  (balances: Balances): boolean =>
+    balances.get('requestStatus') === REQUEST_STATUS.PENDING
+)
+
 const getEthBalance: (state: RootState) => string = createSelector(
   [getBalances],
   (balances: Balances): string => balances.get('ETH')
@@ -48,7 +54,7 @@ export const getFormattedEthBalance: (
   return (!isNaN(balance) && formatBalance(balance)) || '0'
 })
 
-const getPtiBalance: (state: RootState) => string = createSelector(
+export const getPtiBalance: (state: RootState) => string = createSelector(
   [getBalances],
   (balances: Balances): string => balances.get('PTI')
 )
@@ -62,3 +68,8 @@ export const getFormattedPtiBalance: (
   )
   return (!isNaN(balance) && formatBalance(balance)) || '0'
 })
+
+export const getTotalStakedPti: (state: RootState) => string = createSelector(
+  [getUser],
+  (user: User): string => user.get('totalStaked')
+)

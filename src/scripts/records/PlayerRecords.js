@@ -17,7 +17,9 @@ class Player extends ImmutableRecord({
   isAttemptingPlay: false,
   isFullscreen: false,
   selectedVideoId: '',
+  latestPlaybackTimestamp: 0,
   currentTimeSeconds: 0,
+  totalTimeViewedSeconds: 0,
   currentBufferedTimeSeconds: 0,
   currentVolume: 0,
   playbackLevels: ImmutableList(),
@@ -28,7 +30,9 @@ class Player extends ImmutableRecord({
   isAttemptingPlay: boolean
   isFullscreen: boolean
   selectedVideoId: ?string
+  latestPlaybackTimestamp: number
   currentTimeSeconds: number
+  totalTimeViewedSeconds: number
   currentBufferedTimeSeconds: number
   currentVolume: number
   availablePlaybackLevels: ImmutableList<PlaybackLevel>
@@ -45,6 +49,8 @@ export const _getPlayerVideoId = (state: Player): string =>
   state.get('selectedVideoId')
 export const _getPlayerCurrentTimeSeconds = (state: Player): number =>
   state.get('currentTimeSeconds')
+export const _getPlayerTotalTimeViewedSeconds = (state: Player): number =>
+  state.get('totalTimeViewedSeconds')
 export const _getPlayerCurrentBufferedTimeSeconds = (state: Player): number =>
   state.get('currentBufferedTimeSeconds')
 export const _getPlayerCurrentVolume = (state: Player): number =>

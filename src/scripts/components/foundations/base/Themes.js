@@ -10,7 +10,7 @@ const Themes = {
       primary: Colors.purple
     },
     header: {
-      background: Colors.blackLight,
+      background: Colors.blackAlt,
       icon: Colors.grayLight,
       logo: Colors.white
     },
@@ -21,10 +21,14 @@ const Themes = {
       logoFill: Colors.white
     },
     button: {
+      from: Colors.purpleGradientFrom,
+      top: Colors.purpleGradientTo,
       white: Colors.white,
-      gray: Colors.grayLight,
+      gray: Colors.gray,
       purple: Colors.purple,
-      pink: Colors.pink
+      pink: Colors.pink,
+      green: Colors.green,
+      shadow: '0 3px 6px rgba(0, 0, 0, 0.2)'
     },
     Modal: {
       background: Colors.blackLight,
@@ -42,7 +46,7 @@ const Themes = {
     TextField: {
       border: Colors.grayLight,
       borderFocus: Colors.purple,
-      color: Colors.white,
+      color: Colors.gray,
       placeholder: Colors.grayLight,
       error: Colors.pink
     },
@@ -54,6 +58,7 @@ const Themes = {
     },
     MainCard: {
       background: Colors.black,
+      border: Colors.grayDark,
       color: Colors.white,
       title: Colors.white,
       subtitle: Colors.white,
@@ -76,7 +81,7 @@ const Themes = {
         color: Colors.purple
       },
       supportedFileTypes: {
-        color: Colors.grayMedium
+        color: Colors.grayLight
       }
     },
     VideoList: {
@@ -167,8 +172,48 @@ const Themes = {
       },
       nextButton: Colors.gray
     },
+    UserNav: {
+      background: Colors.black,
+      Userbackground: Colors.blackDark,
+      UserPTIValueBox: Colors.blackLight,
+      UserPTIBarOne: Colors.purple,
+      UserPTIBarTwo: Colors.pink,
+      Navigation: Colors.black,
+      NavigationText: Colors.grayLight,
+      SubNavigation: Colors.blackLight
+    },
+    ProfileCuration: {
+      ChallengeBackgroundOneFrom: Colors.purpleGradientFrom,
+      ChallengeBackgroundOneTo: Colors.purpleGradientTo,
+      ChallengeBackgroundTwoFrom: Colors.pink,
+      ChallengeBackgroundTwoTo: Colors.purple,
+      VotingBarOne: Colors.green,
+      VotingBarTwo: Colors.pink,
+      ChallengeSequenceDot: Colors.white
+    },
+    ProfileMyVideos: {
+      headerImageBackground: Colors.blackDark,
+      headerInfoBackground: Colors.blackAlt,
+      ProfilePictureBackground: Colors.blackAlt,
+      filterBackground: Colors.blackDark
+    },
     UploadListItem: {
       background: Colors.black
+    },
+    MyVideoItem: {
+      background: Colors.black,
+      imageBackground: Colors.blackAlt,
+      coverMediaBackground: Colors.blackTransparent
+    },
+    LandingPage: {
+      headerBackground: Colors.blackLight,
+      headerContentBackground: Colors.blackTransparent,
+      headerContentBackgroundShadow: Colors.blackDark,
+      VideoLinkBackground: Colors.grayDark,
+      VideoLinkColor: Colors.white,
+      listItemBackground: Colors.blackAlt,
+      listItemTimeBackground: Colors.blackTransparent,
+      listItemTimeColor: Colors.white
     }
   }
 }

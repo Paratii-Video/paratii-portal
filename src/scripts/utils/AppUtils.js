@@ -1,29 +1,8 @@
 /* @flow */
 import shortNumber from 'short-number'
-import VideoRecord from 'records/VideoRecords'
+import fs from 'fs'
 
-export const getPasswordValidationErrors = (
-  password: ?string
-): Array<string> => {
-  const longRegex = new RegExp('^(?=.{8,})')
-  const numberRegex = new RegExp('^(?=.*[0-9])')
-  const uppercaseRegex = new RegExp('^(?=.*[A-Z])')
-  const errors = []
-  if (password) {
-    if (!longRegex.test(password)) {
-      errors.push('The password must be eight characters or longer')
-    }
-    if (!numberRegex.test(password)) {
-      errors.push('The password must contain at least 1 numeric character')
-    }
-    if (!uppercaseRegex.test(password)) {
-      errors.push(
-        'The password must contain at least 1 uppercase alphabetical character'
-      )
-    }
-  }
-  return errors
-}
+import VideoRecord from 'records/VideoRecords'
 
 export const getRoot = (): Element => {
   let root: ?Element = document.getElementById('root')
@@ -92,10 +71,13 @@ export const getParatiiConfig = (env: ?string, scope: ?string): Object => {
       config.eth.registryAddress = registryAddress
     } else {
       try {
-        const registryConfigPath = '/tmp/registry.json'
-        console.log(`getting registry address from ${registryConfigPath}`)
+        // const registryConfigPath = '/tmp/registry.json'
+        // console.log(`getting registry address from ${registryConfigPath}`)
         // const registryConfig = JSON.parse(fs.readFileSync(registryConfigPath, 'utf8'))
-        const registryConfig = require(registryConfigPath)
+
+        // Get content from file
+        const contents = fs.readFileSync('/tmp/registry.json')
+        const registryConfig = JSON.parse(contents.toString())
         config.eth.registryAddress = registryConfig.registryAddress
       } catch (e) {
         console.log(`WARNING: no registry address configured`)

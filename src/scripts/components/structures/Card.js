@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import BaseTitle from '../foundations/Title'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import { CARD_PADDING } from 'constants/UIConstants'
 
 import cardBackgroundSvgDataUrl from 'assets/svg/card-bg.svg'
 
@@ -100,6 +101,16 @@ const Footer = styled.div`
   flex-direction: column;
   padding: ${props => props.theme.sizes.card.padding};
   width: 100%;
+`
+
+// Need to recreate this component because there's no rule about the aligment
+
+export const CardStyle = css`
+  background-color: ${props => props.theme.colors.MainCard.background};
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  padding: ${props => (props.nopadding ? null : CARD_PADDING)};
 `
 
 class Card extends Component<Props, void> {

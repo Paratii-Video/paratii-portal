@@ -1,0 +1,143 @@
+{
+    "footer": {
+        "discover_html": "Saiba tudo sobre a paratii em %{homePageLink}",
+        "homePage": "paratii.video",
+        "betaTool_html": "v0.0.1: Este portal está em desenvolvimento! Nós &hearts; ouvir seu feedback no Telegram: %{telegramBrazilLink} ou %{telegramEnglishLink}",
+        "brazil": "Português",
+        "english": "Inglês"
+    },
+    "landingPage": {
+        "header": {
+            "title_html": "Traga os seus vídeos<br /> para o futuro.",
+            "description": "A descentralização está mudando o negócio do vídeo online e devolvendo o poder para os usuários."
+        },
+        "videos": {
+            "title": "Conheça outros pioneiros",
+            "description": "Explore curtas, clipes, e novos formatos que nossa comunidade inventa todos os dias."
+        }
+    },
+    "navigation": {
+        "voucher": "Obter PTI",
+        "myVideos": "Meus vídeos",
+        "upload": "Upload",
+        "about": "Sobre a Paratii",
+        "logIn": "Entrar",
+        "signUp": "Registrar"
+    },
+    "notFound": {
+        "title": "Oooooops, página não encontrada!",
+        "description": "Esta página não está disponível ainda. Nossa equipe está desenvolvendo-a ou talvez nem saiba que ela existe. Se quiser nos ajudar a consertar isso mais rápido, conte-nos como veio parar aqui com uma issue no Github:",
+        "linkText": "Paratii-Video"
+    },
+    "search": {
+        "input": {
+            "placeholder": "Buscar"
+        },
+        "results": {
+            "resultsFor": "Resultados para: %{term}",
+            "noResultsFor": "Não foram encontrados resultados para \"%{term}\"",
+            "moreResults": "Mais resultados",
+            "zeroState": "Insira palavras-chave acima para buscar!"
+        }
+    },
+    "uploader": {
+        "dragFiles": "Arraste seus arquivos aqui",
+        "filesInstructions_html": "%{dragFiles} ou clique para buscá-los",
+        "supportedFileTypes": "(atualmente suporta arquivos .mp4 de até 800mb)",
+        "youtubeOrVimeo": "Ou importe do YouTube ou Vimeo (ainda não funciona)"
+    },
+    "player": {
+        "free": "Grátis",
+        "views": {
+            "zero": "zero"
+        },
+        "share": {
+            "title": "Compartilhe este vídeo",
+            "options": {
+                "telegram": "Telegram",
+                "twitter": "Twitter",
+                "whatsapp": "WhatsApp",
+                "embed": "Embedar"
+            },
+            "embedVideo": "Embedar este vídeo"
+        }
+    },
+    "profile": {
+        "modal": {
+            "title": "Perfil",
+            "description": "É assim que você será conhecido na rede Paratii. Insira seu e-mail se você gostaria de receber atualizações sobre a comunidade e sua atividade.",
+            "usernameLabel": "Usuário",
+            "emailLabel": "E-mail",
+            "continue": "Continuar",
+            "pleaseWait": "Por favor aguarde, estamos criando sua carteira",
+            "verificationEmail": {
+                "title": "Verifique seu e-mail",
+                "description": "Enviamos um link de confirmação a você"
+            }
+        }
+    },
+    "wallet": {
+        "securingWallet": "Trancando a sua carteira...",
+        "walletSecured": "Sua carteira está segura",
+        "unlockingKeystore": "Tentando destrancar sua conta...",
+        "enterPassword": {
+            "title": "Insira sua senha",
+            "description": "Favor inserir a sua senha para utilizar todos os recursos da Paratii",
+            "inputPlaceholder": "Insira sua senha",
+            "forgotPassword": "Esqueci minha senha",
+            "continue": "Continuar",
+            "success": {
+                "title": "Sucesso!",
+                "description": "Sua conta foi destrancada."
+            },
+            "error": {
+                "title": "A senha não está correta",
+                "description": "Por favor escreve sua senha novamente",
+                "formErrorMessage": "A senha não é válida, favor reescrevê-la"
+            }
+        },
+        "restoreAccount": {
+            "title": "Reescreva a frase de recuperação de conta",
+            "description": "Reescreva as 12 palavras da sua frase de recuperação para continuar o processo",
+            "mnemonic": "Frase",
+            "continue": "Continuar",
+            "goBack": "Voltar",
+            "errorMessage": "As 12 palavras inseridas não são válidas"
+        },
+        "secureAccount": {
+            "title": "Antes de prosseguir, você deve criar uma conta",
+            "description": "Não levará mais de um minuto",
+            "alreadyHaveAccount": "Eu já tenho uma conta",
+            "secureThisAccount": "Criar conta"
+        },
+        "choosePassword": {
+            "title": "Escolha uma senha",
+            "description_html": "Favor inserir uma senha com pelo menos <strong>oitostrong> caracteres, e que contenha pelo menos uma letra <strong>maiúscula<strong> e um <strong>número</strong>\n",
+            "newPasswordLabel": "Nova Senha",
+            "confirmPasswordLabel": "Confirmar Senha",
+            "continue": "Continuar",
+            "back": "Voltar",
+            "errors": {
+                "passwordMismatch": "Ei, suas senhas não são iguais",
+                "eightCharacters": "A senha deve ter pelo menos oito caracteres",
+                "numericCharacter": "A senha deve conter pelo menos um número",
+                "uppercaseCharacter": "A senha deve conter pelo menos uma letra maiúscula"
+            }
+        },
+        "showSeed": {
+            "title": "Sua chave de recuperação de conta",
+            "description_html": "Esta é sua chave de recuperação. É como uma senha para restaurar a sua conta. %{keepSafe}",
+            "keepSafe": "Mantenha ela em segredo. Mantenha ela segura",
+            "copy": {
+                "buttonText": "Copiar",
+                "confirmCopy": "Eu copiei as 12 palavras. Elas estão em segredo e em segurança",
+                "notification": {
+                    "title": "Copiado!",
+                    "description": "Sua chave foi copiada"
+                }
+            },
+            "goBack": "Voltar",
+            "continue": "Continuar"
+        }
+    }
+}

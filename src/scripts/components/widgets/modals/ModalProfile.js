@@ -7,6 +7,8 @@ import TextField from 'components/widgets/forms/TextField'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import NotepadSvg from 'components/foundations/svgs/NotepadSvg'
+import TranslatedText from 'components/translations/TranslatedText'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
 
@@ -15,6 +17,7 @@ const FORM_ID: string = 'PROFILE_MODAL'
 type Props = {
   walletKey: string,
   openModal: string => void,
+  onComplete: Function,
   closeModal: () => void,
   secureKeystore: string => void,
   setUserData: () => void,
@@ -42,6 +45,10 @@ class ModalProfile extends Component<Props, Object> {
   setProfile: () => void
   sendVerificationMail: (string, string) => void
   handleInputChange: (input: string, e: Object) => void
+
+  static defaultProps = {
+    onComplete: () => {}
+  }
 
   constructor (props: Props) {
     super(props)
@@ -74,6 +81,7 @@ class ModalProfile extends Component<Props, Object> {
       })
     }
     this.props.closeModal()
+    this.props.onComplete()
     // Set profile in the state
     this.props.setUserData()
   }
@@ -88,8 +96,12 @@ class ModalProfile extends Component<Props, Object> {
         // Notification mail sent!
         this.props.notification(
           {
-            title: 'Check your email!',
-            message: 'We sent you a confirmation link',
+            title: (
+              <TranslatedText message="modal.profile.verificationEmail.title" />
+            ),
+            message: (
+              <TranslatedText message="modal.profile.verificationEmail.description" />
+            ),
             autoDismiss: 0
           },
           'success'
@@ -112,11 +124,11 @@ class ModalProfile extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Profile</Title>
+          <Title>
+            <TranslatedText message="modal.profile.title" />
+          </Title>
           <Text small gray>
-            {
-              "This is how you'll be known on the Paratii network. Enter your email if you'd like to receive updates about the community and your activity."
-            }
+            <TranslatedText message="modal.profile.description" />
           </Text>
           <Icon>
             <NotepadSvg />
@@ -124,7 +136,9 @@ class ModalProfile extends Component<Props, Object> {
           <form id={FORM_ID} onSubmit={this.setProfile}>
             <TextField
               error={this.state.error.length > 0}
-              label="Username"
+              label={RawTranslatedText({
+                message: 'modal.profile.usernameLabel'
+              })}
               name="username"
               type="text"
               value={this.state.username}
@@ -133,7 +147,7 @@ class ModalProfile extends Component<Props, Object> {
             />
             <TextField
               error={this.state.error.length > 0}
-              label="Email"
+              label={RawTranslatedText({ message: 'modal.profile.emailLabel' })}
               name="email"
               type="text"
               value={this.state.email}
@@ -157,11 +171,11 @@ class ModalProfile extends Component<Props, Object> {
                   purple
                   disabled={!this.state.username}
                 >
-                  Continue
+                  <TranslatedText message="modal.profile.continue" />
                 </Button>
               ) : (
                 <Button type="submit" form={FORM_ID} purple disabled="true">
-                  Please wait, we are creating your wallet
+                  <TranslatedText message="modal.profile.pleaseWait" />
                 </Button>
               )}
             </ButtonContainer>

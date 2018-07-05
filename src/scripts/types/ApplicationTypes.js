@@ -11,6 +11,8 @@ import NotificationRecord from 'records/NotificationRecord'
 import ModalRecord from 'records/ModalRecord'
 import SearchRecord from 'records/SearchRecords'
 import VideoManagerRecord from 'records/VideoManagerRecords'
+import TippingRecord from 'records/TippingRecords'
+import UserNavRecord from 'records/UserNavRecord'
 import {
   REQUEST_STATUS,
   TRANSITION_STATE,
@@ -18,6 +20,7 @@ import {
   NOTIFICATION_POSITIONS
 } from 'constants/ApplicationConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
+import { TOKEN_UNITS } from 'constants/ParatiiLibConstants'
 
 export type Location = {
   pathname: string,
@@ -73,7 +76,9 @@ export type RootState = {
   notifications: NotificationsArray,
   modal: ModalRecord,
   search: SearchRecord,
-  videoManager: VideoManagerRecord
+  tipping: TippingRecord,
+  videoManager: VideoManagerRecord,
+  userNav: UserNavRecord
 }
 
 type _ThunkAction<R> = (dispatch: Dispatch, getState?: () => RootState) => R
@@ -127,6 +132,8 @@ export type ClapprPlayer = EventEmitter & {
   clappr: ClapprModule
 }
 
+export type TokenUnit = $Values<typeof TOKEN_UNITS>
+
 // TODO move this into paratii-js repo
 export type ParatiiLib = {
   config: {
@@ -151,14 +158,14 @@ export type ParatiiLib = {
   eth: {
     getAccount: () => string,
     wallet: {
+      clear: () => void,
+      createFromMnemonic: (num: ?number, mnemonic: ?string) => Object,
       decrypt: (string, password: string) => Object,
       encrypt: (password: string) => Object,
-      newMnemonic: () => string,
       getMnemonic: () => Promise<string>,
-      create: (num: ?number, mnemonic: ?string) => Object,
-      clear: () => void,
       isValidMnemonic: string => boolean,
-      length: number
+      length: number,
+      newMnemonic: () => string
     },
     vids: {
       get: (id: string) => ?Object,
@@ -178,13 +185,15 @@ export type ParatiiLib = {
     tcr: {
       apply: (string, number) => Promise<Object>,
       checkEligiblityAndApply: (string, number) => Promise<Object>,
-      getMinDeposit: () => string
+      getMinDeposit: () => string,
+      getTotalStaked: string => Promise<Object>
     },
     tcrPlaceholder: {
       apply: (string, number) => Promise<Object>,
       checkEligiblityAndApply: (string, number) => Promise<Object>,
       getMinDeposit: () => string
-    }
+    },
+    transfer: (address: string, amount: number, unit: TokenUnit) => void
   },
   ipfs: {
     local: {
@@ -378,7 +387,7 @@ export type NotificationPosition = $Values<typeof NOTIFICATION_POSITIONS>
 export type NotificationLevel = $Values<typeof NOTIFICATION_LEVELS>
 
 export type Notification = {
-  title: string,
-  message?: string,
+  title: string | any,
+  message?: string | any,
   position?: NotificationPosition
 }

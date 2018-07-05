@@ -5,12 +5,13 @@ import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import Button from 'components/foundations/Button'
 import NotepadLockedSvg from 'components/foundations/svgs/NotepadLockedSvg'
+import TranslatedText from 'components/translations/TranslatedText'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
 import { RESTORE_ACCOUNT, NEW_ACCOUNT } from 'constants/ParatiiLibConstants'
 
 type Props = {
-  openModal: string => void,
+  openModal: (string, ?Object) => void,
   setContext: string => void
 }
 
@@ -55,8 +56,12 @@ class ModalSecure extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Before you proceed your account needs to be secure</Title>
-          <Text gray>It won’t take more than a minute</Text>
+          <Title>
+            <TranslatedText message="wallet.secureAccount.title" />
+          </Title>
+          <Text gray>
+            <TranslatedText message="wallet.secureAccount.description" />
+          </Text>
           <Icon>
             <NotepadLockedSvg />
           </Icon>
@@ -66,7 +71,7 @@ class ModalSecure extends Component<Props, Object> {
                 data-test-id="restore-account"
                 onClick={this.restoreAccount}
               >
-                I already have an account
+                <TranslatedText message="wallet.secureAccount.alreadyHaveAccount" />
               </Button>
             </ButtonContainer>
             <ButtonContainer>
@@ -75,7 +80,7 @@ class ModalSecure extends Component<Props, Object> {
                 purple
                 onClick={this.createPassword}
               >
-                Secure this account
+                <TranslatedText message="wallet.secureAccount.secureThisAccount" />
               </Button>
             </ButtonContainer>
           </Footer>
