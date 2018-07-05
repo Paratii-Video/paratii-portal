@@ -11,6 +11,7 @@ import { MODAL } from 'constants/ModalConstants'
 type Props = {
   videoId: string,
   isWalletSecured: boolean,
+  setVote: number => void,
   openModal: string => void,
   checkUserWallet: () => void
 }
@@ -52,18 +53,12 @@ class CommitYourVote extends Component<Props, void> {
 
   async voteVideo (vote: number) {
     if (this.props.isWalletSecured) {
+      this.props.setVote({ id: this.props.videoId, vote: vote })
       this.props.openModal(MODAL.VOTE)
-      // paratii.eth.tcr.approveAndStartChallenge(this.props.videoId)
     } else {
       // If wallet not secure open the modal for signup / login
       this.props.checkUserWallet()
     }
-    // const amountInWei = paratii.eth.web3.utils.toWei('10')
-    // await paratii.eth.tcr.approveAndGetRightsAndCommitVote(
-    //   this.props.videoId,
-    //   vote,
-    //   amountInWei
-    // )
   }
 
   render () {

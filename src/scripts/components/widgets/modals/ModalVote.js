@@ -15,6 +15,7 @@ type Props = {
   author: string,
   user: UserRecord,
   selectedVideoId: string,
+  getVideoVote: number,
   closeModal: () => void,
   saveVideoStaked: Object => Object,
   notification: (Object, string) => void,
@@ -66,14 +67,12 @@ class ModalVote extends Component<Props, Object> {
   }
 
   async onSubmit (event: Object) {
-    // FIXME We need to get thsi value from redux
-    const vote = 1
     event.preventDefault()
-    this.props.notification({ title: 'Processing your vote...' }, 'warning')
     const amountInWei = paratii.eth.web3.utils.toWei(MIN_VOTE_PTI)
+    this.props.notification({ title: 'Processing your vote...' }, 'warning')
     await paratii.eth.tcr.approveAndGetRightsAndCommitVote(
       this.props.selectedVideoId,
-      vote,
+      this.props.getVideoVote,
       amountInWei
     )
 
@@ -107,9 +106,10 @@ class ModalVote extends Component<Props, Object> {
         <ModalScrollContent>
           <Title>Vote this video</Title>
           <Highlight>
-            By voting to support/oppose this video you agree to make a stake
-            deposit of <Strong purple>{MIN_VOTE_PTI} PTI</Strong>. This will
-            trigger the voting period.
+            By voting to {this.props.getVideoVote ? 'support' : 'oppose'} this
+            video you agree to make a stake deposit of{' '}
+            <Strong purple>{MIN_VOTE_PTI} PTI</Strong>. This will trigger the
+            voting period.
           </Highlight>
           {!balanceIsTooLow ? (
             <MainText small gray>

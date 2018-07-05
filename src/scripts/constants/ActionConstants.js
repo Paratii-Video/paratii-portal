@@ -21,6 +21,9 @@ export const VIDEO_FETCH_WHITELIST = createActionConstant(
   'VIDEO_FETCH_WHITELIST'
 )
 
+/* TCR Actions */
+export const VOTE_VIDEO = createActionConstant('VOTE_VIDEO')
+
 /* User Actions */
 export const SET_WALLET_DATA = createActionConstant('SET_WALLET_DATA')
 export const SET_WALLET_ADDRESS = createActionConstant('SET_WALLET_ADDRESS')
