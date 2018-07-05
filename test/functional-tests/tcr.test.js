@@ -1,15 +1,13 @@
-import chai from 'chai'
-import chaiAsPromised from 'chai-as-promised'
+import { assert } from 'chai'
 import {
   paratii,
   address,
   password,
-  getAccountFromBrowser
+  getAccountFromBrowser,
+  waitForKeystore
 } from './test-utils/helpers'
 import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
 // declare var browser: Object
-
-chai.use(chaiAsPromised)
 
 describe('TCR:', function () {
   beforeEach(async function () {
@@ -20,12 +18,13 @@ describe('TCR:', function () {
   })
 
   it('TCR has Paratii-style settings', async function () {
-    chai.assert.equal(await paratii.eth.tcr.getApplyStageLen(), 0)
+    assert.equal(await paratii.eth.tcr.getApplyStageLen(), 0)
   })
 
   it('you can challenge a publish video @watch', async function () {
     // Create a secure wallet
-    browser.createSecureWallet()
+    await browser.createSecureWallet()
+
     // Create a publish video
     await paratii.vids.create({
       id: ID,
@@ -45,13 +44,13 @@ describe('TCR:', function () {
     await contract.methods.updateStatus(hash).send()
     //
 
-    chai.assert.equal(
+    assert.equal(
       await paratii.eth.tcr.appWasMade(ID),
       true,
       `appWasMade is false`
     )
-    chai.assert.equal(await paratii.eth.tcr.getApplyStageLen(), 0)
-    chai.assert.equal(await paratii.eth.tcr.isWhitelisted(ID), true)
+    assert.equal(await paratii.eth.tcr.getApplyStageLen(), 0)
+    assert.equal(await paratii.eth.tcr.isWhitelisted(ID), true)
     await browser.url(`http://localhost:8080/play/${ID}`)
     // Login
     // Click on login and insert the password
@@ -60,9 +59,14 @@ describe('TCR:', function () {
     await browser.setValue('[name="wallet-password"]', password)
     await browser.waitAndClick('[data-test-id="continue"]')
 
+    // await browser.pause(5000)
     // Get address from browser and send it som PTI
+    const keystore = await waitForKeystore(browser, 'keystore-anon')
+    console.log(keystore)
+    assert.isOk(keystore)
     const userAddress = await getAccountFromBrowser()
-    const value = paratii.eth.web3.utils.toWei('1000')
+    console.log(userAddress)
+    const value = paratii.eth.web3.utils.toWei('100')
     await paratii.eth.transfer(userAddress, value, 'PTI')
   })
 })
