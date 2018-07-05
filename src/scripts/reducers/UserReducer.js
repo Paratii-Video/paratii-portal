@@ -9,7 +9,9 @@ import {
   LOGOUT,
   SET_WALLET_DATA,
   SET_WALLET_ADDRESS,
+  WALLET_SECURED,
   BALANCES_LOADED,
+  LOAD_BALANCES_STARTED,
   STAKED_PTI
 } from 'constants/ActionConstants'
 import UserRecord, { Balances } from 'records/UserRecords'
@@ -37,6 +39,8 @@ const reducer = {
       emailIsVerified: payload.emailIsVerified
     })
   },
+  [WALLET_SECURED]: (state: UserRecord): UserRecord =>
+    state.set('lastSecuredTimestamp', Date.now()),
   [LOGOUT]: (state: UserRecord): UserRecord => {
     return state.merge({
       loginRequestStatus: REQUEST_STATUS.NOT_STARTED,
@@ -59,6 +63,8 @@ const reducer = {
     state.merge({
       address
     }),
+  [LOAD_BALANCES_STARTED]: (state: UserRecord): UserRecord =>
+    state.setIn(['balances', 'requestStatus'], REQUEST_STATUS.PENDING),
   [BALANCES_LOADED]: (
     state: UserRecord,
     { payload: { ETH, PTI } }
@@ -67,7 +73,8 @@ const reducer = {
       'balances',
       new Balances({
         ETH,
-        PTI
+        PTI,
+        requestStatus: REQUEST_STATUS.SUCCEEDED
       })
     ),
   [STAKED_PTI]: (state: UserRecord, { payload: { totalStaked } }): UserRecord =>

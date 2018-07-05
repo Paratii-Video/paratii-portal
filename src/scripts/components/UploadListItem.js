@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom'
 import paratii from 'utils/ParatiiLib'
 
 import { getAppRootUrl } from 'utils/AppUtils'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
+
+import TranslatedText from './translations/TranslatedText'
 import Text from './foundations/Text'
 import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
@@ -357,20 +360,32 @@ class UploadListItem extends Component<Props, Object> {
       video.transcodingStatus.name === 'success'
     ) {
       if (video.title.length < 1) {
-        statusMessage = 'Please provide a title and description'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.needsTitle" />
+        )
       } else {
-        statusMessage = 'Your video is ready'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.videoReady" />
+        )
         videoIsReady = true
       }
     } else {
       if (video.uploadStatus.name === 'failed') {
-        statusMessage = 'Your video could not be uploaded'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.uploadFailed" />
+        )
       } else if (video.transcodingStatus.name === 'failed') {
-        statusMessage = 'Your video could not be transcoded'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.transcodeFailed" />
+        )
       } else if (video.transcodingStatus.name === 'requested') {
-        statusMessage = 'Transcoding your video'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.transcoding" />
+        )
       } else {
-        statusMessage = 'Uploading your video'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.uploading" />
+        )
       }
     }
 
@@ -426,7 +441,7 @@ class UploadListItem extends Component<Props, Object> {
                   disabled={!isPublishable}
                   accent
                 >
-                  Publish
+                  <TranslatedText message="uploadListItem.publish" />
                 </TextButton>
               ) : (
                 <LabelStake>{stakedPTI} PTI Staked</LabelStake>
@@ -452,10 +467,10 @@ class UploadListItem extends Component<Props, Object> {
                 id={'video-id-' + videoId}
                 type="hidden"
                 value={this.state.id}
-                label="Video Id"
+                label={RawTranslatedText({ message: 'uploadListItem.videoId' })}
               />
               <TextField
-                label="Title"
+                label={RawTranslatedText({ message: 'uploadListItem.title' })}
                 id={'input-video-title-' + videoId}
                 type="text"
                 value={this.state.title}
@@ -468,13 +483,17 @@ class UploadListItem extends Component<Props, Object> {
                 id={'input-video-description-' + videoId}
                 value={this.state.description}
                 onChange={e => this.handleInputChange('description', e)}
-                label="Description"
+                label={RawTranslatedText({
+                  message: 'uploadListItem.description'
+                })}
                 rows="1"
                 margin="0 0 30px"
                 tabIndex="0"
               />
               <Textarea
-                label="is this video really yours?"
+                label={RawTranslatedText({
+                  message: 'uploadListItem.ownership'
+                })}
                 id={'input-video-ownership-proof-' + videoId}
                 type="text"
                 value={this.state.ownershipProof}
@@ -484,14 +503,16 @@ class UploadListItem extends Component<Props, Object> {
                 tabIndex="0"
               />
               <RadioWrapper>
-                <RadioTitle>What kind of content?</RadioTitle>
+                <RadioTitle>
+                  <TranslatedText message="uploadListItem.contentType.title" />
+                </RadioTitle>
                 <RadioCheck
                   name="content-type"
                   value="free"
                   tabIndex="0"
                   defaultChecked
                 >
-                  Free
+                  <TranslatedText message="uploadListItem.contentType.free" />
                 </RadioCheck>
                 <RadioCheck
                   name="content-type"
@@ -500,7 +521,7 @@ class UploadListItem extends Component<Props, Object> {
                   nomargin
                   disabled
                 >
-                  Paid (not available yet)
+                  <TranslatedText message="uploadListItem.contentType.paid" />
                 </RadioCheck>
               </RadioWrapper>
               <FormButtons>
@@ -511,7 +532,7 @@ class UploadListItem extends Component<Props, Object> {
                   accent
                   disabled={this.props.video.storageStatus.name === 'running'}
                 >
-                  Save
+                  <TranslatedText message="uploadListItem.save" />
                 </TextButton>
               </FormButtons>
             </Form>
@@ -538,10 +559,7 @@ class UploadListItem extends Component<Props, Object> {
               )}
               {!isPublished ? (
                 <Text gray small>
-                  By clicking on the “Publish” button you acknowledge that you
-                  agree to Paratii’s Terms of Service and Community Guidelines.
-                  Please be sure not to violate others’ copyright or privacy
-                  rights. Learn more
+                  <TranslatedText message="uploadListItem.termsOfService" />
                 </Text>
               ) : (
                 <Text>{urlForSharing}</Text>

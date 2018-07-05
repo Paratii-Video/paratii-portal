@@ -22,9 +22,11 @@ import {
   getPlayerCurrentTimeSeconds,
   getPlayerCurrentBufferedTimeSeconds,
   getPlayerCurrentVolume,
-  getActivePlugin
+  getActivePlugin,
+  getUserIsTipping
 } from 'selectors/index'
 import { getPlayingVideo, getDurationSeconds } from 'selectors/PlayerSelectors'
+
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (
@@ -39,7 +41,8 @@ const mapStateToProps = (
   currentTimeSeconds: getPlayerCurrentTimeSeconds(state),
   currentBufferedTimeSeconds: getPlayerCurrentBufferedTimeSeconds(state),
   currentVolume: getPlayerCurrentVolume(state),
-  activePlugin: getActivePlugin(state)
+  activePlugin: getActivePlugin(state),
+  userIsTipping: getUserIsTipping(state)
 })
 
 const mapDispatchToProps = {

@@ -1,5 +1,5 @@
 /* @flow */
-import paratii from 'utils/ParatiiLib'
+import paratii, { getSecureWallet } from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Title from 'components/foundations/Title'
@@ -22,6 +22,7 @@ const FORM_ID: string = 'ask-password-form'
 type Props = {
   openModal: string => void,
   closeModal: () => void,
+  onComplete: Function,
   notification: (Object, string) => void,
   setWalletData: Object => void,
   setAddressAndBalance: () => void,
@@ -53,6 +54,10 @@ class ModalAskPassword extends Component<Props, Object> {
   setPassword: () => void
   handleInputChange: (input: string, e: Object) => void
 
+  static defaultProps = {
+    onComplete: () => {}
+  }
+
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -74,7 +79,7 @@ class ModalAskPassword extends Component<Props, Object> {
     sessionStorage.removeItem(MNEMONIC_KEY_TEMP)
     // Decrypt Keystore
     const password = this.state.password
-    const walletString = localStorage.getItem(WALLET_KEY_SECURE) || ''
+    const walletString = getSecureWallet()
     this.props.notification(
       { title: <TranslatedText message="wallet.unlockingKeystore" /> },
       'warning'
@@ -102,6 +107,7 @@ class ModalAskPassword extends Component<Props, Object> {
         this.props.setUserData()
         // Retrieve your videos
         this.props.fetchOwnedVideos()
+        this.props.onComplete()
         this.props.closeModal()
       } catch (err) {
         // Password is not valid

@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 `
 
 type Props = {
-  onClick: (e: Object) => void,
+  onClick: () => void,
   'data-test-id'?: string
 }
 
@@ -20,7 +20,7 @@ const CloseButton = (props: Props) => (
   <Wrapper>
     <IconButton
       data-test-id={props['data-test-id']}
-      icon="/assets/img/close-icon.svg"
+      icon="/assets/svg/back-arrow.svg"
       onClick={props.onClick}
     />
   </Wrapper>
