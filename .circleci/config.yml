@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8-browsers
+      - image: leeaandrob/paratii-portal:0.0.6
     working_directory: ~/repo
     steps:
       - checkout
@@ -28,7 +28,7 @@ jobs:
       - run:
           command: node src/scripts/waitForServer.js
           no_output_timeout: 120s
-      - run: yarn run chimp-test
+      - run: yarn run chimp-circleci-test
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
