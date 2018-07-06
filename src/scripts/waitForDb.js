@@ -5,7 +5,7 @@ const pingServer = () => {
     {
       hostname: 'localhost',
       port: 3000,
-      path: '/',
+      path: '/api/v1',
       method: 'GET'
     },
     res => {
