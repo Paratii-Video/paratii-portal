@@ -278,7 +278,7 @@ describe.only('🔍 Search:', () => {
     browser.setValue(searchNavInputSelector, query)
     browser.submitForm(searchNavFormSelector)
 
-    browser.waitAndClick(searchResultSelector)
+    browser.waitAndClick(`[${videoIdAttribute}="${SCIENCE_VIDEO._id}"]`)
     browser.waitUntil(
       () =>
         browser.execute(
