@@ -1,8 +1,7 @@
 import { assert } from 'chai'
 import queryString from 'query-string'
-import { paratii, address } from './test-utils/helpers.js'
 
-import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
+import { ID, TITLE } from './constants/VideoTestConstants'
 
 describe('🎥 Player:', function () {
   const videoElementSelector = '#player video'
@@ -13,13 +12,6 @@ describe('🎥 Player:', function () {
   const playpauseButtonSelector = '[data-test-id="playpause-button"]'
 
   before(async () => {
-    await paratii.vids.create({
-      id: ID,
-      owner: address,
-      title: TITLE,
-      ipfsHash: IPFS_HASH
-    })
-
     browser.addCommand(
       'goToTestVideoUrl',
       ({ embed, overrideID, queryParams }) => {
@@ -30,44 +22,48 @@ describe('🎥 Player:', function () {
             ID}?${query}`
         )
         browser.execute(playerWrapperSelector => {
-          window.PLAYER_TEST_DATA = {
-            playing: false,
-            paused: false
-          }
+          try {
+            window.PLAYER_TEST_DATA = {
+              playing: false,
+              paused: false
+            }
 
-          window.PLAYER_IS_FULLSCREEN = false
-
-          const mockRequestFullscreen = function () {
-            window.PLAYER_IS_FULLSCREEN = true
-            document.fullscreenElement = this
-
-            const fullscreenEvent = new Event('fullscreenchange')
-            document.dispatchEvent(fullscreenEvent)
-          }
-
-          const mockExitFullscreen = () => {
             window.PLAYER_IS_FULLSCREEN = false
-            document.fullscreenElement = undefined
 
-            const fullscreenEvent = new Event('fullscreenchange')
-            document.dispatchEvent(fullscreenEvent)
-          }
+            const mockRequestFullscreen = function () {
+              window.PLAYER_IS_FULLSCREEN = true
+              document.fullscreenElement = this
 
-          const playerWrapper = document.querySelector(playerWrapperSelector)
-          if (playerWrapper.requestFullscreen) {
-            playerWrapper.requestFullscreen = mockRequestFullscreen
-          } else if (playerWrapper.mozRequestFullScreen) {
-            playerWrapper.mozRequestFullScreen = mockRequestFullscreen
-          } else if (playerWrapper.webkitRequestFullscreen) {
-            playerWrapper.webkitRequestFullscreen = mockRequestFullscreen
-          }
+              const fullscreenEvent = new Event('fullscreenchange')
+              document.dispatchEvent(fullscreenEvent)
+            }
 
-          if (document.exitFullscreen) {
-            document.exitFullscreen = mockExitFullscreen
-          } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen = mockExitFullscreen
-          } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen = mockExitFullscreen
+            const mockExitFullscreen = () => {
+              window.PLAYER_IS_FULLSCREEN = false
+              document.fullscreenElement = undefined
+
+              const fullscreenEvent = new Event('fullscreenchange')
+              document.dispatchEvent(fullscreenEvent)
+            }
+
+            const playerWrapper = document.querySelector(playerWrapperSelector)
+            if (playerWrapper.requestFullscreen) {
+              playerWrapper.requestFullscreen = mockRequestFullscreen
+            } else if (playerWrapper.mozRequestFullScreen) {
+              playerWrapper.mozRequestFullScreen = mockRequestFullscreen
+            } else if (playerWrapper.webkitRequestFullscreen) {
+              playerWrapper.webkitRequestFullscreen = mockRequestFullscreen
+            }
+
+            if (document.exitFullscreen) {
+              document.exitFullscreen = mockExitFullscreen
+            } else if (document.mozCancelFullScreen) {
+              document.mozCancelFullScreen = mockExitFullscreen
+            } else if (document.webkitExitFullscreen) {
+              document.webkitExitFullscreen = mockExitFullscreen
+            }
+          } catch (e) {
+            return false
           }
         }, playerWrapperSelector)
         browser.waitUntil(

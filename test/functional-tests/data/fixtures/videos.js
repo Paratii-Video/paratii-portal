@@ -1,4 +1,5 @@
 const range = require('lodash.range')
+const { ID, TITLE, IPFS_HASH } = require('../../constants/VideoTestConstants')
 
 const SCIENCE_VIDEO = {
   _id: 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ',
@@ -68,10 +69,18 @@ const buildSportsVideo = (seed = 1) => ({
   staked: true
 })
 
+const BUNNY_VIDEO = {
+  _id: ID,
+  owner: '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
+  title: TITLE,
+  ipfsHash: IPFS_HASH
+}
+
 module.exports = [
   SCIENCE_VIDEO,
   SCIENCE_VIDEO_MISSING_THUMBNAIL,
   DEVCON_VIDEO,
   ETHEREUM_VIDEO,
-  ...range(1, 15).map(buildSportsVideo)
+  ...range(1, 15).map(buildSportsVideo),
+  BUNNY_VIDEO
 ]
