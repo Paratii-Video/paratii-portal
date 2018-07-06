@@ -191,7 +191,7 @@ describe('🔍 Search:', () => {
     browser.waitUntil(() => !browser.isVisible(moreResultsButtonSelector))
   })
 
-  it('should render info about each search result', () => {
+  it.only('should render info about each search result', () => {
     const query = 'ethereum'
 
     navigateToSearch()
