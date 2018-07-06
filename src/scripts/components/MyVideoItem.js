@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { FlexCenterStyle } from './foundations/Styles'
 import Text, { Span } from './foundations/Text'
 import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
@@ -46,11 +47,9 @@ const ZINDEX_MYVIDEOSITEM_IMAGE: number = 1
 const ZINDEX_MYVIDEOSITEM_PLAY: number = 4
 
 const MyVideoItemMedia = styled.div`
-  align-items: center;
-  background: ${props => props.theme.colors.background.secondary};
-  display: flex;
+  ${FlexCenterStyle} background: ${props =>
+  props.theme.colors.background.secondary};
   height: 200px;
-  justify-content: center;
   position: relative;
   width: 100%;
 

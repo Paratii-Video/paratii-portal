@@ -15,6 +15,7 @@ import {
   Z_INDEX_USERNAV
 } from '../constants/UIConstants'
 import { Link } from 'react-router-dom'
+import { FlexCenterStyle } from './foundations/Styles'
 import Text from './foundations/Text'
 import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
@@ -37,6 +38,8 @@ type Props = {
 const Wrapper = styled.div`
   background: ${props => props.theme.colors.background.primary};
   box-shadow: -11px 0 40px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
   height: 100%;
   left: 0;
   overflow-x: hidden;
@@ -55,6 +58,7 @@ const Wrapper = styled.div`
 
 // User
 const UserWrapper = styled.div`
+  background: ${props => props.theme.colors.background.secondary};
   display: flex;
   flex-direction: column;
   margin-top: ${MAINHEADER_LOGO_HEIGHT};
@@ -77,12 +81,10 @@ const UserPTIValue = styled.div`
 `
 
 const UserPTIValueBox = styled.div`
-  align-items: center;
-  background-color: ${props => props.theme.colors.background.tertiary};
+  ${FlexCenterStyle} background-color: ${props =>
+  props.theme.colors.background.tertiary};
   border-radius: ${BORDER_RADIUS};
-  display: flex;
   flex-direction: column;
-  justify-content: center;
   padding: 14px;
 `
 
@@ -119,6 +121,8 @@ const UserNavList = styled.ul`
 `
 
 const UserNavListItem = styled.li`
+  background: ${props =>
+    props.subnav ? props.theme.colors.background.tertiary : null};
   opacity: 1;
 `
 
@@ -265,7 +269,7 @@ class UserNav extends Component<Props, Object> {
                 Profile
               </UserNavListItemLink>
             </UserNavListItem>
-            <UserNavListItem>
+            <UserNavListItem subnav>
               <UserNavListItemLink
                 to="/profile/my-videos"
                 onClick={this.props.closeUserNav}

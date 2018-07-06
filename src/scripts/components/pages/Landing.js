@@ -4,6 +4,7 @@ import type { Map } from 'immutable'
 import type VideoRecord from 'records/VideoRecords'
 import { MAINHEADER_LOGO_HEIGHT } from 'constants/UIConstants'
 import { Link } from 'react-router-dom'
+import { FlexCenterStyle } from '../foundations/Styles'
 import Title from '../foundations/Title'
 import Text from '../foundations/Text'
 import TruncatedText from '../foundations/TruncatedText'
@@ -27,15 +28,13 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.div`
-  align-items: center;
+  ${FlexCenterStyle}
   background: ${props => props.theme.colors.background.primary}
     url(${props => props.background}) no-repeat 50%;
   background-size: cover;
   box-shadow: ${props => props.theme.colors.LandingPage.secondary};
-  display: flex;
   flex-direction: column;
   min-height: calc(100vh - (${MAINHEADER_LOGO_HEIGHT} * 2));
-  justify-content: center;
   padding: 0 20px;
   position: relative;
 
@@ -86,10 +85,7 @@ const VideoLink = styled(Link)`
 `
 
 const HeaderContent = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  ${FlexCenterStyle} justify-content: center;
   position: relative;
   width: 100%;
 

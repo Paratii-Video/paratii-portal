@@ -4,6 +4,7 @@ import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import { List as ImmutableList } from 'immutable'
 
+import { FlexCenterStyle } from '../foundations/Styles'
 import Loader from 'components/foundations/Loader'
 import SearchResult from 'components/widgets/SearchResult'
 import TranslatedText from 'components/translations/TranslatedText'
@@ -36,12 +37,9 @@ const SearchTermPrompt = styled.span`
 `
 
 const ZeroState = styled.div`
-  color: ${({ theme }) => theme.colors.text.accent};
+  ${FlexCenterStyle} color: ${({ theme }) => theme.colors.text.accent};
   height: 200px;
   font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `
 
 const Results = styled.div`
@@ -58,10 +56,7 @@ const LoaderWrapper = styled.div`
 `
 
 const HasNextButton = styled.button`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${FlexCenterStyle} width: 100%;
   flex: 0 0 60px;
   padding-top: 10px;
   padding-bottom: 20px;

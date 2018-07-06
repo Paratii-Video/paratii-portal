@@ -8,6 +8,8 @@ import { getAppRootUrl } from 'utils/AppUtils'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import TranslatedText from './translations/TranslatedText'
+
+import { FlexCenterStyle } from './foundations/Styles'
 import Text from './foundations/Text'
 import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
@@ -164,10 +166,7 @@ const VideoImage = styled.div`
 `
 
 const VideoMediaOverlay = styled.div`
-  align-items: center;
-  display: flex;
-  height: 100%;
-  justify-content: center;
+  ${FlexCenterStyle} height: 100%;
   left: 0;
   position: absolute;
   top: 0;

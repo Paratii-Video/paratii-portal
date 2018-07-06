@@ -3,6 +3,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { FlexCenterStyle } from 'components/foundations/Styles'
 import Icon from 'components/foundations/Icon'
 import Colors from 'components/foundations/base/Colors'
 import TranslatedText from 'components/translations/TranslatedText'
@@ -14,10 +15,7 @@ type Props = {
 }
 
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
+  ${FlexCenterStyle} font-size: 20px;
   font-weight: bold;
   color: ${Colors.white};
 `

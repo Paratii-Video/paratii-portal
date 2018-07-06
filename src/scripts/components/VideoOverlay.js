@@ -3,6 +3,7 @@
 import React, { Component, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
+import { FlexCenterStyle } from 'components/foundations/Styles'
 import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
@@ -149,10 +150,7 @@ const ProfileButtonWrapper = styled.div`
 `
 
 const CentralizedContent = styled.div`
-  align-items: center;
-  display: flex;
-  height: 100%;
-  justify-content: center;
+  ${FlexCenterStyle} height: 100%;
   left: 0;
   position: absolute;
   top: 0;
