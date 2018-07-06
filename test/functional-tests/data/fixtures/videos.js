@@ -15,7 +15,7 @@ const SCIENCE_VIDEO = {
 }
 
 const SCIENCE_VIDEO_MISSING_THUMBNAIL = {
-  _id: 'QmzzNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ',
+  _id: 'QmzzNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJZZ',
   title: 'I like science',
   description: 'Here are some science',
   duration: '04:11',

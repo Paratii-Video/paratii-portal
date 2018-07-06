@@ -19,7 +19,7 @@ const [
   SPORTS_VIDEO_14
 ] = require('./data/fixtures/videos')
 
-describe('🔍 Search:', () => {
+describe.only('🔍 Search:', () => {
   const navigateToSearch = () => browser.url('http://localhost:8080/search')
   const searchResultsWrapperSelector = '[data-test-id="search-results"]'
   const enterKeywordsZeroStateSelector = `${searchResultsWrapperSelector} [data-test-id="enter-keywords-zero-state"]`
@@ -33,6 +33,7 @@ describe('🔍 Search:', () => {
   const searchResultAuthorSelector = `${searchResultSelector} [data-test-id="search-result-author"]`
   const searchResultDescriptionSelector = `${searchResultSelector} [data-test-id="search-result-description"]`
   const moreResultsButtonSelector = '[data-test-id="more-results-button"]'
+  const videoIdAttribute = 'data-test-video-id'
 
   before(async () => {
     browser.addCommand('waitUntilIsOnSearchRoute', ({ query = '' } = {}) => {
@@ -69,6 +70,7 @@ describe('🔍 Search:', () => {
               searchResultTitleSelector,
               searchResultAuthorSelector,
               searchResultDescriptionSelector,
+              videoIdAttribute,
               results
             ) => {
               const resultsData = JSON.parse(results)
@@ -80,39 +82,44 @@ describe('🔍 Search:', () => {
                 return false
               }
 
-              for (let i = 0; i < searchResults.length; i++) {
-                const searchResult = searchResults[i]
+              for (let i = 0; i < resultsData.length; i++) {
+                const result = resultsData[i]
+                const searchResult = Array.prototype.slice
+                  .call(searchResults)
+                  .find(
+                    resultEl =>
+                      result._id === resultEl.getAttribute(videoIdAttribute)
+                  )
 
                 const thumbnailEl = searchResult.querySelector(
                   searchResultThumbnailSelector
                 )
                 const thumbnailOk =
                   thumbnailEl.getAttribute('src') ===
-                  `https://gateway.paratii.video/ipfs/${
-                    resultsData[i].ipfsHash
-                  }/${resultsData[i].thumbnails[0]}`
+                  `https://gateway.paratii.video/ipfs/${result.ipfsHash}/${
+                    result.thumbnails[0]
+                  }`
 
                 const durationEl = searchResult.querySelector(
                   searchResultDurationSelector
                 )
-                const durationOk =
-                  durationEl.textContent === resultsData[i].duration
+                const durationOk = durationEl.textContent === result.duration
 
                 const titleEl = searchResult.querySelector(
                   searchResultTitleSelector
                 )
-                const titleOk = titleEl.textContent === resultsData[i].title
+                const titleOk = titleEl.textContent === result.title
 
                 const authorEl = searchResult.querySelector(
                   searchResultAuthorSelector
                 )
-                const authorOk = (authorEl.textContent = resultsData[i].author)
+                const authorOk = (authorEl.textContent = result.author)
 
                 const descriptionEl = searchResult.querySelector(
                   searchResultDescriptionSelector
                 )
                 const descriptionOk =
-                  descriptionEl.textContent === resultsData[i].description
+                  descriptionEl.textContent === result.description
 
                 if (
                   !thumbnailOk ||
@@ -133,6 +140,7 @@ describe('🔍 Search:', () => {
             searchResultTitleSelector,
             searchResultAuthorSelector,
             searchResultDescriptionSelector,
+            videoIdAttribute,
             JSON.stringify(results)
           ).value,
         undefined,
@@ -191,7 +199,7 @@ describe('🔍 Search:', () => {
     browser.waitUntil(() => !browser.isVisible(moreResultsButtonSelector))
   })
 
-  it.only('should render info about each search result', () => {
+  it('should render info about each search result', () => {
     const query = 'ethereum'
 
     navigateToSearch()
