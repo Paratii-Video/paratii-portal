@@ -60,5 +60,9 @@ export const CONTROLS_SPACING_MOBILE: string = '12px'
 export const VIDEO_OVERLAY_BUTTONS_HEIGHT: string = '20px'
 export const VIDEO_OVERLAY_PADDING: string = '20px'
 
+// Forms
+export const INPUT_HEIGHT: string = '38px'
+export const RADIO_SIZE: string = '18px'
+
 // Loader
 export const BASE_LOADER_DIMENSION: string = '50px'

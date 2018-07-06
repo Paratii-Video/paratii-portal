@@ -3,6 +3,7 @@
 // https://github.com/styled-components/stylelint-processor-styled-components/issues/34
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { RADIO_SIZE } from 'constants/UIConstants'
 import Colors from 'components/foundations/base/Colors'
 
 type Props = {
@@ -59,10 +60,10 @@ const RadioInputBox = styled.span`
   border: 2px solid
     ${props => (props.white ? Colors.white : props.theme.colors.text.primary)};
   border-radius: 2px;
-  height: ${props => props.theme.sizes.radio};
+  height: ${RADIO_SIZE};
   margin-right: 15px;
   transition: all ${props => props.theme.animation.time.repaint};
-  width: ${props => props.theme.sizes.radio};
+  width: ${RADIO_SIZE};
 
   input:checked + & {
     background-color: ${props => props =>

@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from 'styled-components'
+import { INPUT_HEIGHT } from 'constants/UIConstants'
 
 const AutofillFix = props => keyframes`
   to {
@@ -38,8 +39,7 @@ export const StyleFieldTextStates = css`
 `
 
 const Input = styled.input`
-  ${StyleFieldText} ${StyleFieldTextStates} height: ${props =>
-  props.theme.sizes.mainInput.height};
+  ${StyleFieldText} ${StyleFieldTextStates} height: ${INPUT_HEIGHT};
   position: relative;
   z-index: 2;
 `

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { INPUT_HEIGHT } from 'constants/UIConstants'
 import {
   StyleFieldText,
   StyleFieldTextStates
@@ -6,10 +7,7 @@ import {
 
 const Textarea = styled.textarea`
   ${StyleFieldText} ${StyleFieldTextStates} line-height: 24px;
-  min-height: ${props =>
-    props.theme.sizes.mainInput.height
-      ? props.theme.sizes.mainInput.height
-      : ''};
+  min-height: ${props => (INPUT_HEIGHT || '')};
   padding: 12px 0 0;
   overflow: hidden;
   position: relative;

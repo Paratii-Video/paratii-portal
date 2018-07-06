@@ -3,6 +3,7 @@
 // https://github.com/styled-components/stylelint-processor-styled-components/issues/34
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
+import { INPUT_HEIGHT } from 'constants/UIConstants'
 import InputField, { StyleFieldText } from 'components/foundations/forms/Input'
 
 export const StyleInputFilled = css`
@@ -13,8 +14,8 @@ export const StyleInputFilled = css`
 
 export const StylePlaceholder = css`
   color: ${props => props.theme.colors.text.secondary};
-  height: ${props => props.theme.sizes.mainInput.height};
-  line-height: ${props => props.theme.sizes.mainInput.height};
+  height: ${INPUT_HEIGHT};
+  line-height: ${INPUT_HEIGHT};
   left: 0;
   position: absolute;
   top: 0;

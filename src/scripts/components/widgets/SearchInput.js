@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { StyleFieldText } from 'components/foundations/forms/Input'
 import { ButtonStyleHover } from 'components/foundations/Button'
 import SVGIcon from 'components/foundations/SVGIcon'
-import { SEARCH_PATH } from 'constants/UrlConstants'
+import { INPUT_HEIGHT, SEARCH_PATH } from 'constants/UrlConstants'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import type { RouterHistory } from 'react-router-dom'
@@ -28,7 +28,7 @@ const SearchInputForm = styled.form`
 `
 
 const SearchInputField = styled.input`
-  ${StyleFieldText} height: ${props => props.theme.sizes.mainInput.height};
+  ${StyleFieldText} height: ${INPUT_HEIGHT};
   padding-left: 7px;
   padding-right: 7px;
 `
