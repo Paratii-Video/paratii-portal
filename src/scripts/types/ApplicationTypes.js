@@ -211,7 +211,9 @@ export type ParatiiLib = {
 
 type Animation = {
   ease: {
-    smooth: string
+    smooth: string,
+    outexpo: string,
+    inexpo: string
   },
   time: {
     repaint: string
@@ -225,16 +227,55 @@ type Animation = {
 type Typography = {
   family: string,
   base: string,
+  lineHeight: string,
   weight: {
     light: number,
     regular: number,
     bold: number
   },
   anchor: string,
-  button: string,
+  button: {
+    big: string,
+    main: string,
+    small: string
+  },
+  title: {
+    bigger: string,
+    huge: string,
+    big: string,
+    main: string,
+    small: string,
+    hugeLineHeight: string,
+    bigLineHeight: string,
+    mainLineHeight: string,
+    smallLineHeight: string
+  },
+  text: {
+    big: string,
+    main: string,
+    small: string,
+    tiny: string,
+    bigLineHeight: string,
+    mainLineHeight: string,
+    smallLineHeight: string,
+    tinyLineHeight: string
+  },
+  footer: {
+    text: string
+  },
   form: {
     input: string,
     helper: string
+  },
+  card: {
+    title: string,
+    subtitle: string,
+    strong: string,
+    text: string,
+    index: string
+  },
+  modal: {
+    title: string
   },
   video: {
     form: {
@@ -242,137 +283,92 @@ type Typography = {
       subtitle: string
     },
     info: {
-      time: string,
       progress: string,
       percentual: string
+    },
+    list: {
+      title: string,
+      filename: string,
+      status: string
+    },
+    share: {
+      link: string
+    },
+    quality: {
+      levels: string,
+      levelsDesktop: string
     }
   },
   radio: {
     title: string,
     label: string
   },
-  title: {
-    big: string,
-    main: string,
-    small: string
-  },
-  text: {
-    big: string,
-    main: string,
-    small: string
+  popover: {
+    title: string
   }
 }
 
-type Sizes = {
-  mainHeader: {
-    height: string
-  },
-  mainFooter: {
-    height: string
-  },
-  mainHeaderLogo: {
-    height: string,
-    width: string
-  },
-  searchInputButton: string,
-  card: {
-    padding: string
-  },
-  mainInput: {
-    height: string
-  },
-  radio: string
-}
-
 type Colors = {
-  body: {
-    background: string,
-    color: string
-  },
-  header: {
-    background: string,
-    icon: string,
-    logo: string
-  },
-  footer: {
-    background: string,
-    color: string,
-    logoFill: string
+  background: {
+    body: string,
+    primary: string,
+    secondary: string,
+    tertiary: string,
+    transparent: string
   },
   button: {
-    white: string,
-    gray: string,
-    purple: string
-  },
-  Popover: {
-    background: string,
-    color: string
-  },
-  TextField: {
-    border: string,
-    borderFocus: string,
     color: string,
-    placeholder: string,
+    primary: string,
+    accent: string,
+    warn: string,
+    primaryFrom: string,
+    primaryTo: string,
+    accentFrom: string,
+    accentTo: string,
+    warnFrom: string,
+    warnTo: string,
+    shadow: string
+  },
+  text: {
+    primary: string,
+    secondary: string,
+    accent: string,
+    warn: string,
     error: string
   },
-  Radio: {
-    title: string,
-    label: string,
-    border: string,
-    active: string
+  header: {
+    logo: string,
+    shadow: string
   },
-  MainCard: {
-    background: string,
-    color: string,
-    title: {
-      color: string
-    },
-    footer: {
-      background: string,
-      color: string
-    }
+  footer: {
+    logo: string
   },
-  FilesUploader: {
-    drag: {
-      background: string,
-      color: string,
-      color2: string,
-      info: string,
-      enter: string
-    },
-    input: {
-      background: string,
-      color: string
-    }
+  LandingPage: {
+    headerShadow: string
   },
-  VideoForm: {
-    header: {
-      border: string,
-      title: string,
-      subtitle: string,
-      subtitle2: string
-    },
-    info: {
-      time: {
-        background: string,
-        color: string
-      },
-      progress: {
-        color: string,
-        icon: string,
-        iconBg: string,
-        background: string,
-        barFrom: string,
-        barTo: string
-      }
-    }
+  Card: {
+    shadow: string
+  },
+  Modal: {
+    shadow: string
+  },
+  Popover: {
+    shadow: string
+  },
+  ProfileCuration: {
+    ChallengeBackgroundOneFrom: string,
+    ChallengeBackgroundOneTo: string,
+    ChallengeBackgroundTwoFrom: string,
+    ChallengeBackgroundTwoTo: string,
+    VotingBarOne: string,
+    VotingBarTwo: string,
+    ChallengeSequenceDot: string
   }
 }
 
 export type Theme = Object & {
   animation: Animation,
   fonts: Typography,
-  sizes: Sizes,
   colors: Colors
 }
 
