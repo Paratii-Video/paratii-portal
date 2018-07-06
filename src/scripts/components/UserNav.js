@@ -7,7 +7,7 @@ import Blockies from 'react-blockies'
 import User from 'records/UserRecords'
 import { getName } from 'operators/UserOperators'
 import {
-  BORDER_RADIUS,
+  BUTTON_BORDER_RADIUS,
   USERNAV_WIDTH,
   MAINHEADER_LOGO_HEIGHT,
   MAINFOOTER_HEIGHT,
@@ -83,7 +83,7 @@ const UserPTIValue = styled.div`
 const UserPTIValueBox = styled.div`
   ${FlexCenterStyle} background-color: ${props =>
   props.theme.colors.background.tertiary};
-  border-radius: ${BORDER_RADIUS};
+  border-radius: ${BUTTON_BORDER_RADIUS};
   flex-direction: column;
   padding: 14px;
 `
