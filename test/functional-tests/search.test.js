@@ -73,66 +73,69 @@ describe.only('🔍 Search:', () => {
               videoIdAttribute,
               results
             ) => {
-              const resultsData = JSON.parse(results)
-              const searchResults = document.querySelectorAll(
-                searchResultSelector
-              )
-
-              if (searchResults.length !== resultsData.length) {
-                return false
-              }
-
-              for (let i = 0; i < resultsData.length; i++) {
-                const result = resultsData[i]
-                const searchResult = Array.prototype.slice
-                  .call(searchResults)
-                  .find(
-                    resultEl =>
-                      result._id === resultEl.getAttribute(videoIdAttribute)
-                  )
-
-                const thumbnailEl = searchResult.querySelector(
-                  searchResultThumbnailSelector
+              try {
+                const resultsData = JSON.parse(results)
+                const searchResults = document.querySelectorAll(
+                  searchResultSelector
                 )
-                const thumbnailOk =
-                  thumbnailEl.getAttribute('src') ===
-                  `https://gateway.paratii.video/ipfs/${result.ipfsHash}/${
-                    result.thumbnails[0]
-                  }`
 
-                const durationEl = searchResult.querySelector(
-                  searchResultDurationSelector
-                )
-                const durationOk = durationEl.textContent === result.duration
-
-                const titleEl = searchResult.querySelector(
-                  searchResultTitleSelector
-                )
-                const titleOk = titleEl.textContent === result.title
-
-                const authorEl = searchResult.querySelector(
-                  searchResultAuthorSelector
-                )
-                const authorOk = (authorEl.textContent = result.author)
-
-                const descriptionEl = searchResult.querySelector(
-                  searchResultDescriptionSelector
-                )
-                const descriptionOk =
-                  descriptionEl.textContent === result.description
-
-                if (
-                  !thumbnailOk ||
-                  !durationOk ||
-                  !titleOk ||
-                  !descriptionOk ||
-                  !authorOk
-                ) {
+                if (searchResults.length !== resultsData.length) {
                   return false
                 }
-              }
 
-              return true
+                for (let i = 0; i < resultsData.length; i++) {
+                  const result = resultsData[i]
+                  const searchResult = Array.prototype.slice
+                    .call(searchResults)
+                    .find(
+                      resultEl =>
+                        result._id === resultEl.getAttribute(videoIdAttribute)
+                    )
+
+                  const thumbnailEl = searchResult.querySelector(
+                    searchResultThumbnailSelector
+                  )
+                  const thumbnailOk =
+                    thumbnailEl.getAttribute('src') ===
+                    `https://gateway.paratii.video/ipfs/${result.ipfsHash}/${
+                      result.thumbnails[0]
+                    }`
+
+                  const durationEl = searchResult.querySelector(
+                    searchResultDurationSelector
+                  )
+                  const durationOk = durationEl.textContent === result.duration
+
+                  const titleEl = searchResult.querySelector(
+                    searchResultTitleSelector
+                  )
+                  const titleOk = titleEl.textContent === result.title
+
+                  const authorEl = searchResult.querySelector(
+                    searchResultAuthorSelector
+                  )
+                  const authorOk = (authorEl.textContent = result.author)
+
+                  const descriptionEl = searchResult.querySelector(
+                    searchResultDescriptionSelector
+                  )
+                  const descriptionOk =
+                    descriptionEl.textContent === result.description
+
+                  if (
+                    !thumbnailOk ||
+                    !durationOk ||
+                    !titleOk ||
+                    !descriptionOk ||
+                    !authorOk
+                  ) {
+                    return false
+                  }
+                }
+                return true
+              } catch (e) {
+                return false
+              }
             },
             searchResultSelector,
             searchResultThumbnailSelector,
