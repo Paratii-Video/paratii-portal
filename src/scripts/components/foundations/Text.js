@@ -66,7 +66,7 @@ const Text = styled.p`
 `
 
 export const Strong = styled.strong`
-  ${TextColor} ${TextSize} font-weight: ${props =>
+  ${TextColor} ${TextSize} ${TextStyle} font-weight: ${props =>
   props.theme.fonts.weight.bold};
 `
 

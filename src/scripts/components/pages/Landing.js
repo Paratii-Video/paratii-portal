@@ -402,7 +402,7 @@ class Landing extends Component<Props, void> {
               <Title big accent>
                 <TranslatedText message="landingPage.videos.title" />
               </Title>
-              <Text gray>
+              <Text>
                 <TranslatedText message="landingPage.videos.description" />
               </Text>
             </VideosHeader>

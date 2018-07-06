@@ -58,7 +58,10 @@ const RadioInput = styled.label`
 const RadioInputBox = styled.span`
   background-color: transparent;
   border: 2px solid
-    ${props => (props.white ? Colors.white : props.theme.colors.text.primary)};
+    ${props =>
+    props.white
+      ? props.theme.colors.text.primary
+      : props.theme.colors.text.accent};
   border-radius: 2px;
   height: ${RADIO_SIZE};
   margin-right: 15px;
