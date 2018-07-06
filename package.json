@@ -14,7 +14,7 @@
     "build:staging": "yarn run clean && yarn run prep && yarn run compile:sass && NODE_ENV=staging node --max_old_space_size=4096 node_modules/.bin/webpack --progress --colors",
     "clean": "rm -rf build/",
     "chimp-test": "yarn run test-db & chimp chimp.config.js",
-    "chimp-circleci-test": "yarn run test-db & chimp .circleci/chimp.circleci.config.js",
+    "chimp-circleci-test": "chimp .circleci/chimp.circleci.config.js",
     "chimp-test:watch": "yarn run chimp-test -- --watch",
     "compile:sass": "node_modules/.bin/node-sass --output-style compressed src/styles/embed/index.scss > build/embed/index.css",
     "dev": "concurrently \"yarn run build:dev\" \"yarn run server:dev\" \"yarn run parity\"",
