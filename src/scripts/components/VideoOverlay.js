@@ -18,7 +18,6 @@ import WalletInfoContainer from 'containers/widgets/WalletInfoContainer'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
 import { VIDEO_OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
-import Colors from 'components/foundations/base/Colors'
 
 import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
 
@@ -57,7 +56,7 @@ const ShowHideTopElements = css`
     ${({ transitionState, showShareModal }) =>
     transitionState === TRANSITION_STATE.ENTERED && !showShareModal
       ? '0'
-      : '-100%'},
+      : '0'},
     0
   );
   transition: transform 0.45s ${({ theme }) => theme.animation.ease.smooth};
@@ -139,7 +138,7 @@ const ShareButton = TextButton.extend`
   }
 `
 
-const ProfileButtonWrapper = styled.div`
+const ProfileButtonWrapper = TextButton.extend`
   height: ${VIDEO_OVERLAY_BUTTONS_HEIGHT};
   margin-left: 10px;
   width: 26px;
@@ -245,19 +244,17 @@ class VideoOverlay extends Component<Props> {
             showShareModal={showShareModal}
           >
             {isEmbed && (
-              <ProfileButtonWrapper>
-                <TextButton
-                  warn
-                  color={
-                    activePlugin === PLAYER_PLUGIN.WALLET ? Colors.purple : ''
-                  }
-                  data-test-id="wallet-info-button"
-                  icon="/assets/img/profile.svg"
-                  onClick={(e: Object) => {
-                    e.stopPropagation()
-                    toggleActivePlugin(PLAYER_PLUGIN.WALLET)
-                  }}
-                />
+              <ProfileButtonWrapper
+                warn={activePlugin !== PLAYER_PLUGIN.WALLET}
+                accent={activePlugin === PLAYER_PLUGIN.WALLET}
+                data-test-id="wallet-info-button"
+                onClick={(e: Object) => {
+                  e.stopPropagation()
+                  toggleActivePlugin(PLAYER_PLUGIN.WALLET)
+                  console.log(e)
+                }}
+              >
+                <SVGIcon icon="icon-profile" />
               </ProfileButtonWrapper>
             )}
             <ShareButton
