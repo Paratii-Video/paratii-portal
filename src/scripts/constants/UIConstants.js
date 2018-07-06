@@ -1,11 +1,13 @@
 /* @flow */
 
 // z-index
-export const Z_INDEX_MODAL: string = '1000'
-export const Z_INDEX_POPUPS: string = '990'
-export const Z_INDEX_HEADER: string = '980'
-export const Z_INDEX_FOOTER: string = '980'
-export const Z_INDEX_USERNAV: string = '970'
+export const Z_INDEX_FRONT: number = 2
+export const Z_INDEX_BACK: number = 1
+export const Z_INDEX_MODAL: number = 1000
+export const Z_INDEX_POPUPS: number = 990
+export const Z_INDEX_HEADER: number = 980
+export const Z_INDEX_FOOTER: number = 980
+export const Z_INDEX_USERNAV: number = 970
 
 // Layout
 export const MAX_WIDTH: string = '1264px'

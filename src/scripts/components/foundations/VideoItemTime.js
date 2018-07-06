@@ -2,7 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import {
   VIDEOITEMTIME_PADDING,
-  VIDEOITEMTIME_POSITION
+  VIDEOITEMTIME_POSITION,
+  Z_INDEX_FRONT,
+  Z_INDEX_BACK
 } from 'constants/UIConstants'
 import Text from './Text'
 
@@ -17,7 +19,6 @@ const Wrapper = styled.div`
   padding: ${VIDEOITEMTIME_PADDING};
   position: ${props => (props.relative ? 'relative' : 'absolute')};
   right: ${props => (props.relative ? null : VIDEOITEMTIME_POSITION)};
-  z-index: ${props => (props.relative ? null : 2)};
 
   &::before {
     background-color: ${props => props.theme.colors.background.body};
@@ -29,13 +30,13 @@ const Wrapper = styled.div`
     position: absolute;
     top: 0;
     width: 100%;
-    z-index: 1;
+    z-index: ${Z_INDEX_BACK};
   }
 `
 
 const VideoMediaTimeText = Text.extend`
   position: relative;
-  z-index: 2;
+  z-index: ${Z_INDEX_FRONT};
 `
 
 class VideoItemTime extends React.Component<Props> {
