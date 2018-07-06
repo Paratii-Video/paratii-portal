@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import type { VideoRecord } from 'records/VideoRecords'
 import Title from './foundations/Title'
-import RadioCheck, { RadioWrapper } from './widgets/forms/RadioCheck'
 import MyVideoItem, { MyVideosWrapper } from './MyVideoItem'
 import FileUploader from '../containers/FileUploaderContainer'
 import TranslatedText from './translations/TranslatedText'
@@ -21,7 +20,7 @@ const Wrapper = styled.div`
 
 const ProfileFilterVideos = styled.div`
   align-items: center;
-  background: ${props => props.theme.colors.ProfileMyVideos.filterBackground};
+  background: ${props => props.theme.colors.background.primary};
   display: flex;
   justify-content: space-between;
   padding: 30px 48px;
@@ -29,11 +28,6 @@ const ProfileFilterVideos = styled.div`
 
 const ProfileFilterTitle = styled(Title)`
   flex: 1 1 100%;
-`
-
-const ProfileFilterRadioWrapper = styled(RadioWrapper)`
-  flex-wrap: nowrap;
-  width: auto;
 `
 
 const ProfileMyVideosList = MyVideosWrapper.extend`
@@ -51,42 +45,9 @@ class ProfileMyVideos extends Component<Props, void> {
     return (
       <Wrapper>
         <ProfileFilterVideos>
-          <ProfileFilterTitle small>
+          <ProfileFilterTitle small accent>
             <TranslatedText message="myVideos.title" />
           </ProfileFilterTitle>
-          <ProfileFilterRadioWrapper>
-            <RadioCheck
-              name="myvideos-published"
-              margin="0 20px 0 0"
-              value="published"
-              disabled={true}
-              defaultChecked
-              checkbox
-            >
-              Published
-            </RadioCheck>
-            <RadioCheck
-              name="myvideos-published"
-              margin="0 20px 0 0"
-              value="challenged"
-              disabled={true}
-              defaultChecked
-              checkbox
-            >
-              Challenged
-            </RadioCheck>
-            <RadioCheck
-              name="myvideos-published"
-              margin="0 20px 0 0"
-              value="voting,"
-              disabled={true}
-              defaultChecked
-              checkbox
-              nomargin
-            >
-              On voting
-            </RadioCheck>
-          </ProfileFilterRadioWrapper>
         </ProfileFilterVideos>
         <ProfileMyVideosList>
           {this.props.videos

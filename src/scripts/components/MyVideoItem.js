@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import Text from './foundations/Text'
+import Text, { Span } from './foundations/Text'
+import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
 import { videoDuration } from '../operators/VideoOperators'
 import { formatDuration } from '../utils/VideoUtils'
@@ -31,11 +32,11 @@ export const MyVideosWrapper = styled.ul`
 `
 
 const Wrapper = styled.li`
-  background: ${props => props.theme.colors.MyVideoItem.background};
   position: relative;
 `
 
 const MyVideoItemLink = styled(Link)`
+  background: ${props => props.theme.colors.background.primary};
   display: block;
 `
 
@@ -46,7 +47,7 @@ const ZINDEX_MYVIDEOSITEM_TIME: number = 2
 
 const MyVideoItemMedia = styled.div`
   align-items: center;
-  background: ${props => props.theme.colors.MyVideoItem.imageBackground};
+  background: ${props => props.theme.colors.background.secondary};
   display: flex;
   height: 200px;
   justify-content: center;
@@ -54,18 +55,18 @@ const MyVideoItemMedia = styled.div`
   width: 100%;
 
   &::before {
-    background: ${props => props.theme.colors.MyVideoItem.coverMediaBackground};
+    background: ${props => props.theme.colors.background.body};
     content: '';
     height: 100%;
     left: 0;
     opacity: 0;
     position: absolute;
     top: 0;
-    transition: opacity 0.2s linear 0.2s;
+    transition: opacity 0.3s linear 0.1s;
     width: 100%;
     z-index: ${ZINDEX_MYVIDEOSITEM_COVER};
     ${MyVideoItemLink}:hover & {
-      opacity: 1;
+      opacity: 0.8;
       transition-delay: 0;
     }
   }
@@ -83,6 +84,7 @@ const MyVideoItemImage = styled.div`
 `
 
 const IconPlay = styled.span`
+  color: ${props => props.theme.colors.text.accent};
   height: 33px;
   position: relative;
   width: 26px;
@@ -91,7 +93,7 @@ const IconPlay = styled.span`
   z-index: ${ZINDEX_MYVIDEOSITEM_PLAY};
   ${MyVideoItemLink}:hover & {
     transform: scale(1);
-    transition-delay: 0.2s;
+    transition-delay: 0.1s;
   }
 `
 
@@ -103,28 +105,24 @@ const VideoMediaTime = styled.div`
   z-index: ${ZINDEX_MYVIDEOSITEM_TIME};
 
   &::before {
-    background-color: ${props =>
-    props.theme.colors.VideoForm.info.time.background};
+    background-color: ${props => props.theme.colors.background.body};
     border-radius: 2px;
     content: '';
     height: 100%;
     left: 0;
-    opacity: 0.8;
+    opacity: 0.7;
     position: absolute;
     top: 0;
     width: 100%;
   }
 `
 
-const VideoMediaTimeText = styled.p`
-  color: ${props => props.theme.colors.VideoForm.info.time.color};
-  font-size: ${props => props.theme.fonts.video.info.time};
+const VideoMediaTimeText = Text.extend`
   position: relative;
   z-index: 1;
 `
 
 const MyVideoItemInfo = styled.div`
-  background: ${props => props.theme.colors.MyVideoItem.background};
   padding: 20px;
 `
 
@@ -132,7 +130,13 @@ const MyVideoItemsTitle = Text.extend`
   margin-bottom: 15px;
 `
 
-const MyVideoItemsStatus = Text.withComponent('span')
+const EditButton = TextButton.extend`
+  bottom: 30px;
+  height: 20px;
+  position: absolute;
+  right: 24px;
+  width: 20px;
+`
 
 class MyVideoItem extends Component<Props, void> {
   render () {
@@ -154,30 +158,39 @@ class MyVideoItem extends Component<Props, void> {
       durationNoMillis = formatDuration(duration)
     }
 
+    console.log(video)
+
     return (
       <Wrapper>
         <MyVideoItemLink to={urlToPlay}>
           <MyVideoItemMedia>
             <MyVideoItemImage source={videoPoster} />
             <VideoMediaTime>
-              <VideoMediaTimeText>{durationNoMillis}</VideoMediaTimeText>
+              <VideoMediaTimeText tiny accent>
+                {durationNoMillis}
+              </VideoMediaTimeText>
             </VideoMediaTime>
             <IconPlay>
-              <SVGIcon color="white" icon="icon-player-play" />
+              <SVGIcon icon="icon-player-play" />
             </IconPlay>
           </MyVideoItemMedia>
           <MyVideoItemInfo>
-            <MyVideoItemsTitle small bold>
+            <MyVideoItemsTitle bold accent>
               {title}
             </MyVideoItemsTitle>
-            <Text gray small>
+            <Text small>10000 views</Text>
+            <Text small primary bold>
               Status:{' '}
-              <MyVideoItemsStatus purple small>
+              <Span warn={true} error={false} small regular>
                 Published
-              </MyVideoItemsStatus>
+              </Span>
             </Text>
+            <Text small>11 months ago</Text>
           </MyVideoItemInfo>
         </MyVideoItemLink>
+        <EditButton primary>
+          <SVGIcon icon="icon-edit" />
+        </EditButton>
       </Wrapper>
     )
   }

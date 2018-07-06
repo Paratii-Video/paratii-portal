@@ -155,11 +155,6 @@ const Themes = {
       headerInfoBackground: Colors.blackAlt,
       ProfilePictureBackground: Colors.blackAlt,
       filterBackground: Colors.blackDark
-    },
-    MyVideoItem: {
-      background: Colors.black,
-      imageBackground: Colors.blackAlt,
-      coverMediaBackground: Colors.blackTransparent
     }
   }
 }
