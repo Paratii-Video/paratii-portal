@@ -2,6 +2,7 @@
 import shortNumber from 'short-number'
 import fs from 'fs'
 
+import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
 import VideoRecord from 'records/VideoRecords'
 
 export const getRoot = (): Element => {
@@ -195,3 +196,6 @@ export const copyTextToClipboard = (element: HTMLElement): void => {
     body.removeChild(dummyInput)
   }
 }
+
+export const userHasPreviouslySecuredWallet = (): boolean =>
+  !!localStorage.getItem(WALLET_KEY_SECURE)

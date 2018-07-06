@@ -14,7 +14,6 @@ import TippingStepHeader from '../utils/TippingStepHeader'
 import verifiedDataUrl from 'assets/svg/verified.svg'
 
 type Props = {
-  onComplete: () => void,
   usernameToTip: string
 }
 
@@ -82,7 +81,7 @@ class TipCompleteStep extends React.Component<Props, State> {
             url={verifiedDataUrl}
           />
         </VerifiedIconWrapper>
-        <ContinueButton onClick={this.props.onComplete}>
+        <ContinueButton>
           <TranslatedText message="tipping.steps.completed.continueWatching" />
         </ContinueButton>
       </Fragment>
