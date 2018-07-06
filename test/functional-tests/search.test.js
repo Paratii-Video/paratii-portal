@@ -59,11 +59,92 @@ describe.only('🔍 Search:', () => {
       }
     )
 
-    browser.addCommand('validateSearchResults', ({ results }) =>
-      browser.waitUntil(
-        () =>
-          browser.execute(
-            (
+    browser.addCommand(
+      'validateSearchResults',
+      ({ results, onlyValidateCount }) =>
+        browser.waitUntil(
+          () =>
+            browser.execute(
+              (
+                searchResultSelector,
+                searchResultThumbnailSelector,
+                searchResultDurationSelector,
+                searchResultTitleSelector,
+                searchResultAuthorSelector,
+                searchResultDescriptionSelector,
+                videoIdAttribute,
+                results,
+                onlyValidateCount
+              ) => {
+                try {
+                  const resultsData = JSON.parse(results)
+                  const searchResults = document.querySelectorAll(
+                    searchResultSelector
+                  )
+
+                  if (searchResults.length !== resultsData.length) {
+                    return false
+                  }
+
+                  if (onlyValidateCount) {
+                    return true
+                  }
+
+                  for (let i = 0; i < resultsData.length; i++) {
+                    const result = resultsData[i]
+                    const searchResult = Array.prototype.slice
+                      .call(searchResults)
+                      .find(
+                        resultEl =>
+                          result._id === resultEl.getAttribute(videoIdAttribute)
+                      )
+
+                    const thumbnailEl = searchResult.querySelector(
+                      searchResultThumbnailSelector
+                    )
+                    const thumbnailOk =
+                      thumbnailEl.getAttribute('src') ===
+                      `https://gateway.paratii.video/ipfs/${result.ipfsHash}/${
+                        result.thumbnails[0]
+                      }`
+
+                    const durationEl = searchResult.querySelector(
+                      searchResultDurationSelector
+                    )
+                    const durationOk =
+                      durationEl.textContent === result.duration
+
+                    const titleEl = searchResult.querySelector(
+                      searchResultTitleSelector
+                    )
+                    const titleOk = titleEl.textContent === result.title
+
+                    const authorEl = searchResult.querySelector(
+                      searchResultAuthorSelector
+                    )
+                    const authorOk = (authorEl.textContent = result.author)
+
+                    const descriptionEl = searchResult.querySelector(
+                      searchResultDescriptionSelector
+                    )
+                    const descriptionOk =
+                      descriptionEl.textContent === result.description
+
+                    if (
+                      !thumbnailOk ||
+                      !durationOk ||
+                      !titleOk ||
+                      !descriptionOk ||
+                      !authorOk
+                    ) {
+                      return false
+                    }
+                  }
+                  return true
+                } catch (e) {
+                  return false
+                }
+              },
               searchResultSelector,
               searchResultThumbnailSelector,
               searchResultDurationSelector,
@@ -71,84 +152,12 @@ describe.only('🔍 Search:', () => {
               searchResultAuthorSelector,
               searchResultDescriptionSelector,
               videoIdAttribute,
-              results
-            ) => {
-              try {
-                const resultsData = JSON.parse(results)
-                const searchResults = document.querySelectorAll(
-                  searchResultSelector
-                )
-
-                if (searchResults.length !== resultsData.length) {
-                  return false
-                }
-
-                for (let i = 0; i < resultsData.length; i++) {
-                  const result = resultsData[i]
-                  const searchResult = Array.prototype.slice
-                    .call(searchResults)
-                    .find(
-                      resultEl =>
-                        result._id === resultEl.getAttribute(videoIdAttribute)
-                    )
-
-                  const thumbnailEl = searchResult.querySelector(
-                    searchResultThumbnailSelector
-                  )
-                  const thumbnailOk =
-                    thumbnailEl.getAttribute('src') ===
-                    `https://gateway.paratii.video/ipfs/${result.ipfsHash}/${
-                      result.thumbnails[0]
-                    }`
-
-                  const durationEl = searchResult.querySelector(
-                    searchResultDurationSelector
-                  )
-                  const durationOk = durationEl.textContent === result.duration
-
-                  const titleEl = searchResult.querySelector(
-                    searchResultTitleSelector
-                  )
-                  const titleOk = titleEl.textContent === result.title
-
-                  const authorEl = searchResult.querySelector(
-                    searchResultAuthorSelector
-                  )
-                  const authorOk = (authorEl.textContent = result.author)
-
-                  const descriptionEl = searchResult.querySelector(
-                    searchResultDescriptionSelector
-                  )
-                  const descriptionOk =
-                    descriptionEl.textContent === result.description
-
-                  if (
-                    !thumbnailOk ||
-                    !durationOk ||
-                    !titleOk ||
-                    !descriptionOk ||
-                    !authorOk
-                  ) {
-                    return false
-                  }
-                }
-                return true
-              } catch (e) {
-                return false
-              }
-            },
-            searchResultSelector,
-            searchResultThumbnailSelector,
-            searchResultDurationSelector,
-            searchResultTitleSelector,
-            searchResultAuthorSelector,
-            searchResultDescriptionSelector,
-            videoIdAttribute,
-            JSON.stringify(results)
-          ).value,
-        undefined,
-        'Could not verify that search results were rendered correctly'
-      )
+              JSON.stringify(results),
+              onlyValidateCount
+            ).value,
+          undefined,
+          'Could not verify that search results were rendered correctly'
+        )
     )
   })
 
@@ -319,7 +328,8 @@ describe.only('🔍 Search:', () => {
         SPORTS_VIDEO_10,
         SPORTS_VIDEO_11,
         SPORTS_VIDEO_12
-      ]
+      ],
+      onlyValidateCount: true
     })
 
     const browserHeight = browser.execute(
@@ -330,25 +340,25 @@ describe.only('🔍 Search:', () => {
 
     browser.waitAndClick(moreResultsButtonSelector)
 
-    // browser.validateSearchResults({
-    //   results: [
-    //     SPORTS_VIDEO_1,
-    //     SPORTS_VIDEO_2,
-    //     SPORTS_VIDEO_3,
-    //     SPORTS_VIDEO_4,
-    //     SPORTS_VIDEO_5,
-    //     SPORTS_VIDEO_6,
-    //     SPORTS_VIDEO_7,
-    //     SPORTS_VIDEO_8,
-    //     SPORTS_VIDEO_9,
-    //     SPORTS_VIDEO_10,
-    //     SPORTS_VIDEO_11,
-    //     SPORTS_VIDEO_12,
-    //     SPORTS_VIDEO_13,
-    //     SPORTS_VIDEO_14
-    //   ]
-    // })
+    browser.validateSearchResults({
+      results: [
+        SPORTS_VIDEO_1,
+        SPORTS_VIDEO_2,
+        SPORTS_VIDEO_3,
+        SPORTS_VIDEO_4,
+        SPORTS_VIDEO_5,
+        SPORTS_VIDEO_6,
+        SPORTS_VIDEO_7,
+        SPORTS_VIDEO_8,
+        SPORTS_VIDEO_9,
+        SPORTS_VIDEO_10,
+        SPORTS_VIDEO_11,
+        SPORTS_VIDEO_12,
+        SPORTS_VIDEO_13,
+        SPORTS_VIDEO_14
+      ]
+    })
 
-    // browser.waitUntil(() => !browser.isVisible(moreResultsButtonSelector))
+    browser.waitUntil(() => !browser.isVisible(moreResultsButtonSelector))
   })
 })
