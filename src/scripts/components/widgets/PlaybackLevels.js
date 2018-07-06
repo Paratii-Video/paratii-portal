@@ -57,9 +57,7 @@ const Level = styled.li`
   align-items: center;
   justify-content: flex-end;
   background-color: ${({ theme, selected }) =>
-    selected
-      ? theme.colors.VideoPlayer.levels.selectedBackground
-      : 'transparent'};
+    selected ? theme.colors.background.secondary : 'transparent'};
   padding: 0 ${PADDING};
   transition: background ${({ theme }) => theme.animation.time.repaint};
 

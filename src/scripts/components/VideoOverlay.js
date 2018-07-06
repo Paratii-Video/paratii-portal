@@ -101,7 +101,7 @@ const OverlayShadow = styled.span`
 
 const PlayerTitle = Title.extend`
   ${ShowHideTopElements} align-self: flex-start;
-  color: ${props => props.theme.colors.VideoPlayer.header.title};
+  color: ${props => props.theme.colors.text.accent};
   flex: 1 0;
   font-size: ${props => props.theme.fonts.title.big};
   padding: 20px 0 0 25px;

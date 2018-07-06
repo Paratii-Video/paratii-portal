@@ -2,7 +2,7 @@ import styled, { css, keyframes } from 'styled-components'
 
 const AutofillFix = props => keyframes`
   to {
-    color: ${props.theme.colors.TextField.color};
+    color: ${props.theme.colors.text.primary};
     background: transparent;
   }
 `

@@ -7,18 +7,19 @@ import { Link } from 'react-router-dom'
 import Video from 'records/VideoRecords'
 import { getVideoThumbnailUrl, getVideoPlayUrl } from 'utils/UrlUtils'
 import { formatDuration } from 'utils/VideoUtils'
+import VideoItemTime from 'components/foundations/VideoItemTime'
 import TruncatedText from 'components/foundations/TruncatedText'
 
 const LinkWrapper = styled(Link)`
   display: flex;
   width: 100%;
   height: 160px;
-  background: ${({ theme }) => theme.colors.Search.results.background};
+  background: ${({ theme }) => theme.colors.background.primary};
   align-items: center;
   padding: 10px 20px;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.Search.results.hoverBackground};
+    background: ${({ theme }) => theme.colors.background.secondary};
   }
 `
 
@@ -47,24 +48,13 @@ const ThumbnailData = styled.div`
   padding: ${THUMBNAIL_DATA_PADDING};
 `
 
-const Duration = styled.div`
-  position: absolute;
-  bottom: ${THUMBNAIL_DATA_PADDING};
-  right: ${THUMBNAIL_DATA_PADDING};
-  color: ${({ theme }) => theme.colors.Search.results.duration.text};
-  background: ${({ theme }) => theme.colors.Search.results.duration.background};
-  padding: 4px;
-  font-size: 16px;
-  text-align: center;
-`
-
 const Info = styled.div`
   flex: 1 1 0;
   max-width: calc(100% - ${THUMBNAIL_WIDTH});
   height: 100%;
   padding: 10px;
   padding-bottom: 20px;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.Search.results.border};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.background.body};
 `
 
 const TOP_BAR_HEIGHT: string = '25px'
@@ -79,21 +69,21 @@ const TopBar = styled.div`
 const Title = styled.div`
   flex: 0 1 100%;
   max-width: 100%;
-  color: ${({ theme }) => theme.colors.Search.results.titleColor};
+  color: ${({ theme }) => theme.colors.text.accent};
   font-weight: bold;
   font-size: 18px;
 `
 
 const Author = styled.div`
   max-width: 60%;
-  color: ${({ theme }) => theme.colors.Search.results.authorColor};
+  color: ${({ theme }) => theme.colors.text.secondary};
 `
 
 const BottomBar = styled.div`
   height: calc(100% - ${TOP_BAR_HEIGHT});
   display: flex;
   align-items: flex-end;
-  color: ${({ theme }) => theme.colors.Search.results.descriptionColor};
+  color: ${({ theme }) => theme.colors.text.secondary};
 `
 
 const Description = styled.p`
@@ -123,9 +113,9 @@ class SearchResult extends React.Component<Props, void> {
             src={getVideoThumbnailUrl(video)}
           />
           <ThumbnailData>
-            <Duration data-test-id="search-result-duration">
+            <VideoItemTime data-test-id="search-result-duration">
               {formatDuration(video.get('duration'))}
-            </Duration>
+            </VideoItemTime>
           </ThumbnailData>
         </ThumbnailWrapper>
         <Info>

@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  background: ${({ theme }) => theme.colors.Search.results.background};
+  background: ${({ theme }) => theme.colors.background.primary};
 `
 
 const SearchTerm = styled.div`
@@ -26,17 +26,17 @@ const SearchTerm = styled.div`
   width: 100%;
   padding: 20px;
   padding-bottom: 10px;
-  color: ${({ theme }) => theme.colors.Search.results.searchTerm.term};
+  color: ${({ theme }) => theme.colors.text.accent};
 `
 
 const SearchTermPrompt = styled.span`
   display: inline-block;
   margin-right: 10px;
-  color: ${({ theme }) => theme.colors.Search.results.searchTerm.prompt};
+  color: ${({ theme }) => theme.colors.text.primary};
 `
 
 const ZeroState = styled.div`
-  color: ${({ theme }) => theme.colors.Search.results.zeroState.text};
+  color: ${({ theme }) => theme.colors.text.accent};
   height: 200px;
   font-size: 20px;
   display: flex;
@@ -66,7 +66,7 @@ const HasNextButton = styled.button`
   padding-top: 10px;
   padding-bottom: 20px;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.Search.nextButton};
+  color: ${({ theme }) => theme.colors.text.secondary};
 `
 
 type Props = {

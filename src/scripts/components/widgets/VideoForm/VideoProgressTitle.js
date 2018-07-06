@@ -12,16 +12,15 @@ const Title = styled.p`
   display: flex;
   color: ${props =>
     props.success
-      ? props.theme.colors.VideoForm.info.progress.success
-      : props.theme.colors.VideoForm.info.progress.color};
+      ? props.theme.colors.text.warn
+      : props.theme.colors.text.primary};
   font-size: ${props => props.theme.fonts.video.info.progress};
   margin-right: ${props => (props.marginRight ? '10px' : null)};
   margin-bottom: 12px;
 `
 
 const Icon = styled.span`
-  background-color: ${props =>
-    props.theme.colors.VideoForm.info.progress.iconBg};
+  background-color: ${props => props.theme.colors.text.warn};
   border-radius: 100%;
   height: 14px;
   margin-left: 10px;
@@ -31,7 +30,7 @@ const Icon = styled.span`
 `
 const SVG = styled.svg`
   display: block;
-  fill: ${props => props.theme.colors.VideoForm.info.progress.icon};
+  fill: ${props => props.theme.colors.background.secondary};
   height: 14px;
   transform: scale(0.8);
   transition: transform 0.5s ${props => props.theme.animation.ease.smooth};

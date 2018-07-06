@@ -48,7 +48,7 @@ const TextField = styled(Textarea)`
 `
 
 const HelperLabel = styled.span`
-  color: ${props => props.theme.colors.TextField.placeholder};
+  color: ${props => props.theme.colors.text.secondary};
   display: block;
   font-size: 12px;
   padding: 8px 1px 0 0;
