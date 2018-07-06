@@ -4,11 +4,11 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { userHasPreviouslySecuredWallet } from 'utils/AppUtils'
 import Button, { ButtonColor } from 'components/foundations/Button'
 import Hidden from 'components/foundations/Hidden'
 import TranslatedText from 'components/translations/TranslatedText'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
-import { WALLET_KEY_SECURE } from 'constants/ParatiiLibConstants'
 
 type Props = {
   isWalletSecured: boolean,
@@ -64,8 +64,6 @@ class MainNavigation extends Component<Props, Object> {
   }
 
   render () {
-    const walletStringSecure: ?string = localStorage.getItem(WALLET_KEY_SECURE)
-
     return (
       <Nav>
         <NavList>
@@ -106,7 +104,7 @@ class MainNavigation extends Component<Props, Object> {
                 onClick={this.secureWallet}
                 to="#"
               >
-                {walletStringSecure ? (
+                {userHasPreviouslySecuredWallet() ? (
                   <TranslatedText message="navigation.logIn" />
                 ) : (
                   <TranslatedText message="navigation.signUp" />

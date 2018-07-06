@@ -50,6 +50,7 @@ const Wrapper = styled.div`
   align-items: center;
   text-align: center;
   position: relative;
+  cursor: ${({ clickable }) => (clickable ? 'pointer' : undefined)};
 `
 
 const BackButtonWrapper = styled.div`
@@ -114,6 +115,12 @@ class TipOverlay extends React.Component<Props, State> {
     })
   }
 
+  onClick = () => {
+    if (this.state.currentStep === TIPPING_UI_STEPS.TIP_COMPLETE) {
+      this.onComplete()
+    }
+  }
+
   onClose = () => {
     this.props.setUserIsTipping(false)
   }
@@ -149,17 +156,17 @@ class TipOverlay extends React.Component<Props, State> {
         )
       case TIPPING_UI_STEPS.TIP_COMPLETE:
         return (
-          <TipCompleteStep
-            onComplete={this.onComplete}
-            usernameToTip={this.props.video.get('author')}
-          />
+          <TipCompleteStep usernameToTip={this.props.video.get('author')} />
         )
     }
   }
 
   render () {
     return (
-      <Wrapper>
+      <Wrapper
+        clickable={this.state.currentStep === TIPPING_UI_STEPS.TIP_COMPLETE}
+        onClick={this.onClick}
+      >
         <BackButtonWrapper>
           {this.showBackButton() && (
             <BackButton onClick={this.backToChooseAmountStep} />
