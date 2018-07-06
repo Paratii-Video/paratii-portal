@@ -19,7 +19,7 @@ const [
   SPORTS_VIDEO_14
 ] = require('./data/fixtures/videos')
 
-describe('🔍 Search:', () => {
+describe.only('🔍 Search:', () => {
   const navigateToSearch = () => browser.url('http://localhost:8080/search')
   const searchResultsWrapperSelector = '[data-test-id="search-results"]'
   const enterKeywordsZeroStateSelector = `${searchResultsWrapperSelector} [data-test-id="enter-keywords-zero-state"]`
@@ -230,7 +230,11 @@ describe('🔍 Search:', () => {
     browser.waitUntil(
       () =>
         browser.execute(
-          (searchResultSelector, searchResultThumbnailSelector) => {
+          (
+            searchResultSelector,
+            searchResultThumbnailSelector,
+            videoIdAttribute
+          ) => {
             const searchResults = document.querySelectorAll(
               searchResultSelector
             )
@@ -239,18 +243,26 @@ describe('🔍 Search:', () => {
               return false
             }
 
-            const searchResult = searchResults[1]
+            const searchResult = Array.prototype.slice
+              .call(searchResults)
+              .find(
+                resultEl =>
+                  resultEl.getAttribute(videoIdAttribute) ===
+                  'QmzzNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJZZ'
+              )
 
             const thumbnailEl = searchResult.querySelector(
               searchResultThumbnailSelector
             )
+
             return (
               thumbnailEl.getAttribute('src') ===
               'https://paratii.video/public/images/paratii-src.png'
             )
           },
           searchResultSelector,
-          searchResultThumbnailSelector
+          searchResultThumbnailSelector,
+          videoIdAttribute
         ).value,
       undefined,
       'Could not verify that search results were rendered correctly'
