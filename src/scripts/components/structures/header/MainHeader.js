@@ -35,7 +35,7 @@ type State = {
 }
 
 const Header = styled.header`
-  background-color: ${props => props.theme.colors.background.secondary};
+  background-color: ${props => props.theme.colors.background.primary};
   box-shadow: ${props => props.theme.colors.header.shadow};
   display: flex;
   padding: 0 ${MAINHEADER_PADDING_LEFT};
