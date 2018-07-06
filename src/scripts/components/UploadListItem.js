@@ -11,6 +11,7 @@ import TranslatedText from './translations/TranslatedText'
 import Text from './foundations/Text'
 import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
+import VideoItemTime from './foundations/VideoItemTime'
 import VideoProgressBar from './widgets/VideoForm/VideoProgressBar'
 import TextField from './widgets/forms/TextField'
 import Textarea from './widgets/forms/TextareaField'
@@ -43,7 +44,6 @@ type Props = {
 }
 
 const PADDING_HORIZONTAL: string = '50px'
-const Z_INDEX_TIME = 1
 const Z_INDEX_MEDIAICON = 2
 
 const Item = styled.div`
@@ -200,26 +200,6 @@ const VideoMediaIcon = styled.div`
   }
 `
 
-const VideoMediaTime = styled.div`
-  bottom: 10px;
-  padding: 10px;
-  position: absolute;
-  right: 10px;
-  z-index: ${Z_INDEX_TIME};
-
-  &::before {
-    background-color: ${props => props.theme.colors.background.body};
-    border-radius: 2px;
-    content: '';
-    height: 100%;
-    left: 0;
-    opacity: 0.8;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-`
-
 const LabelStake = styled.div`
   background-color: ${props => props.theme.colors.background.body};
   color: white;
@@ -227,13 +207,6 @@ const LabelStake = styled.div`
   min-width: 100px;
   text-align: center;
   font-size: 14px;
-`
-
-const VideoMediaTimeText = styled.p`
-  color: ${props => props.theme.colors.text.accent};
-  font-size: ${props => props.theme.fonts.text.tiny};
-  position: relative;
-  z-index: 1;
 `
 
 class UploadListItem extends Component<Props, Object> {
@@ -402,11 +375,7 @@ class UploadListItem extends Component<Props, Object> {
     let durationBox = null
     if (duration) {
       const durationNoMillis = duration.substring(0, duration.indexOf('.'))
-      durationBox = (
-        <VideoMediaTime>
-          <VideoMediaTimeText>{durationNoMillis}</VideoMediaTimeText>
-        </VideoMediaTime>
-      )
+      durationBox = <VideoItemTime>{durationNoMillis} </VideoItemTime>
     }
 
     const urlToPlay = '/play/' + video.id

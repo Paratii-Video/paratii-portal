@@ -17,11 +17,19 @@ export const BUTTON_PADDING_LEFT: string = '18px'
 
 // Components
 
+// Card
+export const CARD_PADDING: string = '40px 42px'
+export const CARD_MAX_WIDTH: string = '650px'
+export const CARD_MARGIN_LEFT: string = '25px'
+
 // MainHeader
 export const MAINHEADER_LOGO_WIDTH: string = '98px'
 export const MAINHEADER_LOGO_HEIGHT: string = '62px'
 export const MAINHEADER_PADDING_LEFT: string = '80px'
 export const MAINHEADER_PADDING_LEFT_BP: string = '40px'
+
+// UserNav
+export const USERNAV_WIDTH = '312px'
 
 // MainFooter
 export const MAINFOOTER_HEIGHT: string = '72px'
@@ -30,8 +38,9 @@ export const MAINFOOTER_HEIGHT: string = '72px'
 export const HR_HEIGHT: string = '2px'
 export const HR_MARGIN_TOP: string = '42px'
 
-// UserNav
-export const USERNAV_WIDTH = '312px'
+// VideoItemTime
+export const VIDEOITEMTIME_POSITION: string = '10px'
+export const VIDEOITEMTIME_PADDING: string = '6px 10px 5px'
 
 // Controls
 export const CONTROLS_HEIGHT: string = '48px'
@@ -48,11 +57,6 @@ export const CONTROLS_SPACING_MOBILE: string = '12px'
 // Video Overlay
 export const VIDEO_OVERLAY_BUTTONS_HEIGHT: string = '20px'
 export const VIDEO_OVERLAY_PADDING: string = '20px'
-
-// Card
-export const CARD_PADDING: string = '40px 42px'
-export const CARD_MAX_WIDTH: string = '650px'
-export const CARD_MARGIN_LEFT: string = '25px'
 
 // Loader
 export const BASE_LOADER_DIMENSION: string = '50px'

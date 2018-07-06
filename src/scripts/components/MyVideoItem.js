@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Text, { Span } from './foundations/Text'
 import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
+import VideoItemTime from './foundations/VideoItemTime'
 import { videoDuration } from '../operators/VideoOperators'
 import { formatDuration } from '../utils/VideoUtils'
 import type VideoRecord from 'records/VideoRecords'
@@ -43,7 +44,6 @@ const MyVideoItemLink = styled(Link)`
 const ZINDEX_MYVIDEOSITEM_COVER: number = 3
 const ZINDEX_MYVIDEOSITEM_IMAGE: number = 1
 const ZINDEX_MYVIDEOSITEM_PLAY: number = 4
-const ZINDEX_MYVIDEOSITEM_TIME: number = 2
 
 const MyVideoItemMedia = styled.div`
   align-items: center;
@@ -97,31 +97,6 @@ const IconPlay = styled.span`
   }
 `
 
-const VideoMediaTime = styled.div`
-  bottom: 10px;
-  padding: 10px;
-  position: absolute;
-  right: 10px;
-  z-index: ${ZINDEX_MYVIDEOSITEM_TIME};
-
-  &::before {
-    background-color: ${props => props.theme.colors.background.body};
-    border-radius: 2px;
-    content: '';
-    height: 100%;
-    left: 0;
-    opacity: 0.7;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-`
-
-const VideoMediaTimeText = Text.extend`
-  position: relative;
-  z-index: 1;
-`
-
 const MyVideoItemInfo = styled.div`
   padding: 20px;
 `
@@ -165,11 +140,9 @@ class MyVideoItem extends Component<Props, void> {
         <MyVideoItemLink to={urlToPlay}>
           <MyVideoItemMedia>
             <MyVideoItemImage source={videoPoster} />
-            <VideoMediaTime>
-              <VideoMediaTimeText tiny accent>
-                {durationNoMillis}
-              </VideoMediaTimeText>
-            </VideoMediaTime>
+
+            <VideoItemTime>{durationNoMillis}</VideoItemTime>
+
             <IconPlay>
               <SVGIcon icon="icon-player-play" />
             </IconPlay>
