@@ -84,6 +84,18 @@ export const loadBalances = () => (dispatch: Dispatch) => {
   }
 }
 
+let balanceLoadIntervalId: number = 0
+
+export const loadBalancesOnInterval = (intervalMs: number) => (
+  dispatch: Dispatch
+) => {
+  clearInterval(balanceLoadIntervalId)
+
+  balanceLoadIntervalId = setInterval(() => {
+    dispatch(loadBalances())
+  }, intervalMs)
+}
+
 export const totalStakedPTI = () => async (dispatch: Dispatch) => {
   const address: string = paratii.eth.getAccount()
   if (address) {
