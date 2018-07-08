@@ -96,7 +96,7 @@ export const loadBalancesOnInterval = (intervalMs: number) => (
   }, intervalMs)
 }
 
-export const totalStakedPTI = () => async (dispatch: Dispatch) => {
+export const loadTotalStakedPTI = () => async (dispatch: Dispatch) => {
   const address: string = paratii.eth.getAccount()
   if (address) {
     const totalBN = await paratii.eth.tcr.getTotalStaked(address)
@@ -130,7 +130,7 @@ export const setUserData = () => async (dispatch: Dispatch) => {
       })
     )
     // Get total Pti staked
-    dispatch(totalStakedPTI())
+    dispatch(loadTotalStakedPTI())
   }
 }
 
