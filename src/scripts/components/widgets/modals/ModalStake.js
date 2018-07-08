@@ -17,6 +17,7 @@ type Props = {
   saveVideoStaked: Object => Object,
   selectedVideo: Object => Object,
   notification: (Object, string) => void,
+  loadTotalStakedPTI: () => void,
   loadBalances: () => void
 }
 
@@ -65,7 +66,7 @@ class ModalStake extends Component<Props, Object> {
   }
 
   onSubmit (event: Object) {
-    const { loadBalances } = this.props
+    const { loadBalances, loadTotalStakedPTI } = this.props
     event.preventDefault()
     this.props.notification({ title: 'Processing...' }, 'warning')
     const stakeAmount = this.state.stakeAmount
@@ -101,6 +102,7 @@ class ModalStake extends Component<Props, Object> {
             'success'
           )
           loadBalances()
+          loadTotalStakedPTI()
         } else {
           const msg =
             'apply returns false :( , something went wrong at contract level. check balance, gas, all of that stuff.'
