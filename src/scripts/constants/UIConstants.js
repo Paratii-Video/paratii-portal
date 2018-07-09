@@ -57,8 +57,12 @@ export const CONTROLS_SPACING: string = '24px'
 export const CONTROLS_SPACING_MOBILE: string = '12px'
 
 // Video Overlay
-export const VIDEO_OVERLAY_BUTTONS_HEIGHT: string = '20px'
 export const VIDEO_OVERLAY_PADDING: string = '20px'
+export const VIDEO_OVERLAY_BUTTONS_HEIGHT: string = '20px'
+export const VIDEO_OVERLAY_SHARE_BUTTON_WIDTH: string = '26px'
+export const VIDEO_OVERLAY_SHARE_BUTTON_WIDTH_MOBILE: string = '20px'
+export const VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH: string = '17px'
+export const VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH_MOBILE: string = '17px'
 
 // Forms
 export const INPUT_HEIGHT: string = '38px'
