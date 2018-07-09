@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import type { VideoRecord } from 'records/VideoRecords'
 import Title from './foundations/Title'
-import MyVideoItem, { MyVideosWrapper } from './MyVideoItem'
+import MyVideoItem, { MyVideosContainer } from './MyVideoItem'
 import FileUploader from '../containers/FileUploaderContainer'
 import TranslatedText from './translations/TranslatedText'
 
@@ -30,7 +30,7 @@ const ProfileFilterTitle = styled(Title)`
   flex: 1 1 100%;
 `
 
-const ProfileMyVideosList = MyVideosWrapper.extend`
+const ProfileMyVideosList = MyVideosContainer.extend`
   margin-top: 24px;
 `
 

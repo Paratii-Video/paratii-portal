@@ -14,7 +14,7 @@ type Props = {
   video: VideoRecord
 }
 
-export const MyVideosWrapper = styled.ul`
+export const MyVideosContainer = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 24px;
