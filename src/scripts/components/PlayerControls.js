@@ -79,7 +79,7 @@ const Wrapper = styled.div`
         !showShareModal &&
         !showStartScreen
       ? 0
-      : 'calc(100% + 10px)'
+      : '100%'
   }},
     0
   );
@@ -133,8 +133,7 @@ const TipButtonWrapper = styled.div`
       controlsRaised ? CONTROLS_HEIGHT : BASE_TIP_BUTTON_BOTTOM
     } )`};
   right: ${VIDEO_OVERLAY_PADDING};
-  transition: all ${({ theme }) => theme.animation.time.repaint}
-    ${({ theme }) => theme.animation.ease.smooth};
+  transition: all 0.65s ${({ theme }) => theme.animation.ease.smooth};
   z-index: ${Z_INDEX_BUTTONS};
 
   @media (max-width: 768px) {
@@ -205,18 +204,17 @@ const VolumeBarWrapper = styled.div`
 `
 
 const ControlButtonWrapper = TextButton.extend`
-  display: flex;
-  flex: 0 0 ${CONTROLS_BUTTON_DIMENSION};
   height: ${CONTROLS_BUTTON_DIMENSION};
+  width: ${CONTROLS_BUTTON_DIMENSION};
 
   @media (max-width: 1440px) {
-    flex: 0 0 ${CONTROLS_BUTTON_DIMENSION_DESKTOP};
     height: ${CONTROLS_BUTTON_DIMENSION_DESKTOP};
+    width: ${CONTROLS_BUTTON_DIMENSION_DESKTOP};
   }
 
   @media (max-width: 320px) {
-    flex: 0 0 ${CONTROLS_BUTTON_DIMENSION_MOBILE};
     height: ${CONTROLS_BUTTON_DIMENSION_MOBILE};
+    width: ${CONTROLS_BUTTON_DIMENSION_MOBILE};
   }
 
   &:not(:last-child) {
@@ -296,9 +294,12 @@ class PlayerControls extends Component<Props, State> {
     return currentVolume === 0
   }
 
+  isSettingsActive (): boolean {
+    return this.props.activePlugin === PLAYER_PLUGIN.PLAYBACK_LEVELS
+  }
+
   render () {
     const {
-      activePlugin,
       askForTip,
       isEmbed,
       isPlaying,
@@ -405,8 +406,8 @@ class PlayerControls extends Component<Props, State> {
             </LeftControls>
             <RightControls>
               <ControlButtonWrapper
-                accent={activePlugin === PLAYER_PLUGIN.PLAYBACK_LEVELS}
-                warn={activePlugin !== PLAYER_PLUGIN.PLAYBACK_LEVELS}
+                accent={this.isSettingsActive()}
+                warn={!this.isSettingsActive()}
                 data-test-id="playback-levels-button"
                 disabled={!playbackLevels.size}
                 onClick={() => {
