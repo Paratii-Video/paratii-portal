@@ -132,8 +132,6 @@ class MyVideoItem extends Component<Props, void> {
       durationNoMillis = formatDuration(duration)
     }
 
-    console.log(video)
-
     return (
       <Wrapper>
         <MyVideoItemLink to={urlToPlay}>
