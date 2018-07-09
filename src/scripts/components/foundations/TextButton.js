@@ -2,7 +2,8 @@ import styled, { css } from 'styled-components'
 import {
   ButtonStyleText,
   ButtonStyleDisabled,
-  ButtonStyleHover
+  ButtonStyleHover,
+  IconButtonStyle
 } from './Button'
 
 export const ButtonStyleColor = css`
@@ -26,7 +27,7 @@ export const ButtonStyleColor = css`
 const TextButton = styled.button.attrs({
   'data-test-id': props => props['data-test-id']
 })`
-  ${ButtonStyleText} ${ButtonStyleDisabled} ${ButtonStyleHover} ${ButtonStyleColor} margin: ${props =>
+  ${ButtonStyleText} ${ButtonStyleDisabled} ${ButtonStyleHover} ${ButtonStyleColor} ${IconButtonStyle} margin: ${props =>
   props.margin};
 `
 

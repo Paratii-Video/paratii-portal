@@ -86,6 +86,11 @@ export const ButtonStyleBackground = css`
   }};
 `
 
+export const IconButtonStyle = css`
+  align-items: ${props => (props.iconButton ? 'center' : null)};
+  display: ${props => (props.iconButton ? 'flex' : null)};
+`
+
 export const ButtonStyle = css`
   height: ${BUTTON_HEIGHT};
   padding: 0 ${BUTTON_PADDING_LEFT};
@@ -96,7 +101,7 @@ export const ButtonStyle = css`
 export const Button = styled.button.attrs({
   'data-test-id': props => props['data-test-id']
 })`
-  ${ButtonStyleText} ${ButtonStyleDisabled} ${ButtonStyleHover} ${ButtonStyleBackground} ${ButtonStyle} margin: ${props =>
+  ${ButtonStyleText} ${ButtonStyleDisabled} ${ButtonStyleHover} ${ButtonStyleBackground} ${ButtonStyle} ${IconButtonStyle} margin: ${props =>
   props.margin};
 `
 
