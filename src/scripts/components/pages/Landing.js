@@ -122,7 +122,7 @@ const Videos = styled.div`
   display: block;
 `
 
-const VideosWrapper = styled.div`
+const VideosContainer = styled.div`
   margin: 175px auto 150px;
   max-width: 880px;
   width: 100%;
@@ -397,7 +397,7 @@ class Landing extends Component<Props, void> {
           </HeaderLinkWrapper>
         </Header>
         <Videos>
-          <VideosWrapper>
+          <VideosContainer>
             <VideosHeader>
               <Title big accent>
                 <TranslatedText message="landingPage.videos.title" />
@@ -428,7 +428,7 @@ class Landing extends Component<Props, void> {
                 )
               })}
             </LandingVideoList>
-          </VideosWrapper>
+          </VideosContainer>
         </Videos>
       </Wrapper>
     )

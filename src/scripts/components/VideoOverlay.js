@@ -17,7 +17,13 @@ import PlaybackLevels from 'components/widgets/PlaybackLevels'
 import WalletInfoContainer from 'containers/widgets/WalletInfoContainer'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
-import { VIDEO_OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
+import {
+  VIDEO_OVERLAY_BUTTONS_HEIGHT,
+  VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH,
+  VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH_MOBILE,
+  VIDEO_OVERLAY_SHARE_BUTTON_WIDTH,
+  VIDEO_OVERLAY_SHARE_BUTTON_WIDTH_MOBILE
+} from 'constants/UIConstants'
 
 import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
 
@@ -117,7 +123,7 @@ const PlayerTitle = Title.extend`
   }
 `
 
-const ButtonWrapper = styled.div`
+const ButtonContainer = styled.div`
   ${ShowHideTopElements} align-self: flex-start;
   display: flex;
   flex: 0;
@@ -129,22 +135,22 @@ const ButtonWrapper = styled.div`
 `
 
 const ShareButton = TextButton.extend`
+  flex: 0 0 ${VIDEO_OVERLAY_SHARE_BUTTON_WIDTH};
   height: ${VIDEO_OVERLAY_BUTTONS_HEIGHT};
   margin-left: 10px;
-  width: 26px;
 
   @media (max-width: 768px) {
-    width: 20px;
+    flex: 0 0 ${VIDEO_OVERLAY_SHARE_BUTTON_WIDTH_MOBILE};
   }
 `
 
 const ProfileButtonWrapper = TextButton.extend`
+  flex: 0 0 ${VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH};
   height: ${VIDEO_OVERLAY_BUTTONS_HEIGHT};
   margin-left: 10px;
-  width: 26px;
 
   @media (max-width: 768px) {
-    width: 20px;
+    flex: 0 0 ${VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH_MOBILE};
   }
 `
 
@@ -239,7 +245,7 @@ class VideoOverlay extends Component<Props> {
               {this.getVideoTitle()}
             </PlayerTitle>
           )}
-          <ButtonWrapper
+          <ButtonContainer
             transitionState={transitionState}
             showShareModal={showShareModal}
           >
@@ -251,7 +257,6 @@ class VideoOverlay extends Component<Props> {
                 onClick={(e: Object) => {
                   e.stopPropagation()
                   toggleActivePlugin(PLAYER_PLUGIN.WALLET)
-                  console.log(e)
                 }}
               >
                 <SVGIcon icon="icon-profile" />
@@ -267,7 +272,7 @@ class VideoOverlay extends Component<Props> {
             >
               <SVGIcon icon="icon-player-share" />
             </ShareButton>
-          </ButtonWrapper>
+          </ButtonContainer>
           <CentralizedContent
             transitionState={transitionState}
             showShareModal={showShareModal}
