@@ -3,9 +3,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { List as ImmutableList } from 'immutable'
+import TextButton from 'components/foundations/TextButton'
+import SVGIcon from 'components/foundations/SVGIcon'
 import Text from 'components/foundations/Text'
 import Popover from 'components/foundations/Popover'
-import CloseButton from 'components/foundations/buttons/CloseButton'
 import { CONTROLS_HEIGHT } from 'constants/UIConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
 
@@ -156,11 +157,16 @@ class PlaybackLevels extends React.Component<Props> {
       >
         <Wrapper>
           <TopBar>
-            <Title small>Quality</Title>
-            <CloseButton
+            <Title small primary>
+              Quality
+            </Title>
+            <TextButton
+              warn
               data-test-id="playback-levels-close-button"
               onClick={onClose}
-            />
+            >
+              <SVGIcon width="12px" height="12px" icon="icon-close" />
+            </TextButton>
           </TopBar>
           <LevelsList offsetXPercentage={offsetXPercentage}>
             {playbackLevels.map((level: PlaybackLevel, index: number) => {
