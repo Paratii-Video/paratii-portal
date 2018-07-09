@@ -56,7 +56,7 @@ const ShowHideTopElements = css`
     ${({ transitionState, showShareModal }) =>
     transitionState === TRANSITION_STATE.ENTERED && !showShareModal
       ? '0'
-      : '0'},
+      : '-100%'},
     0
   );
   transition: transform 0.45s ${({ theme }) => theme.animation.ease.smooth};
