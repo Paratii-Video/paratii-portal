@@ -158,7 +158,7 @@ const CentralizedContent = styled.div`
 `
 
 const StartScreenIcon = styled.span`
-  color: ${props => props.theme.colors.button.warn};
+  color: ${props => props.theme.colors.text.accent};
   height: 20%;
   opacity: ${props => (props.showStartScreen ? 1 : 0)};
   transition: transform 0.3s ${props => props.theme.animation.ease.smooth};
