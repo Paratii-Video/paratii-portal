@@ -77,7 +77,7 @@ const WordsWrapper = styled.div`
   padding: 22px ${WORDSWRAPPER_HORIZONTAL_PADDING};
 `
 
-const CopyButton = styled(TextButton)`
+const CopyButton = TextButton.extend`
   align-items: flex-end;
   display: flex;
   margin-left: 20px;
