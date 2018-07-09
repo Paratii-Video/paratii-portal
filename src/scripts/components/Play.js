@@ -161,11 +161,6 @@ const PlayInfoButtons = styled.div`
   margin: 15px 0 15px;
 `
 
-const ButtonIcon = styled(TextButton)`
-  display: flex;
-  margin-right: 10px;
-`
-
 const PlayInfoHighlight = Text.withComponent('span')
 
 const DescriptionWrapper = styled.div`
@@ -702,6 +697,7 @@ class Play extends Component<Props, State> {
       return baseurl + appRootUrl + '/play/' + video.id
     }
   }
+
   getTwitterHref () {
     const { video } = this.props
     const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
@@ -713,6 +709,7 @@ class Play extends Component<Props, State> {
       return baseurl + url + text
     }
   }
+
   getWhatsAppMobileHref () {
     const { video } = this.props
     const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
@@ -724,6 +721,7 @@ class Play extends Component<Props, State> {
       return baseurl + text + url
     }
   }
+
   getWhatsAppDesktopHref () {
     const { video } = this.props
     const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
@@ -735,6 +733,7 @@ class Play extends Component<Props, State> {
       return baseurl + text + url
     }
   }
+
   getTelegramHref () {
     const { video } = this.props
     const appRootUrl = getAppRootUrl(process.env.NODE_ENV)
@@ -865,41 +864,41 @@ class Play extends Component<Props, State> {
               <PlayInfo>
                 {videoName && <Title accent>{videoName}</Title>}
                 {video.author && <Text>By {video.author}</Text>}
-                {video.share && (
+                {true && (
                   <PlayInfoButtons>
-                    <ButtonIcon color>
+                    <TextButton iconButton margin="0 20px 0 0">
                       <SVGIcon
                         width="20px"
                         height="20px"
-                        margin="0 20px 0 0"
-                        icon="#icon-play-view"
-                      />
-                      <Text small accent>
-                        <TranslatedText message="player.views.zero" />
-                      </Text>
-                    </ButtonIcon>
-                    <ButtonIcon color>
-                      <SVGIcon
-                        width="20px"
-                        height="20px"
-                        margin="0 20px 0 0"
-                        icon="#icon-play-like"
+                        margin="0 5px 0 0"
+                        icon="icon-play-view"
                       />
                       <Text small>
                         <TranslatedText message="player.views.zero" />
                       </Text>
-                    </ButtonIcon>
-                    <ButtonIcon color>
+                    </TextButton>
+                    <TextButton iconButton margin="0 20px 0 0">
                       <SVGIcon
                         width="20px"
                         height="20px"
-                        margin="0 20px 0 0"
-                        icon="#icon-play-dislike"
+                        margin="0 5px 0 0"
+                        icon="icon-play-like"
                       />
                       <Text small>
                         <TranslatedText message="player.views.zero" />
                       </Text>
-                    </ButtonIcon>
+                    </TextButton>
+                    <TextButton iconButton>
+                      <SVGIcon
+                        width="20px"
+                        height="20px"
+                        margin="0 5px 0 0"
+                        icon="icon-play-dislike"
+                      />
+                      <Text small>
+                        <TranslatedText message="player.views.zero" />
+                      </Text>
+                    </TextButton>
                   </PlayInfoButtons>
                 )}
                 <Text>

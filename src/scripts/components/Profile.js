@@ -77,12 +77,6 @@ const WordsWrapper = styled.div`
   padding: 22px ${WORDSWRAPPER_HORIZONTAL_PADDING};
 `
 
-const CopyButton = TextButton.extend`
-  align-items: flex-end;
-  display: flex;
-  margin-left: 20px;
-`
-
 class Profile extends Component<Props, void> {
   secureWallet: (e: Object) => void
   copyWordsToClipboard: (event: Object) => void
@@ -161,7 +155,7 @@ class Profile extends Component<Props, void> {
           >
             {userAddress}
           </Text>
-          <CopyButton small onClick={this.copyWordsToClipboard}>
+          <TextButton iconButton small onClick={this.copyWordsToClipboard}>
             <SVGIcon
               icon="icon-copy"
               height="20px"
@@ -169,7 +163,7 @@ class Profile extends Component<Props, void> {
               margin="0 5px 0 0"
             />
             <TranslatedText message="profile.copyLabel" />
-          </CopyButton>
+          </TextButton>
         </WordsWrapper>
       </FooterWrapper>
     )
