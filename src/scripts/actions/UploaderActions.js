@@ -46,6 +46,8 @@ function upsertVideo (videoId, dataToUpdate, state) {
   delete updatedVideo.fetchStatus
   delete updatedVideo.staked
   delete updatedVideo.published
+  delete updatedVideo.vote
+  delete updatedVideo.whiteListed
   if (!updatedVideo.filename) {
     updatedVideo.filename = ''
   }
