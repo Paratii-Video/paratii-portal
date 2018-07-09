@@ -104,12 +104,10 @@ const MyVideoItemsTitle = Text.extend`
   margin-bottom: 15px;
 `
 
-const EditButton = TextButton.extend`
+const EditButtonWrapper = styled.div`
   bottom: 30px;
-  height: 20px;
   position: absolute;
   right: 24px;
-  width: 20px;
 `
 
 class MyVideoItem extends Component<Props, void> {
@@ -158,9 +156,11 @@ class MyVideoItem extends Component<Props, void> {
             <Text small>11 months ago</Text>
           </MyVideoItemInfo>
         </MyVideoItemLink>
-        <EditButton primary>
-          <SVGIcon icon="icon-edit" />
-        </EditButton>
+        <EditButtonWrapper>
+          <TextButton primary>
+            <SVGIcon width="20px" height="20px" icon="icon-edit" />
+          </TextButton>
+        </EditButtonWrapper>
       </Wrapper>
     )
   }
