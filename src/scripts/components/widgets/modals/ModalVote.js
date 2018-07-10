@@ -68,7 +68,7 @@ class ModalVote extends Component<Props, Object> {
 
   async onSubmit (event: Object) {
     event.preventDefault()
-    const amountInWei = paratii.eth.web3.utils.toWei(MIN_VOTE_PTI)
+    const amountInWei = paratii.eth.web3.utils.toWei(String(MIN_VOTE_PTI))
     this.props.notification({ title: 'Processing your vote...' }, 'warning')
     await paratii.eth.tcr.approveAndGetRightsAndCommitVote(
       this.props.selectedVideoId,

@@ -11,7 +11,7 @@ import { MODAL } from 'constants/ModalConstants'
 type Props = {
   videoId: string,
   isWalletSecured: boolean,
-  setVote: number => void,
+  setVote: Object => void,
   openModal: string => void,
   checkUserWallet: () => void
 }
@@ -46,8 +46,6 @@ class CommitYourVote extends Component<Props, void> {
 
   constructor (props: Props) {
     super(props)
-
-    this.state = {}
     this.voteVideo = this.voteVideo.bind(this)
   }
 
