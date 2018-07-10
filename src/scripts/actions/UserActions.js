@@ -8,7 +8,9 @@ import {
   LOGIN_SUCCESS,
   SET_WALLET_DATA,
   SET_WALLET_ADDRESS,
+  LOAD_BALANCES_STARTED,
   BALANCES_LOADED,
+  WALLET_SECURED,
   STAKED_PTI
 } from 'constants/ActionConstants'
 
@@ -33,28 +35,42 @@ import UserRecord from 'records/UserRecords'
 
 const loginSuccess = createAction(LOGIN_SUCCESS)
 const balancesLoaded = createAction(BALANCES_LOADED)
+const walletSecured = createAction(WALLET_SECURED)
 const totalStaked = createAction(STAKED_PTI)
 export const setWalletData = createAction(SET_WALLET_DATA)
 export const setWalletAddress = createAction(SET_WALLET_ADDRESS)
 
-export const checkUserWallet = ({ onClose }: Object = {}) => (
-  dispatch: Dispatch
-) => {
+export const checkUserWallet = ({
+  onClose = () => {},
+  onComplete = () => {}
+}: Object = {}) => (dispatch: Dispatch) => {
+  const completeCallback = (...args) => {
+    dispatch(walletSecured())
+    onComplete(...args)
+  }
+
   if (ACTIVATE_SECURE_WALLET) {
     const walletStringSecure: ?string = localStorage.getItem(WALLET_KEY_SECURE)
     if (walletStringSecure) {
       console.log('Try to open encrypted keystore')
       // Need to ask the PIN
-      dispatch(openModal(MODAL.ASK_PASSWORD, { onClose }))
+      dispatch(
+        openModal(MODAL.ASK_PASSWORD, { onClose, onComplete: completeCallback })
+      )
     } else {
-      dispatch(openModal(MODAL.SECURE, { onClose }))
+      dispatch(
+        openModal(MODAL.SECURE, { onClose, onComplete: completeCallback })
+      )
     }
   }
 }
 
+export const loadBalancesStarted = createAction(LOAD_BALANCES_STARTED)
+
 export const loadBalances = () => (dispatch: Dispatch) => {
   const address: string = paratii.eth.getAccount()
   if (address) {
+    dispatch(loadBalancesStarted())
     paratii.eth.balanceOf(address).then(({ ETH, PTI }) => {
       const ETHAsString = ETH.toString()
       const PTIAsString = PTI.toString()
@@ -68,7 +84,19 @@ export const loadBalances = () => (dispatch: Dispatch) => {
   }
 }
 
-export const totalStakedPTI = () => async (dispatch: Dispatch) => {
+let balanceLoadIntervalId: number = 0
+
+export const loadBalancesOnInterval = (intervalMs: number) => (
+  dispatch: Dispatch
+) => {
+  clearInterval(balanceLoadIntervalId)
+
+  balanceLoadIntervalId = setInterval(() => {
+    dispatch(loadBalances())
+  }, intervalMs)
+}
+
+export const loadTotalStakedPTI = () => async (dispatch: Dispatch) => {
   const address: string = paratii.eth.getAccount()
   if (address) {
     const totalBN = await paratii.eth.tcr.getTotalStaked(address)
@@ -102,7 +130,7 @@ export const setUserData = () => async (dispatch: Dispatch) => {
       })
     )
     // Get total Pti staked
-    dispatch(totalStakedPTI())
+    dispatch(loadTotalStakedPTI())
   }
 }
 

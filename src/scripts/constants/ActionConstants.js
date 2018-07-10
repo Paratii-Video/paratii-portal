@@ -31,7 +31,11 @@ export const LOGIN_REQUESTED = createActionConstant('LOGIN_REQUESTED')
 export const LOGIN_SUCCESS = createActionConstant('LOGIN_SUCCESS')
 export const LOGIN_FAILURE = createActionConstant('LOGIN_FAILURE')
 export const LOGOUT = createActionConstant('LOGOUT')
+export const LOAD_BALANCES_STARTED = createActionConstant(
+  'LOAD_BALANCES_STARTED'
+)
 export const BALANCES_LOADED = createActionConstant('BALANCES_LOADED')
+export const WALLET_SECURED = createActionConstant('WALLET_SECURED')
 export const STAKED_PTI = createActionConstant('STAKED_PTI')
 
 /* Upload Actions */
@@ -103,6 +107,15 @@ export const ADDITIONAL_SEARCH_RESULTS_LOADED = createActionConstant(
 )
 export const ADDITIONAL_SEARCH_FAILED = createActionConstant(
   'ADDITIONAL_SEARCH_FAILED'
+)
+
+/* Tipping actions */
+export const ADD_DO_NOT_TIP_VIDEO: string = createActionConstant(
+  'ADD_DO_NOT_TIP_VIDEO'
+)
+
+export const SET_USER_IS_TIPPING: string = createActionConstant(
+  'SET_USER_IS_TIPPING'
 )
 
 // User nav

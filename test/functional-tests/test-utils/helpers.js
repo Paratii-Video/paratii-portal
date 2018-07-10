@@ -111,17 +111,15 @@ export async function getAccountFromBrowser () {
 }
 
 // TODO: This function does not reliably return the keystore
-export async function waitForKeystore (browser, key = 'keystore-anon') {
-  await browser.waitUntil(function () {
-    const val = browser.execute(function (key) {
+export function waitForKeystore (browser, key = 'keystore-anon') {
+  browser.waitUntil(function () {
+    return browser.execute(function (key) {
       return localStorage.getItem(key)
     }, key).value
-    return val
   })
-  const val = await browser.execute(function (key) {
+  return browser.execute(function (key) {
     return localStorage.getItem(key)
   }, key).value
-  return val
 }
 
 export function createKeystore (userpassword = password) {

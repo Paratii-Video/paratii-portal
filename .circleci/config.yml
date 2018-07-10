@@ -29,6 +29,11 @@ jobs:
       - run:
           command: node src/scripts/waitForServer.js
           no_output_timeout: 120s
+      - run:
+          command: yarn run test-db
+          background: true
+      - run:
+          command: node src/scripts/waitForDb.js
       - run: yarn run chimp-circleci-test
       - deploy:
           command: |

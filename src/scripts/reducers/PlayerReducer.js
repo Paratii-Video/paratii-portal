@@ -24,7 +24,10 @@ const reducer = {
   [PLAYER_TOGGLE_PLAYPAUSE]: (state: PlayerRecord, action: Action<boolean>) =>
     state.merge({
       isPlaying: action.payload || !state.get('isPlaying'),
-      isAttemptingPlay: false
+      isAttemptingPlay: false,
+      latestPlaybackTimestamp: action.payload
+        ? Date.now()
+        : state.get('latestPlaybackTimestamp')
     }),
   [PLAYER_SET_FULLSCREEN]: (state: PlayerRecord, action: Action<boolean>) =>
     state.set('isFullscreen', action.payload),
@@ -35,7 +38,24 @@ const reducer = {
   [UPDATE_VIDEO_TIME]: (
     state: PlayerRecord,
     action: Action<{ time: number }>
-  ): PlayerRecord => state.set('currentTimeSeconds', action.payload.time),
+  ): PlayerRecord => {
+    const prevPlaybackTimestamp: number = state.get('latestPlaybackTimestamp')
+    const timestamp: number = state.get('isPlaying')
+      ? Date.now()
+      : prevPlaybackTimestamp
+    const prevTotalTimeViewedSeconds: number = state.get(
+      'totalTimeViewedSeconds'
+    )
+
+    return state.merge({
+      currentTimeSeconds: action.payload.time,
+      latestPlaybackTimestamp: timestamp,
+      totalTimeViewedSeconds: prevPlaybackTimestamp
+        ? prevTotalTimeViewedSeconds +
+          (timestamp - prevPlaybackTimestamp) / 1000
+        : 0
+    })
+  },
   [UPDATE_VIDEO_BUFFERED_TIME]: (
     state: PlayerRecord,
     action: Action<{ time: number }>
