@@ -12,13 +12,10 @@ import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
 import { List as ImmutableList } from 'immutable'
 
-import IconButton from 'components/foundations/buttons/IconButton'
 import PlaybackLevels from 'components/widgets/PlaybackLevels'
-import WalletInfoContainer from 'containers/widgets/WalletInfoContainer'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
 import { VIDEO_OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
-import Colors from 'components/foundations/base/Colors'
 
 import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
 
@@ -139,16 +136,6 @@ const ShareButton = Button.extend`
   }
 `
 
-const ProfileButtonWrapper = styled.div`
-  height: ${VIDEO_OVERLAY_BUTTONS_HEIGHT};
-  margin-left: 10px;
-  width: 26px;
-
-  @media (max-width: 768px) {
-    width: 20px;
-  }
-`
-
 const CentralizedContent = styled.div`
   align-items: center;
   display: flex;
@@ -195,17 +182,12 @@ class VideoOverlay extends Component<Props> {
           onPlaybackLevelChange={onPlaybackLevelChange}
           onClose={() => toggleActivePlugin()}
         />
-        <WalletInfoContainer
-          open={activePlugin === PLAYER_PLUGIN.WALLET}
-          onClose={() => toggleActivePlugin()}
-        />
       </Fragment>
     )
   }
 
   render () {
     const {
-      activePlugin,
       isEmbed,
       showStartScreen,
       onClick,
@@ -216,7 +198,6 @@ class VideoOverlay extends Component<Props> {
       togglePlayPause,
       toggleShareModal,
       toggleFullscreen,
-      toggleActivePlugin,
       transitionState,
       showShareModal
     } = this.props
@@ -246,21 +227,6 @@ class VideoOverlay extends Component<Props> {
             transitionState={transitionState}
             showShareModal={showShareModal}
           >
-            {isEmbed && (
-              <ProfileButtonWrapper>
-                <IconButton
-                  color={
-                    activePlugin === PLAYER_PLUGIN.WALLET ? Colors.purple : ''
-                  }
-                  data-test-id="wallet-info-button"
-                  icon="/assets/img/profile.svg"
-                  onClick={(e: Object) => {
-                    e.stopPropagation()
-                    toggleActivePlugin(PLAYER_PLUGIN.WALLET)
-                  }}
-                />
-              </ProfileButtonWrapper>
-            )}
             <ShareButton
               data-test-id="share-button"
               onClick={(e: Object) => {
