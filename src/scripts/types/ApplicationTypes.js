@@ -334,7 +334,7 @@ type Colors = {
     secondary: string,
     accent: string,
     highlight: string,
-    error: string
+    warn: string
   },
   header: {
     logo: string,
