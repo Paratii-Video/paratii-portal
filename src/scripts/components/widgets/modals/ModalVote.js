@@ -68,7 +68,7 @@ class ModalVote extends Component<Props, Object> {
 
   async onSubmit (event: Object) {
     event.preventDefault()
-    const amountInWei = paratii.eth.web3.utils.toWei(MIN_VOTE_PTI)
+    const amountInWei = paratii.eth.web3.utils.toWei(String(MIN_VOTE_PTI))
     this.props.notification({ title: 'Processing your vote...' }, 'warning')
     try {
       // Inside eventLogs there is the voteCommite to save in localStorage

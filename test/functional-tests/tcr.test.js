@@ -3,8 +3,7 @@ import {
   paratii,
   address,
   password,
-  getAccountFromBrowser,
-  waitForKeystore
+  getAccountFromBrowser
 } from './test-utils/helpers'
 import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
 // declare var browser: Object
@@ -59,13 +58,12 @@ describe('TCR:', function () {
     await browser.setValue('[name="wallet-password"]', password)
     await browser.waitAndClick('[data-test-id="continue"]')
 
-    // await browser.pause(5000)
-    // Get address from browser and send it som PTI
-    const keystore = await waitForKeystore(browser, 'keystore-anon')
-    console.log(keystore)
-    assert.isOk(keystore)
-    const userAddress = await getAccountFromBrowser()
-    console.log(userAddress)
+    let userAddress
+    await browser.waitUntil(async function () {
+      userAddress = await getAccountFromBrowser()
+      return userAddress !== address
+    })
+
     const value = paratii.eth.web3.utils.toWei('100')
     await paratii.eth.transfer(userAddress, value, 'PTI')
   })

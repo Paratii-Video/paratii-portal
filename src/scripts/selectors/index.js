@@ -1,13 +1,14 @@
 /* @flow */
 
-import { List as ImmutableList } from 'immutable'
+import { Map as ImmutableMap, List as ImmutableList } from 'immutable'
 
 import UserRecord, {
   Balances,
   _getWalletKey,
   _getMnemonicKey,
   _getLoginRequestStatus,
-  _getBalances
+  _getBalances,
+  _getLastSecuredTimestamp
 } from 'records/UserRecords'
 import {
   _getIsPlaying,
@@ -15,6 +16,7 @@ import {
   _getIsFullscreen,
   _getPlayerVideoId,
   _getPlayerCurrentTimeSeconds,
+  _getPlayerTotalTimeViewedSeconds,
   _getPlayerCurrentBufferedTimeSeconds,
   _getPlayerCurrentVolume,
   _getPlaybackLevels,
@@ -34,6 +36,7 @@ import {
 } from 'records/SearchRecords'
 import Video from 'records/VideoRecords'
 import VideoManager from 'records/VideoManagerRecords'
+import { _getDoNotTipVideoIds, _getUserIsTipping } from 'records/TippingRecords'
 
 import type {
   RootState,
@@ -62,6 +65,8 @@ export const getMnemonicKey = (state: RootState): string =>
   _getMnemonicKey(getUser(state))
 export const getBalances = (state: RootState): Balances =>
   _getBalances(getUser(state))
+export const getLastSecuredTimestamp = (state: RootState): number =>
+  _getLastSecuredTimestamp(getUser(state))
 
 export const getLoginRequestStatus = (state: RootState): RequestStatus =>
   _getLoginRequestStatus(state.user)
@@ -80,6 +85,8 @@ export const getPlayerVideoId = (state: RootState): string =>
   _getPlayerVideoId(state.player)
 export const getPlayerCurrentTimeSeconds = (state: RootState): number =>
   _getPlayerCurrentTimeSeconds(state.player)
+export const getPlayerTotalTimeViewedSeconds = (state: RootState): number =>
+  _getPlayerTotalTimeViewedSeconds(state.player)
 export const getPlayerCurrentBufferedTimeSeconds = (state: RootState): number =>
   _getPlayerCurrentBufferedTimeSeconds(state.player)
 export const getPlayerCurrentVolume = (state: RootState): number =>
@@ -125,3 +132,11 @@ export const getUserNavStatus = (state: RootState): boolean =>
 /* VideoManager */
 export const getVideoManager = (state: RootState): VideoManager =>
   state.videoManager
+
+/* Tipping */
+export const getDoNotTipVideoIds = (
+  state: RootState
+): ImmutableMap<string, boolean> => _getDoNotTipVideoIds(state.tipping)
+
+export const getUserIsTipping = (state: RootState): boolean =>
+  _getUserIsTipping(state.tipping)

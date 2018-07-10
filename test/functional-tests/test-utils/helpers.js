@@ -110,6 +110,7 @@ export async function getAccountFromBrowser () {
   return result.value
 }
 
+// TODO: This function does not reliably return the keystore
 export function waitForKeystore (browser, key = 'keystore-anon') {
   browser.waitUntil(function () {
     return browser.execute(function (key) {
@@ -150,7 +151,6 @@ export function uploadFilesToIPFS (ipfs, files) {
     pull(
       pull.values(files),
       pull.through(file => {
-        // console.log('Adding ', file)
         meta.fileSize = file.size
         meta.total = 0
       }),

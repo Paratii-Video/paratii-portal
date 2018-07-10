@@ -32,6 +32,7 @@
     "description": "This page is not available yet. A passionate team is either building it or doesn't know about it. Want to help us move faster? Please tell us how you got here with an issue on our Github:",
     "linkText": "Paratii-Video"
   },
+  "PTI": "PTI",
   "profile": {
     "title": "Profile",
     "editButton": "Edit",
@@ -63,6 +64,35 @@
       "noResultsFor": "No results found for \"%{term}\"",
       "moreResults": "See more results",
       "zeroState": "Enter some keywords above to search!"
+    }
+  },
+  "tipping": {
+    "giveTip": "Give a tip",
+    "amounts": {
+      "10": "10",
+      "15": "15",
+      "20": "20",
+      "25": "25"
+    },
+    "defaultAuthor": "the author",
+    "tippingError": "Unfortunately, something went wrong with the tipping process",
+    "steps": {
+      "chooseAmount": {
+        "header": "Feeling generous today?",
+        "chooseTip": "Choose how much to tip %{username}"
+      },
+      "enterPassword": {
+        "header": "You are about to tip",
+        "inputPlaceholder": "Password",
+        "continue": "Continue",
+        "wrongPassword": "Wrong password"
+      },
+      "completed": {
+        "header1": "%{username} appreciates that.",
+        "header2": "Thanks for making %{username}'s day happier.",
+        "header3": "Tips are like hugs. Without all the touching.",
+        "continueWatching": "Continue watching"
+      }
     }
   },
   "uploader": {

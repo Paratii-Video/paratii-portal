@@ -16,6 +16,7 @@ import ProgressIndicator from 'components/widgets/player/ProgressIndicator'
 
 import IconButton from 'components/foundations/buttons/IconButton'
 import Colors from 'components/foundations/base/Colors'
+import TipButtonContainer from 'containers/tipping/TipButtonContainer'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 import {
   CONTROLS_BUTTON_DIMENSION,
@@ -24,7 +25,8 @@ import {
   CONTROLS_SPACING,
   CONTROLS_SPACING_MOBILE,
   CONTROLS_HEIGHT,
-  CONTROLS_HEIGHT_TABLET
+  CONTROLS_HEIGHT_TABLET,
+  VIDEO_OVERLAY_PADDING
 } from 'constants/UIConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { getFullscreenEnabled } from 'utils/AppUtils'
@@ -38,6 +40,8 @@ import qualityIcon from 'assets/img/quality-icon.svg'
 import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
 
 type Props = {
+  askForTip: boolean,
+  isEmbed: boolean,
   video: ?VideoRecord,
   videoDurationSeconds: number,
   isPlaying: boolean,
@@ -71,6 +75,7 @@ const CONTROL_BUTTONS_HEIGHT: string = '50px'
 const SHADOW_HEIGHT: string = '100px'
 const Z_INDEX_SHADOW: string = '1'
 const Z_INDEX_CONTENT: string = '2'
+const Z_INDEX_BUTTONS: string = '4'
 
 const Wrapper = styled.div`
   position: relative;
@@ -123,6 +128,28 @@ const Shadow = styled.span`
         return '0.3s'
     }
   }};
+`
+
+const BASE_TIP_BUTTON_MARGIN: string = '20px'
+const BASE_TIP_BUTTON_BOTTOM: string = `calc(${CONTROLS_HEIGHT} * -1 - ${BASE_TIP_BUTTON_MARGIN})`
+
+const TipButtonWrapper = styled.div`
+  position: absolute;
+  bottom: ${({ controlsRaised }) =>
+    `calc(${BASE_TIP_BUTTON_MARGIN} + ${VIDEO_OVERLAY_PADDING} + ${
+      controlsRaised ? CONTROLS_HEIGHT : BASE_TIP_BUTTON_BOTTOM
+    } )`};
+  right: ${VIDEO_OVERLAY_PADDING};
+  transition: all ${({ theme }) => theme.animation.time.repaint}
+    ${({ theme }) => theme.animation.ease.smooth};
+  z-index: ${Z_INDEX_BUTTONS};
+
+  @media (max-width: 768px) {
+    bottom: ${({ controlsRaised }) =>
+    `calc(${BASE_TIP_BUTTON_MARGIN} + ${VIDEO_OVERLAY_PADDING} + ${
+      controlsRaised ? CONTROLS_HEIGHT_TABLET : BASE_TIP_BUTTON_BOTTOM
+    } )`};
+  }
 `
 
 const Controls = styled.div`
@@ -280,6 +307,8 @@ class PlayerControls extends Component<Props, State> {
   render () {
     const {
       activePlugin,
+      askForTip,
+      isEmbed,
       isPlaying,
       isFullscreen,
       showStartScreen,
@@ -311,6 +340,14 @@ class PlayerControls extends Component<Props, State> {
           showShareModal={showShareModal}
           showStartScreen={showStartScreen}
         />
+        {askForTip &&
+          !isEmbed && (
+          <TipButtonWrapper
+            controlsRaised={transitionState === TRANSITION_STATE.ENTERED}
+          >
+            <TipButtonContainer />
+          </TipButtonWrapper>
+        )}
         <Controls
           data-test-id="player-controls"
           transitionState={transitionState}

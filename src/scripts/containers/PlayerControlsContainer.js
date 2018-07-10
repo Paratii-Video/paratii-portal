@@ -20,12 +20,14 @@ import {
   getCurrentPlaybackLevel,
   getPlaybackLevelsSorted
 } from 'selectors/PlayerSelectors'
+import { askForTip } from 'selectors/TippingSelectors'
 import { playerToggleActivePlugin } from 'actions/PlayerActions'
 
 import type { RootState } from 'types/ApplicationTypes'
 import type { Dispatch } from 'redux'
 
 const mapStateToProps = (state: RootState): Object => ({
+  askForTip: askForTip(state),
   video: getPlayingVideo(state),
   videoDurationSeconds: getDurationSeconds(state),
   isPlaying: getIsPlaying(state),

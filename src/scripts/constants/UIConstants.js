@@ -29,11 +29,9 @@ export const CONTROLS_BUTTON_DIMENSION_MOBILE: string = '10px'
 export const CONTROLS_SPACING: string = '24px'
 export const CONTROLS_SPACING_MOBILE: string = '12px'
 
-// Popover
-export const POPOVER_PADDING: string = '20px'
-
 // Video Overlay
-export const OVERLAY_BUTTONS_HEIGHT: string = '20px'
+export const VIDEO_OVERLAY_BUTTONS_HEIGHT: string = '20px'
+export const VIDEO_OVERLAY_PADDING: string = '20px'
 
 // Card(not imported to structures/Card default, just for CardStyle)
 export const CARD_PADDING: string = '40px 42px'
