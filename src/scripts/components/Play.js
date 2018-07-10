@@ -864,7 +864,7 @@ class Play extends Component<Props, State> {
               <PlayInfo>
                 {videoName && <Title accent>{videoName}</Title>}
                 {video.author && <Text>By {video.author}</Text>}
-                {true && (
+                {video.share && (
                   <PlayInfoButtons>
                     <TextButton iconButton margin="0 20px 0 0">
                       <SVGIcon
