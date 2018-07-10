@@ -64,7 +64,7 @@ const VolumeBarBuffer = styled.div`
 `
 
 /* prettier-ignore */
-const VolumeBar = styled.div.attrs({
+const VolumeBarContainer = styled.div.attrs({
   style: ({ currentVolume, draggingVolumePercentage, transitionState }) => ({
     transform: `scale(${
       transitionState === TRANSITION_STATE.ENTERED ? 1.0 : 0.0
@@ -80,7 +80,7 @@ const VolumeBar = styled.div.attrs({
   align-items: center;
   `
 
-class PlayerControls extends Component<Props, State> {
+class VolumeBar extends Component<Props, State> {
   volumeBarRef: ?HTMLElement
   remainOpenTimeoutMS: number = 2000
   remainOpenTimeoutId: number = -1
@@ -212,7 +212,7 @@ class PlayerControls extends Component<Props, State> {
                 this.volumeBarRef = ref
               }}
             >
-              <VolumeBar
+              <VolumeBarContainer
                 currentVolume={currentVolume}
                 draggingVolumePercentage={draggingVolumePercentage}
                 onMouseDown={() => {
@@ -231,7 +231,7 @@ class PlayerControls extends Component<Props, State> {
                   userIsScrubbing={this.state.userIsDragging}
                   small
                 />
-              </VolumeBar>
+              </VolumeBarContainer>
             </VolumeBarBuffer>
           )}
         </Transition>
@@ -240,4 +240,4 @@ class PlayerControls extends Component<Props, State> {
   }
 }
 
-export default PlayerControls
+export default VolumeBar
