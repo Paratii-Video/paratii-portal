@@ -110,15 +110,18 @@ export async function getAccountFromBrowser () {
   return result.value
 }
 
-export function waitForKeystore (browser, key = 'keystore-anon') {
-  browser.waitUntil(function () {
-    return browser.execute(function (key) {
+// TODO: This function does not reliably return the keystore
+export async function waitForKeystore (browser, key = 'keystore-anon') {
+  await browser.waitUntil(function () {
+    const val = browser.execute(function (key) {
       return localStorage.getItem(key)
     }, key).value
+    return val
   })
-  return browser.execute(function (key) {
+  const val = await browser.execute(function (key) {
     return localStorage.getItem(key)
   }, key).value
+  return val
 }
 
 export function createKeystore (userpassword = password) {
@@ -150,7 +153,6 @@ export function uploadFilesToIPFS (ipfs, files) {
     pull(
       pull.values(files),
       pull.through(file => {
-        // console.log('Adding ', file)
         meta.fileSize = file.size
         meta.total = 0
       }),
