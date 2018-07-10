@@ -45,7 +45,7 @@ class VideoTimeDisplay extends React.Component<Props> {
       <Wrapper relative={this.props.relative}>
         <TextWrapper tiny accent>
           <Text tiny accent>
-          {this.props.children}
+            {this.props.children}
           </Text>
         </TextWrapper>
       </Wrapper>
