@@ -21,3 +21,19 @@ export const getVideoVote: (state: RootState) => ?VideoRecord = createSelector(
     return null
   }
 )
+
+export const getVideoStatus: (
+  state: RootState
+) => ?VideoRecord = createSelector(
+  [getVideos, getPlayerVideoId],
+  (videos: VideoRecordMap, playerVideoId: string) => {
+    if (playerVideoId) {
+      const playerVideo: ?VideoRecord = videos.get(playerVideoId)
+      if (playerVideo) {
+        return playerVideo.voteStatus
+      }
+    }
+
+    return null
+  }
+)

@@ -17,12 +17,13 @@ export const VIDEOS_FETCH_REQUESTED = createActionConstant(
 )
 export const VIDEOS_FETCH_FAILED = createActionConstant('VIDEOS_FETCH_FAILED')
 export const VIDEOS_FETCH_SUCCESS = createActionConstant('VIDEOS_FETCH_SUCCESS')
-export const VIDEO_FETCH_WHITELIST = createActionConstant(
-  'VIDEO_FETCH_WHITELIST'
-)
+// export const VIDEO_FETCH_WHITELIST = createActionConstant(
+//   'VIDEO_FETCH_WHITELIST'
+// )
 
 /* TCR Actions */
 export const VOTE_VIDEO = createActionConstant('VOTE_VIDEO')
+export const VOTE_STATUS = createActionConstant('VOTE_STATUS')
 
 /* User Actions */
 export const SET_WALLET_DATA = createActionConstant('SET_WALLET_DATA')

@@ -9,8 +9,8 @@ import {
   VIDEO_FETCH_SUCCESS,
   VIDEOS_FETCH_REQUESTED,
   VIDEOS_FETCH_FAILED,
-  VIDEOS_FETCH_SUCCESS,
-  VIDEO_FETCH_WHITELIST
+  VIDEOS_FETCH_SUCCESS
+  // VIDEO_FETCH_WHITELIST
 } from 'constants/ActionConstants'
 import { playerVideoSelect } from 'actions/PlayerActions'
 import { transcodeVideo } from 'actions/UploaderActions'
@@ -27,8 +27,6 @@ export const videosFetchRequested = createAction(VIDEOS_FETCH_REQUESTED)
 export const videosFetchFailed = createAction(VIDEOS_FETCH_FAILED)
 export const videosFetchSuccess = createAction(VIDEOS_FETCH_SUCCESS)
 
-export const videoWhitelisted = createAction(VIDEO_FETCH_WHITELIST)
-
 // fetch the video data from paratii-db and save it in the redux state
 export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
   let videoInfo
@@ -39,14 +37,14 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
       dispatch(videoFetchError(new VideoRecord({ id: id, error: 'failed' })))
     }
     if (videoInfo && videoInfo.id) {
-      dispatch(videoFetchSuccess(videoInfo))
-      dispatch(playerVideoSelect(videoInfo.id))
-
       // FIXME this infos will be in videoInfo when the db will be listen to TCR events
       const whiteListed = await paratii.eth.tcr.isWhitelisted(id)
-      dispatch(
-        videoWhitelisted(new VideoRecord({ id: id, whiteListed: whiteListed }))
-      )
+      // const challengeExists = await paratii.eth.tcr.challengeExists(id)
+      videoInfo.whiteListed = whiteListed
+      videoInfo.challengeExists = true
+
+      dispatch(videoFetchSuccess(videoInfo))
+      dispatch(playerVideoSelect(videoInfo.id))
     }
   } catch (error) {
     dispatch(videoFetchError(new VideoRecord({ id: id, error: error })))

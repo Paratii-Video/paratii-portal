@@ -19,8 +19,9 @@ import {
   VIDEOFETCH_ERROR,
   VIDEO_FETCH_SUCCESS,
   VIDEOS_FETCH_SUCCESS,
-  VIDEO_FETCH_WHITELIST,
-  VOTE_VIDEO
+  // VIDEO_FETCH_WHITELIST,
+  VOTE_VIDEO,
+  VOTE_STATUS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
@@ -195,15 +196,6 @@ const reducer = {
       })
     )
   },
-  [VIDEO_FETCH_WHITELIST]: (
-    state: VideoRecordMap,
-    { payload }: Action<VideoRecord> = {}
-  ): VideoRecordMap => {
-    if (!payload || !payload.id) {
-      return state
-    }
-    return state.setIn([payload.id, 'whiteListed'], payload.whiteListed)
-  },
   [VOTE_VIDEO]: (
     state: VideoRecordMap,
     { payload }: Action<{ id: string, vote: number }> = {}
@@ -212,6 +204,16 @@ const reducer = {
       return state
     }
     return state.setIn([payload.id, 'vote'], payload.vote)
+  },
+  [VOTE_STATUS]: (
+    state: VideoRecordMap,
+    { payload }: Action<{ id: string, voteStatus: number }> = {}
+  ): VideoRecordMap => {
+    if (!payload || !payload.id) {
+      return state
+    }
+    console.log(payload)
+    return state.setIn([payload.id, 'voteStatus'], payload.voteStatus)
   },
   [TRANSCODING_REQUESTED]: (
     state: VideoRecordMap,
@@ -315,6 +317,7 @@ const reducer = {
     if (!payload || !payload.id) {
       return state
     }
+
     let fetchedVideo = new VideoRecord(payload).merge({
       fetchStatus: new AsyncTaskStatusRecord({ name: 'success' })
     })

@@ -10,10 +10,14 @@ import VideoRejected from './VideoRejected'
 import VoteCommitted from './VoteCommitted'
 import VoteRevealed from './VoteRevealed'
 import Voting from './Voting'
+import { VOTE_STATE } from 'constants/TCRConstants'
 
 type Props = {
   videoId: string,
-  whiteListed: boolean
+  whiteListed: boolean,
+  videoChallenged: boolean,
+  voteStatus: string,
+  fetchVoteStatus: number => void
 }
 
 // Sidebar
@@ -24,19 +28,26 @@ const Sidebar = styled.div`
 `
 
 class SidebarTCR extends Component<Props, void> {
+  constructor (props: Props) {
+    super(props)
+
+    props.fetchVoteStatus(props.videoId)
+  }
   render () {
-    const { videoId, whiteListed } = this.props
-    const challenging = true
-    const voteCommited = false
-    const voteSent = false
-    const videoApproved = false
+    const { videoId, whiteListed, videoChallenged, voteStatus } = this.props
+
+    // Vote status
+    const voteCommited = voteStatus === VOTE_STATE.COMMITTED
+    const voteSent = voteStatus === VOTE_STATE.SENT
+    const videoApproved = voteStatus === VOTE_STATE.APPROVED
+
     const endVote = false
 
     return (
       <Sidebar>
         {whiteListed && <WhiteListed videoId={videoId} />}
 
-        {!whiteListed && challenging ? (
+        {!whiteListed && videoChallenged ? (
           <div>
             <ChallengePeriod status="challenged" />
             {voteCommited ? (

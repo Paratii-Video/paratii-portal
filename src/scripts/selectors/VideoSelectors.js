@@ -21,3 +21,18 @@ export const isVideoWhiteListed: (
     return null
   }
 )
+
+export const isVideoChallenged: (
+  state: RootState
+) => ?VideoRecord = createSelector(
+  [getVideos, getPlayerVideoId],
+  (videos: VideoRecordMap, playerVideoId: string) => {
+    if (playerVideoId) {
+      const playerVideo: ?VideoRecord = videos.get(playerVideoId)
+      if (playerVideo) {
+        return playerVideo.get('challengeExists')
+      }
+    }
+    return null
+  }
+)
