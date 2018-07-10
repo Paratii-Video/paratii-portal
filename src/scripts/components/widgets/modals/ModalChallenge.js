@@ -66,7 +66,12 @@ class ModalChallenge extends Component<Props, Object> {
   async onSubmit (event: Object) {
     event.preventDefault()
     this.props.notification({ title: 'Processing the challenge...' }, 'warning')
-    await paratii.eth.tcr.approveAndStartChallenge(this.props.selectedVideoId)
+    try {
+      await paratii.eth.tcr.approveAndStartChallenge(this.props.selectedVideoId)
+    } catch (e) {
+      this.props.notification({ title: e.message }, 'error')
+      console.log(e.message)
+    }
 
     this.setState({
       isChallenging: true

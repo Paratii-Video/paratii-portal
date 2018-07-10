@@ -70,11 +70,20 @@ class ModalVote extends Component<Props, Object> {
     event.preventDefault()
     const amountInWei = paratii.eth.web3.utils.toWei(MIN_VOTE_PTI)
     this.props.notification({ title: 'Processing your vote...' }, 'warning')
-    await paratii.eth.tcr.approveAndGetRightsAndCommitVote(
-      this.props.selectedVideoId,
-      this.props.getVideoVote,
-      amountInWei
-    )
+    try {
+      // Inside eventLogs there is the voteCommite to save in localStorage
+      const eventLogs = await paratii.eth.tcr.approveAndGetRightsAndCommitVote(
+        this.props.selectedVideoId,
+        this.props.getVideoVote,
+        amountInWei
+      )
+
+      console.log(eventLogs)
+      // localStorage.set('commitVote', eventLogs.commitVote)
+    } catch (e) {
+      console.log(e.message)
+      this.props.notification({ title: e.message }, 'error')
+    }
 
     this.setState({
       isVoting: true
