@@ -3,7 +3,7 @@
 import styled from 'styled-components'
 
 /* prettier-ignore */
-export const ProgressBarWrapper = styled.div`
+export const ProgressBarContainer = styled.div`
   width: 100%;
   height: ${props => props.small ? '2px' : '3px'};
   overflow: hidden;
@@ -21,7 +21,7 @@ const ProgressBar = styled.div.attrs({
   background: linear-gradient(
     to right,
     ${({ theme }) =>
-    `${theme.colors.button.primaryfrom}, ${theme.colors.button.primaryto}`}
+    `${theme.colors.button.primaryFrom}, ${theme.colors.button.primaryTo}`}
   );
   background: ${props =>
     props.colorful ? null : props.theme.colors.text.primary};

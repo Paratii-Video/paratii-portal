@@ -6,7 +6,7 @@ import Transition from 'react-transition-group/Transition'
 import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import ProgressBar, {
-  ProgressBarWrapper
+  ProgressBarContainer
 } from 'components/foundations/ProgressBar'
 import ProgressIndicator from 'components/widgets/player/ProgressIndicator'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
@@ -222,9 +222,9 @@ class PlayerControls extends Component<Props, State> {
                 }}
                 transitionState={transitionState}
               >
-                <ProgressBarWrapper>
+                <ProgressBarContainer>
                   <ProgressBar current={currentVolume} total={100} colorful />
-                </ProgressBarWrapper>
+                </ProgressBarContainer>
                 <ProgressIndicator
                   current={currentVolume}
                   total={100}

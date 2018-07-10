@@ -12,7 +12,7 @@ import SVGIcon from 'components/foundations/SVGIcon'
 import VolumeBar from 'components/widgets/VolumeBar'
 
 import ProgressBar, {
-  ProgressBarWrapper
+  ProgressBarContainer
 } from 'components/foundations/ProgressBar'
 import ProgressIndicator from 'components/widgets/player/ProgressIndicator'
 
@@ -79,7 +79,7 @@ const Wrapper = styled.div`
         !showShareModal &&
         !showStartScreen
       ? 0
-      : '100%'
+      : 'calc(100% + 10px)'
   }},
     0
   );
@@ -133,7 +133,8 @@ const TipButtonWrapper = styled.div`
       controlsRaised ? CONTROLS_HEIGHT : BASE_TIP_BUTTON_BOTTOM
     } )`};
   right: ${VIDEO_OVERLAY_PADDING};
-  transition: all 0.65s ${({ theme }) => theme.animation.ease.smooth};
+  transition: all ${({ theme }) => theme.animation.time.repaint}
+    ${({ theme }) => theme.animation.ease.smooth};
   z-index: ${Z_INDEX_BUTTONS};
 
   @media (max-width: 768px) {
@@ -204,17 +205,18 @@ const VolumeBarWrapper = styled.div`
 `
 
 const ControlButtonWrapper = TextButton.extend`
+  display: flex;
+  flex: 0 0 ${CONTROLS_BUTTON_DIMENSION};
   height: ${CONTROLS_BUTTON_DIMENSION};
-  width: ${CONTROLS_BUTTON_DIMENSION};
 
   @media (max-width: 1440px) {
+    flex: 0 0 ${CONTROLS_BUTTON_DIMENSION_DESKTOP};
     height: ${CONTROLS_BUTTON_DIMENSION_DESKTOP};
-    width: ${CONTROLS_BUTTON_DIMENSION_DESKTOP};
   }
 
   @media (max-width: 320px) {
+    flex: 0 0 ${CONTROLS_BUTTON_DIMENSION_MOBILE};
     height: ${CONTROLS_BUTTON_DIMENSION_MOBILE};
-    width: ${CONTROLS_BUTTON_DIMENSION_MOBILE};
   }
 
   &:not(:last-child) {
@@ -358,7 +360,7 @@ class PlayerControls extends Component<Props, State> {
               }
             }}
           >
-            <ProgressBarWrapper
+            <ProgressBarContainer
               innerRef={(ref: HTMLElement) => {
                 this.progressBarRef = ref
               }}
@@ -372,7 +374,7 @@ class PlayerControls extends Component<Props, State> {
                 total={videoDurationSeconds}
                 colorful
               />
-            </ProgressBarWrapper>
+            </ProgressBarContainer>
             <ProgressIndicator
               current={currentTimeSeconds}
               total={videoDurationSeconds}
