@@ -8,6 +8,7 @@ import { FlexCenterStyle } from '../foundations/Styles'
 import Title from '../foundations/Title'
 import Text from '../foundations/Text'
 import TruncatedText from '../foundations/TruncatedText'
+import VideoTimeDisplay from '../foundations/VideoTimeDisplay'
 import { ButtonStyleHover } from '../foundations/Button'
 import SVGIcon from '../foundations/SVGIcon'
 import TranslatedText from '../translations/TranslatedText'
@@ -218,15 +219,6 @@ const LandingVideoItemTitle = styled(Text)`
   width: 100%;
 `
 
-const LandingVideoItemTimeText = styled(Text)`
-  justify-content: center;
-  background: ${props => props.theme.colors.background.transparent};
-  border-radius: 4px;
-  display: flex;
-  padding: 4px 6px 2px;
-  text-align: center;
-`
-
 const LandingVideoItemIcon = styled.div`
   color: ${props => props.theme.colors.text.accent};
   height: 20px;
@@ -417,9 +409,7 @@ class Landing extends Component<Props, void> {
                       <LandingVideoItemTitle small bold accent>
                         <TruncatedText>{item.title}</TruncatedText>
                       </LandingVideoItemTitle>
-                      <LandingVideoItemTimeText tiny accent>
-                        {item.time}
-                      </LandingVideoItemTimeText>
+                      <VideoTimeDisplay>{item.time}</VideoTimeDisplay>
                       <LandingVideoItemIcon>
                         <SVGIcon icon="icon-player-play" />
                       </LandingVideoItemIcon>

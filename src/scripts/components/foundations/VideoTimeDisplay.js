@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import {
-  VIDEOITEMTIME_PADDING,
-  VIDEOITEMTIME_POSITION,
+  VIDEOTIMEDISPLAY_PADDING,
+  VIDEOTIMEDISPLAY_POSITION,
   Z_INDEX_FRONT,
   Z_INDEX_BACK
 } from 'constants/UIConstants'
@@ -15,10 +15,10 @@ type Props = {
 
 const Wrapper = styled.div`
   backface-visibility: hidden;
-  bottom: ${props => (props.relative ? null : VIDEOITEMTIME_POSITION)};
-  padding: ${VIDEOITEMTIME_PADDING};
+  bottom: ${props => (props.relative ? null : VIDEOTIMEDISPLAY_POSITION)};
+  padding: ${VIDEOTIMEDISPLAY_PADDING};
   position: ${props => (props.relative ? 'relative' : 'absolute')};
-  right: ${props => (props.relative ? null : VIDEOITEMTIME_POSITION)};
+  right: ${props => (props.relative ? null : VIDEOTIMEDISPLAY_POSITION)};
 
   &::before {
     background-color: ${props => props.theme.colors.background.body};
@@ -34,21 +34,23 @@ const Wrapper = styled.div`
   }
 `
 
-const VideoMediaTimeText = Text.extend`
+const TextWrapper = styled.div`
   position: relative;
   z-index: ${Z_INDEX_FRONT};
 `
 
-class VideoItemTime extends React.Component<Props> {
+class VideoTimeDisplay extends React.Component<Props> {
   render () {
     return (
       <Wrapper relative={this.props.relative}>
-        <VideoMediaTimeText tiny accent>
+        <TextWrapper tiny accent>
+          <Text tiny accent>
           {this.props.children}
-        </VideoMediaTimeText>
+          </Text>
+        </TextWrapper>
       </Wrapper>
     )
   }
 }
 
-export default VideoItemTime
+export default VideoTimeDisplay

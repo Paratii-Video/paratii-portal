@@ -13,7 +13,7 @@ import { FlexCenterStyle } from './foundations/Styles'
 import Text from './foundations/Text'
 import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
-import VideoItemTime from './foundations/VideoItemTime'
+import VideoTimeDisplay from './foundations/VideoTimeDisplay'
 import VideoProgressBar from './widgets/VideoForm/VideoProgressBar'
 import TextField from './widgets/forms/TextField'
 import Textarea from './widgets/forms/TextareaField'
@@ -374,7 +374,7 @@ class UploadListItem extends Component<Props, Object> {
     let durationBox = null
     if (duration) {
       const durationNoMillis = duration.substring(0, duration.indexOf('.'))
-      durationBox = <VideoItemTime>{durationNoMillis} </VideoItemTime>
+      durationBox = <VideoTimeDisplay>{durationNoMillis} </VideoTimeDisplay>
     }
 
     const urlToPlay = '/play/' + video.id

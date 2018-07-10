@@ -5,7 +5,7 @@ import { FlexCenterStyle } from './foundations/Styles'
 import Text, { Span } from './foundations/Text'
 import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
-import VideoItemTime from './foundations/VideoItemTime'
+import VideoTimeDisplay from './foundations/VideoTimeDisplay'
 import { videoDuration } from '../operators/VideoOperators'
 import { formatDuration } from '../utils/VideoUtils'
 import type VideoRecord from 'records/VideoRecords'
@@ -136,7 +136,7 @@ class MyVideoItem extends Component<Props, void> {
           <MyVideoItemMedia>
             <MyVideoItemImage source={videoPoster} />
 
-            <VideoItemTime>{durationNoMillis}</VideoItemTime>
+            <VideoTimeDisplay>{durationNoMillis}</VideoTimeDisplay>
 
             <IconPlay>
               <SVGIcon icon="icon-player-play" />

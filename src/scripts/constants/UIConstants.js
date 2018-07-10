@@ -40,9 +40,9 @@ export const MAINFOOTER_HEIGHT: string = '72px'
 export const HR_HEIGHT: string = '2px'
 export const HR_MARGIN_TOP: string = '42px'
 
-// VideoItemTime
-export const VIDEOITEMTIME_POSITION: string = '10px'
-export const VIDEOITEMTIME_PADDING: string = '6px 10px 5px'
+// VideoTimeDisplay
+export const VIDEOTIMEDISPLAY_POSITION: string = '10px'
+export const VIDEOTIMEDISPLAY_PADDING: string = '6px 10px 5px'
 
 // Controls
 export const CONTROLS_HEIGHT: string = '48px'

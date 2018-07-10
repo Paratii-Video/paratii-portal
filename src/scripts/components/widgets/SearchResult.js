@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import Video from 'records/VideoRecords'
 import { getVideoThumbnailUrl, getVideoPlayUrl } from 'utils/UrlUtils'
 import { formatDuration } from 'utils/VideoUtils'
-import VideoItemTime from 'components/foundations/VideoItemTime'
+import VideoTimeDisplay from 'components/foundations/VideoTimeDisplay'
 import TruncatedText from 'components/foundations/TruncatedText'
 
 const LinkWrapper = styled(Link)`
@@ -113,9 +113,9 @@ class SearchResult extends React.Component<Props, void> {
             src={getVideoThumbnailUrl(video)}
           />
           <ThumbnailData>
-            <VideoItemTime data-test-id="search-result-duration">
+            <VideoTimeDisplay data-test-id="search-result-duration">
               {formatDuration(video.get('duration'))}
-            </VideoItemTime>
+            </VideoTimeDisplay>
           </ThumbnailData>
         </ThumbnailWrapper>
         <Info>
