@@ -15,21 +15,21 @@ const Themes = {
       color: Colors.white,
       primary: Colors.grayAlt,
       accent: Colors.purple,
-      warn: Colors.white,
+      highlight: Colors.white,
       primaryFrom: Colors.purpleGradientFrom,
       primaryTo: Colors.purpleGradientTo,
       accentFrom: Colors.greenGradientFrom,
       accentTo: Colors.greenGradientTo,
-      warnFrom: Colors.redGradientFrom,
-      warnTo: Colors.redGradientTo,
+      highlightFrom: Colors.redGradientFrom,
+      highlightTo: Colors.redGradientTo,
       shadow: '0 1px 6px rgba(0, 0, 0, 0.2)'
     },
     text: {
       primary: Colors.grayLight,
       secondary: Colors.gray,
       accent: Colors.white,
-      warn: Colors.purple,
-      error: Colors.red
+      highlight: Colors.purple,
+      warn: Colors.red
     },
     header: {
       logo: Colors.white,

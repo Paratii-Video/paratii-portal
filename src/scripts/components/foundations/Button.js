@@ -61,12 +61,12 @@ export const ButtonStyleBackground = css`
         ' 0%, ' +
         props.theme.colors.button.accentTo +
         ' 100%)'
-    } else if (props.warn) {
+    } else if (props.highlight) {
       _background =
         'linear-gradient(135deg, ' +
-        props.theme.colors.button.warnFrom +
+        props.theme.colors.button.highlightFrom +
         ' 0%, ' +
-        props.theme.colors.button.warnTo +
+        props.theme.colors.button.highlightTo +
         ' 100%)'
     } else {
       _background =

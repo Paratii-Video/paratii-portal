@@ -12,7 +12,7 @@ const Title = styled.p`
   display: flex;
   color: ${props =>
     props.success
-      ? props.theme.colors.text.warn
+      ? props.theme.colors.text.highlight
       : props.theme.colors.text.primary};
   font-size: ${props => props.theme.fonts.video.info.progress};
   margin-right: ${props => (props.marginRight ? '10px' : null)};
@@ -20,7 +20,7 @@ const Title = styled.p`
 `
 
 const Icon = styled.span`
-  background-color: ${props => props.theme.colors.text.warn};
+  background-color: ${props => props.theme.colors.text.highlight};
   border-radius: 100%;
   height: 14px;
   margin-left: 10px;

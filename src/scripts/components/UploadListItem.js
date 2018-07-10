@@ -75,7 +75,7 @@ const Icon = styled.span`
   color: ${props =>
     props.open
       ? props.theme.colors.text.secondary
-      : props.theme.colors.text.warn};
+      : props.theme.colors.text.highlight};
   flex: 0 0 22px;
   height: 12px;
   transition: transform 0.7s ${({ theme }) => theme.animation.ease.smooth};
@@ -92,7 +92,7 @@ const ItemHeaderData = styled.div`
 const ItemHeaderStatus = styled.div`
   color: ${props =>
     props.done
-      ? props.theme.colors.text.warn
+      ? props.theme.colors.text.highlight
       : props.theme.colors.text.secondary};
   font-size: ${props => props.theme.fonts.video.list.status};
   font-weight: ${props =>

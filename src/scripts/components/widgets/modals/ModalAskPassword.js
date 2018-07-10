@@ -162,7 +162,7 @@ class ModalAskPassword extends Component<Props, Object> {
               margin="0 0 30px"
             />
             {this.state.error && (
-              <Text error small data-test-id="error-password">
+              <Text warn small data-test-id="error-password">
                 {this.state.error}
               </Text>
             )}

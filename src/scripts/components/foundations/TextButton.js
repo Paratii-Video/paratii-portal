@@ -12,8 +12,8 @@ export const ButtonStyleColor = css`
 
     if (props.accent) {
       _color = props.theme.colors.button.accent
-    } else if (props.warn) {
-      _color = props.theme.colors.button.warn
+    } else if (props.highlight) {
+      _color = props.theme.colors.button.highlight
     } else {
       _color = props.theme.colors.button.primary
     }

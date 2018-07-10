@@ -8,10 +8,10 @@ export const TextColor = css`
       _color = props.theme.colors.text.primary
     } else if (props.accent) {
       _color = props.theme.colors.text.accent
+    } else if (props.highlight) {
+      _color = props.theme.colors.text.highlight
     } else if (props.warn) {
       _color = props.theme.colors.text.warn
-    } else if (props.error) {
-      _color = props.theme.colors.text.error
     } else {
       _color = props.theme.colors.text.secondary
     }

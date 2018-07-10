@@ -251,7 +251,7 @@ class VideoOverlay extends Component<Props> {
           >
             {isEmbed && (
               <ProfileButtonWrapper
-                warn={activePlugin !== PLAYER_PLUGIN.WALLET}
+                highlight={activePlugin !== PLAYER_PLUGIN.WALLET}
                 accent={activePlugin === PLAYER_PLUGIN.WALLET}
                 data-test-id="wallet-info-button"
                 onClick={(e: Object) => {
@@ -263,7 +263,7 @@ class VideoOverlay extends Component<Props> {
               </ProfileButtonWrapper>
             )}
             <ShareButton
-              warn
+              highlight
               data-test-id="share-button"
               onClick={(e: Object) => {
                 e.stopPropagation()

@@ -183,7 +183,7 @@ class VolumeBar extends Component<Props, State> {
         onMouseMove={this.onMouseMoveWithinVolumeBar}
       >
         <ButtonWrapper
-          warn
+          highlight
           data-test-id="volume-button"
           onClick={() => onToggleMute()}
         >

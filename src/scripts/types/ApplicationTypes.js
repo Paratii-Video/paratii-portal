@@ -320,20 +320,20 @@ type Colors = {
     color: string,
     primary: string,
     accent: string,
-    warn: string,
+    highlight: string,
     primaryFrom: string,
     primaryTo: string,
     accentFrom: string,
     accentTo: string,
-    warnFrom: string,
-    warnTo: string,
+    highlightFrom: string,
+    highlightTo: string,
     shadow: string
   },
   text: {
     primary: string,
     secondary: string,
     accent: string,
-    warn: string,
+    highlight: string,
     error: string
   },
   header: {

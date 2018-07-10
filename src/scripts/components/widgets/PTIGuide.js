@@ -42,7 +42,7 @@ const Subtitle = Text.extend`
 `
 
 const AlertIcon = styled.span`
-  color: ${props => props.theme.colors.text.warn};
+  color: ${props => props.theme.colors.text.highlight};
   display: inline-block;
   height: 12px;
   margin: 0 5px 0 0;
@@ -147,7 +147,7 @@ class PTIGuide extends Component<Props, void> {
                 <PTIGuideSvg />
               </Icon>
               <Content>
-                <ContentTitle big warn>
+                <ContentTitle big highlight>
                   <TranslatedText message="ptiGuide.callToAction" />
                 </ContentTitle>
               </Content>

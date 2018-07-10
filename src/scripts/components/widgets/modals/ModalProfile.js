@@ -157,7 +157,7 @@ class ModalProfile extends Component<Props, Object> {
           </form>
 
           {this.state.error && (
-            <Text error small>
+            <Text warn small>
               {this.state.error}
             </Text>
           )}

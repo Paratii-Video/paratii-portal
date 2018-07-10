@@ -22,7 +22,7 @@ type Props = {
 }
 
 const Highlight = styled(Text)`
-  color: ${props => props.theme.colors.Modal.hightlight};
+  color: ${props => props.theme.colors.Modal.highlight};
   margin: 14px 0;
 `
 
@@ -161,12 +161,12 @@ class ModalStake extends Component<Props, Object> {
           )}
 
           {this.state.errorMessage && (
-            <MainText error small>
+            <MainText warn small>
               {this.state.errorMessage}
             </MainText>
           )}
           {balanceIsTooLow ? (
-            <MainText error>
+            <MainText warn>
               Your balance is too low: you need to stake at least {minDeposit}{' '}
               PTI, but you only have {balanceInPTI}. Have no voucher?{' '}
               <Anchor

@@ -70,9 +70,9 @@ const RadioInputBox = styled.span`
 
   input:checked + & {
     background-color: ${props => props =>
-    props.white ? Colors.white : props.theme.colors.text.warn};
+    props.white ? Colors.white : props.theme.colors.text.highlight};
     border-color: ${props => props =>
-    props.white ? Colors.white : props.theme.colors.text.warn};
+    props.white ? Colors.white : props.theme.colors.text.highlight};
 
     svg {
       transform: scale(1);

@@ -297,7 +297,7 @@ class ShareOverlay extends Component<Props, State> {
     return (
       <Wrapper data-test-id="share-overlay" show={this.props.show}>
         <ArrowButton
-          warn
+          highlight
           show={this.state.showEmbed}
           onClick={this.toggleShareContent}
         >
@@ -308,7 +308,7 @@ class ShareOverlay extends Component<Props, State> {
         <CloseButton
           data-test-id="share-close-button"
           onClick={this.props.onToggle}
-          warn
+          highlight
         >
           <SVGIcon icon="icon-close" />
         </CloseButton>
@@ -321,7 +321,7 @@ class ShareOverlay extends Component<Props, State> {
             href={this.getUrl()}
             target="_blank"
             anchor
-            warn
+            highlight
           >
             {this.props.videoLabelUrl}
           </AnchorLink>
@@ -342,7 +342,7 @@ class ShareOverlay extends Component<Props, State> {
                 </Anchor>
               ))}
             <ShareLink
-              warn
+              highlight
               onClick={this.toggleShareContent}
               title={RawTranslatedText({
                 message: 'player.share.options.embed'
@@ -357,7 +357,7 @@ class ShareOverlay extends Component<Props, State> {
             <TranslatedText message="player.share.embedVideo" />
           </ShareTitle>
           <ShareContent>
-            <CopyEmbed anchor warn onClick={this.copyCodeToClipboard}>
+            <CopyEmbed anchor highlight onClick={this.copyCodeToClipboard}>
               {this.getEmbedCode()}
             </CopyEmbed>
           </ShareContent>

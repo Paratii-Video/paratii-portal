@@ -27,14 +27,14 @@ export const StyleFieldTextStates = css`
   border-bottom: 1px solid
     ${props =>
     props.error
-      ? props.theme.colors.text.error
+      ? props.theme.colors.text.warn
       : props.theme.colors.text.secondary};
   display: block;
   transition: border-color 0.3s;
   width: 100%;
 
   &:focus {
-    border-color: ${props => props.theme.colors.text.warn};
+    border-color: ${props => props.theme.colors.text.highlight};
   }
 `
 

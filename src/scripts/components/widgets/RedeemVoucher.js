@@ -193,7 +193,7 @@ class RedeemVoucher extends Component<Props, Object> {
           </SubmitButton>
         </Wrapper>
         {this.state.error && (
-          <Text pink small>
+          <Text warn small>
             {this.state.error}
           </Text>
         )}

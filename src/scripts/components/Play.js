@@ -15,7 +15,7 @@ import VideoOverlayContainer from 'containers/VideoOverlayContainer'
 import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
-import Text from 'components/foundations/Text'
+import Text, { Span } from 'components/foundations/Text'
 import Card from 'components/structures/Card'
 import TipOverlayContainer from 'containers/tipping/TipOverlayContainer'
 import TranslatedText from 'components/translations/TranslatedText'
@@ -160,8 +160,6 @@ const PlayInfoButtons = styled.div`
   display: flex;
   margin: 15px 0 15px;
 `
-
-const PlayInfoHighlight = Text.withComponent('span')
 
 const DescriptionWrapper = styled.div`
   margin-top: 30px;
@@ -903,13 +901,13 @@ class Play extends Component<Props, State> {
                 )}
                 <Text>
                     Price{' '}
-                  <PlayInfoHighlight warn>
+                  <Span highlight>
                     {video.free ? (
                       <TranslatedText message="player.free" />
                     ) : (
                       <TranslatedText message="player.free" />
                     )}
-                  </PlayInfoHighlight>
+                  </Span>
                 </Text>
                 {video.description && (
                   <DescriptionWrapper>

@@ -161,7 +161,7 @@ class PlaybackLevels extends React.Component<Props> {
               Quality
             </Title>
             <TextButton
-              warn
+              highlight
               data-test-id="playback-levels-close-button"
               onClick={onClose}
             >

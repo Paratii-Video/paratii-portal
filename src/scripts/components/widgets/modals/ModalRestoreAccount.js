@@ -104,7 +104,7 @@ class ModalRestoreAccount extends Component<Props, Object> {
               margin="0 0 30px"
             />
             {this.state.error && (
-              <Text error small>
+              <Text warn small>
                 {this.state.error}
               </Text>
             )}

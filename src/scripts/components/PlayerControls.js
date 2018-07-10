@@ -384,7 +384,7 @@ class PlayerControls extends Component<Props, State> {
           <ControlButtons>
             <LeftControls>
               <ControlButtonWrapper
-                warn
+                highlight
                 data-test-id="playpause-button"
                 onClick={togglePlayPause}
               >
@@ -409,7 +409,7 @@ class PlayerControls extends Component<Props, State> {
             <RightControls>
               <ControlButtonWrapper
                 accent={this.isSettingsActive()}
-                warn={!this.isSettingsActive()}
+                highlight={!this.isSettingsActive()}
                 data-test-id="playback-levels-button"
                 disabled={!playbackLevels.size}
                 onClick={() => {
@@ -420,7 +420,7 @@ class PlayerControls extends Component<Props, State> {
               </ControlButtonWrapper>
               {getFullscreenEnabled() && (
                 <ControlButtonWrapper
-                  warn
+                  highlight
                   data-test-id="fullscreen-button"
                   onClick={() => {
                     toggleFullscreen(!isFullscreen)

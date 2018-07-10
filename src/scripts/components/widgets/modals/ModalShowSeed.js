@@ -28,7 +28,7 @@ type Props = {
 const WORDSWRAPPER_HORIZONTAL_PADDING = '24px'
 
 const AlertIcon = styled.span`
-  color: ${props => props.theme.colors.text.warn};
+  color: ${props => props.theme.colors.text.highlight};
   display: inline-block;
   height: 15px;
   margin: 0 5px 0 0;
@@ -157,7 +157,7 @@ class ModalShowSeed extends Component<Props, Object> {
           </Text>
           <WordsWrapper>
             <Text
-              warn
+              highlight
               bold
               data-test-id="new-mnemonic"
               innerRef={(ref: HTMLElement) => {

@@ -97,7 +97,9 @@ const UserPTIBarWrapper = styled.div`
 
 const UserPTIBar = styled.div`
   background: ${props =>
-    props.red ? props.theme.colors.text.error : props.theme.colors.text.warn};
+    props.red
+      ? props.theme.colors.text.warn
+      : props.theme.colors.text.highlight};
   flex: 1 1 ${props => props.percentage};
   height: 100%;
   text-align: center;
@@ -230,7 +232,7 @@ class UserNav extends Component<Props, Object> {
                   <TranslatedText message="userNav.leftBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text warn>{formattedBalance} PTI</Text>
+                  <Text highlight>{formattedBalance} PTI</Text>
                 </UserPTIValueBox>
               </UserPTIValue>
               <UserPTIValue>
@@ -238,18 +240,18 @@ class UserNav extends Component<Props, Object> {
                   <TranslatedText message="userNav.rightBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text error>{formattedStakedPTI} PTI</Text>
+                  <Text warn>{formattedStakedPTI} PTI</Text>
                 </UserPTIValueBox>
               </UserPTIValue>
             </UserPTIValuesWrapper>
             <UserPTIBarWrapper>
               <UserPTIBar percentage={percentagePTI}>
-                <UserPTIBarText warn tiny>
+                <UserPTIBarText highlight tiny>
                   {percentagePTI}
                 </UserPTIBarText>
               </UserPTIBar>
               <UserPTIBar red percentage={percentageStaked}>
-                <UserPTIBarText error tiny>
+                <UserPTIBarText warn tiny>
                   {percentageStaked}
                 </UserPTIBarText>
               </UserPTIBar>

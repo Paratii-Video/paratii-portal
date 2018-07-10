@@ -149,7 +149,7 @@ class MyVideoItem extends Component<Props, void> {
             <Text small>10000 views</Text>
             <Text small primary bold>
               Status:{' '}
-              <Span warn={true} error={false} small regular>
+              <Span highlight={true} warn={false} small regular>
                 Published
               </Span>
             </Text>
