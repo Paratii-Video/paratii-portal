@@ -24,6 +24,7 @@ export const VIDEOS_FETCH_SUCCESS = createActionConstant('VIDEOS_FETCH_SUCCESS')
 /* TCR Actions */
 export const VOTE_VIDEO = createActionConstant('VOTE_VIDEO')
 export const VOTE_STATUS = createActionConstant('VOTE_STATUS')
+export const UPDATE_CHALLENGE = createActionConstant('UPDATE_CHALLENGE')
 
 /* User Actions */
 export const SET_WALLET_DATA = createActionConstant('SET_WALLET_DATA')

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { isVideoWhiteListed, isVideoChallenged } from 'selectors/VideoSelectors'
 import { getVideoStatus } from 'selectors/TCRSelectors'
-import { fetchVoteStatus } from 'actions/TCRActions'
+import { fetchChallenge } from 'actions/TCRActions'
 import SidebarTCR from 'components/widgets/tcr/SidebarTCR'
 
 import type { RootState } from 'types/ApplicationTypes'
@@ -16,7 +16,7 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchVoteStatus: bindActionCreators(fetchVoteStatus, dispatch)
+  fetchChallenge: bindActionCreators(fetchChallenge, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SidebarTCR)

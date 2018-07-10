@@ -17,7 +17,7 @@ type Props = {
   whiteListed: boolean,
   videoChallenged: boolean,
   voteStatus: string,
-  fetchVoteStatus: number => void
+  fetchChallenge: number => void
 }
 
 // Sidebar
@@ -31,7 +31,7 @@ class SidebarTCR extends Component<Props, void> {
   constructor (props: Props) {
     super(props)
 
-    props.fetchVoteStatus(props.videoId)
+    props.fetchChallenge(props.videoId)
   }
   render () {
     const { videoId, whiteListed, videoChallenged, voteStatus } = this.props

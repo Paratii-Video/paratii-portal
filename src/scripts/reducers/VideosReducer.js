@@ -212,7 +212,6 @@ const reducer = {
     if (!payload || !payload.id) {
       return state
     }
-    console.log(payload)
     return state.setIn([payload.id, 'voteStatus'], payload.voteStatus)
   },
   [TRANSCODING_REQUESTED]: (
