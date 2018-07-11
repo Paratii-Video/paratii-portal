@@ -17,7 +17,7 @@ type Props = {
   whiteListed: boolean,
   videoChallenged: boolean,
   voteStatus: string,
-  fetchChallenge: number => void
+  fetchChallenge: string => void
 }
 
 // Sidebar
