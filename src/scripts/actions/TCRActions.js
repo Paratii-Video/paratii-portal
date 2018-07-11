@@ -55,8 +55,6 @@ export const fetchChallenge = (videoId: string) => async (
     let voteStatusValue = ''
     if (userVote && userVoteResult.voteCommitted) {
       voteStatusValue = VOTE_STATE.COMMITTED
-    } else if (userVote && userVoteResult.voteSent) {
-      voteStatusValue = VOTE_STATE.SENT
     } else if (userVote && userVoteResult.voteRevealed) {
       voteStatusValue = VOTE_STATE.REVEALED
     }

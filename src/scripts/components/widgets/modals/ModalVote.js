@@ -79,7 +79,9 @@ class ModalVote extends Component<Props, Object> {
       )
 
       console.log(eventLogs)
+      // TODO: save the vote, encrypted, in localStorage
       // localStorage.set('commitVote', eventLogs.commitVote)
+      // notifications.something('lasdfjasdflj')
     } catch (e) {
       console.log(e.message)
       this.props.notification({ title: e.message }, 'error')

@@ -38,7 +38,7 @@ class SidebarTCR extends Component<Props, void> {
 
     // Vote status
     const voteCommited = voteStatus === VOTE_STATE.COMMITTED
-    const voteSent = voteStatus === VOTE_STATE.SENT
+    const voteSent = voteStatus === VOTE_STATE.REVEALED
     const videoApproved = voteStatus === VOTE_STATE.APPROVED
 
     const endVote = false
