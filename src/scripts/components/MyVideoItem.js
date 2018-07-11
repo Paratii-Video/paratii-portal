@@ -40,7 +40,7 @@ const MyVideoItemLink = styled(Link)`
   display: block;
 `
 
-const MyVideoItemNoLink = styled.div`
+const MyVideoItemButton = styled.div`
   display: block;
 `
 
@@ -195,7 +195,7 @@ class MyVideoItem extends Component<Props, void> {
     const MyVideoItemContent = isPublished ? (
       <MyVideoItemLink to={urlToPlay}>{videoContent}</MyVideoItemLink>
     ) : (
-      <MyVideoItemNoLink>{videoContent}</MyVideoItemNoLink>
+      <MyVideoItemButton>{videoContent}</MyVideoItemButton>
     )
 
     return <Wrapper>{MyVideoItemContent}</Wrapper>
