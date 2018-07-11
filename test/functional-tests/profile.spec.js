@@ -34,13 +34,23 @@ describe('👤 Profile:', function () {
   })
 
   it('if there is anonymous wallet, in the header we have a signup button', function () {
+    browser.setViewportSize({
+      width: 1441,
+      height: 800
+    })
+    browser.waitUntil(() => browser.isVisible('[data-test-id="login-signup"]'))
     const loginText = browser.getText('[data-test-id="login-signup"]')
     assert.equal(loginText, 'SIGN UP / LOG IN')
   })
 
   it('if there is secure wallet, in the header we have a login button', function () {
+    browser.setViewportSize({
+      width: 1441,
+      height: 800
+    })
     createKeystore()
     browser.url(`http://localhost:8080`)
+    browser.waitUntil(() => browser.isVisible('[data-test-id="login-signup"]'))
     const loginText = browser.getText('[data-test-id="login-signup"]')
     assert.equal(loginText, 'SIGN UP / LOG IN')
   })
