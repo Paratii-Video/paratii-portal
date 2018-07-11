@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 import {
   BUTTON_HEIGHT,
-  BUTTON_BORDER_RADIUS,
+  BORDER_RADIUS_SMALL,
   BUTTON_PADDING_LEFT
 } from 'constants/UIConstants'
 
@@ -79,7 +79,7 @@ export const ButtonStyleBackground = css`
 
     return css`
       background: ${_background};
-      border-radius: ${BUTTON_BORDER_RADIUS};
+      border-radius: ${BORDER_RADIUS_SMALL};
       box-shadow: ${props =>
     props.disableShadow ? null : props.theme.colors.button.shadow};
 `

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import {
+  BORDER_RADIUS_SMALL,
   VIDEOTIMEDISPLAY_PADDING,
   VIDEOTIMEDISPLAY_POSITION,
   Z_INDEX_FRONT,
@@ -22,7 +23,7 @@ const Wrapper = styled.div`
 
   &::before {
     background-color: ${props => props.theme.colors.background.body};
-    border-radius: 2px;
+    border-radius: ${BORDER_RADIUS_SMALL};
     content: '';
     height: 100%;
     left: 0;
