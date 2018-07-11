@@ -110,7 +110,7 @@ class TipOverlay extends React.Component<Props, State> {
 
   onChooseAmount = (amount: number) => {
     this.setState({
-      currentStep: TIPPING_UI_STEPS.ENTER_PASSWORD,
+      currentStep: TIPPING_UI_STEPS.CONFIRM_TIP,
       tipAmount: amount
     })
   }
@@ -130,7 +130,7 @@ class TipOverlay extends React.Component<Props, State> {
   }
 
   showBackButton = () =>
-    this.state.currentStep === TIPPING_UI_STEPS.ENTER_PASSWORD
+    this.state.currentStep === TIPPING_UI_STEPS.CONFIRM_TIP
 
   renderStep () {
     switch (this.state.currentStep) {
@@ -143,7 +143,7 @@ class TipOverlay extends React.Component<Props, State> {
             onChooseAmount={this.onChooseAmount}
           />
         )
-      case TIPPING_UI_STEPS.ENTER_PASSWORD:
+      case TIPPING_UI_STEPS.CONFIRM_TIP:
         return (
           <ConfirmTipStep
             passwordRequired={
@@ -165,6 +165,7 @@ class TipOverlay extends React.Component<Props, State> {
     return (
       <Wrapper
         clickable={this.state.currentStep === TIPPING_UI_STEPS.TIP_COMPLETE}
+        data-test-id="tipping-overlay"
         onClick={this.onClick}
       >
         <BackButtonWrapper>

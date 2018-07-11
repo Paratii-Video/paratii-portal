@@ -1,6 +1,6 @@
 /* @flow */
 
-import React, { Fragment } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
@@ -62,7 +62,7 @@ class TipCompleteStep extends React.Component<Props, State> {
 
   render () {
     return (
-      <Fragment>
+      <div data-test-id="tip-complete-step">
         <TippingStepHeader>
           <TranslatedText
             message={`tipping.steps.completed.header${
@@ -84,7 +84,7 @@ class TipCompleteStep extends React.Component<Props, State> {
         <ContinueButton>
           <TranslatedText message="tipping.steps.completed.continueWatching" />
         </ContinueButton>
-      </Fragment>
+      </div>
     )
   }
 }

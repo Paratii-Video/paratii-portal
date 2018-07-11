@@ -1,6 +1,6 @@
 /* @flow */
 
-import React, { Fragment } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import paratii, { getSecureWallet } from 'utils/ParatiiLib'
@@ -105,7 +105,7 @@ class ConfirmTipStep extends React.Component<Props, State> {
 
   render () {
     return (
-      <Fragment>
+      <div data-test-id="confirm-tip-step">
         <TippingStepHeader>
           <TranslatedText message="tipping.steps.enterPassword.header" />
         </TippingStepHeader>
@@ -144,7 +144,7 @@ class ConfirmTipStep extends React.Component<Props, State> {
             </ContinueButton>
           </BottomBar>
         </PasswordForm>
-      </Fragment>
+      </div>
     )
   }
 }

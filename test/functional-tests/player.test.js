@@ -713,6 +713,13 @@ describe('🎥 Player:', function () {
         browser.waitUntilShareOverlayIsNotVisible()
       })
     })
+
+    describe('tipping', () => {
+      const tippingOverlaySelector = '[data-test-id="tipping-overlay"]'
+      const chooseAmountTipStepSelector = `${tippingOverlaySelector} [data-test-id="choose-amount-tip-step"]`
+      const confirmTipStepSelector = `${tippingOverlaySelector} [data-test-id="confirm-tip-step"]`
+      const tipCompleteStepSelector = `${tippingOverlaySelector} [data-test-id="tip-complete-step"]`
+    })
   }
 
   describe('portal player', () => {

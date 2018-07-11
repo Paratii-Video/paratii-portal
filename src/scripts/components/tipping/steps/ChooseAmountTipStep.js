@@ -55,7 +55,7 @@ class ChooseAmountToTipStep extends React.Component<Props> {
         {this.props.balancesAreLoading ? (
           <Loader />
         ) : (
-          <Fragment>
+          <div data-test-id="choose-amount-tip-step">
             <TippingStepHeader>
               <TranslatedText message="tipping.steps.chooseAmount.header" />
             </TippingStepHeader>
@@ -80,7 +80,7 @@ class ChooseAmountToTipStep extends React.Component<Props> {
                 />
               ))}
             </TipAmounts>
-          </Fragment>
+          </div>
         )}
       </Fragment>
     )
