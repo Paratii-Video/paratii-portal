@@ -13,8 +13,8 @@ export const Z_INDEX_USERNAV: number = 970
 export const MAX_WIDTH: string = '1264px'
 export const MEDIAQUERY_BREAKPOINT: string = '(max-width: 1440px)'
 export const BORDER_RADIUS: string = '4px'
+export const BORDER_RADIUS_SMALL: string = '2px'
 export const BUTTON_HEIGHT: string = '30px'
-export const BUTTON_BORDER_RADIUS: string = '2px'
 export const BUTTON_PADDING_LEFT: string = '18px'
 
 // Components
