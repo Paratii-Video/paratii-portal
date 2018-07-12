@@ -140,7 +140,7 @@ class ModalAskPassword extends Component<Props, Object> {
 
   render () {
     return (
-      <ModalContentWrapper>
+      <ModalContentWrapper data-test-id="ask-password-modal">
         <ModalScrollContent>
           <Title>
             <TranslatedText message="wallet.enterPassword.title" />

@@ -17,10 +17,16 @@ import TipAmount from '../utils/TipAmount'
 
 const FORM_ID: string = 'TIP_PASSWORD_FORM'
 
+const Wrapper = styled.div`
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+`
+
 const PasswordForm = styled.form`
   display: flex;
   flex-direction: column;
-  width: 65%;
+  width: 100%;
   align-items: center;
 `
 
@@ -105,7 +111,7 @@ class ConfirmTipStep extends React.Component<Props, State> {
 
   render () {
     return (
-      <div data-test-id="confirm-tip-step">
+      <Wrapper data-test-id="confirm-tip-step">
         <TippingStepHeader>
           <TranslatedText message="tipping.steps.enterPassword.header" />
         </TippingStepHeader>
@@ -144,7 +150,7 @@ class ConfirmTipStep extends React.Component<Props, State> {
             </ContinueButton>
           </BottomBar>
         </PasswordForm>
-      </div>
+      </Wrapper>
     )
   }
 }
