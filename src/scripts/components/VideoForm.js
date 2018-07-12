@@ -1,127 +1,275 @@
-import paratii from 'utils/ParatiiLib'
+/* @flow */
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import VideoRecord from 'records/VideoRecords'
-import UserRecord from 'records/UserRecords'
+import { Link } from 'react-router-dom'
+import paratii from 'utils/ParatiiLib'
 
-import Card from './structures/Card'
+import { getAppRootUrl } from 'utils/AppUtils'
+import Text from './foundations/Text'
 import Button from './foundations/Button'
+import SVGIcon from './foundations/SVGIcon'
+import VideoProgressBar from './widgets/VideoForm/VideoProgressBar'
 import TextField from './widgets/forms/TextField'
 import Textarea from './widgets/forms/TextareaField'
 import RadioCheck, {
   RadioWrapper,
   RadioTitle
 } from './widgets/forms/RadioCheck'
-import VideoFormInfoBox from 'containers/VideoFormInfoBoxContainer'
-import { prettyBytes } from 'utils/AppUtils'
+import type VideoRecord from 'records/VideoRecords'
+import UserRecord from 'records/UserRecords'
+import {
+  isVideoPublished,
+  isVideoPublishable,
+  videoProgress,
+  videoDuration,
+  stakedAmount
+} from 'operators/VideoOperators'
 import { MODAL } from 'constants/ModalConstants'
+import { BORDER_RADIUS } from 'constants/UIConstants'
 
-const VideoFormHeader = styled.div`
-  border-bottom: 1px solid
-    ${props => props.theme.colors.VideoForm.header.border};
-  margin-bottom: 40px;
-  padding-bottom: 20px;
+type Props = {
+  user: UserRecord,
+  balance: string,
+  video: VideoRecord,
+  videoId: string,
+  isWalletSecured: boolean,
+  saveVideoInfo: Object => Object,
+  openModal: string => void,
+  notification: (Object, string) => void,
+  checkUserWallet: () => void,
+  setVideoToPublish: string => void
+}
+
+const PADDING_HORIZONTAL: string = '50px'
+const Z_INDEX_TIME = 1
+const Z_INDEX_MEDIAICON = 2
+
+const Container = styled.div`
+  background: ${props => props.theme.colors.UploadListItem.background};
+  border-radius: ${BORDER_RADIUS};
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+  overflow: hidden;
 `
 
-const VideoFormWrapper = styled.div`
+const Header = styled.div`
+  cursor: ${({ open }) => (!open ? 'pointer' : 'pointer')};
   display: flex;
-  position: relative;
-  width: 100%;
+  flex-direction: column;
+  padding-bottom: 50px;
+  user-select: none;
+`
 
-  @media (max-width: 1150px) {
-    flex-wrap: wrap;
+const HeaderContent = styled.div`
+  align-items: center;
+  display: flex;
+  padding: 25px ${PADDING_HORIZONTAL};
+`
+
+const Icon = styled.span`
+  flex: 0 0 22px;
+  height: 12px;
+  transition: transform 0.7s ${({ theme }) => theme.animation.ease.smooth};
+  transform: ${({ flip }) => (flip ? 'rotateX(180deg)' : null)};
+`
+
+const HeaderData = styled.div`
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: column;
+  padding-left: 25px;
+`
+
+const HeaderStatus = styled.div`
+  color: ${props =>
+    props.done
+      ? props.theme.colors.VideoList.done
+      : props.theme.colors.VideoList.status};
+  font-size: ${props => props.theme.fonts.video.list.status};
+  font-weight: ${props =>
+    props.done
+      ? props.theme.fonts.weight.bold
+      : props.theme.fonts.weight.regular};
+`
+
+const HeaderButtons = styled.div`
+  display: flex;
+  flex: 0 1 auto;
+
+  button {
+    margin-left: 20px;
   }
 `
 
-const VideoFormTitle = styled.h1`
-  color: ${props => props.theme.colors.VideoForm.header.title};
-  font-size: ${props => props.theme.fonts.video.form.title};
+const HeaderBar = styled.div`
+  display: block;
 `
 
-const VideoFormSubTitle = styled.p`
-  color: ${props =>
-    props.purple
-      ? props.theme.colors.VideoForm.header.subtitle2
-      : props.theme.colors.VideoForm.header.subtitle};
-  font-size: ${props => props.theme.fonts.video.form.subtitle};
-  margin-top: 3px;
+const Content = styled.div`
+  height: ${({ offsetHeight }) => offsetHeight};
+  overflow: hidden;
 `
 
-const Form = styled.div`
+const ContentHeight = styled.div`
+  display: flex;
+  padding: 20px ${PADDING_HORIZONTAL} ${PADDING_HORIZONTAL};
+`
+
+const Form = styled.form`
   flex: 1 1 100%;
-  margin-right: 45px;
   opacity: ${props => (props.disabled ? '0.5' : null)};
-  padding-bottom: 70px;
+  padding-right: 45px;
   pointer-events: ${props => (props.disabled ? 'none' : null)};
   position: relative;
 
   @media (max-width: 1150px) {
     flex: 1 1 100%;
-    margin: 0 0 50px;
   }
 `
 
-const ButtonContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  margin: 50px 0 0;
+const FormButtons = styled.div`
   display: flex;
-  flex-direction: row-reverse;
-  align-items: baseline;
+  justify-content: flex-end;
 `
 
-const ButtonWrapper = styled.div`
-  margin-left: 20px;
-  z-index: 5;
+const PreviewBox = styled.div`
+  flex: 1 1 100%;
+  max-width: 360px;
 `
 
-type Props = {
-  selectedVideo: VideoRecord,
-  canSubmit: boolean,
-  progress: Number,
-  isWalletSecured: boolean,
-  isUploaded: boolean,
-  isPublished: boolean,
-  isPublishable: boolean,
-  user: UserRecord,
-  balance: String,
-  innerRef: Object,
-  saveVideoInfo: Object => Object,
-  transcodeVideo: Object => Object,
-  uploadAndTranscode: (file: Object, videoId: string) => Object,
-  openModal: string => void,
-  notification: (Object, string) => void,
-  checkUserWallet: () => void
-}
+const VideoMedia = styled.div`
+  margin-bottom: 20px;
+  position: relative;
+  width: 100%;
+`
+
+const VideoMediaLink = styled(Link)`
+  display: block;
+`
+
+const VideoImage = styled.div`
+  background-color: ${props => props.theme.colors.body.background};
+  background-image: url(${({ source }) => source});
+  background-size: cover;
+  background-position: center center;
+  padding-top: 60%;
+  width: 100%;
+`
+
+const VideoMediaOverlay = styled.div`
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  &::before {
+    background-color: ${props =>
+    props.theme.colors.VideoForm.info.imageBackground};
+    content: '';
+    height: 100%;
+    left: 0;
+    opacity: 0.5;
+    position: absolute;
+    transition: opacity ${props => props.theme.animation.time.repaint};
+    top: 0;
+    width: 100%;
+    ${VideoMediaLink}:hover & {
+      opacity: 0.7;
+    }
+  }
+`
+const VideoMediaIcon = styled.div`
+  height: 20%;
+  transition: transform 0.3s ${props => props.theme.animation.ease.smooth};
+  position: relative;
+  width: 20%;
+  z-index: ${Z_INDEX_MEDIAICON};
+  ${VideoMediaLink}:hover & {
+    transform: scale(0.9);
+  }
+`
+
+const VideoMediaTime = styled.div`
+  bottom: 10px;
+  padding: 10px;
+  position: absolute;
+  right: 10px;
+  z-index: ${Z_INDEX_TIME};
+
+  &::before {
+    background-color: ${props =>
+    props.theme.colors.VideoForm.info.time.background};
+    border-radius: 2px;
+    content: '';
+    height: 100%;
+    left: 0;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+`
+
+const LabelStake = styled.div`
+  background-color: ${props => props.theme.colors.body.background};
+  color: white;
+  padding: 5px;
+  min-width: 100px;
+  text-align: center;
+  font-size: 14px;
+`
+
+const VideoMediaTimeText = styled.p`
+  color: ${props => props.theme.colors.VideoForm.info.time.color};
+  font-size: ${props => props.theme.fonts.video.info.time};
+  position: relative;
+  z-index: 1;
+`
 
 class VideoForm extends Component<Props, Object> {
   handleInputChange: (input: string, e: Object) => void
   onPublishVideo: (e: Object) => void
   onSaveData: (e: Object) => void
-  publishVideo: (publish: boolean) => void
-  saveData: (publish: boolean) => void
-  onFileChosen: (e: Object) => void
+  handleHeight: (e: Object) => string
+  toggleOpen: (e: Object) => void
 
-  constructor (props: Props) {
+  formWrapperRef: Object
+
+  constructor (props: Props, formWrapperRef: Object) {
     super(props)
-    const selectedVideo = this.props.selectedVideo
+    const theVideo = this.props.video
     this.state = {
-      id: selectedVideo.id,
-      title: selectedVideo.title,
-      description: selectedVideo.description,
-      // FIXME: we are not editing duration, so we do not need to store it in the state
-      duration: selectedVideo.duration,
-      author: selectedVideo.author
+      open: false,
+      id: theVideo.id,
+      title: theVideo.title || '',
+      description: theVideo.description || '',
+      ownershipProof: theVideo.ownershipProof || '',
+      duration: theVideo.duration,
+      author: theVideo.author,
+      height: '0px',
+      stakeAmount: 0
     }
 
-    this.handleInputChange = this.handleInputChange.bind(this)
-    this.onPublishVideo = this.onPublishVideo.bind(this)
+    this.formWrapperRef = formWrapperRef
+
+    this.handleHeight = this.handleHeight.bind(this)
+    this.toggleOpen = this.toggleOpen.bind(this)
     this.onSaveData = this.onSaveData.bind(this)
-    this.publishVideo = this.publishVideo.bind(this)
-    this.saveData = this.saveData.bind(this)
-    this.onFileChosen = this.onFileChosen.bind(this)
+    this.onPublishVideo = this.onPublishVideo.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
+  }
+
+  async componentDidMount () {
+    const stakeAmountBN = await paratii.eth.tcrPlaceholder.getMinDeposit()
+    const stakeAmount = stakeAmountBN.toString()
+    this.setState({
+      stakeAmount
+    })
   }
 
   handleInputChange (input: string, e: Object) {
@@ -130,14 +278,32 @@ class VideoForm extends Component<Props, Object> {
     })
   }
 
-  onPublishVideo (e: Object) {
+  onSaveData (e: Object) {
     e.preventDefault()
+    if (this.props.isWalletSecured) {
+      const videoToSave = {
+        id: this.state.id,
+        title: this.state.title,
+        description: this.state.description,
+        ownershipProof: this.state.ownershipProof,
+        author: this.props.user.name
+      }
+      this.props.saveVideoInfo(videoToSave)
+    } else {
+      // If wallet not secure open the modal
+      this.props.checkUserWallet()
+    }
+  }
+
+  async onPublishVideo (e: Object) {
+    e.preventDefault()
+    const videoId = this.state.id
     const balance = Number(this.props.user.balances.PTI) // paratii.eth.web3.utils.fromWei(balance)
-    // FIXME we need to manage this globally and not hardcoded
-    const stakeAmount = 5
-    const stakeAmountWei = Number(
-      paratii.eth.web3.utils.toWei(stakeAmount + '')
+    const stakeAmountWei = this.state.stakeAmount
+    const stakeAmount = Number(
+      paratii.eth.web3.utils.fromWei(stakeAmountWei + '')
     )
+    this.props.setVideoToPublish(videoId)
     if (balance < stakeAmountWei) {
       this.props.notification(
         {
@@ -148,166 +314,241 @@ class VideoForm extends Component<Props, Object> {
       )
     } else {
       if (this.props.isWalletSecured) {
-        this.publishVideo(true)
+        this.props.openModal(MODAL.STAKE)
       } else {
-        // If wallet not secure open the modal
+        // If wallet not secure open the modal for signup / login
         this.props.checkUserWallet()
       }
     }
   }
 
-  onFileChosen (e: Object) {
-    const file = e.target.files[0]
-    this.props.uploadAndTranscode(file, this.props.selectedVideo.id)
+  toggleOpen (e: Object) {
+    this.setState({
+      open: !this.state.open
+    })
   }
 
-  onSaveData (e: Object) {
-    e.preventDefault()
-    if (this.props.isWalletSecured) {
-      this.saveData(false)
-    } else {
-      // If wallet not secure open the modal
-      this.props.checkUserWallet()
+  handleHeight (e: Object) {
+    let height = '0px'
+    if (this.formWrapperRef && this.state.open) {
+      height = this.formWrapperRef.offsetHeight + 'px'
     }
-  }
-
-  publishVideo (publish: false) {
-    this.props.openModal(MODAL.STAKE)
-  }
-
-  saveData (publish: false) {
-    const videoToSave = {
-      id: this.state.id,
-      title: this.state.title,
-      description: this.state.description,
-      author: this.props.user.name
-    }
-    this.props.saveVideoInfo(videoToSave)
-  }
-
-  componentWillReceiveProps (nextProps: Props): void {
-    const selectedVideo: ?VideoRecord = nextProps.selectedVideo
-    if (selectedVideo && this.state.id !== selectedVideo.id) {
-      this.setState({
-        id: selectedVideo.id,
-        title: selectedVideo.title,
-        description: selectedVideo.description,
-        // FIXME: we are not editing duration, so we do not need to store it in the state
-        duration: selectedVideo.duration,
-        author: selectedVideo.author
-      })
-    }
+    return height
   }
 
   render () {
-    const video: VideoRecord = this.props.selectedVideo
-    if (!this.state.id) {
-      return (
-        <Card title="No video selected!">{this.props.selectedVideo.id}</Card>
-      )
-    }
-
+    const { video, videoId } = this.props
+    // Title
     const title = video.title || video.filename
-    const fileSize = prettyBytes((video && video.get('filesize')) || 0)
 
-    const isPublished = this.props.isPublished
-    const isPublishable = this.props.isPublishable
+    // Need to do this below
+    // if (!video || !video.id) {
+    //   return <ListItem>Something went wrong - no video known</ListItem>
+    // }
 
-    let publishButton = ''
-    if (isPublishable && !isPublished) {
-      publishButton = (
-        <ButtonWrapper>
-          <Button
-            data-test-id="video-submit-publish"
-            type="submit"
-            onClick={this.onPublishVideo}
-            disabled={!isPublishable}
-            purple
-          >
-            Publish
-          </Button>
-        </ButtonWrapper>
-      )
+    // Status
+    let videoIsReady = false
+    let statusMessage = ''
+
+    if (
+      video.uploadStatus.name === 'success' &&
+      video.transcodingStatus.name === 'success'
+    ) {
+      if (video.title.length < 1) {
+        statusMessage = 'Please provide a title and description'
+      } else {
+        statusMessage = 'Your video is ready'
+        videoIsReady = true
+      }
+    } else {
+      if (video.uploadStatus.name === 'failed') {
+        statusMessage = 'Your video could not be uploaded'
+      } else if (video.transcodingStatus.name === 'failed') {
+        statusMessage = 'Your video could not be transcoded'
+      } else if (video.transcodingStatus.name === 'requested') {
+        statusMessage = 'Transcoding your video'
+      } else {
+        statusMessage = 'Uploading your video'
+      }
     }
 
-    const saveButton = (
-      <ButtonWrapper>
-        <Button
-          data-test-id="video-submit-save"
-          type="submit"
-          onClick={this.onSaveData}
-          purple
-          disabled={this.props.selectedVideo.storageStatus.name === 'running'}
-        >
-          Save Changes
-        </Button>
-      </ButtonWrapper>
+    // Media box
+    let poster = ''
+    let videoPoster = ''
+    const isPublished = isVideoPublished(video)
+    const isPublishable = isVideoPublishable(video)
+    const duration = videoDuration(video)
+    const stakedPTI = paratii.eth.web3.utils.fromWei(
+      String(stakedAmount(video))
     )
 
-    return (
-      <Card full innerRef={this.props.innerRef} nobackground>
-        <VideoFormHeader>
-          <VideoFormTitle id="video-title">{title}</VideoFormTitle>
-          <VideoFormSubTitle purple>{fileSize}</VideoFormSubTitle>
-        </VideoFormHeader>
-        <VideoFormWrapper>
-          <Form
-            onSubmit={this.onPublishVideo}
-            disabled={this.props.selectedVideo.storageStatus.name === 'running'}
-          >
-            <TextField
-              id="video-id"
-              type="hidden"
-              value={this.state.id}
-              label="Title"
-            />
-            <TextField
-              label="Title"
-              id="input-video-title"
-              type="text"
-              value={this.state.title}
-              onChange={e => this.handleInputChange('title', e)}
-              margin="0 0 30px"
-              maxLength="100"
-              tabIndex="1"
-            />
-            <Textarea
-              id="input-video-description"
-              value={this.state.description}
-              onChange={e => this.handleInputChange('description', e)}
-              label="Description"
-              rows="1"
-              margin="0 0 30px"
-              tabIndex="2"
-            />
-            <TextField
-              label="Is this video really yours?"
-              id="input-video-title"
-              type="text"
-              value={this.state.title}
-              onChange={e => this.handleInputChange('title', e)}
-              margin="0 0 30px"
-              maxLength="100"
-              tabIndex="1"
-            />
+    let durationBox = null
+    if (duration) {
+      const durationNoMillis = duration.substring(0, duration.indexOf('.'))
+      durationBox = (
+        <VideoMediaTime>
+          <VideoMediaTimeText>{durationNoMillis}</VideoMediaTimeText>
+        </VideoMediaTime>
+      )
+    }
 
-            <RadioWrapper>
-              <RadioTitle>What kind of content?</RadioTitle>
-              <RadioCheck name="content-type" value="free" defaultChecked>
-                Free
-              </RadioCheck>
-              <RadioCheck name="content-type" value="paid" nomargin disabled>
-                Paid (not available yet)
-              </RadioCheck>
-            </RadioWrapper>
-            <ButtonContainer>
-              {publishButton}
-              {saveButton}
-            </ButtonContainer>
-          </Form>
-          <VideoFormInfoBox />
-        </VideoFormWrapper>
-      </Card>
+    const urlToPlay = '/play/' + video.id
+    const urlForSharing =
+      getAppRootUrl(process.env.NODE_ENV) + '/play/' + video.id
+
+    if (video && video.thumbnails.size === 4) {
+      poster = video.thumbnails.get(0)
+      videoPoster =
+        'https://gateway.paratii.video/ipfs/' + video.ipfsHash + '/' + poster
+    }
+
+    return (
+      <Container data-test-id="uploader-item">
+        <Header open={this.state.open} onClick={this.toggleOpen}>
+          <HeaderContent>
+            <Icon flip={!this.state.open}>
+              <SVGIcon
+                icon="icon-arrow-vertical"
+                color={this.state.open ? 'gray' : 'purple'}
+              />
+            </Icon>
+            <HeaderData>
+              <Text>{title}</Text>
+              <HeaderStatus done={videoIsReady}>{statusMessage}</HeaderStatus>
+            </HeaderData>
+            <HeaderButtons>
+              {!isPublished ? (
+                <Button
+                  data-test-id="video-submit-publish"
+                  type="submit"
+                  onClick={this.onPublishVideo}
+                  disabled={!isPublishable}
+                  purple
+                >
+                  Publish
+                </Button>
+              ) : (
+                <LabelStake>{stakedPTI} PTI Staked</LabelStake>
+              )}
+            </HeaderButtons>
+          </HeaderContent>
+          <HeaderBar>
+            <VideoProgressBar
+              progress={videoProgress(video) + '%'}
+              nopercentual
+            />
+          </HeaderBar>
+        </Header>
+        <Content offsetHeight={this.handleHeight}>
+          <ContentHeight
+            innerRef={(ref: HTMLElement) => {
+              this.formWrapperRef = ref
+            }}
+          >
+            <Form onSubmit={this.onPublishVideo}>
+              <input
+                data-test-id="video-id"
+                id={'video-id-' + videoId}
+                type="hidden"
+                value={this.state.id}
+                label="Video Id"
+              />
+              <TextField
+                label="Title"
+                id={'input-video-title-' + videoId}
+                type="text"
+                value={this.state.title}
+                onChange={e => this.handleInputChange('title', e)}
+                margin="0 0 30px"
+                maxLength="100"
+                tabIndex="0"
+              />
+              <Textarea
+                id={'input-video-description-' + videoId}
+                value={this.state.description}
+                onChange={e => this.handleInputChange('description', e)}
+                label="Description"
+                rows="1"
+                margin="0 0 30px"
+                tabIndex="0"
+              />
+              <Textarea
+                label="is this video really yours?"
+                id={'input-video-ownership-proof-' + videoId}
+                type="text"
+                value={this.state.ownershipProof}
+                onChange={e => this.handleInputChange('ownershipProof', e)}
+                margin="0 0 30px"
+                maxLength="50"
+                tabIndex="0"
+              />
+              <RadioWrapper>
+                <RadioTitle>What kind of content?</RadioTitle>
+                <RadioCheck
+                  name="content-type"
+                  value="free"
+                  tabIndex="0"
+                  defaultChecked
+                >
+                  Free
+                </RadioCheck>
+                <RadioCheck
+                  name="content-type"
+                  value="paid"
+                  tabIndex="-1"
+                  nomargin
+                  disabled
+                >
+                  Paid (not available yet)
+                </RadioCheck>
+              </RadioWrapper>
+              <FormButtons>
+                <Button
+                  data-test-id="video-submit-save"
+                  type="submit"
+                  onClick={this.onSaveData}
+                  purple
+                  disabled={this.props.video.storageStatus.name === 'running'}
+                >
+                  Save
+                </Button>
+              </FormButtons>
+            </Form>
+            <PreviewBox>
+              {isPublished ? (
+                <VideoMedia>
+                  <VideoMediaLink to={urlToPlay}>
+                    <VideoMediaOverlay>
+                      <VideoMediaIcon>
+                        <SVGIcon color="white" icon="icon-player-play" />
+                      </VideoMediaIcon>
+                      {durationBox}
+                    </VideoMediaOverlay>
+                    <VideoImage source={videoPoster} />
+                  </VideoMediaLink>
+                </VideoMedia>
+              ) : (
+                <VideoMedia>
+                  <div>
+                    <VideoMediaOverlay>{durationBox}</VideoMediaOverlay>
+                    <VideoImage source={videoPoster} />
+                  </div>
+                </VideoMedia>
+              )}
+              {!isPublished ? (
+                <Text gray small>
+                  By clicking on the “Publish” button you acknowledge that you
+                  agree to Paratii’s Terms of Service and Community Guidelines.
+                  Please be sure not to violate others’ copyright or privacy
+                  rights. Learn more
+                </Text>
+              ) : (
+                <Text>{urlForSharing}</Text>
+              )}
+            </PreviewBox>
+          </ContentHeight>
+        </Content>
+      </Container>
     )
   }
 }

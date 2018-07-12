@@ -7,6 +7,10 @@ export const Z_INDEX_HEADER: string = '980'
 export const Z_INDEX_FOOTER: string = '980'
 export const Z_INDEX_USERNAV: string = '970'
 
+// Layout
+export const BORDER_RADIUS: string = '4px'
+export const BORDER_RADIUS_SMALL: string = '2px'
+
 // MainHeader
 export const MAINHEADER_LOGO_WIDTH: string = '98px'
 export const MAINHEADER_LOGO_HEIGHT: string = '62px'
