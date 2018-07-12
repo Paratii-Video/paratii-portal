@@ -35,6 +35,10 @@ const TipAmounts = styled.div`
   max-width: 640px;
 `
 
+const TipAmountWrapper = styled.div`
+  margin: 0 2px;
+`
+
 class ChooseAmountToTipStep extends React.Component<Props> {
   usernameToTipOrDefault () {
     const { usernameToTip } = this.props
@@ -67,17 +71,18 @@ class ChooseAmountToTipStep extends React.Component<Props> {
             </ChoosePrompt>
             <TipAmounts>
               {TIPPING_PTI_AMOUNTS.map((amount: number) => (
-                <TipAmountButton
-                  disabled={
-                    this.props.ptiBalance <
-                    ParatiiLib.eth.web3.utils.fromWei(`${amount}`)
-                  }
-                  key={amount}
-                  amount={amount}
-                  onClick={() => {
-                    onChooseAmount(amount)
-                  }}
-                />
+                <TipAmountWrapper key={amount}>
+                  <TipAmountButton
+                    disabled={
+                      this.props.ptiBalance <
+                      ParatiiLib.eth.web3.utils.fromWei(`${amount}`)
+                    }
+                    amount={amount}
+                    onClick={() => {
+                      onChooseAmount(amount)
+                    }}
+                  />
+                </TipAmountWrapper>
               ))}
             </TipAmounts>
           </div>
