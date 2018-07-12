@@ -12,7 +12,6 @@ const MainWrapper = styled.main`
   display: flex;
   flex: 1 1 100%;
   flex-direction: column;
-  justify-content: center;
   margin-top: ${MAINHEADER_LOGO_HEIGHT};
   min-height: 500px;
   padding: ${({ landing }) => (landing ? null : '40px 80px')};
