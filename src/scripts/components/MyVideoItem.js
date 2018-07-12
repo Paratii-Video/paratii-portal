@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Text from './foundations/Text'
+import { ButtonStyleHover } from './foundations/Button'
 import SVGIcon from './foundations/SVGIcon'
 import { videoDuration } from '../operators/VideoOperators'
 import { formatDuration } from '../utils/VideoUtils'
@@ -136,7 +137,7 @@ const MyVideoItemsTitle = Text.extend`
 const MyVideoItemsStatus = Text.withComponent('span')
 
 const EditButtonWrapper = styled.div`
-  bottom: 30px;
+  ${ButtonStyleHover} bottom: 30px;
   position: absolute;
   right: 24px;
 `
