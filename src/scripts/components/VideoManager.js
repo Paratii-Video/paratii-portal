@@ -78,14 +78,14 @@ class VideoManager extends Component<Props, void> {
   render () {
     const showForm = this.props.selectedVideo
     const showList = this.props.videos.size > 0 || this.props.selectedVideo
-    return (
+    return this.props.isWalletSecured ? (
       <Wrapper padding={!showForm} column={!showList}>
         {showList && <UploadList />}
         <UploadFile showCard={!showList} />
         {!showList ? <RedeemVoucher marginLeft /> : ''}
         {!showList && <PTIGuide marginLeft />}
       </Wrapper>
-    )
+    ) : null
   }
 }
 
