@@ -23,6 +23,12 @@ type State = {
 
 const VERIFIED_ICON_DIMENSION: string = '100px'
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
 const VerifiedIconWrapper = styled.div`
   margin-top: 30px;
   margin-bottom: 40px;
@@ -62,7 +68,7 @@ class TipCompleteStep extends React.Component<Props, State> {
 
   render () {
     return (
-      <div data-test-id="tip-complete-step">
+      <Wrapper data-test-id="tip-complete-step">
         <TippingStepHeader>
           <TranslatedText
             message={`tipping.steps.completed.header${
@@ -84,7 +90,7 @@ class TipCompleteStep extends React.Component<Props, State> {
         <ContinueButton>
           <TranslatedText message="tipping.steps.completed.continueWatching" />
         </ContinueButton>
-      </div>
+      </Wrapper>
     )
   }
 }
