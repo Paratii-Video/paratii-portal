@@ -67,11 +67,11 @@ export const checkUserWallet = ({
 
 export const loadBalancesStarted = createAction(LOAD_BALANCES_STARTED)
 
-export const loadBalances = () => (dispatch: Dispatch) => {
+export const loadBalances = () => (dispatch: Dispatch): Promise<void> => {
   const address: string = paratii.eth.getAccount()
   if (address) {
     dispatch(loadBalancesStarted())
-    paratii.eth.balanceOf(address).then(({ ETH, PTI }) => {
+    return paratii.eth.balanceOf(address).then(({ ETH, PTI }) => {
       const ETHAsString = ETH.toString()
       const PTIAsString = PTI.toString()
       dispatch(
@@ -82,6 +82,8 @@ export const loadBalances = () => (dispatch: Dispatch) => {
       )
     })
   }
+
+  return Promise.resolve()
 }
 
 let balanceLoadIntervalId: number = 0
