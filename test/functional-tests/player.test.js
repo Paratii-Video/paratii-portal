@@ -1,6 +1,7 @@
 import queryString from 'query-string'
 
 import { ID, TITLE } from './constants/VideoTestConstants'
+import { password } from './test-utils/helpers'
 
 describe('🎥 Player:', function () {
   const videoElementSelector = '#player video'
@@ -714,11 +715,83 @@ describe('🎥 Player:', function () {
       })
     })
 
-    describe('tipping', () => {
+    describe('tipping watch', () => {
+      const tipButtonSelector = '[data-test-id="tip-button"]'
       const tippingOverlaySelector = '[data-test-id="tipping-overlay"]'
+
+      // eslint-disable-next-line no-unused-vars
       const chooseAmountTipStepSelector = `${tippingOverlaySelector} [data-test-id="choose-amount-tip-step"]`
+
+      // eslint-disable-next-line no-unused-vars
       const confirmTipStepSelector = `${tippingOverlaySelector} [data-test-id="confirm-tip-step"]`
+
+      // eslint-disable-next-line no-unused-vars
       const tipCompleteStepSelector = `${tippingOverlaySelector} [data-test-id="tip-complete-step"]`
+
+      before(() => {
+        browser.addCommand(
+          'waitUntilTipButtonIsNotVisible',
+          () => {
+            browser.waitUntil(
+              () => !browser.isVisible(tipButtonSelector),
+              undefined,
+              'Could not confirm the tip button was not visible'
+            )
+          },
+          true
+        )
+
+        browser.addCommand(
+          'waitUntilTipButtonIsVisible',
+          () => {
+            browser.waitUntil(
+              () => browser.isVisible(tipButtonSelector),
+              undefined,
+              'Could not confirm the tip button is visible'
+            )
+          },
+          true
+        )
+      })
+
+      if (!embed) {
+        describe('has secured wallet', () => {
+          beforeEach(() => {
+            browser.createSecureWallet()
+          })
+
+          describe('already logged in', () => {
+            beforeEach(async () => {
+              browser.goToTestVideoUrl({ embed })
+              browser.login(password)
+            })
+
+            it('should not show tip button even after 3 seconds of the video has played if the user lacks enough balance to tip', () => {
+              browser.waitAndClick(startScreenIconSelector)
+              browser.waitUntilVideoIsPlaying()
+
+              browser.moveToObject(overlaySelector)
+              browser.waitUntilControlsAreVisible()
+              browser.waitUntilTipButtonIsNotVisible()
+              browser.pause(1000)
+
+              browser.moveToObject(overlaySelector)
+              browser.waitUntilControlsAreVisible()
+              browser.waitUntilTipButtonIsNotVisible()
+              browser.pause(1000)
+
+              browser.moveToObject(overlaySelector)
+              browser.waitUntilControlsAreVisible()
+              browser.waitUntilTipButtonIsNotVisible()
+              browser.pause(1000)
+
+              browser.moveToObject(overlaySelector)
+              browser.waitUntilControlsAreVisible()
+              browser.waitUntilTipButtonIsNotVisible()
+            })
+          })
+        })
+      }
     })
   }
 
