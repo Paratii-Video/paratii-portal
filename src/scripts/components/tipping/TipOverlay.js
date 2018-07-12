@@ -28,14 +28,12 @@ type Props = {
   addDoNotTipVideo: (videoId: string) => void,
   ptiBalance: string,
   lastSecuredTimestamp: number,
-  loadBalances: () => void,
   notification: (Object, string) => void,
   setUserIsTipping: (isTipping: boolean) => void,
   video: Video
 }
 
 type State = {
-  balancesAreLoading: boolean,
   currentStep: TippingUIStep,
   tipAmount: number
 }
@@ -70,16 +68,9 @@ class TipOverlay extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      balancesAreLoading: true,
       currentStep: TIPPING_UI_STEPS.CHOOSE_AMOUNT,
       tipAmount: 0
     }
-
-    this.props.loadBalances().then(() => {
-      this.setState({
-        balancesAreLoading: false
-      })
-    })
   }
 
   backToChooseAmountStep = () => {
@@ -102,7 +93,6 @@ class TipOverlay extends React.Component<Props, State> {
         currentStep: TIPPING_UI_STEPS.TIP_COMPLETE
       })
       this.props.addDoNotTipVideo(this.props.video.get('id'))
-      this.props.loadBalances()
     } catch (e) {
       this.props.notification(
         {
@@ -141,7 +131,6 @@ class TipOverlay extends React.Component<Props, State> {
       case TIPPING_UI_STEPS.CHOOSE_AMOUNT:
         return (
           <ChooseAmountTipStep
-            balancesAreLoading={this.state.balancesAreLoading}
             ptiBalance={this.props.ptiBalance}
             usernameToTip={this.props.video.get('author')}
             onChooseAmount={this.onChooseAmount}
