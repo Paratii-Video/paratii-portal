@@ -53,7 +53,8 @@ export const askForTip: (state: RootState) => boolean = createSelector(
     userHasEnoughPtiToTip: boolean,
     hasPreviouslySecuredWallet: boolean
   ) =>
-    ((walletIsSecure && userHasEnoughPtiToTip) || hasPreviouslySecuredWallet) &&
+    ((walletIsSecure && userHasEnoughPtiToTip) ||
+      (!walletIsSecure && hasPreviouslySecuredWallet)) &&
     totalTimeViewedSeconds > MINIMUM_VIEWED_SECONDS_FOR_TIP_PROMPT &&
     !doNotTipVideoIds.get(video.get('id'))
 )

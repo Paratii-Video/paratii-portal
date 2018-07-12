@@ -26,10 +26,8 @@ import type { TippingUIStep } from 'types/TippingTypes'
 
 type Props = {
   addDoNotTipVideo: (videoId: string) => void,
-  balancesAreLoading: boolean,
   ptiBalance: string,
   lastSecuredTimestamp: number,
-  loadBalances: () => void,
   notification: (Object, string) => void,
   setUserIsTipping: (isTipping: boolean) => void,
   video: Video
@@ -73,8 +71,6 @@ class TipOverlay extends React.Component<Props, State> {
       currentStep: TIPPING_UI_STEPS.CHOOSE_AMOUNT,
       tipAmount: 0
     }
-
-    this.props.loadBalances()
   }
 
   backToChooseAmountStep = () => {
@@ -97,7 +93,6 @@ class TipOverlay extends React.Component<Props, State> {
         currentStep: TIPPING_UI_STEPS.TIP_COMPLETE
       })
       this.props.addDoNotTipVideo(this.props.video.get('id'))
-      this.props.loadBalances()
     } catch (e) {
       this.props.notification(
         {
@@ -110,7 +105,7 @@ class TipOverlay extends React.Component<Props, State> {
 
   onChooseAmount = (amount: number) => {
     this.setState({
-      currentStep: TIPPING_UI_STEPS.ENTER_PASSWORD,
+      currentStep: TIPPING_UI_STEPS.CONFIRM_TIP,
       tipAmount: amount
     })
   }
@@ -129,21 +124,19 @@ class TipOverlay extends React.Component<Props, State> {
     this.props.setUserIsTipping(false)
   }
 
-  showBackButton = () =>
-    this.state.currentStep === TIPPING_UI_STEPS.ENTER_PASSWORD
+  showBackButton = () => this.state.currentStep === TIPPING_UI_STEPS.CONFIRM_TIP
 
   renderStep () {
     switch (this.state.currentStep) {
       case TIPPING_UI_STEPS.CHOOSE_AMOUNT:
         return (
           <ChooseAmountTipStep
-            balancesAreLoading={this.props.balancesAreLoading}
             ptiBalance={this.props.ptiBalance}
             usernameToTip={this.props.video.get('author')}
             onChooseAmount={this.onChooseAmount}
           />
         )
-      case TIPPING_UI_STEPS.ENTER_PASSWORD:
+      case TIPPING_UI_STEPS.CONFIRM_TIP:
         return (
           <ConfirmTipStep
             passwordRequired={
@@ -165,6 +158,7 @@ class TipOverlay extends React.Component<Props, State> {
     return (
       <Wrapper
         clickable={this.state.currentStep === TIPPING_UI_STEPS.TIP_COMPLETE}
+        data-test-id="tipping-overlay"
         onClick={this.onClick}
       >
         <BackButtonWrapper>
