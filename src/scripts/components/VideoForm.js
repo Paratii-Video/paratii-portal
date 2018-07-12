@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom'
 import paratii from 'utils/ParatiiLib'
 
 import { getAppRootUrl } from 'utils/AppUtils'
+import RawTranslatedText from 'utils/translations/RawTranslatedText'
+
+import TranslatedText from './translations/TranslatedText'
 import Text from './foundations/Text'
 import Button from './foundations/Button'
 import SVGIcon from './foundations/SVGIcon'
@@ -25,7 +28,6 @@ import {
   stakedAmount
 } from 'operators/VideoOperators'
 import { MODAL } from 'constants/ModalConstants'
-import { BORDER_RADIUS } from 'constants/UIConstants'
 
 type Props = {
   user: UserRecord,
@@ -44,16 +46,16 @@ const PADDING_HORIZONTAL: string = '50px'
 const Z_INDEX_TIME = 1
 const Z_INDEX_MEDIAICON = 2
 
-const Container = styled.div`
+const Item = styled.div`
   background: ${props => props.theme.colors.UploadListItem.background};
-  border-radius: ${BORDER_RADIUS};
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   margin-bottom: 25px;
   overflow: hidden;
 `
 
-const Header = styled.div`
+const ItemHeader = styled.div`
   cursor: ${({ open }) => (!open ? 'pointer' : 'pointer')};
   display: flex;
   flex-direction: column;
@@ -61,7 +63,7 @@ const Header = styled.div`
   user-select: none;
 `
 
-const HeaderContent = styled.div`
+const ItemHeaderContent = styled.div`
   align-items: center;
   display: flex;
   padding: 25px ${PADDING_HORIZONTAL};
@@ -74,14 +76,14 @@ const Icon = styled.span`
   transform: ${({ flip }) => (flip ? 'rotateX(180deg)' : null)};
 `
 
-const HeaderData = styled.div`
+const ItemHeaderData = styled.div`
   display: flex;
   flex: 1 1 100%;
   flex-direction: column;
   padding-left: 25px;
 `
 
-const HeaderStatus = styled.div`
+const ItemHeaderStatus = styled.div`
   color: ${props =>
     props.done
       ? props.theme.colors.VideoList.done
@@ -93,7 +95,7 @@ const HeaderStatus = styled.div`
       : props.theme.fonts.weight.regular};
 `
 
-const HeaderButtons = styled.div`
+const ItemHeaderButtons = styled.div`
   display: flex;
   flex: 0 1 auto;
 
@@ -102,16 +104,16 @@ const HeaderButtons = styled.div`
   }
 `
 
-const HeaderBar = styled.div`
+const ItemHeaderBar = styled.div`
   display: block;
 `
 
-const Content = styled.div`
+const ItemContent = styled.div`
   height: ${({ offsetHeight }) => offsetHeight};
   overflow: hidden;
 `
 
-const ContentHeight = styled.div`
+const ItemContentHeight = styled.div`
   display: flex;
   padding: 20px ${PADDING_HORIZONTAL} ${PADDING_HORIZONTAL};
 `
@@ -355,20 +357,32 @@ class VideoForm extends Component<Props, Object> {
       video.transcodingStatus.name === 'success'
     ) {
       if (video.title.length < 1) {
-        statusMessage = 'Please provide a title and description'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.needsTitle" />
+        )
       } else {
-        statusMessage = 'Your video is ready'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.videoReady" />
+        )
         videoIsReady = true
       }
     } else {
       if (video.uploadStatus.name === 'failed') {
-        statusMessage = 'Your video could not be uploaded'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.uploadFailed" />
+        )
       } else if (video.transcodingStatus.name === 'failed') {
-        statusMessage = 'Your video could not be transcoded'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.transcodeFailed" />
+        )
       } else if (video.transcodingStatus.name === 'requested') {
-        statusMessage = 'Transcoding your video'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.transcoding" />
+        )
       } else {
-        statusMessage = 'Uploading your video'
+        statusMessage = (
+          <TranslatedText message="uploadListItem.statusMessage.uploading" />
+        )
       }
     }
 
@@ -376,11 +390,11 @@ class VideoForm extends Component<Props, Object> {
     let poster = ''
     let videoPoster = ''
     const isPublished = isVideoPublished(video)
-    const isPublishable = isVideoPublishable(video)
-    const duration = videoDuration(video)
     const stakedPTI = paratii.eth.web3.utils.fromWei(
       String(stakedAmount(video))
     )
+    const isPublishable = isVideoPublishable(video)
+    const duration = videoDuration(video)
 
     let durationBox = null
     if (duration) {
@@ -403,20 +417,22 @@ class VideoForm extends Component<Props, Object> {
     }
 
     return (
-      <Container data-test-id="uploader-item">
-        <Header open={this.state.open} onClick={this.toggleOpen}>
-          <HeaderContent>
+      <Item data-test-id="uploader-item">
+        <ItemHeader open={this.state.open} onClick={this.toggleOpen}>
+          <ItemHeaderContent>
             <Icon flip={!this.state.open}>
               <SVGIcon
                 icon="icon-arrow-vertical"
                 color={this.state.open ? 'gray' : 'purple'}
               />
             </Icon>
-            <HeaderData>
+            <ItemHeaderData>
               <Text>{title}</Text>
-              <HeaderStatus done={videoIsReady}>{statusMessage}</HeaderStatus>
-            </HeaderData>
-            <HeaderButtons>
+              <ItemHeaderStatus done={videoIsReady}>
+                {statusMessage}
+              </ItemHeaderStatus>
+            </ItemHeaderData>
+            <ItemHeaderButtons>
               {!isPublished ? (
                 <Button
                   data-test-id="video-submit-publish"
@@ -425,22 +441,22 @@ class VideoForm extends Component<Props, Object> {
                   disabled={!isPublishable}
                   purple
                 >
-                  Publish
+                  <TranslatedText message="uploadListItem.publish" />
                 </Button>
               ) : (
                 <LabelStake>{stakedPTI} PTI Staked</LabelStake>
               )}
-            </HeaderButtons>
-          </HeaderContent>
-          <HeaderBar>
+            </ItemHeaderButtons>
+          </ItemHeaderContent>
+          <ItemHeaderBar>
             <VideoProgressBar
               progress={videoProgress(video) + '%'}
               nopercentual
             />
-          </HeaderBar>
-        </Header>
-        <Content offsetHeight={this.handleHeight}>
-          <ContentHeight
+          </ItemHeaderBar>
+        </ItemHeader>
+        <ItemContent offsetHeight={this.handleHeight}>
+          <ItemContentHeight
             innerRef={(ref: HTMLElement) => {
               this.formWrapperRef = ref
             }}
@@ -451,10 +467,10 @@ class VideoForm extends Component<Props, Object> {
                 id={'video-id-' + videoId}
                 type="hidden"
                 value={this.state.id}
-                label="Video Id"
+                label={RawTranslatedText({ message: 'uploadListItem.videoId' })}
               />
               <TextField
-                label="Title"
+                label={RawTranslatedText({ message: 'uploadListItem.title' })}
                 id={'input-video-title-' + videoId}
                 type="text"
                 value={this.state.title}
@@ -467,13 +483,17 @@ class VideoForm extends Component<Props, Object> {
                 id={'input-video-description-' + videoId}
                 value={this.state.description}
                 onChange={e => this.handleInputChange('description', e)}
-                label="Description"
+                label={RawTranslatedText({
+                  message: 'uploadListItem.description'
+                })}
                 rows="1"
                 margin="0 0 30px"
                 tabIndex="0"
               />
               <Textarea
-                label="is this video really yours?"
+                label={RawTranslatedText({
+                  message: 'uploadListItem.ownership'
+                })}
                 id={'input-video-ownership-proof-' + videoId}
                 type="text"
                 value={this.state.ownershipProof}
@@ -483,14 +503,16 @@ class VideoForm extends Component<Props, Object> {
                 tabIndex="0"
               />
               <RadioWrapper>
-                <RadioTitle>What kind of content?</RadioTitle>
+                <RadioTitle>
+                  <TranslatedText message="uploadListItem.contentType.title" />
+                </RadioTitle>
                 <RadioCheck
                   name="content-type"
                   value="free"
                   tabIndex="0"
                   defaultChecked
                 >
-                  Free
+                  <TranslatedText message="uploadListItem.contentType.free" />
                 </RadioCheck>
                 <RadioCheck
                   name="content-type"
@@ -499,7 +521,7 @@ class VideoForm extends Component<Props, Object> {
                   nomargin
                   disabled
                 >
-                  Paid (not available yet)
+                  <TranslatedText message="uploadListItem.contentType.paid" />
                 </RadioCheck>
               </RadioWrapper>
               <FormButtons>
@@ -510,7 +532,7 @@ class VideoForm extends Component<Props, Object> {
                   purple
                   disabled={this.props.video.storageStatus.name === 'running'}
                 >
-                  Save
+                  <TranslatedText message="uploadListItem.save" />
                 </Button>
               </FormButtons>
             </Form>
@@ -537,18 +559,15 @@ class VideoForm extends Component<Props, Object> {
               )}
               {!isPublished ? (
                 <Text gray small>
-                  By clicking on the “Publish” button you acknowledge that you
-                  agree to Paratii’s Terms of Service and Community Guidelines.
-                  Please be sure not to violate others’ copyright or privacy
-                  rights. Learn more
+                  <TranslatedText message="uploadListItem.termsOfService" />
                 </Text>
               ) : (
                 <Text>{urlForSharing}</Text>
               )}
             </PreviewBox>
-          </ContentHeight>
-        </Content>
-      </Container>
+          </ItemContentHeight>
+        </ItemContent>
+      </Item>
     )
   }
 }

@@ -135,11 +135,18 @@ const MyVideoItemsTitle = Text.extend`
 
 const MyVideoItemsStatus = Text.withComponent('span')
 
+const EditButtonWrapper = styled.div`
+  bottom: 30px;
+  position: absolute;
+  right: 24px;
+`
+
 class MyVideoItem extends Component<Props, void> {
   render () {
     const { video } = this.props
     const title = video.title || video.filename
     const urlToPlay = '/play/' + video.id
+    const urlToEdit = '/edit/' + video.id
     let poster = ''
     let videoPoster = ''
     const duration = videoDuration(video)
@@ -179,6 +186,11 @@ class MyVideoItem extends Component<Props, void> {
             </Text>
           </MyVideoItemInfo>
         </MyVideoItemLink>
+        <EditButtonWrapper>
+          <Link to={urlToEdit}>
+            <SVGIcon width="20px" height="20px" icon="icon-edit" />
+          </Link>
+        </EditButtonWrapper>
       </Wrapper>
     )
   }
