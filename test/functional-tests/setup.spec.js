@@ -94,16 +94,7 @@ before(async function (done) {
       `Could not click on ${selector} in ${timeout}ms`
     )
   })
-  //   browser.addCommand('waitUntilRequestHasStatus', function (url, status = 200, method = 'GET', timeout) {
-  //     browser.waitUntil(() => {
-  //       const request = new XMLHttpRequest()
-  //       request.open(method, url, false)
-  //       request.send(null)setv
 
-  //       return request.status === status
-  //     }, timeout, `The ${method} request to ${url} never achieved a ${status} status`)
-  //   })
-  //
   browser.addCommand('waitAndRemove', function (selector, timeout) {
     this.waitForVisible(selector)
     browser.execute(selectorToRemove => {
@@ -113,30 +104,20 @@ before(async function (done) {
       }
     }, selector)
   })
-  //
-  //   browser.addCommand('sendSomeETH', async function (beneficiary, amount, timeout) {
-  //     // console.log(`send ${amount} to ${beneficiary}`)
-  //     await sendSomeETH(beneficiary, amount)
-  //     browser.waitUntil(function () {
-  //       let result = browser.execute(function () {
-  //         return Session.get('eth_balance')
-  //       })
-  //       return result.value && result.value > 0
-  //     }, timeout, `the ETH did not arrive..`)
-  //   })
-  //
-  //   browser.addCommand('sendSomePTI', async function (beneficiary, amount, timeout) {
-  //     await sendSomePTI(beneficiary, amount)
-  //     browser.waitUntil(function () {
-  //       let result = browser.execute(function () {
-  //         return Session.get('pti_balance')
-  //       })
-  //       // console.log(`PTI balance: ${result.value}`)
-  //       return result.value && result.value > 0
-  //     }, timeout, `the PTI did not arrive..`)
-  //   })
-  //   browser.url('http://localhost:3000')
-  //   browser.contracts = await getOrDeployParatiiContracts(server, browser)
+
+  browser.addCommand('login', password => {
+    browser.waitAndClick('[data-test-id="login-signup"]')
+    browser.waitUntil(
+      () => !browser.isVisible('[data-test-id="ask-password-modal"]')
+    )
+    browser.waitAndClick('[name="wallet-password"]')
+    browser.setValue('[name="wallet-password"]', password)
+    browser.waitAndClick('[data-test-id="continue"]')
+    browser.waitUntil(
+      () => !browser.isVisible('[data-test-id="ask-password-modal"]')
+    )
+  })
+
   done()
 })
 

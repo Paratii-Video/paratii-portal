@@ -9,7 +9,7 @@ import { getSelectedUploaderVideo } from 'selectors/UploaderSelectors'
 import { saveVideoStaked, uploadAndTranscode } from 'actions/UploaderActions'
 import { getUser } from 'selectors/index'
 import ModalStake from 'components/widgets/modals/ModalStake'
-import { loadBalances } from 'actions/UserActions'
+import { loadBalances, loadTotalStakedPTI } from 'actions/UserActions'
 
 import type { RootState } from 'types/ApplicationTypes'
 
@@ -23,6 +23,7 @@ const mapDispatchToProps = dispatch => ({
   uploadAndTranscode: bindActionCreators(uploadAndTranscode, dispatch),
   closeModal: bindActionCreators(closeModal, dispatch),
   notification: bindActionCreators(show, dispatch),
+  loadTotalStakedPTI: bindActionCreators(loadTotalStakedPTI, dispatch),
   loadBalances: bindActionCreators(loadBalances, dispatch)
 })
 

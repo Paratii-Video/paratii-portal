@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 `
 
 type Props = {
-  onClick: () => void,
+  onClick: (e: Object) => void,
   'data-test-id'?: string
 }
 

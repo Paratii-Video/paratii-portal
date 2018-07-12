@@ -12,6 +12,7 @@ const Colors: Object = {
   black: '#20232E',
   blackTransparent: 'rgba(27, 31, 36, 0.6)',
   blackMedium: '#2E3133',
+  blackMediumTransparent: 'rgba(0, 0, 0, 0.8)',
   blackDark: '#1B1F26',
   blackDarkTransparent: 'rgba(27, 31, 36, 0.7)',
   blackAlt: '#1F222C',

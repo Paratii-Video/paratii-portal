@@ -12,13 +12,10 @@ import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
 import { List as ImmutableList } from 'immutable'
 
-import IconButton from 'components/foundations/buttons/IconButton'
 import PlaybackLevels from 'components/widgets/PlaybackLevels'
-import WalletInfoContainer from 'containers/widgets/WalletInfoContainer'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
-import { OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
-import Colors from 'components/foundations/base/Colors'
+import { VIDEO_OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
 
 import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
 
@@ -35,11 +32,13 @@ type Props = {
   onScrub: (percentage: number) => void,
   onVolumeChange: (percentage: number) => void,
   onToggleMute: (mute: boolean) => void,
+  onTipButtonClick: (e: Object) => void,
   playbackLevels: ImmutableList<PlaybackLevel>,
   onPlaybackLevelChange: (levelId: number) => void,
   toggleActivePlugin: (plugin: PlayerPlugin) => void,
   currentPlaybackLevel: ?PlaybackLevel,
-  activePlugin: ?PlayerPlugin
+  activePlugin: ?PlayerPlugin,
+  askForTip: boolean
 }
 
 const Z_INDEX_OVERLAY: string = '1'
@@ -87,6 +86,7 @@ const Overlay = styled.div`
 `
 
 const OverlayShadow = styled.span`
+  display: none;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   height: 100%;
   opacity: ${({ transitionState, showShareModal }) =>
@@ -127,17 +127,7 @@ const ButtonWrapper = styled.div`
 `
 
 const ShareButton = Button.extend`
-  height: ${OVERLAY_BUTTONS_HEIGHT};
-  margin-left: 10px;
-  width: 26px;
-
-  @media (max-width: 768px) {
-    width: 20px;
-  }
-`
-
-const ProfileButtonWrapper = styled.div`
-  height: ${OVERLAY_BUTTONS_HEIGHT};
+  height: ${VIDEO_OVERLAY_BUTTONS_HEIGHT};
   margin-left: 10px;
   width: 26px;
 
@@ -192,17 +182,12 @@ class VideoOverlay extends Component<Props> {
           onPlaybackLevelChange={onPlaybackLevelChange}
           onClose={() => toggleActivePlugin()}
         />
-        <WalletInfoContainer
-          open={activePlugin === PLAYER_PLUGIN.WALLET}
-          onClose={() => toggleActivePlugin()}
-        />
       </Fragment>
     )
   }
 
   render () {
     const {
-      activePlugin,
       isEmbed,
       showStartScreen,
       onClick,
@@ -213,7 +198,6 @@ class VideoOverlay extends Component<Props> {
       togglePlayPause,
       toggleShareModal,
       toggleFullscreen,
-      toggleActivePlugin,
       transitionState,
       showShareModal
     } = this.props
@@ -243,21 +227,6 @@ class VideoOverlay extends Component<Props> {
             transitionState={transitionState}
             showShareModal={showShareModal}
           >
-            {isEmbed && (
-              <ProfileButtonWrapper>
-                <IconButton
-                  color={
-                    activePlugin === PLAYER_PLUGIN.WALLET ? Colors.purple : ''
-                  }
-                  data-test-id="wallet-info-button"
-                  icon="/assets/img/profile.svg"
-                  onClick={(e: Object) => {
-                    e.stopPropagation()
-                    toggleActivePlugin(PLAYER_PLUGIN.WALLET)
-                  }}
-                />
-              </ProfileButtonWrapper>
-            )}
             <ShareButton
               data-test-id="share-button"
               onClick={(e: Object) => {
@@ -284,6 +253,7 @@ class VideoOverlay extends Component<Props> {
         </Overlay>
         <PlayerControlsWrapper showStartScreen={showStartScreen}>
           <PlayerControlsContainer
+            isEmbed={isEmbed}
             onScrub={onScrub}
             onVolumeChange={onVolumeChange}
             onToggleMute={onToggleMute}
