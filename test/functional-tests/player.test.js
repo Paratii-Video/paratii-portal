@@ -715,7 +715,7 @@ describe('🎥 Player:', function () {
       })
     })
 
-    describe('tipping watch', () => {
+    describe('tipping', () => {
       const tipButtonSelector = '[data-test-id="tip-button"]'
       const tippingOverlaySelector = '[data-test-id="tipping-overlay"]'
 
