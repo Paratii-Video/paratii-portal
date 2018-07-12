@@ -82,7 +82,6 @@ class VideoManager extends Component<Props, void> {
   render () {
     const selectedVideo = this.props.selectedVideo
 
-    console.log('selectedVideo', selectedVideo)
     return (
       <Wrapper>
         {this.props.isWalletSecured && selectedVideo ? (
@@ -90,6 +89,7 @@ class VideoManager extends Component<Props, void> {
             key={selectedVideo.id}
             videoId={selectedVideo.id}
             video={selectedVideo}
+            edit
           />
         ) : (
           <LoaderWrapper>
