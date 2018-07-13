@@ -16,6 +16,16 @@
             "description": "Explore curtas, clipes, e novos formatos que nossa comunidade inventa todos os dias."
         }
     },
+    "myVideos": {
+        "title": "My videos",
+        "item": {
+            "status": {
+                "label": "Status",
+                "published": "Publicado",
+                "unpublished": "Não publicado"
+            }
+        }
+    },
     "navigation": {
         "voucher": "Obter PTI",
         "myVideos": "Meus vídeos",
