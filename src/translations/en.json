@@ -17,7 +17,14 @@
     }
   },
   "myVideos": {
-    "title": "My videos"
+    "title": "My videos",
+    "item": {
+      "status": {
+        "label": "Status",
+        "published": "Published",
+        "unpublished": "Unpublished"
+      }
+    }
   },
   "navigation": {
     "voucher": "Get PTI",
