@@ -37,13 +37,13 @@ const Wrapper = styled.li`
   position: relative;
 `
 
-const MyVideoItemLink = styled(Link)`
-  display: block;
+const MyVideoItemButton = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `
 
-const MyVideoItemButton = styled.div`
-  display: block;
-`
+const MyVideoItemLink = MyVideoItemButton.withComponent(Link)
 
 const ZINDEX_MYVIDEOSITEM_COVER: number = 3
 const ZINDEX_MYVIDEOSITEM_IMAGE: number = 1
@@ -61,7 +61,7 @@ const MyVideoItemMedia = styled.div`
 
   &::before {
     background: ${props => props.theme.colors.MyVideoItem.coverMediaBackground};
-    content: '';
+    content: ${({ isPublished }) => (isPublished ? '' : null)};
     height: 100%;
     left: 0;
     opacity: 0;
@@ -174,22 +174,22 @@ class MyVideoItem extends Component<Props, void> {
 
     const videoContent = (
       <Fragment>
-        <MyVideoItemMedia>
+        <MyVideoItemMedia isPublished={isPublished}>
           <MyVideoItemImage source={videoPoster} />
           {isPublished ? (
-            <VideoMediaTime>
-              <VideoMediaTimeText>{durationNoMillis}</VideoMediaTimeText>
-            </VideoMediaTime>
+            <Fragment>
+              <VideoMediaTime>
+                <VideoMediaTimeText>{durationNoMillis}</VideoMediaTimeText>
+              </VideoMediaTime>
+              <IconPlay>
+                <SVGIcon color="white" icon="icon-player-play" />
+              </IconPlay>
+            </Fragment>
           ) : null}
-          <IconPlay>
-            <SVGIcon color="white" icon="icon-player-play" />
-          </IconPlay>
         </MyVideoItemMedia>
         <MyVideoItemInfo>
-          <MyVideoItemsTitle small bold>
-            {title}
-          </MyVideoItemsTitle>
-          <Text gray small bold>
+          <MyVideoItemsTitle bold>{title}</MyVideoItemsTitle>
+          <Text gray small>
             <TranslatedText message="myVideos.item.status.label" />
             {': '}
             <MyVideoItemsStatus purple={isPublished} gray={!isPublished} small>
