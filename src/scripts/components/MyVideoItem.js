@@ -58,22 +58,21 @@ const MyVideoItemMedia = styled.div`
   justify-content: center;
   position: relative;
   width: 100%;
+`
 
-  &::before {
-    background: ${props => props.theme.colors.MyVideoItem.coverMediaBackground};
-    content: ${({ isPublished }) => (isPublished ? '' : null)};
-    height: 100%;
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    transition: opacity 0.2s linear 0.2s;
-    width: 100%;
-    z-index: ${ZINDEX_MYVIDEOSITEM_COVER};
-    ${MyVideoItemLink}:hover & {
-      opacity: 1;
-      transition-delay: 0;
-    }
+const VideoMediaBackground = styled.span`
+  background: ${props => props.theme.colors.MyVideoItem.coverMediaBackground};
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition: opacity 0.2s linear 0.2s;
+  width: 100%;
+  z-index: ${ZINDEX_MYVIDEOSITEM_COVER};
+  ${MyVideoItemLink}:hover & {
+    opacity: 1;
+    transition-delay: 0;
   }
 `
 
@@ -184,6 +183,7 @@ class MyVideoItem extends Component<Props, void> {
               <IconPlay>
                 <SVGIcon color="white" icon="icon-player-play" />
               </IconPlay>
+              <VideoMediaBackground />
             </Fragment>
           ) : null}
         </MyVideoItemMedia>
