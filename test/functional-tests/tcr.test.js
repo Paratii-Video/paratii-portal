@@ -10,7 +10,7 @@ import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
 
 describe('TCR:', function () {
   beforeEach(async function () {
-    // await paratii.eth.deployContracts()
+    await paratii.eth.deployContracts()
     browser.url(`http://localhost:8080`)
     // browser.execute(nukeLocalStorage)
     // browser.execute(nukeSessionStorage)
@@ -20,7 +20,7 @@ describe('TCR:', function () {
     assert.equal(await paratii.eth.tcr.getApplyStageLen(), 0)
   })
 
-  it('you can challenge a publish video @watch', async function () {
+  it('you can challenge a published video', async function () {
     // Create a secure wallet
     await browser.createSecureWallet()
 

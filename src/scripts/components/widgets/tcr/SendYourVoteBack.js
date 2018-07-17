@@ -42,7 +42,8 @@ export default class SendYourVoteBack extends Component<Props, void> {
         </InfoStatusContent>
         <InfoStatusContent>
           <Text gray>
-            Wait until the commit period ends to reveal it. You will send it{' '}
+            Wait until the commit period ends to reveal your vote. You will send
+            it
             <Strong purple>back</Strong> when the reveal period starts. If you
             don’t send it back your vote is not going to be counted.
           </Text>
