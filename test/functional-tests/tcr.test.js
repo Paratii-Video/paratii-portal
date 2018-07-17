@@ -12,6 +12,10 @@ describe('TCR:', function () {
   beforeEach(async function () {
     await paratii.eth.deployContracts()
     browser.url(`http://localhost:8080`)
+    const registryAddress = await paratii.eth.getRegistryAddress()
+    browser.execute(function (registryAddress) {
+      paratii.eth.setRegistryAddresss(registryAddress)
+    }, registryAddress)
     // browser.execute(nukeLocalStorage)
     // browser.execute(nukeSessionStorage)
   })

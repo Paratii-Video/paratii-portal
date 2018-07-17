@@ -63,7 +63,7 @@ class CommitYourVote extends Component<Props, void> {
     return (
       <InfoStatus>
         <InfoStatusContent>
-          <InfoStatusTitle>Committ your vote</InfoStatusTitle>
+          <InfoStatusTitle>Commit your vote</InfoStatusTitle>
         </InfoStatusContent>
         <InfoStatusContent>
           <Text gray>

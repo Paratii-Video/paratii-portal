@@ -126,7 +126,7 @@ class ChallengePeriodComponent extends Component<Props, void> {
           </Text>
         ) : (
           <Text big>
-            <Strong>Challenged period</Strong> ends in
+            <Strong>Challenge period</Strong> ends in
           </Text>
         )}
 
