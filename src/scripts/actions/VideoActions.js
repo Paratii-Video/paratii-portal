@@ -39,7 +39,8 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
     if (videoInfo && videoInfo.id) {
       // FIXME this infos will be in videoInfo when the db will be listen to TCR events
       const whiteListed = await paratii.eth.tcr.isWhitelisted(id)
-      const challengeExists = await paratii.eth.tcr.challengeExists(id)
+      // const challengeExists = await paratii.eth.tcr.challengeExists(id)
+      const challengeExists = false
       videoInfo.whiteListed = whiteListed
       videoInfo.challengeExists = challengeExists
 

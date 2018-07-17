@@ -110,11 +110,12 @@ class ModalChallenge extends Component<Props, Object> {
           </Highlight>
           {!balanceIsTooLow ? (
             <MainText small gray>
-              For now, with no monetary value, this is mostly an experiment.
-              Soon, the community will curate all the content published.
-              Well-received videos will see their stakes increase, earning PTI
-              for their creators. Illegal content may lose its stake. Want to
-              know how exactly this is going to play out? Stay alert!
+              For now, PTI has no monetary value, and this is mostly an
+              experiment. Soon, the community will curate all the published
+              content . Well-received videos will see their stakes increase,
+              earning PTI for their creators. Illegal content may lose its
+              stake. Want to know how exactly this is going to play out? Stay
+              alert!
             </MainText>
           ) : (
             ''
