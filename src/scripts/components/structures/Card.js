@@ -6,6 +6,7 @@ import {
   CARD_PADDING,
   CARD_MAX_WIDTH,
   CARD_MARGIN_LEFT,
+  CARD_MARGIN_BOTTOM,
   MEDIAQUERY_BREAKPOINT
 } from 'constants/UIConstants'
 
@@ -38,10 +39,7 @@ export const CardWrapper = styled.div`
 
   @media ${MEDIAQUERY_BREAKPOINT} {
     max-width: initial;
-  }
-
-  @media (max-width: 1024px) {
-    margin: 0;
+    margin: 0 0 ${CARD_MARGIN_BOTTOM};
   }
 `
 
