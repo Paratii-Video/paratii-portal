@@ -8,6 +8,7 @@ class Video extends ImmutableRecord({
   description: '',
   filename: null,
   filesize: null,
+  challengeExists: null,
   duration: '',
   id: '',
   ipfsHashOrig: '',
@@ -21,7 +22,6 @@ class Video extends ImmutableRecord({
   free: '',
   staked: new StakingRecord(),
   whiteListed: null,
-  challengeExists: null,
   vote: null,
   voteStatus: '',
   storageStatus: new AsyncTaskStatusRecord(),
@@ -29,6 +29,7 @@ class Video extends ImmutableRecord({
   uploadStatus: new AsyncTaskStatusRecord(),
   fetchStatus: new AsyncTaskStatusRecord()
 }) {
+  challengeExists: boolean
   description: string
   filename: string
   filesize: ?number

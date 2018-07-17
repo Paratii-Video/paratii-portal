@@ -28,11 +28,13 @@ export const getDefaultAsyncTaskStatus = () => ({
 })
 
 export const getDefaultVideo = () => ({
+  author: '',
+  challengeExists: null,
   description: '',
+  duration: '',
+  fetchStatus: getDefaultAsyncTaskStatus(),
   filename: null,
   filesize: null,
-  duration: '',
-  author: '',
   free: '',
   id: '',
   ipfsHashOrig: '',
@@ -41,10 +43,12 @@ export const getDefaultVideo = () => ({
   ownershipProof: '',
   price: 0,
   thumbnails: [],
-  title: '',
   staked: getDefaultStakingStatus(),
   storageStatus: getDefaultAsyncTaskStatus(),
+  title: '',
   transcodingStatus: getDefaultAsyncTaskStatus(),
   uploadStatus: getDefaultAsyncTaskStatus(),
-  fetchStatus: getDefaultAsyncTaskStatus()
+  vote: null,
+  voteStatus: '',
+  whiteListed: null
 })
