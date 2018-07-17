@@ -184,6 +184,7 @@ export type ParatiiLib = {
     },
     tcr: {
       apply: (string, number) => Promise<Object>,
+      challengeExists: string => boolean,
       checkEligiblityAndApply: (string, number) => Promise<Object>,
       getMinDeposit: () => string,
       getTotalStaked: string => Promise<Object>,
