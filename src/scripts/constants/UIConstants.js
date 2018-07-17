@@ -86,3 +86,9 @@ export const BASE_LOADER_DIMENSION: string = '50px'
 
 // Video Manager
 export const VIDEOMANAGER_FILEUPLOADERWRAPPER_MARGIN: string = '100px 0'
+
+// Search Input
+export const SEARCHINPUTBUTTON_WIDTH: string = '15px'
+export const SEARCHINPUTBUTTON_HEIGHT: string = '30px'
+export const SEARCHINPUTBUTTON_MARGIN: string = '0 10px'
+export const SEARCHINPUTFIELD_PADDING: string = '0 7px'
