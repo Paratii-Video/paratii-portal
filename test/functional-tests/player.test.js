@@ -1,9 +1,7 @@
-import { assert } from 'chai'
 import queryString from 'query-string'
 
-import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
-
-import mockEndpoint from '../../mock-server/mockEndpoint'
+import { ID, TITLE } from './constants/VideoTestConstants'
+import { password } from './test-utils/helpers'
 
 describe('🎥 Player:', function () {
   const videoElementSelector = '#player video'
@@ -13,35 +11,7 @@ describe('🎥 Player:', function () {
   const controlsSelector = '[data-test-id="player-controls"]'
   const playpauseButtonSelector = '[data-test-id="playpause-button"]'
 
-  before(() => {
-    mockEndpoint({
-      endpoint: `/api/v1/videos/${ID}`,
-      response: {
-        author: '',
-        blockNumber: 1167,
-        createBlockNumber: 1166,
-        description: '',
-        duration: '00:00:05.31',
-        filename: 'city.mp4',
-        filesize: '2989735',
-        id: ID,
-        ipfsData: 'QmZeRT7KNid9UAWhpncFPgiungZYtvzdnRodqtE66AuFR7',
-        ipfsHash: IPFS_HASH,
-        ipfsHashOrig: 'Qmd6t5arM98ShdmHXvYzjT7ku4Z8xtKbM8AY3oN5Cs7oSi',
-        owner: '0x7d1Cbbd813b1a865CDf1476d112a21dC5d643B8b',
-        price: 0,
-        published: '',
-        stats: { likers: [], dislikers: [] },
-        thumbnails: [
-          'thumbnail-1920x1080_1.png',
-          'thumbnail-1920x1080_2.png',
-          'thumbnail-1920x1080_3.png'
-        ],
-        title: TITLE,
-        uploader: { address: '0x7d1Cbbd813b1a865CDf1476d112a21dC5d643B8b' }
-      }
-    })
-
+  before(async () => {
     browser.addCommand(
       'goToTestVideoUrl',
       ({ embed, overrideID, queryParams }) => {
@@ -52,44 +22,48 @@ describe('🎥 Player:', function () {
             ID}?${query}`
         )
         browser.execute(playerWrapperSelector => {
-          window.PLAYER_TEST_DATA = {
-            playing: false,
-            paused: false
-          }
+          try {
+            window.PLAYER_TEST_DATA = {
+              playing: false,
+              paused: false
+            }
 
-          window.PLAYER_IS_FULLSCREEN = false
-
-          const mockRequestFullscreen = function () {
-            window.PLAYER_IS_FULLSCREEN = true
-            document.fullscreenElement = this
-
-            const fullscreenEvent = new Event('fullscreenchange')
-            document.dispatchEvent(fullscreenEvent)
-          }
-
-          const mockExitFullscreen = () => {
             window.PLAYER_IS_FULLSCREEN = false
-            document.fullscreenElement = undefined
 
-            const fullscreenEvent = new Event('fullscreenchange')
-            document.dispatchEvent(fullscreenEvent)
-          }
+            const mockRequestFullscreen = function () {
+              window.PLAYER_IS_FULLSCREEN = true
+              document.fullscreenElement = this
 
-          const playerWrapper = document.querySelector(playerWrapperSelector)
-          if (playerWrapper.requestFullscreen) {
-            playerWrapper.requestFullscreen = mockRequestFullscreen
-          } else if (playerWrapper.mozRequestFullScreen) {
-            playerWrapper.mozRequestFullScreen = mockRequestFullscreen
-          } else if (playerWrapper.webkitRequestFullscreen) {
-            playerWrapper.webkitRequestFullscreen = mockRequestFullscreen
-          }
+              const fullscreenEvent = new Event('fullscreenchange')
+              document.dispatchEvent(fullscreenEvent)
+            }
 
-          if (document.exitFullscreen) {
-            document.exitFullscreen = mockExitFullscreen
-          } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen = mockExitFullscreen
-          } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen = mockExitFullscreen
+            const mockExitFullscreen = () => {
+              window.PLAYER_IS_FULLSCREEN = false
+              document.fullscreenElement = undefined
+
+              const fullscreenEvent = new Event('fullscreenchange')
+              document.dispatchEvent(fullscreenEvent)
+            }
+
+            const playerWrapper = document.querySelector(playerWrapperSelector)
+            if (playerWrapper.requestFullscreen) {
+              playerWrapper.requestFullscreen = mockRequestFullscreen
+            } else if (playerWrapper.mozRequestFullScreen) {
+              playerWrapper.mozRequestFullScreen = mockRequestFullscreen
+            } else if (playerWrapper.webkitRequestFullscreen) {
+              playerWrapper.webkitRequestFullscreen = mockRequestFullscreen
+            }
+
+            if (document.exitFullscreen) {
+              document.exitFullscreen = mockExitFullscreen
+            } else if (document.mozCancelFullScreen) {
+              document.mozCancelFullScreen = mockExitFullscreen
+            } else if (document.webkitExitFullscreen) {
+              document.webkitExitFullscreen = mockExitFullscreen
+            }
+          } catch (e) {
+            return false
           }
         }, playerWrapperSelector)
         browser.waitUntil(
@@ -536,153 +510,6 @@ describe('🎥 Player:', function () {
       })
     })
 
-    describe('wallet info', () => {
-      const walletButtonSelector = '[data-test-id="wallet-info-button"]'
-      const walletPopoverSelector = '[data-test-id="wallet-info-popover"]'
-      const walletInfoAddressSelector = '[data-test-id="wallet-info-address"]'
-      const walletInfoCloseButtonSelector =
-        '[data-test-id="wallet-info-close-button"]'
-      const ptiBalanceSelector = '[data-test-id="pti-balance-wrapper"]'
-
-      before(() => {
-        browser.addCommand(
-          'waitUntilWalletInfoIsNotVisible',
-          () => {
-            browser.waitUntil(() => !browser.isVisible(walletPopoverSelector))
-          },
-          true,
-          'Could not verify that wallet info is not visible'
-        )
-
-        browser.addCommand(
-          'waitUntilWalletInfoIsVisible',
-          () => {
-            browser.waitUntil(
-              () =>
-                browser.execute(
-                  (
-                    walletPopoverSelector,
-                    controlsSelector,
-                    videoElementSelector,
-                    ptiBalanceSelector,
-                    walletInfoAddressSelector
-                  ) => {
-                    try {
-                      const videoEl = document.querySelector(
-                        videoElementSelector
-                      )
-                      const videoRect = videoEl.getBoundingClientRect()
-
-                      const controlsEl = document.querySelector(
-                        controlsSelector
-                      )
-                      const controlsRect = controlsEl.getBoundingClientRect()
-
-                      const walletEl = document.querySelector(
-                        walletPopoverSelector
-                      )
-                      const walletRect = walletEl.getBoundingClientRect()
-
-                      const walletIsVerticallyContained =
-                        controlsRect.y > walletRect.y + walletRect.height &&
-                        videoRect.y < walletRect.y
-
-                      const walletIsHorizontallyContained =
-                        videoRect.x < walletRect.x &&
-                        videoRect.x + videoRect.width >
-                          walletRect.x + walletRect.width
-
-                      const balanceEl = walletEl.querySelector(
-                        ptiBalanceSelector
-                      )
-                      if (!balanceEl) {
-                        return false
-                      }
-
-                      const balanceText = balanceEl.innerText
-                      const balanceTextIsExpected =
-                        balanceText.indexOf('PTI') === balanceText.length - 3 &&
-                        balanceText.length > 3
-
-                      const addressEl = walletEl.querySelector(
-                        walletInfoAddressSelector
-                      )
-                      const addressText = addressEl.innerText
-                      const addressTextIsExpected =
-                        addressText === window.paratii.config.account.address
-
-                      return (
-                        walletIsVerticallyContained &&
-                        walletIsHorizontallyContained &&
-                        balanceTextIsExpected &&
-                        addressTextIsExpected
-                      )
-                    } catch (e) {
-                      return false
-                    }
-                  },
-                  walletPopoverSelector,
-                  controlsSelector,
-                  videoElementSelector,
-                  ptiBalanceSelector,
-                  walletInfoAddressSelector
-                ).value
-            )
-          },
-          true,
-          'Could not verify that wallet info is visible'
-        )
-      })
-      if (embed) {
-        it('should show the wallet info when the wallet button is clicked', () => {
-          browser.goToTestVideoUrl({ embed })
-          browser.waitAndClick(overlaySelector)
-          browser.waitUntilVideoIsPlaying()
-          browser.waitAndClick(overlaySelector)
-          browser.moveToObject(overlaySelector)
-          browser.waitUntilWalletInfoIsNotVisible()
-          browser.waitAndClick(walletButtonSelector)
-          browser.waitUntilWalletInfoIsVisible()
-        })
-
-        it('should not dismiss the controls as long as the wallet info is being displayed', () => {
-          browser.waitUntilVideoIsPlaying()
-          browser.waitUntilWalletInfoIsVisible()
-          browser.waitUntilControlsAreVisible()
-          browser.pause(5000)
-          browser.waitUntilControlsAreVisible()
-        })
-
-        it('should close the wallet info menu and hide the controls when the button is clicked again', () => {
-          browser.waitUntilVideoIsPlaying()
-          browser.waitUntilWalletInfoIsVisible()
-          browser.waitAndClick(walletButtonSelector)
-          browser.waitUntilWalletInfoIsNotVisible()
-          browser.waitUntilControlsAreHidden()
-        })
-
-        it('should close the wallet info and hide the controls menu when the close button is clicked', () => {
-          browser.goToTestVideoUrl({ embed })
-          browser.waitAndClick(overlaySelector)
-          browser.waitUntilVideoIsPlaying()
-          browser.moveToObject(overlaySelector)
-          browser.waitUntilWalletInfoIsNotVisible()
-          browser.waitAndClick(walletButtonSelector)
-          browser.waitUntilWalletInfoIsVisible()
-          browser.waitAndClick(walletInfoCloseButtonSelector)
-          browser.waitUntilWalletInfoIsNotVisible()
-          browser.waitUntilControlsAreHidden()
-        })
-      } else {
-        it('should not show the wallet info button', () => {
-          browser.goToTestVideoUrl({ embed })
-          browser.moveToObject(overlaySelector)
-          browser.waitUntilWalletInfoIsNotVisible()
-          assert.equal(browser.isVisible(walletButtonSelector), false)
-        })
-      }
-    })
-
     describe('share overlay', () => {
       const shareOverlaySelector = '[data-test-id="share-overlay"]'
       const shareButtonSelector = '[data-test-id="share-button"]'
@@ -886,6 +713,85 @@ describe('🎥 Player:', function () {
         browser.waitAndClick(shareCloseButtonSelector)
         browser.waitUntilShareOverlayIsNotVisible()
       })
+    })
+
+    describe('tipping', () => {
+      const tipButtonSelector = '[data-test-id="tip-button"]'
+      const tippingOverlaySelector = '[data-test-id="tipping-overlay"]'
+
+      // eslint-disable-next-line no-unused-vars
+      const chooseAmountTipStepSelector = `${tippingOverlaySelector} [data-test-id="choose-amount-tip-step"]`
+
+      // eslint-disable-next-line no-unused-vars
+      const confirmTipStepSelector = `${tippingOverlaySelector} [data-test-id="confirm-tip-step"]`
+
+      // eslint-disable-next-line no-unused-vars
+      const tipCompleteStepSelector = `${tippingOverlaySelector} [data-test-id="tip-complete-step"]`
+
+      before(() => {
+        browser.addCommand(
+          'waitUntilTipButtonIsNotVisible',
+          () => {
+            browser.waitUntil(
+              () => !browser.isVisible(tipButtonSelector),
+              undefined,
+              'Could not confirm the tip button was not visible'
+            )
+          },
+          true
+        )
+
+        browser.addCommand(
+          'waitUntilTipButtonIsVisible',
+          () => {
+            browser.waitUntil(
+              () => browser.isVisible(tipButtonSelector),
+              undefined,
+              'Could not confirm the tip button is visible'
+            )
+          },
+          true
+        )
+      })
+
+      if (!embed) {
+        describe('has secured wallet', () => {
+          beforeEach(() => {
+            browser.createSecureWallet()
+          })
+
+          describe('already logged in', () => {
+            beforeEach(async () => {
+              browser.goToTestVideoUrl({ embed })
+              browser.login(password)
+            })
+
+            it('should not show tip button even after 3 seconds of the video has played if the user lacks enough balance to tip', () => {
+              browser.waitAndClick(startScreenIconSelector)
+              browser.waitUntilVideoIsPlaying()
+
+              browser.moveToObject(overlaySelector)
+              browser.waitUntilControlsAreVisible()
+              browser.waitUntilTipButtonIsNotVisible()
+              browser.pause(1000)
+
+              browser.moveToObject(overlaySelector)
+              browser.waitUntilControlsAreVisible()
+              browser.waitUntilTipButtonIsNotVisible()
+              browser.pause(1000)
+
+              browser.moveToObject(overlaySelector)
+              browser.waitUntilControlsAreVisible()
+              browser.waitUntilTipButtonIsNotVisible()
+              browser.pause(1000)
+
+              browser.moveToObject(overlaySelector)
+              browser.waitUntilControlsAreVisible()
+              browser.waitUntilTipButtonIsNotVisible()
+            })
+          })
+        })
+      }
     })
   }
 

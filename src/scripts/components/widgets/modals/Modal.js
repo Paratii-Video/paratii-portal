@@ -18,6 +18,7 @@ import ModalRestoreAccount from 'containers/widgets/modals/ModalRestoreAccountCo
 import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
+  'data-test-id'?: string,
   modalName: string,
   modalProps: Object,
   showModal: boolean,
@@ -216,7 +217,7 @@ class Modal extends Component<Props, void> {
     const isVisible = this.props.showModal
 
     return (
-      <Wrapper show={isVisible}>
+      <Wrapper data-test-id={this.props['data-test-id']} show={isVisible}>
         <Container show={isVisible} width={this.getModalWidth()}>
           {this.canClose() && (
             <CloseButton data-test-id="modal-close-button" onClick={this.close}>

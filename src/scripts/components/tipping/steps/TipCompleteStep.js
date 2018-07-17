@@ -1,6 +1,6 @@
 /* @flow */
 
-import React, { Fragment } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
@@ -14,7 +14,6 @@ import TippingStepHeader from '../utils/TippingStepHeader'
 import verifiedDataUrl from 'assets/svg/verified.svg'
 
 type Props = {
-  onComplete: () => void,
   usernameToTip: string
 }
 
@@ -23,6 +22,12 @@ type State = {
 }
 
 const VERIFIED_ICON_DIMENSION: string = '100px'
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
 
 const VerifiedIconWrapper = styled.div`
   margin-top: 30px;
@@ -63,7 +68,7 @@ class TipCompleteStep extends React.Component<Props, State> {
 
   render () {
     return (
-      <Fragment>
+      <Wrapper data-test-id="tip-complete-step">
         <TippingStepHeader>
           <TranslatedText
             message={`tipping.steps.completed.header${
@@ -82,10 +87,10 @@ class TipCompleteStep extends React.Component<Props, State> {
             url={verifiedDataUrl}
           />
         </VerifiedIconWrapper>
-        <ContinueButton onClick={this.props.onComplete}>
+        <ContinueButton>
           <TranslatedText message="tipping.steps.completed.continueWatching" />
         </ContinueButton>
-      </Fragment>
+      </Wrapper>
     )
   }
 }

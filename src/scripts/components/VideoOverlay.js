@@ -14,7 +14,6 @@ import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 import { List as ImmutableList } from 'immutable'
 
 import PlaybackLevels from 'components/widgets/PlaybackLevels'
-import WalletInfoContainer from 'containers/widgets/WalletInfoContainer'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
 import {
@@ -198,10 +197,6 @@ class VideoOverlay extends Component<Props> {
           onPlaybackLevelChange={onPlaybackLevelChange}
           onClose={() => toggleActivePlugin()}
         />
-        <WalletInfoContainer
-          open={activePlugin === PLAYER_PLUGIN.WALLET}
-          onClose={() => toggleActivePlugin()}
-        />
       </Fragment>
     )
   }
@@ -209,6 +204,7 @@ class VideoOverlay extends Component<Props> {
   render () {
     const {
       activePlugin,
+      toggleActivePlugin,
       isEmbed,
       showStartScreen,
       onClick,
@@ -219,7 +215,6 @@ class VideoOverlay extends Component<Props> {
       togglePlayPause,
       toggleShareModal,
       toggleFullscreen,
-      toggleActivePlugin,
       transitionState,
       showShareModal
     } = this.props

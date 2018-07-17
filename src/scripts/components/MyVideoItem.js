@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FlexCenterStyle } from './foundations/Styles'
@@ -6,7 +6,8 @@ import Text, { Span } from './foundations/Text'
 import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
 import VideoTimeDisplay from './foundations/VideoTimeDisplay'
-import { videoDuration } from '../operators/VideoOperators'
+import TranslatedText from './translations/TranslatedText'
+import { isVideoPublished, videoDuration } from 'operators/VideoOperators'
 import { formatDuration } from '../utils/VideoUtils'
 import type VideoRecord from 'records/VideoRecords'
 
@@ -39,6 +40,10 @@ const Wrapper = styled.li`
 
 const MyVideoItemLink = styled(Link)`
   background: ${props => props.theme.colors.background.primary};
+  display: block;
+`
+
+const MyVideoItemButton = styled.div`
   display: block;
 `
 
@@ -113,12 +118,16 @@ const EditButtonWrapper = styled.div`
 class MyVideoItem extends Component<Props, void> {
   render () {
     const { video } = this.props
+    const duration = videoDuration(video)
+    const isPublished = isVideoPublished(video)
     const title = video.title || video.filename
     const urlToPlay = '/play/' + video.id
     let poster = ''
     let videoPoster = ''
-    const duration = videoDuration(video)
     let durationNoMillis = '00:00'
+    const statusMsg = isPublished
+      ? 'myVideos.item.status.published'
+      : 'myVideos.item.status.unpublished'
 
     if (video && video.thumbnails.size === 4) {
       poster = video.thumbnails.get(0)
@@ -130,39 +139,46 @@ class MyVideoItem extends Component<Props, void> {
       durationNoMillis = formatDuration(duration)
     }
 
-    return (
-      <Wrapper>
-        <MyVideoItemLink to={urlToPlay}>
-          <MyVideoItemMedia>
-            <MyVideoItemImage source={videoPoster} />
-
+    const videoContent = (
+      <Fragment>
+        <MyVideoItemMedia>
+          <MyVideoItemImage source={videoPoster} />
+          {isPublished ? (
             <VideoTimeDisplay>{durationNoMillis}</VideoTimeDisplay>
-
-            <IconPlay>
-              <SVGIcon icon="icon-player-play" />
-            </IconPlay>
-          </MyVideoItemMedia>
-          <MyVideoItemInfo>
-            <MyVideoItemsTitle bold accent>
-              {title}
-            </MyVideoItemsTitle>
-            <Text small>10000 views</Text>
-            <Text small primary bold>
-              Status:{' '}
-              <Span highlight={true} warn={false} small regular>
-                Published
-              </Span>
-            </Text>
-            <Text small>11 months ago</Text>
-          </MyVideoItemInfo>
-        </MyVideoItemLink>
+          ) : null}
+          <IconPlay>
+            <SVGIcon icon="icon-player-play" />
+          </IconPlay>
+        </MyVideoItemMedia>
+        <MyVideoItemInfo>
+          <MyVideoItemsTitle bold accent>
+            {title}
+          </MyVideoItemsTitle>
+          <Text small>0 views</Text>
+          <Text small primary bold>
+            <TranslatedText message="myVideos.item.status.label" />
+            {': '}
+            <Span highlight={true} warn={false} small regular>
+              <TranslatedText message={statusMsg} />
+            </Span>
+          </Text>
+          <Text small>0 days ago</Text>
+        </MyVideoItemInfo>
         <EditButtonWrapper>
           <TextButton primary>
             <SVGIcon width="20px" height="20px" icon="icon-edit" />
           </TextButton>
         </EditButtonWrapper>
-      </Wrapper>
+      </Fragment>
     )
+
+    const MyVideoItemContent = isPublished ? (
+      <MyVideoItemLink to={urlToPlay}>{videoContent}</MyVideoItemLink>
+    ) : (
+      <MyVideoItemButton>{videoContent}</MyVideoItemButton>
+    )
+
+    return <Wrapper>{MyVideoItemContent}</Wrapper>
   }
 }
 

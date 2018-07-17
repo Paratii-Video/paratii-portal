@@ -4,12 +4,13 @@ import { createSelector } from 'reselect'
 import { Map } from 'immutable'
 import ParatiiLib from 'utils/ParatiiLib'
 
+import { userHasPreviouslySecuredWallet } from 'utils/AppUtils'
 import {
   getDoNotTipVideoIds,
   getPlayerTotalTimeViewedSeconds
 } from 'selectors/index'
 import { getPlayingVideo } from 'selectors/PlayerSelectors'
-import { getPtiBalance } from 'selectors/UserSelectors'
+import { getPtiBalance, getIsSecure } from 'selectors/UserSelectors'
 
 import Video from 'records/VideoRecords'
 
@@ -40,15 +41,20 @@ export const askForTip: (state: RootState) => boolean = createSelector(
     getPlayerTotalTimeViewedSeconds,
     getDoNotTipVideoIds,
     getPlayingVideo,
-    userHasEnoughPtiToTip
+    getIsSecure,
+    userHasEnoughPtiToTip,
+    userHasPreviouslySecuredWallet
   ],
   (
     totalTimeViewedSeconds: number,
     doNotTipVideoIds: Map<string, boolean>,
     video: Video,
-    userHasEnoughPtiToTip: boolean
+    walletIsSecure: boolean,
+    userHasEnoughPtiToTip: boolean,
+    hasPreviouslySecuredWallet: boolean
   ) =>
-    userHasEnoughPtiToTip &&
+    ((walletIsSecure && userHasEnoughPtiToTip) ||
+      (!walletIsSecure && hasPreviouslySecuredWallet)) &&
     totalTimeViewedSeconds > MINIMUM_VIEWED_SECONDS_FOR_TIP_PROMPT &&
     !doNotTipVideoIds.get(video.get('id'))
 )

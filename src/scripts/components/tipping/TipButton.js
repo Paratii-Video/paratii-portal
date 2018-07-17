@@ -69,7 +69,7 @@ class TipButton extends React.Component<Props> {
 
   render () {
     return (
-      <WrappedButton onClick={this.onClick}>
+      <WrappedButton data-test-id="tip-button" onClick={this.onClick}>
         <IconWrapper>
           <Icon color={Colors.white} url={coinDataUrl} />
         </IconWrapper>

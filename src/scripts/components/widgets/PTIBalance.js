@@ -8,8 +8,7 @@ import TruncatedText from 'components/foundations/TruncatedText'
 
 type Props = {
   balance: string,
-  color?: string,
-  loadBalances: () => void
+  color?: string
 }
 
 const Wrapper = styled.div`
@@ -23,24 +22,7 @@ const NumberWrapper = styled.span`
   display: flex;
 `
 
-// FIXME: the whole polling logic should be moved to its own dedicated place a
-// instead of being connected to  a particular component
-const REFRESH_BALANCES_INTERVAL_MS: number = 200000
-
 class PTIBalance extends React.Component<Props, void> {
-  intervalId: ?number
-
-  componentWillMount = (): void => {
-    const { loadBalances } = this.props
-    this.intervalId = setInterval(loadBalances, REFRESH_BALANCES_INTERVAL_MS)
-  }
-
-  componentWillUnmount = (): void => {
-    if (this.intervalId) {
-      clearInterval(this.intervalId)
-    }
-  }
-
   render () {
     const { balance, color } = this.props
 
