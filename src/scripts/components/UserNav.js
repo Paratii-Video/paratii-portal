@@ -9,6 +9,17 @@ import { getName } from 'operators/UserOperators'
 import {
   BORDER_RADIUS_SMALL,
   USERNAV_WIDTH,
+  USERNAV_USERWRAPPER_PADDING,
+  USERNAV_USERPTI_MARGIN_TOP,
+  USERNAV_USERPTIVALUEWRAPPER_FLEX,
+  USERNAV_USERPTIVALUEBOX_PADDING,
+  USERNAV_USERPTIBARWRAPPER_HEIGHT,
+  USERNAV_USERPTIBARWRAPPER_MARGIN_TOP,
+  USERNAV_USERPTIBARTEXT_TRANSLATEY,
+  USERNAV_USERNAVLISTITEM_PADDING,
+  USERNAV_USERNAVLISTITEMICON_SIZE,
+  USERNAV_USERNAVLISTITEMICON_MARGIN_RIGHT,
+  USERNAV_USERSUBNAVLISTITEMLINK_PADDING,
   MAINHEADER_LOGO_HEIGHT,
   MAINFOOTER_HEIGHT,
   MEDIAQUERY_BREAKPOINT,
@@ -38,8 +49,6 @@ type Props = {
 const Wrapper = styled.div`
   background: ${props => props.theme.colors.background.primary};
   box-shadow: -11px 0 40px rgba(0, 0, 0, 0.7);
-  display: flex;
-  flex-direction: column;
   height: 100%;
   left: 0;
   overflow-x: hidden;
@@ -62,13 +71,14 @@ const UserWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: ${MAINHEADER_LOGO_HEIGHT};
-  padding: 40px 30px;
+  padding: ${USERNAV_USERWRAPPER_PADDING};
+  width: 100%;
 `
 
 const UserPTI = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 35px;
+  margin-top: ${USERNAV_USERPTI_MARGIN_TOP};
 `
 
 const UserPTIValuesWrapper = styled.div`
@@ -77,7 +87,7 @@ const UserPTIValuesWrapper = styled.div`
 `
 
 const UserPTIValue = styled.div`
-  flex: 0 0 48.5%;
+  flex: ${USERNAV_USERPTIVALUEWRAPPER_FLEX};
 `
 
 const UserPTIValueBox = styled.div`
@@ -85,14 +95,14 @@ const UserPTIValueBox = styled.div`
   props.theme.colors.background.tertiary};
   border-radius: ${BORDER_RADIUS_SMALL};
   flex-direction: column;
-  padding: 14px;
+  padding: ${USERNAV_USERPTIVALUEBOX_PADDING};
 `
 
 const UserPTIBarWrapper = styled.div`
-  border-radius: 2px;
+  border-radius: ${BORDER_RADIUS_SMALL};
   display: flex;
-  height: 4px;
-  margin-top: 25px;
+  height: ${USERNAV_USERPTIBARWRAPPER_HEIGHT};
+  margin-top: ${USERNAV_USERPTIBARWRAPPER_MARGIN_TOP};
 `
 
 const UserPTIBar = styled.div`
@@ -105,16 +115,16 @@ const UserPTIBar = styled.div`
   text-align: center;
   position: relative;
 `
-
 const UserPTIBarText = Text.extend`
   position: absolute;
   left: 50%;
-  transform: translate3d(-50%, 5px, 0);
+  transform: translate3d(-50%, ${USERNAV_USERPTIBARTEXT_TRANSLATEY}, 0);
 `
 
 // User navigation
 const UserNavListWrapper = styled.div`
   display: block;
+  width: 100%;
 `
 
 const UserNavList = styled.ul`
@@ -133,7 +143,7 @@ const UserNavListItemStyle = css`
   display: flex;
   font-size: ${props => props.theme.fonts.text.main};
   font-weight: ${props => props.theme.fonts.weight.regular};
-  padding: 25px 30px;
+  padding: ${USERNAV_USERNAVLISTITEM_PADDING};
   text-transform: initial;
 `
 
@@ -148,9 +158,9 @@ const UserNavListItemLink = styled(UserTextButton)`
 `
 
 const UserNavListItemIcon = styled.span`
-  flex: 0 0 22px;
-  height: 22px;
-  margin-right: 10px;
+  flex: 0 0 ${USERNAV_USERNAVLISTITEMICON_SIZE};
+  height: ${USERNAV_USERNAVLISTITEMICON_SIZE};
+  margin-right: ${USERNAV_USERNAVLISTITEMICON_MARGIN_RIGHT};
 `
 
 const UserSubNavList = styled.ul`
@@ -163,7 +173,7 @@ const UserSubNavListItem = styled.li`
 `
 
 const UserSubNavListItemLink = styled(Link)`
-  ${UserNavListItemStyle} padding: 25px 30px 25px 90px;
+  ${UserNavListItemStyle} padding: ${USERNAV_USERSUBNAVLISTITEMLINK_PADDING};
   transition: opacity 0.3s;
   &:hover {
     opacity: 0.5;
@@ -271,7 +281,7 @@ class UserNav extends Component<Props, Object> {
                 Profile
               </UserNavListItemLink>
             </UserNavListItem>
-            <UserNavListItem subnav>
+            <UserNavListItem>
               <UserNavListItemLink
                 to="/profile/my-videos"
                 onClick={this.props.closeUserNav}

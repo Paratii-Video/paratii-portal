@@ -23,6 +23,7 @@ export const BUTTON_PADDING_LEFT: string = '18px'
 export const CARD_PADDING: string = '40px 42px'
 export const CARD_MAX_WIDTH: string = '650px'
 export const CARD_MARGIN_LEFT: string = '25px'
+export const CARD_MARGIN_BOTTOM: string = '25px'
 
 // MainHeader
 export const MAINHEADER_LOGO_WIDTH: string = '98px'
@@ -32,6 +33,18 @@ export const MAINHEADER_PADDING_LEFT_BP: string = '40px'
 
 // UserNav
 export const USERNAV_WIDTH = '312px'
+export const USERNAV_USERWRAPPER_PADDING: string = '40px 30px'
+export const USERNAV_USERPTI_MARGIN_TOP: string = '35px'
+export const USERNAV_USERPTIVALUEWRAPPER_FLEX: string = '0 0 48.5%'
+export const USERNAV_USERPTIVALUEBOX_PADDING: string = '14px'
+export const USERNAV_USERPTIBARWRAPPER_HEIGHT: string = '4px'
+export const USERNAV_USERPTIBARWRAPPER_MARGIN_TOP: string = '25px'
+export const USERNAV_USERPTIBARTEXT_TRANSLATEY: string = '5px'
+export const USERNAV_USERNAVLISTITEM_PADDING: string = '25px 30px'
+export const USERNAV_USERNAVLISTITEMICON_SIZE: string = '22px'
+export const USERNAV_USERNAVLISTITEMICON_MARGIN_RIGHT: string = '22px'
+export const USERNAV_USERSUBNAVLISTITEMLINK_PADDING: string =
+  '25px 30px 25px 90px'
 
 // MainFooter
 export const MAINFOOTER_HEIGHT: string = '72px'
