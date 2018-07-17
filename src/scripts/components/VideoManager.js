@@ -37,18 +37,6 @@ const Wrapper = styled.div`
   }
 `
 
-const CardWrapper = styled.div`
-  box-sizing: border-box;
-  flex: 0 0 ${({ column }) => (column ? '100%' : '32%')};
-  margin-bottom: 40px;
-  width: ${({ column }) => (column ? '100%' : '32%')};
-
-  @media ${MEDIAQUERY_BREAKPOINT} {
-    flex: 0 0 100%;
-    width: 100%;
-  }
-`
-
 class VideoManager extends Component<Props, void> {
   constructor (props: Props) {
     super(props)
@@ -92,28 +80,14 @@ class VideoManager extends Component<Props, void> {
   render () {
     const showList = this.props.videos.size > 0 || this.props.selectedVideo
 
-    return (
+    return this.props.isWalletSecured ? (
       <Wrapper column={showList}>
-        {showList && (
-          <CardWrapper column={showList}>
-            <UploadList />
-          </CardWrapper>
-        )}
-        <CardWrapper column={showList}>
-          <FileUploader showCard={!showList} height="100%" />
-        </CardWrapper>
-        {!showList && (
-          <CardWrapper>
-            <RedeemVoucher height="100%" />
-          </CardWrapper>
-        )}
-        {!showList && (
-          <CardWrapper>
-            <PTIGuide height="100%" />
-          </CardWrapper>
-        )}
+        {showList && <UploadList />}
+        <FileUploader showCard={!showList} />
+        {!showList ? <RedeemVoucher marginLeft /> : ''}
+        {!showList && <PTIGuide marginLeft />}
       </Wrapper>
-    )
+    ) : null
   }
 }
 
