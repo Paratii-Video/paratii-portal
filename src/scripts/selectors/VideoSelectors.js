@@ -22,7 +22,7 @@ export const isVideoWhiteListed: (
   }
 )
 
-export const isVideoChallenged: (
+export const videoChallengeExists: (
   state: RootState
 ) => ?VideoRecord = createSelector(
   [getVideos, getPlayerVideoId],
