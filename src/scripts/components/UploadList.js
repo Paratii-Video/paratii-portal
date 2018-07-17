@@ -5,7 +5,6 @@ import UploadListItem from 'containers/UploadListItemContainer'
 import Loader from 'components/foundations/Loader'
 import type { Map } from 'immutable'
 import type VideoRecord from 'records/VideoRecords'
-import { isVideoPublishable } from 'operators/VideoOperators'
 
 type Props = {
   videosAreBeingFetched: boolean,
@@ -26,15 +25,13 @@ class UploadList extends Component<Props, void> {
           <Loader />
         ) : (
           this.props.videos.entrySeq().map(([videoId, videoInfo]) => {
-            if (!isVideoPublishable(videoInfo)) {
-              return (
-                <UploadListItem
-                  key={videoId}
-                  videoId={videoId}
-                  video={videoInfo}
-                />
-              )
-            }
+            return (
+              <UploadListItem
+                key={videoId}
+                videoId={videoId}
+                video={videoInfo}
+              />
+            )
           })
         )}
       </Wrapper>
