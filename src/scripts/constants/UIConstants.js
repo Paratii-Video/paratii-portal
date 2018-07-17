@@ -83,3 +83,6 @@ export const RADIO_SIZE: string = '18px'
 
 // Loader
 export const BASE_LOADER_DIMENSION: string = '50px'
+
+// Video Manager
+export const VIDEOMANAGER_FILEUPLOADERWRAPPER_MARGIN: string = '100px 0'

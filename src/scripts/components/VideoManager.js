@@ -8,6 +8,7 @@ import VideoRecord from 'records/VideoRecords'
 import RedeemVoucher from 'containers/RedeemVoucherContainer'
 import FileUploader from 'containers/FileUploaderContainer'
 import UploadList from 'containers/UploadListContainer'
+import { VIDEOMANAGER_FILEUPLOADERWRAPPER_MARGIN } from 'constants/UIConstants'
 
 import type { Match, History } from 'react-router-dom'
 
@@ -35,6 +36,11 @@ const Wrapper = styled.div`
   @media ${MEDIAQUERY_BREAKPOINT} {
     flex-wrap: wrap;
   }
+`
+
+const FileUploaderWrapper = styled.div`
+  margin: ${({ margin }) =>
+    margin ? VIDEOMANAGER_FILEUPLOADERWRAPPER_MARGIN : null};
 `
 
 class VideoManager extends Component<Props, void> {
@@ -83,7 +89,9 @@ class VideoManager extends Component<Props, void> {
     return this.props.isWalletSecured ? (
       <Wrapper column={showList}>
         {showList && <UploadList />}
-        <FileUploader showCard={!showList} />
+        <FileUploaderWrapper margin={showList}>
+          <FileUploader showCard={!showList} />
+        </FileUploaderWrapper>
         {!showList ? <RedeemVoucher marginLeft /> : ''}
         {!showList && <PTIGuide marginLeft />}
       </Wrapper>
