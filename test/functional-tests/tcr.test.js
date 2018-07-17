@@ -8,14 +8,14 @@ import {
 import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
 // declare var browser: Object
 
-describe('TCR:', function () {
+describe('TCR: @watch', function () {
   beforeEach(async function () {
-    await paratii.eth.deployContracts()
-    browser.url(`http://localhost:8080`)
-    const registryAddress = await paratii.eth.getRegistryAddress()
-    browser.execute(function (registryAddress) {
-      paratii.eth.setRegistryAddresss(registryAddress)
-    }, registryAddress)
+    // await paratii.eth.deployContracts()
+    // browser.url(`http://localhost:8080`)
+    // const registryAddress = await paratii.eth.getRegistryAddress()
+    // browser.execute(function (registryAddress) {
+    //   paratii.eth.setRegistryAddresss(registryAddress)
+    // }, registryAddress)
     // browser.execute(nukeLocalStorage)
     // browser.execute(nukeSessionStorage)
   })

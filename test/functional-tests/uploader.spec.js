@@ -14,14 +14,14 @@ describe('🦄 Uploader Tool', function () {
   const modalCloseButtonSelector = '[data-test-id="modal-close-button"]'
   const forgotPasswordButtonSelector = '[data-test-id="forgot-password-button"]'
   beforeEach(async function () {
-    await paratii.eth.deployContracts()
-    browser.url(`http://localhost:8080`)
-    const registryAddress = await paratii.eth.getRegistryAddress()
+    // await paratii.eth.deployContracts()
+    await browser.url(`http://localhost:8080`)
+    // const registryAddress = await paratii.eth.getRegistryAddress()
     // console.log(`setting registryAddress in browser to ${registryAddress}`)
-    browser.execute(function (registryAddress) {
-      return paratii.eth.setRegistryAddresss(registryAddress)
-    }, registryAddress)
-    // const registryAddressBrowser = (await browser.execute(function () { return paratii.eth.getRegistryAddress() }).value
+    // await browser.execute(function (registryAddress) {
+    //   return paratii.eth.setRegistryAddresss(registryAddress)
+    // }, registryAddress)
+    // const registryAddressBrowser = (await browser.execute(function () { return paratii.eth.getRegistryAddress() })).value
     // console.log(`registry address in browser: ${registryAddressBrowser}`)
     // browser.execute(nukeLocalStorage)
     // browser.execute(nukeSessionStorage)
@@ -114,7 +114,7 @@ describe('🦄 Uploader Tool', function () {
         throw err
       }
     }
-    // console.log(paratii.config.eth)
+    console.log(paratii.config.eth)
     browser.waitUntil(getVideoInfoFromBlockchain)
     // Check if video title has been saved
     browser.waitUntil(() => {
