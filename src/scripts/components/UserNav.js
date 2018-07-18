@@ -219,8 +219,13 @@ class UserNav extends Component<Props, Object> {
     const percStaked = Math.round(stakedNumber / totalPTI * 100)
     const percPTI = 100 - percStaked
 
-    percentageStaked = percStaked + '%'
-    percentagePTI = percPTI + '%'
+    if (isNaN(percStaked) || isNaN(percPTI)) {
+      percentageStaked = false
+      percentagePTI = false
+    } else {
+      percentageStaked = percStaked + '%'
+      percentagePTI = percPTI + '%'
+    }
 
     return (
       <Wrapper
@@ -254,18 +259,20 @@ class UserNav extends Component<Props, Object> {
                 </UserPTIValueBox>
               </UserPTIValue>
             </UserPTIValuesWrapper>
-            <UserPTIBarWrapper>
-              <UserPTIBar percentage={percentagePTI}>
-                <UserPTIBarText highlight tiny>
-                  {percentagePTI}
-                </UserPTIBarText>
-              </UserPTIBar>
-              <UserPTIBar red percentage={percentageStaked}>
-                <UserPTIBarText warn tiny>
-                  {percentageStaked}
-                </UserPTIBarText>
-              </UserPTIBar>
-            </UserPTIBarWrapper>
+            {percentagePTI && percentageStaked ? (
+              <UserPTIBarWrapper>
+                <UserPTIBar percentage={percentagePTI}>
+                  <UserPTIBarText highlight tiny>
+                    {percentagePTI}
+                  </UserPTIBarText>
+                </UserPTIBar>
+                <UserPTIBar red percentage={percentageStaked}>
+                  <UserPTIBarText warn tiny>
+                    {percentageStaked}
+                  </UserPTIBarText>
+                </UserPTIBar>
+              </UserPTIBarWrapper>
+            ) : null}
           </UserPTI>
         </UserWrapper>
         <UserNavListWrapper>
