@@ -162,7 +162,6 @@ class FilesUploader extends Component<Props, Object> {
     return (
       <UploaderWrapper card={card}>
         <InputFile
-          type="file"
           data-test-id="upload-file-input"
           onChange={this.onFileChosen}
           onClick={this.onFileInputClick}

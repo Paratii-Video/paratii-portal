@@ -301,7 +301,7 @@ class ShareOverlay extends Component<Props, State> {
           onClick={this.toggleShareContent}
         >
           <ArrowButtonIcon>
-            <SVGIcon icon="icon-arrow" />
+            <SVGIcon icon="icon-arrow-horizontal" />
           </ArrowButtonIcon>
         </ArrowButton>
         <CloseButton

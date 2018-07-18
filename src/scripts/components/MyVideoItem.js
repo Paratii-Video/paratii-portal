@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import TranslatedText from './translations/TranslatedText'
 import Text from './foundations/Text'
+import { ButtonStyleHover } from './foundations/Button'
 import SVGIcon from './foundations/SVGIcon'
 import { isVideoPublished, videoDuration } from 'operators/VideoOperators'
 import { formatDuration } from '../utils/VideoUtils'
@@ -36,13 +37,13 @@ const Wrapper = styled.li`
   position: relative;
 `
 
-const MyVideoItemLink = styled(Link)`
-  display: block;
+const MyVideoItemButton = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `
 
-const MyVideoItemButton = styled.div`
-  display: block;
-`
+const MyVideoItemLink = MyVideoItemButton.withComponent(Link)
 
 const ZINDEX_MYVIDEOSITEM_COVER: number = 3
 const ZINDEX_MYVIDEOSITEM_IMAGE: number = 1
@@ -57,22 +58,21 @@ const MyVideoItemMedia = styled.div`
   justify-content: center;
   position: relative;
   width: 100%;
+`
 
-  &::before {
-    background: ${props => props.theme.colors.MyVideoItem.coverMediaBackground};
-    content: '';
-    height: 100%;
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    transition: opacity 0.2s linear 0.2s;
-    width: 100%;
-    z-index: ${ZINDEX_MYVIDEOSITEM_COVER};
-    ${MyVideoItemLink}:hover & {
-      opacity: 1;
-      transition-delay: 0;
-    }
+const VideoMediaBackground = styled.span`
+  background: ${props => props.theme.colors.MyVideoItem.coverMediaBackground};
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition: opacity 0.2s linear 0.2s;
+  width: 100%;
+  z-index: ${ZINDEX_MYVIDEOSITEM_COVER};
+  ${MyVideoItemLink}:hover & {
+    opacity: 1;
+    transition-delay: 0;
   }
 `
 
@@ -140,6 +140,12 @@ const MyVideoItemsTitle = Text.extend`
 
 const MyVideoItemsStatus = Text.withComponent('span')
 
+const EditButtonWrapper = styled.div`
+  ${ButtonStyleHover} bottom: 30px;
+  position: absolute;
+  right: 24px;
+`
+
 class MyVideoItem extends Component<Props, void> {
   render () {
     const { video } = this.props
@@ -147,6 +153,7 @@ class MyVideoItem extends Component<Props, void> {
     const isPublished = isVideoPublished(video)
     const title = video.title || video.filename
     const urlToPlay = '/play/' + video.id
+    const urlToEdit = '/edit/' + video.id
     let poster = ''
     let videoPoster = ''
     let durationNoMillis = '00:00'
@@ -166,22 +173,23 @@ class MyVideoItem extends Component<Props, void> {
 
     const videoContent = (
       <Fragment>
-        <MyVideoItemMedia>
+        <MyVideoItemMedia isPublished={isPublished}>
           <MyVideoItemImage source={videoPoster} />
           {isPublished ? (
-            <VideoMediaTime>
-              <VideoMediaTimeText>{durationNoMillis}</VideoMediaTimeText>
-            </VideoMediaTime>
+            <Fragment>
+              <VideoMediaTime>
+                <VideoMediaTimeText>{durationNoMillis}</VideoMediaTimeText>
+              </VideoMediaTime>
+              <IconPlay>
+                <SVGIcon color="white" icon="icon-player-play" />
+              </IconPlay>
+              <VideoMediaBackground />
+            </Fragment>
           ) : null}
-          <IconPlay>
-            <SVGIcon color="white" icon="icon-player-play" />
-          </IconPlay>
         </MyVideoItemMedia>
         <MyVideoItemInfo>
-          <MyVideoItemsTitle small bold>
-            {title}
-          </MyVideoItemsTitle>
-          <Text gray small bold>
+          <MyVideoItemsTitle bold>{title}</MyVideoItemsTitle>
+          <Text gray small>
             <TranslatedText message="myVideos.item.status.label" />
             {': '}
             <MyVideoItemsStatus purple={isPublished} gray={!isPublished} small>
@@ -198,7 +206,16 @@ class MyVideoItem extends Component<Props, void> {
       <MyVideoItemButton>{videoContent}</MyVideoItemButton>
     )
 
-    return <Wrapper>{MyVideoItemContent}</Wrapper>
+    return (
+      <Wrapper>
+        {MyVideoItemContent}
+        <EditButtonWrapper>
+          <Link to={urlToEdit}>
+            <SVGIcon width="20px" height="20px" icon="icon-edit" />
+          </Link>
+        </EditButtonWrapper>
+      </Wrapper>
+    )
   }
 }
 

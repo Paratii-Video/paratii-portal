@@ -7,6 +7,12 @@ export const Z_INDEX_HEADER: string = '980'
 export const Z_INDEX_FOOTER: string = '980'
 export const Z_INDEX_USERNAV: string = '970'
 
+// Layout
+export const BORDER_RADIUS: string = '4px'
+export const BORDER_RADIUS_SMALL: string = '2px'
+
+// Components
+
 // MainHeader
 export const MAINHEADER_LOGO_WIDTH: string = '98px'
 export const MAINHEADER_LOGO_HEIGHT: string = '62px'
@@ -38,3 +44,12 @@ export const CARD_PADDING: string = '40px 42px'
 
 // Loader
 export const BASE_LOADER_DIMENSION: string = '50px'
+
+// Video Form
+export const VIDEOFORM_PADDING_VERTICAL: string = '42px'
+export const VIDEOFORM_PADDING_HORIZONTAL: string = '50px'
+export const VIDEOFORM_CONTAINER_MARGIN_BOTTOM: string = '25px'
+export const VIDEOFORM_HEADER_ICON_WIDTH: string = '22px'
+export const VIDEOFORM_HEADER_ICON_HEIGHT: string = '12px'
+export const VIDEOFORM_HEADER_PADDING_BOTTOM: string = '50px'
+export const VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT: string = '35px'

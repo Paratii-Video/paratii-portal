@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import UploadListItem from 'containers/UploadListItemContainer'
+import VideoForm from 'containers/VideoFormContainer'
 import Loader from 'components/foundations/Loader'
 
 import type { Map } from 'immutable'
@@ -30,11 +30,7 @@ class UploadList extends Component<Props, void> {
           this.props.videos
             .entrySeq()
             .map(([videoId, videoInfo]) => (
-              <UploadListItem
-                key={videoId}
-                videoId={videoId}
-                video={videoInfo}
-              />
+              <VideoForm key={videoId} videoId={videoId} video={videoInfo} />
             ))
         )}
       </Wrapper>

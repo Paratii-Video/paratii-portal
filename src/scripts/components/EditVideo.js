@@ -1,13 +1,10 @@
 import { Map } from 'immutable'
 
 import React, { Component } from 'react'
-
-import { CardContainer } from 'components/structures/Card'
-import PTIGuide from 'components/widgets/PTIGuide'
+import styled from 'styled-components'
 import VideoRecord from 'records/VideoRecords'
-import RedeemVoucher from 'containers/RedeemVoucherContainer'
-import UploadFile from 'containers/FileUploaderContainer'
-import UploadList from 'containers/UploadListContainer'
+import Loader from 'components/foundations/Loader'
+import VideoForm from 'containers/VideoFormContainer'
 
 import type { Match, History } from 'react-router-dom'
 
@@ -24,7 +21,7 @@ type Props = {
   closeModal: () => void
 }
 
-const Wrapper = CardContainer.extend`
+const Wrapper = styled.div`
   flex-direction: ${props => (props.column ? 'initial' : 'column')};
   margin: 0 auto;
   max-width: 1080px;
@@ -33,6 +30,13 @@ const Wrapper = CardContainer.extend`
   @media (max-width: 1280px) {
     justify-content: ${props => (props.padding ? 'space-between' : 'center')};
   }
+`
+
+const LoaderWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  min-height: 400px;
+  align-items: center;
 `
 
 class VideoManager extends Component<Props, void> {
@@ -76,16 +80,24 @@ class VideoManager extends Component<Props, void> {
   }
 
   render () {
-    const showForm = this.props.selectedVideo
-    const showList = this.props.videos.size > 0 || this.props.selectedVideo
-    return this.props.isWalletSecured ? (
-      <Wrapper padding={!showForm} column={!showList}>
-        {showList && <UploadList />}
-        <UploadFile showCard={!showList} />
-        {!showList ? <RedeemVoucher marginLeft /> : ''}
-        {!showList && <PTIGuide marginLeft />}
+    const selectedVideo = this.props.selectedVideo
+
+    return (
+      <Wrapper>
+        {this.props.isWalletSecured && selectedVideo ? (
+          <VideoForm
+            key={selectedVideo.id}
+            videoId={selectedVideo.id}
+            video={selectedVideo}
+            edit
+          />
+        ) : (
+          <LoaderWrapper>
+            <Loader />
+          </LoaderWrapper>
+        )}
       </Wrapper>
-    ) : null
+    )
   }
 }
 
