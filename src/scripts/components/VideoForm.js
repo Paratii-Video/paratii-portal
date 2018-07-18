@@ -1,15 +1,13 @@
 /* @flow */
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import paratii from 'utils/ParatiiLib'
 
 import { getAppRootUrl } from 'utils/AppUtils'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import TranslatedText from './translations/TranslatedText'
-
-import { FlexCenterStyle } from './foundations/Styles'
 import Text from './foundations/Text'
 import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
@@ -21,7 +19,6 @@ import RadioCheck, {
   RadioWrapper,
   RadioTitle
 } from './widgets/forms/RadioCheck'
-import type VideoRecord from 'records/VideoRecords'
 import UserRecord from 'records/UserRecords'
 import {
   isVideoPublished,
@@ -30,7 +27,21 @@ import {
   videoDuration,
   stakedAmount
 } from 'operators/VideoOperators'
+import { PROFILE_MYVIDEOS_PATH } from 'constants/UrlConstants'
 import { MODAL } from 'constants/ModalConstants'
+import {
+  BORDER_RADIUS,
+  VIDEOFORM_PADDING_VERTICAL,
+  VIDEOFORM_PADDING_HORIZONTAL,
+  VIDEOFORM_CONTAINER_MARGIN_BOTTOM,
+  VIDEOFORM_HEADER_PADDING_BOTTOM,
+  VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT,
+  VIDEOFORM_HEADER_ICON_WIDTH,
+  VIDEOFORM_HEADER_ICON_HEIGHT
+} from 'constants/UIConstants'
+
+import type VideoRecord from 'records/VideoRecords'
+import type { RouterHistory } from 'react-router-dom'
 
 type Props = {
   user: UserRecord,
@@ -38,6 +49,8 @@ type Props = {
   video: VideoRecord,
   videoId: string,
   isWalletSecured: boolean,
+  edit: boolean,
+  history: RouterHistory,
   saveVideoInfo: Object => Object,
   openModal: string => void,
   notification: (Object, string) => void,
@@ -45,51 +58,66 @@ type Props = {
   setVideoToPublish: string => void
 }
 
-const PADDING_HORIZONTAL: string = '50px'
 const Z_INDEX_MEDIAICON = 2
 
-const Item = styled.div`
-  background: ${props => props.theme.colors.background.secondary};
-  border-radius: 4px;
+const Container = styled.div`
+  background: ${props => props.theme.colors.background.primary};
+  border-radius: ${BORDER_RADIUS};
   display: flex;
   flex-direction: column;
-  margin-bottom: 25px;
+  margin-bottom: ${({ edit }) =>
+    edit ? null : VIDEOFORM_CONTAINER_MARGIN_BOTTOM};
   overflow: hidden;
 `
-
-const ItemHeader = styled.div`
-  cursor: ${({ open }) => (!open ? 'pointer' : 'pointer')};
+const Header = styled.div`
+  cursor: ${({ edit }) => (edit ? null : 'pointer')};
   display: flex;
   flex-direction: column;
-  padding-bottom: 50px;
+  padding-bottom: ${({ edit }) =>
+    edit
+      ? VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT
+      : VIDEOFORM_HEADER_PADDING_BOTTOM};
   user-select: none;
 `
 
-const ItemHeaderContent = styled.div`
+const HeaderContent = styled.div`
   align-items: center;
   display: flex;
-  padding: 25px ${PADDING_HORIZONTAL};
+  padding: ${VIDEOFORM_PADDING_VERTICAL} ${VIDEOFORM_PADDING_HORIZONTAL};
 `
 
-const Icon = styled.span`
+const HeaderIcon = styled.button`
   color: ${props =>
     props.open
       ? props.theme.colors.text.secondary
       : props.theme.colors.text.highlight};
-  flex: 0 0 22px;
-  height: 12px;
-  transition: transform 0.7s ${({ theme }) => theme.animation.ease.smooth};
-  transform: ${({ flip }) => (flip ? 'rotateX(180deg)' : null)};
+  flex: 0 0
+    ${({ edit }) =>
+    edit ? VIDEOFORM_HEADER_ICON_HEIGHT : VIDEOFORM_HEADER_ICON_WIDTH};
+  height: ${({ edit }) =>
+    edit ? VIDEOFORM_HEADER_ICON_WIDTH : VIDEOFORM_HEADER_ICON_HEIGHT};
+  margin-right: calc(${VIDEOFORM_PADDING_VERTICAL} / 2);
+  transition: all 0.5s,
+    transform 0.7s ${({ theme }) => theme.animation.ease.smooth};
+  transform: ${({ flip, edit }) =>
+    flip ? 'rotateX(180deg)' : edit ? 'rotateY(180deg)' : null};
+
+  &:hover {
+    filter: brightness(1.3);
+  }
+
+  ${Header}:hover & {
+    filter: ${({ edit }) => (edit ? null : 'brightness(1.3)')};
+  }
 `
 
-const ItemHeaderData = styled.div`
+const HeaderData = styled.div`
   display: flex;
   flex: 1 1 100%;
   flex-direction: column;
-  padding-left: 25px;
 `
 
-const ItemHeaderStatus = styled.div`
+const HeaderStatus = styled.div`
   color: ${props =>
     props.done
       ? props.theme.colors.text.highlight
@@ -101,7 +129,7 @@ const ItemHeaderStatus = styled.div`
       : props.theme.fonts.weight.regular};
 `
 
-const ItemHeaderButtons = styled.div`
+const HeaderButtons = styled.div`
   display: flex;
   flex: 0 1 auto;
 
@@ -110,18 +138,18 @@ const ItemHeaderButtons = styled.div`
   }
 `
 
-const ItemHeaderBar = styled.div`
-  display: block;
+const HeaderBar = styled.div`
+  display: ${({ edit }) => (edit ? 'none' : 'block')};
 `
 
-const ItemContent = styled.div`
+const Content = styled.div`
   height: ${({ offsetHeight }) => offsetHeight};
   overflow: hidden;
 `
 
-const ItemContentHeight = styled.div`
+const ContentHeight = styled.div`
   display: flex;
-  padding: 20px ${PADDING_HORIZONTAL} ${PADDING_HORIZONTAL};
+  padding: 20px ${VIDEOFORM_PADDING_HORIZONTAL} ${VIDEOFORM_PADDING_HORIZONTAL};
 `
 
 const Form = styled.form`
@@ -166,7 +194,10 @@ const VideoImage = styled.div`
 `
 
 const VideoMediaOverlay = styled.div`
-  ${FlexCenterStyle} height: 100%;
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
   left: 0;
   position: absolute;
   top: 0;
@@ -189,7 +220,7 @@ const VideoMediaOverlay = styled.div`
 `
 
 const VideoMediaIcon = styled.div`
-  color: ${props => props.theme.colors.button.color};
+  color: ${props => props.theme.colors.text.accent};
   height: 20%;
   transition: transform 0.3s ${props => props.theme.animation.ease.smooth};
   position: relative;
@@ -209,12 +240,13 @@ const LabelStake = styled.div`
   font-size: 14px;
 `
 
-class UploadListItem extends Component<Props, Object> {
+class VideoForm extends Component<Props, Object> {
   handleInputChange: (input: string, e: Object) => void
   onPublishVideo: (e: Object) => void
   onSaveData: (e: Object) => void
   handleHeight: (e: Object) => string
   toggleOpen: (e: Object) => void
+  onBackToMyVideos: () => void
 
   formWrapperRef: Object
 
@@ -222,7 +254,7 @@ class UploadListItem extends Component<Props, Object> {
     super(props)
     const theVideo = this.props.video
     this.state = {
-      open: false,
+      open: this.props.edit,
       id: theVideo.id,
       title: theVideo.title || '',
       description: theVideo.description || '',
@@ -240,6 +272,7 @@ class UploadListItem extends Component<Props, Object> {
     this.onSaveData = this.onSaveData.bind(this)
     this.onPublishVideo = this.onPublishVideo.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.onBackToMyVideos = this.onBackToMyVideos.bind(this)
   }
 
   async componentDidMount () {
@@ -254,6 +287,10 @@ class UploadListItem extends Component<Props, Object> {
     this.setState({
       [input]: e.target.value
     })
+  }
+
+  onBackToMyVideos (e: Object) {
+    this.props.history.push(PROFILE_MYVIDEOS_PATH)
   }
 
   onSaveData (e: Object) {
@@ -275,6 +312,7 @@ class UploadListItem extends Component<Props, Object> {
 
   async onPublishVideo (e: Object) {
     e.preventDefault()
+    e.stopPropagation()
     const videoId = this.state.id
     const balance = Number(this.props.user.balances.PTI) // paratii.eth.web3.utils.fromWei(balance)
     const stakeAmountWei = this.state.stakeAmount
@@ -315,7 +353,7 @@ class UploadListItem extends Component<Props, Object> {
   }
 
   render () {
-    const { video, videoId } = this.props
+    const { video, videoId, edit } = this.props
     // Title
     const title = video.title || video.filename
 
@@ -375,7 +413,7 @@ class UploadListItem extends Component<Props, Object> {
     let durationBox = null
     if (duration) {
       const durationNoMillis = duration.substring(0, duration.indexOf('.'))
-      durationBox = <VideoTimeDisplay>{durationNoMillis} </VideoTimeDisplay>
+      durationBox = <VideoTimeDisplay>{durationNoMillis}</VideoTimeDisplay>
     }
 
     const urlToPlay = '/play/' + video.id
@@ -389,19 +427,27 @@ class UploadListItem extends Component<Props, Object> {
     }
 
     return (
-      <Item data-test-id="uploader-item">
-        <ItemHeader open={this.state.open} onClick={this.toggleOpen}>
-          <ItemHeaderContent>
-            <Icon open={this.state.open} flip={!this.state.open}>
-              <SVGIcon icon="icon-arrow-vertical" />
-            </Icon>
-            <ItemHeaderData>
+      <Container data-test-id="uploader-item">
+        <Header
+          open={this.state.open}
+          edit={edit}
+          onClick={edit ? null : this.toggleOpen}
+        >
+          <HeaderContent>
+            <HeaderIcon
+              onClick={edit ? this.onBackToMyVideos : this.toggleOpen}
+              flip={!this.state.open}
+              edit={edit}
+            >
+              <SVGIcon
+                icon={edit ? 'icon-arrow-horizontal' : 'icon-arrow-vertical'}
+              />
+            </HeaderIcon>
+            <HeaderData>
               <Text accent>{title}</Text>
-              <ItemHeaderStatus done={videoIsReady}>
-                {statusMessage}
-              </ItemHeaderStatus>
-            </ItemHeaderData>
-            <ItemHeaderButtons>
+              <HeaderStatus done={videoIsReady}>{statusMessage}</HeaderStatus>
+            </HeaderData>
+            <HeaderButtons>
               {!isPublished ? (
                 <TextButton
                   data-test-id="video-submit-publish"
@@ -415,17 +461,19 @@ class UploadListItem extends Component<Props, Object> {
               ) : (
                 <LabelStake>{stakedPTI} PTI Staked</LabelStake>
               )}
-            </ItemHeaderButtons>
-          </ItemHeaderContent>
-          <ItemHeaderBar>
-            <VideoProgressBar
-              progress={videoProgress(video) + '%'}
-              nopercentual
-            />
-          </ItemHeaderBar>
-        </ItemHeader>
-        <ItemContent offsetHeight={this.handleHeight}>
-          <ItemContentHeight
+            </HeaderButtons>
+          </HeaderContent>
+          {edit ? null : (
+            <HeaderBar>
+              <VideoProgressBar
+                progress={videoProgress(video) + '%'}
+                nopercentual
+              />
+            </HeaderBar>
+          )}
+        </Header>
+        <Content offsetHeight={this.handleHeight}>
+          <ContentHeight
             innerRef={(ref: HTMLElement) => {
               this.formWrapperRef = ref
             }}
@@ -520,25 +568,25 @@ class UploadListItem extends Component<Props, Object> {
                 </VideoMedia>
               ) : (
                 <VideoMedia>
-                  <div>
+                  <Fragment>
                     <VideoMediaOverlay>{durationBox}</VideoMediaOverlay>
                     <VideoImage source={videoPoster} />
-                  </div>
+                  </Fragment>
                 </VideoMedia>
               )}
               {!isPublished ? (
-                <Text gray small>
+                <Text small>
                   <TranslatedText message="uploadListItem.termsOfService" />
                 </Text>
               ) : (
                 <Text>{urlForSharing}</Text>
               )}
             </PreviewBox>
-          </ItemContentHeight>
-        </ItemContent>
-      </Item>
+          </ContentHeight>
+        </Content>
+      </Container>
     )
   }
 }
 
-export default UploadListItem
+export default withRouter(VideoForm)

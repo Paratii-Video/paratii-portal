@@ -234,7 +234,7 @@ class PTIGuide extends Component<Props, void> {
             disabled={this.state.page === 0}
           >
             <ButtonIcon inverse>
-              <SVGIcon icon="icon-arrow" />
+              <SVGIcon icon="icon-arrow-horizontal" />
             </ButtonIcon>
           </ArrowButton>
           <Index>
@@ -245,7 +245,7 @@ class PTIGuide extends Component<Props, void> {
             disabled={this.state.page >= this.state.total}
           >
             <ButtonIcon>
-              <SVGIcon icon="icon-arrow" />
+              <SVGIcon icon="icon-arrow-horizontal" />
             </ButtonIcon>
           </ArrowButton>
         </Footer>

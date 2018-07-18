@@ -7,7 +7,8 @@ import FileUploader from '../containers/FileUploaderContainer'
 import TranslatedText from './translations/TranslatedText'
 
 type Props = {
-  videos: Map<string, VideoRecord> // maps video ids to upload records
+  videos: Map<string, VideoRecord>, // maps video ids to upload records
+  isWalletSecured: boolean
 }
 
 const Wrapper = styled.div`
@@ -42,7 +43,7 @@ const FileUploaderWrapper = styled.li`
 
 class ProfileMyVideos extends Component<Props, void> {
   render () {
-    return (
+    return this.props.isWalletSecured ? (
       <Wrapper>
         <ProfileFilterVideos>
           <ProfileFilterTitle small accent>
@@ -55,14 +56,12 @@ class ProfileMyVideos extends Component<Props, void> {
             .map(([videoId, videoInfo]) => (
               <MyVideoItem key={videoId} videoId={videoId} video={videoInfo} />
             ))}
-          {!this.props.videos && (
-            <FileUploaderWrapper>
-              <FileUploader />
-            </FileUploaderWrapper>
-          )}
+          <FileUploaderWrapper>
+            <FileUploader />
+          </FileUploaderWrapper>
         </ProfileMyVideosList>
       </Wrapper>
-    )
+    ) : null
   }
 }
 

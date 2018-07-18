@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+
 import { FlexCenterStyle } from './foundations/Styles'
 import Text, { Span } from './foundations/Text'
-import TextButton from './foundations/TextButton'
+import { ButtonStyleHover } from './foundations/Button'
+import { ButtonStyleColor } from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
 import VideoTimeDisplay from './foundations/VideoTimeDisplay'
 import TranslatedText from './translations/TranslatedText'
@@ -35,17 +37,17 @@ export const MyVideosContainer = styled.ul`
 `
 
 const Wrapper = styled.li`
+  background: ${props => props.theme.colors.background.body};
   position: relative;
 `
 
-const MyVideoItemLink = styled(Link)`
-  background: ${props => props.theme.colors.background.primary};
-  display: block;
+const MyVideoItemButton = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `
 
-const MyVideoItemButton = styled.div`
-  display: block;
-`
+const MyVideoItemLink = MyVideoItemButton.withComponent(Link)
 
 const ZINDEX_MYVIDEOSITEM_COVER: number = 3
 const ZINDEX_MYVIDEOSITEM_IMAGE: number = 1
@@ -57,22 +59,21 @@ const MyVideoItemMedia = styled.div`
   height: 200px;
   position: relative;
   width: 100%;
+`
 
-  &::before {
-    background: ${props => props.theme.colors.background.body};
-    content: '';
-    height: 100%;
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    transition: opacity 0.3s linear 0.1s;
-    width: 100%;
-    z-index: ${ZINDEX_MYVIDEOSITEM_COVER};
-    ${MyVideoItemLink}:hover & {
-      opacity: 0.8;
-      transition-delay: 0;
-    }
+const VideoMediaBackground = styled.span`
+  background: ${props => props.theme.colors.background.body};
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition: opacity 0.2s linear 0.2s;
+  width: 100%;
+  z-index: ${ZINDEX_MYVIDEOSITEM_COVER};
+  ${MyVideoItemLink}:hover & {
+    opacity: 0.7;
+    transition-delay: 0;
   }
 `
 
@@ -115,6 +116,10 @@ const EditButtonWrapper = styled.div`
   right: 24px;
 `
 
+const EditButton = styled(Link)`
+  ${ButtonStyleColor} ${ButtonStyleHover} display: block;
+`
+
 class MyVideoItem extends Component<Props, void> {
   render () {
     const { video } = this.props
@@ -122,6 +127,7 @@ class MyVideoItem extends Component<Props, void> {
     const isPublished = isVideoPublished(video)
     const title = video.title || video.filename
     const urlToPlay = '/play/' + video.id
+    const urlToEdit = '/edit/' + video.id
     let poster = ''
     let videoPoster = ''
     let durationNoMillis = '00:00'
@@ -141,34 +147,32 @@ class MyVideoItem extends Component<Props, void> {
 
     const videoContent = (
       <Fragment>
-        <MyVideoItemMedia>
+        <MyVideoItemMedia isPublished={isPublished}>
           <MyVideoItemImage source={videoPoster} />
           {isPublished ? (
-            <VideoTimeDisplay>{durationNoMillis}</VideoTimeDisplay>
+            <Fragment>
+              <VideoTimeDisplay>{durationNoMillis}</VideoTimeDisplay>
+              <IconPlay>
+                <SVGIcon icon="icon-player-play" />
+              </IconPlay>
+              <VideoMediaBackground />
+            </Fragment>
           ) : null}
-          <IconPlay>
-            <SVGIcon icon="icon-player-play" />
-          </IconPlay>
         </MyVideoItemMedia>
         <MyVideoItemInfo>
           <MyVideoItemsTitle bold accent>
             {title}
           </MyVideoItemsTitle>
           <Text small>0 views</Text>
-          <Text small primary bold>
+          <Text small>
             <TranslatedText message="myVideos.item.status.label" />
             {': '}
-            <Span highlight={true} warn={false} small regular>
+            <Span highlight={isPublished} small>
               <TranslatedText message={statusMsg} />
             </Span>
           </Text>
           <Text small>0 days ago</Text>
         </MyVideoItemInfo>
-        <EditButtonWrapper>
-          <TextButton primary>
-            <SVGIcon width="20px" height="20px" icon="icon-edit" />
-          </TextButton>
-        </EditButtonWrapper>
       </Fragment>
     )
 
@@ -178,7 +182,16 @@ class MyVideoItem extends Component<Props, void> {
       <MyVideoItemButton>{videoContent}</MyVideoItemButton>
     )
 
-    return <Wrapper>{MyVideoItemContent}</Wrapper>
+    return (
+      <Wrapper>
+        {MyVideoItemContent}
+        <EditButtonWrapper>
+          <EditButton to={urlToEdit}>
+            <SVGIcon width="20px" height="20px" icon="icon-edit" />
+          </EditButton>
+        </EditButtonWrapper>
+      </Wrapper>
+    )
   }
 }
 

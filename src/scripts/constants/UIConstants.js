@@ -84,11 +84,20 @@ export const RADIO_SIZE: string = '18px'
 // Loader
 export const BASE_LOADER_DIMENSION: string = '50px'
 
-// Video Manager
-export const VIDEOMANAGER_FILEUPLOADERWRAPPER_MARGIN: string = '100px 0'
-
 // Search Input
 export const SEARCHINPUTBUTTON_WIDTH: string = '15px'
 export const SEARCHINPUTBUTTON_HEIGHT: string = '30px'
 export const SEARCHINPUTBUTTON_MARGIN: string = '0 10px'
 export const SEARCHINPUTFIELD_PADDING: string = '0 7px'
+
+// Video Manager
+export const VIDEOMANAGER_FILEUPLOADERWRAPPER_MARGIN: string = '100px 0'
+
+// Video Form
+export const VIDEOFORM_PADDING_VERTICAL: string = '42px'
+export const VIDEOFORM_PADDING_HORIZONTAL: string = '50px'
+export const VIDEOFORM_CONTAINER_MARGIN_BOTTOM: string = '25px'
+export const VIDEOFORM_HEADER_ICON_WIDTH: string = '22px'
+export const VIDEOFORM_HEADER_ICON_HEIGHT: string = '12px'
+export const VIDEOFORM_HEADER_PADDING_BOTTOM: string = '50px'
+export const VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT: string = '35px'
