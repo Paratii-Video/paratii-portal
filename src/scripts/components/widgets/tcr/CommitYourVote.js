@@ -3,9 +3,9 @@
 // import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import ButtonColor from 'components/foundations/Button'
+import Button from 'components/foundations/Button'
 import Text from 'components/foundations/Text'
-import { CardStyle } from 'components/structures/Card'
+import Card from 'components/structures/Card'
 import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
@@ -15,11 +15,6 @@ type Props = {
   openModal: string => void,
   checkUserWallet: () => void
 }
-const INFOSTATUS_CARD_MARGIN_BOTTOM: string = '15px'
-
-const InfoStatus = styled.div`
-  ${CardStyle} margin-bottom: ${INFOSTATUS_CARD_MARGIN_BOTTOM};
-`
 
 const InfoStatusTitle = styled(Text)`
   display: flex;
@@ -29,14 +24,14 @@ const InfoStatusTitle = styled(Text)`
 const InfoStatusContent = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 0 20px;
+  margin: ${({ margin }) => margin};
 `
 
 const InfoStatusButtons = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  ${ButtonColor} {
+  ${Button} {
     flex: 0 0 49%;
   }
 `
@@ -61,28 +56,25 @@ class CommitYourVote extends Component<Props, void> {
 
   render () {
     return (
-      <InfoStatus>
-        <InfoStatusContent>
-          <InfoStatusTitle>Commit your vote</InfoStatusTitle>
-        </InfoStatusContent>
-        <InfoStatusContent>
-          <Text gray>
+      <Card>
+        <InfoStatusTitle big accent>
+          Commit your side
+        </InfoStatusTitle>
+        <InfoStatusContent margin="36px 0 30px">
+          <Text>
             This video has been challenged, and we need your input! Please vote.
             You will not lose any tokens, but you may win some!
           </Text>
         </InfoStatusContent>
-        <InfoStatusContent>
-          <InfoStatusTitle>Choose wisely</InfoStatusTitle>
-        </InfoStatusContent>
         <InfoStatusButtons>
-          <ButtonColor green onClick={() => this.voteVideo(1)}>
+          <Button accent onClick={() => this.voteVideo(1)}>
             Support
-          </ButtonColor>
-          <ButtonColor pink onClick={() => this.voteVideo(0)}>
+          </Button>
+          <Button highlight onClick={() => this.voteVideo(0)}>
             Oppose
-          </ButtonColor>
+          </Button>
         </InfoStatusButtons>
-      </InfoStatus>
+      </Card>
     )
   }
 }
