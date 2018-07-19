@@ -15,7 +15,7 @@ const mapStateToProps = (state: RootState) => {
   // - inReveal:  a challange was made (tcrStatus.challange != {}) and currentTime > commitEndDate and currentTime < revealEndDate
   // - videoApproved: currentTime > revealEnddata and isWhitelisted
   // - videoRejected: currentTime > revealEnddata and !isWhitelisted
-  const tcrState = 'videoApproved'
+  const tcrState = 'inReveal'
   // moreover, a second state regulates the vote, and is one
   // - voteCommited
   // -  voteRevealed
