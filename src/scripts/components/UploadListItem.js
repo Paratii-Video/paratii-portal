@@ -267,7 +267,7 @@ class UploadListItem extends Component<Props, Object> {
   }
 
   async componentDidMount () {
-    const stakeAmountBN = await paratii.eth.tcrPlaceholder.getMinDeposit()
+    const stakeAmountBN = await paratii.eth.tcr.getMinDeposit()
     const stakeAmount = stakeAmountBN.toString()
     this.setState({
       stakeAmount

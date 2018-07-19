@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import ButtonColor from 'components/foundations/Button'
-import Text, { Strong } from 'components/foundations/Text'
+import Text from 'components/foundations/Text'
 import { CardStyle } from 'components/structures/Card'
 import SVGIcon from 'components/foundations/SVGIcon'
 
@@ -42,13 +42,11 @@ export default class SendYourVoteBack extends Component<Props, void> {
         </InfoStatusContent>
         <InfoStatusContent>
           <Text gray>
-            Wait until the commit period ends to reveal your vote. You will send
-            it
-            <Strong purple>back</Strong> when the reveal period starts. If you
-            don’t send it back your vote is not going to be counted.
+            You have previously cast a secret vote, and now is the time to
+            reveal it!
           </Text>
         </InfoStatusContent>
-        <ButtonColor>Send back your vote</ButtonColor>
+        <ButtonColor>Reveal your vote</ButtonColor>
       </InfoStatus>
     )
   }

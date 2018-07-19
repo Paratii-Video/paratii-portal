@@ -67,12 +67,12 @@ class CommitYourVote extends Component<Props, void> {
         </InfoStatusContent>
         <InfoStatusContent>
           <Text gray>
-            This video has been published in our network. If it has anything
-            that goes against our policy challenge it and you’ll be rewarded
+            This video has been challenged, and we need your input! Please vote.
+            You will not lose any tokens, but you may win some!
           </Text>
         </InfoStatusContent>
         <InfoStatusContent>
-          <InfoStatusTitle>Choose wise</InfoStatusTitle>
+          <InfoStatusTitle>Choose wisely</InfoStatusTitle>
         </InfoStatusContent>
         <InfoStatusButtons>
           <ButtonColor green onClick={() => this.voteVideo(1)}>

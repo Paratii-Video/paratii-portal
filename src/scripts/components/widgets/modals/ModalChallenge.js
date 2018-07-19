@@ -79,7 +79,7 @@ class ModalChallenge extends Component<Props, Object> {
   }
 
   async componentDidMount () {
-    const stakeAmountBN = await paratii.eth.tcrPlaceholder.getMinDeposit()
+    const stakeAmountBN = await paratii.eth.tcr.getMinDeposit()
     const stakeAmountWei = stakeAmountBN.toString()
     const stakeAmount = paratii.eth.web3.utils.fromWei(stakeAmountWei)
     this.setState({

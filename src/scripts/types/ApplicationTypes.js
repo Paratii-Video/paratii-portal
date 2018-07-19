@@ -192,11 +192,11 @@ export type ParatiiLib = {
       approveAndStartChallenge: string => void,
       approveAndGetRightsAndCommitVote: (string, number, number) => void
     },
-    tcrPlaceholder: {
-      apply: (string, number) => Promise<Object>,
-      checkEligiblityAndApply: (string, number) => Promise<Object>,
-      getMinDeposit: () => string
-    },
+    // tcrPlaceholder: {
+    //   apply: (string, number) => Promise<Object>,
+    //   checkEligiblityAndApply: (string, number) => Promise<Object>,
+    //   getMinDeposit: () => string
+    // },
     transfer: (address: string, amount: number, unit: TokenUnit) => void
   },
   ipfs: {

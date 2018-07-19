@@ -59,7 +59,7 @@ class WhiteListed extends Component<Props, void> {
         <InfoStatusContent>
           <Text gray>
             This video has been published in our network. If it has anything
-            that goes against our policy challenge it and you’ll be rewarded
+            that goes against our policy challenge it and you may be rewarded
           </Text>
         </InfoStatusContent>
         <ButtonColor onClick={this.challengeVideo}>

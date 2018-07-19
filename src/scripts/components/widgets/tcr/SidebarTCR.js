@@ -10,13 +10,18 @@ import VideoRejected from './VideoRejected'
 import VoteCommitted from './VoteCommitted'
 import VoteRevealed from './VoteRevealed'
 import Voting from './Voting'
-import { VOTE_STATE } from 'constants/TCRConstants'
 
 type Props = {
   videoId: string,
-  whiteListed: boolean,
-  videoChallengeExists: boolean,
-  voteStatus: string,
+  isWhitelisted: boolean,
+  inChallenge: boolean,
+  inReveal: boolean,
+  videoApproved: boolean,
+  // videoRejected: boolean,
+  hasBeenChallenged: boolean,
+  challengeEnded: boolean,
+  voteCommited: boolean,
+  voteRevealed: boolean,
   fetchChallenge: string => void
 }
 
@@ -36,23 +41,23 @@ class SidebarTCR extends Component<Props, void> {
   render () {
     const {
       videoId,
-      whiteListed,
-      videoChallengeExists,
-      voteStatus
+      isWhitelisted,
+      inChallenge,
+      inReveal,
+      videoApproved,
+      // videoRejected,
+      hasBeenChallenged,
+      challengeEnded,
+      voteCommited,
+      voteRevealed
     } = this.props
-
-    // Vote status
-    const voteCommited = voteStatus === VOTE_STATE.COMMITTED
-    const voteSent = voteStatus === VOTE_STATE.REVEALED
-    const videoApproved = voteStatus === VOTE_STATE.APPROVED
-
-    const endVote = false
 
     return (
       <Sidebar>
-        {whiteListed && <WhiteListed videoId={videoId} />}
+        {isWhitelisted &&
+          !hasBeenChallenged && <WhiteListed videoId={videoId} />}
 
-        {!whiteListed && videoChallengeExists ? (
+        {inChallenge && (
           <div>
             <ChallengePeriod status="challenged" />
             {voteCommited ? (
@@ -61,20 +66,21 @@ class SidebarTCR extends Component<Props, void> {
               <CommitYourVote videoId={videoId} />
             )}
           </div>
-        ) : (
+        )}
+        {inReveal && (
           <div>
             <ChallengePeriod status="inReveal" />
-            {voteSent ? <VoteRevealed /> : <SendYourVoteBack />}
+            {voteRevealed ? <VoteRevealed /> : <SendYourVoteBack />}
           </div>
         )}
 
-        {!whiteListed &&
-          endVote && (
+        {challengeEnded && (
           <div>
             <Voting />
             {videoApproved ? <VideoApproved /> : <VideoRejected />}
           </div>
         )}
+        <tt>isWhitelisted: {isWhitelisted}</tt>
       </Sidebar>
     )
   }
