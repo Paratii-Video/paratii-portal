@@ -3,8 +3,8 @@
     "provider": "http://localhost:8545",
     "tcrConfig": {
       "paramDefaults": {
-        "minDeposit": 5,
-        "pMinDeposit": 100,
+        "minDeposit": 5e18,
+        "pMinDeposit": 100e18,
         "applyStageLength": 0,
         "pApplyStageLength": 0,
         "commitStageLength": 600,
