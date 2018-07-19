@@ -3,6 +3,7 @@ import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Text, { Strong } from 'components/foundations/Text'
+import Title from 'components/foundations/Title'
 import Button from 'components/foundations/Button'
 import UserRecord from 'records/UserRecords'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
@@ -19,9 +20,7 @@ type Props = {
   loadBalances: () => void
 }
 
-const Title = styled.h2`
-  color: ${props => props.theme.colors.Modal.title};
-  font-size: ${props => props.theme.fonts.modal.title};
+const ModalTitle = styled(Title)`
   margin-bottom: 25px;
 `
 
@@ -102,7 +101,7 @@ class ModalChallenge extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Challenge this video</Title>
+          <ModalTitle accent>Challenge this video</ModalTitle>
           <Highlight>
             By challenging this video you agree to make a stake deposit of{' '}
             <Strong purple>{minDeposit} PTI</Strong>. This will trigger the{' '}
