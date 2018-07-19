@@ -5,7 +5,7 @@ import Text from 'components/foundations/Text'
 import { CardStyle } from 'components/structures/Card'
 import Title from 'components/foundations/Title'
 import ProgressBar, {
-  ProgressBarWrapper
+  ProgressBarContainer
 } from 'components/foundations/ProgressBar'
 
 type Props = {}
@@ -47,7 +47,7 @@ const VotingValue = styled.div`
   text-align: center;
 `
 
-const VotingBarWrapper = styled(ProgressBarWrapper)`
+const VotingBarWrapper = styled(ProgressBarContainer)`
   background: ${props => props.theme.colors.ProfileCuration.VotingBarTwo};
   margin: 20px 0 25px;
 `
