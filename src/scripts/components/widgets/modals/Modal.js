@@ -1,8 +1,8 @@
 /* @flow */
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Z_INDEX_MODAL } from 'constants/UIConstants'
-import Button from 'components/foundations/Button'
+import { Z_INDEX_MODAL, BORDER_RADIUS } from 'constants/UIConstants'
+import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 
 import ModalStake from 'containers/widgets/modals/ModalStakeContainer' // need to receive any content
@@ -40,7 +40,7 @@ const Wrapper = styled.div`
 `
 
 const Background = styled.span`
-  background: ${props => props.theme.colors.Modal.background};
+  background: ${props => props.theme.colors.background.body};
   content: '';
   height: 100%;
   left: 0;
@@ -53,8 +53,9 @@ const Background = styled.span`
 `
 
 const Container = styled.div`
-  background: ${props => props.theme.colors.Modal.content};
-  border-radius: 4px;
+  background: ${props => props.theme.colors.background.primary};
+  border-radius: ${BORDER_RADIUS};
+  box-shadow: ${props => props.theme.colors.Modal.shadow};
   position: relative;
   margin: 0 40px;
   opacity: ${props => (props.show ? '1' : '0')};
@@ -74,7 +75,7 @@ const Container = styled.div`
   }
 `
 
-const CloseButton = styled(Button)`
+const CloseButton = styled(TextButton)`
   height: 20px;
   position: absolute;
   right: 30px;

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import Button from '../foundations/Button'
+import styled from 'styled-components'
+import TextButton from '../foundations/TextButton'
 import Title from '../foundations/Title'
 import Text from '../foundations/Text'
-import styled from 'styled-components'
+import TranslatedText from 'components/translations/TranslatedText'
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,14 +25,16 @@ type Props = {
   children: any
 }
 
-const NavLink = Button.withComponent('a')
+const NavLink = TextButton.withComponent('a')
 
-class NotFound extends Component<Props, void> {
+class VideoNotFound extends Component<Props, void> {
   render () {
     return (
       <Wrapper>
-        <Title purple>Oooooops, video not found!</Title>
-        <Text gray>{this.props.children}</Text>
+        <Title accent>
+          <TranslatedText message="videoNotFound.title" />
+        </Title>
+        <Text>{this.props.children}</Text>
         <SVG viewBox="1644 3231.982 710.6 165.593">
           <defs>
             <linearGradient
@@ -60,21 +63,19 @@ class NotFound extends Component<Props, void> {
             />
           </g>
         </SVG>
-        <Text gray>
-          The video you are looking for doesn&apos;t exist. If you think
-          it&apos;s a bug you can report it on our{' '}
+        <Text>
+          <TranslatedText message="videoNotFound.description" />{' '}
           <NavLink
             href="https://github.com/Paratii-Video/"
             target="_blank"
             anchor
-            purple
           >
-            Github
-          </NavLink>?
+            <TranslatedText message="videoNotFound.linkText" />
+          </NavLink>
         </Text>
       </Wrapper>
     )
   }
 }
 
-export default NotFound
+export default VideoNotFound

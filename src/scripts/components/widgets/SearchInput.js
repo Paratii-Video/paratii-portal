@@ -3,8 +3,16 @@ import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { StyleFieldText } from 'components/foundations/forms/Input'
-import Button from 'components/foundations/Button'
+import { ButtonStyleHover } from 'components/foundations/Button'
 import SVGIcon from 'components/foundations/SVGIcon'
+import {
+  BORDER_RADIUS,
+  INPUT_HEIGHT,
+  SEARCHINPUTBUTTON_WIDTH,
+  SEARCHINPUTBUTTON_HEIGHT,
+  SEARCHINPUTBUTTON_MARGIN,
+  SEARCHINPUTFIELD_PADDING
+} from 'constants/UIConstants'
 import { SEARCH_PATH } from 'constants/UrlConstants'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
@@ -20,26 +28,24 @@ type Props = {
 
 const SearchInputForm = styled.form`
   align-items: center;
-  background-color: ${props => props.theme.colors.Nav.search.background};
-  border-radius: 4px;
+  background-color: ${props => props.theme.colors.background.body};
+  border-radius: ${BORDER_RADIUS};
   display: inline-flex;
   flex-direction: row-reverse;
   width: 100%;
 `
 
 const SearchInputField = styled.input`
-  ${StyleFieldText} height: ${props => props.theme.sizes.mainInput.height};
-  padding-left: 7px;
-  padding-right: 7px;
+  ${StyleFieldText} height: ${INPUT_HEIGHT};
+  padding: ${SEARCHINPUTFIELD_PADDING};
 `
 
-const SEARCH_BUTTON_DIMENSION: string = '27px'
-
-const SearchInputButton = styled(Button)`
-  flex: 0 0 ${SEARCH_BUTTON_DIMENSION};
-  height: ${SEARCH_BUTTON_DIMENSION};
-  padding-left: 10px;
-  margin-right: 10px;
+const SearchInputButton = styled.button`
+  ${ButtonStyleHover};
+  color: ${({ theme }) => theme.colors.text.primary};
+  flex: 0 0 ${SEARCHINPUTBUTTON_WIDTH};
+  height: ${SEARCHINPUTBUTTON_HEIGHT};
+  margin: ${SEARCHINPUTBUTTON_MARGIN};
 `
 
 class SearchInput extends Component<Props, void> {

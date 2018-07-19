@@ -123,7 +123,7 @@ before(async function (done) {
 
 beforeEach(() => {
   browser.setViewportSize({
-    width: 1400,
+    width: 1441,
     height: 800
   })
 })

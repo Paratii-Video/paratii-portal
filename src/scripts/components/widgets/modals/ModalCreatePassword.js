@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Title from 'components/foundations/Title'
 import TextField from 'components/widgets/forms/TextField'
 import Text from 'components/foundations/Text'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import PadLockSvg from 'components/foundations/svgs/PadlockSvg'
 import TranslatedText from 'components/translations/TranslatedText'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
@@ -199,10 +199,10 @@ class ModalSetPassword extends Component<Props, State> {
       <ModalContentWrapper>
         <ModalScrollContent>
           <form id={FORM_ID} onSubmit={this.setPassword}>
-            <Title>
+            <Title accent>
               <TranslatedText message="wallet.choosePassword.title" />
             </Title>
-            <Text small gray>
+            <Text small>
               <TranslatedText message="wallet.choosePassword.description_html" />
             </Text>
             <Icon>
@@ -237,20 +237,20 @@ class ModalSetPassword extends Component<Props, State> {
           {this.renderErrors()}
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.secureAccount}>
+              <TextButton onClick={this.secureAccount}>
                 <TranslatedText message="wallet.choosePassword.back" />
-              </Button>
+              </TextButton>
             </ButtonContainer>
             <ButtonContainer>
-              <Button
+              <TextButton
                 form={FORM_ID}
                 type="submit"
                 data-test-id="continue"
-                purple
+                accent
                 disabled={!this.state.confirm}
               >
                 <TranslatedText message="wallet.choosePassword.continue" />
-              </Button>
+              </TextButton>
             </ButtonContainer>
           </Footer>
         </ModalScrollContent>

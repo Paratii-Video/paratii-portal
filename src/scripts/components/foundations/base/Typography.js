@@ -8,7 +8,32 @@ const Typography = {
     bold: 700
   },
   anchor: '0.75rem',
-  button: '0.8rem',
+  button: {
+    big: '1rem',
+    main: '0.82rem',
+    small: '0.75rem'
+  },
+  title: {
+    bigger: '2.2rem',
+    huge: '2.7rem',
+    big: '2rem',
+    main: '1.75rem',
+    small: '1.5rem',
+    hugeLineHeight: '1.4',
+    bigLineHeight: '1.7',
+    mainLineHeight: '1.6',
+    smallLineHeight: '1.6'
+  },
+  text: {
+    big: '1.1rem',
+    main: '1rem',
+    small: '0.9rem',
+    tiny: '0.7rem',
+    bigLineHeight: '1.5',
+    mainLineHeight: '1.75',
+    smallLineHeight: '1.88',
+    tinyLineHeight: '1.7'
+  },
   footer: {
     text: '0.7rem'
   },
@@ -32,7 +57,6 @@ const Typography = {
       subtitle: '0.8rem'
     },
     info: {
-      time: '0.8rem',
       progress: '0.8rem',
       percentual: '0.7rem'
     },
@@ -42,7 +66,6 @@ const Typography = {
       status: '0.8rem'
     },
     share: {
-      title: '1.5rem',
       link: '1.3rem'
     },
     quality: {
@@ -53,27 +76,6 @@ const Typography = {
   radio: {
     title: '0.8rem',
     label: '0.8rem'
-  },
-  title: {
-    bigger: '2.2rem',
-    huge: '2.7rem',
-    big: '2rem',
-    main: '1.75rem',
-    small: '1.5rem',
-    hugeLineHeight: '1.4',
-    bigLineHeight: '1.7',
-    mainLineHeight: '1.6',
-    smallLineHeight: '1.6'
-  },
-  text: {
-    big: '1.1rem',
-    main: '1rem',
-    small: '0.9rem',
-    tiny: '0.7rem',
-    bigLineHeight: '1.5',
-    mainLineHeight: '1.75',
-    smallLineHeight: '1.88',
-    tinyLineHeight: '1.7'
   },
   popover: {
     title: '1.12rem'

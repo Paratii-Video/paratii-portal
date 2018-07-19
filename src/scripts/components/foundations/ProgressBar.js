@@ -3,12 +3,12 @@
 import styled from 'styled-components'
 
 /* prettier-ignore */
-export const ProgressBarWrapper = styled.div`
+export const ProgressBarContainer = styled.div`
   width: 100%;
   height: ${props => props.small ? '2px' : '3px'};
   overflow: hidden;
   position: relative;
-  background: ${props => props.theme.colors.bar.base};`
+  background: ${props => props.theme.colors.text.secondary};`
 
 const ProgressBar = styled.div.attrs({
   style: ({ current, total }) => ({
@@ -20,10 +20,11 @@ const ProgressBar = styled.div.attrs({
   height: 100%;
   background: linear-gradient(
     to right,
-    ${({ theme }) => `${theme.colors.bar.from}, ${theme.colors.bar.to}`}
+    ${({ theme }) =>
+    `${theme.colors.button.primaryFrom}, ${theme.colors.button.primaryTo}`}
   );
   background: ${props =>
-    props.colorful ? null : props.theme.colors.bar.buffer};
+    props.colorful ? null : props.theme.colors.text.primary};
   width: 100%;
 `
 

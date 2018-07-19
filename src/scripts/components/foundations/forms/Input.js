@@ -1,15 +1,16 @@
 import styled, { css, keyframes } from 'styled-components'
+import { INPUT_HEIGHT } from 'constants/UIConstants'
 
 const AutofillFix = props => keyframes`
   to {
-    color: ${props.theme.colors.TextField.color};
+    color: ${props.theme.colors.text.primary};
     background: transparent;
   }
 `
 
 export const StyleFieldText = css`
   background-color: transparent;
-  color: ${props => props.theme.colors.TextField.color};
+  color: ${props => props.theme.colors.text.primary};
   font-family: ${props => props.theme.fonts.family}, sans-serif;
   font-size: ${props => props.theme.fonts.form.input};
   font-weight: ${props => props.theme.fonts.weight.regular};
@@ -26,20 +27,19 @@ export const StyleFieldTextStates = css`
   border-bottom: 1px solid
     ${props =>
     props.error
-      ? props.theme.colors.TextField.error
-      : props.theme.colors.TextField.border};
+      ? props.theme.colors.text.warn
+      : props.theme.colors.text.secondary};
   display: block;
-  transition: border-color ${props => props.theme.animation.time.repaint};
+  transition: border-color 0.3s;
   width: 100%;
 
   &:focus {
-    border-color: ${props => props.theme.colors.TextField.borderFocus};
+    border-color: ${props => props.theme.colors.text.highlight};
   }
 `
 
 const Input = styled.input`
-  ${StyleFieldText} ${StyleFieldTextStates} height: ${props =>
-  props.theme.sizes.mainInput.height};
+  ${StyleFieldText} ${StyleFieldTextStates} height: ${INPUT_HEIGHT};
   position: relative;
   z-index: 2;
 `

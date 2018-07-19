@@ -13,8 +13,7 @@ const Wrapper = styled.div`
 `
 
 const BarWrapper = styled.div`
-  background-color: ${props =>
-    props.theme.colors.VideoForm.info.progress.background};
+  background-color: ${props => props.theme.colors.text.secondary};
   height: ${props => (props.small ? '1px' : '3px')};
   position: relative;
   width: 100%;
@@ -23,8 +22,8 @@ const BarWrapper = styled.div`
 const Bar = styled.span`
   background: linear-gradient(
     to right,
-    ${props => props.theme.colors.VideoForm.info.progress.barFrom} 0%,
-    ${props => props.theme.colors.VideoForm.info.progress.barTo} 100%
+    ${props => props.theme.colors.button.primaryFrom} 0%,
+    ${props => props.theme.colors.button.primaryTo} 100%
   );
   height: 100%;
   left: 0;
@@ -35,7 +34,7 @@ const Bar = styled.span`
 
 const Precentual = styled.span`
   bottom: -5px;
-  color: ${props => props.theme.colors.VideoForm.info.progress.color};
+  color: ${props => props.theme.colors.text.primary};
   font-size: ${props => props.theme.fonts.video.info.percentual};
   position: absolute;
   right: 0;

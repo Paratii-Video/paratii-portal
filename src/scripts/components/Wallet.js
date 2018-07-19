@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Card from 'components/structures/Card'
-import Text from 'components/foundations/Text'
-import Button from './foundations/Button'
+import Text, { Strong } from 'components/foundations/Text'
+import TextButton from './foundations/TextButton'
 import paratii from 'utils/ParatiiLib'
 import { MODAL } from 'constants/ModalConstants'
 import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
@@ -29,26 +29,32 @@ class Wallet extends Component<Props> {
   render () {
     const balance = this.props.user.balances.PTI
     return (
-      <Card title="Wallet">
+      <Card
+        title="Wallet"
+        maxWidth
+        footer={
+          ACTIVATE_SECURE_WALLET &&
+          !this.props.isWalletSecured && (
+            <TextButton
+              data-test-id="secure-wallet"
+              onClick={this.secureWallet}
+              accent
+            >
+              Secure Wallet
+            </TextButton>
+          )
+        }
+      >
         <Text>
           Your address is{' '}
-          <strong data-test-id="user-address">{this.props.userAddress}</strong>
+          <Strong primary data-test-id="user-address">
+            {this.props.userAddress}
+          </Strong>
         </Text>
         <Text>
-          You have <strong>{paratii.eth.web3.utils.fromWei(balance)}</strong>{' '}
-          PTI
+          You have{' '}
+          <Strong primary>{paratii.eth.web3.utils.fromWei(balance)}</Strong> PTI
         </Text>
-        <br />
-        {ACTIVATE_SECURE_WALLET &&
-          !this.props.isWalletSecured && (
-          <Button
-            data-test-id="secure-wallet"
-            onClick={this.secureWallet}
-            purple
-          >
-              Secure Wallet
-          </Button>
-        )}
       </Card>
     )
   }

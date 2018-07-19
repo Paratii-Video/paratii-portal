@@ -1,7 +1,6 @@
 /* @flow */
 
 import Animation from 'components/foundations/base/Animation'
-import Sizes from 'components/foundations/base/Sizes'
 import Themes from 'components/foundations/base/Themes'
 import Typography from 'components/foundations/base/Typography'
 
@@ -12,7 +11,6 @@ export const APP_TITLE: string = 'Paratii'
 export const paratiiTheme: Theme = {
   animation: Animation,
   fonts: Typography,
-  sizes: Sizes,
   colors: Themes.dark
 }
 

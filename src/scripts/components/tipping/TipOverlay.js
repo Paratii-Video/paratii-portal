@@ -14,6 +14,7 @@ import {
 
 import Video from 'records/VideoRecords'
 
+import { FlexCenterStyle } from 'components/foundations/Styles'
 import TranslatedText from 'components/translations/TranslatedText'
 import BackButton from 'components/foundations/buttons/BackButton'
 import CloseButton from 'components/foundations/buttons/CloseButton'
@@ -39,13 +40,10 @@ type State = {
 }
 
 const Wrapper = styled.div`
-  width: 100%;
+  ${FlexCenterStyle} width: 100%;
   height: 100%;
   background-color: ${Colors.blackMediumTransparent};
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   text-align: center;
   position: relative;
   cursor: ${({ clickable }) => (clickable ? 'pointer' : undefined)};

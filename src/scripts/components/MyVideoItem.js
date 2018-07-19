@@ -1,10 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import TranslatedText from './translations/TranslatedText'
-import Text from './foundations/Text'
+
+import { FlexCenterStyle } from './foundations/Styles'
+import Text, { Span } from './foundations/Text'
 import { ButtonStyleHover } from './foundations/Button'
+import { ButtonStyleColor } from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
+import VideoTimeDisplay from './foundations/VideoTimeDisplay'
+import TranslatedText from './translations/TranslatedText'
 import { isVideoPublished, videoDuration } from 'operators/VideoOperators'
 import { formatDuration } from '../utils/VideoUtils'
 import type VideoRecord from 'records/VideoRecords'
@@ -13,7 +17,7 @@ type Props = {
   video: VideoRecord
 }
 
-export const MyVideosWrapper = styled.ul`
+export const MyVideosContainer = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 24px;
@@ -33,7 +37,7 @@ export const MyVideosWrapper = styled.ul`
 `
 
 const Wrapper = styled.li`
-  background: ${props => props.theme.colors.MyVideoItem.background};
+  background: ${props => props.theme.colors.background.body};
   position: relative;
 `
 
@@ -48,20 +52,17 @@ const MyVideoItemLink = MyVideoItemButton.withComponent(Link)
 const ZINDEX_MYVIDEOSITEM_COVER: number = 3
 const ZINDEX_MYVIDEOSITEM_IMAGE: number = 1
 const ZINDEX_MYVIDEOSITEM_PLAY: number = 4
-const ZINDEX_MYVIDEOSITEM_TIME: number = 2
 
 const MyVideoItemMedia = styled.div`
-  align-items: center;
-  background: ${props => props.theme.colors.MyVideoItem.imageBackground};
-  display: flex;
+  ${FlexCenterStyle} background: ${props =>
+  props.theme.colors.background.secondary};
   height: 200px;
-  justify-content: center;
   position: relative;
   width: 100%;
 `
 
 const VideoMediaBackground = styled.span`
-  background: ${props => props.theme.colors.MyVideoItem.coverMediaBackground};
+  background: ${props => props.theme.colors.background.body};
   height: 100%;
   left: 0;
   opacity: 0;
@@ -71,7 +72,7 @@ const VideoMediaBackground = styled.span`
   width: 100%;
   z-index: ${ZINDEX_MYVIDEOSITEM_COVER};
   ${MyVideoItemLink}:hover & {
-    opacity: 1;
+    opacity: 0.7;
     transition-delay: 0;
   }
 `
@@ -88,6 +89,7 @@ const MyVideoItemImage = styled.div`
 `
 
 const IconPlay = styled.span`
+  color: ${props => props.theme.colors.text.accent};
   height: 33px;
   position: relative;
   width: 26px;
@@ -96,41 +98,11 @@ const IconPlay = styled.span`
   z-index: ${ZINDEX_MYVIDEOSITEM_PLAY};
   ${MyVideoItemLink}:hover & {
     transform: scale(1);
-    transition-duration: 0.65s;
-    transition-delay: 0.2s;
+    transition-delay: 0.1s;
   }
-`
-
-const VideoMediaTime = styled.div`
-  bottom: 10px;
-  padding: 10px;
-  position: absolute;
-  right: 10px;
-  z-index: ${ZINDEX_MYVIDEOSITEM_TIME};
-
-  &::before {
-    background-color: ${props =>
-    props.theme.colors.VideoForm.info.time.background};
-    border-radius: 2px;
-    content: '';
-    height: 100%;
-    left: 0;
-    opacity: 0.8;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-`
-
-const VideoMediaTimeText = styled.p`
-  color: ${props => props.theme.colors.VideoForm.info.time.color};
-  font-size: ${props => props.theme.fonts.video.info.time};
-  position: relative;
-  z-index: 1;
 `
 
 const MyVideoItemInfo = styled.div`
-  background: ${props => props.theme.colors.MyVideoItem.background};
   padding: 20px;
 `
 
@@ -138,12 +110,14 @@ const MyVideoItemsTitle = Text.extend`
   margin-bottom: 15px;
 `
 
-const MyVideoItemsStatus = Text.withComponent('span')
-
 const EditButtonWrapper = styled.div`
-  ${ButtonStyleHover} bottom: 30px;
+  bottom: 30px;
   position: absolute;
   right: 24px;
+`
+
+const EditButton = styled(Link)`
+  ${ButtonStyleColor} ${ButtonStyleHover} display: block;
 `
 
 class MyVideoItem extends Component<Props, void> {
@@ -177,25 +151,27 @@ class MyVideoItem extends Component<Props, void> {
           <MyVideoItemImage source={videoPoster} />
           {isPublished ? (
             <Fragment>
-              <VideoMediaTime>
-                <VideoMediaTimeText>{durationNoMillis}</VideoMediaTimeText>
-              </VideoMediaTime>
+              <VideoTimeDisplay>{durationNoMillis}</VideoTimeDisplay>
               <IconPlay>
-                <SVGIcon color="white" icon="icon-player-play" />
+                <SVGIcon icon="icon-player-play" />
               </IconPlay>
               <VideoMediaBackground />
             </Fragment>
           ) : null}
         </MyVideoItemMedia>
         <MyVideoItemInfo>
-          <MyVideoItemsTitle bold>{title}</MyVideoItemsTitle>
-          <Text gray small>
+          <MyVideoItemsTitle bold accent>
+            {title}
+          </MyVideoItemsTitle>
+          <Text small>0 views</Text>
+          <Text small>
             <TranslatedText message="myVideos.item.status.label" />
             {': '}
-            <MyVideoItemsStatus purple={isPublished} gray={!isPublished} small>
+            <Span highlight={isPublished} small>
               <TranslatedText message={statusMsg} />
-            </MyVideoItemsStatus>
+            </Span>
           </Text>
+          <Text small>0 days ago</Text>
         </MyVideoItemInfo>
       </Fragment>
     )
@@ -210,9 +186,9 @@ class MyVideoItem extends Component<Props, void> {
       <Wrapper>
         {MyVideoItemContent}
         <EditButtonWrapper>
-          <Link to={urlToEdit}>
+          <EditButton to={urlToEdit}>
             <SVGIcon width="20px" height="20px" icon="icon-edit" />
-          </Link>
+          </EditButton>
         </EditButtonWrapper>
       </Wrapper>
     )

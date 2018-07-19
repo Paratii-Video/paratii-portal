@@ -3,12 +3,13 @@ import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import TextField from './forms/TextField'
-import Button from '../foundations/Button'
+import TextButton from '../foundations/TextButton'
 import Text from '../foundations/Text'
 import Card from '../structures/Card'
 
 type Props = {
-  isWalletSecured: Boolean,
+  isWalletSecured: boolean,
+  height: boolean,
   openModal: string => void,
   loadBalances: () => void,
   notification: (Object, string) => void,
@@ -29,11 +30,11 @@ const Wrapper = styled.div`
   width: 100%;
 `
 
-const SubmitButton = styled(Button)`
+const SubmitButton = styled(TextButton)`
   margin: 30px 0 0;
 `
 
-const Anchor = Button.withComponent('a')
+const Anchor = TextButton.withComponent('a')
 
 const FooterWrapper = styled.div`
   padding-bottom: 15px;
@@ -121,15 +122,16 @@ class RedeemVoucher extends Component<Props, Object> {
       <Card
         {...this.props}
         title="Redeem your voucher"
+        height={this.props.height}
         footer={
           <FooterWrapper>
-            <Text small gray>
+            <Text small>
               Have no voucher?{' '}
               <Anchor
                 href="mailto:we@paratii.video"
                 target="_blank"
-                purple
                 anchor
+                accent
               >
                 Drop us a line
               </Anchor>{' '}
@@ -181,6 +183,7 @@ class RedeemVoucher extends Component<Props, Object> {
             name="voucher-code"
           />
           <SubmitButton
+            accent
             onClick={this.redeemVoucher}
             disabled={this.state.disableInput}
             data-test-id="redeem-voucher"
@@ -190,7 +193,7 @@ class RedeemVoucher extends Component<Props, Object> {
           </SubmitButton>
         </Wrapper>
         {this.state.error && (
-          <Text pink small>
+          <Text warn small>
             {this.state.error}
           </Text>
         )}

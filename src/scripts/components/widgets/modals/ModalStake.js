@@ -2,8 +2,9 @@
 import paratii from 'utils/ParatiiLib'
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import UserRecord from 'records/UserRecords'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 
@@ -21,22 +22,16 @@ type Props = {
   loadBalances: () => void
 }
 
-const Title = styled.h2`
-  color: ${props => props.theme.colors.Modal.title};
-  font-size: ${props => props.theme.fonts.modal.title};
-  margin-bottom: 25px;
-`
-
 const Highlight = styled(Text)`
-  color: ${props => props.theme.colors.Modal.hightlight};
-  margin-bottom: 14px;
+  color: ${props => props.theme.colors.Modal.highlight};
+  margin: 14px 0;
 `
 
 const MainText = styled(Text)`
-  margin-bottom: 35px;
+  margin-top: 14px;
 `
 
-const Anchor = Button.withComponent('a')
+const Anchor = TextButton.withComponent('a')
 
 const Footer = styled.div`
   display: flex;
@@ -149,14 +144,14 @@ class ModalStake extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>Stake {minDeposit} PTI</Title>
-          <Highlight>
+          <Title accent>Stake {minDeposit} PTI</Title>
+          <Highlight primary>
             By publishing this video you agree to make a stake deposit of{' '}
             {minDeposit} PTI. The tokens still belong to you, and can be
             retrieved, along with the video, at any time.
           </Highlight>
           {!balanceIsTooLow ? (
-            <MainText small gray>
+            <MainText small>
               For now, with no monetary value, this is mostly an experiment.
               Soon, the community will curate all the content published.
               Well-received videos will see their stakes increase, earning PTI
@@ -168,18 +163,18 @@ class ModalStake extends Component<Props, Object> {
           )}
 
           {this.state.errorMessage && (
-            <MainText pink small>
+            <MainText warn small>
               {this.state.errorMessage}
             </MainText>
           )}
           {balanceIsTooLow ? (
-            <MainText pink>
+            <MainText warn>
               Your balance is too low: you need to stake at least {minDeposit}{' '}
               PTI, but you only have {balanceInPTI}. Have no voucher?{' '}
               <Anchor
                 href="mailto:we@paratii.video"
                 target="_blank"
-                purple
+                accent
                 anchor
               >
                 Drop us a line
@@ -189,14 +184,14 @@ class ModalStake extends Component<Props, Object> {
             </MainText>
           ) : (
             <Footer>
-              <Button
-                purple
+              <TextButton
+                accent
                 onClick={this.onSubmit}
                 disabled={this.disableButton()}
                 data-test-id="button-stake"
               >
                 Continue
-              </Button>
+              </TextButton>
             </Footer>
           )}
         </ModalScrollContent>

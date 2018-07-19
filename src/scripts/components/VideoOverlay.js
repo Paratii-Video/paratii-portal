@@ -3,7 +3,8 @@
 import React, { Component, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
-import Button from 'components/foundations/Button'
+import { FlexCenterStyle } from 'components/foundations/Styles'
+import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
 import PlayerControlsContainer from 'containers/PlayerControlsContainer'
@@ -15,7 +16,13 @@ import { List as ImmutableList } from 'immutable'
 import PlaybackLevels from 'components/widgets/PlaybackLevels'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
-import { VIDEO_OVERLAY_BUTTONS_HEIGHT } from 'constants/UIConstants'
+import {
+  VIDEO_OVERLAY_BUTTONS_HEIGHT,
+  VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH,
+  VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH_MOBILE,
+  VIDEO_OVERLAY_SHARE_BUTTON_WIDTH,
+  VIDEO_OVERLAY_SHARE_BUTTON_WIDTH_MOBILE
+} from 'constants/UIConstants'
 
 import type { TransitionState, PlayerPlugin } from 'types/ApplicationTypes'
 
@@ -99,7 +106,7 @@ const OverlayShadow = styled.span`
 
 const PlayerTitle = Title.extend`
   ${ShowHideTopElements} align-self: flex-start;
-  color: ${props => props.theme.colors.VideoPlayer.header.title};
+  color: ${props => props.theme.colors.text.accent};
   flex: 1 0;
   font-size: ${props => props.theme.fonts.title.big};
   padding: 20px 0 0 25px;
@@ -115,7 +122,7 @@ const PlayerTitle = Title.extend`
   }
 `
 
-const ButtonWrapper = styled.div`
+const ButtonContainer = styled.div`
   ${ShowHideTopElements} align-self: flex-start;
   display: flex;
   flex: 0;
@@ -126,21 +133,28 @@ const ButtonWrapper = styled.div`
   z-index: ${Z_INDEX_BUTTONS};
 `
 
-const ShareButton = Button.extend`
+const ShareButton = TextButton.extend`
+  flex: 0 0 ${VIDEO_OVERLAY_SHARE_BUTTON_WIDTH};
   height: ${VIDEO_OVERLAY_BUTTONS_HEIGHT};
   margin-left: 10px;
-  width: 26px;
 
   @media (max-width: 768px) {
-    width: 20px;
+    flex: 0 0 ${VIDEO_OVERLAY_SHARE_BUTTON_WIDTH_MOBILE};
+  }
+`
+
+const ProfileButtonWrapper = TextButton.extend`
+  flex: 0 0 ${VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH};
+  height: ${VIDEO_OVERLAY_BUTTONS_HEIGHT};
+  margin-left: 10px;
+
+  @media (max-width: 768px) {
+    flex: 0 0 ${VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH_MOBILE};
   }
 `
 
 const CentralizedContent = styled.div`
-  align-items: center;
-  display: flex;
-  height: 100%;
-  justify-content: center;
+  ${FlexCenterStyle} height: 100%;
   left: 0;
   position: absolute;
   top: 0;
@@ -149,6 +163,7 @@ const CentralizedContent = styled.div`
 `
 
 const StartScreenIcon = styled.span`
+  color: ${props => props.theme.colors.text.accent};
   height: 20%;
   opacity: ${props => (props.showStartScreen ? 1 : 0)};
   transition: transform 0.3s ${props => props.theme.animation.ease.smooth};
@@ -188,6 +203,8 @@ class VideoOverlay extends Component<Props> {
 
   render () {
     const {
+      activePlugin,
+      toggleActivePlugin,
       isEmbed,
       showStartScreen,
       onClick,
@@ -223,20 +240,34 @@ class VideoOverlay extends Component<Props> {
               {this.getVideoTitle()}
             </PlayerTitle>
           )}
-          <ButtonWrapper
+          <ButtonContainer
             transitionState={transitionState}
             showShareModal={showShareModal}
           >
+            {isEmbed && (
+              <ProfileButtonWrapper
+                highlight={activePlugin !== PLAYER_PLUGIN.WALLET}
+                accent={activePlugin === PLAYER_PLUGIN.WALLET}
+                data-test-id="wallet-info-button"
+                onClick={(e: Object) => {
+                  e.stopPropagation()
+                  toggleActivePlugin(PLAYER_PLUGIN.WALLET)
+                }}
+              >
+                <SVGIcon icon="icon-profile" />
+              </ProfileButtonWrapper>
+            )}
             <ShareButton
+              highlight
               data-test-id="share-button"
               onClick={(e: Object) => {
                 e.stopPropagation()
                 toggleShareModal(e)
               }}
             >
-              <SVGIcon icon="icon-player-share" color="white" />
+              <SVGIcon icon="icon-player-share" />
             </ShareButton>
-          </ButtonWrapper>
+          </ButtonContainer>
           <CentralizedContent
             transitionState={transitionState}
             showShareModal={showShareModal}
@@ -246,7 +277,7 @@ class VideoOverlay extends Component<Props> {
                 data-test-id="start-screen-icon"
                 showStartScreen={showStartScreen}
               >
-                <SVGIcon color="white" icon="icon-player-play" />
+                <SVGIcon icon="icon-player-play" />
               </StartScreenIcon>
             }
           </CentralizedContent>

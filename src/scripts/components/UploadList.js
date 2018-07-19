@@ -1,10 +1,8 @@
 /* @flow */
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
 import VideoForm from 'containers/VideoFormContainer'
 import Loader from 'components/foundations/Loader'
-
 import type { Map } from 'immutable'
 import type VideoRecord from 'records/VideoRecords'
 
@@ -17,7 +15,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1 0 100%;
-  min-height: 200px;
 `
 
 class UploadList extends Component<Props, void> {

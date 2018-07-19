@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { CARD_PADDING } from 'constants/UIConstants'
 import PTIGuideSvg from '../foundations/svgs/PTIGuideSvg'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import Text from 'components/foundations/Text'
+import Title from 'components/foundations/Title'
+import Card from 'components/structures/Card'
 import TranslatedText from 'components/translations/TranslatedText'
-import Card, { CardTitle } from 'components/structures/Card'
 
 type Props = {
-  margin: String
+  margin: string,
+  height: string
 }
 
 const Wrapper = styled.div`
@@ -30,15 +33,16 @@ const Item = styled.section`
 `
 
 const Header = styled.div`
-  padding: ${props => props.theme.sizes.card.padding};
+  padding: ${CARD_PADDING};
   padding-bottom: 0;
 `
 
 const Subtitle = Text.extend`
-  color: ${props => props.theme.colors.MainCard.subtitle};
+  color: ${props => props.theme.colors.text.secondary};
 `
 
 const AlertIcon = styled.span`
+  color: ${props => props.theme.colors.text.highlight};
   display: inline-block;
   height: 12px;
   margin: 0 5px 0 0;
@@ -70,9 +74,9 @@ const Footer = styled.div`
   padding: 40px 48px;
 `
 
-const ArrowButton = styled(Button)`
+const ArrowButton = styled(TextButton)`
   height: 20px;
-  width: 20px;
+  width: 11px;
 `
 
 const ButtonIcon = styled.div`
@@ -82,15 +86,15 @@ const ButtonIcon = styled.div`
 `
 
 const Index = styled.div`
-  font-size: ${props => props.theme.fonts.card.index};
+  font-size: ${props => props.theme.fonts.text.tiny};
   height: 20px;
-  line-height: 20px;
-  padding: 0 5px;
+  line-height: 22px;
+  padding: 0 10px;
   pointer-events: none;
   user-select: none;
 `
 
-const Anchor = Button.withComponent('a')
+const Anchor = TextButton.withComponent('a')
 
 class PTIGuide extends Component<Props, void> {
   constructor (props) {
@@ -124,17 +128,17 @@ class PTIGuide extends Component<Props, void> {
 
   render () {
     return (
-      <Card nopadding {...this.props} fullAtFirstBreak>
+      <Card nopadding {...this.props} height={this.props.height}>
         <Wrapper>
           <List page={this.state.page}>
             <Item active={this.state.page === 0}>
               <Header>
-                <CardTitle>
+                <Title accent>
                   <TranslatedText message="ptiGuide.title" />
-                </CardTitle>
+                </Title>
                 <Subtitle tiny>
                   <AlertIcon>
-                    <SVGIcon color="purple" icon="icon-alert" />
+                    <SVGIcon icon="icon-alert" />
                   </AlertIcon>
                   <TranslatedText message="ptiGuide.description" />
                 </Subtitle>
@@ -143,16 +147,16 @@ class PTIGuide extends Component<Props, void> {
                 <PTIGuideSvg />
               </Icon>
               <Content>
-                <ContentTitle big purple>
+                <ContentTitle big highlight>
                   <TranslatedText message="ptiGuide.callToAction" />
                 </ContentTitle>
               </Content>
             </Item>
             <Item active={this.state.page === 1}>
               <Header>
-                <CardTitle>
+                <Title accent>
                   <TranslatedText message="ptiGuide.ptiGuide" />
-                </CardTitle>
+                </Title>
               </Header>
               <Content>
                 <TextStrong>
@@ -165,9 +169,9 @@ class PTIGuide extends Component<Props, void> {
             </Item>
             <Item active={this.state.page === 2}>
               <Header>
-                <CardTitle>
+                <Title accent>
                   <TranslatedText message="ptiGuide.ptiGuide" />
-                </CardTitle>
+                </Title>
               </Header>
               <Content>
                 <TextStrong>
@@ -180,9 +184,9 @@ class PTIGuide extends Component<Props, void> {
             </Item>
             <Item active={this.state.page === 3}>
               <Header>
-                <CardTitle>
+                <Title accent>
                   <TranslatedText message="ptiGuide.ptiGuide" />
-                </CardTitle>
+                </Title>
               </Header>
               <Content>
                 <TextStrong>
@@ -195,9 +199,9 @@ class PTIGuide extends Component<Props, void> {
             </Item>
             <Item active={this.state.page === 4}>
               <Header>
-                <CardTitle>
+                <Title accent>
                   <TranslatedText message="ptiGuide.ptiGuide" />
-                </CardTitle>
+                </Title>
               </Header>
               <Content>
                 <TextStrong>
@@ -230,7 +234,7 @@ class PTIGuide extends Component<Props, void> {
             disabled={this.state.page === 0}
           >
             <ButtonIcon inverse>
-              <SVGIcon white icon="icon-arrow-horizontal" />
+              <SVGIcon icon="icon-arrow-horizontal" />
             </ButtonIcon>
           </ArrowButton>
           <Index>
@@ -241,7 +245,7 @@ class PTIGuide extends Component<Props, void> {
             disabled={this.state.page >= this.state.total}
           >
             <ButtonIcon>
-              <SVGIcon white icon="icon-arrow-horizontal" />
+              <SVGIcon icon="icon-arrow-horizontal" />
             </ButtonIcon>
           </ArrowButton>
         </Footer>

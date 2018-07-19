@@ -18,7 +18,7 @@ type Props = {
 // `
 
 const Wrapper = styled.div`
-  background-color: ${props => props.theme.colors.body.background};
+  background-color: ${props => props.theme.colors.background.body};
   display: flex;
   min-height: 100vh;
   flex-direction: column;
