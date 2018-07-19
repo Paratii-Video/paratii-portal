@@ -3,16 +3,92 @@
 import { List as ImmutableList, Record as ImmutableRecord } from 'immutable'
 import {
   AsyncTaskStatusRecord,
-  TcrStatusRecord
+  DataStatusRecord
 } from 'records/AsyncTaskStatusRecord'
-// import { StakingRecord } from 'records/StakingRecord'
+
+export type TcrStatusName = 'notInTcr' | 'appWasMade'
+
+class TcrStakedRecord extends ImmutableRecord({
+  id: null,
+  deposit: '',
+  appEndDate: null,
+  blockNumber: null,
+  applicant: null
+}) {
+  id: string
+  deposit: string
+  appEndDate: number
+  blockNumber: number
+  applicant: string
+}
+
+class TcrChallengeRecord extends ImmutableRecord({
+  voteQuorum: null,
+  blockNumber: null,
+  challenger: '',
+  commitEndDate: null,
+  commitStartDate: null,
+  listingHash: '',
+  revealEndDate: null,
+  rewardPool: null,
+  totalTokens: null,
+  id: null,
+  votesFor: null,
+  totalVotes: null,
+  votesAgainst: null
+}) {
+  voteQuorum: number
+  blockNumber: number
+  challenger: string
+  commitEndDate: number
+  commitStartDate: number
+  listingHash: string
+  revealEndDate: number
+  rewardPool: number
+  totalTokens: number
+  id: string
+  votesFor: number
+  totalVotes: number
+  votesAgainst: number
+}
+
+export class TcrDataRecord extends ImmutableRecord({
+  staked: new TcrStakedRecord(),
+  challenge: new TcrChallengeRecord()
+}) {
+  staked: TcrStakedRecord
+  challenge: TcrChallengeRecord
+  constructor ({ staked, challenge, ...rest }: Object = {}) {
+    super({
+      ...rest,
+      staked: new TcrStakedRecord(staked),
+      challenge: new TcrChallengeRecord(challenge)
+    })
+  }
+}
+
+export class TcrStatusRecord extends ImmutableRecord({
+  name: 'notInTcr',
+  data: new TcrDataRecord()
+}) {
+  name: TcrStatusName
+  data: DataStatusRecord
+
+  constructor ({ data, ...rest }: Object = {}) {
+    super({
+      ...rest,
+      data: new TcrDataRecord(data)
+    })
+  }
+}
 
 class Video extends ImmutableRecord({
+  author: '',
   description: '',
+  duration: '',
   filename: null,
   filesize: null,
-  challengeExists: null,
-  duration: '',
+  free: '',
   id: '',
   ipfsHashOrig: '',
   ipfsHash: '',
@@ -21,11 +97,7 @@ class Video extends ImmutableRecord({
   price: 0,
   thumbnails: ImmutableList(),
   title: '',
-  author: '',
-  free: '',
-  // staked: new StakingRecord(),
   tcrStatus: new TcrStatusRecord(),
-  // whiteListed: null,
   vote: null,
   voteStatus: '',
   storageStatus: new AsyncTaskStatusRecord(),
@@ -33,7 +105,7 @@ class Video extends ImmutableRecord({
   uploadStatus: new AsyncTaskStatusRecord(),
   fetchStatus: new AsyncTaskStatusRecord()
 }) {
-  challengeExists: boolean
+  // challengeExists: boolean
   description: string
   filename: string
   filesize: ?number
@@ -50,7 +122,7 @@ class Video extends ImmutableRecord({
   free: string
   tcrStatus: TcrStatusRecord
   // whiteListed: boolean
-  challengeExists: boolean
+  // challengeExists: boolean
   vote: number
   voteStatus: string
   storageStatus: AsyncTaskStatusRecord

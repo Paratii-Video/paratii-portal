@@ -56,7 +56,6 @@ export const getDefaultTcrStatus = () => ({
 })
 export const getDefaultVideo = () => ({
   author: '',
-  challengeExists: null,
   description: '',
   duration: '',
   fetchStatus: getDefaultAsyncTaskStatus(),

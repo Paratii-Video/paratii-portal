@@ -3,19 +3,21 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchChallenge } from 'actions/TCRActions'
+import { getTcrState } from 'selectors/VideoSelectors'
 import SidebarTCR from 'components/widgets/tcr/SidebarTCR'
 
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState) => {
   // the video can be in one of the following states:
-  // - notInTcr: the default state, we get from the redux state, in tcrStatus.name === notInTcr
-  // - appWasMade: after the app was made, we get this fromt eh redux state stcrStatus.name === 'appWasMade', AND NONE OF THE OTHER STATES APPLY
-  // - inChallenge:  a challange was made (tcrStatus.challange != {}) and currentTime < commitEndDate
-  // - inReveal:  a challange was made (tcrStatus.challange != {}) and currentTime > commitEndDate and currentTime < revealEndDate
+  // - notInTcr: the default state when the video is not published yet
+  // - appWasMade: after the app was made. The video is pbulished and has not yet been chellenged
+  // - inChallenge: the video is being challenged - this is when votes are committed
+  // - inReveal: the votes are cast, and now need to be revealed
   // - videoApproved: currentTime > revealEnddata and isWhitelisted
   // - videoRejected: currentTime > revealEnddata and !isWhitelisted
-  const tcrState = 'inReveal'
+  const tcrState = getTcrState(state)
+  // const tcrState = 'inReveal'
   // moreover, a second state regulates the vote, and is one
   // - voteCommited
   // -  voteRevealed
