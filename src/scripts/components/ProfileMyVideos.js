@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import type { VideoRecord } from 'records/VideoRecords'
 import Title from './foundations/Title'
-import RadioCheck, { RadioWrapper } from './widgets/forms/RadioCheck'
-import MyVideoItem, { MyVideosWrapper } from './MyVideoItem'
+import MyVideoItem, { MyVideosContainer } from './MyVideoItem'
 import FileUploader from '../containers/FileUploaderContainer'
 import TranslatedText from './translations/TranslatedText'
 
 type Props = {
-  videos: Map<string, VideoRecord> // maps video ids to upload records
+  videos: Map<string, VideoRecord>, // maps video ids to upload records
+  isWalletSecured: boolean
 }
 
 const Wrapper = styled.div`
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 
 const ProfileFilterVideos = styled.div`
   align-items: center;
-  background: ${props => props.theme.colors.ProfileMyVideos.filterBackground};
+  background: ${props => props.theme.colors.background.primary};
   display: flex;
   justify-content: space-between;
   padding: 30px 48px;
@@ -31,12 +31,7 @@ const ProfileFilterTitle = styled(Title)`
   flex: 1 1 100%;
 `
 
-const ProfileFilterRadioWrapper = styled(RadioWrapper)`
-  flex-wrap: nowrap;
-  width: auto;
-`
-
-const ProfileMyVideosList = MyVideosWrapper.extend`
+const ProfileMyVideosList = MyVideosContainer.extend`
   margin-top: 24px;
 `
 
@@ -48,45 +43,12 @@ const FileUploaderWrapper = styled.li`
 
 class ProfileMyVideos extends Component<Props, void> {
   render () {
-    return (
+    return this.props.isWalletSecured ? (
       <Wrapper>
         <ProfileFilterVideos>
-          <ProfileFilterTitle small>
+          <ProfileFilterTitle small accent>
             <TranslatedText message="myVideos.title" />
           </ProfileFilterTitle>
-          <ProfileFilterRadioWrapper>
-            <RadioCheck
-              name="myvideos-published"
-              margin="0 20px 0 0"
-              value="published"
-              disabled={true}
-              defaultChecked
-              checkbox
-            >
-              Published
-            </RadioCheck>
-            <RadioCheck
-              name="myvideos-published"
-              margin="0 20px 0 0"
-              value="challenged"
-              disabled={true}
-              defaultChecked
-              checkbox
-            >
-              Challenged
-            </RadioCheck>
-            <RadioCheck
-              name="myvideos-published"
-              margin="0 20px 0 0"
-              value="voting,"
-              disabled={true}
-              defaultChecked
-              checkbox
-              nomargin
-            >
-              On voting
-            </RadioCheck>
-          </ProfileFilterRadioWrapper>
         </ProfileFilterVideos>
         <ProfileMyVideosList>
           {this.props.videos
@@ -94,14 +56,12 @@ class ProfileMyVideos extends Component<Props, void> {
             .map(([videoId, videoInfo]) => (
               <MyVideoItem key={videoId} videoId={videoId} video={videoInfo} />
             ))}
-          {!this.props.videos && (
-            <FileUploaderWrapper>
-              <FileUploader />
-            </FileUploaderWrapper>
-          )}
+          <FileUploaderWrapper>
+            <FileUploader />
+          </FileUploaderWrapper>
         </ProfileMyVideosList>
       </Wrapper>
-    )
+    ) : null
   }
 }
 

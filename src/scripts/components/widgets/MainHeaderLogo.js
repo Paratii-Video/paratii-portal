@@ -14,6 +14,7 @@ const MainLogo = styled.h1`
 `
 
 const MainLogoAnchor = styled(Link)`
+  color: ${({ theme }) => theme.colors.header.logo};
   display: block;
   height: 100%;
   width: 100%;
@@ -24,7 +25,7 @@ class MainHeaderLogo extends Component<Props, void> {
     return (
       <MainLogo>
         <MainLogoAnchor to="/" onClick={this.props.clickOnLogo}>
-          <SVGIcon color="white" icon="paratii-logo" />
+          <SVGIcon icon="paratii-logo" />
         </MainLogoAnchor>
       </MainLogo>
     )

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Colors from 'components/foundations/base/Colors'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import NotepadLockedSvg from 'components/foundations/svgs/NotepadLockedSvg'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
 import { MODAL } from 'constants/ModalConstants'
@@ -60,14 +60,12 @@ class ModalSecure extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>“With great powers, come great responsibilities”</Title>
-          <Text small gray>
-            by Uncle Ben
-          </Text>
+          <Title accent>“With great powers, come great responsibilities”</Title>
+          <Text small>by Uncle Ben</Text>
           <Icon>
             <NotepadLockedSvg />
           </Icon>
-          <MainText small gray>
+          <MainText small>
             On the decentralised internet, no company owns your stuff. Paratii
             cannot hold or hide the data you produce or the money you come to
             earn. It is a network, instead of a corporation.{' '}
@@ -75,7 +73,7 @@ class ModalSecure extends Component<Props, Object> {
               This means you must take care of your belongings here!
             </HighlightText>
           </MainText>
-          <Text small gray>
+          <Text small>
             Click “proceed” and watch as crypto-magic gives you an exclusive set
             of twelve keywords. They are a confidential sequence that works as a
             key to your tokens and digital goods. Like a super-duper secret
@@ -83,14 +81,18 @@ class ModalSecure extends Component<Props, Object> {
           </Text>
           <Footer>
             <ButtonContainer>
-              <Button data-test-id="go-back" onClick={this.secureAccount}>
+              <TextButton data-test-id="go-back" onClick={this.secureAccount}>
                 Go Back
-              </Button>
+              </TextButton>
             </ButtonContainer>
             <ButtonContainer>
-              <Button data-test-id="continue" purple onClick={this.showSeed}>
+              <TextButton
+                data-test-id="continue"
+                accent
+                onClick={this.showSeed}
+              >
                 Continue
-              </Button>
+              </TextButton>
             </ButtonContainer>
           </Footer>
         </ModalScrollContent>

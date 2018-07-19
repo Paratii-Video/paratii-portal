@@ -34,6 +34,7 @@ describe('🦄 Uploader Tool', function () {
 
   it('should only allow mp4 files', () => {
     browser.url('http://localhost:8080/upload')
+    browser.createSecureWallet()
     browser.isVisible(uploadFileInputSelector)
     expect(browser.getAttribute(uploadFileInputSelector, 'accept')).to.equal(
       'video/mp4'

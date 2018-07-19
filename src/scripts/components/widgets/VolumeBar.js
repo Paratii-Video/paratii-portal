@@ -3,9 +3,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Transition from 'react-transition-group/Transition'
-import IconButton from 'components/foundations/buttons/IconButton'
+import TextButton from 'components/foundations/TextButton'
+import SVGIcon from 'components/foundations/SVGIcon'
 import ProgressBar, {
-  ProgressBarWrapper
+  ProgressBarContainer
 } from 'components/foundations/ProgressBar'
 import ProgressIndicator from 'components/widgets/player/ProgressIndicator'
 import { TRANSITION_STATE } from 'constants/ApplicationConstants'
@@ -16,9 +17,6 @@ import {
 } from 'constants/UIConstants'
 
 import type { TransitionState } from 'types/ApplicationTypes'
-
-import volumeIcon from 'assets/img/volume-icon.svg'
-import muteIcon from 'assets/img/mute-icon.svg'
 
 type Props = {
   onVolumeChange: (percentage: number) => void,
@@ -39,7 +37,7 @@ const Wrapper = styled.div`
   min-width: ${CONTROLS_BUTTON_DIMENSION};
 `
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = TextButton.extend`
   display: flex;
   flex: 0 0 17px;
   height: 17px;
@@ -66,7 +64,7 @@ const VolumeBarBuffer = styled.div`
 `
 
 /* prettier-ignore */
-const VolumeBar = styled.div.attrs({
+const VolumeBarContainer = styled.div.attrs({
   style: ({ currentVolume, draggingVolumePercentage, transitionState }) => ({
     transform: `scale(${
       transitionState === TRANSITION_STATE.ENTERED ? 1.0 : 0.0
@@ -82,7 +80,7 @@ const VolumeBar = styled.div.attrs({
   align-items: center;
   `
 
-class PlayerControls extends Component<Props, State> {
+class VolumeBar extends Component<Props, State> {
   volumeBarRef: ?HTMLElement
   remainOpenTimeoutMS: number = 2000
   remainOpenTimeoutId: number = -1
@@ -184,11 +182,15 @@ class PlayerControls extends Component<Props, State> {
         onMouseEnter={this.onMouseEnter}
         onMouseMove={this.onMouseMoveWithinVolumeBar}
       >
-        <ButtonWrapper>
-          <IconButton
-            data-test-id="volume-button"
-            icon={currentVolume === 0 ? muteIcon : volumeIcon}
-            onClick={() => onToggleMute()}
+        <ButtonWrapper
+          highlight
+          data-test-id="volume-button"
+          onClick={() => onToggleMute()}
+        >
+          <SVGIcon
+            icon={
+              currentVolume === 0 ? 'icon-player-mute' : 'icon-player-volume'
+            }
           />
         </ButtonWrapper>
         <Transition in={open} timeout={250} unmountOnExit>
@@ -210,7 +212,7 @@ class PlayerControls extends Component<Props, State> {
                 this.volumeBarRef = ref
               }}
             >
-              <VolumeBar
+              <VolumeBarContainer
                 currentVolume={currentVolume}
                 draggingVolumePercentage={draggingVolumePercentage}
                 onMouseDown={() => {
@@ -220,16 +222,16 @@ class PlayerControls extends Component<Props, State> {
                 }}
                 transitionState={transitionState}
               >
-                <ProgressBarWrapper>
+                <ProgressBarContainer>
                   <ProgressBar current={currentVolume} total={100} colorful />
-                </ProgressBarWrapper>
+                </ProgressBarContainer>
                 <ProgressIndicator
                   current={currentVolume}
                   total={100}
                   userIsScrubbing={this.state.userIsDragging}
                   small
                 />
-              </VolumeBar>
+              </VolumeBarContainer>
             </VolumeBarBuffer>
           )}
         </Transition>
@@ -238,4 +240,4 @@ class PlayerControls extends Component<Props, State> {
   }
 }
 
-export default PlayerControls
+export default VolumeBar

@@ -1,9 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import Text from './foundations/Text'
+
+import { FlexCenterStyle } from './foundations/Styles'
+import Text, { Span } from './foundations/Text'
+import { ButtonStyleHover } from './foundations/Button'
+import { ButtonStyleColor } from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
-import { videoDuration } from '../operators/VideoOperators'
+import VideoTimeDisplay from './foundations/VideoTimeDisplay'
+import TranslatedText from './translations/TranslatedText'
+import { isVideoPublished, videoDuration } from 'operators/VideoOperators'
 import { formatDuration } from '../utils/VideoUtils'
 import type VideoRecord from 'records/VideoRecords'
 
@@ -11,7 +17,7 @@ type Props = {
   video: VideoRecord
 }
 
-export const MyVideosWrapper = styled.ul`
+export const MyVideosContainer = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 24px;
@@ -31,43 +37,43 @@ export const MyVideosWrapper = styled.ul`
 `
 
 const Wrapper = styled.li`
-  background: ${props => props.theme.colors.MyVideoItem.background};
+  background: ${props => props.theme.colors.background.body};
   position: relative;
 `
 
-const MyVideoItemLink = styled(Link)`
-  display: block;
+const MyVideoItemButton = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `
+
+const MyVideoItemLink = MyVideoItemButton.withComponent(Link)
 
 const ZINDEX_MYVIDEOSITEM_COVER: number = 3
 const ZINDEX_MYVIDEOSITEM_IMAGE: number = 1
 const ZINDEX_MYVIDEOSITEM_PLAY: number = 4
-const ZINDEX_MYVIDEOSITEM_TIME: number = 2
 
 const MyVideoItemMedia = styled.div`
-  align-items: center;
-  background: ${props => props.theme.colors.MyVideoItem.imageBackground};
-  display: flex;
+  ${FlexCenterStyle} background: ${props =>
+  props.theme.colors.background.secondary};
   height: 200px;
-  justify-content: center;
   position: relative;
   width: 100%;
+`
 
-  &::before {
-    background: ${props => props.theme.colors.MyVideoItem.coverMediaBackground};
-    content: '';
-    height: 100%;
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    transition: opacity 0.2s linear 0.2s;
-    width: 100%;
-    z-index: ${ZINDEX_MYVIDEOSITEM_COVER};
-    ${MyVideoItemLink}:hover & {
-      opacity: 1;
-      transition-delay: 0;
-    }
+const VideoMediaBackground = styled.span`
+  background: ${props => props.theme.colors.background.body};
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition: opacity 0.2s linear 0.2s;
+  width: 100%;
+  z-index: ${ZINDEX_MYVIDEOSITEM_COVER};
+  ${MyVideoItemLink}:hover & {
+    opacity: 0.7;
+    transition-delay: 0;
   }
 `
 
@@ -83,6 +89,7 @@ const MyVideoItemImage = styled.div`
 `
 
 const IconPlay = styled.span`
+  color: ${props => props.theme.colors.text.accent};
   height: 33px;
   position: relative;
   width: 26px;
@@ -91,41 +98,11 @@ const IconPlay = styled.span`
   z-index: ${ZINDEX_MYVIDEOSITEM_PLAY};
   ${MyVideoItemLink}:hover & {
     transform: scale(1);
-    transition-duration: 0.65s;
-    transition-delay: 0.2s;
+    transition-delay: 0.1s;
   }
-`
-
-const VideoMediaTime = styled.div`
-  bottom: 10px;
-  padding: 10px;
-  position: absolute;
-  right: 10px;
-  z-index: ${ZINDEX_MYVIDEOSITEM_TIME};
-
-  &::before {
-    background-color: ${props =>
-    props.theme.colors.VideoForm.info.time.background};
-    border-radius: 2px;
-    content: '';
-    height: 100%;
-    left: 0;
-    opacity: 0.8;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-`
-
-const VideoMediaTimeText = styled.p`
-  color: ${props => props.theme.colors.VideoForm.info.time.color};
-  font-size: ${props => props.theme.fonts.video.info.time};
-  position: relative;
-  z-index: 1;
 `
 
 const MyVideoItemInfo = styled.div`
-  background: ${props => props.theme.colors.MyVideoItem.background};
   padding: 20px;
 `
 
@@ -133,17 +110,30 @@ const MyVideoItemsTitle = Text.extend`
   margin-bottom: 15px;
 `
 
-const MyVideoItemsStatus = Text.withComponent('span')
+const EditButtonWrapper = styled.div`
+  bottom: 30px;
+  position: absolute;
+  right: 24px;
+`
+
+const EditButton = styled(Link)`
+  ${ButtonStyleColor} ${ButtonStyleHover} display: block;
+`
 
 class MyVideoItem extends Component<Props, void> {
   render () {
     const { video } = this.props
+    const duration = videoDuration(video)
+    const isPublished = isVideoPublished(video)
     const title = video.title || video.filename
     const urlToPlay = '/play/' + video.id
+    const urlToEdit = '/edit/' + video.id
     let poster = ''
     let videoPoster = ''
-    const duration = videoDuration(video)
     let durationNoMillis = '00:00'
+    const statusMsg = isPublished
+      ? 'myVideos.item.status.published'
+      : 'myVideos.item.status.unpublished'
 
     if (video && video.thumbnails.size === 4) {
       poster = video.thumbnails.get(0)
@@ -155,30 +145,51 @@ class MyVideoItem extends Component<Props, void> {
       durationNoMillis = formatDuration(duration)
     }
 
+    const videoContent = (
+      <Fragment>
+        <MyVideoItemMedia isPublished={isPublished}>
+          <MyVideoItemImage source={videoPoster} />
+          {isPublished ? (
+            <Fragment>
+              <VideoTimeDisplay>{durationNoMillis}</VideoTimeDisplay>
+              <IconPlay>
+                <SVGIcon icon="icon-player-play" />
+              </IconPlay>
+              <VideoMediaBackground />
+            </Fragment>
+          ) : null}
+        </MyVideoItemMedia>
+        <MyVideoItemInfo>
+          <MyVideoItemsTitle bold accent>
+            {title}
+          </MyVideoItemsTitle>
+          <Text small>0 views</Text>
+          <Text small>
+            <TranslatedText message="myVideos.item.status.label" />
+            {': '}
+            <Span highlight={isPublished} small>
+              <TranslatedText message={statusMsg} />
+            </Span>
+          </Text>
+          <Text small>0 days ago</Text>
+        </MyVideoItemInfo>
+      </Fragment>
+    )
+
+    const MyVideoItemContent = isPublished ? (
+      <MyVideoItemLink to={urlToPlay}>{videoContent}</MyVideoItemLink>
+    ) : (
+      <MyVideoItemButton>{videoContent}</MyVideoItemButton>
+    )
+
     return (
       <Wrapper>
-        <MyVideoItemLink to={urlToPlay}>
-          <MyVideoItemMedia>
-            <MyVideoItemImage source={videoPoster} />
-            <VideoMediaTime>
-              <VideoMediaTimeText>{durationNoMillis}</VideoMediaTimeText>
-            </VideoMediaTime>
-            <IconPlay>
-              <SVGIcon color="white" icon="icon-player-play" />
-            </IconPlay>
-          </MyVideoItemMedia>
-          <MyVideoItemInfo>
-            <MyVideoItemsTitle small bold>
-              {title}
-            </MyVideoItemsTitle>
-            <Text gray small>
-              Status:{' '}
-              <MyVideoItemsStatus purple small>
-                Published
-              </MyVideoItemsStatus>
-            </Text>
-          </MyVideoItemInfo>
-        </MyVideoItemLink>
+        {MyVideoItemContent}
+        <EditButtonWrapper>
+          <EditButton to={urlToEdit}>
+            <SVGIcon width="20px" height="20px" icon="icon-edit" />
+          </EditButton>
+        </EditButtonWrapper>
       </Wrapper>
     )
   }

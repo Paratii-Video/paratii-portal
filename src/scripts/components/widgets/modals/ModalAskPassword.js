@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
 import TextField from 'components/widgets/forms/TextField'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import TranslatedText from 'components/translations/TranslatedText'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
 import { MODAL } from 'constants/ModalConstants'
@@ -140,12 +140,12 @@ class ModalAskPassword extends Component<Props, Object> {
 
   render () {
     return (
-      <ModalContentWrapper>
+      <ModalContentWrapper data-test-id="ask-password-modal">
         <ModalScrollContent>
-          <Title>
+          <Title accent>
             <TranslatedText message="wallet.enterPassword.title" />
           </Title>
-          <Text small gray>
+          <Text small>
             <TranslatedText message="wallet.enterPassword.description" />
           </Text>
           <FieldContainer id={FORM_ID} onSubmit={this.setPassword}>
@@ -162,30 +162,30 @@ class ModalAskPassword extends Component<Props, Object> {
               margin="0 0 30px"
             />
             {this.state.error && (
-              <Text pink small data-test-id="error-password">
+              <Text warn small data-test-id="error-password">
                 {this.state.error}
               </Text>
             )}
           </FieldContainer>
           <Footer>
             <ButtonContainer>
-              <Button
+              <TextButton
                 data-test-id="forgot-password-button"
                 onClick={this.forgotPassword}
               >
                 <TranslatedText message="wallet.enterPassword.forgotPassword" />
-              </Button>
+              </TextButton>
             </ButtonContainer>
             <ButtonContainer>
-              <Button
+              <TextButton
+                accent
                 data-test-id="continue"
                 form={FORM_ID}
                 type="submit"
-                purple
                 disabled={!this.state.password}
               >
                 <TranslatedText message="wallet.enterPassword.continue" />
-              </Button>
+              </TextButton>
             </ButtonContainer>
           </Footer>
         </ModalScrollContent>

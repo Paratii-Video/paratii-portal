@@ -16,18 +16,32 @@
             "description": "Explore curtas, clipes, e novos formatos que nossa comunidade inventa todos os dias."
         }
     },
+    "myVideos": {
+        "title": "My videos",
+        "item": {
+            "status": {
+                "label": "Status",
+                "published": "Publicado",
+                "unpublished": "Não publicado"
+            }
+        }
+    },
     "navigation": {
         "voucher": "Obter PTI",
         "myVideos": "Meus vídeos",
         "upload": "Upload",
         "about": "Sobre a Paratii",
-        "logIn": "Entrar",
-        "signUp": "Registrar"
+        "logIn": "Registrar / Entrar"
     },
     "notFound": {
         "title": "Oooooops, página não encontrada!",
         "description": "Esta página não está disponível ainda. Nossa equipe está desenvolvendo-a ou talvez nem saiba que ela existe. Se quiser nos ajudar a consertar isso mais rápido, conte-nos como veio parar aqui com uma issue no Github:",
         "linkText": "Paratii-Video"
+    },
+    "videoNotFound": {
+    "title": "Oooooops, vídeo não encontrado",
+    "description": "This page is not available yet. A passionate team is either building it or doesn't know about it. Want to help us move faster? Please tell us how you got here with an issue on our Github:",
+    "linkText": "Paratii-Video"
     },
     "search": {
         "input": {

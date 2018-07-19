@@ -57,7 +57,7 @@ export const Circle = styled.div`
     position: absolute;
     height: 100%;
     width: 100%;
-    background-color: ${({ theme }) => theme.colors.bar.scrubber};
+    background-color: ${({ theme }) => theme.colors.text.accent};
     border-radius: 50%;
   }
 

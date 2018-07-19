@@ -7,13 +7,28 @@ import Blockies from 'react-blockies'
 import User from 'records/UserRecords'
 import { getName } from 'operators/UserOperators'
 import {
+  BORDER_RADIUS_SMALL,
   USERNAV_WIDTH,
+  USERNAV_USERWRAPPER_PADDING,
+  USERNAV_USERPTI_MARGIN_TOP,
+  USERNAV_USERPTIVALUEWRAPPER_FLEX,
+  USERNAV_USERPTIVALUEBOX_PADDING,
+  USERNAV_USERPTIBARWRAPPER_HEIGHT,
+  USERNAV_USERPTIBARWRAPPER_MARGIN_TOP,
+  USERNAV_USERPTIBARTEXT_TRANSLATEY,
+  USERNAV_USERNAVLISTITEM_PADDING,
+  USERNAV_USERNAVLISTITEMICON_SIZE,
+  USERNAV_USERNAVLISTITEMICON_MARGIN_RIGHT,
+  USERNAV_USERSUBNAVLISTITEMLINK_PADDING,
   MAINHEADER_LOGO_HEIGHT,
   MAINFOOTER_HEIGHT,
+  MEDIAQUERY_BREAKPOINT,
   Z_INDEX_USERNAV
 } from '../constants/UIConstants'
 import { Link } from 'react-router-dom'
+import { FlexCenterStyle } from './foundations/Styles'
 import Text from './foundations/Text'
+import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
 import UserBadge from './widgets/UserBadge'
 import TranslatedText from './translations/TranslatedText'
@@ -32,7 +47,8 @@ type Props = {
 }
 
 const Wrapper = styled.div`
-  background: ${props => props.theme.colors.UserNav.background};
+  background: ${props => props.theme.colors.background.primary};
+  box-shadow: -11px 0 40px rgba(0, 0, 0, 0.7);
   height: 100%;
   left: 0;
   overflow-x: hidden;
@@ -40,25 +56,29 @@ const Wrapper = styled.div`
   padding: 0 0 ${MAINFOOTER_HEIGHT};
   position: fixed;
   top: 0;
-  transform: translate3d(${({ show }) => (show ? 0 : '-100%')}, 0, 0);
   transition: transform 0.6s ${({ theme }) => theme.animation.ease.smooth};
   width: ${USERNAV_WIDTH};
   z-index: ${Z_INDEX_USERNAV};
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    transform: translate3d(${({ show }) => (show ? 0 : '-100%')}, 0, 0);
+  }
 `
 
 // User
 const UserWrapper = styled.div`
-  background: ${props => props.theme.colors.UserNav.Userbackground};
+  background: ${props => props.theme.colors.background.secondary};
   display: flex;
   flex-direction: column;
   margin-top: ${MAINHEADER_LOGO_HEIGHT};
-  padding: 40px 30px;
+  padding: ${USERNAV_USERWRAPPER_PADDING};
+  width: 100%;
 `
 
 const UserPTI = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 35px;
+  margin-top: ${USERNAV_USERPTI_MARGIN_TOP};
 `
 
 const UserPTIValuesWrapper = styled.div`
@@ -67,46 +87,44 @@ const UserPTIValuesWrapper = styled.div`
 `
 
 const UserPTIValue = styled.div`
-  flex: 0 0 48.5%;
+  flex: ${USERNAV_USERPTIVALUEWRAPPER_FLEX};
 `
 
 const UserPTIValueBox = styled.div`
-  align-items: center;
-  background-color: ${props => props.theme.colors.UserNav.UserPTIValueBox};
-  display: flex;
+  ${FlexCenterStyle} background-color: ${props =>
+  props.theme.colors.background.tertiary};
+  border-radius: ${BORDER_RADIUS_SMALL};
   flex-direction: column;
-  justify-content: center;
-  min-height: 90px;
-  padding: 14px 14px 16px;
+  padding: ${USERNAV_USERPTIVALUEBOX_PADDING};
 `
 
 const UserPTIBarWrapper = styled.div`
-  border-radius: 2px;
+  border-radius: ${BORDER_RADIUS_SMALL};
   display: flex;
-  height: 4px;
-  margin-top: 25px;
+  height: ${USERNAV_USERPTIBARWRAPPER_HEIGHT};
+  margin-top: ${USERNAV_USERPTIBARWRAPPER_MARGIN_TOP};
 `
 
 const UserPTIBar = styled.div`
   background: ${props =>
     props.red
-      ? props.theme.colors.UserNav.UserPTIBarTwo
-      : props.theme.colors.UserNav.UserPTIBarOne};
+      ? props.theme.colors.text.warn
+      : props.theme.colors.text.highlight};
   flex: 1 1 ${props => props.percentage};
   height: 100%;
   text-align: center;
   position: relative;
 `
-
 const UserPTIBarText = Text.extend`
   position: absolute;
   left: 50%;
-  transform: translate3d(-50%, 5px, 0);
+  transform: translate3d(-50%, ${USERNAV_USERPTIBARTEXT_TRANSLATEY}, 0);
 `
 
 // User navigation
 const UserNavListWrapper = styled.div`
   display: block;
+  width: 100%;
 `
 
 const UserNavList = styled.ul`
@@ -115,31 +133,34 @@ const UserNavList = styled.ul`
 `
 
 const UserNavListItem = styled.li`
-  background-color: ${props => props.theme.colors.UserNav.Navigation};
+  background: ${props =>
+    props.subnav ? props.theme.colors.background.tertiary : null};
+  opacity: 1;
 `
 
 const UserNavListItemStyle = css`
   align-items: center;
-  color: ${props => props.theme.colors.UserNav.NavigationText};
   display: flex;
-  padding: 25px 30px;
+  font-size: ${props => props.theme.fonts.text.main};
+  font-weight: ${props => props.theme.fonts.weight.regular};
+  padding: ${USERNAV_USERNAVLISTITEM_PADDING};
+  text-transform: initial;
 `
 
 const UserNavListItemNoLink = styled.div`
   ${UserNavListItemStyle};
 `
 
-const UserNavListItemLink = styled(Link)`
-  ${UserNavListItemStyle} transition: opacity .3s;
-  &:hover {
-    opacity: 0.5;
-  }
+const UserTextButton = TextButton.withComponent(Link)
+
+const UserNavListItemLink = styled(UserTextButton)`
+  ${UserNavListItemStyle};
 `
 
 const UserNavListItemIcon = styled.span`
-  flex: 0 0 22px;
-  height: 22px;
-  margin-right: 10px;
+  flex: 0 0 ${USERNAV_USERNAVLISTITEMICON_SIZE};
+  height: ${USERNAV_USERNAVLISTITEMICON_SIZE};
+  margin-right: ${USERNAV_USERNAVLISTITEMICON_MARGIN_RIGHT};
 `
 
 const UserSubNavList = styled.ul`
@@ -148,11 +169,11 @@ const UserSubNavList = styled.ul`
 `
 
 const UserSubNavListItem = styled.li`
-  background-color: ${props => props.theme.colors.UserNav.SubNavigation};
+  background-color: ${props => props.theme.colors.background.tertiary};
 `
 
 const UserSubNavListItemLink = styled(Link)`
-  ${UserNavListItemStyle} padding: 25px 30px 25px 90px;
+  ${UserNavListItemStyle} padding: ${USERNAV_USERSUBNAVLISTITEMLINK_PADDING};
   transition: opacity 0.3s;
   &:hover {
     opacity: 0.5;
@@ -198,8 +219,13 @@ class UserNav extends Component<Props, Object> {
     const percStaked = Math.round(stakedNumber / totalPTI * 100)
     const percPTI = 100 - percStaked
 
-    percentageStaked = percStaked + '%'
-    percentagePTI = percPTI + '%'
+    if (isNaN(percStaked) || isNaN(percPTI)) {
+      percentageStaked = false
+      percentagePTI = false
+    } else {
+      percentageStaked = percStaked + '%'
+      percentagePTI = percPTI + '%'
+    }
 
     return (
       <Wrapper
@@ -217,34 +243,36 @@ class UserNav extends Component<Props, Object> {
           <UserPTI>
             <UserPTIValuesWrapper>
               <UserPTIValue>
-                <Text gray tiny>
+                <Text secondary small>
                   <TranslatedText message="userNav.leftBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text purple>{formattedBalance} PTI</Text>
+                  <Text highlight>{formattedBalance} PTI</Text>
                 </UserPTIValueBox>
               </UserPTIValue>
               <UserPTIValue>
-                <Text gray tiny>
+                <Text secondary small>
                   <TranslatedText message="userNav.rightBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text pink>{formattedStakedPTI} PTI</Text>
+                  <Text warn>{formattedStakedPTI} PTI</Text>
                 </UserPTIValueBox>
               </UserPTIValue>
             </UserPTIValuesWrapper>
-            <UserPTIBarWrapper>
-              <UserPTIBar percentage={percentagePTI}>
-                <UserPTIBarText purple tiny>
-                  {percentagePTI}
-                </UserPTIBarText>
-              </UserPTIBar>
-              <UserPTIBar red percentage={percentageStaked}>
-                <UserPTIBarText pink tiny>
-                  {percentageStaked}
-                </UserPTIBarText>
-              </UserPTIBar>
-            </UserPTIBarWrapper>
+            {percentagePTI && percentageStaked ? (
+              <UserPTIBarWrapper>
+                <UserPTIBar percentage={percentagePTI}>
+                  <UserPTIBarText highlight tiny>
+                    {percentagePTI}
+                  </UserPTIBarText>
+                </UserPTIBar>
+                <UserPTIBar red percentage={percentageStaked}>
+                  <UserPTIBarText warn tiny>
+                    {percentageStaked}
+                  </UserPTIBarText>
+                </UserPTIBar>
+              </UserPTIBarWrapper>
+            ) : null}
           </UserPTI>
         </UserWrapper>
         <UserNavListWrapper>

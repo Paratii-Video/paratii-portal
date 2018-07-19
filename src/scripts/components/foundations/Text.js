@@ -1,19 +1,19 @@
 import styled, { css } from 'styled-components'
-
-export const ColorText = css`
+import { ButtonStyleDisabled } from './Button'
+export const TextColor = css`
   ${props => {
     let _color: String
 
-    if (props.gray) {
-      _color = props.theme.colors.button.gray
-    } else if (props.purple) {
-      _color = props.theme.colors.button.purple
-    } else if (props.pink) {
-      _color = props.theme.colors.button.pink
-    } else if (props.green) {
-      _color = props.theme.colors.button.green
+    if (props.primary) {
+      _color = props.theme.colors.text.primary
+    } else if (props.accent) {
+      _color = props.theme.colors.text.accent
+    } else if (props.highlight) {
+      _color = props.theme.colors.text.highlight
+    } else if (props.warn) {
+      _color = props.theme.colors.text.warn
     } else {
-      _color = props.theme.colors.button.white
+      _color = props.theme.colors.text.secondary
     }
 
     return css`
@@ -22,43 +22,56 @@ export const ColorText = css`
   }};
 `
 
-const Text = styled.p`
-  ${ColorText} font-size: ${props => {
-  if (props.big) {
-    return props.theme.fonts.text.big
-  } else if (props.small) {
-    return props.theme.fonts.text.small
-  } else if (props.tiny) {
-    return props.theme.fonts.text.tiny
-  } else {
-    return props.theme.fonts.text.main
-  }
-}};
-  font-weight: ${props =>
-    props.bold
-      ? props.theme.fonts.weight.bold
-      : props.theme.fonts.weight.regular};
-  line-height: ${props => {
-    if (props.big) {
-      return props.theme.fonts.text.bigLineHeight
-    } else if (props.small) {
-      return props.theme.fonts.text.bigLineHeight
-    } else if (props.tiny) {
-      return props.theme.fonts.text.tinyLineHeight
-    } else {
-      return props.theme.fonts.text.mainLineHeight
-    }
+export const TextStyle = css`
+  ${props => {
+    return css`
+      ${ButtonStyleDisabled} font-weight: ${props =>
+  props.bold
+    ? props.theme.fonts.weight.bold
+    : props.theme.fonts.weight.regular};
+      user-select: ${props => (props.disabled ? 'none' : null)};
+      text-transform: ${props => (props.uppercase ? 'uppercase' : null)};
+`
   }};
-  opacity: ${props => (props.disabled ? 0.5 : null)};
-  overflow-wrap: break-word;
-  text-transform: ${({ textTransform }) => textTransform || null};
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  margin: ${({ margin }) => margin};
+`
+
+export const TextSize = css`
+  ${props => {
+    let _size: String
+    let _line: String
+
+    if (props.big) {
+      _size = props.theme.fonts.text.big
+      _line = props.theme.fonts.text.bigLineHeight
+    } else if (props.small) {
+      _size = props.theme.fonts.text.small
+      _line = props.theme.fonts.text.smallLineHeight
+    } else if (props.tiny) {
+      _size = props.theme.fonts.text.tiny
+      _line = props.theme.fonts.text.tinyLineHeight
+    } else {
+      _size = props.theme.fonts.text.main
+      _line = props.theme.fonts.text.mainLineHeight
+    }
+
+    return css`
+      font-size: ${_size};
+      line-height: ${_line};
+`
+  }};
+`
+
+const Text = styled.p`
+  ${TextColor} ${TextSize} ${TextStyle} margin: ${({ margin }) => margin};
 `
 
 export const Strong = styled.strong`
-  ${ColorText} font-weight: ${props => props.theme.fonts.weight.bold};
+  ${TextColor} ${TextSize} ${TextStyle} font-weight: ${props =>
+  props.theme.fonts.weight.bold};
+`
+
+export const Span = styled.span`
+  ${TextColor} ${TextSize} ${TextStyle};
 `
 
 export default Text

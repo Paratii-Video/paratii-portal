@@ -11,8 +11,7 @@ type Props = {
 const PROFILEPICTURE_SIZE = '112px'
 
 const Wrapper = styled.div`
-  background: ${props =>
-    props.theme.colors.ProfileMyVideos.headerImageBackground};
+  background: ${props => props.theme.colors.background.secondary};
   display: flex;
   flex-direction: column;
 `
@@ -24,20 +23,17 @@ const ProfileHeaderCover = styled.div`
 
 const ProfileHeaderInfo = styled.div`
   align-items: center;
-  background: ${props =>
-    props.theme.colors.ProfileMyVideos.headerInfoBackground};
+  background: ${props => props.theme.colors.background.primary};
   display: flex;
   flex-direction: column;
   padding: 0 42px 24px;
 `
 
 const ProfileHeaderPicture = styled.div`
-  background: ${props =>
-    props.theme.colors.ProfileMyVideos.ProfilePictureBackground}
+  background: ${props => props.theme.colors.background.primary}
     url(${({ source }) => source}) no-repeat 50%;
   background-size: cover;
-  border: 8px solid
-    ${props => props.theme.colors.ProfileMyVideos.ProfilePictureBackground};
+  border: 8px solid ${props => props.theme.colors.background.primary};
   border-radius: 100%;
   height: ${PROFILEPICTURE_SIZE};
   transform: translate3d(0, -50%, 0);

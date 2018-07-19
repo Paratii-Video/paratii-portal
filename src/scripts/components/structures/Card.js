@@ -1,81 +1,56 @@
 import React, { Component } from 'react'
-import BaseTitle from '../foundations/Title'
-import styled, { css } from 'styled-components'
-import { CARD_PADDING } from 'constants/UIConstants'
-
-import cardBackgroundSvgDataUrl from 'assets/svg/card-bg.svg'
+import Title from '../foundations/Title'
+import styled from 'styled-components'
+import {
+  BORDER_RADIUS,
+  CARD_PADDING,
+  CARD_MAX_WIDTH,
+  CARD_MARGIN_LEFT,
+  CARD_MARGIN_BOTTOM,
+  MEDIAQUERY_BREAKPOINT
+} from 'constants/UIConstants'
 
 type Props = {
-  className: String,
   children: Object,
-  id: String,
-  title: String,
+  id: string,
+  title: string,
   footer: Object,
-  full: Boolean,
-  fullAtFirstBreak: Boolean,
-  margin: String,
-  marginLeft: Boolean,
-  marginRight: Boolean,
-  nopadding: String,
-  nobackground: Boolean,
-  withFull: Boolean,
-  innerRef: Object
+  marginLeft: boolean,
+  marginRight: boolean,
+  nopadding: string,
+  innerRef: Object,
+  maxWidth: boolean,
+  height: string
 }
 
-export const CardContainer = styled.div`
-  display: flex;
-  justify-content: center;
-
-  @media (max-width: 1280px) {
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-`
-
 export const CardWrapper = styled.div`
-  border-radius: 4px;
+  border-radius: ${BORDER_RADIUS};
+  box-shadow: ${({ theme }) => theme.colors.Card.shadow};
   display: flex;
+  flex: 1 1 100%;
   flex-direction: column;
-  margin-left: ${props => (props.marginLeft ? '25px' : null)};
-  margin-right: ${props => (props.marginRight ? '25px' : null)};
-  min-width: ${props => (!props.full ? '395px' : null)};
+  height: ${({ height }) => height};
+  margin-left: ${({ marginLeft }) => (marginLeft ? CARD_MARGIN_LEFT : null)};
+  margin-right: ${({ marginRight }) => (marginRight ? CARD_MARGIN_LEFT : null)};
+  max-width: ${({ maxWidth }) => (maxWidth ? CARD_MAX_WIDTH : null)};
   overflow: hidden;
   position: relative;
-  width: ${props => (props.full ? '64%' : '33%')};
+  width: 100%;
 
-  @media (max-width: 1280px) {
-    margin-bottom: 40px;
-    margin-left: ${props =>
-    props.full || props.fullAtFirstBreak ? '0px' : null};
-    margin-right: ${props =>
-    props.full || props.fullAtFirstBreak ? '0px' : null};
-    min-width: ${props => (!props.full ? '295px' : null)};
-    min-width: ${props => (props.withFull ? 'initial' : null)};
-    width: ${props => (props.fullAtFirstBreak ? '100%' : null)};
-    width: ${props =>
-    !props.fullAtFirstBreak && !props.full && !props.withFull ? '48%' : null};
-  }
-
-  @media (max-width: 1024px) {
-    flex: 1 1 100%;
-    min-width: initial;
+  @media ${MEDIAQUERY_BREAKPOINT} {
     max-width: initial;
-    margin: 0 0 25px;
-    width: 100%;
+    margin: 0 0 ${CARD_MARGIN_BOTTOM};
   }
 `
 
 const Main = styled.div`
-  background: ${props => props.theme.colors.MainCard.background}
-    ${props => (props.nobackground ? null : `url(${cardBackgroundSvgDataUrl})`)}
-    no-repeat 50% 0;
-  background-size: cover;
-  color: ${props => props.theme.colors.MainCard.color};
+  background: ${props => props.theme.colors.background.primary};
+  color: ${props => props.theme.colors.text.accent};
   display: flex;
   flex: 1;
   flex-direction: column;
   height: 100%;
-  padding: ${props => (props.nopadding ? '' : props.theme.sizes.card.padding)};
+  padding: ${props => (props.nopadding ? '' : CARD_PADDING)};
   position: relative;
   width: 100%;
 `
@@ -84,33 +59,17 @@ const Header = styled.div`
   margin-bottom: 50px;
 `
 
-const Title = BaseTitle.extend`
-  color: ${props => props.theme.colors.MainCard.title};
-  font-size: ${props => props.theme.fonts.card.title};
-  font-weight: ${props => props.theme.fonts.weight.regular};
-`
-
 export const CardTitle = Title.withComponent('h2')
 
 const Footer = styled.div`
   align-items: flex-end;
-  background-color: ${props => props.theme.colors.MainCard.footer.background};
-  color: ${props => props.theme.colors.MainCard.footer.color};
+  background-color: ${props => props.theme.colors.background.secondary};
+  color: ${props => props.theme.colors.text.secondary};
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  padding: ${props => props.theme.sizes.card.padding};
+  padding: ${CARD_PADDING};
   width: 100%;
-`
-
-// Need to recreate this component because there's no rule about the aligment
-
-export const CardStyle = css`
-  background-color: ${props => props.theme.colors.MainCard.background};
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  padding: ${props => (props.nopadding ? null : CARD_PADDING)};
 `
 
 class Card extends Component<Props, void> {
@@ -118,21 +77,16 @@ class Card extends Component<Props, void> {
     return (
       <CardWrapper
         id={this.props.id}
-        full={this.props.full}
-        fullAtFirstBreak={this.props.fullAtFirstBreak}
-        withFull={this.props.withFull}
         marginLeft={this.props.marginLeft}
         marginRight={this.props.marginRight}
-        className={this.props.className}
         innerRef={this.props.innerRef}
+        maxWidth={this.props.maxWidth}
+        height={this.props.height}
       >
-        <Main
-          nopadding={this.props.nopadding}
-          nobackground={this.props.nobackground}
-        >
+        <Main nopadding={this.props.nopadding}>
           {this.props.title && (
             <Header>
-              <CardTitle>{this.props.title}</CardTitle>
+              <CardTitle accent>{this.props.title}</CardTitle>
             </Header>
           )}
           {this.props.children}

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import NotepadLockedSvg from 'components/foundations/svgs/NotepadLockedSvg'
 import TranslatedText from 'components/translations/TranslatedText'
 import { ModalContentWrapper, ModalScrollContent } from './Modal'
@@ -56,10 +56,10 @@ class ModalSecure extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>
+          <Title accent>
             <TranslatedText message="wallet.secureAccount.title" />
           </Title>
-          <Text gray>
+          <Text>
             <TranslatedText message="wallet.secureAccount.description" />
           </Text>
           <Icon>
@@ -67,21 +67,21 @@ class ModalSecure extends Component<Props, Object> {
           </Icon>
           <Footer>
             <ButtonContainer>
-              <Button
+              <TextButton
                 data-test-id="restore-account"
                 onClick={this.restoreAccount}
               >
                 <TranslatedText message="wallet.secureAccount.alreadyHaveAccount" />
-              </Button>
+              </TextButton>
             </ButtonContainer>
             <ButtonContainer>
-              <Button
+              <TextButton
                 data-test-id="new-here"
-                purple
+                accent
                 onClick={this.createPassword}
               >
                 <TranslatedText message="wallet.secureAccount.secureThisAccount" />
-              </Button>
+              </TextButton>
             </ButtonContainer>
           </Footer>
         </ModalScrollContent>

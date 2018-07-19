@@ -4,6 +4,7 @@ import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import { List as ImmutableList } from 'immutable'
 
+import { FlexCenterStyle } from '../foundations/Styles'
 import Loader from 'components/foundations/Loader'
 import SearchResult from 'components/widgets/SearchResult'
 import TranslatedText from 'components/translations/TranslatedText'
@@ -15,7 +16,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  background: ${({ theme }) => theme.colors.Search.results.background};
+  background: ${({ theme }) => theme.colors.background.primary};
 `
 
 const SearchTerm = styled.div`
@@ -26,22 +27,19 @@ const SearchTerm = styled.div`
   width: 100%;
   padding: 20px;
   padding-bottom: 10px;
-  color: ${({ theme }) => theme.colors.Search.results.searchTerm.term};
+  color: ${({ theme }) => theme.colors.text.accent};
 `
 
 const SearchTermPrompt = styled.span`
   display: inline-block;
   margin-right: 10px;
-  color: ${({ theme }) => theme.colors.Search.results.searchTerm.prompt};
+  color: ${({ theme }) => theme.colors.text.primary};
 `
 
 const ZeroState = styled.div`
-  color: ${({ theme }) => theme.colors.Search.results.zeroState.text};
+  ${FlexCenterStyle} color: ${({ theme }) => theme.colors.text.accent};
   height: 200px;
   font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `
 
 const Results = styled.div`
@@ -58,15 +56,12 @@ const LoaderWrapper = styled.div`
 `
 
 const HasNextButton = styled.button`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${FlexCenterStyle} width: 100%;
   flex: 0 0 60px;
   padding-top: 10px;
   padding-bottom: 20px;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.Search.nextButton};
+  color: ${({ theme }) => theme.colors.text.secondary};
 `
 
 type Props = {

@@ -3,6 +3,7 @@
 // https://github.com/styled-components/stylelint-processor-styled-components/issues/34
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { RADIO_SIZE } from 'constants/UIConstants'
 import Colors from 'components/foundations/base/Colors'
 
 type Props = {
@@ -28,7 +29,7 @@ export const RadioWrapper = styled.div`
 `
 
 export const RadioTitle = styled.p`
-  color: ${props => props.theme.colors.Radio.title};
+  color: ${props => props.theme.colors.text.secondary};
   flex: 1 0 100%;
   font-size: ${props => props.theme.fonts.radio.title};
   margin-bottom: 15px;
@@ -57,18 +58,21 @@ const RadioInput = styled.label`
 const RadioInputBox = styled.span`
   background-color: transparent;
   border: 2px solid
-    ${props => (props.white ? Colors.white : props.theme.colors.Radio.border)};
+    ${props =>
+    props.white
+      ? props.theme.colors.text.primary
+      : props.theme.colors.text.accent};
   border-radius: 2px;
-  height: ${props => props.theme.sizes.radio};
+  height: ${RADIO_SIZE};
   margin-right: 15px;
   transition: all ${props => props.theme.animation.time.repaint};
-  width: ${props => props.theme.sizes.radio};
+  width: ${RADIO_SIZE};
 
   input:checked + & {
     background-color: ${props => props =>
-    props.white ? Colors.white : props.theme.colors.Radio.active};
+    props.white ? Colors.white : props.theme.colors.text.highlight};
     border-color: ${props => props =>
-    props.white ? Colors.white : props.theme.colors.Radio.active};
+    props.white ? Colors.white : props.theme.colors.text.highlight};
 
     svg {
       transform: scale(1);
@@ -86,7 +90,7 @@ const RadioInputIcon = styled.svg`
 `
 
 const RadioInputLabel = styled.span`
-  color: ${props => props.theme.colors.Radio.label};
+  color: ${props => props.theme.colors.text.accent};
   font-size: ${props => props.theme.fonts.radio.label};
   user-select: none;
   white-space: nowrap;

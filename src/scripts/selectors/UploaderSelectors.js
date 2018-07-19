@@ -18,6 +18,17 @@ export const getUploaderVideos: (
         video.get('owner') === paratii.eth.getAccount()
     )
 )
+export const getProfileMyVideos: (
+  state: RootState
+) => VideoRecordMap = createSelector(
+  [getVideos],
+  (videos: VideoRecordMap): VideoRecordMap =>
+    videos.filter(
+      (video: VideoRecord): boolean =>
+        video.get('owner') === paratii.eth.getAccount() &&
+        video.getIn(['staked', 'deposit']) !== ''
+    )
+)
 
 export const getUploaderBusyVideos: (
   state: RootState

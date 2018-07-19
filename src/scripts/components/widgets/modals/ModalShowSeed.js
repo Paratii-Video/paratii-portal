@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Colors from 'components/foundations/base/Colors'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import RadioCheck from 'components/widgets/forms/RadioCheck'
 import TranslatedText from 'components/translations/TranslatedText'
@@ -28,6 +28,7 @@ type Props = {
 const WORDSWRAPPER_HORIZONTAL_PADDING = '24px'
 
 const AlertIcon = styled.span`
+  color: ${props => props.theme.colors.text.highlight};
   display: inline-block;
   height: 15px;
   margin: 0 5px 0 0;
@@ -54,7 +55,7 @@ const CheckWrapper = styled.div`
   margin: 20px 0 143px ${WORDSWRAPPER_HORIZONTAL_PADDING};
 `
 
-const CopyButton = styled(Button)`
+const CopyButton = styled(TextButton)`
   align-items: flex-end;
   display: flex;
 `
@@ -136,12 +137,12 @@ class ModalShowSeed extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title>
+          <Title accent>
             <TranslatedText message="wallet.showSeed.title" />
           </Title>
           <Text>
             <AlertIcon>
-              <SVGIcon color="purple" icon="icon-alert" />
+              <SVGIcon icon="icon-alert" />
             </AlertIcon>
             <TranslatedText
               message="wallet.showSeed.description_html"
@@ -156,7 +157,7 @@ class ModalShowSeed extends Component<Props, Object> {
           </Text>
           <WordsWrapper>
             <Text
-              purple
+              highlight
               bold
               data-test-id="new-mnemonic"
               innerRef={(ref: HTMLElement) => {
@@ -171,9 +172,8 @@ class ModalShowSeed extends Component<Props, Object> {
                 return <Word key={index}>{word}</Word>
               })}
             </Text>
-            <CopyButton gray small onClick={this.copyWordsToClipboard}>
+            <CopyButton small onClick={this.copyWordsToClipboard}>
               <SVGIcon
-                color="gray"
                 icon="icon-copy"
                 height="20px"
                 width="20px"
@@ -195,19 +195,19 @@ class ModalShowSeed extends Component<Props, Object> {
 
           <Footer>
             <ButtonContainer>
-              <Button onClick={this.goBack}>
+              <TextButton onClick={this.goBack}>
                 <TranslatedText message="wallet.showSeed.goBack" />
-              </Button>
+              </TextButton>
             </ButtonContainer>
             <ButtonContainer>
-              <Button
+              <TextButton
                 data-test-id="continue"
-                purple
+                accent
                 onClick={this.modalContinue}
                 disabled={!this.state.seedCheck}
               >
                 <TranslatedText message="wallet.showSeed.continue" />
-              </Button>
+              </TextButton>
             </ButtonContainer>
           </Footer>
         </ModalScrollContent>

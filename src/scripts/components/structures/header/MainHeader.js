@@ -3,18 +3,21 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Blockies from 'react-blockies'
+import {
+  MEDIAQUERY_BREAKPOINT,
+  MAINHEADER_LOGO_HEIGHT,
+  MAINHEADER_LOGO_WIDTH,
+  MAINHEADER_PADDING_LEFT,
+  MAINHEADER_PADDING_LEFT_BP,
+  Z_INDEX_HEADER
+} from 'constants/UIConstants'
+import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 import SearchInputContainer from 'containers/widgets/SearchInputContainer'
-import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
 import MainNavigation from 'components/structures/header/MainNavigation'
 import { add0x } from 'utils/AppUtils'
-import {
-  MAINHEADER_LOGO_HEIGHT,
-  MAINHEADER_LOGO_WIDTH,
-  Z_INDEX_HEADER
-} from 'constants/UIConstants'
-import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 
 type Props = {
   children: Object,
@@ -32,19 +35,18 @@ type State = {
 }
 
 const Header = styled.header`
-  background-color: ${props => props.theme.colors.header.background};
-  box-shadow: ${({ displayShadow }) =>
-    displayShadow ? '0 3px 5px rgba(0,0,0,0.16)' : ''};
+  background-color: ${props => props.theme.colors.background.primary};
+  box-shadow: ${props => props.theme.colors.header.shadow};
   display: flex;
-  padding: 0 80px;
+  padding: 0 ${MAINHEADER_PADDING_LEFT};
   position: fixed;
   transition: box-shadow 0.3s;
   width: 100%;
   z-index: ${Z_INDEX_HEADER};
 
-  @media (max-width: 768px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     height: ${props => (props.open ? '100vh' : null)};
-    padding: 0 40px;
+    padding: 0 ${MAINHEADER_PADDING_LEFT_BP};
   }
 `
 
@@ -54,7 +56,7 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
 
-  @media (max-width: 768px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     align-content: baseline;
     flex-wrap: wrap;
   }
@@ -72,7 +74,7 @@ const HeaderContent = styled.div`
   flex: 0 1 100%;
   justify-content: flex-end;
 
-  @media (max-width: 768px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     display: ${props => (props.open ? 'block' : 'none')};
     flex: 1 1 100%;
   }
@@ -88,7 +90,7 @@ const HeaderButtons = styled.div`
   display: flex;
   justify-content: flex-end;
 
-  @media (max-width: 768px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-start;
@@ -104,21 +106,21 @@ const ProfileAvatarButton = styled.button`
   margin-left: 10px;
   overflow: hidden;
 
-  @media (max-width: 768px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     margin-left: 0;
   }
 `
 
-const MobileButton = styled(Button)`
+const MobileButton = styled(TextButton)`
   display: none;
   height: 20px;
   position: absolute;
   right: 30px;
-  top: 24px;
+  top: 20px;
   width: 20px;
   z-index: 3;
 
-  @media (max-width: 768px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     display: block;
   }
 `
@@ -135,7 +137,7 @@ class MainHeader extends Component<Props, State> {
     super(props)
     this.state = {
       navOpen: false,
-      displayShadow: false
+      displayShadow: true
     }
 
     this.openNav = this.openNav.bind(this)
@@ -224,10 +226,7 @@ class MainHeader extends Component<Props, State> {
             </HeaderButtons>
           </HeaderContent>
           <MobileButton onClick={this.toggleNav} open={this.state.navOpen}>
-            <SVGIcon
-              color="white"
-              icon={this.state.navOpen ? 'icon-close' : 'icon-menu'}
-            />
+            <SVGIcon icon={this.state.navOpen ? 'icon-close' : 'icon-menu'} />
           </MobileButton>
         </HeaderWrapper>
       </Header>

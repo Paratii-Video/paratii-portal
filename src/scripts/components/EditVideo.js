@@ -2,13 +2,9 @@ import { Map } from 'immutable'
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { MAX_WIDTH, MEDIAQUERY_BREAKPOINT } from '../constants/UIConstants'
-import PTIGuide from 'components/widgets/PTIGuide'
 import VideoRecord from 'records/VideoRecords'
-import RedeemVoucher from 'containers/RedeemVoucherContainer'
-import FileUploader from 'containers/FileUploaderContainer'
-import UploadList from 'containers/UploadListContainer'
-import { VIDEOMANAGER_FILEUPLOADERWRAPPER_MARGIN } from 'constants/UIConstants'
+import Loader from 'components/foundations/Loader'
+import VideoForm from 'containers/VideoFormContainer'
 
 import type { Match, History } from 'react-router-dom'
 
@@ -26,23 +22,21 @@ type Props = {
 }
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: ${({ column }) => (column ? 'column' : null)};
-  justify-content: space-between;
+  flex-direction: ${props => (props.column ? 'initial' : 'column')};
   margin: 0 auto;
-  max-width: ${MAX_WIDTH};
+  max-width: 1080px;
   width: 100%;
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
-    flex-wrap: wrap;
+  @media (max-width: 1280px) {
+    justify-content: ${props => (props.padding ? 'space-between' : 'center')};
   }
 `
 
-const FileUploaderWrapper = styled.div`
+const LoaderWrapper = styled.div`
+  width: 100%;
   display: flex;
-  flex: 1 1 100%;
-  margin: ${({ margin }) =>
-    margin ? VIDEOMANAGER_FILEUPLOADERWRAPPER_MARGIN : null};
+  min-height: 400px;
+  align-items: center;
 `
 
 class VideoManager extends Component<Props, void> {
@@ -86,18 +80,24 @@ class VideoManager extends Component<Props, void> {
   }
 
   render () {
-    const showList = this.props.videos.size > 0 || this.props.selectedVideo
+    const selectedVideo = this.props.selectedVideo
 
-    return this.props.isWalletSecured ? (
-      <Wrapper column={showList}>
-        {showList && <UploadList />}
-        <FileUploaderWrapper margin={showList}>
-          <FileUploader showCard={!showList} />
-        </FileUploaderWrapper>
-        {!showList ? <RedeemVoucher marginLeft /> : ''}
-        {!showList && <PTIGuide marginLeft />}
+    return (
+      <Wrapper>
+        {this.props.isWalletSecured && selectedVideo ? (
+          <VideoForm
+            key={selectedVideo.id}
+            videoId={selectedVideo.id}
+            video={selectedVideo}
+            edit
+          />
+        ) : (
+          <LoaderWrapper>
+            <Loader />
+          </LoaderWrapper>
+        )}
       </Wrapper>
-    ) : null
+    )
   }
 }
 

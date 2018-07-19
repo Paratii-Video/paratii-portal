@@ -12,6 +12,7 @@ import ProfileMyVideosContainer from 'containers/ProfileMyVideosContainer'
 
 import PlayContainer from 'containers/PlayContainer'
 import VideoManager from 'containers/VideoManagerContainer'
+import EditVideo from 'containers/EditVideoContainer'
 import DebugContainer from 'containers/DebugContainer'
 import WalletContainer from 'containers/WalletContainer'
 import SearchResultsContainer from 'containers/pages/SearchResultsContainer'
@@ -83,7 +84,7 @@ class App extends Component<Props, State> {
             <Notifications />
             <MainHeader />
             {isWalletSecured ? <UserNav /> : null}
-            <Main landing={match.isExact}>
+            <Main landing={match.isExact} isWalletSecured={isWalletSecured}>
               <Switch>
                 <Route exact path="/" component={LandingContainer} />
                 <Route
@@ -116,6 +117,7 @@ class App extends Component<Props, State> {
                     isWalletSecured ? <WalletContainer /> : <Redirect to="/" />
                   }
                 />
+                <Route path={`${match.url}edit/:id`} component={EditVideo} />
                 <Route
                   path={`${match.url}play/:id`}
                   component={PlayContainer}

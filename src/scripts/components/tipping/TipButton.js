@@ -3,6 +3,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { FlexCenterStyle } from 'components/foundations/Styles'
 import CloseButton from 'components/foundations/buttons/CloseButton'
 import Icon from 'components/foundations/Icon'
 import Colors from 'components/foundations/base/Colors'
@@ -21,10 +22,7 @@ type Props = {
 }
 
 const WrappedButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: uppercase;
+  ${FlexCenterStyle} text-transform: uppercase;
   font-weight: bold;
   padding: 5px 20px;
   background-color: ${Colors.purple};
@@ -71,7 +69,7 @@ class TipButton extends React.Component<Props> {
 
   render () {
     return (
-      <WrappedButton onClick={this.onClick}>
+      <WrappedButton data-test-id="tip-button" onClick={this.onClick}>
         <IconWrapper>
           <Icon color={Colors.white} url={coinDataUrl} />
         </IconWrapper>
