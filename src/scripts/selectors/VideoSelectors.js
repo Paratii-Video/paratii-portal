@@ -15,7 +15,7 @@ export const isVideoWhiteListed: (
     if (playerVideoId) {
       const playerVideo: ?VideoRecord = videos.get(playerVideoId)
       if (playerVideo) {
-        return playerVideo.get('whiteListed')
+        return playerVideo.getIn(['staked', 'deposit']) !== ''
       }
     }
     return null

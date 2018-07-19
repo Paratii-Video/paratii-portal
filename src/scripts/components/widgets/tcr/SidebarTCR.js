@@ -80,7 +80,6 @@ class SidebarTCR extends Component<Props, void> {
             {videoApproved ? <VideoApproved /> : <VideoRejected />}
           </div>
         )}
-        <tt>isWhitelisted: {isWhitelisted}</tt>
       </Sidebar>
     )
   }
