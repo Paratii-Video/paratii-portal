@@ -21,6 +21,7 @@ import TipOverlayContainer from 'containers/tipping/TipOverlayContainer'
 import TranslatedText from 'components/translations/TranslatedText'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
+import SidebarTCR from 'containers/widgets/tcr/SidebarTCRContainer'
 import {
   requestFullscreen,
   requestCancelFullscreen,
@@ -105,6 +106,13 @@ const VideoWrapper = styled.div`
   @media (max-width: 930px) {
     margin: ${props => (props.isEmbed ? null : '0 0 25px')};
   }
+`
+
+const VideoWrapperContent = styled.div`
+  display: flex;
+  flex: 1 1 840px;
+  flex-direction: column;
+  margin-right: 20px;
 `
 
 const VideoCover = styled.div`
@@ -787,135 +795,140 @@ class Play extends Component<Props, State> {
       return (
         <DocumentTitle title={videoName || APP_TITLE}>
           <Wrapper isEmbed={isEmbed}>
-            <VideoWrapper isEmbed={isEmbed}>
-              <VideoCover isEmbed={isEmbed}>
-                <PlayerWrapper
-                  data-test-id="player-wrapper"
-                  onClick={this.onPlayerClick}
-                  onMouseEnter={this.onMouseEnter}
-                  innerRef={(ref: HTMLElement) => {
-                    this.wrapperRef = ref
-                  }}
-                >
-                  <Transition in={this.shouldShowVideoOverlay()} timeout={0}>
-                    {(transitionState: ?string) => (
-                      <OverlayWrapper
-                        onMouseLeave={this.onMouseLeave}
-                        onMouseMove={this.onMouseMove}
-                      >
-                        <VideoOverlayContainer
-                          onClick={this.onOverlayClick}
-                          video={video}
-                          isEmbed={isEmbed}
-                          showStartScreen={this.shouldShowStartScreen()}
-                          toggleShareModal={this.toggleShareModal}
-                          onTipButtonClick={this.onTipButtonClick}
-                          showShareModal={this.state.showShareModal}
-                          onScrub={this.scrubVideo}
-                          onVolumeChange={this.changeVolume}
-                          onToggleMute={this.toggleMute}
-                          onPlaybackLevelChange={this.changePlaybackLevel}
-                          transitionState={transitionState}
-                          togglePlayPause={this.togglePlayPause}
-                          toggleFullscreen={(goToFullscreen: boolean): void => {
-                            if (goToFullscreen && this.wrapperRef) {
-                              requestFullscreen(this.wrapperRef)
-                            } else {
-                              requestCancelFullscreen()
-                            }
-                          }}
-                        />
-                      </OverlayWrapper>
-                    )}
-                  </Transition>
-                  <Player
-                    datat-test-id={PLAYER_ID}
-                    id={PLAYER_ID}
+            <VideoWrapperContent isEmbed={isEmbed}>
+              <VideoWrapper isEmbed={isEmbed}>
+                <VideoCover isEmbed={isEmbed}>
+                  <PlayerWrapper
+                    data-test-id="player-wrapper"
+                    onClick={this.onPlayerClick}
+                    onMouseEnter={this.onMouseEnter}
                     innerRef={(ref: HTMLElement) => {
-                      this.playerWrapperRef = ref
+                      this.wrapperRef = ref
                     }}
-                  />
-                  {this.props.video ? (
-                    <ShareOverlay
-                      show={this.state.showShareModal}
-                      onToggle={this.toggleShareModal}
-                      portalUrl={getAppRootUrl(process.env.NODE_ENV)}
-                      videoId={video && video.id}
-                      videoLabelUrl={
-                        getAppRootUrl(process.env.NODE_ENV) +
-                        '/play/' +
-                        ((video && video.id) || '')
-                      }
-                      shareOptions={shareOptions}
+                  >
+                    <Transition in={this.shouldShowVideoOverlay()} timeout={0}>
+                      {(transitionState: ?string) => (
+                        <OverlayWrapper
+                          onMouseLeave={this.onMouseLeave}
+                          onMouseMove={this.onMouseMove}
+                        >
+                          <VideoOverlayContainer
+                            onClick={this.onOverlayClick}
+                            video={video}
+                            isEmbed={isEmbed}
+                            showStartScreen={this.shouldShowStartScreen()}
+                            toggleShareModal={this.toggleShareModal}
+                            onTipButtonClick={this.onTipButtonClick}
+                            showShareModal={this.state.showShareModal}
+                            onScrub={this.scrubVideo}
+                            onVolumeChange={this.changeVolume}
+                            onToggleMute={this.toggleMute}
+                            onPlaybackLevelChange={this.changePlaybackLevel}
+                            transitionState={transitionState}
+                            togglePlayPause={this.togglePlayPause}
+                            toggleFullscreen={(
+                              goToFullscreen: boolean
+                            ): void => {
+                              if (goToFullscreen && this.wrapperRef) {
+                                requestFullscreen(this.wrapperRef)
+                              } else {
+                                requestCancelFullscreen()
+                              }
+                            }}
+                          />
+                        </OverlayWrapper>
+                      )}
+                    </Transition>
+                    <Player
+                      datat-test-id={PLAYER_ID}
+                      id={PLAYER_ID}
+                      innerRef={(ref: HTMLElement) => {
+                        this.playerWrapperRef = ref
+                      }}
                     />
-                  ) : null}
-                  {this.props.userIsTipping && this.props.video ? (
-                    <TipOverlayWrapper>
-                      <TipOverlayContainer />
-                    </TipOverlayWrapper>
-                  ) : null}
-                </PlayerWrapper>
-              </VideoCover>
-            </VideoWrapper>
-            {!isEmbed &&
-              video && (
-              <PlayInfo>
-                {videoName && <Title accent>{videoName}</Title>}
-                {video.author && <Text>By {video.author}</Text>}
-                {video.share && (
-                  <PlayInfoButtons>
-                    <TextButton iconButton margin="0 20px 0 0">
-                      <SVGIcon
-                        width="20px"
-                        height="20px"
-                        margin="0 5px 0 0"
-                        icon="icon-play-view"
+                    {this.props.video ? (
+                      <ShareOverlay
+                        show={this.state.showShareModal}
+                        onToggle={this.toggleShareModal}
+                        portalUrl={getAppRootUrl(process.env.NODE_ENV)}
+                        videoId={video && video.id}
+                        videoLabelUrl={
+                          getAppRootUrl(process.env.NODE_ENV) +
+                          '/play/' +
+                          ((video && video.id) || '')
+                        }
+                        shareOptions={shareOptions}
                       />
-                      <Text small>
-                        <TranslatedText message="player.views.zero" />
-                      </Text>
-                    </TextButton>
-                    <TextButton iconButton margin="0 20px 0 0">
-                      <SVGIcon
-                        width="20px"
-                        height="20px"
-                        margin="0 5px 0 0"
-                        icon="icon-play-like"
-                      />
-                      <Text small>
-                        <TranslatedText message="player.views.zero" />
-                      </Text>
-                    </TextButton>
-                    <TextButton iconButton>
-                      <SVGIcon
-                        width="20px"
-                        height="20px"
-                        margin="0 5px 0 0"
-                        icon="icon-play-dislike"
-                      />
-                      <Text small>
-                        <TranslatedText message="player.views.zero" />
-                      </Text>
-                    </TextButton>
-                  </PlayInfoButtons>
-                )}
-                <Text>
-                    Price{' '}
-                  <Span highlight>
-                    {video.free ? (
-                      <TranslatedText message="player.free" />
-                    ) : (
-                      <TranslatedText message="player.free" />
-                    )}
-                  </Span>
-                </Text>
-                {video.description && (
-                  <DescriptionWrapper>
-                    <Text>{video.description}</Text>
-                  </DescriptionWrapper>
-                )}
-              </PlayInfo>
-            )}
+                    ) : null}
+                    {this.props.userIsTipping && this.props.video ? (
+                      <TipOverlayWrapper>
+                        <TipOverlayContainer />
+                      </TipOverlayWrapper>
+                    ) : null}
+                  </PlayerWrapper>
+                </VideoCover>
+              </VideoWrapper>
+              {!isEmbed &&
+                video && (
+                <PlayInfo>
+                  {videoName && <Title accent>{videoName}</Title>}
+                  {video.author && <Text>By {video.author}</Text>}
+                  {video.share && (
+                    <PlayInfoButtons>
+                      <TextButton iconButton margin="0 20px 0 0">
+                        <SVGIcon
+                          width="20px"
+                          height="20px"
+                          margin="0 5px 0 0"
+                          icon="icon-play-view"
+                        />
+                        <Text small>
+                          <TranslatedText message="player.views.zero" />
+                        </Text>
+                      </TextButton>
+                      <TextButton iconButton margin="0 20px 0 0">
+                        <SVGIcon
+                          width="20px"
+                          height="20px"
+                          margin="0 5px 0 0"
+                          icon="icon-play-like"
+                        />
+                        <Text small>
+                          <TranslatedText message="player.views.zero" />
+                        </Text>
+                      </TextButton>
+                      <TextButton iconButton>
+                        <SVGIcon
+                          width="20px"
+                          height="20px"
+                          margin="0 5px 0 0"
+                          icon="icon-play-dislike"
+                        />
+                        <Text small>
+                          <TranslatedText message="player.views.zero" />
+                        </Text>
+                      </TextButton>
+                    </PlayInfoButtons>
+                  )}
+                  <Text>
+                      Price{' '}
+                    <Span highlight>
+                      {video.free ? (
+                        <TranslatedText message="player.free" />
+                      ) : (
+                        <TranslatedText message="player.free" />
+                      )}
+                    </Span>
+                  </Text>
+                  {video.description && (
+                    <DescriptionWrapper>
+                      <Text>{video.description}</Text>
+                    </DescriptionWrapper>
+                  )}
+                </PlayInfo>
+              )}
+            </VideoWrapperContent>
+            {!isEmbed && video && <SidebarTCR videoId={video && video.id} />}
           </Wrapper>
         </DocumentTitle>
       )
