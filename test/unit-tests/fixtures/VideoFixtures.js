@@ -77,6 +77,6 @@ export const getDefaultVideo = () => ({
   transcodingStatus: getDefaultAsyncTaskStatus(),
   uploadStatus: getDefaultAsyncTaskStatus(),
   vote: null,
-  voteStatus: '',
-  whiteListed: null
+  voteStatus: ''
+  // whiteListed: null
 })

@@ -25,7 +25,7 @@ class Video extends ImmutableRecord({
   free: '',
   // staked: new StakingRecord(),
   tcrStatus: new TcrStatusRecord(),
-  whiteListed: null,
+  // whiteListed: null,
   vote: null,
   voteStatus: '',
   storageStatus: new AsyncTaskStatusRecord(),
@@ -49,7 +49,7 @@ class Video extends ImmutableRecord({
   author: string
   free: string
   tcrStatus: TcrStatusRecord
-  whiteListed: boolean
+  // whiteListed: boolean
   challengeExists: boolean
   vote: number
   voteStatus: string
