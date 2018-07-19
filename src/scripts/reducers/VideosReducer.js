@@ -189,7 +189,7 @@ const reducer = {
       return state
     }
     return state.setIn(
-      [payload.id, 'staked'],
+      [payload.id, 'tcrStatus', 'data', 'staked'],
       new StakingRecord({
         id: payload.id,
         deposit: payload.deposit

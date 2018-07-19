@@ -1,8 +1,11 @@
 /* @flow */
 
 import { List as ImmutableList, Record as ImmutableRecord } from 'immutable'
-import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
-import { StakingRecord } from 'records/StakingRecord'
+import {
+  AsyncTaskStatusRecord,
+  TcrStatusRecord
+} from 'records/AsyncTaskStatusRecord'
+// import { StakingRecord } from 'records/StakingRecord'
 
 class Video extends ImmutableRecord({
   description: '',
@@ -20,7 +23,8 @@ class Video extends ImmutableRecord({
   title: '',
   author: '',
   free: '',
-  staked: new StakingRecord(),
+  // staked: new StakingRecord(),
+  tcrStatus: new TcrStatusRecord(),
   whiteListed: null,
   vote: null,
   voteStatus: '',
@@ -44,7 +48,7 @@ class Video extends ImmutableRecord({
   title: string
   author: string
   free: string
-  staked: StakingRecord
+  tcrStatus: TcrStatusRecord
   whiteListed: boolean
   challengeExists: boolean
   vote: number
@@ -66,7 +70,7 @@ class Video extends ImmutableRecord({
     super({
       ...rest,
       thumbnails: ImmutableList(thumbnails),
-      staked: new StakingRecord(staked),
+      tcrStatus: new TcrStatusRecord(staked),
       storageStatus: new AsyncTaskStatusRecord(storageStatus),
       transcodingStatus: new AsyncTaskStatusRecord(transcodingStatus),
       uploadStatus: new AsyncTaskStatusRecord(uploadStatus),
