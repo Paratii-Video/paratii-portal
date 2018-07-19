@@ -11,7 +11,8 @@ import Text from './Text'
 
 type Props = {
   children: any,
-  relative: boolean
+  relative: boolean,
+  'data-test-id'?: string
 }
 
 const Wrapper = styled.div`
@@ -40,18 +41,14 @@ const TextWrapper = styled.div`
   z-index: ${Z_INDEX_FRONT};
 `
 
-class VideoTimeDisplay extends React.Component<Props> {
-  render () {
-    return (
-      <Wrapper relative={this.props.relative}>
-        <TextWrapper tiny accent>
-          <Text tiny accent>
-            {this.props.children}
-          </Text>
-        </TextWrapper>
-      </Wrapper>
-    )
-  }
-}
+const VideoTimeDisplay = (props: Props) => (
+  <Wrapper relative={props.relative}>
+    <TextWrapper tiny accent>
+      <Text tiny accent data-test-id={props['data-test-id']}>
+        {props.children}
+      </Text>
+    </TextWrapper>
+  </Wrapper>
+)
 
 export default VideoTimeDisplay
