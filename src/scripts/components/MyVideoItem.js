@@ -37,7 +37,7 @@ export const MyVideosContainer = styled.ul`
 `
 
 const Wrapper = styled.li`
-  background: ${props => props.theme.colors.background.body};
+  background: ${props => props.theme.colors.background.primary};
   position: relative;
 `
 
