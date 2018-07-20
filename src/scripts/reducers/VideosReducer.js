@@ -207,6 +207,7 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
+    console.log(payload)
     const challengeRecord = new TcrChallengeRecord({
       id: payload.id,
       challenger: payload.challenger,
@@ -218,7 +219,6 @@ const reducer = {
     const result = state
       .setIn([payload.id, 'tcrStatus', 'data', 'challenge'], challengeRecord)
       .setIn([payload.id, 'tcrStatus', 'name'], 'appWasMade')
-    console.log(payload)
     console.log(state.getIn([payload.id]))
     return result
   },

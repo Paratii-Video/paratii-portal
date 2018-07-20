@@ -7,6 +7,8 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - run: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+      - run: sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
       - run: apt update && apt upgrade google-chrome-stable -y
       - restore_cache:
           keys:
