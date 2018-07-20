@@ -8,6 +8,7 @@ import { ButtonStyleHover } from './foundations/Button'
 import { ButtonStyleColor } from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
 import VideoTimeDisplay from './foundations/VideoTimeDisplay'
+import Card from 'components/structures/Card'
 import TranslatedText from './translations/TranslatedText'
 import { isVideoPublished, videoDuration } from 'operators/VideoOperators'
 import { formatDuration } from '../utils/VideoUtils'
@@ -36,8 +37,7 @@ export const MyVideosContainer = styled.ul`
   }
 `
 
-const Wrapper = styled.li`
-  background: ${props => props.theme.colors.background.primary};
+const Wrapper = styled(Card)`
   position: relative;
 `
 
@@ -183,7 +183,7 @@ class MyVideoItem extends Component<Props, void> {
     )
 
     return (
-      <Wrapper>
+      <Wrapper nopadding>
         {MyVideoItemContent}
         <EditButtonWrapper>
           <EditButton to={urlToEdit}>
