@@ -23,7 +23,7 @@ export const BUTTON_PADDING_LEFT: string = '18px'
 export const CARD_PADDING: string = '40px 42px'
 export const CARD_MAX_WIDTH: string = '650px'
 export const CARD_MARGIN_LEFT: string = '25px'
-export const CARD_MARGIN_BOTTOM: string = '25px'
+export const CARD_MARGIN_TOP: string = '25px'
 
 // MainHeader
 export const MAINHEADER_LOGO_WIDTH: string = '98px'
