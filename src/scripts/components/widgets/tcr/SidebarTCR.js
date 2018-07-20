@@ -48,28 +48,6 @@ class SidebarTCR extends Component<Props, void> {
 
     return (
       <Sidebar>
-        <ChallengePeriod status="challenged" />
-        <Card>
-          <CommitYourVote />
-        </Card>
-        <Card marginTop>
-          <SendYourVoteBack />
-        </Card>
-        <Card marginTop>
-          <VideoApproved />
-        </Card>
-        <Card marginTop>
-          <VideoRejected />
-        </Card>
-        <Card marginTop>
-          <VoteCommitted />
-        </Card>
-        <Card marginTop>
-          <VoteRevealed />
-        </Card>
-        <Card marginTop>
-          <Voting />
-        </Card>
         {isWhitelisted &&
           !hasBeenChallenged && (
           <Card>
