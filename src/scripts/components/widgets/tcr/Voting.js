@@ -37,12 +37,20 @@ const VotingValue = styled.div`
 `
 
 const VotingBarWrapper = styled(ProgressBarContainer)`
-  background: ${props => props.theme.colors.ProfileCuration.VotingBarTwo};
+  background: linear-gradient(
+    to top,
+    ${props => props.theme.colors.button.highlightFrom} 0%,
+    ${props => props.theme.colors.button.highlightTo} 100%
+  );
   margin: 20px 0 25px;
 `
 
 const VotingBar = styled(ProgressBar)`
-  background: ${props => props.theme.colors.ProfileCuration.VotingBarOne};
+  background: linear-gradient(
+    to top,
+    ${props => props.theme.colors.button.accentFrom} 0%,
+    ${props => props.theme.colors.button.accentTo} 100%
+  );
 `
 
 export default class VotingBox extends Component<Props, void> {

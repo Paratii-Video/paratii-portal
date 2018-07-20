@@ -49,15 +49,6 @@ const Themes = {
     },
     Popover: {
       shadow: '0 3px 6px rgba(32, 35, 46, 0.7)'
-    },
-    ProfileCuration: {
-      ChallengeBackgroundOneFrom: Colors.purpleGradientFrom,
-      ChallengeBackgroundOneTo: Colors.purpleGradientTo,
-      ChallengeBackgroundTwoFrom: Colors.pink,
-      ChallengeBackgroundTwoTo: Colors.purple,
-      VotingBarOne: Colors.green,
-      VotingBarTwo: Colors.pink,
-      ChallengeSequenceDot: Colors.white
     }
   }
 }

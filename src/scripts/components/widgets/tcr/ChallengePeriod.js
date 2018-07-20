@@ -17,14 +17,14 @@ const ChallengePeriod = styled.div`
     135deg,
     ${props =>
     props.status === 'inReveal'
-      ? props.theme.colors.ProfileCuration.ChallengeBackgroundTwoFrom
-      : props.theme.colors.ProfileCuration.ChallengeBackgroundOneFrom}
-      0%,
+      ? props.theme.colors.button.highlightFrom
+      : props.theme.colors.button.primaryFrom}
+      30%,
     ${props =>
     props.status === 'inReveal'
-      ? props.theme.colors.ProfileCuration.ChallengeBackgroundTwoTo
-      : props.theme.colors.ProfileCuration.ChallengeBackgroundOneTo}
-      100%
+      ? props.theme.colors.button.primaryTo
+      : props.theme.colors.button.primaryTo}
+      ${props => (props.status === 'inReveal' ? '150%' : '100%')}
   );
   display: flex;
   flex-direction: column;
@@ -68,7 +68,7 @@ const ChallengeTimeline = styled(ChallengeTimeWrapper)`
 
 const ChallengeLine = styled.span`
   border-top: 2px ${({ dashed }) => (dashed ? 'dashed' : 'solid')}
-    ${props => props.theme.colors.ProfileCuration.ChallengeSequenceDot};
+    ${props => props.theme.colors.text.accent};
   left: 0;
   opacity: ${({ dashed }) => (dashed ? 0.5 : null)};
   opacity: ${({ dashed }) => (dashed ? 0.5 : null)};
@@ -103,8 +103,7 @@ const circles = `
   }
 `
 const ChallengeSequenceDot = styled.span`
-  background: ${props =>
-    props.theme.colors.ProfileCuration.ChallengeSequenceDot};
+  background: ${props => props.theme.colors.text.accent};
   border-radius: 100%;
   height: ${props => (props.active ? '12px' : '8px')};
   position: relative;
@@ -122,47 +121,47 @@ class ChallengePeriodComponent extends Component<Props, void> {
     return (
       <ChallengePeriod status={this.props.status}>
         {this.props.status === 'inReveal' ? (
-          <Text big>
+          <Text accent big>
             <TranslatedText message="tcr.ChallengePeriod.inRevealTitle_html" />
           </Text>
         ) : (
-          <Text big>
+          <Text accent big>
             <TranslatedText message="tcr.ChallengePeriod.challengedTitle_html" />
           </Text>
         )}
 
         <ChallengeTimeWrapper>
           <ChallengeTime>
-            <Text tiny>
+            <Text accent tiny>
               <TranslatedText message="tcr.ChallengePeriod.hourLabel" />
             </Text>
-            <Title bigger bold>
+            <Title accent bigger bold>
               19
             </Title>
           </ChallengeTime>
           <ChallengeTime>
-            <Title bigger bold>
+            <Title accent bigger bold>
               :
             </Title>
           </ChallengeTime>
           <ChallengeTime>
-            <Text tiny>
+            <Text accent tiny>
               <TranslatedText message="tcr.ChallengePeriod.minutesLabel" />
             </Text>
-            <Title bigger bold>
+            <Title accent bigger bold>
               20
             </Title>
           </ChallengeTime>
           <ChallengeTime>
-            <Title bigger bold>
+            <Title accent bigger bold>
               :
             </Title>
           </ChallengeTime>
           <ChallengeTime>
-            <Text tiny>
+            <Text accent tiny>
               <TranslatedText message="tcr.ChallengePeriod.secondsLabel" />
             </Text>
-            <Title bigger bold>
+            <Title accent bigger bold>
               47
             </Title>
           </ChallengeTime>
@@ -170,25 +169,25 @@ class ChallengePeriodComponent extends Component<Props, void> {
 
         {this.props.status === 'inReveal' ? (
           <ChallengeSequence>
-            <ChallengeSequenceText disabled>
+            <ChallengeSequenceText accent disabled>
               <TranslatedText message="tcr.ChallengePeriod.whitelistedLabel" />
             </ChallengeSequenceText>
-            <ChallengeSequenceText disabled>
+            <ChallengeSequenceText accent disabled>
               <TranslatedText message="tcr.ChallengePeriod.challengedLabel" />
             </ChallengeSequenceText>
-            <ChallengeSequenceText bold>
+            <ChallengeSequenceText accent bold>
               <TranslatedText message="tcr.ChallengePeriod.inRevealLabel" />
             </ChallengeSequenceText>
           </ChallengeSequence>
         ) : (
           <ChallengeSequence>
-            <ChallengeSequenceText disabled>
+            <ChallengeSequenceText accent disabled>
               <TranslatedText message="tcr.ChallengePeriod.whitelistedLabel" />
             </ChallengeSequenceText>
-            <ChallengeSequenceText bold>
+            <ChallengeSequenceText accent bold>
               <TranslatedText message="tcr.ChallengePeriod.challengedLabel" />
             </ChallengeSequenceText>
-            <ChallengeSequenceText disabled>
+            <ChallengeSequenceText accent disabled>
               <TranslatedText message="tcr.ChallengePeriod.inRevealLabel" />
             </ChallengeSequenceText>
           </ChallengeSequence>
