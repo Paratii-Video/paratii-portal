@@ -207,15 +207,20 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
-    return state
-      .setIn(
-        [payload.id, 'tcrStatus', 'data', 'challenge'],
-        new TcrChallengeRecord({
-          id: payload.id,
-          challenger: payload.challenger
-        })
-      )
+    const challengeRecord = new TcrChallengeRecord({
+      id: payload.id,
+      challenger: payload.challenger,
+      commitEndDate: payload.commitEndDate,
+      revealEndDate: payload.revealEndDate,
+      listingHash: payload.listingHash
+    })
+    console.log(challengeRecord)
+    const result = state
+      .setIn([payload.id, 'tcrStatus', 'data', 'challenge'], challengeRecord)
       .setIn([payload.id, 'tcrStatus', 'name'], 'appWasMade')
+    console.log(payload)
+    console.log(state.getIn([payload.id]))
+    return result
   },
   [VOTE_VIDEO]: (
     state: VideoRecordMap,

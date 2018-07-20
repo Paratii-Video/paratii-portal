@@ -43,24 +43,36 @@ export const getTcrState: (state: RootState) => ?VideoRecord = createSelector(
           return statusName
         } else if (statusName === 'appWasMade') {
           // TODO: here we need to distinguish the other cases
-          if (video.getIn(['tcrStatus', 'challenge', 'blockNumber'])) {
+          if (video.getIn(['tcrStatus', 'data', 'challenge', 'challenger'])) {
             const commitEndDate = video.getIn([
               'tcrStatus',
+              'data',
               'challenge',
               'commitEndDate'
             ])
             const revealEndDate = video.getIn([
               'tcrStatus',
+              'data',
               'challenge',
               'revealEndDate'
             ])
-            const votesFor = video.getIn(['tcrStatus', 'challenge', 'votesFor'])
+            const votesFor = video.getIn([
+              'tcrStatus',
+              'data',
+              'challenge',
+              'votesFor'
+            ])
             const votesAgainst = video.getIn([
               'tcrStatus',
+              'data',
               'challenge',
               'votesAgainst'
             ])
-            const now = Date.now()
+            const now = Date.now() / 1000
+
+            console.log(`now: ${now}`)
+            console.log(`commitEndDate: ${commitEndDate}`)
+            console.log(`revealEndDate: ${revealEndDate}`)
             if (now <= commitEndDate) {
               return 'inChallenge'
             } else if (now <= revealEndDate) {

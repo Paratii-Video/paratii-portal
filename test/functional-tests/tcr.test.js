@@ -122,8 +122,10 @@ describe('TCR:', function () {
     // now do the actual challenge
     await browser.waitAndClick('[data-test-id="button-challenge"]')
     // now click on 'challenge in the modal box:
-    await browser.waitAndClick('[data-test-id="modal-button-challenge"]')
+    await browser.waitAndClick('[data-test-id="modal-button-challenge"]', 5000)
 
-    // the challenge should be a success
+    // oppose the video [this one is hidden!]
+    await browser.waitAndClick('[data-test-id="button-vote-2"]', 5000)
+    //
   })
 })

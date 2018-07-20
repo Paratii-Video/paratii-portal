@@ -38,7 +38,7 @@ const VotingValuesWrapper = styled.div`
 
 const VotingValue = styled.div`
   align-content: center;
-  background-color: ${props => props.theme.colors.UserNav.UserPTIValueBox};
+  background-color: ${props => props.theme.colors.background.secondary};
   display: flex;
   flex: 0 0 48.5%;
   flex-direction: column;

@@ -63,7 +63,7 @@ class CommitYourVote extends Component<Props, void> {
     return (
       <InfoStatus>
         <InfoStatusContent>
-          <InfoStatusTitle>Commit your vote</InfoStatusTitle>
+          <InfoStatusTitle>You can vote now</InfoStatusTitle>
         </InfoStatusContent>
         <InfoStatusContent>
           <Text gray>
@@ -75,10 +75,18 @@ class CommitYourVote extends Component<Props, void> {
           <InfoStatusTitle>Choose wisely</InfoStatusTitle>
         </InfoStatusContent>
         <InfoStatusButtons>
-          <ButtonColor green onClick={() => this.voteVideo(1)}>
+          <ButtonColor
+            green
+            onClick={() => this.voteVideo(1)}
+            data-test-id="button-vote-1"
+          >
             Support
           </ButtonColor>
-          <ButtonColor pink onClick={() => this.voteVideo(0)}>
+          <ButtonColor
+            pink
+            onClick={() => this.voteVideo(0)}
+            data-test-id="button-vote-2"
+          >
             Oppose
           </ButtonColor>
         </InfoStatusButtons>

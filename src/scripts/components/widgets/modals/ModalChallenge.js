@@ -73,10 +73,16 @@ class ModalChallenge extends Component<Props, Object> {
       const tx = await paratii.eth.tcr.approveAndStartChallenge(
         this.props.selectedVideoId
       )
+      console.log('--------------------------------------')
       console.log(tx)
+      const event = tx.events._Challenge.returnValues
+
       this.props.videoChallenged({
         id: this.props.selectedVideoId,
-        challenger: paratii.getAccount()
+        challenger: event.challenger,
+        commitEndDate: event.commitEndDate,
+        revealEndDate: event.revealEndDate,
+        listingHash: event.listingHash
       })
       this.props.notification({ title: 'Challenge is ready..' }, 'warning')
       this.props.closeModal()
