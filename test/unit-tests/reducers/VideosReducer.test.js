@@ -16,7 +16,7 @@ import {
   TRANSCODING_PROGRESS,
   TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE,
-  VIDEOFETCH_ERROR,
+  VIDEO_FETCH_ERROR,
   VIDEO_FETCH_SUCCESS
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
@@ -1529,12 +1529,12 @@ describe('Video Reducer', () => {
       })
     })
   })
-  describe('VIDEOFETCH_ERROR', () => {
+  describe('VIDEO_FETCH_ERROR', () => {
     it('should do nothing if there is no payload', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
       store.dispatch({
-        type: VIDEOFETCH_ERROR
+        type: VIDEO_FETCH_ERROR
       })
       expect(store.getState().toJS()).to.deep.equal({})
     })
@@ -1549,7 +1549,7 @@ describe('Video Reducer', () => {
         '999': getDefaultVideo()
       })
       store.dispatch({
-        type: VIDEOFETCH_ERROR,
+        type: VIDEO_FETCH_ERROR,
         payload: {
           foo: 'bar'
         }
@@ -1571,7 +1571,7 @@ describe('Video Reducer', () => {
         '999': getDefaultVideo()
       })
       store.dispatch({
-        type: VIDEOFETCH_ERROR,
+        type: VIDEO_FETCH_ERROR,
         payload: {
           id: '333',
           error: {
@@ -1608,7 +1608,7 @@ describe('Video Reducer', () => {
         '999': getDefaultVideo()
       })
       store.dispatch({
-        type: VIDEOFETCH_ERROR,
+        type: VIDEO_FETCH_ERROR,
         payload: {
           id: '999',
           error: {

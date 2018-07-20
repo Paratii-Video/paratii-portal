@@ -6,9 +6,9 @@ import {
   DataStatusRecord
 } from 'records/AsyncTaskStatusRecord'
 
-export type TcrStatusName = 'notInTcr' | 'appWasMade'
+type TcrStatusName = 'notInTcr' | 'appWasMade'
 
-class TcrStakedRecord extends ImmutableRecord({
+export class TcrStakedRecord extends ImmutableRecord({
   id: null,
   deposit: '',
   appEndDate: null,
@@ -22,20 +22,20 @@ class TcrStakedRecord extends ImmutableRecord({
   applicant: string
 }
 
-class TcrChallengeRecord extends ImmutableRecord({
-  voteQuorum: null,
+export class TcrChallengeRecord extends ImmutableRecord({
   blockNumber: null,
   challenger: '',
   commitEndDate: null,
   commitStartDate: null,
+  id: null,
   listingHash: '',
   revealEndDate: null,
   rewardPool: null,
-  totalTokens: null,
-  id: null,
-  votesFor: null,
   totalVotes: null,
-  votesAgainst: null
+  totalTokens: null,
+  voteQuorum: null,
+  votesAgainst: null,
+  votesFor: null
 }) {
   voteQuorum: number
   blockNumber: number
@@ -82,7 +82,7 @@ export class TcrStatusRecord extends ImmutableRecord({
   }
 }
 
-class Video extends ImmutableRecord({
+export default class Video extends ImmutableRecord({
   author: '',
   description: '',
   duration: '',
@@ -95,14 +95,14 @@ class Video extends ImmutableRecord({
   owner: '',
   ownershipProof: '',
   price: 0,
+  storageStatus: new AsyncTaskStatusRecord(),
   thumbnails: ImmutableList(),
   title: '',
   tcrStatus: new TcrStatusRecord(),
-  vote: null,
-  voteStatus: '',
-  storageStatus: new AsyncTaskStatusRecord(),
   transcodingStatus: new AsyncTaskStatusRecord(),
   uploadStatus: new AsyncTaskStatusRecord(),
+  vote: null,
+  voteStatus: '',
   fetchStatus: new AsyncTaskStatusRecord()
 }) {
   // challengeExists: boolean
@@ -132,17 +132,17 @@ class Video extends ImmutableRecord({
 
   constructor ({
     thumbnails,
-    staked,
     storageStatus,
     transcodingStatus,
     uploadStatus,
     fetchStatus,
+    tcrStatus,
     ...rest
   }: Object = {}) {
     super({
       ...rest,
       thumbnails: ImmutableList(thumbnails),
-      tcrStatus: new TcrStatusRecord(staked),
+      tcrStatus: new TcrStatusRecord(tcrStatus),
       storageStatus: new AsyncTaskStatusRecord(storageStatus),
       transcodingStatus: new AsyncTaskStatusRecord(transcodingStatus),
       uploadStatus: new AsyncTaskStatusRecord(uploadStatus),
@@ -150,5 +150,3 @@ class Video extends ImmutableRecord({
     })
   }
 }
-
-export default Video

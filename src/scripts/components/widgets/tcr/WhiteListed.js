@@ -62,7 +62,10 @@ class WhiteListed extends Component<Props, void> {
             that goes against our policy challenge it and you may be rewarded
           </Text>
         </InfoStatusContent>
-        <ButtonColor onClick={this.challengeVideo}>
+        <ButtonColor
+          onClick={this.challengeVideo}
+          data-test-id="button-challenge"
+        >
           Challenge this content
         </ButtonColor>
       </InfoStatus>

@@ -10,7 +10,7 @@ export const SET_CONTEXT = createActionConstant('SET_CONTEXT')
 
 /* Video actions */
 export const PLAYER_VIDEO_SELECT = createActionConstant('PLAYER_VIDEO_SELECT')
-export const VIDEOFETCH_ERROR = createActionConstant('VIDEOFETCH_ERROR')
+export const VIDEO_FETCH_ERROR = createActionConstant('VIDEO_FETCH_ERROR')
 export const VIDEO_FETCH_SUCCESS = createActionConstant('VIDEO_FETCH_SUCCESS')
 export const VIDEOS_FETCH_REQUESTED = createActionConstant(
   'VIDEOS_FETCH_REQUESTED'
@@ -22,9 +22,10 @@ export const VIDEOS_FETCH_SUCCESS = createActionConstant('VIDEOS_FETCH_SUCCESS')
 // )
 
 /* TCR Actions */
+export const VIDEO_CHALLENGED = createActionConstant('VIDEO_CHALLENGED')
+export const UPDATE_CHALLENGE = createActionConstant('UPDATE_CHALLENGE')
 export const VOTE_VIDEO = createActionConstant('VOTE_VIDEO')
 export const VOTE_STATUS = createActionConstant('VOTE_STATUS')
-export const UPDATE_CHALLENGE = createActionConstant('UPDATE_CHALLENGE')
 
 /* User Actions */
 export const SET_WALLET_DATA = createActionConstant('SET_WALLET_DATA')

@@ -2,11 +2,16 @@
 
 import { createAction } from 'redux-actions'
 import type { Dispatch } from 'redux'
-import { VOTE_VIDEO, VOTE_STATUS } from 'constants/ActionConstants'
+import {
+  VOTE_VIDEO,
+  VOTE_STATUS,
+  VIDEO_CHALLENGED
+} from 'constants/ActionConstants'
 import { VOTE_STATE } from 'constants/TCRConstants'
 
 export const voteVideo = createAction(VOTE_VIDEO)
 export const voteStatus = createAction(VOTE_STATUS)
+export const videoChallenged = createAction(VIDEO_CHALLENGED)
 
 export const fetchChallenge = (videoId: string) => async (
   dispatch: Dispatch<*>

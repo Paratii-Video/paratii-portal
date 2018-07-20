@@ -136,6 +136,7 @@ export type TokenUnit = $Values<typeof TOKEN_UNITS>
 
 // TODO move this into paratii-js repo
 export type ParatiiLib = {
+  getAccount: () => string,
   config: {
     account: {
       address: string,

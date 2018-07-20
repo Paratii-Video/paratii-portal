@@ -17,7 +17,8 @@ const mapStateToProps = (state: RootState) => {
   // - videoApproved: currentTime > revealEnddata and isWhitelisted
   // - videoRejected: currentTime > revealEnddata and !isWhitelisted
   const tcrState = getTcrState(state)
-  // const tcrState = 'inReveal'
+  // console.log(`tcrState: ${tcrState}`)
+  // const tcrState = 'appWasMade'
   // moreover, a second state regulates the vote, and is one
   // - voteCommited
   // -  voteRevealed
