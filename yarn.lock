@@ -15828,8 +15828,8 @@ seek-bzip@^1.0.5:
     commander "~2.8.1"
 
 selenium-standalone@^6.1.0:
-  version "6.15.1"
-  resolved "https://registry.yarnpkg.com/selenium-standalone/-/selenium-standalone-6.15.1.tgz#4b99241445034d0c652eb5a645da46788adc8274"
+  version "6.15.0"
+  resolved "https://registry.yarnpkg.com/selenium-standalone/-/selenium-standalone-6.15.0.tgz#c8dc77bd45154afbda7509ec53dc599809f63ee4"
   dependencies:
     async "^2.1.4"
     commander "^2.9.0"
