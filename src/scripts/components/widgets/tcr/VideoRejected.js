@@ -1,8 +1,7 @@
 /* @flow */
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
-import Card from 'components/structures/Card'
 import SVGIcon from 'components/foundations/SVGIcon'
 
 type Props = {}
@@ -21,7 +20,7 @@ const InfoStatusContent = styled.div`
 export default class VideoRejected extends Component<Props, void> {
   render () {
     return (
-      <Card>
+      <Fragment>
         <InfoStatusTitle big accent>
           <SVGIcon
             icon="icon-close"
@@ -38,7 +37,7 @@ export default class VideoRejected extends Component<Props, void> {
             that this video broke one of our policies
           </Text>
         </InfoStatusContent>
-      </Card>
+      </Fragment>
     )
   }
 }

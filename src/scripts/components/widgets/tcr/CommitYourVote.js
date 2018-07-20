@@ -1,11 +1,10 @@
 /* @flow */
 /* stylelint-disable */
 // import paratii from 'utils/ParatiiLib'
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 import Text from 'components/foundations/Text'
-import Card from 'components/structures/Card'
 import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
@@ -56,7 +55,7 @@ class CommitYourVote extends Component<Props, void> {
 
   render () {
     return (
-      <Card>
+      <Fragment>
         <InfoStatusTitle big accent>
           Commit your side
         </InfoStatusTitle>
@@ -74,7 +73,7 @@ class CommitYourVote extends Component<Props, void> {
             Oppose
           </Button>
         </InfoStatusButtons>
-      </Card>
+      </Fragment>
     )
   }
 }

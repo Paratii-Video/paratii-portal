@@ -1,10 +1,9 @@
 /* @flow */
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 // import paratii from 'utils/ParatiiLib'
 import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 import Text, { Strong } from 'components/foundations/Text'
-import Card from 'components/structures/Card'
 import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
@@ -45,7 +44,7 @@ class WhiteListed extends Component<Props, void> {
 
   render () {
     return (
-      <Card>
+      <Fragment>
         <InfoStatusTitle big accent>
           This video is <Strong accent>Whitelisted</Strong>
         </InfoStatusTitle>
@@ -56,7 +55,7 @@ class WhiteListed extends Component<Props, void> {
           </Text>
         </InfoStatusContent>
         <Button onClick={this.challengeVideo}>Challenge this content</Button>
-      </Card>
+      </Fragment>
     )
   }
 }

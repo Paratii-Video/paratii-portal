@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import ChallengePeriod from './ChallengePeriod'
 import WhiteListed from 'containers/widgets/tcr/WhiteListedContainer'
 import CommitYourVote from 'containers/widgets/tcr/CommitYourVoteContainer'
+import Card from 'components/structures/Card'
 import SendYourVoteBack from './SendYourVoteBack'
 import VideoApproved from './VideoApproved'
 import VideoRejected from './VideoRejected'
@@ -55,29 +56,43 @@ class SidebarTCR extends Component<Props, void> {
     return (
       <Sidebar>
         {isWhitelisted &&
-          !hasBeenChallenged && <WhiteListed videoId={videoId} />}
+          !hasBeenChallenged && (
+          <Card>
+            <WhiteListed videoId={videoId} />
+          </Card>
+        )}
 
         {inChallenge && (
           <div>
             <ChallengePeriod status="challenged" />
             {voteCommited ? (
-              <VoteCommitted />
+              <Card marginTop>
+                <VoteCommitted />
+              </Card>
             ) : (
-              <CommitYourVote videoId={videoId} />
+              <Card marginTop>
+                <CommitYourVote videoId={videoId} />
+              </Card>
             )}
           </div>
         )}
         {inReveal && (
           <div>
             <ChallengePeriod status="inReveal" />
-            {voteRevealed ? <VoteRevealed /> : <SendYourVoteBack />}
+            <Card marginTop>
+              {voteRevealed ? <VoteRevealed /> : <SendYourVoteBack />}
+            </Card>
           </div>
         )}
 
         {challengeEnded && (
           <div>
-            <Voting />
-            {videoApproved ? <VideoApproved /> : <VideoRejected />}
+            <Card>
+              <Voting />
+            </Card>
+            <Card marginTop>
+              {videoApproved ? <VideoApproved /> : <VideoRejected />}
+            </Card>
           </div>
         )}
       </Sidebar>

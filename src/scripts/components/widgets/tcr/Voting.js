@@ -1,29 +1,17 @@
 /* @flow */
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
-import { CardStyle } from 'components/structures/Card'
 import Title from 'components/foundations/Title'
 import ProgressBar, {
   ProgressBarContainer
 } from 'components/foundations/ProgressBar'
 
 type Props = {}
-const INFOSTATUS_CARD_MARGIN_BOTTOM: string = '15px'
-
-const InfoStatus = styled.div`
-  ${CardStyle} margin-bottom: ${INFOSTATUS_CARD_MARGIN_BOTTOM};
-`
 
 const InfoStatusTitle = styled(Text)`
   display: flex;
   align-items: center;
-`
-
-const InfoStatusContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0 0 20px;
 `
 
 const Voting = styled.div`
@@ -38,7 +26,7 @@ const VotingValuesWrapper = styled.div`
 
 const VotingValue = styled.div`
   align-content: center;
-  background-color: ${props => props.theme.colors.UserNav.UserPTIValueBox};
+  background-color: ${props => props.theme.colors.background.secondary};
   display: flex;
   flex: 0 0 48.5%;
   flex-direction: column;
@@ -59,10 +47,10 @@ const VotingBar = styled(ProgressBar)`
 export default class VotingBox extends Component<Props, void> {
   render () {
     return (
-      <InfoStatus>
-        <InfoStatusContent>
-          <InfoStatusTitle>Voting</InfoStatusTitle>
-        </InfoStatusContent>
+      <Fragment>
+        <InfoStatusTitle big accent>
+          Voting
+        </InfoStatusTitle>
         <Voting>
           <VotingValuesWrapper>
             <VotingValue>
@@ -89,7 +77,7 @@ export default class VotingBox extends Component<Props, void> {
         <Text small gray>
           Date of the challenge: 04/03/2018
         </Text>
-      </InfoStatus>
+      </Fragment>
     )
   }
 }
