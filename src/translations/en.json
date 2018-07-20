@@ -221,6 +221,9 @@
     }
   },
   "modal": {
+    "challenge": {
+      "title": "Challenge this video"
+    },
     "profile": {
       "title": "Profile",
       "description": "This is how you'll be known on the Paratii network. Enter your email if you'd like to receive updates about the community and your activity.",
@@ -232,6 +235,9 @@
         "title": "Check your email",
         "description": "We sent you a confirmation link"
       }
+    },
+    "vote": {
+      "title": "Vote this video"
     }
   },
   "wallet": {

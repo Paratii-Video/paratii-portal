@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Z_INDEX_MODAL, BORDER_RADIUS } from 'constants/UIConstants'
+import Title from 'components/foundations/Title'
 import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 
@@ -114,6 +115,10 @@ export const ModalScrollContent = styled.div`
     overflow-x: hidden;
     overflow-y: scroll;
   }
+`
+
+export const ModalTitle = styled(Title)`
+  margin-bottom: 25px;
 `
 
 class Modal extends Component<Props, void> {
