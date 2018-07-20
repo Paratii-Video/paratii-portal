@@ -66,12 +66,12 @@ const Text = styled.p`
 `
 
 export const Strong = styled.strong`
-  ${TextColor} ${TextSize} ${TextStyle} font-weight: ${props =>
+  ${TextColor} ${TextStyle} font-weight: ${props =>
   props.theme.fonts.weight.bold};
 `
 
 export const Span = styled.span`
-  ${TextColor} ${TextSize} ${TextStyle};
+  ${TextColor} ${TextStyle};
 `
 
 export default Text

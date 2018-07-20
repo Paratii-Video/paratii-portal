@@ -5,7 +5,7 @@ import type { Dispatch } from 'redux'
 
 import paratii from 'utils/ParatiiLib'
 import {
-  VIDEOFETCH_ERROR,
+  VIDEO_FETCH_ERROR,
   VIDEO_FETCH_SUCCESS,
   VIDEOS_FETCH_REQUESTED,
   VIDEOS_FETCH_FAILED,
@@ -20,7 +20,7 @@ import type { RootState } from 'types/ApplicationTypes'
 
 import Notifications from 'react-notification-system-redux'
 
-export const videoFetchError = createAction(VIDEOFETCH_ERROR)
+export const videoFetchError = createAction(VIDEO_FETCH_ERROR)
 export const videoFetchSuccess = createAction(VIDEO_FETCH_SUCCESS)
 
 export const videosFetchRequested = createAction(VIDEOS_FETCH_REQUESTED)
@@ -38,11 +38,11 @@ export const fetchVideo = (id: string) => async (dispatch: Dispatch<*>) => {
     }
     if (videoInfo && videoInfo.id) {
       // FIXME this infos will be in videoInfo when the db will be listen to TCR events
-      const whiteListed = await paratii.eth.tcr.isWhitelisted(id)
-      // const challengeExists = await paratii.eth.tcr.challengeExists(id)
-      const challengeExists = false
-      videoInfo.whiteListed = whiteListed
-      videoInfo.challengeExists = challengeExists
+      // const whiteListed = await paratii.eth.tcr.isWhitelisted(id)
+      // // const challengeExists = await paratii.eth.tcr.challengeExists(id)
+      // const challengeExists = false
+      // videoInfo.whiteListed = whiteListed
+      // videoInfo.challengeExists = challengeExists
 
       dispatch(videoFetchSuccess(videoInfo))
       dispatch(playerVideoSelect(videoInfo.id))

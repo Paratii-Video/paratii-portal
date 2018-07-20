@@ -14,47 +14,62 @@ import Voting from './Voting'
 
 type Props = {
   videoId: string,
-  isWhitelisted: boolean,
-  inChallenge: boolean,
-  inReveal: boolean,
-  videoApproved: boolean,
-  // videoRejected: boolean,
-  hasBeenChallenged: boolean,
-  challengeEnded: boolean,
-  voteCommited: boolean,
-  voteRevealed: boolean,
+  tcrState: string,
+  voteState: string,
   fetchChallenge: string => void
 }
 
 // Sidebar
 const Sidebar = styled.div`
   display: flex;
-  flex: 1 1 410px;
+  flex: 1 1 100%;
   flex-direction: column;
+  width: 100%;
 `
 
 class SidebarTCR extends Component<Props, void> {
   constructor (props: Props) {
     super(props)
-
+    // TODO: this should be done in the SidebarTCRContainer
     props.fetchChallenge(props.videoId)
   }
   render () {
-    const {
-      videoId,
-      isWhitelisted,
-      inChallenge,
-      inReveal,
-      videoApproved,
-      // videoRejected,
-      hasBeenChallenged,
-      challengeEnded,
-      voteCommited,
-      voteRevealed
-    } = this.props
+    const { videoId, tcrState, voteState } = this.props
+    const isWhitelisted = tcrState === 'appWasMade'
+    const inChallenge = tcrState === 'inChallenge'
+    const inReveal = tcrState === 'inReveal'
+    const videoApproved = tcrState === 'videoApproved'
+    const hasBeenChallenged =
+      tcrState !== 'notInTcr' && tcrState !== 'appWasMade'
+    const challengeEnded =
+      tcrState === 'videoApproved' || tcrState === 'videoRejected'
+    const voteCommited = voteState === 'voteCommitted'
+    const voteRevealed = voteState === 'voteRevealed'
 
     return (
       <Sidebar>
+        <ChallengePeriod status="challenged" />
+        <Card>
+          <CommitYourVote />
+        </Card>
+        <Card marginTop>
+          <SendYourVoteBack />
+        </Card>
+        <Card marginTop>
+          <VideoApproved />
+        </Card>
+        <Card marginTop>
+          <VideoRejected />
+        </Card>
+        <Card marginTop>
+          <VoteCommitted />
+        </Card>
+        <Card marginTop>
+          <VoteRevealed />
+        </Card>
+        <Card marginTop>
+          <Voting />
+        </Card>
         {isWhitelisted &&
           !hasBeenChallenged && (
           <Card>

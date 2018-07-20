@@ -1,8 +1,9 @@
 /* @flow */
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
-import Text, { Strong } from 'components/foundations/Text'
+import Text from 'components/foundations/Text'
 import Title from 'components/foundations/Title'
+import TranslatedText from 'components/translations/TranslatedText'
 
 type Props = {
   status: string
@@ -122,17 +123,19 @@ class ChallengePeriodComponent extends Component<Props, void> {
       <ChallengePeriod status={this.props.status}>
         {this.props.status === 'inReveal' ? (
           <Text big>
-            <Strong>Time to reveal</Strong> ends in
+            <TranslatedText message="tcr.ChallengePeriod.inRevealTitle_html" />
           </Text>
         ) : (
           <Text big>
-            <Strong>Challenge period</Strong> ends in
+            <TranslatedText message="tcr.ChallengePeriod.challengedTitle_html" />
           </Text>
         )}
 
         <ChallengeTimeWrapper>
           <ChallengeTime>
-            <Text tiny>hours</Text>
+            <Text tiny>
+              <TranslatedText message="tcr.ChallengePeriod.hourLabel" />
+            </Text>
             <Title bigger bold>
               19
             </Title>
@@ -143,7 +146,9 @@ class ChallengePeriodComponent extends Component<Props, void> {
             </Title>
           </ChallengeTime>
           <ChallengeTime>
-            <Text tiny>minutes</Text>
+            <Text tiny>
+              <TranslatedText message="tcr.ChallengePeriod.minutesLabel" />
+            </Text>
             <Title bigger bold>
               20
             </Title>
@@ -154,7 +159,9 @@ class ChallengePeriodComponent extends Component<Props, void> {
             </Title>
           </ChallengeTime>
           <ChallengeTime>
-            <Text tiny>seconds</Text>
+            <Text tiny>
+              <TranslatedText message="tcr.ChallengePeriod.secondsLabel" />
+            </Text>
             <Title bigger bold>
               47
             </Title>
@@ -163,15 +170,27 @@ class ChallengePeriodComponent extends Component<Props, void> {
 
         {this.props.status === 'inReveal' ? (
           <ChallengeSequence>
-            <ChallengeSequenceText disabled>whitelisted</ChallengeSequenceText>
-            <ChallengeSequenceText disabled>challenged</ChallengeSequenceText>
-            <ChallengeSequenceText bold>in reveal</ChallengeSequenceText>
+            <ChallengeSequenceText disabled>
+              <TranslatedText message="tcr.ChallengePeriod.whitelistedLabel" />
+            </ChallengeSequenceText>
+            <ChallengeSequenceText disabled>
+              <TranslatedText message="tcr.ChallengePeriod.challengedLabel" />
+            </ChallengeSequenceText>
+            <ChallengeSequenceText bold>
+              <TranslatedText message="tcr.ChallengePeriod.inRevealLabel" />
+            </ChallengeSequenceText>
           </ChallengeSequence>
         ) : (
           <ChallengeSequence>
-            <ChallengeSequenceText disabled>whitelisted</ChallengeSequenceText>
-            <ChallengeSequenceText bold>challenged</ChallengeSequenceText>
-            <ChallengeSequenceText disabled>in reveal</ChallengeSequenceText>
+            <ChallengeSequenceText disabled>
+              <TranslatedText message="tcr.ChallengePeriod.whitelistedLabel" />
+            </ChallengeSequenceText>
+            <ChallengeSequenceText bold>
+              <TranslatedText message="tcr.ChallengePeriod.challengedLabel" />
+            </ChallengeSequenceText>
+            <ChallengeSequenceText disabled>
+              <TranslatedText message="tcr.ChallengePeriod.inRevealLabel" />
+            </ChallengeSequenceText>
           </ChallengeSequence>
         )}
 

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 import Text from 'components/foundations/Text'
 import SVGIcon from 'components/foundations/SVGIcon'
+import TranslatedText from 'components/translations/TranslatedText'
 
 type Props = {}
 
@@ -29,15 +30,16 @@ export default class SendYourVoteBack extends Component<Props, void> {
             width="18px"
             margin="0 10px 0 0"
           />
-          You need to send back your vote!!
+          <TranslatedText message="tcr.SendYourVoteBack.title" />
         </InfoStatusTitle>
         <InfoStatusContent margin="36px 0 30px">
           <Text>
-            You have previously cast a secret vote, and now is the time to
-            reveal it!
+            <TranslatedText message="tcr.SendYourVoteBack.text" />
           </Text>
         </InfoStatusContent>
-        <Button>Reveal your vote</Button>
+        <Button>
+          <TranslatedText message="tcr.SendYourVoteBack.button" />
+        </Button>
       </Fragment>
     )
   }

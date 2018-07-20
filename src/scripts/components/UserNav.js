@@ -90,7 +90,7 @@ const UserPTIValue = styled.div`
   flex: ${USERNAV_USERPTIVALUEWRAPPER_FLEX};
 `
 
-const UserPTIValueBox = styled.div`
+export const UserPTIValueBox = styled.div`
   ${FlexCenterStyle} background-color: ${props =>
   props.theme.colors.background.tertiary};
   border-radius: ${BORDER_RADIUS_SMALL};

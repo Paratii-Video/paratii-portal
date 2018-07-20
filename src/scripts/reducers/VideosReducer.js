@@ -9,23 +9,25 @@ import {
   UPLOAD_LOCAL_SUCCESS,
   UPDATE_VIDEO_TIME,
   UPDATE_VIDEO_INFO,
-  VIDEO_DATA_START,
-  VIDEO_DATA_SAVED,
   VIDEO_STAKED,
   TRANSCODING_REQUESTED,
   TRANSCODING_PROGRESS,
   TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE,
-  VIDEOFETCH_ERROR,
+  VIDEO_CHALLENGED,
+  VIDEO_DATA_START,
+  VIDEO_DATA_SAVED,
+  VIDEO_FETCH_ERROR,
   VIDEO_FETCH_SUCCESS,
   VIDEOS_FETCH_SUCCESS,
-  // VIDEO_FETCH_WHITELIST,
   VOTE_VIDEO,
   VOTE_STATUS
 } from 'constants/ActionConstants'
-import VideoRecord from 'records/VideoRecords'
+import VideoRecord, {
+  TcrStakedRecord,
+  TcrChallengeRecord
+} from 'records/VideoRecords'
 import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
-import { StakingRecord } from 'records/StakingRecord'
 import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
 
 const reducer = {
@@ -188,13 +190,37 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
-    return state.setIn(
-      [payload.id, 'staked'],
-      new StakingRecord({
-        id: payload.id,
-        deposit: payload.deposit
-      })
-    )
+    return state
+      .setIn(
+        [payload.id, 'tcrStatus', 'data', 'staked'],
+        new TcrStakedRecord({
+          id: payload.id,
+          deposit: payload.deposit
+        })
+      )
+      .setIn([payload.id, 'tcrStatus', 'name'], 'appWasMade')
+  },
+  [VIDEO_CHALLENGED]: (
+    state: VideoRecordMap,
+    { payload }: Action<VideoRecord> = {}
+  ): VideoRecordMap => {
+    if (!payload || !payload.id || !state.get(payload.id)) {
+      return state
+    }
+    console.log(payload)
+    const challengeRecord = new TcrChallengeRecord({
+      id: payload.id,
+      challenger: payload.challenger,
+      commitEndDate: payload.commitEndDate,
+      revealEndDate: payload.revealEndDate,
+      listingHash: payload.listingHash
+    })
+    console.log(challengeRecord)
+    const result = state
+      .setIn([payload.id, 'tcrStatus', 'data', 'challenge'], challengeRecord)
+      .setIn([payload.id, 'tcrStatus', 'name'], 'appWasMade')
+    console.log(state.getIn([payload.id]))
+    return result
   },
   [VOTE_VIDEO]: (
     state: VideoRecordMap,
@@ -289,7 +315,7 @@ const reducer = {
       })
     )
   },
-  [VIDEOFETCH_ERROR]: (
+  [VIDEO_FETCH_ERROR]: (
     state: VideoRecordMap,
     { payload }: Action<{ id: string, error: Object }>
   ): VideoRecordMap => {
@@ -364,15 +390,6 @@ export default handleActions(reducer, Immutable.Map({}))
 // This is a functino to fix a legacy bug in which the thumbnails where not
 // saved in  the "thumbnails" property, as they should
 const fixFetchedVideo = (video: VideoRecord, payload): VideoRecord => {
-  // console.log(video.id)
-  // console.log(video.get('thumbnails'))
-  // console.log('size:')
-  // console.log(video.get('thumbnails').size)
-  // console.log(
-  //   payload.transcodingStatus &&
-  //     payload.transcodingStatus.data.result &&
-  //     payload.transcodingStatus.data.result.screenshots
-  // )
   if (
     video.get('thumbnails').size === 0 ||
     video.get('thumbnails').size === undefined

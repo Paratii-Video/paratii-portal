@@ -5,6 +5,7 @@ import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 import Text from 'components/foundations/Text'
+import TranslatedText from 'components/translations/TranslatedText'
 import { MODAL } from 'constants/ModalConstants'
 
 type Props = {
@@ -57,20 +58,27 @@ class CommitYourVote extends Component<Props, void> {
     return (
       <Fragment>
         <InfoStatusTitle big accent>
-          Commit your side
+          <TranslatedText message="tcr.CommitYourVote.title" />
         </InfoStatusTitle>
         <InfoStatusContent margin="36px 0 30px">
           <Text>
-            This video has been challenged, and we need your input! Please vote.
-            You will not lose any tokens, but you may win some!
+            <TranslatedText message="tcr.CommitYourVote.text" />
           </Text>
         </InfoStatusContent>
         <InfoStatusButtons>
-          <Button accent onClick={() => this.voteVideo(1)}>
-            Support
+          <Button
+            accent
+            onClick={() => this.voteVideo(1)}
+            data-test-id="button-vote-1"
+          >
+            <TranslatedText message="tcr.CommitYourVote.buttonSupport" />
           </Button>
-          <Button highlight onClick={() => this.voteVideo(0)}>
-            Oppose
+          <Button
+            highlight
+            onClick={() => this.voteVideo(0)}
+            data-test-id="button-vote-2"
+          >
+            <TranslatedText message="tcr.CommitYourVote.buttonOppose" />
           </Button>
         </InfoStatusButtons>
       </Fragment>

@@ -6,6 +6,7 @@ import Title from 'components/foundations/Title'
 import ProgressBar, {
   ProgressBarContainer
 } from 'components/foundations/ProgressBar'
+import TranslatedText from 'components/translations/TranslatedText'
 
 type Props = {}
 
@@ -49,13 +50,13 @@ export default class VotingBox extends Component<Props, void> {
     return (
       <Fragment>
         <InfoStatusTitle big accent>
-          Voting
+          <TranslatedText message="tcr.Voting.title" />
         </InfoStatusTitle>
         <Voting>
           <VotingValuesWrapper>
             <VotingValue>
               <Text textTransform="uppercase" small green>
-                Support
+                <TranslatedText message="tcr.Voting.box1Label" />
               </Text>
               <Title big bold gray>
                 65%
@@ -63,7 +64,7 @@ export default class VotingBox extends Component<Props, void> {
             </VotingValue>
             <VotingValue>
               <Text textTransform="uppercase" small pink>
-                Oppose
+                <TranslatedText message="tcr.Voting.box2Label" />
               </Text>
               <Title big bold gray>
                 35%
@@ -75,7 +76,7 @@ export default class VotingBox extends Component<Props, void> {
           </VotingBarWrapper>
         </Voting>
         <Text small gray>
-          Date of the challenge: 04/03/2018
+          <TranslatedText message="tcr.Voting.dateLabel" />
         </Text>
       </Fragment>
     )

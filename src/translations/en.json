@@ -77,6 +77,56 @@
       "zeroState": "Enter some keywords above to search!"
     }
   },
+  "tcr": {
+    "ChallengePeriod": {
+      "whitelistedTitle_html": "<strong>Challenge period</strong> ends in",
+      "challengedTitle_html": "<strong>Challenge period</strong> ends in",
+      "inRevealTitle_html": "<strong>Time to reveal</strong> ends in",
+      "whitelistedLabel": "whitelisted",
+      "challengedLabel": "challenged",
+      "inRevealLabel": "in reveal",
+      "hourLabel": "hour",
+      "minutesLabel": "minutes",
+      "secondsLabel": "seconds"
+    },
+    "CommitYourVote": {
+      "text": "This video has been challenged, and we need your input! Please vote. You will not lose any tokens, but you may win some!",
+      "buttonSupport": "Support",
+      "buttonOppose": "Oppose"
+    },
+    "SendYourVoteBack": {
+      "title": "You need to send back your vote!!",
+      "text": "You have previously cast a secret vote, and now is the time to reveal it!",
+      "button": "Reveal your vote"
+    },
+    "VideoApproved": {
+      "title": "This video has been approved",
+      "text": "The Paratii community supported the permanence of this video on the platform. The video will continue to exist on the plataform and is going to be available for new challenges in 6 days."
+    },
+    "VideoRejected": {
+      "title": "This video has been rejected",
+      "text": "The Paratii community opposed the permanence of this video on the platform. The video was deleted because most of our trustees believe that this video broke one of our policies."
+    },
+    "VoteCommitted": {
+      "title": "Vote Committed",
+      "text_html": "Wait until the commit period ends to reveal it. You will send it <strong>back</strong> when the reveal period starts. If you don’t send it back your vote is not going to be counted."
+    },
+    "VoteRevealed": {
+      "title": "Vote Revealed",
+      "text": "Vote Your vote has been revealed, now you just need to wait until the reveal period ends."
+    },
+    "Voting": {
+      "title": "Voting",
+      "box1Label": "Support",
+      "box2Label": "Oppose",
+      "dateLabel": "Date of the challenge:"
+    },
+    "WhiteListed": {
+      "title": "This video is ",
+      "text": "This video has been published in our network. If it has anything that goes against our policy challenge it and you may be rewarded",
+      "button": "Challenge this content"
+    }
+  },
   "tipping": {
     "giveTip": "Give a tip",
     "amounts": {

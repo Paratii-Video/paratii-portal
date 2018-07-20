@@ -136,6 +136,7 @@ export type TokenUnit = $Values<typeof TOKEN_UNITS>
 
 // TODO move this into paratii-js repo
 export type ParatiiLib = {
+  getAccount: () => string,
   config: {
     account: {
       address: string,
@@ -189,8 +190,14 @@ export type ParatiiLib = {
       getMinDeposit: () => string,
       getTotalStaked: string => Promise<Object>,
       isWhitelisted: string => Promise<Object>,
-      approveAndStartChallenge: string => void,
-      approveAndGetRightsAndCommitVote: (string, number, number) => void
+      approveAndStartChallenge: string => Promise<Object>,
+      approveAndGetRightsAndCommitVote: (string, number, number) => void,
+      challenge: {
+        get: string => Object
+      },
+      votes: {
+        get: (string, string) => Object
+      }
     },
     // tcrPlaceholder: {
     //   apply: (string, number) => Promise<Object>,

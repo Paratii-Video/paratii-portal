@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import SVGIcon from 'components/foundations/SVGIcon'
+import TranslatedText from 'components/translations/TranslatedText'
 
 type Props = {}
 
@@ -28,12 +29,11 @@ export default class VoteSent extends Component<Props, void> {
             width="18px"
             margin="0 10px 0 0"
           />
-          Vote Revealed
+          <TranslatedText message="tcr.VoteRevealed.title" />
         </InfoStatusTitle>
-        <InfoStatusContent margin="36px 0 0">
+        <InfoStatusContent margin="36px 0 30px">
           <Text>
-            Your vote has been revealed, now you just need to wait until the
-            reveal period ends.
+            <TranslatedText message="tcr.VoteRevealed.text" />
           </Text>
         </InfoStatusContent>
       </Fragment>

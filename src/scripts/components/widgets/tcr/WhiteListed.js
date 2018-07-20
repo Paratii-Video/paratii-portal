@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Button from 'components/foundations/Button'
 import Text, { Strong } from 'components/foundations/Text'
 import { MODAL } from 'constants/ModalConstants'
+import TranslatedText from 'components/translations/TranslatedText'
 
 type Props = {
   videoId: string,
@@ -46,15 +47,17 @@ class WhiteListed extends Component<Props, void> {
     return (
       <Fragment>
         <InfoStatusTitle big accent>
-          This video is <Strong accent>Whitelisted</Strong>
+          <TranslatedText message="tcr.WhiteListed.title" />
+          <Strong accent>Whitelisted</Strong>
         </InfoStatusTitle>
         <InfoStatusContent margin="36px 0 30px">
           <Text>
-            This video has been published in our network. If it has anything
-            that goes against our policy challenge it and you may be rewarded
+            <TranslatedText message="tcr.WhiteListed.text" />
           </Text>
         </InfoStatusContent>
-        <Button onClick={this.challengeVideo}>Challenge this content</Button>
+        <Button onClick={this.challengeVideo} data-test-id="button-challenge">
+          <TranslatedText message="tcr.WhiteListed.button" />
+        </Button>
       </Fragment>
     )
   }

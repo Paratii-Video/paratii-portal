@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import Text from 'components/foundations/Text'
 import SVGIcon from 'components/foundations/SVGIcon'
+import TranslatedText from 'components/translations/TranslatedText'
 
 type Props = {}
 
@@ -28,13 +29,11 @@ export default class VideoApproved extends Component<Props, void> {
             width="18px"
             margin="0 10px 0 0"
           />
-          This video has been approved
+          <TranslatedText message="tcr.VideoApproved.title" />
         </InfoStatusTitle>
         <InfoStatusContent margin="36px 0 30px">
           <Text>
-            The Paratii community supported the permanence of this video on the
-            platform. The video will continue to exist on the plataform and is
-            going to be available for new challenges in 6 days
+            <TranslatedText message="tcr.VideoApproved.text" />
           </Text>
         </InfoStatusContent>
       </Fragment>

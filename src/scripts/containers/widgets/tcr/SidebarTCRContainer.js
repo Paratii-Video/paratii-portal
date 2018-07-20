@@ -2,50 +2,34 @@
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  isVideoWhiteListed
-  // videoChallengeExists
-} from 'selectors/VideoSelectors'
-// import { getVoteStatus } from 'selectors/TCRSelectors'
 import { fetchChallenge } from 'actions/TCRActions'
+import { getTcrState } from 'selectors/VideoSelectors'
 import SidebarTCR from 'components/widgets/tcr/SidebarTCR'
 
 import type { RootState } from 'types/ApplicationTypes'
 
 const mapStateToProps = (state: RootState) => {
-  // videoChallengeExists: videoChallengeExists(state),
-  // voteStatus: getVoteStatus(state),
-  // tcr states
-  // Of the next 4 states, only one can be true at any time
-  const inChallenge = false
-  // const inChallenge = videoChallengeExists
-  const inReveal = false
-  // todo: the VOTE_STATE is not correct here
-  // const videoApproved = voteStatus === VOTE_STATE.APPROVED
-  const videoApproved = false
-  const videoRejected = false
-
-  const hasBeenChallenged =
-    inChallenge || inReveal || videoApproved || videoRejected
-  const challengeEnded = videoApproved || videoRejected
-  // state of the user's vote
-  // TODO: the VOTE_STATE is not correct here
-  // const voteCommited = voteStatus === VOTE_STATE.COMMITTED
-  const voteCommited = true
-  // const voteRevealed = voteStatus === VOTE_STATE.REVEALED
-  const voteRevealed = true
+  // the video can be in one of the following states:
+  // - notInTcr: the default state when the video is not published yet
+  // - appWasMade: after the app was made. The video is pbulished and has not yet been chellenged
+  // - inChallenge: the video is being challenged - this is when votes are committed
+  // - inReveal: the votes are cast, and now need to be revealed
+  // - videoApproved: currentTime > revealEnddata and isWhitelisted
+  // - videoRejected: currentTime > revealEnddata and !isWhitelisted
+  const tcrState = getTcrState(state)
+  // console.log(`tcrState: ${tcrState}`)
+  // const tcrState = 'appWasMade'
+  // moreover, a second state regulates the vote, and is one
+  // - voteCommited
+  // -  voteRevealed
+  const voteState = 'voteCommited'
+  //
+  //   // videoChallengeExists: videoChallengeExists(state),
+  //   // voteStatus: getVoteStatus(state),
 
   return {
-    isWhitelisted: isVideoWhiteListed(state),
-    // at most one of the next 4 states can be true at any one time
-    inChallenge,
-    inReveal,
-    videoApproved,
-    // videoRejected,
-    hasBeenChallenged,
-    challengeEnded,
-    voteCommited,
-    voteRevealed
+    tcrState,
+    voteState
   }
 }
 

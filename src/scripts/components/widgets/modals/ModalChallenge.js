@@ -17,7 +17,7 @@ type Props = {
   selectedVideoId: string,
   closeModal: () => void,
   notification: (Object, string) => void,
-  loadBalances: () => void
+  videoChallenged: Object => void
 }
 
 const ModalTitle = styled(Title)`
@@ -50,8 +50,8 @@ class ModalChallenge extends Component<Props, Object> {
     super(props)
     this.state = {
       errorMessage: false,
-      agreedTOC: false, // TODO,
-      stakeAmount: 0,
+      agreedTOC: false, // TODO, (????)
+      stakeAmount: 0, // ???
       isChallenging: false
     }
     this.onSubmit = this.onSubmit.bind(this)
@@ -65,16 +65,30 @@ class ModalChallenge extends Component<Props, Object> {
   async onSubmit (event: Object) {
     event.preventDefault()
     this.props.notification({ title: 'Processing the challenge...' }, 'warning')
+    this.setState({
+      isChallenging: true
+    })
     try {
-      await paratii.eth.tcr.approveAndStartChallenge(this.props.selectedVideoId)
+      const tx = await paratii.eth.tcr.approveAndStartChallenge(
+        this.props.selectedVideoId
+      )
+      console.log('--------------------------------------')
+      console.log(tx)
+      const event = tx.events._Challenge.returnValues
+
+      this.props.videoChallenged({
+        id: this.props.selectedVideoId,
+        challenger: event.challenger,
+        commitEndDate: event.commitEndDate,
+        revealEndDate: event.revealEndDate,
+        listingHash: event.listingHash
+      })
+      this.props.notification({ title: 'Challenge is ready..' }, 'warning')
+      this.props.closeModal()
     } catch (e) {
       this.props.notification({ title: e.message }, 'error')
       console.log(e.message)
     }
-
-    this.setState({
-      isChallenging: true
-    })
   }
 
   async componentDidMount () {
@@ -147,7 +161,7 @@ class ModalChallenge extends Component<Props, Object> {
                 purple
                 onClick={this.onSubmit}
                 disabled={this.disableButton()}
-                data-test-id="button-stake"
+                data-test-id="modal-button-challenge"
               >
                 Challenge
               </Button>

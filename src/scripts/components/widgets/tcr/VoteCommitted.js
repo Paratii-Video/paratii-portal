@@ -1,8 +1,9 @@
 /* @flow */
 import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
-import Text, { Strong } from 'components/foundations/Text'
+import Text from 'components/foundations/Text'
 import SVGIcon from 'components/foundations/SVGIcon'
+import TranslatedText from 'components/translations/TranslatedText'
 
 type Props = {}
 
@@ -28,13 +29,11 @@ export default class VoteCommitted extends Component<Props, void> {
             width="18px"
             margin="0 10px 0 0"
           />
-          Vote committed
+          <TranslatedText message="tcr.VoteCommitted.title" />
         </InfoStatusTitle>
-        <InfoStatusContent margin="36px 0 0">
+        <InfoStatusContent margin="36px 0 30px">
           <Text>
-            Wait until the commit period ends to reveal it. You will send it{' '}
-            <Strong purple>back</Strong> when the reveal period starts. If you
-            don’t send it back your vote is not going to be counted.
+            <TranslatedText message="tcr.VoteCommitted.text_html" />
           </Text>
         </InfoStatusContent>
       </Fragment>

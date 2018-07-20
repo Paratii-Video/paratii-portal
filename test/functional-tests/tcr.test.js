@@ -8,7 +8,7 @@ import {
 import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
 // declare var browser: Object
 
-describe('TCR: @watch', function () {
+describe('TCR:', function () {
   beforeEach(async function () {
     // await paratii.eth.deployContracts()
     // browser.url(`http://localhost:8080`)
@@ -24,7 +24,56 @@ describe('TCR: @watch', function () {
     assert.equal(await paratii.eth.tcr.getApplyStageLen(), 0)
   })
 
-  it('you can challenge a published video', async function () {
+  it('check db integration of the TCR process', async function () {
+    // TODO: these tests should be in paratii-db
+    let dbRecord
+    const id = Math.random()
+      .toString(36)
+      .substring(3)
+    const stakeAmount = 5
+    const stakeAmountWei = paratii.eth.web3.utils.toWei(String(stakeAmount))
+    await paratii.vids.create({ id, owner: paratii.getAccount() })
+
+    dbRecord = await paratii.db.vids.get(id)
+    assert.equal(dbRecord.tcrStatus.name, 'notInTcr')
+
+    const result = await paratii.eth.tcr.checkEligiblityAndApply(
+      id,
+      stakeAmountWei
+    )
+    assert.isTrue(result)
+
+    dbRecord = await paratii.db.vids.get(id)
+    assert.equal(dbRecord.tcrStatus.name, 'appWasMade')
+    const appWasMade = await paratii.eth.tcr.appWasMade(id)
+    assert.isTrue(appWasMade)
+    let canBeWhitelisted = await paratii.eth.tcr.canBeWhitelisted(id)
+    // the vid cannot be whitelisted immediately even if applystagelen is 0
+    assert.isFalse(canBeWhitelisted)
+    // we must add a transaction - the video is _not_ whitelisted immediately
+    await paratii.eth.transfer(
+      '0xb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01',
+      1,
+      'PTI'
+    )
+    canBeWhitelisted = await paratii.eth.tcr.canBeWhitelisted(id)
+    assert.isTrue(
+      canBeWhitelisted,
+      'expected that this video to be whitelisted!'
+    )
+
+    // the video should enter the whitelist succesfully
+    const updateTx = await paratii.eth.tcr.updateStatus(id)
+    assert.isOk(updateTx)
+    assert.isOk(updateTx.events._ApplicationWhitelisted)
+    const isWhitelisted = await paratii.eth.tcr.isWhitelisted(id)
+    assert.isOk(isWhitelisted)
+    // the db should know about this
+    dbRecord = await paratii.db.vids.get(id)
+    assert.equal(dbRecord.tcrStatus.name, 'appWasMade')
+  })
+
+  it('@watch you can challenge a published video', async function () {
     // Create a secure wallet
     await browser.createSecureWallet()
 
@@ -45,23 +94,22 @@ describe('TCR: @watch', function () {
     const contract = await paratii.eth.tcr.getTcrContract()
     const hash = await paratii.eth.tcr.getHash(ID)
     await contract.methods.updateStatus(hash).send()
-    //
 
     assert.equal(
       await paratii.eth.tcr.appWasMade(ID),
       true,
-      `appWasMade is false`
+      `appWasMade was excpected to be true`
     )
-    assert.equal(await paratii.eth.tcr.getApplyStageLen(), 0)
+
     assert.equal(await paratii.eth.tcr.isWhitelisted(ID), true)
     await browser.url(`http://localhost:8080/play/${ID}`)
-    // Login
-    // Click on login and insert the password
-    await browser.waitAndClick('[data-test-id="login-signup"]', 5000)
-    await browser.waitAndClick('[name="wallet-password"]', 5000)
-    await browser.setValue('[name="wallet-password"]', password)
+
+    // Login (trying to challenge asks the user to log in)
+    await browser.waitAndClick('[data-test-id="button-challenge"]')
+    await browser.waitAndSetValue('[name="wallet-password"]', password)
     await browser.waitAndClick('[data-test-id="continue"]')
 
+    // get some PTI so we can do the challenge
     let userAddress
     await browser.waitUntil(async function () {
       userAddress = await getAccountFromBrowser()
@@ -70,5 +118,14 @@ describe('TCR: @watch', function () {
 
     const value = paratii.eth.web3.utils.toWei('100')
     await paratii.eth.transfer(userAddress, value, 'PTI')
+
+    // now do the actual challenge
+    await browser.waitAndClick('[data-test-id="button-challenge"]')
+    // now click on 'challenge in the modal box:
+    await browser.waitAndClick('[data-test-id="modal-button-challenge"]', 5000)
+
+    // oppose the video [this one is hidden!]
+    await browser.waitAndClick('[data-test-id="button-vote-2"]', 5000)
+    //
   })
 })
