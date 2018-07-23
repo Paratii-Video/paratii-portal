@@ -90,6 +90,7 @@
       "secondsLabel": "seconds"
     },
     "CommitYourVote": {
+      "title": "Choose your side",
       "text": "This video has been challenged, and we need your input! Please vote. You will not lose any tokens, but you may win some!",
       "buttonSupport": "Support",
       "buttonOppose": "Oppose"
