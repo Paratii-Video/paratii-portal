@@ -12,6 +12,8 @@ export const TextColor = css`
       _color = props.theme.colors.text.highlight
     } else if (props.warn) {
       _color = props.theme.colors.text.warn
+    } else if (props.succeed) {
+      _color = props.theme.colors.text.succeed
     } else {
       _color = props.theme.colors.text.secondary
     }

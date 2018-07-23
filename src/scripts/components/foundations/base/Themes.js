@@ -29,7 +29,8 @@ const Themes = {
       secondary: Colors.gray,
       accent: Colors.white,
       highlight: Colors.purple,
-      warn: Colors.red
+      warn: Colors.red,
+      suceed: Colors.green
     },
     header: {
       logo: Colors.white,
