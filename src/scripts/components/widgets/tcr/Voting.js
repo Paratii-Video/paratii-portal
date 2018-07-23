@@ -23,6 +23,7 @@ const Voting = styled.div`
 const VotingValuesWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  margin: 30px 0 0;
 `
 
 const VotingValue = styled.div`
@@ -63,7 +64,7 @@ export default class VotingBox extends Component<Props, void> {
         <Voting>
           <VotingValuesWrapper>
             <VotingValue>
-              <Text textTransform="uppercase" small green>
+              <Text textTransform="uppercase" small succeed>
                 <TranslatedText message="tcr.Voting.box1Label" />
               </Text>
               <Title big bold gray>
@@ -71,7 +72,7 @@ export default class VotingBox extends Component<Props, void> {
               </Title>
             </VotingValue>
             <VotingValue>
-              <Text textTransform="uppercase" small pink>
+              <Text textTransform="uppercase" small warn>
                 <TranslatedText message="tcr.Voting.box2Label" />
               </Text>
               <Title big bold gray>

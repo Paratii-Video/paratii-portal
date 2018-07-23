@@ -30,7 +30,7 @@ const Themes = {
       accent: Colors.white,
       highlight: Colors.purple,
       warn: Colors.red,
-      suceed: Colors.green
+      succeed: Colors.green
     },
     header: {
       logo: Colors.white,
