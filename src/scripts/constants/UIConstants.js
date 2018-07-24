@@ -25,11 +25,49 @@ export const CARD_MAX_WIDTH: string = '650px'
 export const CARD_MARGIN_LEFT: string = '25px'
 export const CARD_MARGIN_TOP: string = '25px'
 
+// Forms
+export const INPUT_HEIGHT: string = '38px'
+export const RADIO_SIZE: string = '18px'
+
+// HR
+export const HR_HEIGHT: string = '2px'
+export const HR_MARGIN_TOP: string = '42px'
+
 // MainHeader
 export const MAINHEADER_LOGO_WIDTH: string = '98px'
 export const MAINHEADER_LOGO_HEIGHT: string = '62px'
 export const MAINHEADER_PADDING_LEFT: string = '80px'
 export const MAINHEADER_PADDING_LEFT_BP: string = '40px'
+
+// MainFooter
+export const MAINFOOTER_HEIGHT: string = '72px'
+
+// Controls
+export const CONTROLS_HEIGHT: string = '48px'
+export const CONTROLS_HEIGHT_TABLET: string = '42px'
+export const VIDEO_MANAGER_MAX_HEIGHT: string = '600px'
+
+// Loader
+export const BASE_LOADER_DIMENSION: string = '50px'
+
+// Modal
+export const MODAL_WIDTH: string = '900px'
+export const MODAL_WIDTH_SMALL: string = '490px'
+export const MODALCONTENT_PADDING: string = '38px 40px 44px'
+export const MODALCONTENT_PADDING_MOBILE: string = '30px 34px'
+
+// Player
+export const CONTROLS_BUTTON_DIMENSION: string = '16px'
+export const CONTROLS_BUTTON_DIMENSION_DESKTOP: string = '14px'
+export const CONTROLS_BUTTON_DIMENSION_MOBILE: string = '10px'
+export const CONTROLS_SPACING: string = '24px'
+export const CONTROLS_SPACING_MOBILE: string = '12px'
+
+// Search Input
+export const SEARCHINPUTBUTTON_WIDTH: string = '15px'
+export const SEARCHINPUTBUTTON_HEIGHT: string = '30px'
+export const SEARCHINPUTBUTTON_MARGIN: string = '0 10px'
+export const SEARCHINPUTFIELD_PADDING: string = '0 7px'
 
 // UserNav
 export const USERNAV_WIDTH = '312px'
@@ -46,28 +84,17 @@ export const USERNAV_USERNAVLISTITEMICON_MARGIN_RIGHT: string = '22px'
 export const USERNAV_USERSUBNAVLISTITEMLINK_PADDING: string =
   '25px 30px 25px 90px'
 
-// MainFooter
-export const MAINFOOTER_HEIGHT: string = '72px'
+// Video Form
+export const VIDEOFORM_PADDING_VERTICAL: string = '42px'
+export const VIDEOFORM_PADDING_HORIZONTAL: string = '50px'
+export const VIDEOFORM_CONTAINER_MARGIN_BOTTOM: string = '25px'
+export const VIDEOFORM_HEADER_ICON_WIDTH: string = '22px'
+export const VIDEOFORM_HEADER_ICON_HEIGHT: string = '12px'
+export const VIDEOFORM_HEADER_PADDING_BOTTOM: string = '50px'
+export const VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT: string = '35px'
 
-// HR
-export const HR_HEIGHT: string = '2px'
-export const HR_MARGIN_TOP: string = '42px'
-
-// VideoTimeDisplay
-export const VIDEOTIMEDISPLAY_POSITION: string = '10px'
-export const VIDEOTIMEDISPLAY_PADDING: string = '6px 10px 5px'
-
-// Controls
-export const CONTROLS_HEIGHT: string = '48px'
-export const CONTROLS_HEIGHT_TABLET: string = '42px'
-export const VIDEO_MANAGER_MAX_HEIGHT: string = '600px'
-
-// Player
-export const CONTROLS_BUTTON_DIMENSION: string = '16px'
-export const CONTROLS_BUTTON_DIMENSION_DESKTOP: string = '14px'
-export const CONTROLS_BUTTON_DIMENSION_MOBILE: string = '10px'
-export const CONTROLS_SPACING: string = '24px'
-export const CONTROLS_SPACING_MOBILE: string = '12px'
+// Video Manager
+export const VIDEOMANAGER_FILEUPLOADERWRAPPER_MARGIN: string = '100px 0'
 
 // Video Overlay
 export const VIDEO_OVERLAY_PADDING: string = '20px'
@@ -77,27 +104,6 @@ export const VIDEO_OVERLAY_SHARE_BUTTON_WIDTH_MOBILE: string = '20px'
 export const VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH: string = '17px'
 export const VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH_MOBILE: string = '17px'
 
-// Forms
-export const INPUT_HEIGHT: string = '38px'
-export const RADIO_SIZE: string = '18px'
-
-// Loader
-export const BASE_LOADER_DIMENSION: string = '50px'
-
-// Search Input
-export const SEARCHINPUTBUTTON_WIDTH: string = '15px'
-export const SEARCHINPUTBUTTON_HEIGHT: string = '30px'
-export const SEARCHINPUTBUTTON_MARGIN: string = '0 10px'
-export const SEARCHINPUTFIELD_PADDING: string = '0 7px'
-
-// Video Manager
-export const VIDEOMANAGER_FILEUPLOADERWRAPPER_MARGIN: string = '100px 0'
-
-// Video Form
-export const VIDEOFORM_PADDING_VERTICAL: string = '42px'
-export const VIDEOFORM_PADDING_HORIZONTAL: string = '50px'
-export const VIDEOFORM_CONTAINER_MARGIN_BOTTOM: string = '25px'
-export const VIDEOFORM_HEADER_ICON_WIDTH: string = '22px'
-export const VIDEOFORM_HEADER_ICON_HEIGHT: string = '12px'
-export const VIDEOFORM_HEADER_PADDING_BOTTOM: string = '50px'
-export const VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT: string = '35px'
+// VideoTimeDisplay
+export const VIDEOTIMEDISPLAY_POSITION: string = '10px'
+export const VIDEOTIMEDISPLAY_PADDING: string = '6px 10px 5px'

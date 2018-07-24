@@ -1,7 +1,14 @@
 /* @flow */
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Z_INDEX_MODAL, BORDER_RADIUS } from 'constants/UIConstants'
+import {
+  BORDER_RADIUS,
+  MODAL_WIDTH,
+  MODAL_WIDTH_SMALL,
+  MODALCONTENT_PADDING,
+  MODALCONTENT_PADDING_MOBILE,
+  Z_INDEX_MODAL
+} from 'constants/UIConstants'
 import Title from 'components/foundations/Title'
 import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
@@ -93,11 +100,11 @@ const CloseButton = styled(TextButton)`
 
 const Content = styled.div`
   height: 100%;
-  padding: 44px 48px;
+  padding: ${MODALCONTENT_PADDING};
   width: 100%;
 
   @media (max-width: 767px) {
-    padding: 30px 34px;
+    padding: ${MODALCONTENT_PADDING_MOBILE};
   }
 `
 
@@ -144,29 +151,29 @@ class Modal extends Component<Props, void> {
     const { modalName } = this.props
     switch (modalName) {
       case MODAL.STAKE:
-        return '490px'
+        return MODAL_WIDTH_SMALL
       case MODAL.SECURE:
-        return '900px'
+        return MODAL_WIDTH
       case MODAL.SHOW_SEED:
-        return '900px'
+        return MODAL_WIDTH
       case MODAL.GREAT_POWER:
-        return '900px'
+        return MODAL_WIDTH
       case MODAL.REWRITE_SEED:
-        return '900px'
+        return MODAL_WIDTH
       case MODAL.RESTORE_ACCOUNT:
-        return '900px'
+        return MODAL_WIDTH
       case MODAL.CREATE_PASSWORD:
-        return '900px'
+        return MODAL_WIDTH
       case MODAL.ASK_PASSWORD:
-        return '490px'
+        return MODAL_WIDTH_SMALL
       case MODAL.PROFILE:
-        return '900px'
+        return MODAL_WIDTH
       case MODAL.CHALLENGE:
-        return '490px'
+        return MODAL_WIDTH_SMALL
       case MODAL.VOTE:
-        return '490px'
+        return MODAL_WIDTH_SMALL
       default:
-        return '490px'
+        return MODAL_WIDTH_SMALL
     }
   }
 
