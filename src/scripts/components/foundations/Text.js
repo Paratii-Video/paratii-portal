@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import { ButtonStyleDisabled } from './Button'
+
 export const TextColor = css`
   ${props => {
     let _color: String
