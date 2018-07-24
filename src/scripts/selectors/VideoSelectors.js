@@ -24,6 +24,19 @@ export const isVideoWhiteListed: (
   }
 )
 
+export const getChallenge: (state: RootState) => ?VideoRecord = createSelector(
+  [getVideos, getPlayerVideoId],
+  (videos: VideoRecordMap, playerVideoId: string) => {
+    if (playerVideoId) {
+      const video: ?VideoRecord = videos.get(playerVideoId)
+      if (video) {
+        return video.getIn(['tcrStatus', 'data', 'challenge'])
+      }
+    }
+    return null
+  }
+)
+
 export const getTcrState: (state: RootState) => ?VideoRecord = createSelector(
   [getVideos, getPlayerVideoId],
   (videos: VideoRecordMap, playerVideoId: string) => {
@@ -36,8 +49,8 @@ export const getTcrState: (state: RootState) => ?VideoRecord = createSelector(
         // - inReveal:  a challange was made (tcrStatus.challange != {}) and currentTime > commitEndDate and currentTime < revealEndDate
         // - videoApproved: currentTime > revealEnddata and isWhitelisted
         // - videoRejected: currentTime > revealEnddata and !isWhitelisted
-        console.log('---------------------')
-        console.log(video)
+        // console.log('---------------------')
+        // console.log(video)
         const statusName = video.getIn(['tcrStatus', 'name'])
         if (statusName === 'notInTcr') {
           return statusName
@@ -70,9 +83,9 @@ export const getTcrState: (state: RootState) => ?VideoRecord = createSelector(
             ])
             const now = Date.now() / 1000
 
-            console.log(`now: ${now}`)
-            console.log(`commitEndDate: ${commitEndDate}`)
-            console.log(`revealEndDate: ${revealEndDate}`)
+            // console.log(`now: ${now}`)
+            // console.log(`commitEndDate: ${commitEndDate}`)
+            // console.log(`revealEndDate: ${revealEndDate}`)
             if (now <= commitEndDate) {
               return 'inChallenge'
             } else if (now <= revealEndDate) {
