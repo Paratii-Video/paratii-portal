@@ -13,6 +13,7 @@ import VoteRevealed from './VoteRevealed'
 import Voting from './Voting'
 
 type Props = {
+  challenge: Object,
   videoId: string,
   tcrState: string,
   voteState: string,
@@ -28,13 +29,27 @@ const Sidebar = styled.div`
 `
 
 class SidebarTCR extends Component<Props, void> {
+  challengeDate: () => string
+
   constructor (props: Props) {
     super(props)
     // TODO: this should be done in the SidebarTCRContainer
     props.fetchChallenge(props.videoId)
+
+    this.challengeDate = this.challengeDate.bind(this)
   }
+
+  challengeDate () {
+    const { commitStartDate } = this.props.challenge
+    const date = new Date(commitStartDate * 1000)
+    const fullDate =
+      date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear()
+
+    return fullDate
+  }
+
   render () {
-    const { videoId, tcrState, voteState } = this.props
+    const { challenge, videoId, tcrState, voteState } = this.props
     const isWhitelisted = tcrState === 'appWasMade'
     const inChallenge = tcrState === 'inChallenge'
     const inReveal = tcrState === 'inReveal'
@@ -57,7 +72,11 @@ class SidebarTCR extends Component<Props, void> {
 
         {inChallenge && (
           <div>
-            <ChallengePeriod status="challenged" />
+            <ChallengePeriod
+              commitEnd={challenge.commitEndDate}
+              revealEnd={challenge.revealEndDate}
+              status="challenged"
+            />
             {voteCommited ? (
               <Card marginTop>
                 <VoteCommitted />
@@ -71,7 +90,11 @@ class SidebarTCR extends Component<Props, void> {
         )}
         {inReveal && (
           <div>
-            <ChallengePeriod status="inReveal" />
+            <ChallengePeriod
+              commitEnd={challenge.commitEndDate}
+              revealEnd={challenge.revealEndDate}
+              status="inReveal"
+            />
             <Card marginTop>
               {voteRevealed ? <VoteRevealed /> : <SendYourVoteBack />}
             </Card>
@@ -81,7 +104,11 @@ class SidebarTCR extends Component<Props, void> {
         {challengeEnded && (
           <div>
             <Card>
-              <Voting />
+              <Voting
+                votesFor={challenge.votesFor || 0}
+                votesAgainst={challenge.votesAgainst || 0}
+                date={this.challengeDate()}
+              />
             </Card>
             <Card marginTop>
               {videoApproved ? <VideoApproved /> : <VideoRejected />}

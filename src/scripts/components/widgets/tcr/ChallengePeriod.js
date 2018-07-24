@@ -4,12 +4,13 @@ import styled, { css } from 'styled-components'
 import Text from 'components/foundations/Text'
 import Title from 'components/foundations/Title'
 import TranslatedText from 'components/translations/TranslatedText'
+import { BORDER_RADIUS } from 'constants/UIConstants'
 
 type Props = {
-  status: string
+  status: string,
+  commitEnd: number,
+  revealEnd: number
 }
-
-const INFOSTATUS_CARD_MARGIN_BOTTOM: string = '15px'
 
 const ChallengePeriod = styled.div`
   align-items: center;
@@ -26,10 +27,10 @@ const ChallengePeriod = styled.div`
       : props.theme.colors.button.primaryTo}
       ${props => (props.status === 'inReveal' ? '150%' : '100%')}
   );
+  border-radius: ${BORDER_RADIUS};
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: ${INFOSTATUS_CARD_MARGIN_BOTTOM};
   padding: 50px 25px 60px;
 `
 
@@ -102,6 +103,7 @@ const circles = `
     width: 36px;
   }
 `
+
 const ChallengeSequenceDot = styled.span`
   background: ${props => props.theme.colors.text.accent};
   border-radius: 100%;
@@ -117,6 +119,93 @@ const ChallengeSequenceDot = styled.span`
 `
 
 class ChallengePeriodComponent extends Component<Props, void> {
+  setTimer: (dateDiff: number) => void
+  timer: () => number
+
+  constructor (props: Props) {
+    super(props)
+
+    this.state = {
+      commitEnd: null,
+      revealEnd: null,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      intervalId: null
+    }
+
+    this.setTimer = this.setTimer.bind(this)
+    this.timer = this.timer.bind(this)
+  }
+
+  componentDidMount (): void {
+    const { commitEnd, revealEnd } = this.props
+    const now = new Date()
+    const commit = new Date(commitEnd * 1000)
+    const reveal = new Date(revealEnd * 1000)
+    let intervalId = null
+
+    if (this.props.status === 'inReveal') {
+      if (now <= revealEnd) {
+        intervalId = setInterval(this.timer, 1000)
+      }
+    } else {
+      if (now <= commit) {
+        intervalId = setInterval(this.timer, 1000)
+      }
+    }
+
+    this.setState({
+      commitEnd: commit,
+      revealEnd: reveal,
+      intervalId: intervalId
+    })
+  }
+
+  componentWillUnmount (): void {
+    if (this.state.intervalId) {
+      clearInterval(this.state.intervalId)
+    }
+  }
+
+  setTimer (dateDiff) {
+    const hours = Math.floor(dateDiff / 3600) % 24
+    const minutes = Math.floor(dateDiff / 60) % 60
+    const seconds = Math.floor(dateDiff) % 60
+
+    this.setState({
+      hours: hours,
+      minutes: minutes,
+      seconds: seconds
+    })
+  }
+
+  timer () {
+    const now = new Date()
+    let dateDiff = null
+
+    if (this.props.status === 'inReveal') {
+      if (now <= this.state.revealEnd) {
+        dateDiff = Math.abs(this.state.revealEnd - now) / 1000
+      }
+    } else {
+      if (now <= this.state.commitEnd) {
+        dateDiff = Math.abs(this.state.commitEnd - now) / 1000
+      }
+    }
+
+    if (dateDiff) {
+      this.setTimer(dateDiff)
+    } else {
+      clearInterval(this.state.intervalId)
+      this.setState({
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      })
+    }
+  }
+
   render () {
     return (
       <ChallengePeriod status={this.props.status}>
@@ -136,7 +225,7 @@ class ChallengePeriodComponent extends Component<Props, void> {
               <TranslatedText message="tcr.ChallengePeriod.hourLabel" />
             </Text>
             <Title accent bigger bold>
-              19
+              {this.state.hours}
             </Title>
           </ChallengeTime>
           <ChallengeTime>
@@ -149,7 +238,7 @@ class ChallengePeriodComponent extends Component<Props, void> {
               <TranslatedText message="tcr.ChallengePeriod.minutesLabel" />
             </Text>
             <Title accent bigger bold>
-              20
+              {this.state.minutes}
             </Title>
           </ChallengeTime>
           <ChallengeTime>
@@ -162,7 +251,7 @@ class ChallengePeriodComponent extends Component<Props, void> {
               <TranslatedText message="tcr.ChallengePeriod.secondsLabel" />
             </Text>
             <Title accent bigger bold>
-              47
+              {this.state.seconds}
             </Title>
           </ChallengeTime>
         </ChallengeTimeWrapper>

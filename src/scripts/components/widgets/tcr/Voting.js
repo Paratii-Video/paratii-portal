@@ -8,7 +8,11 @@ import ProgressBar, {
 } from 'components/foundations/ProgressBar'
 import TranslatedText from 'components/translations/TranslatedText'
 
-type Props = {}
+type Props = {
+  date: string,
+  votesFor: number,
+  votesAgainst: number
+}
 
 const InfoStatusTitle = styled(Text)`
   display: flex;
@@ -55,6 +59,15 @@ const VotingBar = styled(ProgressBar)`
 `
 
 export default class VotingBox extends Component<Props, void> {
+  votesFor (against) {
+    const total = this.props.votesAgainst + this.props.votesFor
+    const percentageFor = Math.round(this.props.votesFor / total * 100) || 0
+    const percentageAgainst =
+      Math.round(this.props.votesAgainst / total * 100) || 0
+
+    return against ? percentageFor : percentageAgainst
+  }
+
   render () {
     return (
       <Fragment>
@@ -68,7 +81,7 @@ export default class VotingBox extends Component<Props, void> {
                 <TranslatedText message="tcr.Voting.box1Label" />
               </Text>
               <Title big bold gray>
-                65%
+                {this.votesFor()}%
               </Title>
             </VotingValue>
             <VotingValue>
@@ -76,16 +89,16 @@ export default class VotingBox extends Component<Props, void> {
                 <TranslatedText message="tcr.Voting.box2Label" />
               </Text>
               <Title big bold gray>
-                35%
+                {this.votesFor(true)}%
               </Title>
             </VotingValue>
           </VotingValuesWrapper>
           <VotingBarWrapper>
-            <VotingBar current="65" total="100" />
+            <VotingBar current={this.votesFor()} total="100" />
           </VotingBarWrapper>
         </Voting>
         <Text small gray>
-          <TranslatedText message="tcr.Voting.dateLabel" />
+          <TranslatedText message="tcr.Voting.dateLabel" /> {this.props.date}
         </Text>
       </Fragment>
     )
