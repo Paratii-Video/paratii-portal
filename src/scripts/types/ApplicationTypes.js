@@ -345,7 +345,8 @@ type Colors = {
     secondary: string,
     accent: string,
     highlight: string,
-    warn: string
+    warn: string,
+    succeed: string
   },
   header: {
     logo: string,
@@ -365,15 +366,6 @@ type Colors = {
   },
   Popover: {
     shadow: string
-  },
-  ProfileCuration: {
-    ChallengeBackgroundOneFrom: string,
-    ChallengeBackgroundOneTo: string,
-    ChallengeBackgroundTwoFrom: string,
-    ChallengeBackgroundTwoTo: string,
-    VotingBarOne: string,
-    VotingBarTwo: string,
-    ChallengeSequenceDot: string
   }
 }
 

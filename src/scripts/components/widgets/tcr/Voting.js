@@ -59,7 +59,7 @@ const VotingBar = styled(ProgressBar)`
 `
 
 export default class VotingBox extends Component<Props, void> {
-  votesFor (against) {
+  votesFor (against: boolean): number {
     const total = this.props.votesAgainst + this.props.votesFor
     const percentageFor = Math.round(this.props.votesFor / total * 100) || 0
     const percentageAgainst =
@@ -81,7 +81,7 @@ export default class VotingBox extends Component<Props, void> {
                 <TranslatedText message="tcr.Voting.box1Label" />
               </Text>
               <Title big bold gray>
-                {this.votesFor()}%
+                {this.votesFor(false)}%
               </Title>
             </VotingValue>
             <VotingValue>
@@ -94,7 +94,7 @@ export default class VotingBox extends Component<Props, void> {
             </VotingValue>
           </VotingValuesWrapper>
           <VotingBarWrapper>
-            <VotingBar current={this.votesFor()} total="100" />
+            <VotingBar current={this.votesFor(false)} total="100" />
           </VotingBarWrapper>
         </Voting>
         <Text small gray>

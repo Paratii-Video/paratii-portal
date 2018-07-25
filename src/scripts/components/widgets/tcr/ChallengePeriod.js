@@ -12,6 +12,15 @@ type Props = {
   revealEnd: number
 }
 
+type State = {
+  commitEnd: number,
+  revealEnd: number,
+  hours: number,
+  minutes: number,
+  seconds: number,
+  intervalId: number
+}
+
 const ChallengePeriod = styled.div`
   align-items: center;
   background: linear-gradient(
@@ -118,7 +127,7 @@ const ChallengeSequenceDot = styled.span`
     `};
 `
 
-class ChallengePeriodComponent extends Component<Props, void> {
+class ChallengePeriodComponent extends Component<Props, State> {
   setTimer: (dateDiff: number) => void
   timer: () => number
 
@@ -126,12 +135,12 @@ class ChallengePeriodComponent extends Component<Props, void> {
     super(props)
 
     this.state = {
-      commitEnd: null,
-      revealEnd: null,
+      commitEnd: new Date(this.props.commitEnd * 1000),
+      revealEnd: new Date(this.props.revealEnd * 1000),
       hours: 0,
       minutes: 0,
       seconds: 0,
-      intervalId: null
+      intervalId: NaN
     }
 
     this.setTimer = this.setTimer.bind(this)
@@ -139,27 +148,20 @@ class ChallengePeriodComponent extends Component<Props, void> {
   }
 
   componentDidMount (): void {
-    const { commitEnd, revealEnd } = this.props
     const now = new Date()
-    const commit = new Date(commitEnd * 1000)
-    const reveal = new Date(revealEnd * 1000)
-    let intervalId = null
+    let interval = NaN
 
     if (this.props.status === 'inReveal') {
-      if (now <= revealEnd) {
-        intervalId = setInterval(this.timer, 1000)
+      if (now <= this.state.revealEnd) {
+        interval = setInterval(this.timer, 1000)
       }
     } else {
-      if (now <= commit) {
-        intervalId = setInterval(this.timer, 1000)
+      if (now <= this.state.commitEnd) {
+        interval = setInterval(this.timer, 1000)
       }
     }
 
-    this.setState({
-      commitEnd: commit,
-      revealEnd: reveal,
-      intervalId: intervalId
-    })
+    this.setState({ intervalId: interval })
   }
 
   componentWillUnmount (): void {
@@ -168,7 +170,7 @@ class ChallengePeriodComponent extends Component<Props, void> {
     }
   }
 
-  setTimer (dateDiff) {
+  setTimer (dateDiff: number) {
     const hours = Math.floor(dateDiff / 3600) % 24
     const minutes = Math.floor(dateDiff / 60) % 60
     const seconds = Math.floor(dateDiff) % 60
