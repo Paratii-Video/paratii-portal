@@ -31,6 +31,7 @@ export const ButtonStyleText = css`
       text-transform: ${props => (props.anchor ? null : 'uppercase')};
       text-rendering: geometricPrecision;
       user-select: none;
+      white-space: nowrap;
     `
   }};
 `
