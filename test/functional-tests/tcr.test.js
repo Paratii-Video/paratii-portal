@@ -126,6 +126,8 @@ describe('TCR:', function () {
 
     // oppose the video [this one is hidden!]
     await browser.waitAndClick('[data-test-id="button-vote-2"]', 5000)
-    //
+    // this shouldo open a confirmation modal, we click the button
+    await browser.waitAndClick('[data-test-id="button-confirm-vote"]', 5000)
+    console.log('success')
   })
 })

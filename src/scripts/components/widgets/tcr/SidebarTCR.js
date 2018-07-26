@@ -17,7 +17,7 @@ type Props = {
   videoId: string,
   tcrState: string,
   voteState: string,
-  fetchChallenge: string => void
+  fetchVoteStatus: string => void
 }
 
 // Sidebar
@@ -34,7 +34,8 @@ class SidebarTCR extends Component<Props, void> {
   constructor (props: Props) {
     super(props)
     // TODO: this should be done in the SidebarTCRContainer
-    props.fetchChallenge(props.videoId)
+    // props.fetchChallenge(props.videoId)
+    props.fetchVoteStatus(props.videoId)
 
     this.challengeDate = this.challengeDate.bind(this)
   }
@@ -50,6 +51,9 @@ class SidebarTCR extends Component<Props, void> {
 
   render () {
     const { challenge, videoId, tcrState, voteState } = this.props
+    console.log(`render() SidbarTCR`)
+    console.log(`tcrState: ${tcrState}`)
+    console.log(`voteState: ${voteState}`)
     const isWhitelisted = tcrState === 'appWasMade'
     const inChallenge = tcrState === 'inChallenge'
     const inReveal = tcrState === 'inReveal'

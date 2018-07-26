@@ -49,8 +49,6 @@ export const getTcrState: (state: RootState) => ?VideoRecord = createSelector(
         // - inReveal:  a challange was made (tcrStatus.challange != {}) and currentTime > commitEndDate and currentTime < revealEndDate
         // - videoApproved: currentTime > revealEnddata and isWhitelisted
         // - videoRejected: currentTime > revealEnddata and !isWhitelisted
-        // console.log('---------------------')
-        // console.log(video)
         const statusName = video.getIn(['tcrStatus', 'name'])
         if (statusName === 'notInTcr') {
           return statusName

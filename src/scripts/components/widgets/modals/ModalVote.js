@@ -17,6 +17,7 @@ type Props = {
   user: UserRecord,
   selectedVideoId: string,
   getVideoVote: number,
+  setVoteStatus: (string, Object) => void,
   closeModal: () => void,
   saveVideoStaked: Object => Object,
   notification: (Object, string) => void,
@@ -65,26 +66,43 @@ class ModalVote extends Component<Props, Object> {
     event.preventDefault()
     const amountInWei = paratii.eth.web3.utils.toWei(String(MIN_VOTE_PTI))
     this.props.notification({ title: 'Processing your vote...' }, 'warning')
+    const vote = this.props.getVideoVote
+    console.log(`your vote is ${vote}`)
     try {
       // Inside eventLogs there is the voteCommite to save in localStorage
-      const eventLogs = await paratii.eth.tcr.approveAndGetRightsAndCommitVote(
+      const {
+        tx,
+        salt
+      } = await paratii.eth.tcr.approveAndGetRightsAndCommitVote(
         this.props.selectedVideoId,
-        this.props.getVideoVote,
-        amountInWei
+        vote,
+        Number(amountInWei)
       )
 
-      console.log(eventLogs)
+      this.props.setVoteStatus(this.props.selectedVideoId, {
+        voter: paratii.getAccount(),
+        numTokens: Number(amountInWei),
+        vote: vote
+      })
+      console.log(tx)
+      console.log(
+        `need to save salt: ${salt} and vote ${
+          this.props.getVideoVote
+        } in localstorage`
+      )
       // TODO: save the vote, encrypted, in localStorage
       // localStorage.set('commitVote', eventLogs.commitVote)
       // notifications.something('lasdfjasdflj')
     } catch (e) {
       console.log(e.message)
       this.props.notification({ title: e.message }, 'error')
+      throw e
     }
 
     this.setState({
       isVoting: true
     })
+    this.props.closeModal()
   }
 
   async componentDidMount () {
@@ -116,8 +134,7 @@ class ModalVote extends Component<Props, Object> {
           <Highlight>
             By voting to {this.props.getVideoVote ? 'support' : 'oppose'} this
             video you agree to make a stake deposit of{' '}
-            <Strong purple>{MIN_VOTE_PTI} PTI</Strong>. This will trigger the
-            voting period.
+            <Strong purple>{MIN_VOTE_PTI} PTI</Strong>.
           </Highlight>
           {!balanceIsTooLow ? (
             <MainText small>
@@ -157,9 +174,9 @@ class ModalVote extends Component<Props, Object> {
                 accent
                 onClick={this.onSubmit}
                 disabled={this.disableButton()}
-                data-test-id="button-stake"
+                data-test-id="button-confirm-vote"
               >
-                Continue
+                {this.props.getVideoVote ? 'support' : 'oppose'}
               </TextButton>
             </Footer>
           )}

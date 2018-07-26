@@ -2,8 +2,9 @@
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { fetchChallenge } from 'actions/TCRActions'
-import { getChallenge, getTcrState } from 'selectors/VideoSelectors'
+import { fetchVoteStatus } from 'actions/TCRActions'
+import { getTcrState, getChallenge } from 'selectors/VideoSelectors'
+import { getVoteStatus } from 'selectors/TCRSelectors'
 import SidebarTCR from 'components/widgets/tcr/SidebarTCR'
 
 import type { RootState } from 'types/ApplicationTypes'
@@ -23,10 +24,7 @@ const mapStateToProps = (state: RootState) => {
   // moreover, a second state regulates the vote, and is one
   // - voteCommited
   // -  voteRevealed
-  const voteState = 'voteCommited'
-  //
-  //   // videoChallengeExists: videoChallengeExists(state),
-  //   // voteStatus: getVoteStatus(state),
+  const voteState = getVoteStatus(state)
 
   return {
     challenge,
@@ -36,7 +34,7 @@ const mapStateToProps = (state: RootState) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchChallenge: bindActionCreators(fetchChallenge, dispatch)
+  fetchVoteStatus: bindActionCreators(fetchVoteStatus, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SidebarTCR)

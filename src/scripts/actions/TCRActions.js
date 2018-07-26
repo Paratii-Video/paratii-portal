@@ -10,7 +10,7 @@ import {
 import { VOTE_STATE } from 'constants/TCRConstants'
 
 export const voteVideo = createAction(VOTE_VIDEO)
-export const voteStatus = createAction(VOTE_STATUS)
+export const setVoteStatus = createAction(VOTE_STATUS)
 export const videoChallenged = createAction(VIDEO_CHALLENGED)
 
 export const fetchChallenge = (videoId: string) => async (
@@ -18,7 +18,7 @@ export const fetchChallenge = (videoId: string) => async (
 ) => {
   // FIXME get challenge from DB
   try {
-    const challenge = await paratii.eth.tcr.challenge.get(videoId)
+    const challenge = await paratii.db.tcr.challenges.get(videoId)
     // // Fixture
     // const challenge = {
     //   id: 0x1234,
@@ -39,7 +39,7 @@ export const fetchChallenge = (videoId: string) => async (
     // }
     console.log(challenge)
 
-    const userVote = await paratii.eth.tcr.votes.get(
+    const userVote = await paratii.db.tcr.votes.get(
       challenge.id,
       paratii.getAccount()
     )
@@ -69,8 +69,25 @@ export const fetchChallenge = (videoId: string) => async (
     }
 
     dispatch(voteVideo({ id: videoId, vote: userVoteResult.choice }))
-    dispatch(voteStatus({ id: videoId, voteStatus: voteStatusValue }))
+    dispatch(setVoteStatus({ id: videoId, voteStatus: voteStatusValue }))
   } catch (e) {
     console.log(e.message)
+    throw e
+  }
+}
+
+export const fetchVoteStatus = (pollId: string) => async (
+  dispatch: Dispatch<*>
+) => {
+  // FIXME get challenge from DB
+  try {
+    const userVote = await paratii.db.tcr.votes.get(
+      pollId,
+      paratii.getAccount()
+    )
+    return userVote
+  } catch (e) {
+    console.log(e.message)
+    throw e
   }
 }

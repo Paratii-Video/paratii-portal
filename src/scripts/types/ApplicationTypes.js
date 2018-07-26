@@ -156,6 +156,16 @@ export type ParatiiLib = {
     create: Object => Object,
     get: (address: string) => Object
   },
+  db: {
+    tcr: {
+      challenges: {
+        get: string => Object
+      },
+      votes: {
+        get: (string, string) => Object
+      }
+    }
+  },
   eth: {
     getAccount: () => string,
     wallet: {
@@ -191,7 +201,11 @@ export type ParatiiLib = {
       getTotalStaked: string => Promise<Object>,
       isWhitelisted: string => Promise<Object>,
       approveAndStartChallenge: string => Promise<Object>,
-      approveAndGetRightsAndCommitVote: (string, number, number) => void,
+      approveAndGetRightsAndCommitVote: (
+        string,
+        number,
+        number
+      ) => Promise<Object>,
       challenge: {
         get: string => Object
       },

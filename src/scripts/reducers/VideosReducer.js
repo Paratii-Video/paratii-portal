@@ -20,7 +20,7 @@ import {
   VIDEO_FETCH_ERROR,
   VIDEO_FETCH_SUCCESS,
   VIDEOS_FETCH_SUCCESS,
-  VOTE_VIDEO,
+  // VOTE_VIDEO,
   VOTE_STATUS
 } from 'constants/ActionConstants'
 import VideoRecord, {
@@ -222,18 +222,18 @@ const reducer = {
     console.log(state.getIn([payload.id]))
     return result
   },
-  [VOTE_VIDEO]: (
-    state: VideoRecordMap,
-    { payload }: Action<{ id: string, vote: number }> = {}
-  ): VideoRecordMap => {
-    if (!payload || !payload.id) {
-      return state
-    }
-    return state.setIn([payload.id, 'vote'], payload.vote)
-  },
+  // [VOTE_VIDEO]: (
+  //   state: VideoRecordMap,
+  //   { payload }: Action<{ id: string, vote: number }> = {}
+  // ): VideoRecordMap => {
+  //   if (!payload || !payload.id) {
+  //     return state
+  //   }
+  //   return state.setIn([payload.id, 'vote'], payload.vote)
+  // },
   [VOTE_STATUS]: (
     state: VideoRecordMap,
-    { payload }: Action<{ id: string, voteStatus: number }> = {}
+    { payload }: Action<{ id: string, voteStatus: Object }> = {}
   ): VideoRecordMap => {
     if (!payload || !payload.id) {
       return state
