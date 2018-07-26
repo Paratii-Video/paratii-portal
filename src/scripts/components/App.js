@@ -20,7 +20,7 @@ import MainHeader from 'containers/MainHeaderContainer'
 import UserNav from 'containers/UserNavContainer'
 import Notifications from 'containers/NotificationContainer'
 
-import type { Match } from 'react-router-dom'
+import type { Match, RouterHistory } from 'react-router-dom'
 import MainTemplate from './templates/MainTemplate'
 import Modal from 'containers/widgets/modals/ModalContainer'
 import MailVerifyContainer from 'containers/pages/MailVerifyContainer'
@@ -34,7 +34,6 @@ import { APP_TITLE, paratiiTheme } from 'constants/ApplicationConstants'
 
 import type VideoRecord from 'records/VideoRecords'
 import type { Map } from 'immutable'
-import type { RouterHistory } from 'react-router-dom'
 
 type Props = {
   initializeApp: () => void,
