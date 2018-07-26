@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect, History } from 'react-router-dom'
 import DocumentTitle from 'react-document-title'
 import { ThemeProvider } from 'styled-components'
 
@@ -40,7 +40,7 @@ type Props = {
   match: Match,
   videos: Map<string, VideoRecord>,
   isWalletSecured: boolean,
-  location: Object
+  history: History
 }
 
 type State = {
@@ -75,7 +75,7 @@ class App extends Component<Props, State> {
   }
 
   render () {
-    const { match, isWalletSecured } = this.props
+    const { match, isWalletSecured, history } = this.props
     return (
       <ThemeProvider theme={paratiiTheme}>
         <DocumentTitle title={APP_TITLE}>
@@ -86,7 +86,7 @@ class App extends Component<Props, State> {
             {isWalletSecured ? <UserNav /> : null}
             <Main
               landing={match.isExact}
-              play={this.props.location.pathname.indexOf('/play') > -1}
+              play={history.location.pathname.indexOf('/play') > -1}
               isWalletSecured={isWalletSecured}
             >
               <Switch>
