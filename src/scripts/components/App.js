@@ -75,7 +75,6 @@ class App extends Component<Props, State> {
 
   render () {
     const { match, isWalletSecured } = this.props
-
     return (
       <ThemeProvider theme={paratiiTheme}>
         <DocumentTitle title={APP_TITLE}>
@@ -84,7 +83,11 @@ class App extends Component<Props, State> {
             <Notifications />
             <MainHeader />
             {isWalletSecured ? <UserNav /> : null}
-            <Main landing={match.isExact} isWalletSecured={isWalletSecured}>
+            <Main
+              landing={match.isExact}
+              play={this.props.location.pathname.indexOf('/play') > -1}
+              isWalletSecured={isWalletSecured}
+            >
               <Switch>
                 <Route exact path="/" component={LandingContainer} />
                 <Route
