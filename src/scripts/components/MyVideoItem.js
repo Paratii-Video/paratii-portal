@@ -9,6 +9,15 @@ import { ButtonStyleColor } from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
 import VideoTimeDisplay from './foundations/VideoTimeDisplay'
 import TranslatedText from './translations/TranslatedText'
+import {
+  MYVIDEOITEMMEDIA_HEIGHT,
+  MYVIDEOITEM_ICONPLAY_HEIGHT,
+  MYVIDEOITEM_ICONPLAY_WIDTH,
+  MYVIDEOITEMINFO_PADDING,
+  MYVIDEOITEMINFO_MARGIN_BOTTOM,
+  MYVIDEOITEM_EDITBUTTONWRAPPER_BOTTOM,
+  MYVIDEOITEM_EDITBUTTONWRAPPER_RIGHT
+} from 'constants/UIConstants'
 import { isVideoPublished, videoDuration } from 'operators/VideoOperators'
 import { formatDuration } from '../utils/VideoUtils'
 import type VideoRecord from 'records/VideoRecords'
@@ -16,6 +25,10 @@ import type VideoRecord from 'records/VideoRecords'
 type Props = {
   video: VideoRecord
 }
+
+const ZINDEX_MYVIDEOSITEM_IMAGE: number = 1
+const ZINDEX_MYVIDEOSITEM_COVER: number = 3
+const ZINDEX_MYVIDEOSITEM_PLAY: number = 4
 
 export const MyVideosContainer = styled.ul`
   display: grid;
@@ -37,7 +50,7 @@ export const MyVideosContainer = styled.ul`
 `
 
 const Wrapper = styled.li`
-  background: ${props => props.theme.colors.background.body};
+  background: ${props => props.theme.colors.background.primary};
   position: relative;
 `
 
@@ -49,14 +62,11 @@ const MyVideoItemButton = styled.div`
 
 const MyVideoItemLink = MyVideoItemButton.withComponent(Link)
 
-const ZINDEX_MYVIDEOSITEM_COVER: number = 3
-const ZINDEX_MYVIDEOSITEM_IMAGE: number = 1
-const ZINDEX_MYVIDEOSITEM_PLAY: number = 4
 
 const MyVideoItemMedia = styled.div`
   ${FlexCenterStyle} background: ${props =>
   props.theme.colors.background.secondary};
-  height: 200px;
+  height: ${MYVIDEOITEMMEDIA_HEIGHT};
   position: relative;
   width: 100%;
 `
@@ -90,9 +100,9 @@ const MyVideoItemImage = styled.div`
 
 const IconPlay = styled.span`
   color: ${props => props.theme.colors.text.accent};
-  height: 33px;
+  height: ${MYVIDEOITEM_ICONPLAY_HEIGHT};
   position: relative;
-  width: 26px;
+  width: ${MYVIDEOITEM_ICONPLAY_WIDTH};
   transform: scale(0);
   transition: transform 0.5s ${({ theme }) => theme.animation.ease.smooth};
   z-index: ${ZINDEX_MYVIDEOSITEM_PLAY};
@@ -103,17 +113,17 @@ const IconPlay = styled.span`
 `
 
 const MyVideoItemInfo = styled.div`
-  padding: 20px;
+  padding: ${MYVIDEOITEMINFO_PADDING};
 `
 
 const MyVideoItemsTitle = Text.extend`
-  margin-bottom: 15px;
+  margin-bottom: ${MYVIDEOITEMINFO_MARGIN_BOTTOM};
 `
 
 const EditButtonWrapper = styled.div`
-  bottom: 30px;
+  bottom: ${MYVIDEOITEM_EDITBUTTONWRAPPER_BOTTOM};
   position: absolute;
-  right: 24px;
+  right: ${MYVIDEOITEM_EDITBUTTONWRAPPER_RIGHT};
 `
 
 const EditButton = styled(Link)`
