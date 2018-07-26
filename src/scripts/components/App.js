@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react'
-import { Route, Switch, Redirect, History } from 'react-router-dom'
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom'
 import DocumentTitle from 'react-document-title'
 import { ThemeProvider } from 'styled-components'
 
@@ -34,13 +34,14 @@ import { APP_TITLE, paratiiTheme } from 'constants/ApplicationConstants'
 
 import type VideoRecord from 'records/VideoRecords'
 import type { Map } from 'immutable'
+import type { RouterHistory } from 'react-router-dom'
 
 type Props = {
   initializeApp: () => void,
   match: Match,
   videos: Map<string, VideoRecord>,
   isWalletSecured: boolean,
-  history: History
+  history: RouterHistory
 }
 
 type State = {
@@ -76,6 +77,9 @@ class App extends Component<Props, State> {
 
   render () {
     const { match, isWalletSecured, history } = this.props
+
+    console.log(history)
+
     return (
       <ThemeProvider theme={paratiiTheme}>
         <DocumentTitle title={APP_TITLE}>
@@ -146,4 +150,4 @@ class App extends Component<Props, State> {
   }
 }
 
-export default App
+export default withRouter(App)
