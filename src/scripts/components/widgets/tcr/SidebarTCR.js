@@ -17,6 +17,7 @@ type Props = {
   videoId: string,
   tcrState: string,
   voteState: string,
+  voteInfo: Object,
   fetchVoteStatus: string => void
 }
 
@@ -50,10 +51,11 @@ class SidebarTCR extends Component<Props, void> {
   }
 
   render () {
-    const { challenge, videoId, tcrState, voteState } = this.props
+    const { challenge, videoId, tcrState, voteState, voteInfo } = this.props
     console.log(`render() SidbarTCR`)
     console.log(`tcrState: ${tcrState}`)
     console.log(`voteState: ${voteState}`)
+    console.log(`voteInfo: ${voteInfo}`)
     const isWhitelisted = tcrState === 'appWasMade'
     const inChallenge = tcrState === 'inChallenge'
     const inReveal = tcrState === 'inReveal'

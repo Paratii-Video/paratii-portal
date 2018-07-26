@@ -79,10 +79,13 @@ class ModalVote extends Component<Props, Object> {
         Number(amountInWei)
       )
 
-      this.props.setVoteStatus(this.props.selectedVideoId, {
-        voter: paratii.getAccount(),
-        numTokens: Number(amountInWei),
-        vote: vote
+      this.props.setVoteStatus({
+        id: this.props.selectedVideoId,
+        voteStatus: {
+          voter: paratii.getAccount(),
+          numTokens: Number(amountInWei),
+          vote: vote
+        }
       })
       console.log(tx)
       console.log(

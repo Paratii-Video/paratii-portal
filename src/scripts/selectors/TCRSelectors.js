@@ -25,13 +25,18 @@ export const getVideoVote: (state: RootState) => ?VideoRecord = createSelector(
 export const getVoteStatus: (state: RootState) => ?VideoRecord = createSelector(
   [getVideos, getPlayerVideoId],
   (videos: VideoRecordMap, playerVideoId: string) => {
-    if (playerVideoId) {
-      const playerVideo: ?VideoRecord = videos.get(playerVideoId)
-      if (playerVideo) {
-        return playerVideo.voteStatus
-      }
-    }
+    const voteStatus = videos.getIn([playerVideoId, 'voteStatus'])
+    return voteStatus
+  }
+)
 
-    return null
+// return the state of the logged-in user's vote, value is either 'voteCommitted' or 'voteRevealed'
+export const getVoteState: (state: RootState) => ?VideoRecord = createSelector(
+  [getVideos, getPlayerVideoId],
+  (videos: VideoRecordMap, playerVideoId: string) => {
+    const voteStatus = videos.getIn([playerVideoId, 'voteStatus'])
+    if (voteStatus) {
+      return 'voteCommitted'
+    }
   }
 )

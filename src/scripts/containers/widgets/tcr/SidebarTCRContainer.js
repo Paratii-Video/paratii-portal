@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchVoteStatus } from 'actions/TCRActions'
 import { getTcrState, getChallenge } from 'selectors/VideoSelectors'
-import { getVoteStatus } from 'selectors/TCRSelectors'
+import { getVoteStatus, getVoteState } from 'selectors/TCRSelectors'
 import SidebarTCR from 'components/widgets/tcr/SidebarTCR'
 
 import type { RootState } from 'types/ApplicationTypes'
@@ -19,17 +19,17 @@ const mapStateToProps = (state: RootState) => {
   // - videoRejected: currentTime > revealEnddata and !isWhitelisted
   const tcrState = getTcrState(state)
   const challenge = getChallenge(state)
-  // console.log(`tcrState: ${tcrState}`)
-  // const tcrState = 'appWasMade'
   // moreover, a second state regulates the vote, and is one
   // - voteCommited
   // -  voteRevealed
-  const voteState = getVoteStatus(state)
+  const voteState = getVoteState(state)
+  const voteInfo = getVoteStatus(state)
 
   return {
     challenge,
     tcrState,
-    voteState
+    voteState,
+    voteInfo
   }
 }
 
