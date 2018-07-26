@@ -34,7 +34,7 @@ const Wrapper = styled.div`
   width: 100%;
 
   @media ${MEDIAQUERY_BREAKPOINT} {
-    flex-wrap: wrap;
+    flex-direction: column;
   }
 `
 

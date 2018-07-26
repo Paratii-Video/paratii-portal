@@ -14,7 +14,7 @@ type Props = {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1 0 100%;
+  flex: 1 1 100%;
 `
 
 class UploadList extends Component<Props, void> {
