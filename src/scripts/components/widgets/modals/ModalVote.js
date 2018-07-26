@@ -67,6 +67,7 @@ class ModalVote extends Component<Props, Object> {
     const amountInWei = paratii.eth.web3.utils.toWei(String(MIN_VOTE_PTI))
     this.props.notification({ title: 'Processing your vote...' }, 'warning')
     const vote = this.props.getVideoVote
+    const videoId = this.props.selectedVideoId
     console.log(`your vote is ${vote}`)
     try {
       // Inside eventLogs there is the voteCommite to save in localStorage
@@ -74,7 +75,7 @@ class ModalVote extends Component<Props, Object> {
         tx,
         salt
       } = await paratii.eth.tcr.approveAndGetRightsAndCommitVote(
-        this.props.selectedVideoId,
+        videoId,
         vote,
         Number(amountInWei)
       )
@@ -87,13 +88,19 @@ class ModalVote extends Component<Props, Object> {
           vote: vote
         }
       })
-      console.log(tx)
+      const pollID = tx.events._VoteCommitted.returnValues.pollID
       console.log(
-        `need to save salt: ${salt} and vote ${
-          this.props.getVideoVote
-        } in localstorage`
+        `need to save salt: ${salt} and vote ${vote} and pollID ${pollID} in localstorage`
       )
-      // TODO: save the vote, encrypted, in localStorage
+      localStorage.setItem(
+        `vote-${videoId}`,
+        JSON.stringify({
+          salt: salt,
+          vote: vote,
+          pollID: pollID
+        })
+      )
+
       // localStorage.set('commitVote', eventLogs.commitVote)
       // notifications.something('lasdfjasdflj')
     } catch (e) {

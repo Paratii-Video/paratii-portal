@@ -36,7 +36,11 @@ export const getVoteState: (state: RootState) => ?VideoRecord = createSelector(
   (videos: VideoRecordMap, playerVideoId: string) => {
     const voteStatus = videos.getIn([playerVideoId, 'voteStatus'])
     if (voteStatus) {
-      return 'voteCommitted'
+      if (voteStatus.revealed) {
+        return 'voteRevealed'
+      } else {
+        return 'voteCommitted'
+      }
     }
   }
 )

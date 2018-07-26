@@ -56,6 +56,7 @@ class SidebarTCR extends Component<Props, void> {
     console.log(`tcrState: ${tcrState}`)
     console.log(`voteState: ${voteState}`)
     console.log(`voteInfo: ${voteInfo}`)
+    console.log(`voteInfo.vote: ${voteInfo.vote}`)
     const isWhitelisted = tcrState === 'appWasMade'
     const inChallenge = tcrState === 'inChallenge'
     const inReveal = tcrState === 'inReveal'

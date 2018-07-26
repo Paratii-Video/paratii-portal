@@ -183,6 +183,7 @@ class ChallengePeriodComponent extends Component<Props, State> {
   }
 
   timer () {
+    console.log('timer..')
     const now = new Date()
     let dateDiff = null
 

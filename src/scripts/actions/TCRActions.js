@@ -76,13 +76,13 @@ export const fetchChallenge = (videoId: string) => async (
   }
 }
 
-export const fetchVoteStatus = (pollId: string) => async (
+export const fetchVoteStatus = (pollID: string) => async (
   dispatch: Dispatch<*>
 ) => {
   // FIXME get challenge from DB
   try {
     const userVote = await paratii.db.tcr.votes.get(
-      pollId,
+      pollID,
       paratii.getAccount()
     )
     return userVote
