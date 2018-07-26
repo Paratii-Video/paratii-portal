@@ -62,7 +62,6 @@ const MyVideoItemButton = styled.div`
 
 const MyVideoItemLink = MyVideoItemButton.withComponent(Link)
 
-
 const MyVideoItemMedia = styled.div`
   ${FlexCenterStyle} background: ${props =>
   props.theme.colors.background.secondary};

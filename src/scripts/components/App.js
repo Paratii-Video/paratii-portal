@@ -39,7 +39,8 @@ type Props = {
   initializeApp: () => void,
   match: Match,
   videos: Map<string, VideoRecord>,
-  isWalletSecured: boolean
+  isWalletSecured: boolean,
+  location: Object
 }
 
 type State = {

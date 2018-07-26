@@ -25,7 +25,7 @@ const MainWrapper = styled.main`
   margin: ${MAINHEADER_LOGO_HEIGHT} 0 0
     ${({ isWalletSecured }) => (isWalletSecured ? USERNAV_WIDTH : '0')};
   min-height: 500px;
-  padding: ${({ landing, play }) => (landing || play ? null : MAINWRAPPER_PADDING_VERTICAL + ' ' +MAINWRAPPER_PADDING_HORIZONTAL)};
+  padding: ${({ landing, play }) => (landing || play ? null : MAINWRAPPER_PADDING_VERTICAL + ' ' + MAINWRAPPER_PADDING_HORIZONTAL)};
 
   @media ${MEDIAQUERY_BREAKPOINT} {
     margin-left: 0;
@@ -40,7 +40,7 @@ const MainWrapper = styled.main`
   }
 
   @media (max-width: 767px) {
-    padding: ${({ landing, play }) => (landing || play ? null : MAINWRAPPER_PADDING_VERTICAL_MOBILE + ' ' +MAINWRAPPER_PADDING_HORIZONTAL_MOBILE )};
+    padding: ${({ landing, play }) => (landing || play ? null : MAINWRAPPER_PADDING_VERTICAL_MOBILE + ' ' + MAINWRAPPER_PADDING_HORIZONTAL_MOBILE)};
   }
 `
 
