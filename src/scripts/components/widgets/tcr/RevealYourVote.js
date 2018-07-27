@@ -19,7 +19,7 @@ const InfoStatusContent = styled.div`
   margin: ${({ margin }) => margin};
 `
 
-export default class SendYourVoteBack extends Component<Props, void> {
+export default class RevealYourVote extends Component<Props, void> {
   render () {
     return (
       <Fragment>
@@ -30,15 +30,15 @@ export default class SendYourVoteBack extends Component<Props, void> {
             width="18px"
             margin="0 10px 0 0"
           />
-          <TranslatedText message="tcr.SendYourVoteBack.title" />
+          <TranslatedText message="tcr.RevealYourVote.title" />
         </InfoStatusTitle>
         <InfoStatusContent margin="36px 0 30px">
           <Text>
-            <TranslatedText message="tcr.SendYourVoteBack.text" />
+            <TranslatedText message="tcr.RevealYourVote.text" />
           </Text>
         </InfoStatusContent>
-        <Button data-test-id="SendYourVoteBack.button">
-          <TranslatedText message="tcr.SendYourVoteBack.button" />
+        <Button data-test-id="RevealYourVote.button">
+          <TranslatedText message="tcr.RevealYourVote.button" />
         </Button>
       </Fragment>
     )

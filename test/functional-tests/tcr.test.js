@@ -134,10 +134,7 @@ describe('TCR:', function () {
 
     // we need to wait 10 seconds for the commit period to end and the reveal period to start
     // (this is changed in development.json)
-    await browser.waitForVisible(
-      '[data-test-id="SendYourVoteBack.button"]',
-      10000
-    )
+    await browser.waitAndClick('[data-test-id="RevealYourVote.button"]', 10000)
 
     console.log('success')
   })

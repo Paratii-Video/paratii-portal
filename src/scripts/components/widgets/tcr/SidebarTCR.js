@@ -5,7 +5,7 @@ import ChallengePeriod from './ChallengePeriod'
 import WhiteListed from 'containers/widgets/tcr/WhiteListedContainer'
 import CommitYourVote from 'containers/widgets/tcr/CommitYourVoteContainer'
 import Card from 'components/structures/Card'
-import SendYourVoteBack from './SendYourVoteBack'
+import RevealYourVote from './RevealYourVote'
 import VideoApproved from './VideoApproved'
 import VideoRejected from './VideoRejected'
 import VoteCommitted from './VoteCommitted'
@@ -108,7 +108,7 @@ class SidebarTCR extends Component<Props, void> {
               status="inReveal"
             />
             <Card marginTop>
-              {voteRevealed ? <VoteRevealed /> : <SendYourVoteBack />}
+              {voteRevealed ? <VoteRevealed /> : <RevealYourVote />}
             </Card>
           </div>
         )}

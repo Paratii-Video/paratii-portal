@@ -95,7 +95,7 @@
       "buttonSupport": "Support",
       "buttonOppose": "Oppose"
     },
-    "SendYourVoteBack": {
+    "RevealYourVote": {
       "title": "You need to send back your vote!!",
       "text": "You have previously cast a secret vote, and now is the time to reveal it!",
       "button": "Reveal your vote"
