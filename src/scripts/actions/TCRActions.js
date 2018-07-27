@@ -5,12 +5,14 @@ import type { Dispatch } from 'redux'
 import {
   VOTE_VIDEO,
   VOTE_STATUS,
-  VIDEO_CHALLENGED
+  VIDEO_CHALLENGED,
+  TCR_RERENDER_COMPONENTS
 } from 'constants/ActionConstants'
 import { VOTE_STATE } from 'constants/TCRConstants'
 
 export const voteVideo = createAction(VOTE_VIDEO)
 export const setVoteStatus = createAction(VOTE_STATUS)
+export const tcrRerenderComponents = createAction(TCR_RERENDER_COMPONENTS)
 export const videoChallenged = createAction(VIDEO_CHALLENGED)
 
 export const fetchChallenge = (videoId: string) => async (

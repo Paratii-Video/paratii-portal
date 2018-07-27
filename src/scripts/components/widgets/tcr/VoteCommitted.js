@@ -22,7 +22,7 @@ export default class VoteCommitted extends Component<Props, void> {
   render () {
     return (
       <Fragment>
-        <InfoStatusTitle big accent>
+        <InfoStatusTitle big accent data-test-id="VoteCommitted.title">
           <SVGIcon
             icon="icon-check"
             height="18px"

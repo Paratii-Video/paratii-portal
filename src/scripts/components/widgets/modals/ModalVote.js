@@ -17,7 +17,7 @@ type Props = {
   user: UserRecord,
   selectedVideoId: string,
   getVideoVote: number,
-  setVoteStatus: (string, Object) => void,
+  setVoteStatus: Object => void,
   closeModal: () => void,
   saveVideoStaked: Object => Object,
   notification: (Object, string) => void,

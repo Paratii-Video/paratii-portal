@@ -2,8 +2,9 @@
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { fetchVoteStatus } from 'actions/TCRActions'
+import { fetchVoteStatus, tcrRerenderComponents } from 'actions/TCRActions'
 import { getTcrState, getChallenge } from 'selectors/VideoSelectors'
+import { getPlayerVideoId } from 'selectors/index'
 import { getVoteStatus, getVoteState } from 'selectors/TCRSelectors'
 import SidebarTCR from 'components/widgets/tcr/SidebarTCR'
 
@@ -24,8 +25,10 @@ const mapStateToProps = (state: RootState) => {
   // -  voteRevealed
   const voteState = getVoteState(state)
   const voteInfo = getVoteStatus(state)
+  const videoId = getPlayerVideoId(state)
 
   return {
+    videoId,
     challenge,
     tcrState,
     voteState,
@@ -34,7 +37,8 @@ const mapStateToProps = (state: RootState) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchVoteStatus: bindActionCreators(fetchVoteStatus, dispatch)
+  fetchVoteStatus: bindActionCreators(fetchVoteStatus, dispatch),
+  tcrRerenderComponents: bindActionCreators(tcrRerenderComponents, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SidebarTCR)

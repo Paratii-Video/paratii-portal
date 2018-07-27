@@ -9,7 +9,9 @@ import { BORDER_RADIUS } from 'constants/UIConstants'
 type Props = {
   status: string,
   commitEnd: number,
-  revealEnd: number
+  revealEnd: number,
+  videoId: string,
+  tcrRerenderComponents: Object => void
 }
 
 type State = {
@@ -183,7 +185,6 @@ class ChallengePeriodComponent extends Component<Props, State> {
   }
 
   timer () {
-    console.log('timer..')
     const now = new Date()
     let dateDiff = null
 
@@ -206,6 +207,11 @@ class ChallengePeriodComponent extends Component<Props, State> {
         minutes: 0,
         seconds: 0
       })
+      // time has run out: we rerender the tcr componennts
+      console.log(
+        `calling tcrRerenderComponents with videoId=${this.props.videoId} `
+      )
+      this.props.tcrRerenderComponents({ id: this.props.videoId })
     }
   }
 

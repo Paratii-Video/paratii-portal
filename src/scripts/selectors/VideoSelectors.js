@@ -40,6 +40,7 @@ export const getChallenge: (state: RootState) => ?VideoRecord = createSelector(
 export const getTcrState: (state: RootState) => ?VideoRecord = createSelector(
   [getVideos, getPlayerVideoId],
   (videos: VideoRecordMap, playerVideoId: string) => {
+    const now = new Date() / 1000
     if (playerVideoId) {
       const video: ?VideoRecord = videos.get(playerVideoId)
       if (video) {
@@ -79,7 +80,6 @@ export const getTcrState: (state: RootState) => ?VideoRecord = createSelector(
               'challenge',
               'votesAgainst'
             ])
-            const now = Date.now() / 1000
 
             // console.log(`now: ${now}`)
             // console.log(`commitEndDate: ${commitEndDate}`)

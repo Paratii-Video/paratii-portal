@@ -69,10 +69,12 @@ export class TcrDataRecord extends ImmutableRecord({
 
 export class TcrStatusRecord extends ImmutableRecord({
   name: 'notInTcr',
-  data: new TcrDataRecord()
+  data: new TcrDataRecord(),
+  dummy: null
 }) {
   name: TcrStatusName
   data: DataStatusRecord
+  dummy: number
 
   constructor ({ data, ...rest }: Object = {}) {
     super({

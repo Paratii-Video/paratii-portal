@@ -128,6 +128,17 @@ describe('TCR:', function () {
     await browser.waitAndClick('[data-test-id="button-vote-2"]', 5000)
     // this shouldo open a confirmation modal, we click the button
     await browser.waitAndClick('[data-test-id="button-confirm-vote"]', 5000)
+    // we should now be able to see
+    // we should now see the card where the user is told that his vote has been committed
+    await browser.waitForVisible('[data-test-id="VoteCommitted.title"]')
+
+    // we need to wait 10 seconds for the commit period to end and the reveal period to start
+    // (this is changed in development.json)
+    await browser.waitForVisible(
+      '[data-test-id="SendYourVoteBack.button"]',
+      10000
+    )
+
     console.log('success')
   })
 })

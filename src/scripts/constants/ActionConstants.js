@@ -26,6 +26,9 @@ export const VIDEO_CHALLENGED = createActionConstant('VIDEO_CHALLENGED')
 export const UPDATE_CHALLENGE = createActionConstant('UPDATE_CHALLENGE')
 export const VOTE_VIDEO = createActionConstant('VOTE_VIDEO')
 export const VOTE_STATUS = createActionConstant('VOTE_STATUS')
+export const TCR_RERENDER_COMPONENTS = createActionConstant(
+  'TCR_RERENDER_COMPONENTS'
+)
 
 /* User Actions */
 export const SET_WALLET_DATA = createActionConstant('SET_WALLET_DATA')

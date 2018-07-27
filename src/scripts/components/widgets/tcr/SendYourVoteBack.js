@@ -37,7 +37,7 @@ export default class SendYourVoteBack extends Component<Props, void> {
             <TranslatedText message="tcr.SendYourVoteBack.text" />
           </Text>
         </InfoStatusContent>
-        <Button>
+        <Button data-test-id="SendYourVoteBack.button">
           <TranslatedText message="tcr.SendYourVoteBack.button" />
         </Button>
       </Fragment>

@@ -21,7 +21,8 @@ import {
   VIDEO_FETCH_SUCCESS,
   VIDEOS_FETCH_SUCCESS,
   VOTE_VIDEO,
-  VOTE_STATUS
+  VOTE_STATUS,
+  TCR_RERENDER_COMPONENTS
 } from 'constants/ActionConstants'
 import VideoRecord, {
   TcrStakedRecord,
@@ -207,7 +208,6 @@ const reducer = {
     if (!payload || !payload.id || !state.get(payload.id)) {
       return state
     }
-    console.log(payload)
     const challengeRecord = new TcrChallengeRecord({
       id: payload.id,
       challenger: payload.challenger,
@@ -215,11 +215,9 @@ const reducer = {
       revealEndDate: payload.revealEndDate,
       listingHash: payload.listingHash
     })
-    console.log(challengeRecord)
     const result = state
       .setIn([payload.id, 'tcrStatus', 'data', 'challenge'], challengeRecord)
       .setIn([payload.id, 'tcrStatus', 'name'], 'appWasMade')
-    console.log(state.getIn([payload.id]))
     return result
   },
   [VOTE_VIDEO]: (
@@ -239,6 +237,19 @@ const reducer = {
       return state
     }
     return state.setIn([payload.id, 'voteStatus'], payload.voteStatus)
+  },
+  [TCR_RERENDER_COMPONENTS]: (
+    state: VideoRecordMap,
+    { payload }: Action<{ id: string }> = {}
+  ): VideoRecordMap => {
+    const videoId = payload.id
+    if (!videoId) {
+      throw Error('Need to provide a videoId value')
+    }
+    function getRandomInt (max) {
+      return Math.floor(Math.random() * Math.floor(max))
+    }
+    return state.setIn([videoId, 'tcrStatus', 'dummy'], getRandomInt(999))
   },
   [TRANSCODING_REQUESTED]: (
     state: VideoRecordMap,

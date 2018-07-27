@@ -18,7 +18,8 @@ type Props = {
   tcrState: string,
   voteState: string,
   voteInfo: Object,
-  fetchVoteStatus: string => void
+  fetchVoteStatus: string => void,
+  tcrRerenderComponents: Object => void
 }
 
 // Sidebar
@@ -55,8 +56,8 @@ class SidebarTCR extends Component<Props, void> {
     console.log(`render() SidbarTCR`)
     console.log(`tcrState: ${tcrState}`)
     console.log(`voteState: ${voteState}`)
-    console.log(`voteInfo: ${voteInfo}`)
     console.log(`voteInfo.vote: ${voteInfo.vote}`)
+    console.log(`videoId: ${videoId}`)
     const isWhitelisted = tcrState === 'appWasMade'
     const inChallenge = tcrState === 'inChallenge'
     const inReveal = tcrState === 'inReveal'
@@ -82,6 +83,8 @@ class SidebarTCR extends Component<Props, void> {
             <ChallengePeriod
               commitEnd={challenge.commitEndDate}
               revealEnd={challenge.revealEndDate}
+              tcrRerenderComponents={this.props.tcrRerenderComponents}
+              videoId={videoId}
               status="challenged"
             />
             {voteCommited ? (
@@ -100,6 +103,8 @@ class SidebarTCR extends Component<Props, void> {
             <ChallengePeriod
               commitEnd={challenge.commitEndDate}
               revealEnd={challenge.revealEndDate}
+              tcrRerenderComponents={this.props.tcrRerenderComponents}
+              videoId={videoId}
               status="inReveal"
             />
             <Card marginTop>
