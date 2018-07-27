@@ -3,11 +3,16 @@ import styled from 'styled-components'
 import {
   MAINHEADER_LOGO_HEIGHT,
   MEDIAQUERY_BREAKPOINT,
-  USERNAV_WIDTH
+  USERNAV_WIDTH,
+  MAINWRAPPER_PADDING_VERTICAL,
+  MAINWRAPPER_PADDING_VERTICAL_MOBILE,
+  MAINWRAPPER_PADDING_HORIZONTAL,
+  MAINWRAPPER_PADDING_HORIZONTAL_MOBILE
 } from 'constants/UIConstants'
 
 type Props = {
   landing: boolean,
+  play: boolean,
   isWalletSecured: boolean,
   children: Object
 }
@@ -20,14 +25,14 @@ const MainWrapper = styled.main`
   margin: ${MAINHEADER_LOGO_HEIGHT} 0 0
     ${({ isWalletSecured }) => (isWalletSecured ? USERNAV_WIDTH : '0')};
   min-height: 500px;
-  padding: ${({ landing }) => (landing ? null : '40px 80px')};
+  padding: ${({ landing, play }) => (landing || play ? null : MAINWRAPPER_PADDING_VERTICAL + ' ' + MAINWRAPPER_PADDING_HORIZONTAL)};
 
   @media ${MEDIAQUERY_BREAKPOINT} {
     margin-left: 0;
   }
 
   @media (max-width: 1024px) {
-    padding: ${({ landing }) => (landing ? null : '40px')};
+    padding: ${({ landing, play }) => (landing || play ? null : MAINWRAPPER_PADDING_VERTICAL)};
   }
 
   @media (max-width: 768px) {
@@ -35,7 +40,7 @@ const MainWrapper = styled.main`
   }
 
   @media (max-width: 767px) {
-    padding: ${({ landing }) => (landing ? null : '16px 20px 0')};
+    padding: ${({ landing, play }) => (landing || play ? null : MAINWRAPPER_PADDING_VERTICAL_MOBILE + ' ' + MAINWRAPPER_PADDING_HORIZONTAL_MOBILE)};
   }
 `
 
@@ -44,6 +49,7 @@ class Main extends Component<Props, void> {
     return (
       <MainWrapper
         landing={this.props.landing}
+        play={this.props.play}
         isWalletSecured={this.props.isWalletSecured}
       >
         {this.props.children}

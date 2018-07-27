@@ -16,14 +16,17 @@ export const BORDER_RADIUS: string = '4px'
 export const BORDER_RADIUS_SMALL: string = '2px'
 export const BUTTON_HEIGHT: string = '38px'
 export const BUTTON_PADDING_LEFT: string = '18px'
+export const MAINWRAPPER_PADDING_VERTICAL: string = '40px'
+export const MAINWRAPPER_PADDING_VERTICAL_MOBILE: string = '24px'
+export const MAINWRAPPER_PADDING_HORIZONTAL: string = '80px'
+export const MAINWRAPPER_PADDING_HORIZONTAL_MOBILE: string = '20px'
 
 // Components
 
 // Card
 export const CARD_PADDING: string = '40px 42px'
 export const CARD_MAX_WIDTH: string = '650px'
-export const CARD_MARGIN_LEFT: string = '25px'
-export const CARD_MARGIN_TOP: string = '25px'
+export const CARD_MARGIN: string = '25px'
 
 // Forms
 export const INPUT_HEIGHT: string = '38px'
@@ -33,22 +36,17 @@ export const RADIO_SIZE: string = '18px'
 export const HR_HEIGHT: string = '2px'
 export const HR_MARGIN_TOP: string = '42px'
 
+// Loader
+export const BASE_LOADER_DIMENSION: string = '50px'
+
+// MainFooter
+export const MAINFOOTER_HEIGHT: string = '72px'
+
 // MainHeader
 export const MAINHEADER_LOGO_WIDTH: string = '98px'
 export const MAINHEADER_LOGO_HEIGHT: string = '62px'
 export const MAINHEADER_PADDING_LEFT: string = '80px'
 export const MAINHEADER_PADDING_LEFT_BP: string = '40px'
-
-// MainFooter
-export const MAINFOOTER_HEIGHT: string = '72px'
-
-// Controls
-export const CONTROLS_HEIGHT: string = '48px'
-export const CONTROLS_HEIGHT_TABLET: string = '42px'
-export const VIDEO_MANAGER_MAX_HEIGHT: string = '600px'
-
-// Loader
-export const BASE_LOADER_DIMENSION: string = '50px'
 
 // Modal
 export const MODAL_WIDTH: string = '900px'
@@ -56,10 +54,24 @@ export const MODAL_WIDTH_SMALL: string = '490px'
 export const MODALCONTENT_PADDING: string = '38px 40px 44px'
 export const MODALCONTENT_PADDING_MOBILE: string = '30px 34px'
 
+// MyVideoItem
+export const MYVIDEOITEMMEDIA_HEIGHT: string = '200px'
+export const MYVIDEOITEM_ICONPLAY_HEIGHT: string = '33px'
+export const MYVIDEOITEM_ICONPLAY_WIDTH: string = '26px'
+export const MYVIDEOITEMINFO_PADDING: string = '20px'
+export const MYVIDEOITEMINFO_MARGIN_BOTTOM: string = '15px'
+export const MYVIDEOITEM_EDITBUTTONWRAPPER_BOTTOM: string = '30px'
+export const MYVIDEOITEM_EDITBUTTONWRAPPER_RIGHT: string = '24px'
+
+// Play
+export const PLAYMAINWRAPPER_MARGIN_RIGHT: string = '20px'
+
 // Player
 export const CONTROLS_BUTTON_DIMENSION: string = '16px'
 export const CONTROLS_BUTTON_DIMENSION_DESKTOP: string = '14px'
 export const CONTROLS_BUTTON_DIMENSION_MOBILE: string = '10px'
+export const CONTROLS_HEIGHT: string = '48px'
+export const CONTROLS_HEIGHT_TABLET: string = '42px'
 export const CONTROLS_SPACING: string = '24px'
 export const CONTROLS_SPACING_MOBILE: string = '12px'
 
@@ -95,6 +107,7 @@ export const VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT: string = '35px'
 
 // Video Manager
 export const VIDEOMANAGER_FILEUPLOADERWRAPPER_MARGIN: string = '100px 0'
+export const VIDEO_MANAGER_MAX_HEIGHT: string = '600px'
 
 // Video Overlay
 export const VIDEO_OVERLAY_PADDING: string = '20px'

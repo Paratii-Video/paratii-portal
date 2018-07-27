@@ -31,6 +31,13 @@ import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 import { APP_TITLE } from 'constants/ApplicationConstants'
+import {
+  MAX_WIDTH,
+  PLAYMAINWRAPPER_MARGIN_RIGHT,
+  MEDIAQUERY_BREAKPOINT,
+  MAINWRAPPER_PADDING_VERTICAL,
+  CARD_MARGIN
+} from 'constants/UIConstants'
 
 import type { ClapprPlayer, PlayerPlugin } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
@@ -80,51 +87,45 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  max-width: ${props => (props.isEmbed ? null : '1280px')};
   height: ${props => (props.isEmbed ? null : null)};
+  padding-bottom: ${MAINWRAPPER_PADDING_VERTICAL};
   width: 100%;
-
-  @media (max-width: 1440px) {
-    max-width: ${props => (props.isEmbed ? null : '1024px')};
-  }
-
-  @media (max-width: 1200px) {
-    max-width: ${props => (props.isEmbed ? null : '768px')};
-  }
-
-  @media (max-width: 930px) {
-    max-width: initial;
-  }
 `
 
 // Video
 
 const VideoWrapper = styled.div`
-  position: relative;
+  background: black;
   width: 100%;
   height: ${props => (props.isEmbed ? '100%' : null)};
-  margin: ${props => (props.isEmbed ? null : '0 auto 25px')};
+  margin: ${props => (props.isEmbed ? null : '0 auto ' + CARD_MARGIN)};
 
   @media (max-width: 930px) {
-    margin: ${props => (props.isEmbed ? null : '0 0 25px')};
+    margin: ${props => (props.isEmbed ? null : '0 0 ' + CARD_MARGIN)};
   }
 `
 
-const VideoCover = styled.div`
-  width: 100%;
+const VideoContainer = styled.div`
   height: ${props => (props.isEmbed ? '100%' : '720px')};
+  margin: 0 auto;
+  max-width: ${props => (props.isEmbed ? null : MAX_WIDTH)};
+  position: relative;
+  width: 100%;
 
   @media (max-width: 1440px) {
     height: ${props => (props.isEmbed ? null : '576px')};
+    max-width: ${props => (props.isEmbed ? null : '1024px')};
   }
 
   @media (max-width: 1200px) {
     height: ${props => (props.isEmbed ? null : '432px')};
+    max-width: ${props => (props.isEmbed ? null : '768px')};
   }
 
   @media (max-width: 930px) {
     height: ${props => (props.isEmbed ? '100%' : '0')};
-    padding-top: ${props => (props.isEmbed ? null : '30px')};
+    max-width: initial;
+    padding-top: ${props => (props.isEmbed ? null : CARD_MARGIN)};
     padding-bottom: ${props => (props.isEmbed ? null : '56.25%')};
   }
 `
@@ -160,17 +161,24 @@ const OverlayWrapper = styled.div`
 const PlayWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  margin: 0 auto;
+  max-width: ${props => (props.isEmbed ? null : MAX_WIDTH)};
   width: 100%;
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    flex-direction: column;
+    max-width: initial;
+  }
 `
 
 const PlayMainWrapper = styled.div`
-  flex: 1 1 840px;
+  flex: 1 1 100%;
   flex-direction: column;
-  margin-right: 20px;
+  margin-right: ${({ noSidebar }) => noSidebar ? null : PLAYMAINWRAPPER_MARGIN_RIGHT};
 `
 
 const PlaySidebarWrapper = styled.div`
-  flex: 1 1 410px;
+  flex: 1 0 410px;
   flex-direction: column;
 `
 
@@ -806,7 +814,7 @@ class Play extends Component<Props, State> {
         <DocumentTitle title={videoName || APP_TITLE}>
           <Wrapper isEmbed={isEmbed}>
             <VideoWrapper isEmbed={isEmbed}>
-              <VideoCover isEmbed={isEmbed}>
+              <VideoContainer isEmbed={isEmbed}>
                 <PlayerWrapper
                   data-test-id="player-wrapper"
                   onClick={this.onPlayerClick}
@@ -873,7 +881,7 @@ class Play extends Component<Props, State> {
                     </TipOverlayWrapper>
                   ) : null}
                 </PlayerWrapper>
-              </VideoCover>
+              </VideoContainer>
             </VideoWrapper>
             {!isEmbed &&
               video && (
