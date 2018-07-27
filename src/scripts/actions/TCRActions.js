@@ -63,7 +63,7 @@ export const revealYourVote = (pollID: string) => async (
   dispatch: Dispatch<*>
 ) => {
   console.log(`Revealing the vote for pollID ${pollID}`)
-  const key = `vote=${pollID}`
+  const key = `vote-${pollID}`
   const serializedVote = localStorage.getItem(key)
   console.log(serializedVote)
   if (!serializedVote) {
