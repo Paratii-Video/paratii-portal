@@ -30,6 +30,13 @@ import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 import { APP_TITLE } from 'constants/ApplicationConstants'
+import {
+  MAX_WIDTH,
+  PLAYMAINWRAPPER_MARGIN_RIGHT,
+  MEDIAQUERY_BREAKPOINT,
+  MAINWRAPPER_PADDING_VERTICAL,
+  CARD_MARGIN_BOTTOM
+} from 'constants/UIConstants'
 
 import type { ClapprPlayer, PlayerPlugin } from 'types/ApplicationTypes'
 import type { Match } from 'react-router-dom'
@@ -79,49 +86,43 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  max-width: ${props => (props.isEmbed ? null : '1280px')};
   height: ${props => (props.isEmbed ? null : null)};
+  padding-bottom: ${MAINWRAPPER_PADDING_VERTICAL};
+  width: 100%;
+`
+
+const VideoWrapper = styled.div`
+  background: black;
+  width: 100%;
+  height: ${props => (props.isEmbed ? '100%' : null)};
+  margin: ${props => (props.isEmbed ? null : '0 auto ' + CARD_MARGIN_BOTTOM)};
+
+  @media (max-width: 930px) {
+    margin: ${props => (props.isEmbed ? null : '0 0 ' + CARD_MARGIN_BOTTOM)};
+  }
+`
+
+const VideoContainer = styled.div`
+  height: ${props => (props.isEmbed ? '100%' : '720px')};
+  margin: 0 auto;
+  max-width: ${props => (props.isEmbed ? null : MAX_WIDTH)};
+  position: relative;
   width: 100%;
 
   @media (max-width: 1440px) {
+    height: ${props => (props.isEmbed ? null : '576px')};
     max-width: ${props => (props.isEmbed ? null : '1024px')};
   }
 
   @media (max-width: 1200px) {
+    height: ${props => (props.isEmbed ? null : '432px')};
     max-width: ${props => (props.isEmbed ? null : '768px')};
   }
 
   @media (max-width: 930px) {
-    max-width: initial;
-  }
-`
-
-const VideoWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  height: ${props => (props.isEmbed ? '100%' : null)};
-  margin: ${props => (props.isEmbed ? null : '0 auto 25px')};
-
-  @media (max-width: 930px) {
-    margin: ${props => (props.isEmbed ? null : '0 0 25px')};
-  }
-`
-
-const VideoCover = styled.div`
-  width: 100%;
-  height: ${props => (props.isEmbed ? '100%' : '720px')};
-
-  @media (max-width: 1440px) {
-    height: ${props => (props.isEmbed ? null : '576px')};
-  }
-
-  @media (max-width: 1200px) {
-    height: ${props => (props.isEmbed ? null : '432px')};
-  }
-
-  @media (max-width: 930px) {
     height: ${props => (props.isEmbed ? '100%' : '0')};
-    padding-top: ${props => (props.isEmbed ? null : '30px')};
+    max-width: initial;
+    padding-top: ${props => (props.isEmbed ? null : CARD_MARGIN_BOTTOM)};
     padding-bottom: ${props => (props.isEmbed ? null : '56.25%')};
   }
 `
@@ -152,11 +153,37 @@ const OverlayWrapper = styled.div`
   z-index: ${Z_INDEX_OVERLAY};
 `
 
-const PlayInfo = styled(Card)`
+// Infos (Description and sidebar)
+
+const PlayWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: ${props => (props.isEmbed ? null : MAX_WIDTH)};
   width: 100%;
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    flex-direction: column;
+    max-width: initial;
+  }
 `
 
-const PlayInfoButtons = styled.div`
+const PlayMainWrapper = styled.div`
+  flex: 1 1 100%;
+  flex-direction: column;
+  margin-right: ${({ noSidebar }) => noSidebar ? null : PLAYMAINWRAPPER_MARGIN_RIGHT};
+`
+
+const PlaySidebarWrapper = styled.div`
+  flex: 1 0 410px;
+  flex-direction: column;
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    flex: 1 1 100%;
+  }
+`
+
+const VideoInfoButtons = styled.div`
   display: flex;
   margin: 15px 0 15px;
 `
@@ -788,7 +815,7 @@ class Play extends Component<Props, State> {
         <DocumentTitle title={videoName || APP_TITLE}>
           <Wrapper isEmbed={isEmbed}>
             <VideoWrapper isEmbed={isEmbed}>
-              <VideoCover isEmbed={isEmbed}>
+              <VideoContainer isEmbed={isEmbed}>
                 <PlayerWrapper
                   data-test-id="player-wrapper"
                   onClick={this.onPlayerClick}
@@ -855,66 +882,71 @@ class Play extends Component<Props, State> {
                     </TipOverlayWrapper>
                   ) : null}
                 </PlayerWrapper>
-              </VideoCover>
+              </VideoContainer>
             </VideoWrapper>
             {!isEmbed &&
               video && (
-              <PlayInfo>
-                {videoName && <Title accent>{videoName}</Title>}
-                {video.author && <Text>By {video.author}</Text>}
-                {video.share && (
-                  <PlayInfoButtons>
-                    <TextButton iconButton margin="0 20px 0 0">
-                      <SVGIcon
-                        width="20px"
-                        height="20px"
-                        margin="0 5px 0 0"
-                        icon="icon-play-view"
-                      />
-                      <Text small>
-                        <TranslatedText message="player.views.zero" />
-                      </Text>
-                    </TextButton>
-                    <TextButton iconButton margin="0 20px 0 0">
-                      <SVGIcon
-                        width="20px"
-                        height="20px"
-                        margin="0 5px 0 0"
-                        icon="icon-play-like"
-                      />
-                      <Text small>
-                        <TranslatedText message="player.views.zero" />
-                      </Text>
-                    </TextButton>
-                    <TextButton iconButton>
-                      <SVGIcon
-                        width="20px"
-                        height="20px"
-                        margin="0 5px 0 0"
-                        icon="icon-play-dislike"
-                      />
-                      <Text small>
-                        <TranslatedText message="player.views.zero" />
-                      </Text>
-                    </TextButton>
-                  </PlayInfoButtons>
-                )}
-                <Text>
-                    Price{' '}
-                  <Span highlight>
-                    {video.free ? (
-                      <TranslatedText message="player.free" />
-                    ) : (
-                      <TranslatedText message="player.free" />
+              <PlayWrapper>
+                <PlayMainWrapper noSidebar>
+                  <Card>
+                    {videoName && <Title accent>{videoName}</Title>}
+                    {video.author && <Text>By {video.author}</Text>}
+                    {video.share && (
+                      <VideoInfoButtons>
+                        <TextButton iconButton margin="0 20px 0 0">
+                          <SVGIcon
+                            width="20px"
+                            height="20px"
+                            margin="0 5px 0 0"
+                            icon="icon-play-view"
+                          />
+                          <Text small>
+                            <TranslatedText message="player.views.zero" />
+                          </Text>
+                        </TextButton>
+                        <TextButton iconButton margin="0 20px 0 0">
+                          <SVGIcon
+                            width="20px"
+                            height="20px"
+                            margin="0 5px 0 0"
+                            icon="icon-play-like"
+                          />
+                          <Text small>
+                            <TranslatedText message="player.views.zero" />
+                          </Text>
+                        </TextButton>
+                        <TextButton iconButton>
+                          <SVGIcon
+                            width="20px"
+                            height="20px"
+                            margin="0 5px 0 0"
+                            icon="icon-play-dislike"
+                          />
+                          <Text small>
+                            <TranslatedText message="player.views.zero" />
+                          </Text>
+                        </TextButton>
+                      </VideoInfoButtons>
                     )}
-                  </Span>
-                </Text>
-                {video.description && (
-                  <DescriptionWrapper>
-                    <Text>{video.description}</Text>
-                  </DescriptionWrapper>
-                )}
-              </PlayInfo>
+                    <Text>
+                        Price{' '}
+                      <Span highlight>
+                        {video.free ? (
+                          <TranslatedText message="player.free" />
+                        ) : (
+                          <TranslatedText message="player.free" />
+                        )}
+                      </Span>
+                    </Text>
+                    {video.description && (
+                      <DescriptionWrapper>
+                        <Text>{video.description}</Text>
+                      </DescriptionWrapper>
+                    )}
+                  </Card>
+                </PlayMainWrapper>
+                {false && <PlaySidebarWrapper></PlaySidebarWrapper>}
+              </PlayWrapper>
             )}
           </Wrapper>
         </DocumentTitle>

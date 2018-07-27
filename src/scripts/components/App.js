@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom'
 import DocumentTitle from 'react-document-title'
 import { ThemeProvider } from 'styled-components'
 
@@ -20,7 +20,7 @@ import MainHeader from 'containers/MainHeaderContainer'
 import UserNav from 'containers/UserNavContainer'
 import Notifications from 'containers/NotificationContainer'
 
-import type { Match } from 'react-router-dom'
+import type { Match, RouterHistory } from 'react-router-dom'
 import MainTemplate from './templates/MainTemplate'
 import Modal from 'containers/widgets/modals/ModalContainer'
 import MailVerifyContainer from 'containers/pages/MailVerifyContainer'
@@ -39,7 +39,8 @@ type Props = {
   initializeApp: () => void,
   match: Match,
   videos: Map<string, VideoRecord>,
-  isWalletSecured: boolean
+  isWalletSecured: boolean,
+  history: RouterHistory
 }
 
 type State = {
@@ -74,7 +75,9 @@ class App extends Component<Props, State> {
   }
 
   render () {
-    const { match, isWalletSecured } = this.props
+    const { match, isWalletSecured, history } = this.props
+
+    console.log(history)
 
     return (
       <ThemeProvider theme={paratiiTheme}>
@@ -84,7 +87,11 @@ class App extends Component<Props, State> {
             <Notifications />
             <MainHeader />
             {isWalletSecured ? <UserNav /> : null}
-            <Main landing={match.isExact} isWalletSecured={isWalletSecured}>
+            <Main
+              landing={match.isExact}
+              play={history.location.pathname.indexOf('/play') > -1}
+              isWalletSecured={isWalletSecured}
+            >
               <Switch>
                 <Route exact path="/" component={LandingContainer} />
                 <Route
@@ -142,4 +149,4 @@ class App extends Component<Props, State> {
   }
 }
 
-export default App
+export default withRouter(App)
