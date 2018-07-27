@@ -21,6 +21,7 @@ type Props = {
   closeModal: () => void,
   saveVideoStaked: Object => Object,
   notification: (Object, string) => void,
+  storeVote: Object => void,
   loadBalances: () => void
 }
 
@@ -92,16 +93,13 @@ class ModalVote extends Component<Props, Object> {
       console.log(
         `need to save salt: ${salt} and vote ${vote} and pollID ${pollID} in localstorage`
       )
-      localStorage.setItem(
-        `vote-${videoId}`,
-        JSON.stringify({
-          salt: salt,
-          vote: vote,
-          pollID: pollID
-        })
-      )
+      this.props.storeVote({
+        videoId,
+        salt,
+        vote,
+        pollID
+      })
 
-      // localStorage.set('commitVote', eventLogs.commitVote)
       // notifications.something('lasdfjasdflj')
     } catch (e) {
       console.log(e.message)

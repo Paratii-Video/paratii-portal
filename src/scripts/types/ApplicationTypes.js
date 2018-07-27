@@ -209,6 +209,7 @@ export type ParatiiLib = {
       challenge: {
         get: string => Object
       },
+      revealVote: (pollID: string, vote: string, salt: string) => Object,
       votes: {
         get: (string, string) => Object
       }

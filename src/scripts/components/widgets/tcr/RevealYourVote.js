@@ -6,7 +6,10 @@ import Text from 'components/foundations/Text'
 import SVGIcon from 'components/foundations/SVGIcon'
 import TranslatedText from 'components/translations/TranslatedText'
 
-type Props = {}
+type Props = {
+  tcrStatusRecord: Object,
+  revealYourVote: (pollID: string) => void
+}
 
 const InfoStatusTitle = styled(Text)`
   display: flex;
@@ -20,6 +23,14 @@ const InfoStatusContent = styled.div`
 `
 
 export default class RevealYourVote extends Component<Props, void> {
+  revealYourVote: () => void
+
+  async revealYourVote () {
+    console.log(this.props.tcrStatusRecord)
+    const pollID = this.props.tcrStatusRecord.data.challenge.id
+    return this.props.revealYourVote(pollID)
+  }
+
   render () {
     return (
       <Fragment>
@@ -37,7 +48,10 @@ export default class RevealYourVote extends Component<Props, void> {
             <TranslatedText message="tcr.RevealYourVote.text" />
           </Text>
         </InfoStatusContent>
-        <Button data-test-id="RevealYourVote.button">
+        <Button
+          data-test-id="RevealYourVote.button"
+          onClick={() => this.revealYourVote()}
+        >
           <TranslatedText message="tcr.RevealYourVote.button" />
         </Button>
       </Fragment>

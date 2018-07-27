@@ -3,9 +3,13 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchVoteStatus, tcrRerenderComponents } from 'actions/TCRActions'
-import { getTcrState, getChallenge } from 'selectors/VideoSelectors'
+import {
+  getTcrState,
+  getChallenge,
+  getVoteState,
+  getVoteStatus
+} from 'selectors/TCRSelectors'
 import { getPlayerVideoId } from 'selectors/index'
-import { getVoteStatus, getVoteState } from 'selectors/TCRSelectors'
 import SidebarTCR from 'components/widgets/tcr/SidebarTCR'
 
 import type { RootState } from 'types/ApplicationTypes'

@@ -5,7 +5,7 @@ import ChallengePeriod from './ChallengePeriod'
 import WhiteListed from 'containers/widgets/tcr/WhiteListedContainer'
 import CommitYourVote from 'containers/widgets/tcr/CommitYourVoteContainer'
 import Card from 'components/structures/Card'
-import RevealYourVote from './RevealYourVote'
+import RevealYourVote from 'containers/widgets/tcr/RevealYourVoteContainer'
 import VideoApproved from './VideoApproved'
 import VideoRejected from './VideoRejected'
 import VoteCommitted from './VoteCommitted'
@@ -36,7 +36,7 @@ class SidebarTCR extends Component<Props, void> {
   constructor (props: Props) {
     super(props)
     // TODO: this should be done in the SidebarTCRContainer
-    // props.fetchChallenge(props.videoId)
+    // TODO: this is WRONG, fetchVoteStatus takes the pollID as an argument
     props.fetchVoteStatus(props.videoId)
 
     this.challengeDate = this.challengeDate.bind(this)
