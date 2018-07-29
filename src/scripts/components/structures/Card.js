@@ -5,8 +5,7 @@ import {
   BORDER_RADIUS,
   CARD_PADDING,
   CARD_MAX_WIDTH,
-  CARD_MARGIN_LEFT,
-  CARD_MARGIN_TOP,
+  CARD_MARGIN,
   MEDIAQUERY_BREAKPOINT
 } from 'constants/UIConstants'
 
@@ -33,10 +32,10 @@ const CardWrapper = styled.div`
   flex-direction: column;
   height: ${({ height }) => height};
   margin-bottom: ${({ marginBottom }) =>
-    marginBottom ? CARD_MARGIN_TOP : null};
-  margin-left: ${({ marginLeft }) => (marginLeft ? CARD_MARGIN_LEFT : null)};
-  margin-right: ${({ marginRight }) => (marginRight ? CARD_MARGIN_LEFT : null)};
-  margin-top: ${({ marginTop }) => (marginTop ? CARD_MARGIN_TOP : null)};
+    marginBottom ? CARD_MARGIN : null};
+  margin-left: ${({ marginLeft }) => (marginLeft ? CARD_MARGIN : null)};
+  margin-right: ${({ marginRight }) => (marginRight ? CARD_MARGIN : null)};
+  margin-top: ${({ marginTop }) => (marginTop ? CARD_MARGIN : null)};
   max-width: ${({ maxWidth }) => (maxWidth ? CARD_MAX_WIDTH : null)};
   overflow: hidden;
   position: relative;
@@ -44,7 +43,7 @@ const CardWrapper = styled.div`
 
   @media ${MEDIAQUERY_BREAKPOINT} {
     max-width: initial;
-    margin: 0 0 ${CARD_MARGIN_TOP};
+    margin: 0 0 ${CARD_MARGIN};
   }
 `
 

@@ -60,6 +60,8 @@ const VotingBar = styled(ProgressBar)`
 
 export default class VotingBox extends Component<Props, void> {
   votesFor (against: boolean): number {
+    console.log('VOTING', this.props)
+
     const total = this.props.votesAgainst + this.props.votesFor
     const percentageFor = Math.round(this.props.votesFor / total * 100) || 0
     const percentageAgainst =
