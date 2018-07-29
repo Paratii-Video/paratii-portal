@@ -29,6 +29,7 @@ export const getDefaultAsyncTaskStatus = () => ({
 
 export const getDefaultTcrStatus = () => ({
   name: 'notInTcr',
+  dummy: null,
   data: {
     challenge: {
       voteQuorum: null,
@@ -69,13 +70,18 @@ export const getDefaultVideo = () => ({
   ownershipProof: '',
   price: 0,
   thumbnails: [],
-  // staked: getDefaultStakingStatus(),
   storageStatus: getDefaultAsyncTaskStatus(),
   tcrStatus: getDefaultTcrStatus(),
   title: '',
   transcodingStatus: getDefaultAsyncTaskStatus(),
   uploadStatus: getDefaultAsyncTaskStatus(),
   vote: null,
-  voteStatus: ''
-  // whiteListed: null
+  voteStatus: {
+    name: null,
+    data: {
+      numTokens: null,
+      vote: null,
+      voter: null
+    }
+  }
 })

@@ -6,12 +6,14 @@ import {
   VOTE_VIDEO,
   VOTE_STATUS,
   VIDEO_CHALLENGED,
+  VOTE_STATUS_RECORD,
   TCR_RERENDER_COMPONENTS
 } from 'constants/ActionConstants'
 import { VOTE_STATE } from 'constants/TCRConstants'
 
 export const voteVideo = createAction(VOTE_VIDEO)
 export const setVoteStatus = createAction(VOTE_STATUS)
+export const setVoteStatusRecord = createAction(VOTE_STATUS_RECORD)
 export const tcrRerenderComponents = createAction(TCR_RERENDER_COMPONENTS)
 export const videoChallenged = createAction(VIDEO_CHALLENGED)
 
@@ -59,7 +61,7 @@ export const fetchVoteStatus = (pollID: string) => async (
   }
 }
 
-export const revealYourVote = (pollID: string) => async (
+export const revealYourVote = (pollID: string, videoId: string) => async (
   dispatch: Dispatch<*>
 ) => {
   console.log(`Revealing the vote for pollID ${pollID}`)
@@ -77,6 +79,7 @@ export const revealYourVote = (pollID: string) => async (
       voteInfo.salt
     )
     console.log(revealTx)
+    dispatch(setVoteStatus({ id: videoId, voteStatus: VOTE_STATE.REVEALED }))
   }
 }
 

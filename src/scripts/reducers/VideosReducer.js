@@ -22,6 +22,7 @@ import {
   VIDEOS_FETCH_SUCCESS,
   VOTE_VIDEO,
   VOTE_STATUS,
+  VOTE_STATUS_RECORD,
   TCR_RERENDER_COMPONENTS
 } from 'constants/ActionConstants'
 import VideoRecord, {
@@ -231,12 +232,21 @@ const reducer = {
   },
   [VOTE_STATUS]: (
     state: VideoRecordMap,
-    { payload }: Action<{ id: string, voteStatus: Object }> = {}
+    { payload }: Action<{ id: string, voteStatus: string }> = {}
   ): VideoRecordMap => {
     if (!payload || !payload.id) {
       return state
     }
     return state.setIn([payload.id, 'voteStatus'], payload.voteStatus)
+  },
+  [VOTE_STATUS_RECORD]: (
+    state: VideoRecordMap,
+    { payload }: Action<{ id: string, voteStatus: Object }> = {}
+  ): VideoRecordMap => {
+    if (!payload || !payload.id) {
+      return state
+    }
+    return state.setIn([payload.id, 'voteStatus', 'data'], payload.voteStatus)
   },
   [TCR_RERENDER_COMPONENTS]: (
     state: VideoRecordMap,

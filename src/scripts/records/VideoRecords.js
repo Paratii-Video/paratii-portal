@@ -7,6 +7,7 @@ import {
 } from 'records/AsyncTaskStatusRecord'
 
 type TcrStatusName = 'notInTcr' | 'appWasMade'
+type VoteStatusName = 'inCommit' | 'inReveal'
 
 export class TcrStakedRecord extends ImmutableRecord({
   id: null,
@@ -84,10 +85,35 @@ export class TcrStatusRecord extends ImmutableRecord({
   }
 }
 
+export class VoteDataRecord extends ImmutableRecord({
+  numTokens: null,
+  vote: null,
+  voter: null
+}) {
+  vote: number
+  numTokens: number
+  voter: string
+}
+export class VoteStatusRecord extends ImmutableRecord({
+  name: null,
+  data: new VoteDataRecord()
+}) {
+  name: VoteStatusName
+  data: VoteDataRecord
+
+  constructor ({ data, ...rest }: Object = {}) {
+    super({
+      ...rest,
+      data: new VoteDataRecord(data)
+    })
+  }
+}
+
 export default class Video extends ImmutableRecord({
   author: '',
   description: '',
   duration: '',
+  fetchStatus: new AsyncTaskStatusRecord(),
   filename: null,
   filesize: null,
   free: '',
@@ -104,8 +130,7 @@ export default class Video extends ImmutableRecord({
   transcodingStatus: new AsyncTaskStatusRecord(),
   uploadStatus: new AsyncTaskStatusRecord(),
   vote: null,
-  voteStatus: '',
-  fetchStatus: new AsyncTaskStatusRecord()
+  voteStatus: new VoteStatusRecord()
 }) {
   // challengeExists: boolean
   description: string
@@ -125,7 +150,7 @@ export default class Video extends ImmutableRecord({
   tcrStatus: TcrStatusRecord
   // whiteListed: boolean
   // challengeExists: boolean
-  vote: number
+  vote: VoteStatusRecord
   voteStatus: string
   storageStatus: AsyncTaskStatusRecord
   transcodingStatus: AsyncTaskStatusRecord
@@ -145,6 +170,7 @@ export default class Video extends ImmutableRecord({
       ...rest,
       thumbnails: ImmutableList(thumbnails),
       tcrStatus: new TcrStatusRecord(tcrStatus),
+      voteStatus: new VoteStatusRecord(tcrStatus),
       storageStatus: new AsyncTaskStatusRecord(storageStatus),
       transcodingStatus: new AsyncTaskStatusRecord(transcodingStatus),
       uploadStatus: new AsyncTaskStatusRecord(uploadStatus),
