@@ -47,6 +47,8 @@ const Header = styled.header`
   @media ${MEDIAQUERY_BREAKPOINT} {
     height: ${props => (props.open ? '100vh' : null)};
     padding: 0 ${MAINHEADER_PADDING_LEFT_BP};
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 `
 

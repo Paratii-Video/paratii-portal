@@ -1,6 +1,6 @@
 /* @flow */
 
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { MEDIAQUERY_BREAKPOINT } from 'constants/UIConstants'
@@ -68,16 +68,20 @@ class MainNavigation extends Component<Props, Object> {
     return (
       <Nav>
         <NavList>
-          <NavItem onlyMobile>
-            <NavLink onClick={this.props.closeMainNavAndUserNav} to="/profile">
-              <TranslatedText message="navigation.profile" />
-            </NavLink>
-          </NavItem>
-          <NavItem onlyMobile>
-            <NavLink onClick={this.props.closeMainNavAndUserNav} to="/profile/my-videos">
-              <TranslatedText message="navigation.myVideos" />
-            </NavLink>
-          </NavItem>
+          {this.props.isWalletSecured && (
+            <Fragment>
+              <NavItem onlyMobile>
+                <NavLink onClick={this.props.closeMainNavAndUserNav} to="/profile">
+                  <TranslatedText message="navigation.profile" />
+                </NavLink>
+              </NavItem>
+              <NavItem onlyMobile>
+                <NavLink onClick={this.props.closeMainNavAndUserNav} to="/profile/my-videos">
+                  <TranslatedText message="navigation.myVideos" />
+                </NavLink>
+              </NavItem>
+            </Fragment>
+          )}
           <NavItem>
             <NavLink onClick={this.props.closeMainNavAndUserNav} to="/voucher">
               <TranslatedText message="navigation.voucher" />
