@@ -134,6 +134,16 @@ describe('TCR:', function () {
 
     // we need to wait 10 seconds for the commit period to end and the reveal period to start
     // (this is changed in development.json)
+    await browser.waitForVisible(
+      '[data-test-id="RevealYourVote.button"]',
+      10000
+    )
+
+    console.log('revealvotebutton is visible')
+    // we add a dummy transaction
+    // FIXME: this should be handled by paratii-js
+    await paratii.eth.transfer(userAddress, 1, 'PTI')
+    await paratii.eth.transfer(userAddress, 1, 'PTI')
     await browser.waitAndClick('[data-test-id="RevealYourVote.button"]', 10000)
 
     console.log('success')

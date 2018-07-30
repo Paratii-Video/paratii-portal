@@ -17,7 +17,7 @@ type Props = {
   user: UserRecord,
   selectedVideoId: string,
   getVideoVote: number,
-  setVoteStatus: Object => void,
+  setVoteStatusRecord: Object => void,
   closeModal: () => void,
   saveVideoStaked: Object => Object,
   notification: (Object, string) => void,
@@ -81,7 +81,7 @@ class ModalVote extends Component<Props, Object> {
         Number(amountInWei)
       )
 
-      this.props.setVoteStatus({
+      this.props.setVoteStatusRecord({
         id: this.props.selectedVideoId,
         voteStatus: {
           voter: paratii.getAccount(),

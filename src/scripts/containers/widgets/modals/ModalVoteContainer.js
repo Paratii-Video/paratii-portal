@@ -9,7 +9,7 @@ import { getUser, getPlayerVideoId } from 'selectors/index'
 import { getVideoVote } from 'selectors/TCRSelectors'
 import ModalVote from 'components/widgets/modals/ModalVote'
 import { loadBalances } from 'actions/UserActions'
-import { setVoteStatus, storeVote } from 'actions/TCRActions.js'
+import { setVoteStatusRecord, storeVote } from 'actions/TCRActions.js'
 
 import type { RootState } from 'types/ApplicationTypes'
 
@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
   closeModal: bindActionCreators(closeModal, dispatch),
   notification: bindActionCreators(show, dispatch),
   loadBalances: bindActionCreators(loadBalances, dispatch),
-  setVoteStatus: bindActionCreators(setVoteStatus, dispatch),
+  setVoteStatusRecord: bindActionCreators(setVoteStatusRecord, dispatch),
   storeVote: bindActionCreators(storeVote, dispatch)
 })
 

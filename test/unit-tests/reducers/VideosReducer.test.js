@@ -5,19 +5,21 @@ import Immutable from 'immutable'
 
 import reducer from 'reducers/VideosReducer'
 import {
-  UPLOAD_REQUESTED,
-  UPLOAD_PROGRESS,
-  UPLOAD_REMOTE_SUCCESS,
-  UPLOAD_LOCAL_SUCCESS,
-  UPDATE_VIDEO_INFO,
-  VIDEO_DATA_START,
-  VIDEO_DATA_SAVED,
-  TRANSCODING_REQUESTED,
-  TRANSCODING_PROGRESS,
-  TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE,
+  TRANSCODING_PROGRESS,
+  TRANSCODING_REQUESTED,
+  TRANSCODING_SUCCESS,
+  UPLOAD_LOCAL_SUCCESS,
+  UPLOAD_PROGRESS,
+  UPLOAD_REQUESTED,
+  UPLOAD_REMOTE_SUCCESS,
+  UPDATE_VIDEO_INFO,
   VIDEO_FETCH_ERROR,
-  VIDEO_FETCH_SUCCESS
+  VIDEO_DATA_SAVED,
+  VIDEO_DATA_START,
+  VIDEO_FETCH_SUCCESS,
+  VOTE_STATUS,
+  VOTE_STATUS_RECORD
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import {
@@ -1633,6 +1635,59 @@ describe('Video Reducer', () => {
           }
         }
       })
+    })
+  })
+  describe('VOTE_STATUS_RECORD', () => {
+    it('should do nothing if there is no payload', () => {
+      const store = createStore(reducer)
+      expect(store.getState().toJS()).to.deep.equal({})
+      store.dispatch({
+        type: VOTE_STATUS_RECORD
+      })
+      expect(store.getState().toJS()).to.deep.equal({})
+    })
+    it('should update the status when reuested', () => {
+      const store = createStore(
+        reducer,
+        Immutable.Map({
+          '123': new VideoRecord({})
+        })
+      )
+      const payload = {
+        id: '123',
+        voteStatus: {
+          voter: '0x1234',
+          numTokens: Number(100000),
+          vote: '1'
+        }
+      }
+      store.dispatch({
+        type: VOTE_STATUS_RECORD,
+        payload: payload
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': {
+          ...getDefaultVideo(),
+          voteStatus: {
+            name: null,
+            data: {
+              voter: '0x1234',
+              numTokens: Number(100000),
+              vote: '1'
+            }
+          }
+        }
+      })
+    })
+  })
+  describe('VOTE_STATUS', () => {
+    it('should do nothing if there is no payload', () => {
+      const store = createStore(reducer)
+      expect(store.getState().toJS()).to.deep.equal({})
+      store.dispatch({
+        type: VOTE_STATUS
+      })
+      expect(store.getState().toJS()).to.deep.equal({})
     })
   })
 })

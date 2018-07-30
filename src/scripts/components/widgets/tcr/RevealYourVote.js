@@ -7,8 +7,9 @@ import SVGIcon from 'components/foundations/SVGIcon'
 import TranslatedText from 'components/translations/TranslatedText'
 
 type Props = {
+  videoId: string,
   tcrStatusRecord: Object,
-  revealYourVote: (pollID: string) => void
+  revealYourVote: (pollID: string, videoId: string) => void
 }
 
 const InfoStatusTitle = styled(Text)`
@@ -28,7 +29,7 @@ export default class RevealYourVote extends Component<Props, void> {
   async revealYourVote () {
     console.log(this.props.tcrStatusRecord)
     const pollID = this.props.tcrStatusRecord.data.challenge.id
-    return this.props.revealYourVote(pollID)
+    return this.props.revealYourVote(pollID, this.props.videoId)
   }
 
   render () {

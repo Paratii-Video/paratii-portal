@@ -7,7 +7,7 @@ import {
   getTcrState,
   getChallenge,
   getVoteState,
-  getVoteStatus
+  getVoteStatusRecord
 } from 'selectors/TCRSelectors'
 import { getPlayerVideoId } from 'selectors/index'
 import SidebarTCR from 'components/widgets/tcr/SidebarTCR'
@@ -22,13 +22,13 @@ const mapStateToProps = (state: RootState) => {
   // - inReveal: the votes are cast, and now need to be revealed
   // - videoApproved: currentTime > revealEnddata and isWhitelisted
   // - videoRejected: currentTime > revealEnddata and !isWhitelisted
-  const tcrState = getTcrState(state)
   const challenge = getChallenge(state)
+  const tcrState = getTcrState(state)
   // moreover, a second state regulates the vote, and is one
   // - voteCommited
   // -  voteRevealed
   const voteState = getVoteState(state)
-  const voteInfo = getVoteStatus(state)
+  const voteInfo = getVoteStatusRecord(state)
   const videoId = getPlayerVideoId(state)
 
   return {

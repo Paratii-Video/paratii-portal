@@ -96,9 +96,6 @@ export const getTcrState: (state: RootState) => ?VideoRecord = createSelector(
               'votesAgainst'
             ])
 
-            // console.log(`now: ${now}`)
-            // console.log(`commitEndDate: ${commitEndDate}`)
-            // console.log(`revealEndDate: ${revealEndDate}`)
             if (now <= commitEndDate) {
               return 'inChallenge'
             } else if (now <= revealEndDate) {
@@ -135,10 +132,13 @@ export const getVideoVote: (state: RootState) => ?VideoRecord = createSelector(
   }
 )
 
-export const getVoteStatus: (state: RootState) => ?VideoRecord = createSelector(
+export const getVoteStatusRecord: (
+  state: RootState
+) => ?VideoRecord = createSelector(
   [getVideos, getPlayerVideoId],
   (videos: VideoRecordMap, playerVideoId: string) => {
-    const voteStatus = videos.getIn([playerVideoId, 'voteStatus'])
+    const voteStatus = videos.getIn([playerVideoId, 'voteStatus', 'name'])
+    console.log(voteStatus)
     return voteStatus
   }
 )
@@ -148,12 +148,8 @@ export const getVoteState: (state: RootState) => ?VideoRecord = createSelector(
   [getVideos, getPlayerVideoId],
   (videos: VideoRecordMap, playerVideoId: string) => {
     const voteStatus = videos.getIn([playerVideoId, 'voteStatus'])
-    if (voteStatus) {
-      if (voteStatus.revealed) {
-        return 'voteRevealed'
-      } else {
-        return 'voteCommitted'
-      }
-    }
+    console.log(`voteStatus:\n`)
+    console.log(voteStatus)
+    return voteStatus
   }
 )
