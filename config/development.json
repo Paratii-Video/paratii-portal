@@ -9,7 +9,7 @@
         "pApplyStageLength": 0,
         "commitStageLength": 10,
         "pCommitStageLength": 1200,
-        "revealStageLength": 300,
+        "revealStageLength": 10,
         "pRevealStageLength": 1200,
         "dispensationPct": 50,
         "pDispensationPct": 50,

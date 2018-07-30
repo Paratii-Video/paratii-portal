@@ -7,7 +7,7 @@
         "pMinDeposit": 100e18,
         "applyStageLength": 0,
         "pApplyStageLength": 0,
-        "commitStageLength": 60,
+        "commitStageLength": 10,
         "pCommitStageLength": 1200,
         "revealStageLength": 60,
         "pRevealStageLength": 1200,
