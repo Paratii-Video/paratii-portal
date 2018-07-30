@@ -124,7 +124,7 @@ const Shadow = styled.span`
   }};
 `
 
-export const TIPBUTTONWRAPPER_BOTTOM: string = '70px'
+export const TIPBUTTONWRAPPER_BOTTOM: string = '74px'
 export const TIPBUTTONWRAPPER_RIGHT: string = '16px'
 
 const TipButtonWrapper = styled.div`
