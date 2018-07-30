@@ -53,12 +53,12 @@ class SidebarTCR extends Component<Props, void> {
   }
 
   render () {
-    const { challenge, videoId, tcrState, voteState, voteInfo } = this.props
+    const { challenge, videoId, tcrState, voteState } = this.props
     console.log(this.props)
     console.log(`render() SidbarTCR`)
     console.log(`tcrState: ${tcrState}`)
     console.log(`voteState: ${voteState}`)
-    console.log(`voteInfo.vote: ${voteInfo}`)
+    // console.log(`voteInfo.vote: ${voteInfo}`)
     console.log(`videoId: ${videoId}`)
     const isWhitelisted = tcrState === 'appWasMade'
     const inChallenge = tcrState === 'inChallenge'
@@ -70,9 +70,9 @@ class SidebarTCR extends Component<Props, void> {
       tcrState === 'videoApproved' || tcrState === 'videoRejected'
     const voteCommitted = voteState === VOTE_STATE.COMMITTED
     const voteRevealed = voteState === VOTE_STATE.REVEALED
-    console.log(`voteCommitted: ${voteCommitted}`)
+    // console.log(`voteCommitted: ${voteCommitted}`)
     console.log(`VOTE_STATE.COMMITTED: ${VOTE_STATE.COMMITTED}`)
-    console.log(`voteRevealed: ${voteRevealed}`)
+    // console.log(`voteRevealed: ${voteRevealed}`)
 
     return (
       <Sidebar>

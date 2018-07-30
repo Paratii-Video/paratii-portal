@@ -35,7 +35,6 @@ import {
   MAX_WIDTH,
   MAINWRAPPER_PADDING_HORIZONTAL_MOBILE,
   PLAYMAINWRAPPER_MARGIN_RIGHT,
-  MEDIAQUERY_BREAKPOINT,
   MAINWRAPPER_PADDING_VERTICAL,
   CARD_MARGIN
 } from 'constants/UIConstants'
@@ -177,7 +176,8 @@ const PlayWrapper = styled.div`
 const PlayMainWrapper = styled.div`
   flex: 1 1 100%;
   flex-direction: column;
-  margin-right: ${({ noSidebar }) => noSidebar ? null : PLAYMAINWRAPPER_MARGIN_RIGHT};
+  margin-right: ${({ noSidebar }) =>
+    noSidebar ? null : PLAYMAINWRAPPER_MARGIN_RIGHT};
 `
 
 const PlaySidebarWrapper = styled.div`

@@ -27,7 +27,7 @@ const mapStateToProps = (state: RootState) => {
   // - voteCommited
   // -  voteRevealed
   const voteInfo = getVoteStatusRecord(state)
-  const voteState = voteInfo.name
+  const voteState = voteInfo && voteInfo.name
   const videoId = getPlayerVideoId(state)
   // console.log('aaargh')
   // console.log(voteState)

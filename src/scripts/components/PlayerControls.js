@@ -25,8 +25,7 @@ import {
   CONTROLS_SPACING,
   CONTROLS_SPACING_MOBILE,
   CONTROLS_HEIGHT,
-  CONTROLS_HEIGHT_TABLET,
-  VIDEO_OVERLAY_PADDING
+  CONTROLS_HEIGHT_TABLET
 } from 'constants/UIConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { getFullscreenEnabled } from 'utils/AppUtils'
@@ -131,8 +130,15 @@ const TipButtonWrapper = styled.div`
   position: absolute;
   bottom: ${TIPBUTTONWRAPPER_BOTTOM};
   right: ${TIPBUTTONWRAPPER_RIGHT};
-  transform: translate3d(${({ controlsRaised }) => controlsRaised ? 0 : '125%'}, 0, 0);
-  transition: transform ${({ controlsRaised }) => controlsRaised ? '0.75s' : '0.5s'} ${({ theme }) => theme.animation.ease.smooth} ${({ controlsRaised }) => controlsRaised ? '0.2s' : null};
+  transform: translate3d(
+    ${({ controlsRaised }) => (controlsRaised ? 0 : '125%')},
+    0,
+    0
+  );
+  transition: transform
+    ${({ controlsRaised }) => (controlsRaised ? '0.75s' : '0.5s')}
+    ${({ theme }) => theme.animation.ease.smooth}
+    ${({ controlsRaised }) => (controlsRaised ? '0.2s' : null)};
   z-index: ${Z_INDEX_BUTTONS};
 `
 
