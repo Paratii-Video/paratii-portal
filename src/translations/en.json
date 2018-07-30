@@ -31,7 +31,8 @@
     "myVideos": "My videos",
     "upload": "Upload",
     "about": "About Paratii",
-    "logIn": "Sign Up / Log In"
+    "logIn": "Sign Up / Log In",
+    "profile": "Profile"
   },
   "notFound": {
     "title": "Oooooops, page not found",

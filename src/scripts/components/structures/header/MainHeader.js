@@ -47,6 +47,8 @@ const Header = styled.header`
   @media ${MEDIAQUERY_BREAKPOINT} {
     height: ${props => (props.open ? '100vh' : null)};
     padding: 0 ${MAINHEADER_PADDING_LEFT_BP};
+    overflow-x: hidden;
+    overflow-y: ${props => (props.open ? 'scroll' : 'hidden')};
   }
 `
 
@@ -98,8 +100,8 @@ const HeaderButtons = styled.div`
   }
 `
 
-const ProfileAvatarButton = styled.button`
-  background-color: ${props => props.theme.colors.header.color};
+const ProfileAvatarButton = styled.div`
+  background-color: ${props => props.theme.colors.background.secondary};
   border-radius: 100%;
   flex: 0 0 40px;
   height: 40px;
@@ -194,7 +196,6 @@ class MainHeader extends Component<Props, State> {
         userAvatar = (
           <ProfileAvatarButton
             data-test-id="address-avatar"
-            onClick={this.toggleUserNav}
           >
             <Blockies seed={lowerAddress} size={10} scale={4} />
           </ProfileAvatarButton>

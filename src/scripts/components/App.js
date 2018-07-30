@@ -76,9 +76,6 @@ class App extends Component<Props, State> {
 
   render () {
     const { match, isWalletSecured, history } = this.props
-
-    console.log(history)
-
     return (
       <ThemeProvider theme={paratiiTheme}>
         <DocumentTitle title={APP_TITLE}>

@@ -77,6 +77,12 @@ const WordsWrapper = styled.div`
   padding: 22px ${WORDSWRAPPER_HORIZONTAL_PADDING};
 `
 
+const Words = Text.extend`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+`
+
 class Profile extends Component<Props, void> {
   secureWallet: (e: Object) => void
   copyWordsToClipboard: (event: Object) => void
@@ -147,14 +153,14 @@ class Profile extends Component<Props, void> {
           <TranslatedText message="profile.addressLabel" />
         </Text>
         <WordsWrapper>
-          <Text
+          <Words
             accent
             innerRef={(ref: HTMLElement) => {
               this.KeyWords = ref
             }}
           >
             {userAddress}
-          </Text>
+          </Words>
           <TextButton iconButton small onClick={this.copyWordsToClipboard}>
             <SVGIcon
               icon="icon-copy"

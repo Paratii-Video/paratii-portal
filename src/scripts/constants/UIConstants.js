@@ -6,8 +6,8 @@ export const Z_INDEX_BACK: number = 1
 export const Z_INDEX_MODAL: number = 1000
 export const Z_INDEX_POPUPS: number = 990
 export const Z_INDEX_HEADER: number = 980
-export const Z_INDEX_FOOTER: number = 980
-export const Z_INDEX_USERNAV: number = 970
+export const Z_INDEX_FOOTER: number = 970
+export const Z_INDEX_USERNAV: number = 960
 
 // Layout
 export const MAX_WIDTH: string = '1264px'
