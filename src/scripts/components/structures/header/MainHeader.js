@@ -48,7 +48,7 @@ const Header = styled.header`
     height: ${props => (props.open ? '100vh' : null)};
     padding: 0 ${MAINHEADER_PADDING_LEFT_BP};
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: ${props => (props.open ? 'scroll' : 'hidden')};
   }
 `
 
