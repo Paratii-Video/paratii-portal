@@ -69,6 +69,7 @@ class ModalVote extends Component<Props, Object> {
     this.props.notification({ title: 'Processing your vote...' }, 'warning')
     const vote = this.props.getVideoVote
     const videoId = this.props.selectedVideoId
+    // FIXME: move this logic to TCR Actions
     console.log(`your vote is ${vote}`)
     try {
       // Inside eventLogs there is the voteCommite to save in localStorage
@@ -81,15 +82,19 @@ class ModalVote extends Component<Props, Object> {
         Number(amountInWei)
       )
 
+      const pollID = tx.events._VoteCommitted.returnValues.pollID
       this.props.setVoteStatusRecord({
         id: this.props.selectedVideoId,
         voteStatus: {
-          voter: paratii.getAccount(),
-          numTokens: Number(amountInWei),
-          vote: vote
+          name: 'voteCommitted',
+          data: {
+            voter: paratii.getAccount(),
+            numTokens: Number(amountInWei),
+            vote: vote,
+            pollID: pollID
+          }
         }
       })
-      const pollID = tx.events._VoteCommitted.returnValues.pollID
       console.log(
         `need to save salt: ${salt} and vote ${vote} and pollID ${pollID} in localstorage`
       )

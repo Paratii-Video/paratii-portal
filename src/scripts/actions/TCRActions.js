@@ -38,7 +38,16 @@ export const fetchChallenge = (videoId: string) => async (
     }
 
     dispatch(voteVideo({ id: videoId, vote: userVoteResult.choice }))
-    dispatch(setVoteStatus({ id: videoId, voteStatus: voteStatusValue }))
+    // dispatch(setVoteStatus({ id: videoId, name: voteStatusValue }))
+    dispatch(
+      setVoteStatusRecord({
+        id: videoId,
+        name: voteStatusValue,
+        data: {
+          vote: userVoteResult.choice
+        }
+      })
+    )
   } catch (e) {
     console.log(e.message)
     throw e
@@ -79,7 +88,13 @@ export const revealYourVote = (pollID: string, videoId: string) => async (
       voteInfo.salt
     )
     console.log(revealTx)
-    dispatch(setVoteStatus({ id: videoId, voteStatus: VOTE_STATE.REVEALED }))
+    // dispatch(setVoteStatus({ id: videoId, name: VOTE_STATE.REVEALED }))
+    dispatch(
+      setVoteStatusRecord({
+        id: videoId,
+        voteStatus: { name: VOTE_STATE.REVEALED }
+      })
+    )
   }
 }
 

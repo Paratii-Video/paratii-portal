@@ -5,9 +5,10 @@ import {
   AsyncTaskStatusRecord,
   DataStatusRecord
 } from 'records/AsyncTaskStatusRecord'
+import { VOTE_STATE } from 'constants/TCRConstants'
 
 type TcrStatusName = 'notInTcr' | 'appWasMade'
-type VoteStatusName = 'inCommit' | 'inReveal'
+type VoteStatusName = VOTE_STATE.COMMITTED | VOTE_STATE.REVEALED
 
 export class TcrStakedRecord extends ImmutableRecord({
   id: null,

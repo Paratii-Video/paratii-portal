@@ -1,5 +1,6 @@
 /* @flow */
 
+import { expect } from 'chai'
 import { createStore } from 'redux'
 import Immutable from 'immutable'
 
@@ -28,7 +29,6 @@ import {
   getDefaultAsyncTaskStatus,
   getDefaultDataStatus
 } from 'unit-tests/fixtures/VideoFixtures'
-import { expect } from 'chai'
 
 describe('Video Reducer', () => {
   describe('UPLOAD_REQUESTED', () => {
@@ -1656,9 +1656,12 @@ describe('Video Reducer', () => {
       const payload = {
         id: '123',
         voteStatus: {
-          voter: '0x1234',
-          numTokens: Number(100000),
-          vote: '1'
+          name: 'voteCommitted',
+          data: {
+            voter: '0x1234',
+            numTokens: Number(100000),
+            vote: '1'
+          }
         }
       }
       store.dispatch({
@@ -1669,7 +1672,7 @@ describe('Video Reducer', () => {
         '123': {
           ...getDefaultVideo(),
           voteStatus: {
-            name: null,
+            name: 'voteCommitted',
             data: {
               voter: '0x1234',
               numTokens: Number(100000),
@@ -1678,8 +1681,10 @@ describe('Video Reducer', () => {
           }
         }
       })
+      //
     })
   })
+
   describe('VOTE_STATUS', () => {
     it('should do nothing if there is no payload', () => {
       const store = createStore(reducer)
@@ -1688,6 +1693,61 @@ describe('Video Reducer', () => {
         type: VOTE_STATUS
       })
       expect(store.getState().toJS()).to.deep.equal({})
+    })
+
+    it('should update the status when requested', () => {
+      const store = createStore(
+        reducer,
+        Immutable.Map({
+          '123': new VideoRecord({})
+        })
+      )
+      let payload
+      payload = {
+        id: '123',
+        name: 'voteCommitted'
+      }
+
+      store.dispatch({
+        type: VOTE_STATUS,
+        payload: payload
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': {
+          ...getDefaultVideo(),
+          voteStatus: {
+            name: 'voteCommitted',
+            data: {
+              numTokens: null,
+              voter: null,
+              vote: null
+            }
+          }
+        }
+      })
+      //
+      payload = {
+        id: '123',
+        name: 'voteSent'
+      }
+
+      store.dispatch({
+        type: VOTE_STATUS,
+        payload: payload
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': {
+          ...getDefaultVideo(),
+          voteStatus: {
+            name: 'voteSent',
+            data: {
+              numTokens: null,
+              voter: null,
+              vote: null
+            }
+          }
+        }
+      })
     })
   })
 })

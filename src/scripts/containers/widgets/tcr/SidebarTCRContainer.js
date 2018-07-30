@@ -6,7 +6,6 @@ import { fetchVoteStatus, tcrRerenderComponents } from 'actions/TCRActions'
 import {
   getTcrState,
   getChallenge,
-  getVoteState,
   getVoteStatusRecord
 } from 'selectors/TCRSelectors'
 import { getPlayerVideoId } from 'selectors/index'
@@ -27,9 +26,12 @@ const mapStateToProps = (state: RootState) => {
   // moreover, a second state regulates the vote, and is one
   // - voteCommited
   // -  voteRevealed
-  const voteState = getVoteState(state)
   const voteInfo = getVoteStatusRecord(state)
+  const voteState = voteInfo.name
   const videoId = getPlayerVideoId(state)
+  // console.log('aaargh')
+  // console.log(voteState)
+  // console.log(voteInfo)
 
   return {
     videoId,

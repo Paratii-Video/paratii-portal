@@ -6,6 +6,7 @@ import type { RootState } from 'types/ApplicationTypes'
 import { revealYourVote } from 'actions/TCRActions'
 import { getTcrStatusRecord } from 'selectors/TCRSelectors'
 import { getPlayerVideoId } from 'selectors/index'
+import { show } from 'react-notification-system-redux'
 
 const mapStateToProps = (state: RootState, props) => ({
   videoId: getPlayerVideoId(state),
@@ -13,7 +14,8 @@ const mapStateToProps = (state: RootState, props) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  revealYourVote: bindActionCreators(revealYourVote, dispatch)
+  revealYourVote: bindActionCreators(revealYourVote, dispatch),
+  notification: bindActionCreators(show, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RevealYourVote)

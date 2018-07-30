@@ -129,6 +129,7 @@ describe('TCR:', function () {
     // this shouldo open a confirmation modal, we click the button
     await browser.waitAndClick('[data-test-id="button-confirm-vote"]', 5000)
     // we should now be able to see
+    console.log('Vote has been submitted')
     // we should now see the card where the user is told that his vote has been committed
     await browser.waitForVisible('[data-test-id="VoteCommitted.title"]')
 
@@ -139,9 +140,10 @@ describe('TCR:', function () {
       10000
     )
 
-    console.log('revealvotebutton is visible')
+    console.log('we now reveal the vote')
     // we add a dummy transaction
     // FIXME: this should be handled by paratii-js
+    browser.pause(1000)
     await paratii.eth.transfer(userAddress, 1, 'PTI')
     await paratii.eth.transfer(userAddress, 1, 'PTI')
     await browser.waitAndClick('[data-test-id="RevealYourVote.button"]', 10000)

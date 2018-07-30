@@ -27,7 +27,8 @@ import {
 } from 'constants/ActionConstants'
 import VideoRecord, {
   TcrStakedRecord,
-  TcrChallengeRecord
+  TcrChallengeRecord,
+  VoteStatusRecord
 } from 'records/VideoRecords'
 import { AsyncTaskStatusRecord } from 'records/AsyncTaskStatusRecord'
 import type { Action, VideoRecordMap } from 'types/ApplicationTypes'
@@ -232,21 +233,21 @@ const reducer = {
   },
   [VOTE_STATUS]: (
     state: VideoRecordMap,
-    { payload }: Action<{ id: string, voteStatus: string }> = {}
+    { payload }: Action<{ id: string, name: string }> = {}
+  ): VideoRecordMap => {
+    if (!payload || !payload.id) {
+      return state
+    }
+    return state.setIn([payload.id, 'voteStatus', 'name'], payload.name)
+  },
+  [VOTE_STATUS_RECORD]: (
+    state: VideoRecordMap,
+    { payload }: Action<{ id: string, voteStatus: VoteStatusRecord }> = {}
   ): VideoRecordMap => {
     if (!payload || !payload.id) {
       return state
     }
     return state.setIn([payload.id, 'voteStatus'], payload.voteStatus)
-  },
-  [VOTE_STATUS_RECORD]: (
-    state: VideoRecordMap,
-    { payload }: Action<{ id: string, voteStatus: Object }> = {}
-  ): VideoRecordMap => {
-    if (!payload || !payload.id) {
-      return state
-    }
-    return state.setIn([payload.id, 'voteStatus', 'data'], payload.voteStatus)
   },
   [TCR_RERENDER_COMPONENTS]: (
     state: VideoRecordMap,

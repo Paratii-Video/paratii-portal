@@ -11,6 +11,7 @@ import VideoRejected from './VideoRejected'
 import VoteCommitted from './VoteCommitted'
 import VoteRevealed from './VoteRevealed'
 import Voting from './Voting'
+import { VOTE_STATE } from 'constants/TCRConstants'
 
 type Props = {
   challenge: Object,
@@ -53,6 +54,7 @@ class SidebarTCR extends Component<Props, void> {
 
   render () {
     const { challenge, videoId, tcrState, voteState, voteInfo } = this.props
+    console.log(this.props)
     console.log(`render() SidbarTCR`)
     console.log(`tcrState: ${tcrState}`)
     console.log(`voteState: ${voteState}`)
@@ -66,8 +68,11 @@ class SidebarTCR extends Component<Props, void> {
       tcrState !== 'notInTcr' && tcrState !== 'appWasMade'
     const challengeEnded =
       tcrState === 'videoApproved' || tcrState === 'videoRejected'
-    const voteCommited = voteState === 'voteCommitted'
-    const voteRevealed = voteState === 'voteRevealed'
+    const voteCommitted = voteState === VOTE_STATE.COMMITTED
+    const voteRevealed = voteState === VOTE_STATE.REVEALED
+    console.log(`voteCommitted: ${voteCommitted}`)
+    console.log(`VOTE_STATE.COMMITTED: ${VOTE_STATE.COMMITTED}`)
+    console.log(`voteRevealed: ${voteRevealed}`)
 
     return (
       <Sidebar>
@@ -87,7 +92,7 @@ class SidebarTCR extends Component<Props, void> {
               videoId={videoId}
               status="challenged"
             />
-            {voteCommited ? (
+            {voteCommitted ? (
               <Card marginTop>
                 <VoteCommitted />
               </Card>

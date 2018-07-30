@@ -9,6 +9,7 @@ import TranslatedText from 'components/translations/TranslatedText'
 type Props = {
   videoId: string,
   tcrStatusRecord: Object,
+  notification: (Object, string) => void,
   revealYourVote: (pollID: string, videoId: string) => void
 }
 
@@ -29,7 +30,17 @@ export default class RevealYourVote extends Component<Props, void> {
   async revealYourVote () {
     console.log(this.props.tcrStatusRecord)
     const pollID = this.props.tcrStatusRecord.data.challenge.id
-    return this.props.revealYourVote(pollID, this.props.videoId)
+    try {
+      return this.props.revealYourVote(pollID, this.props.videoId)
+    } catch (e) {
+      this.props.notification(
+        {
+          title: 'Error',
+          message: e.message
+        },
+        'error'
+      )
+    }
   }
 
   render () {
