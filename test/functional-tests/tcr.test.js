@@ -8,7 +8,7 @@ import {
 import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
 // declare var browser: Object
 
-describe('TCR:', function () {
+describe('TCR: @watch', function () {
   beforeEach(async function () {
     // await paratii.eth.deployContracts()
     // browser.url(`http://localhost:8080`)
@@ -33,8 +33,9 @@ describe('TCR:', function () {
     const stakeAmount = 5
     const stakeAmountWei = paratii.eth.web3.utils.toWei(String(stakeAmount))
     await paratii.vids.create({ id, owner: paratii.getAccount() })
-
-    dbRecord = await paratii.db.vids.get(id)
+    while (!dbRecord) {
+      dbRecord = await paratii.db.vids.get(id)
+    }
     assert.equal(dbRecord.tcrStatus.name, 'notInTcr')
 
     const result = await paratii.eth.tcr.checkEligiblityAndApply(
