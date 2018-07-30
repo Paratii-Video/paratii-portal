@@ -33,6 +33,7 @@ import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 import { APP_TITLE } from 'constants/ApplicationConstants'
 import {
   MAX_WIDTH,
+  MAINWRAPPER_PADDING_HORIZONTAL_MOBILE,
   PLAYMAINWRAPPER_MARGIN_RIGHT,
   MEDIAQUERY_BREAKPOINT,
   MAINWRAPPER_PADDING_VERTICAL,
@@ -110,6 +111,7 @@ const VideoContainer = styled.div`
   margin: 0 auto;
   max-width: ${props => (props.isEmbed ? null : MAX_WIDTH)};
   position: relative;
+  padding: 0 ${MAINWRAPPER_PADDING_HORIZONTAL_MOBILE};
   width: 100%;
 
   @media (max-width: 1440px) {
@@ -163,9 +165,10 @@ const PlayWrapper = styled.div`
   justify-content: space-between;
   margin: 0 auto;
   max-width: ${props => (props.isEmbed ? null : MAX_WIDTH)};
+  padding: 0 ${MAINWRAPPER_PADDING_HORIZONTAL_MOBILE};
   width: 100%;
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media (max-width: 1024px) {
     flex-direction: column;
     max-width: initial;
   }
