@@ -32,9 +32,11 @@ const NavList = styled.ul`
 `
 
 const NavItem = styled.li`
+  display: ${({ onlyMobile }) => onlyMobile ? 'none' : null};
   padding-left: 45px;
 
   @media ${MEDIAQUERY_BREAKPOINT} {
+    display: ${({ onlyMobile }) => onlyMobile ? 'block' : null};
     padding: 20px 0;
   }
 `
@@ -66,6 +68,16 @@ class MainNavigation extends Component<Props, Object> {
     return (
       <Nav>
         <NavList>
+          <NavItem onlyMobile>
+            <NavLink onClick={this.props.closeMainNavAndUserNav} to="/profile">
+              <TranslatedText message="navigation.profile" />
+            </NavLink>
+          </NavItem>
+          <NavItem onlyMobile>
+            <NavLink onClick={this.props.closeMainNavAndUserNav} to="/profile/my-videos">
+              <TranslatedText message="navigation.myVideos" />
+            </NavLink>
+          </NavItem>
           <NavItem>
             <NavLink onClick={this.props.closeMainNavAndUserNav} to="/voucher">
               <TranslatedText message="navigation.voucher" />
