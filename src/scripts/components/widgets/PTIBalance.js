@@ -2,9 +2,10 @@
 
 import React from 'react'
 import styled from 'styled-components'
-
+import TranslatedText from 'components/translations/TranslatedText'
 import Colors from 'components/foundations/base/Colors'
 import TruncatedText from 'components/foundations/TruncatedText'
+import { FlexCenterStyle } from 'components/foundations/Styles'
 
 type Props = {
   balance: string,
@@ -12,9 +13,9 @@ type Props = {
 }
 
 const Wrapper = styled.div`
-  font-size: 14px;
+  ${FlexCenterStyle}
+  font-size: ${props => props.theme.fonts.text.small};
   color: ${({ color }) => color || Colors.purple};
-  display: flex;
 `
 
 const NumberWrapper = styled.span`
@@ -32,7 +33,7 @@ class PTIBalance extends React.Component<Props, void> {
           <TruncatedText data-test-id="pti-balance" maxWidth="60px">
             {balance}
           </TruncatedText>
-        </NumberWrapper>PTI
+        </NumberWrapper><TranslatedText message="PTI" />
       </Wrapper>
     )
   }
