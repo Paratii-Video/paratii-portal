@@ -15,7 +15,6 @@ import {
 } from 'constants/UIConstants'
 import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 import SearchInputContainer from 'containers/widgets/SearchInputContainer'
-import { FlexCenterStyle } from 'components/foundations/Styles'
 import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'

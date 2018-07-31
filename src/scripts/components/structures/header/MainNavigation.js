@@ -7,7 +7,6 @@ import {
   NAVITEM_PADDING_HORIZONTAL,
   NAVITEM_PADDING_VERTICAL_BP,
   MEDIAQUERY_BREAKPOINT,
-  MAINHEADER_PADDING_LEFT,
   MAINHEADER_PADDING_LEFT_BP } from 'constants/UIConstants'
 import Button from 'components/foundations/Button'
 import TextButton from 'components/foundations/TextButton'
