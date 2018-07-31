@@ -8,6 +8,7 @@ import { getAppRootUrl } from 'utils/AppUtils'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import TranslatedText from './translations/TranslatedText'
+import { FlexCenterStyle, AbsoluteFullStyle } from './foundations/Styles'
 import Text from './foundations/Text'
 import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
@@ -194,25 +195,15 @@ const VideoImage = styled.div`
 `
 
 const VideoMediaOverlay = styled.div`
-  align-items: center;
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
+  ${FlexCenterStyle}
+  ${AbsoluteFullStyle}
 
   &::before {
+    ${AbsoluteFullStyle}
     background-color: ${props => props.theme.colors.background.body};
     content: '';
-    height: 100%;
-    left: 0;
-    opacity: 0.5;
-    position: absolute;
+    opacity: 0.3;
     transition: opacity ${props => props.theme.animation.time.repaint};
-    top: 0;
-    width: 100%;
     ${VideoMediaLink}:hover & {
       opacity: 0.7;
     }

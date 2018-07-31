@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { FlexCenterStyle, AbsoluteFullStyle } from 'components/foundations/Styles'
 import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
@@ -38,16 +39,12 @@ const Z_INDEX_ARROWBUTTON: number = 2
 const Z_INDEX_CLOSEBUTTON: number = 3
 
 const Wrapper = styled.div`
+  ${AbsoluteFullStyle}
   background-color: ${props => props.theme.colors.background.transparent};
-  height: 100%;
-  left: 0;
   opacity: ${props => (props.show ? 1 : 0)};
   overflow: hidden;
-  position: absolute;
   pointer-events: ${props => (!props.show ? 'none' : null)};
   transition: opacity ${props => props.theme.animation.time.repaint};
-  top: 0;
-  width: 100%;
   z-index: 15;
 `
 
@@ -79,19 +76,13 @@ const CloseButton = TextButton.extend`
 `
 
 const Content = styled.div`
-  align-items: center;
-  display: flex;
+  ${FlexCenterStyle}
+  ${AbsoluteFullStyle}
   flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  left: 0;
   opacity: ${({ show }) => (show ? 1 : 0)};
   pointer-events: ${({ show }) => (show ? null : 'none')};
-  position: absolute;
-  top: 0;
   transition: opacity ${props => props.theme.animation.time.repaint} linear
     ${({ show }) => (show ? '0.2s' : null)};
-  width: 100%;
   z-index: ${Z_INDEX_CONTENT};
 `
 
