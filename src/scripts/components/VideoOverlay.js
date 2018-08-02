@@ -18,8 +18,6 @@ import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
 import {
   VIDEO_OVERLAY_BUTTONS_HEIGHT,
-  VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH,
-  VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH_MOBILE,
   VIDEO_OVERLAY_SHARE_BUTTON_WIDTH,
   VIDEO_OVERLAY_SHARE_BUTTON_WIDTH_MOBILE
 } from 'constants/UIConstants'
@@ -143,16 +141,6 @@ const ShareButton = TextButton.extend`
   }
 `
 
-const ProfileButtonWrapper = TextButton.extend`
-  flex: 0 0 ${VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH};
-  height: ${VIDEO_OVERLAY_BUTTONS_HEIGHT};
-  margin-left: 10px;
-
-  @media (max-width: 768px) {
-    flex: 0 0 ${VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH_MOBILE};
-  }
-`
-
 const CentralizedContent = styled.div`
   ${FlexCenterStyle} height: 100%;
   left: 0;
@@ -203,8 +191,6 @@ class VideoOverlay extends Component<Props> {
 
   render () {
     const {
-      activePlugin,
-      toggleActivePlugin,
       isEmbed,
       showStartScreen,
       onClick,
