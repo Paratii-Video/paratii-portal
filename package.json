@@ -161,7 +161,7 @@
     "node-polyglot": "^2.2.2",
     "nodemailer": "^4.6.4",
     "paratii-db": "github:Paratii-Video/paratii-db",
-    "paratii-js": "github:Paratii-Video/paratii-js#43b3158f02bb9d4e3bb14c98024ad539afca2639",
+    "paratii-js": "github:Paratii-Video/paratii-js#7e102253503f754cffd2a0467f02d880ff1688dd",
     "paratii-mediaplayer": "3.1.2",
     "player.js": "^0.1.0",
     "promise-polyfill": "^7.1.2",
