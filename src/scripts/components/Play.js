@@ -87,8 +87,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  height: ${props => (props.isEmbed ? null : null)};
-  padding-bottom: ${MAINWRAPPER_PADDING_VERTICAL};
+  height: 100%;
+  padding-bottom: ${props => (props.isEmbed ? null : MAINWRAPPER_PADDING_VERTICAL)};
   width: 100%;
 `
 
