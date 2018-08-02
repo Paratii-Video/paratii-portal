@@ -1,6 +1,7 @@
 /* @flow */
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
+import { FlexCenterStyle } from 'components/foundations/Styles'
 import Text from 'components/foundations/Text'
 import Title from 'components/foundations/Title'
 import TranslatedText from 'components/translations/TranslatedText'
@@ -24,7 +25,7 @@ type State = {
 }
 
 const ChallengePeriod = styled.div`
-  align-items: center;
+  ${FlexCenterStyle}
   background: linear-gradient(
     135deg,
     ${props =>
@@ -39,9 +40,7 @@ const ChallengePeriod = styled.div`
       ${props => (props.status === 'inReveal' ? '150%' : '100%')}
   );
   border-radius: ${BORDER_RADIUS};
-  display: flex;
   flex-direction: column;
-  justify-content: center;
   padding: 50px 25px 60px;
 `
 

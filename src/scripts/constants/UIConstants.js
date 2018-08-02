@@ -46,7 +46,12 @@ export const MAINFOOTER_HEIGHT: string = '72px'
 export const MAINHEADER_LOGO_WIDTH: string = '98px'
 export const MAINHEADER_LOGO_HEIGHT: string = '62px'
 export const MAINHEADER_PADDING_LEFT: string = '80px'
-export const MAINHEADER_PADDING_LEFT_BP: string = '40px'
+export const MAINHEADER_PADDING_LEFT_BP: string = '30px'
+export const HEADERBUTTONS_MARGIN_TOP_BP: string = '30px'
+
+// MainNavigation
+export const NAVITEM_PADDING_HORIZONTAL: string = '45px'
+export const NAVITEM_PADDING_VERTICAL_BP: string = '20px'
 
 // Modal
 export const MODAL_WIDTH: string = '900px'

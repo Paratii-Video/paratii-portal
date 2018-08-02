@@ -9,7 +9,9 @@ import {
   MAINHEADER_LOGO_WIDTH,
   MAINHEADER_PADDING_LEFT,
   MAINHEADER_PADDING_LEFT_BP,
-  Z_INDEX_HEADER
+  NAVITEM_PADDING_HORIZONTAL,
+  Z_INDEX_HEADER,
+  HEADERBUTTONS_MARGIN_TOP_BP
 } from 'constants/UIConstants'
 import { ACTIVATE_SECURE_WALLET } from 'constants/ParatiiLibConstants'
 import SearchInputContainer from 'containers/widgets/SearchInputContainer'
@@ -17,6 +19,7 @@ import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import MainHeaderLogo from 'components/widgets/MainHeaderLogo'
 import MainNavigation from 'components/structures/header/MainNavigation'
+import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 import { add0x } from 'utils/AppUtils'
 
 type Props = {
@@ -46,7 +49,7 @@ const Header = styled.header`
 
   @media ${MEDIAQUERY_BREAKPOINT} {
     height: ${props => (props.open ? '100vh' : null)};
-    padding: 0 ${MAINHEADER_PADDING_LEFT_BP};
+    padding: 0;
     overflow-x: hidden;
     overflow-y: ${props => (props.open ? 'scroll' : 'hidden')};
   }
@@ -65,9 +68,13 @@ const HeaderWrapper = styled.div`
 `
 
 const LogoWrapper = styled.div`
-  margin-right: 40px;
+  margin-right: ${MAINHEADER_PADDING_LEFT};
   flex: 0 0 ${MAINHEADER_LOGO_WIDTH};
   height: ${MAINHEADER_LOGO_HEIGHT};
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    margin: 0 0 0 ${MAINHEADER_PADDING_LEFT_BP};
+  }
 `
 
 const HeaderContent = styled.div`
@@ -84,6 +91,10 @@ const HeaderContent = styled.div`
 
 const SearchWrapper = styled.div`
   flex: 0 1 auto;
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    margin: 0 ${MAINHEADER_PADDING_LEFT_BP};
+  }
 `
 
 const HeaderButtons = styled.div`
@@ -94,9 +105,24 @@ const HeaderButtons = styled.div`
 
   @media ${MEDIAQUERY_BREAKPOINT} {
     align-items: flex-start;
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: flex-start;
-    margin-top: 30px;
+    margin-top: ${HEADERBUTTONS_MARGIN_TOP_BP};
+  }
+`
+
+const AvatarWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  padding-left: ${NAVITEM_PADDING_HORIZONTAL};
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    background-color: ${props => props.theme.colors.background.secondary};
+    margin-bottom: 5px;
+    padding: 20px ${MAINHEADER_PADDING_LEFT_BP};
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    width: 100%;
   }
 `
 
@@ -110,6 +136,7 @@ const ProfileAvatarButton = styled.div`
 
   @media ${MEDIAQUERY_BREAKPOINT} {
     margin-left: 0;
+    margin-right: 10px;
   }
 `
 
@@ -117,7 +144,7 @@ const MobileButton = styled(TextButton)`
   display: none;
   height: 20px;
   position: absolute;
-  right: 30px;
+  right: ${MAINHEADER_PADDING_LEFT_BP};
   top: 20px;
   width: 20px;
   z-index: 3;
@@ -194,11 +221,14 @@ class MainHeader extends Component<Props, State> {
       const lowerAddress = add0x(this.props.userAddress)
       if (ACTIVATE_SECURE_WALLET && this.props.isWalletSecured) {
         userAvatar = (
-          <ProfileAvatarButton
-            data-test-id="address-avatar"
-          >
-            <Blockies seed={lowerAddress} size={10} scale={4} />
-          </ProfileAvatarButton>
+          <AvatarWrapper>
+            <PTIBalanceContainer />
+            <ProfileAvatarButton
+              data-test-id="address-avatar"
+            >
+              <Blockies seed={lowerAddress} size={10} scale={4} />
+            </ProfileAvatarButton>
+          </AvatarWrapper>
         )
       }
     }

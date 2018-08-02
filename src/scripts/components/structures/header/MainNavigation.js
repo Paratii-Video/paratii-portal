@@ -3,12 +3,15 @@
 import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { MEDIAQUERY_BREAKPOINT } from 'constants/UIConstants'
+import {
+  NAVITEM_PADDING_HORIZONTAL,
+  NAVITEM_PADDING_VERTICAL_BP,
+  MEDIAQUERY_BREAKPOINT,
+  MAINHEADER_PADDING_LEFT_BP } from 'constants/UIConstants'
 import Button from 'components/foundations/Button'
 import TextButton from 'components/foundations/TextButton'
 import Hidden from 'components/foundations/Hidden'
 import TranslatedText from 'components/translations/TranslatedText'
-import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 
 type Props = {
   isWalletSecured: boolean,
@@ -18,6 +21,10 @@ type Props = {
 
 const Nav = styled.nav`
   display: block;
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    margin: 0 0 0 ${MAINHEADER_PADDING_LEFT_BP};
+  }
 `
 
 const NavList = styled.ul`
@@ -33,11 +40,11 @@ const NavList = styled.ul`
 
 const NavItem = styled.li`
   display: ${({ onlyMobile }) => onlyMobile ? 'none' : null};
-  padding-left: 45px;
+  padding-left: ${NAVITEM_PADDING_HORIZONTAL};
 
   @media ${MEDIAQUERY_BREAKPOINT} {
     display: ${({ onlyMobile }) => onlyMobile ? 'block' : null};
-    padding: 20px 0;
+    padding: ${NAVITEM_PADDING_VERTICAL_BP} 0;
   }
 `
 
@@ -122,11 +129,7 @@ class MainNavigation extends Component<Props, Object> {
                 <TranslatedText message="navigation.logIn" />
               </Button>
             </NavItem>
-          ) : (
-            <NavItem>
-              <PTIBalanceContainer />
-            </NavItem>
-          )}
+          ) : null}
         </NavList>
       </Nav>
     )

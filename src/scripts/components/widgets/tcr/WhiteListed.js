@@ -47,7 +47,7 @@ class WhiteListed extends Component<Props, void> {
     return (
       <Fragment>
         <InfoStatusTitle big accent>
-          <TranslatedText message="tcr.WhiteListed.title" />
+          <TranslatedText message="tcr.WhiteListed.title" />{' '}
           <Strong accent>Whitelisted</Strong>
         </InfoStatusTitle>
         <InfoStatusContent margin="36px 0 30px">

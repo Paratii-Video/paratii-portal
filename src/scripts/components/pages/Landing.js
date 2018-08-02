@@ -4,7 +4,7 @@ import type { Map } from 'immutable'
 import type VideoRecord from 'records/VideoRecords'
 import { MAINHEADER_LOGO_HEIGHT } from 'constants/UIConstants'
 import { Link } from 'react-router-dom'
-import { FlexCenterStyle } from '../foundations/Styles'
+import { FlexCenterStyle, AbsoluteFullStyle } from '../foundations/Styles'
 import Title from '../foundations/Title'
 import Text from '../foundations/Text'
 import TruncatedText from '../foundations/TruncatedText'
@@ -86,22 +86,17 @@ const VideoLink = styled(Link)`
 `
 
 const HeaderContent = styled.div`
-  ${FlexCenterStyle} justify-content: center;
+  ${FlexCenterStyle}
   position: relative;
   width: 100%;
 
   &::before {
+    ${AbsoluteFullStyle}
     background: ${props => props.theme.colors.background.transparent};
     border-radius: 5px;
     box-shadow: inset 0 0 200px
       ${props => props.theme.colors.background.secondary};
     content: '';
-    height: 100%;
-    left: 50%;
-    position: absolute;
-    transform: translate3d(-50%, -50%, 0);
-    top: 50%;
-    width: 100%;
     z-index: 2;
   }
 `
@@ -165,16 +160,14 @@ const LandingVideoItem = styled.article`
   position: relative;
 
   &::before {
+    ${AbsoluteFullStyle}
     content: '';
     background: linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0.8),
       rgba(0, 0, 0, 0)
     );
-    height: 100%;
-    position: absolute;
     transition: opacity 0.7s;
-    width: 100%;
     z-index: ${ZINDEX_LANDINGVIDEOITEMSHADOW};
   }
 
@@ -186,13 +179,11 @@ const LandingVideoItem = styled.article`
 `
 
 const LandingVideoItemBackground = styled.div`
+  ${AbsoluteFullStyle}
   background: ${props => props.theme.colors.background.primary}
     url(${props => props.background}) no-repeat 50%;
   background-size: cover;
-  height: 100%;
-  position: absolute;
   transition: transform 7s ${({ theme }) => theme.animation.ease.outexpo} 0.1s;
-  width: 100%;
   z-index: ${ZINDEX_LANDINGVIDEOITEMBACKGROUND};
   ${LandingVideoItem}:hover & {
     transform: scale(1.1);
