@@ -186,18 +186,22 @@ const LeftControls = styled.div`
 `
 
 const RightControls = styled.div`
-  flex: 0;
+  flex: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 `
 
 const Time = styled.div`
+  flex: 1;
   margin-right: ${CONTROLS_SPACING};
+  text-overflow: ellipsis;
   user-select: none;
+  white-space: nowrap;
 `
 
 const VolumeBarWrapper = styled.div`
+  flex: 1 1 100%;
   position: relative;
 `
 
