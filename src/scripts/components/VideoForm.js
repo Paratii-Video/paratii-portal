@@ -31,6 +31,7 @@ import { PROFILE_MYVIDEOS_PATH } from 'constants/UrlConstants'
 import { MODAL } from 'constants/ModalConstants'
 import {
   BORDER_RADIUS,
+  MEDIAQUERY_BREAKPOINT,
   VIDEOFORM_PADDING_VERTICAL,
   VIDEOFORM_PADDING_HORIZONTAL,
   VIDEOFORM_CONTAINER_MARGIN_BOTTOM,
@@ -150,17 +151,22 @@ const Content = styled.div`
 const ContentHeight = styled.div`
   display: flex;
   padding: 20px ${VIDEOFORM_PADDING_HORIZONTAL} ${VIDEOFORM_PADDING_HORIZONTAL};
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    flex-wrap: wrap;
+  }
 `
 
 const Form = styled.form`
   flex: 1 1 100%;
   opacity: ${props => (props.disabled ? '0.5' : null)};
-  padding-right: 45px;
+  padding-right: ${VIDEOFORM_PADDING_HORIZONTAL};
   pointer-events: ${props => (props.disabled ? 'none' : null)};
   position: relative;
 
-  @media (max-width: 1150px) {
-    flex: 1 1 100%;
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    padding-right: 0;
+    margin-bottom: ${VIDEOFORM_PADDING_HORIZONTAL};
   }
 `
 
@@ -172,6 +178,10 @@ const FormButtons = styled.div`
 const PreviewBox = styled.div`
   flex: 1 1 100%;
   max-width: 360px;
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    max-width: initial;
+  }
 `
 
 const VideoMedia = styled.div`
