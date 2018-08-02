@@ -244,19 +244,6 @@ class VideoOverlay extends Component<Props> {
             transitionState={transitionState}
             showShareModal={showShareModal}
           >
-            {isEmbed && (
-              <ProfileButtonWrapper
-                highlight={activePlugin !== PLAYER_PLUGIN.WALLET}
-                accent={activePlugin === PLAYER_PLUGIN.WALLET}
-                data-test-id="wallet-info-button"
-                onClick={(e: Object) => {
-                  e.stopPropagation()
-                  toggleActivePlugin(PLAYER_PLUGIN.WALLET)
-                }}
-              >
-                <SVGIcon icon="icon-profile" />
-              </ProfileButtonWrapper>
-            )}
             <ShareButton
               highlight
               data-test-id="share-button"
