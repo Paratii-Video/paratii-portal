@@ -173,7 +173,7 @@
 			"buttonSupport": "Support",
 			"buttonOppose": "Oppose"
 		},
-		"SendYourVoteBack": {
+		"RevealYourVote": {
 			"title": "You need to send back your vote!!",
 			"text": "You need to send back your vote to reveal it. If you forget,your vote is not going to count.",
 			"button": "Reveal your vote"
