@@ -17,6 +17,9 @@
 		}
 	},
 	"modal": {
+		"challenge": {
+			"title": "Challenge this video"
+		},
 		"profile": {
 			"title": "Profile",
 			"description": "This is how you'll be known on the Paratii network. Enter your email if you'd like to receive updates about the community and your activity.",
@@ -28,6 +31,9 @@
 				"title": "Check your email",
 				"description": "We sent you a confirmation link"
 			}
+		},
+		"vote": {
+			"title": "Vote this video"
 		}
 	},
 	"myVideos": {
@@ -185,6 +191,20 @@
 		"VideoRejected": {
 			"title": "This video has been rejected",
 			"text": "The Paratii community opposed the permanence of this video on the platform.The video was deleted because the community consensus is that this video broke one of our policies."
+		},
+		"VoteCommitted": {
+			"title": "Vote Committed",
+			"text_html": "Wait until the commit period ends to reveal it. You will send it <strong>back</strong> when the reveal period starts. If you don’t send it back your vote is not going to be counted."
+		},
+		"VoteRevealed": {
+			"title": "Vote Revealed",
+			"text": "Vote Your vote has been revealed, now you just need to wait until the reveal period ends."
+		},
+		"Voting": {
+			"title": "Voting",
+			"box1Label": "Support",
+			"box2Label": "Oppose",
+			"dateLabel": "Date of the challenge:"
 		},
 		"WhiteListed": {
 			"title": "This video is ",
