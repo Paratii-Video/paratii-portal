@@ -12,6 +12,7 @@ import {
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS
 } from 'constants/ApplicationConstants'
+import { MEDIAQUERY_BREAKPOINT } from 'constants/UIConstants'
 import { copyTextToClipboard } from 'utils/AppUtils'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
@@ -95,7 +96,7 @@ const ShareTitle = Title.extend`
     margin: 18px 0 24px;
   }
 
-  @media (max-width: 400px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     font-size: ${props => props.theme.fonts.text.big};
     margin: 0;
   }
@@ -124,7 +125,7 @@ const CopyEmbed = TextButton.extend`
     overflow: hidden;
   }
 
-  @media (max-width: 400px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     font-size: ${props => props.theme.fonts.text.small};
     height: auto;
     margin: 10px 0 0;
@@ -142,7 +143,7 @@ const ShareButtons = styled.div`
     margin-top: 50px;
   }
 
-  @media (max-width: 400px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     margin-top: 2%;
   }
 `
@@ -162,11 +163,9 @@ const AnchorLink = Anchor.extend`
   width: 100%;
   word-wrap: break-word;
 
-  @media (max-width: 767px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    font-size: ${props => props.theme.fonts.text.main};
     margin: 0;
-  }
-
-  @media (max-width: 400px) {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -352,13 +351,13 @@ class ShareOverlay extends Component<Props, State> {
               {this.getEmbedCode()}
             </CopyEmbed>
           </ShareContent>
-          <RadioWrapper justifyContent="center">
+          <RadioWrapper justifyContent="center" padding="0 10px">
             {this.state.embedOptions.map((opt: Object, index: number) => (
               <RadioCheck
                 checkbox
                 white
-                nomargin={index === this.state.embedOptions.length - 1}
                 key={index}
+                margin="0 10px 20px"
                 name={opt.name}
                 value={opt.value}
                 onChange={this.toggleOption}
