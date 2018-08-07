@@ -168,10 +168,8 @@ const StartScreenIcon = styled.span`
 `
 
 class VideoOverlay extends Component<Props> {
-
   getVideoTitle (): string {
     const { video } = this.props
-
     if (video) {
       let title = video.get('title') || video.get('filename')
       console.log(window.innerWidth)
