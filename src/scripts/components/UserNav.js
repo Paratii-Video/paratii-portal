@@ -247,7 +247,7 @@ class UserNav extends Component<Props, Object> {
                   <TranslatedText message="userNav.leftBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text highlight>{formattedBalance} PTI</Text>
+                  <Text highlight>{formattedBalance} <TranslatedText message="PTI" /></Text>
                 </UserPTIValueBox>
               </UserPTIValue>
               <UserPTIValue>
@@ -255,7 +255,7 @@ class UserNav extends Component<Props, Object> {
                   <TranslatedText message="userNav.rightBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text warn>{formattedStakedPTI} PTI</Text>
+                  <Text warn>{formattedStakedPTI} <TranslatedText message="PTI" /></Text>
                 </UserPTIValueBox>
               </UserPTIValue>
             </UserPTIValuesWrapper>
