@@ -108,7 +108,7 @@ export const VIDEOFORM_CONTAINER_MARGIN_BOTTOM: string = '25px'
 export const VIDEOFORM_HEADER_ICON_WIDTH: string = '22px'
 export const VIDEOFORM_HEADER_ICON_HEIGHT: string = '12px'
 export const VIDEOFORM_HEADER_PADDING_BOTTOM: string = '50px'
-export const VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT: string = '35px'
+export const VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT: string = '20px'
 
 // Video Manager
 export const VIDEOMANAGER_FILEUPLOADERWRAPPER_MARGIN: string = '100px 0'
