@@ -172,7 +172,6 @@ class VideoOverlay extends Component<Props> {
     const { video } = this.props
     if (video) {
       let title = video.get('title') || video.get('filename')
-      console.log(window.innerWidth)
       if (window.innerWidth < 450) {
         if (title.length > 55) {
           title = title.substring(0, 55) + '...'
