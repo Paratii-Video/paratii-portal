@@ -73,8 +73,8 @@ export const fetchVoteStatus = (pollID: string) => async (
 export const revealYourVote = (pollID: string, videoId: string) => async (
   dispatch: Dispatch<*>
 ) => {
-  console.log(`Revealing the vote for pollID ${pollID}`)
-  const key = `vote-${pollID}`
+  console.log(`Revealing the vote for videoId ${videoId}, pollID ${pollID}`)
+  const key = `vote-${videoId}`
   const serializedVote = localStorage.getItem(key)
   console.log(serializedVote)
   if (!serializedVote) {
