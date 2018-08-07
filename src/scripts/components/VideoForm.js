@@ -34,7 +34,9 @@ import {
   BORDER_RADIUS,
   MEDIAQUERY_BREAKPOINT,
   VIDEOFORM_PADDING_VERTICAL,
+  VIDEOFORM_PADDING_VERTICAL_BP,
   VIDEOFORM_PADDING_HORIZONTAL,
+  VIDEOFORM_PADDING_HORIZONTAL_BP,
   VIDEOFORM_CONTAINER_MARGIN_BOTTOM,
   VIDEOFORM_HEADER_PADDING_BOTTOM,
   VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT,
@@ -86,6 +88,10 @@ const HeaderContent = styled.div`
   align-items: center;
   display: flex;
   padding: ${VIDEOFORM_PADDING_VERTICAL} ${VIDEOFORM_PADDING_HORIZONTAL};
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    padding: ${VIDEOFORM_PADDING_VERTICAL_BP} ${VIDEOFORM_PADDING_HORIZONTAL_BP};
+  }
 `
 
 const HeaderIcon = styled.button`
@@ -140,6 +146,15 @@ const HeaderButtons = styled.div`
   }
 `
 
+const LabelStake = styled.div`
+  background-color: ${props => props.theme.colors.background.body};
+  color: white;
+  padding: 5px;
+  min-width: 100px;
+  text-align: center;
+  font-size: 14px;
+`
+
 const HeaderBar = styled.div`
   display: ${({ edit }) => (edit ? 'none' : 'block')};
 `
@@ -155,6 +170,7 @@ const ContentHeight = styled.div`
 
   @media ${MEDIAQUERY_BREAKPOINT} {
     flex-wrap: wrap;
+    padding: 20px ${VIDEOFORM_PADDING_HORIZONTAL_BP} ${VIDEOFORM_PADDING_HORIZONTAL_BP};
   }
 `
 
@@ -181,7 +197,7 @@ const PreviewBox = styled.div`
   max-width: 360px;
 
   @media ${MEDIAQUERY_BREAKPOINT} {
-    max-width: initial;
+    max-width: 100%;
   }
 `
 
@@ -232,13 +248,10 @@ const VideoMediaIcon = styled.div`
   }
 `
 
-const LabelStake = styled.div`
-  background-color: ${props => props.theme.colors.background.body};
-  color: white;
-  padding: 5px;
-  min-width: 100px;
-  text-align: center;
-  font-size: 14px;
+const URLForShare = Text.extend`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `
 
 class VideoForm extends Component<Props, Object> {
@@ -580,7 +593,7 @@ class VideoForm extends Component<Props, Object> {
                   <TranslatedText message="uploadListItem.termsOfService" />
                 </Text>
               ) : (
-                <Text>{urlForSharing}</Text>
+                <URLForShare>{urlForSharing}</URLForShare>
               )}
             </PreviewBox>
           </ContentHeight>

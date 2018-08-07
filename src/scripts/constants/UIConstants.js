@@ -103,7 +103,9 @@ export const USERNAV_USERSUBNAVLISTITEMLINK_PADDING: string =
 
 // Video Form
 export const VIDEOFORM_PADDING_VERTICAL: string = '42px'
+export const VIDEOFORM_PADDING_VERTICAL_BP: string = '24px'
 export const VIDEOFORM_PADDING_HORIZONTAL: string = '50px'
+export const VIDEOFORM_PADDING_HORIZONTAL_BP: string = '40px'
 export const VIDEOFORM_CONTAINER_MARGIN_BOTTOM: string = '25px'
 export const VIDEOFORM_HEADER_ICON_WIDTH: string = '22px'
 export const VIDEOFORM_HEADER_ICON_HEIGHT: string = '12px'
