@@ -487,7 +487,6 @@ class UploadListItem extends Component<Props, Object> {
                   name="content-type"
                   value="paid"
                   tabIndex="-1"
-                  nomargin
                   disabled
                 >
                   <TranslatedText message="uploadListItem.contentType.paid" />

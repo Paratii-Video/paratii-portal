@@ -540,6 +540,7 @@ class VideoForm extends Component<Props, Object> {
                 <RadioCheck
                   name="content-type"
                   value="free"
+                  margin="0 20px 20px 0"
                   tabIndex="0"
                   defaultChecked
                 >
@@ -548,8 +549,8 @@ class VideoForm extends Component<Props, Object> {
                 <RadioCheck
                   name="content-type"
                   value="paid"
+                  margin="0 20px 20px 0"
                   tabIndex="-1"
-                  nomargin
                   disabled
                 >
                   <TranslatedText message="uploadListItem.contentType.paid" />
