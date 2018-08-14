@@ -88,8 +88,8 @@ export const ButtonStyleBackground = css`
 `
 
 export const IconButtonStyle = css`
-  align-items: ${props => (props.iconButton ? 'center' : null)};
-  display: ${props => (props.iconButton ? 'flex' : null)};
+  align-items: ${props => (props.iconbutton ? 'center' : null)};
+  display: ${props => (props.iconbutton ? 'flex' : null)};
 `
 
 export const ButtonStyle = css`

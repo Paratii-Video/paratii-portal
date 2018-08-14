@@ -161,7 +161,7 @@ class Profile extends Component<Props, void> {
           >
             {userAddress}
           </Words>
-          <TextButton iconButton small onClick={this.copyWordsToClipboard}>
+          <TextButton iconbutton small onClick={this.copyWordsToClipboard}>
             <SVGIcon
               icon="icon-copy"
               height="20px"

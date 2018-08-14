@@ -895,7 +895,7 @@ class Play extends Component<Props, State> {
                     {video.author && <Text>By {video.author}</Text>}
                     {video.share && (
                       <VideoInfoButtons>
-                        <TextButton iconButton margin="0 20px 0 0">
+                        <TextButton iconbutton margin="0 20px 0 0">
                           <SVGIcon
                             width="20px"
                             height="20px"
@@ -906,7 +906,7 @@ class Play extends Component<Props, State> {
                             <TranslatedText message="player.views.zero" />
                           </Text>
                         </TextButton>
-                        <TextButton iconButton margin="0 20px 0 0">
+                        <TextButton iconbutton margin="0 20px 0 0">
                           <SVGIcon
                             width="20px"
                             height="20px"
@@ -917,7 +917,7 @@ class Play extends Component<Props, State> {
                             <TranslatedText message="player.views.zero" />
                           </Text>
                         </TextButton>
-                        <TextButton iconButton>
+                        <TextButton iconbutton>
                           <SVGIcon
                             width="20px"
                             height="20px"
