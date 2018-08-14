@@ -12907,9 +12907,9 @@ parallel-transform@^1.1.0:
     web3-eth "1.0.0-beta.33"
     web3-eth-accounts "1.0.0-beta.33"
 
-"paratii-js@github:Paratii-Video/paratii-js#4fd9847ddcccbb95cd75e2f28a39e40a2c34c694":
-  version "0.2.9"
-  resolved "https://codeload.github.com/Paratii-Video/paratii-js/tar.gz/4fd9847ddcccbb95cd75e2f28a39e40a2c34c694"
+"paratii-js@github:Paratii-Video/paratii-js#fd62b790765ac8593c4d594decf4b938c591db8b":
+  version "0.2.8"
+  resolved "https://codeload.github.com/Paratii-Video/paratii-js/tar.gz/fd62b790765ac8593c4d594decf4b938c591db8b"
   dependencies:
     babel-runtime "^6.26.0"
     bignumber.js "^6.0.0"

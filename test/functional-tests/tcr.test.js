@@ -8,7 +8,7 @@ import {
 import { ID, TITLE, IPFS_HASH } from './constants/VideoTestConstants'
 // declare var browser: Object
 
-describe('TCR: @watch', function () {
+describe('TCR:', function () {
   beforeEach(async function () {
     // await paratii.eth.deployContracts()
     // browser.url(`http://localhost:8080`)
@@ -24,7 +24,7 @@ describe('TCR: @watch', function () {
     assert.equal(await paratii.eth.tcr.getApplyStageLen(), 0)
   })
 
-  it('check db integration of the TCR process', async function () {
+  it('@watch check db integration of the TCR process', async function () {
     // TODO: these tests should be in paratii-db
     let dbRecord
     const id = Math.random()
@@ -72,9 +72,32 @@ describe('TCR: @watch', function () {
     // the db should know about this
     dbRecord = await paratii.db.vids.get(id)
     assert.equal(dbRecord.tcrStatus.name, 'appWasMade')
+
+    // now challenge the video
+    const tx = await paratii.eth.tcr.approveAndStartChallenge(id)
+    assert.isOk(tx)
+    // challenge should be started
+    const challengeId = await paratii.eth.tcr.getChallengeId(id)
+    assert.isOk(challengeId)
+    const challenge = await paratii.eth.tcr.getChallenge(challengeId)
+    assert.isOk(challenge)
+    console.log(challenge)
+    // challenge should be in db
+    dbRecord = await paratii.db.vids.get(id)
+    assert.isOk(dbRecord.tcrStatus.data.challenge)
+    console.log(dbRecord.tcrStatus.data.challenge)
+    //
+
+    const tx2 = await paratii.eth.tcr.approveAndGetRightsAndCommitVote(
+      id,
+      1,
+      Number(5e18)
+    )
+    console.log(tx2)
+    
   })
 
-  it('@watch you can challenge a published video', async function () {
+  it('you can challenge a published video', async function () {
     // Create a secure wallet
     await browser.createSecureWallet()
 
