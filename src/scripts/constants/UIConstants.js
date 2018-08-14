@@ -21,6 +21,8 @@ export const MAINWRAPPER_PADDING_VERTICAL_MOBILE: string = '24px'
 export const MAINWRAPPER_PADDING_HORIZONTAL: string = '80px'
 export const MAINWRAPPER_PADDING_HORIZONTAL_MOBILE: string = '20px'
 
+export const LANDING_HEADERWRAPPER_MARGIN_VERTICAL: string = '50px'
+
 // Components
 
 // Card

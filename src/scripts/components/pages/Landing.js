@@ -2,17 +2,26 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import type { Map } from 'immutable'
 import type VideoRecord from 'records/VideoRecords'
-import { MAINHEADER_LOGO_HEIGHT } from 'constants/UIConstants'
+import {
+  BUTTON_HEIGHT,
+  BUTTON_PADDING_LEFT,
+  LANDING_HEADERWRAPPER_MARGIN_VERTICAL,
+  MAINHEADER_LOGO_HEIGHT,
+  MAINHEADER_PADDING_LEFT,
+  MAINHEADER_PADDING_LEFT_BP,
+  MAX_WIDTH,
+  MEDIAQUERY_BREAKPOINT
+} from 'constants/UIConstants'
 import { Link } from 'react-router-dom'
 import { FlexCenterStyle, AbsoluteFullStyle } from '../foundations/Styles'
 import Title from '../foundations/Title'
 import Text from '../foundations/Text'
+import Button from '../foundations/Button'
 import TruncatedText from '../foundations/TruncatedText'
 import VideoTimeDisplay from '../foundations/VideoTimeDisplay'
 import { ButtonStyleHover } from '../foundations/Button'
 import SVGIcon from '../foundations/SVGIcon'
 import TranslatedText from '../translations/TranslatedText'
-import FilesUploader from '../../containers/FileUploaderContainer'
 
 type Props = {
   videos: Map<string, VideoRecord> // maps video ids to upload records
@@ -35,18 +44,16 @@ const Header = styled.div`
   background-size: cover;
   box-shadow: ${props => props.theme.colors.LandingPage.secondary};
   flex-direction: column;
-  min-height: calc(100vh - (${MAINHEADER_LOGO_HEIGHT} * 2));
-  padding: 0 20px;
-  position: relative;
+  padding: 0 ${MAINHEADER_PADDING_LEFT};
 
-  @media (max-width: 767px) {
-    flex-direction: column;
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    background-image: url(${props => props.backgroundMobile});
+    padding: 0 ${MAINHEADER_PADDING_LEFT_BP};
   }
 `
 
 const HeaderWrapper = styled.div`
-  margin: 40px 100px;
-  max-width: 980px;
+  margin: ${LANDING_HEADERWRAPPER_MARGIN_VERTICAL} 0;
   width: 100%;
 
   @media (max-width: 767px) {
@@ -54,65 +61,56 @@ const HeaderWrapper = styled.div`
   }
 `
 
-const HeaderLinkWrapper = styled.div`
-  padding: 0 ${VIDEOLINK_POSITION} ${VIDEOLINK_POSITION};
-  width: 100%;
-
-  @media (max-width: 1024px) {
-    padding: 0 0 ${VIDEOLINK_POSITION} 0;
-  }
-`
-
-const VideoLink = styled(Link)`
-  ${ButtonStyleHover} align-items: center;
-  background: ${props => props.theme.colors.background.body};
-  border-radius: 4px;
-  color: ${props => props.theme.colors.button.color};
-  display: flex;
-  font-size: 1rem;
-  font-weight: ${props => props.theme.fonts.weight.bold};
-  padding: 16px 24px;
-  overflow: hidden;
-  max-width: 200px;
-  width: 100%;
-
-  @media (max-width: 767px) {
-    max-width: initial;
-  }
-
-  svg {
-    margin-right: 10px;
-  }
-`
-
 const HeaderContent = styled.div`
-  ${FlexCenterStyle}
-  position: relative;
+  width: 100%;
+`
+
+const HeaderContentItem = styled.div`
+  max-width: 500px;
   width: 100%;
 
-  &::before {
-    ${AbsoluteFullStyle}
-    background: ${props => props.theme.colors.background.transparent};
-    border-radius: 5px;
-    box-shadow: inset 0 0 200px
-      ${props => props.theme.colors.background.secondary};
-    content: '';
-    z-index: 2;
+  @media (max-width: 500px) {
+    max-width: 100%;
   }
 `
 
-const HeaderContentWrapper = styled.div`
-  max-width: 500px;
-  text-align: center;
-  padding: 90px 40px;
-  width: 100%;
-  z-index: 4;
+const HeaderTitle = Title.extend`
+  font-size: ${props => props.theme.fonts.title.huge};
+  line-height: ${props => props.theme.fonts.title.hugeLineHeight};
+
+  @media (max-width: 500px) {
+    font-size: ${props => props.theme.fonts.title.big};
+    line-height: ${props => props.theme.fonts.title.bigLineHeight};
+  }
 `
 
 const HeaderText = Text.extend`
-  margin: 15px 0 60px;
+  margin: 15px 0 30px;
   opacity: 0.7;
 `
+
+const HeaderButtons = styled.div`
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 500px) {
+    flex-wrap: wrap;
+  }
+`
+
+const HeaderButtonsItem = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  min-height: ${BUTTON_HEIGHT};
+
+  @media (max-width: 500px) {
+    flex: 1 1 50%;
+    margin: 0 0 20px;
+  }
+`
+
+const HeaderButton = Button.withComponent(Link)
 
 const Videos = styled.div`
   display: block;
@@ -233,50 +231,6 @@ class Landing extends Component<Props, void> {
   constructor (props: Props) {
     super(props)
 
-    this.headerVideosList = [
-      {
-        title: 'Vento Na Janela',
-        url: 'play/65te9Z7bXDM4',
-        image: 'vento-na-janela.png',
-        time: '02:58'
-      },
-      {
-        title: 'Johnny B. Goode',
-        url: 'play/cpApjlvwRK8O',
-        image: 'johnny-b-goode.png',
-        time: '05:37'
-      },
-      {
-        title: 'Yunta',
-        url: 'play/A9SftW9yaPcJ',
-        image: 'yunta.png',
-        time: '04:03'
-      },
-      {
-        title: 'A Mysterious Clip',
-        url: 'play/XTCgW0oToNnc',
-        image: 'a-mysterious-clip.png',
-        time: '03:21'
-      },
-      {
-        title: 'CHONPS | Robin & Batman',
-        url: 'play/rOHszskLtIEy',
-        image: 'chonps-robin-and-batman.png',
-        time: '03:54'
-      },
-      {
-        title: 'Venice Beach',
-        url: 'play/9qMA3KhZir2Z',
-        image: 'venice-beach.png',
-        time: '01:06'
-      }
-    ]
-
-    const itemIndex = Math.floor(Math.random() * this.headerVideosList.length)
-    this.headerVideo = this.headerVideosList[itemIndex]
-
-    this.headerVideosList.splice(itemIndex, 1) // removes the header video
-
     const videosListTemp = [
       {
         title: 'O que é Algoritmo',
@@ -346,7 +300,8 @@ class Landing extends Component<Props, void> {
       }
     ]
 
-    this.videosList = this.headerVideosList.concat(videosListTemp)
+    // this.videosList = this.headerVideosList.concat(videosListTemp)
+    this.videosList = videosListTemp
     this.videosList = this.videosList
       .map(a => [Math.random(), a])
       .sort((a, b) => a[0] - b[0])
@@ -357,27 +312,37 @@ class Landing extends Component<Props, void> {
     return (
       <Wrapper>
         <Header
-          background={'/assets/img/landing/big/' + this.headerVideo.image}
+          background={'/assets/img/landing/big/around-the-block.png'}
+          backgroundMobile={'/assets/img/landing/big/around-the-block-mobile.png'}
         >
           <HeaderWrapper>
             <HeaderContent>
-              <HeaderContentWrapper>
-                <Title huge bold accent>
+              <HeaderContentItem>
+                <HeaderTitle bold accent>
                   <TranslatedText message="landingPage.header.title_html" />
-                </Title>
+                </HeaderTitle>
                 <HeaderText big primary>
-                  <TranslatedText message="landingPage.header.description" />
+                  <TranslatedText message="landingPage.header.description_html" />
                 </HeaderText>
-                <FilesUploader white />
-              </HeaderContentWrapper>
+                <HeaderButtons>
+                  <HeaderButtonsItem>
+                    <HeaderButton iconbutton="true" to="/play/65te9Z7bXDM4">
+                      <SVGIcon
+                        icon="icon-player-play"
+                        width="14px"
+                        height="14px"
+                        margin="0 10px 0 0"
+                      />
+                      Episode 1
+                    </HeaderButton>
+                  </HeaderButtonsItem>
+                  <HeaderButtonsItem><Text accent>Episode 2</Text></HeaderButtonsItem>
+                  <HeaderButtonsItem><Text accent>Episode 3</Text></HeaderButtonsItem>
+                  <HeaderButtonsItem><Text accent>Episode 4</Text></HeaderButtonsItem>
+                </HeaderButtons>
+              </HeaderContentItem>
             </HeaderContent>
           </HeaderWrapper>
-          <HeaderLinkWrapper>
-            <VideoLink to={this.headerVideo.url}>
-              <SVGIcon icon="icon-player-play" width="13px" height="16px" />
-              <TruncatedText>{this.headerVideo.title}</TruncatedText>
-            </VideoLink>
-          </HeaderLinkWrapper>
         </Header>
         <Videos>
           <VideosContainer>

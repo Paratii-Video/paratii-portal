@@ -8,8 +8,8 @@
 	},
 	"landingPage": {
 		"header": {
-			"title_html": "Bring your videos<br /> to the future",
-			"description": "Decentralisation is changing the business of online video and giving the power back to peers"
+			"title_html": "Around the block<br /> now available!",
+			"description_html": "The 4-part documentary webseries<br /> on the minds behind the blockchain"
 		},
 		"videos": {
 			"title": "Meet your fellow pioneers",
@@ -51,8 +51,9 @@
 		"myVideos": "My videos",
 		"upload": "Upload",
 		"about": "About Paratii",
-		"logIn": "Sign Up / Log In",
-		"profile": "Profile"
+		"logIn": "Become a contributor",
+		"profile": "Profile",
+		"telegram": "Join us on Telegram"
 	},
 	"notFound": {
 		"title": "Oooooops, page not found",
