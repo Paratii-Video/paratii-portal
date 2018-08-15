@@ -13,7 +13,7 @@ const Themes = {
     },
     button: {
       color: Colors.white,
-      primary: Colors.grayAlt,
+      primary: Colors.gray,
       accent: Colors.purple,
       highlight: Colors.white,
       primaryFrom: Colors.purpleGradientFrom,
