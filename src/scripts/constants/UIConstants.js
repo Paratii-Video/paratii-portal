@@ -57,7 +57,7 @@ export const BASE_LOADER_DIMENSION: string = '50px'
 // MainFooter
 export const MAINFOOTER_PADDING: string = '55px 40px 50px'
 export const MAINFOOTER_PADDING_BP: string = '55px 20px 50px'
-export const MAINFOOTER_BUTTONSCONTAINER_MARGIN: string = '34px 0'
+export const MAINFOOTER_BUTTONSCONTAINER_MARGIN: string = '24px 0'
 export const MAINFOOTER_LOGO_WIDTH: string = '80px'
 export const MAINFOOTER_LOGO_HEIGHT: string = '48px'
 export const MAINFOOTER_LOGO_MARGIN: string = '10px 20px'
