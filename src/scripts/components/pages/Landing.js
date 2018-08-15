@@ -6,18 +6,39 @@ import {
   BUTTON_HEIGHT,
   BUTTON_PADDING_LEFT,
   LANDING_HEADERWRAPPER_MARGIN_VERTICAL,
+  LANDING_HEADERCONTENTITEM_MAX_WIDTH,
+  LANDING_HEADERTEXT_MARING,
+  LANDING_HEADERBUTTONSITEM_MARGIN,
+  LANDING_HEADERBUTTONSITEM_MARGIN_BP,
+  LANDING_VIDEOSCONTAINER_MARGIN,
+  LANDING_VIDEOSCONTAINER_MAX_WIDTH,
+  LANDING_TEXTWRAPPER_MARGIN,
+  LANDING_TEXTWRAPPER_MAX_WIDTH,
+  LANDING_LISTVIDEOS_MARGIN_BOTTOM,
+  LANDING_LISTVIDEOSITEM_HEIGHT,
+  LANDING_LISTVIDEOSITEM_HEIGHT_HIGHLIGHT,
+  LANDING_LISTVIDEOSITEM_HEIGHT_BP,
+  LANDING_LISTVIDEOSITEM_HEIGHT_HIGHLIGHT_BP,
+  VIDEOTIMEDISPLAY_POSITION,
   MAINHEADER_LOGO_HEIGHT,
   MAINHEADER_PADDING_LEFT,
   MAINHEADER_PADDING_LEFT_BP,
   MAX_WIDTH,
-  MEDIAQUERY_BREAKPOINT
+  MEDIAQUERY_BREAKPOINT,
+  Z_INDEX_FRONT,
+  Z_INDEX_BACK
 } from 'constants/UIConstants'
+import {
+  LANDING_HIGHLIGHT_VIDEOS,
+  LANDING_CATEGORY_VIDEOS
+} from 'constants/LandingConstants'
+
 import { Link } from 'react-router-dom'
 import { FlexCenterStyle, AbsoluteFullStyle } from '../foundations/Styles'
 import Title from '../foundations/Title'
 import Text from '../foundations/Text'
 import Button from '../foundations/Button'
-import TruncatedText from '../foundations/TruncatedText'
+import TextButton from '../foundations/TextButton'
 import VideoTimeDisplay from '../foundations/VideoTimeDisplay'
 import { ButtonStyleHover } from '../foundations/Button'
 import SVGIcon from '../foundations/SVGIcon'
@@ -66,7 +87,7 @@ const HeaderContent = styled.div`
 `
 
 const HeaderContentItem = styled.div`
-  max-width: 500px;
+  max-width: ${LANDING_HEADERCONTENTITEM_MAX_WIDTH};
   width: 100%;
 
   @media (max-width: 500px) {
@@ -85,7 +106,7 @@ const HeaderTitle = Title.extend`
 `
 
 const HeaderText = Text.extend`
-  margin: 15px 0 30px;
+  margin: ${LANDING_HEADERTEXT_MARING};
   opacity: 0.7;
 `
 
@@ -101,12 +122,12 @@ const HeaderButtons = styled.div`
 const HeaderButtonsItem = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 20px;
+  margin: ${LANDING_HEADERBUTTONSITEM_MARGIN};
   min-height: ${BUTTON_HEIGHT};
 
   @media (max-width: 500px) {
     flex: 1 1 50%;
-    margin: 0 0 20px;
+    margin: ${LANDING_HEADERBUTTONSITEM_MARGIN_BP};
   }
 `
 
@@ -114,76 +135,79 @@ const HeaderButton = Button.withComponent(Link)
 
 const Videos = styled.div`
   display: block;
+  padding: 0 ${MAINHEADER_PADDING_LEFT};
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    padding: 0 ${MAINHEADER_PADDING_LEFT_BP};
+  }
 `
 
 const VideosContainer = styled.div`
-  margin: 175px auto 150px;
-  max-width: 880px;
+  margin: ${LANDING_VIDEOSCONTAINER_MARGIN};
+  max-width: ${LANDING_VIDEOSCONTAINER_MAX_WIDTH};
   width: 100%;
 `
 
-const VideosHeader = styled.div`
-  padding: 0 248px 100px;
+const TextWrapper = styled.div`
+  margin: ${LANDING_TEXTWRAPPER_MARGIN};
+  max-width: ${LANDING_TEXTWRAPPER_MAX_WIDTH};
   text-align: center;
-  width: 100%;
 
-  @media (max-width: 900px) {
-    padding: 0 100px 100px;
-  }
-
-  @media (max-width: 650px) {
-    padding: 0 40px 100px;
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    max-width: 100%;
   }
 `
 
-const LandingVideoList = styled.div`
+const ListVideos = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: ${({ nomargin }) => nomargin ? null : LANDING_LISTVIDEOS_MARGIN_BOTTOM};
+`
+
+const ListVideosContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 15px;
   grid-row-gap: 15px;
+  overflow: hidden;
 
-  @media (max-width: 900px) {
-    grid-template-columns: repeat(3, 1fr);
-    padding: 0 20px;
-  }
-
-  @media (max-width: 650px) {
+  @media (max-width: 767px) {
     grid-template-columns: repeat(2, 1fr);
   }
 `
 
-const LandingVideoItem = styled.article`
-  height: 128px;
-  overflow: hidden;
-  position: relative;
+const ListVideosItem = styled.div`
+  height: ${({ highlight }) => highlight ? LANDING_LISTVIDEOSITEM_HEIGHT_HIGHLIGHT : LANDING_LISTVIDEOSITEM_HEIGHT};
 
-  &::before {
-    ${AbsoluteFullStyle}
-    content: '';
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.8),
-      rgba(0, 0, 0, 0)
-    );
-    transition: opacity 0.7s;
-    z-index: ${ZINDEX_LANDINGVIDEOITEMSHADOW};
+  @media (max-width: 767px) {
+    display: none;
+    height: ${({ highlight }) => highlight ? LANDING_LISTVIDEOSITEM_HEIGHT_HIGHLIGHT_BP : LANDING_LISTVIDEOSITEM_HEIGHT_BP};
   }
 
-  &:hover {
-    &::before {
-      opacity: 0.8;
+  &:nth-child(1),
+  &:nth-child(2) {
+    @media (max-width: 767px) {
+      display: block;
     }
   }
 `
 
-const LandingVideoItemBackground = styled.div`
+const ListVideosItemLink = styled(Link)`
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+`
+
+const ListVideosItemBackground = styled.span`
   ${AbsoluteFullStyle}
   background: ${props => props.theme.colors.background.primary}
     url(${props => props.background}) no-repeat 50%;
   background-size: cover;
-  transition: transform 7s ${({ theme }) => theme.animation.ease.outexpo} 0.1s;
-  z-index: ${ZINDEX_LANDINGVIDEOITEMBACKGROUND};
-  ${LandingVideoItem}:hover & {
+  transition: transform 5s ${({ theme }) => theme.animation.ease.outexpo} 0.1s;
+  z-index: ${Z_INDEX_BACK};
+
+  ${ListVideosItemLink}:hover & {
     transform: scale(1.1);
     transition-delay: 0s;
     transition-timing-function: ${({ theme }) =>
@@ -192,23 +216,38 @@ const LandingVideoItemBackground = styled.div`
   }
 `
 
-const LandingVideoItemLink = styled(Link)`
-  align-items: flex-end;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: space-between;
-  padding: 15px;
-  position: relative;
-  transition: opacity 0.3s;
-  z-index: ${ZINDEX_LANDINGVIDEOITEMLINK};
+const ListVideosItemShadow = styled.div`
+  ${AbsoluteFullStyle}
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  opacity: 1;
+  transition: opacity 1s;
+  z-index: ${Z_INDEX_BACK};
+
+  ${ListVideosItemLink}:hover & {
+    opacity: 0.8;
+  }
 `
 
-const LandingVideoItemTitle = styled(Text)`
+const ListVideosItemContainer = styled.div`
+  height: 100%;
+  position: relative;
+  z-index: ${Z_INDEX_FRONT};
+`
+
+const ListVideosItemTitle = Text.extend`
+  display: block;
+  position:absolute;
+  left: 0;
+  top: 0;
+  max-width: 100%;
+  overflow: hidden;
+  padding: ${VIDEOTIMEDISPLAY_POSITION};
+  text-overflow:ellipsis; 
+  white-space: nowrap;
   width: 100%;
 `
 
-const LandingVideoItemIcon = styled.div`
+const ListVideosItemIcon = styled.div`
   color: ${props => props.theme.colors.text.accent};
   height: 20px;
   left: 50%;
@@ -218,96 +257,19 @@ const LandingVideoItemIcon = styled.div`
   width: 20px;
   transform: scale(0);
   transition: transform 0.45s ${({ theme }) => theme.animation.ease.smooth};
-  ${LandingVideoItemLink}:hover & {
+  ${ListVideosItemLink}:hover & {
     transform: scale(1);
   }
 `
 
+const ListVideosButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
+
+const ListVideoButton = TextButton.withComponent(Link)
+
 class Landing extends Component<Props, void> {
-  headerVideosList: Array
-  headerVideo: string
-  videosList: Array
-
-  constructor (props: Props) {
-    super(props)
-
-    const videosListTemp = [
-      {
-        title: 'O que é Algoritmo',
-        url: 'play/D93ftQHK3OXN',
-        image: 'o-que-e-algoritimo.png',
-        time: '02:48'
-      },
-      {
-        title: 'Around the Block - Trailer',
-        url: 'play/a4Dbd26pLu0X',
-        image: 'around-the-block-trailer.png',
-        time: '02:56'
-      },
-      {
-        title: 'Todo Tempo do Mundo - Ep. 1',
-        url: 'play/mF7YHwBeGqZq',
-        image: 'todo-tempo-do-mundo-ep-1.png',
-        time: '18:38'
-      },
-      {
-        title: 'Só Quero Fazer Falta',
-        url: 'play/9Jh8KlGxtRIC',
-        image: 'so-quero-fazer-falta.png',
-        time: '02:03'
-      },
-      {
-        title: 'Vlog 1 - O começo',
-        url: 'play/10wBsdyp4biH',
-        image: 'vlog-1-o-comeco.png',
-        time: '05:46'
-      },
-      {
-        title: 'Palafita Filmes Reel',
-        url: 'play/pNK5nsGL2WYw',
-        image: 'palafita-filmes-reel.png',
-        time: '01:28'
-      },
-      {
-        title: 'Comece Logo Sua HQ',
-        url: 'play/VLOLj6iVhuP8',
-        image: 'comece-logo-sua-hq.png',
-        time: '04:14'
-      },
-      {
-        title: 'Hipótese do Tempo Fantasma | Beirologia',
-        url: 'play/tJxLXRZimSn8',
-        image: 'hipotese-do-tempo-fantasma-beirologia.png',
-        time: '04:55'
-      },
-      {
-        title: 'Garage',
-        url: 'play/WKj68pwWOm5a',
-        image: 'garage.png',
-        time: '00:30'
-      },
-      {
-        title: 'Final de Semana Dourado - Rolê com Dom',
-        url: 'play/dTyzjCmg5mvc',
-        image: 'final-de-semana-dourado-role-com-dom.png',
-        time: '02:17'
-      },
-      {
-        title: 'Gurufim Na Mangueira',
-        url: 'play/CDjEPRDCO1ED',
-        image: 'gurufim-na-mangueira.png',
-        time: '25:14'
-      }
-    ]
-
-    // this.videosList = this.headerVideosList.concat(videosListTemp)
-    this.videosList = videosListTemp
-    this.videosList = this.videosList
-      .map(a => [Math.random(), a])
-      .sort((a, b) => a[0] - b[0])
-      .map(a => a[1]) // shuffle the array
-    this.videosList.splice(16, 1) // always keep just 16 videos
-  }
   render () {
     return (
       <Wrapper>
@@ -346,34 +308,62 @@ class Landing extends Component<Props, void> {
         </Header>
         <Videos>
           <VideosContainer>
-            <VideosHeader>
-              <Title big accent>
-                <TranslatedText message="landingPage.videos.title" />
-              </Title>
-              <Text>
-                <TranslatedText message="landingPage.videos.description" />
-              </Text>
-            </VideosHeader>
-            <LandingVideoList>
-              {this.videosList.map((item, index) => {
-                return (
-                  <LandingVideoItem key={index}>
-                    <LandingVideoItemBackground
-                      background={'/assets/img/landing/small/' + item.image}
-                    />
-                    <LandingVideoItemLink to={item.url}>
-                      <LandingVideoItemTitle small bold accent>
-                        <TruncatedText>{item.title}</TruncatedText>
-                      </LandingVideoItemTitle>
-                      <VideoTimeDisplay>{item.time}</VideoTimeDisplay>
-                      <LandingVideoItemIcon>
-                        <SVGIcon icon="icon-player-play" />
-                      </LandingVideoItemIcon>
-                    </LandingVideoItemLink>
-                  </LandingVideoItem>
-                )
-              })}
-            </LandingVideoList>
+            {LANDING_HIGHLIGHT_VIDEOS.map((item, index) => {
+              return (
+                <ListVideos nomargin key={index}>
+                  <Title accent small margin="0 0 15px">Explore more crypto content</Title>
+                  <ListVideosContainer>
+                    {item.list.map((item2, index2) => {
+                      return (
+                        <ListVideosItem highlight key={index2}>
+                          <ListVideosItemLink to={item2.url}>
+                            <ListVideosItemBackground background={'/assets/img/landing/small/' + item2.image} />
+                            <ListVideosItemContainer>
+                              <ListVideosItemIcon>
+                                <SVGIcon icon="icon-player-play" />
+                              </ListVideosItemIcon>
+                            </ListVideosItemContainer>
+                          </ListVideosItemLink>
+                        </ListVideosItem>
+                      )
+                    })}
+                  </ListVideosContainer>
+                  <ListVideosButtonWrapper><ListVideoButton to="/" margin="20px 0 0"><TranslatedText message="landingPage.button" /></ListVideoButton></ListVideosButtonWrapper>
+                </ListVideos>
+              )
+            })}
+            <TextWrapper>
+              <Text big><TranslatedText message="landingPage.text" /></Text>
+            </TextWrapper>
+            {LANDING_CATEGORY_VIDEOS.map((item, index) => {
+              return (
+                <ListVideos key={index}>
+                  <Title accent small margin="0 0 15px">{item.title}</Title>
+                  <ListVideosContainer>
+                    {item.list.map((item2, index2) => {
+                      return (
+                        <ListVideosItem key={index2}>
+                          <ListVideosItemLink to={item2.url}>
+                            <ListVideosItemBackground background={'/assets/img/landing/small/' + item2.image} />
+                            <ListVideosItemShadow />
+                            <ListVideosItemContainer>
+                              <ListVideosItemTitle bold accent>
+                                {item2.title}
+                              </ListVideosItemTitle>
+                              <VideoTimeDisplay>{item2.time}</VideoTimeDisplay>
+                              <ListVideosItemIcon>
+                                <SVGIcon icon="icon-player-play" />
+                              </ListVideosItemIcon>
+                            </ListVideosItemContainer>
+                          </ListVideosItemLink>
+                        </ListVideosItem>
+                      )
+                    })}
+                  </ListVideosContainer>
+                  <ListVideosButtonWrapper><ListVideoButton to="/" margin="20px 0 0"><TranslatedText message="landingPage.button" /></ListVideoButton></ListVideosButtonWrapper>
+                </ListVideos>
+              )
+            })}
           </VideosContainer>
         </Videos>
       </Wrapper>

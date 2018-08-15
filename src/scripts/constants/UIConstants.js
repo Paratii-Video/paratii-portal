@@ -20,8 +20,21 @@ export const MAINWRAPPER_PADDING_VERTICAL: string = '40px'
 export const MAINWRAPPER_PADDING_VERTICAL_MOBILE: string = '24px'
 export const MAINWRAPPER_PADDING_HORIZONTAL: string = '80px'
 export const MAINWRAPPER_PADDING_HORIZONTAL_MOBILE: string = '20px'
-
 export const LANDING_HEADERWRAPPER_MARGIN_VERTICAL: string = '50px'
+export const LANDING_HEADERCONTENTITEM_MAX_WIDTH: string = '500px'
+export const LANDING_HEADERTEXT_MARING: string = '15px 0 30px'
+export const LANDING_HEADERBUTTONSITEM_MARGIN: string = '0 20px 0 0'
+export const LANDING_HEADERBUTTONSITEM_MARGIN_BP: string = '0 0 20px'
+export const LANDING_VIDEOSCONTAINER_MARGIN: string = '70px auto 0'
+export const LANDING_VIDEOSCONTAINER_MAX_WIDTH: string = '1280px'
+export const LANDING_TEXTWRAPPER_MARGIN: string = '100px auto 80px'
+export const LANDING_TEXTWRAPPER_MAX_WIDTH: string = '650px'
+export const LANDING_LISTVIDEOS_MARGIN_BOTTOM: string = '100px'
+export const LANDING_LISTVIDEOSITEM_HEIGHT: string = '192px'
+export const LANDING_LISTVIDEOSITEM_HEIGHT_HIGHLIGHT: string = '465px'
+export const LANDING_LISTVIDEOSITEM_HEIGHT_BP: string = '120px'
+export const LANDING_LISTVIDEOSITEM_HEIGHT_HIGHLIGHT_BP: string = '292px'
+export const LANDING_LISTVIDEOSITEMCONTAINER_PADDING: string = '14px'
 
 // Components
 
