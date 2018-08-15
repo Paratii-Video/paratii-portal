@@ -21,7 +21,6 @@ import {
   USERNAV_USERNAVLISTITEMICON_MARGIN_RIGHT,
   USERNAV_USERSUBNAVLISTITEMLINK_PADDING,
   MAINHEADER_LOGO_HEIGHT,
-  MAINFOOTER_HEIGHT,
   MEDIAQUERY_BREAKPOINT,
   Z_INDEX_USERNAV
 } from '../constants/UIConstants'
@@ -53,7 +52,6 @@ const Wrapper = styled.div`
   left: 0;
   overflow-x: hidden;
   overflow-y: hidden;
-  padding: 0 0 ${MAINFOOTER_HEIGHT};
   position: fixed;
   top: 0;
   transition: transform 0.6s ${({ theme }) => theme.animation.ease.smooth};
