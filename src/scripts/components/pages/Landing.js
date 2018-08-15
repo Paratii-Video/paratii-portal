@@ -153,7 +153,7 @@ const TextWrapper = styled.div`
   max-width: ${LANDING_TEXTWRAPPER_MAX_WIDTH};
   text-align: center;
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media (max-width: 767px) {
     max-width: 100%;
   }
 `
