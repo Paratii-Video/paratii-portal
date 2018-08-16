@@ -19,21 +19,27 @@ import {
 const Wrapper = styled.div`
   ${FlexCenterStyle}
   background: ${props => props.theme.colors.text.highlight};
+  width: 100%;
+`
+
+const Container = styled.div`
+  align-items: center;
+  display: flex;
   padding: ${ALPHABAR_PADDING_VERTICAL} ${MAINHEADER_PADDING_LEFT};
   text-align: center;
-  width: 100%;
 
   @media ${MEDIAQUERY_BREAKPOINT} {
+    flex-direction: column;
     padding: ${ALPHABAR_PADDING_VERTICAL} ${MAINHEADER_PADDING_LEFT_BP};
   }
 `
 
 const ButtonWrapper = styled.div`
-  justify-self: flex-end;
-  right: ${MAINHEADER_PADDING_LEFT};
+  position: absolute;
+  right: 10px;
 
   @media ${MEDIAQUERY_BREAKPOINT} {
-    right: ${MAINHEADER_PADDING_LEFT_BP};
+    right: 10px;
   }
 `
 
@@ -61,7 +67,22 @@ class AlphaBar extends React.Component<Props> {
     return (
       !disabled && (
         <Wrapper>
-          <Text accent><TranslatedText message="landingPage.alert_html" /></Text>
+          <Container>
+            <Text
+              accent
+              margin="10px"
+            >
+              <SVGIcon
+                icon="icon-alpha"
+                width="20px"
+                height="20px"
+              />
+            </Text>
+            <Text
+              accent
+              margin="10px 0"
+            ><TranslatedText message="landingPage.alert_html" /></Text>
+          </Container>
           <ButtonWrapper>
             <TextButton
               highlight
@@ -69,8 +90,8 @@ class AlphaBar extends React.Component<Props> {
             >
               <SVGIcon
                 icon="icon-close"
-                width="14px"
-                height="14px"
+                width="16px"
+                height="16px"
               />
             </TextButton>
           </ButtonWrapper>

@@ -39,7 +39,7 @@ export const LANDING_LISTVIDEOSITEMCONTAINER_PADDING: string = '14px'
 // Components
 
 // Alpha bar
-export const ALPHABAR_PADDING_VERTICAL:string = '10px'
+export const ALPHABAR_PADDING_VERTICAL:string = '2px'
 
 // Card
 export const CARD_PADDING: string = '40px 42px'
