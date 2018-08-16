@@ -37,19 +37,47 @@ const ButtonWrapper = styled.div`
   }
 `
 
-const AlphaBar = () => (
-  <Wrapper>
-    <Text accent><TranslatedText message="landingPage.alert_html" /></Text>
-    <ButtonWrapper>
-      <TextButton highlight>
-        <SVGIcon
-          icon="icon-close"
-          width="14px"
-          height="14px"
-        />
-      </TextButton>
-    </ButtonWrapper>
-  </Wrapper> 
-)
+class AlphaBar extends React.Component<Props> {
+  closeBar: () => void
+  constructor (props: Props) {
+    super(props)
+
+    const showBar = localStorage.getItem('ParatiiAlphaBar')
+
+    this.state = {
+      disabled: showBar === 'true'
+    }
+
+    this.closeBar = this.closeBar.bind(this)
+  }
+
+  closeBar (): void {
+    localStorage.setItem('ParatiiAlphaBar', 'true')
+    this.setState({ disabled: true })
+  }
+
+  render () {
+    const { disabled } = this.state
+    return (
+      !disabled && (
+        <Wrapper>
+          <Text accent><TranslatedText message="landingPage.alert_html" /></Text>
+          <ButtonWrapper>
+            <TextButton
+              highlight
+              onClick={this.closeBar}
+            >
+              <SVGIcon
+                icon="icon-close"
+                width="14px"
+                height="14px"
+              />
+            </TextButton>
+          </ButtonWrapper>
+        </Wrapper>
+      )
+    )
+  }
+}
 
 export default AlphaBar
