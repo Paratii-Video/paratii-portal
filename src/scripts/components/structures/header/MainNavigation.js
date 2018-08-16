@@ -82,34 +82,36 @@ class MainNavigation extends Component<Props, Object> {
         <NavList>
           {this.props.isWalletSecured && (
             <Fragment>
-              <NavItem onlyMobile>
+              <NavItem>
                 <NavLink onClick={this.props.closeMainNavAndUserNav} to="/profile">
                   <TranslatedText message="navigation.profile" />
                 </NavLink>
               </NavItem>
-              <NavItem onlyMobile>
+              <NavItem>
                 <NavLink onClick={this.props.closeMainNavAndUserNav} to="/profile/my-videos">
                   <TranslatedText message="navigation.myVideos" />
                 </NavLink>
               </NavItem>
             </Fragment>
           )}
-          <NavItem>
-            <Anchor
-              onClick={this.props.closeMainNavAndUserNav}
-              href={JOIN_US_ON_TELEGRAM}
-              target="_blank"
-              iconbutton
-            >
-              <SVGIcon
-                icon="icon-telegram"
-                width="18px"
-                height="16px"
-                margin="0 18px 0 0"
-              />
-              <TranslatedText message="navigation.telegram" />
-            </Anchor>
-          </NavItem>
+          {!this.props.isWalletSecured && (
+            <NavItem>
+              <Anchor
+                onClick={this.props.closeMainNavAndUserNav}
+                href={JOIN_US_ON_TELEGRAM}
+                target="_blank"
+                iconbutton
+              >
+                <SVGIcon
+                  icon="icon-telegram"
+                  width="18px"
+                  height="16px"
+                  margin="0 18px 0 0"
+                />
+                <TranslatedText message="navigation.telegram" />
+              </Anchor>
+            </NavItem>
+          )}
           <NavItem>
             <Anchor
               onClick={this.props.closeMainNavAndUserNav}
