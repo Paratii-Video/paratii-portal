@@ -83,7 +83,6 @@ class App extends Component<Props, State> {
             <Modal />
             <Notifications />
             <MainHeader />
-            {isWalletSecured ? <UserNav /> : null}
             <Main
               landing={match.isExact}
               play={history.location.pathname.indexOf('/play') > -1}

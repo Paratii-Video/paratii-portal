@@ -22,8 +22,7 @@ const MainWrapper = styled.main`
   display: flex;
   flex: 1 1 100%;
   flex-direction: column;
-  margin: ${MAINHEADER_LOGO_HEIGHT} 0 0
-    ${({ isWalletSecured }) => (isWalletSecured ? USERNAV_WIDTH : '0')};
+  margin: ${MAINHEADER_LOGO_HEIGHT} 0 0 0;
   min-height: 500px;
   padding: ${({ landing, play }) => (landing || play ? null : MAINWRAPPER_PADDING_VERTICAL + ' ' + MAINWRAPPER_PADDING_HORIZONTAL)};
 
