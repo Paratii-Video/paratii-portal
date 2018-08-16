@@ -20,7 +20,7 @@ import {
   USERNAV_USERNAVLISTITEMICON_SIZE,
   USERNAV_USERNAVLISTITEMICON_MARGIN_RIGHT,
   USERNAV_USERSUBNAVLISTITEMLINK_PADDING,
-  MAINHEADER_LOGO_HEIGHT,
+  MAINHEADER_HEIGHT,
   MEDIAQUERY_BREAKPOINT,
   Z_INDEX_USERNAV
 } from '../constants/UIConstants'
@@ -68,7 +68,7 @@ const UserWrapper = styled.div`
   background: ${props => props.theme.colors.background.secondary};
   display: flex;
   flex-direction: column;
-  margin-top: ${MAINHEADER_LOGO_HEIGHT};
+  margin-top: ${MAINHEADER_HEIGHT};
   padding: ${USERNAV_USERWRAPPER_PADDING};
   width: 100%;
 `

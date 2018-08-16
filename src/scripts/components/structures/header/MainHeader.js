@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Blockies from 'react-blockies'
 import {
   MEDIAQUERY_BREAKPOINT,
-  MAINHEADER_LOGO_HEIGHT,
+  MAINHEADER_HEIGHT,
   MAINHEADER_LOGO_WIDTH,
   MAINHEADER_PADDING_LEFT,
   MAINHEADER_PADDING_LEFT_BP,
@@ -70,7 +70,7 @@ const HeaderWrapper = styled.div`
 const LogoWrapper = styled.div`
   margin-right: ${MAINHEADER_PADDING_LEFT};
   flex: 0 0 ${MAINHEADER_LOGO_WIDTH};
-  height: ${MAINHEADER_LOGO_HEIGHT};
+  height: ${MAINHEADER_HEIGHT};
 
   @media ${MEDIAQUERY_BREAKPOINT} {
     margin: 0 0 0 ${MAINHEADER_PADDING_LEFT_BP};

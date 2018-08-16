@@ -29,7 +29,6 @@ import MainFooter from './structures/footer/MainFooter'
 import Voucher from './pages/Voucher'
 import NotFound from './pages/NotFound'
 import LandingContainer from 'containers/pages/LandingContainer'
-
 import { APP_TITLE, paratiiTheme } from 'constants/ApplicationConstants'
 
 import type VideoRecord from 'records/VideoRecords'

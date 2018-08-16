@@ -38,8 +38,8 @@ export const LANDING_LISTVIDEOSITEMCONTAINER_PADDING: string = '14px'
 
 // Components
 
-// Alert bar
-export const ALERTBAR_PADDING_VERTICAL:string = '10px'
+// Alpha bar
+export const ALPHABAR_PADDING_VERTICAL:string = '10px'
 
 // Card
 export const CARD_PADDING: string = '40px 42px'
@@ -67,7 +67,7 @@ export const MAINFOOTER_LOGO_MARGIN: string = '10px 20px'
 
 // MainHeader
 export const MAINHEADER_LOGO_WIDTH: string = '98px'
-export const MAINHEADER_LOGO_HEIGHT: string = '62px'
+export const MAINHEADER_HEIGHT: string = '62px'
 export const MAINHEADER_PADDING_LEFT: string = '80px'
 export const MAINHEADER_PADDING_LEFT_BP: string = '30px'
 export const HEADERBUTTONS_MARGIN_TOP_BP: string = '30px'

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import {
-  MAINHEADER_LOGO_HEIGHT,
+  MAINHEADER_HEIGHT,
   MEDIAQUERY_BREAKPOINT,
   USERNAV_WIDTH,
   MAINWRAPPER_PADDING_VERTICAL,
@@ -9,6 +9,7 @@ import {
   MAINWRAPPER_PADDING_HORIZONTAL,
   MAINWRAPPER_PADDING_HORIZONTAL_MOBILE
 } from 'constants/UIConstants'
+import AlphaBar from '../widgets/AlphaBar'
 
 type Props = {
   landing: boolean,
@@ -17,25 +18,21 @@ type Props = {
   children: Object
 }
 
-const MainWrapper = styled.main`
+const Wrapper = styled.main`
   background-color: ${props => props.theme.colors.background.body};
-  display: flex;
+  display: block;
   flex: 1 1 100%;
-  flex-direction: column;
-  margin: ${MAINHEADER_LOGO_HEIGHT} 0 0 0;
+  margin: ${MAINHEADER_HEIGHT} 0 0 0;
   min-height: 500px;
-  padding: ${({ landing, play }) => (landing || play ? null : MAINWRAPPER_PADDING_VERTICAL + ' ' + MAINWRAPPER_PADDING_HORIZONTAL)};
+`
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
-    margin-left: 0;
-  }
+const Children = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: ${({ landing, play }) => (landing || play ? null : MAINWRAPPER_PADDING_VERTICAL + ' ' + MAINWRAPPER_PADDING_HORIZONTAL)};
 
   @media (max-width: 1024px) {
     padding: ${({ landing, play }) => (landing || play ? null : MAINWRAPPER_PADDING_VERTICAL)};
-  }
-
-  @media (max-width: 768px) {
-    margin-left: 0;
   }
 
   @media (max-width: 767px) {
@@ -46,13 +43,19 @@ const MainWrapper = styled.main`
 class Main extends Component<Props, void> {
   render () {
     return (
-      <MainWrapper
+      <Wrapper
         landing={this.props.landing}
         play={this.props.play}
         isWalletSecured={this.props.isWalletSecured}
       >
-        {this.props.children}
-      </MainWrapper>
+        <AlphaBar />
+        <Children
+          landing={this.props.landing}
+          play={this.props.play}
+        >
+          {this.props.children}
+        </Children>
+      </Wrapper>
     )
   }
 }
