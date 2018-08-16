@@ -16,6 +16,10 @@ import {
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS
 } from 'constants/ApplicationConstants'
+import {
+  PROFILE_AVATAR_SIZE,
+  PROFILEEDIT_AVATAR_MARGIN_BOTTOM
+} from 'constants/UIConstants'
 import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
 import TranslatedText from './translations/TranslatedText'
 
@@ -40,10 +44,10 @@ const CardContent = styled.div`
 const ProfileAvatar = styled.div`
   background-color: ${props => props.theme.colors.header.color};
   border-radius: 100%;
-  height: 100px;
-  margin-bottom: 20px;
+  height: ${PROFILE_AVATAR_SIZE};
+  margin-bottom: ${PROFILEEDIT_AVATAR_MARGIN_BOTTOM};
   overflow: hidden;
-  width: 100px;
+  width: ${PROFILE_AVATAR_SIZE};
 `
 
 const Form = styled.form`
@@ -214,10 +218,6 @@ class Profile extends Component<Props, void> {
         >
           <CardContent>
             <ProfileAvatar>{userAvatar}</ProfileAvatar>
-            <TextButton>
-              <TranslatedText message="profileEdit.avatarLabel" />
-            </TextButton>
-            <HR />
             <Form onSubmit={this.submitForm}>
               <TextField
                 type="text"

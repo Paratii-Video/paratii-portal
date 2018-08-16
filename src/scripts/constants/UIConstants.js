@@ -103,6 +103,16 @@ export const CONTROLS_HEIGHT_TABLET: string = '42px'
 export const CONTROLS_SPACING: string = '24px'
 export const CONTROLS_SPACING_MOBILE: string = '12px'
 
+// Profile
+export const PROFILE_AVATAR_SIZE:string = '100px'
+export const PROFILE_AVATAR_MARGIN_BOTTOM:string = '20px'
+export const PROFILE_EDITPROFILEBUTTON_TOP:string = '50px'
+export const PROFILE_EDITPROFILEBUTTON_RIGHT:string = '42px'
+export const PROFILE_EMAILADDRESSWRAPPER_MARGIN_RIGHT:string = '10px'
+export const PROFILE_WORDSWRAPPER_MARGIN:string = '5px 0 0'
+export const PROFILE_WORDSWRAPPER_PADDING_VERTICAL:string = '22px'
+export const PROFILEEDIT_AVATAR_MARGIN_BOTTOM:string = '100px'
+
 // Search Input
 export const SEARCHINPUTBUTTON_WIDTH: string = '15px'
 export const SEARCHINPUTBUTTON_HEIGHT: string = '30px'

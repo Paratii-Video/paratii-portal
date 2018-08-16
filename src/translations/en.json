@@ -80,11 +80,13 @@
 		}
 	},
 	"PTI": "💎",
+	"invested": "🔐",
 	"profile": {
 		"title": "Profile",
 		"editButton": "Edit",
 		"dataLabel": "Since",
-		"balanceTitle": "Current balance: ",
+		"balanceTitle": "Balance",
+		"investedTitle": "Invested ",
 		"emailLabel": "E-mail",
 		"addressLabel": "Address",
 		"copyLabel": "Copy"
