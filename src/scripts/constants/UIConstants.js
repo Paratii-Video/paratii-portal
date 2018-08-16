@@ -38,6 +38,9 @@ export const LANDING_LISTVIDEOSITEMCONTAINER_PADDING: string = '14px'
 
 // Components
 
+// Alert bar
+export const ALERTBAR_PADDING_VERTICAL:string = '10px'
+
 // Card
 export const CARD_PADDING: string = '40px 42px'
 export const CARD_MAX_WIDTH: string = '650px'

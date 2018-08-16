@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import type { Map } from 'immutable'
 import type VideoRecord from 'records/VideoRecords'
 import {
+  ALERTBAR_PADDING_VERTICAL,
   BUTTON_HEIGHT,
   BUTTON_PADDING_LEFT,
   LANDING_HEADERWRAPPER_MARGIN_VERTICAL,
@@ -56,6 +57,30 @@ const VIDEOLINK_POSITION: String = '40px'
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+`
+
+const LandingAlert = styled.div`
+  ${FlexCenterStyle}
+  background: ${props => props.theme.colors.text.highlight};
+  padding: ${ALERTBAR_PADDING_VERTICAL} ${MAINHEADER_PADDING_LEFT};
+  text-align: center;
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    padding: ${ALERTBAR_PADDING_VERTICAL} ${MAINHEADER_PADDING_LEFT_BP};
+  }
+`
+
+const LandingAlertButtonWrapper = styled.div`
+  position: absolute;
+  right: ${MAINHEADER_PADDING_LEFT};
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    right: ${MAINHEADER_PADDING_LEFT_BP};
+  }
+`
+
+const LandingAlertButton = styled(TextButton)`
+  display: block;
 `
 
 const Header = styled.div`
@@ -273,6 +298,18 @@ class Landing extends Component<Props, void> {
   render () {
     return (
       <Wrapper>
+        <LandingAlert>
+          <Text accent><TranslatedText message="landingPage.alert_html" /></Text>
+          <LandingAlertButtonWrapper>
+            <TextButton highlight>
+              <SVGIcon
+                icon="icon-close"
+                width="14px"
+                height="14px"
+              />
+            </TextButton>
+          </LandingAlertButtonWrapper>
+        </LandingAlert> 
         <Header
           background={'/assets/img/landing/big/around-the-block.png'}
           backgroundMobile={'/assets/img/landing/big/around-the-block-mobile.png'}

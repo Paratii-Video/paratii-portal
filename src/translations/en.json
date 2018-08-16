@@ -7,6 +7,7 @@
 		"english": "English"
 	},
 	"landingPage": {
+		"alert_html": "<strong>This portal is in Alpha</strong> (Ethereum testnet). Code hasn’t been audited. Don’t share sensitive information.",
 		"header": {
 			"title_html": "Around the block<br /> now available!",
 			"description_html": "The 4-part documentary webseries<br /> on the minds behind the blockchain"
@@ -50,7 +51,7 @@
 	},
 	"navigation": {
 		"voucher": "Get PTI",
-		"myVideos": "My videos",
+		"myVideos": "Submit &  Edit",
 		"upload": "Upload",
 		"about": "About Paratii",
 		"logIn": "Become a contributor",
