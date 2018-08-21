@@ -64,10 +64,10 @@ describe('TCR:', function () {
     )
 
     // the video should enter the whitelist succesfully
-    const updateTx = await paratii.eth.tcr.updateStatus(id)
+    let updateTx = await paratii.eth.tcr.updateStatus(id)
     assert.isOk(updateTx)
     assert.isOk(updateTx.events._ApplicationWhitelisted)
-    const isWhitelisted = await paratii.eth.tcr.isWhitelisted(id)
+    let isWhitelisted = await paratii.eth.tcr.isWhitelisted(id)
     assert.isOk(isWhitelisted)
     // the db should know about this
     dbRecord = await paratii.db.vids.get(id)
@@ -88,13 +88,52 @@ describe('TCR:', function () {
     console.log(dbRecord.tcrStatus.data.challenge)
     //
 
+    const voteValue = 1
     const tx2 = await paratii.eth.tcr.approveAndGetRightsAndCommitVote(
       id,
-      1,
+      voteValue,
       Number(5e18)
     )
+    const salt = tx2.salt
+
     console.log(tx2)
-    
+    console.log(`salt: ${salt}`)
+    const revealStageLen = await paratii.eth.tcr.getRevealStageLen()
+    console.log(`revealStageLen: ${revealStageLen}`)
+    let revealPeriodActive = false
+    const someAddress = '0xf53ebb252d09250652560db5a15ac22d95f48304'
+    while (!revealPeriodActive) {
+      await paratii.eth.transfer(someAddress, 1, 'PTI')
+      revealPeriodActive = await paratii.eth.tcr.revealPeriodActive(challengeId)
+    }
+    // reveal the vote
+    const tx3 = await paratii.eth.tcr.revealVote(challengeId, voteValue, salt)
+    console.log(tx3)
+
+    while (revealPeriodActive) {
+      await paratii.eth.transfer(someAddress, 1, 'PTI')
+      revealPeriodActive = await paratii.eth.tcr.revealPeriodActive(challengeId)
+    }
+    let isPassed = await paratii.eth.tcr.isPassed(challengeId)
+    assert.isTrue(isPassed)
+
+    // the video should enter the whitelist succesfully because there are 2 votes for and 1 against
+    updateTx = await paratii.eth.tcr.updateStatus(id)
+    // assert.isOk(updateTx)
+    // console.log(updateTx)
+    // assert.isOk(updateTx.events._ApplicationWhitelisted)
+    // assert.isOk(updateTx.events._ChallengeFailed)
+
+    // the video should be isWhitelisted
+    isWhitelisted = await paratii.eth.tcr.isWhitelisted(id)
+    assert.isTrue(isWhitelisted)
+    // we should now find the votes in the db
+    dbRecord = await paratii.db.vids.get(id)
+    console.log(dbRecord)
+    console.log(dbRecord.tcrStatus.data.challenge)
+    const challengeRecord = await paratii.db.tcr.challenges.get(id)
+    console.log(challengeRecord)
+
   })
 
   it('you can challenge a published video', async function () {
