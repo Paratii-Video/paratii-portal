@@ -89,7 +89,6 @@ class VideoManager extends Component<Props, void> {
             key={selectedVideo.id}
             videoId={selectedVideo.id}
             video={selectedVideo}
-            edit
           />
         ) : (
           <LoaderWrapper>
