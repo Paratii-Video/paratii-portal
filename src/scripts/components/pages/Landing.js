@@ -328,7 +328,7 @@ class Landing extends Component<Props, void> {
                       )
                     })}
                   </ListVideosContainer>
-                  <ListVideosButtonWrapper><ListVideoButton to="/" margin="20px 0 0"><TranslatedText message="landingPage.button" /></ListVideoButton></ListVideosButtonWrapper>
+                  <ListVideosButtonWrapper><ListVideoButton to={item.slug} margin="20px 0 0"><TranslatedText message="landingPage.button" /></ListVideoButton></ListVideosButtonWrapper>
                 </ListVideos>
               )
             })}
@@ -360,7 +360,7 @@ class Landing extends Component<Props, void> {
                       )
                     })}
                   </ListVideosContainer>
-                  <ListVideosButtonWrapper><ListVideoButton to="/" margin="20px 0 0"><TranslatedText message="landingPage.button" /></ListVideoButton></ListVideosButtonWrapper>
+                  <ListVideosButtonWrapper><ListVideoButton to={item.slug} margin="20px 0 0"><TranslatedText message="landingPage.button" /></ListVideoButton></ListVideosButtonWrapper>
                 </ListVideos>
               )
             })}

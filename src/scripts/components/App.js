@@ -29,6 +29,7 @@ import MainFooter from './structures/footer/MainFooter'
 import Voucher from './pages/Voucher'
 import NotFound from './pages/NotFound'
 import LandingContainer from 'containers/pages/LandingContainer'
+import CategoryContainer from 'containers/pages/CategoryContainer'
 import { APP_TITLE, paratiiTheme } from 'constants/ApplicationConstants'
 
 import type VideoRecord from 'records/VideoRecords'
@@ -123,6 +124,10 @@ class App extends Component<Props, State> {
                 <Route
                   path={`${match.url}play/:id`}
                   component={PlayContainer}
+                />
+                <Route
+                  path={`${match.url}category/:id`}
+                  component={CategoryContainer}
                 />
                 <Route
                   path={`${match.url}embed/:id`}
