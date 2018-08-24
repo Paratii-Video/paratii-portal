@@ -477,14 +477,12 @@ class VideoForm extends Component<Props, Object> {
               )}
             </HeaderButtons>
           </HeaderContent>
-          {edit ? null : (
-            <HeaderBar>
-              <VideoProgressBar
-                progress={videoProgress(video) + '%'}
-                nopercentual
-              />
-            </HeaderBar>
-          )}
+          <HeaderBar>
+            <VideoProgressBar
+              progress={videoProgress(video) + '%'}
+              nopercentual
+            />
+          </HeaderBar>
         </Header>
         <Content offsetHeight={this.handleHeight}>
           <ContentHeight
