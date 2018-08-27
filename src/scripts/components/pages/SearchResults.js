@@ -6,9 +6,16 @@ import { List as ImmutableList } from 'immutable'
 
 import { FlexCenterStyle } from '../foundations/Styles'
 import Loader from 'components/foundations/Loader'
+import Title from 'components/foundations/Title'
+import Text from 'components/foundations/Text'
+import Button from 'components/foundations/Button'
+import TextButton from 'components/foundations/TextButton'
 import SearchResult from 'components/widgets/SearchResult'
 import TranslatedText from 'components/translations/TranslatedText'
 import Video from 'records/VideoRecords'
+import { CATEGORIES_VIDEOS } from 'constants/CategoriesConstants'
+import Card from 'components/structures/Card'
+import { Link } from 'react-router-dom'
 
 const Wrapper = styled.div`
   width: 1180px;
@@ -16,18 +23,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  background: ${({ theme }) => theme.colors.background.primary};
-`
-
-const SearchTerm = styled.div`
-  flex: 0 0 100px;
-  min-height: 100px;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 20px;
-  padding-bottom: 10px;
-  color: ${({ theme }) => theme.colors.text.accent};
 `
 
 const SearchTermPrompt = styled.span`
@@ -36,15 +31,11 @@ const SearchTermPrompt = styled.span`
   color: ${({ theme }) => theme.colors.text.primary};
 `
 
-const ZeroState = styled.div`
-  ${FlexCenterStyle} color: ${({ theme }) => theme.colors.text.accent};
-  height: 200px;
-  font-size: 20px;
-`
-
 const Results = styled.div`
   width: 100%;
   flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
   padding-bottom: 10px;
 `
 
@@ -63,6 +54,20 @@ const HasNextButton = styled.button`
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.text.secondary};
 `
+
+const RelatedContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 40px;
+`
+
+const RelatedContentItem = styled.div`
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+`
+
+const CategoryButton = TextButton.withComponent(Link)
 
 type Props = {
   hasNext: boolean,
@@ -90,18 +95,41 @@ class SearchResults extends React.Component<Props, void> {
     )
   }
 
+  relatedContent () {
+    const { searchTerm } = this.props
+    const contentRelated = CATEGORIES_VIDEOS.filter(item => item.tags.indexOf(searchTerm) > -1)
+
+    return (
+      (contentRelated.length > 0) &&
+        (<RelatedContent>
+          <Title small accent><TranslatedText message="search.results.relatedContent" /></Title>
+          <RelatedContentItem>
+            <Text primary margin="0 10px 0 0"><TranslatedText message="search.results.relatedContentCategories" /></Text>
+            {contentRelated.map((item, index) => {
+              return (
+                <CategoryButton
+                  key={index}
+                  to={item.slug}
+                  margin="0 10px 0 0"
+                  accent="true"
+                >{item.name}</CategoryButton >
+              )
+            })}
+          </RelatedContentItem>
+        </RelatedContent>)
+    )
+  }
+
   renderSearchTerm () {
     const { searchTerm } = this.props
 
     return (
-      <SearchTerm>
-        <SearchTermPrompt>
-          <TranslatedText
-            message="search.results.resultsFor"
-            options={{ term: searchTerm }}
-          />
-        </SearchTermPrompt>
-      </SearchTerm>
+      <Title accent margin="0 0 20px">
+        <TranslatedText
+          message="search.results.resultsFor"
+          options={{ term: searchTerm }}
+        />
+      </Title>
     )
   }
 
@@ -109,17 +137,21 @@ class SearchResults extends React.Component<Props, void> {
     if (this.props.searchTerm) {
       if (!this.props.results.size) {
         return (
-          <ZeroState data-test-id="no-results-zero-state">
-            <TranslatedText
-              message="search.results.noResultsFor"
-              options={{ term: this.props.searchTerm }}
-            />
-          </ZeroState>
+          <Fragment>
+            {this.relatedContent()}
+            <Title accent data-test-id="no-results-zero-state">
+              <TranslatedText
+                message="search.results.noResultsFor"
+                options={{ term: this.props.searchTerm }}
+              />
+            </Title>
+          </Fragment>
         )
       }
 
       return (
         <Fragment>
+          {this.relatedContent()}
           {this.renderSearchTerm()}
           {this.props.results.map((result: Video) => (
             <SearchResult key={result.get('id')} video={result} />
@@ -129,16 +161,16 @@ class SearchResults extends React.Component<Props, void> {
     }
 
     return (
-      <ZeroState data-test-id="enter-keywords-zero-state">
-        <TranslatedText message="search.results.zeroState" />
-      </ZeroState>
+      <Fragment>
+        <Text big accent data-test-id="enter-keywords-zero-state"><TranslatedText message="search.results.zeroState" /></Text>
+      </Fragment>
     )
   }
 
   render () {
     return (
       <Wrapper data-test-id="search-results">
-        <Results>
+        <Card>
           {this.props.resultsLoading ? (
             <LoaderWrapper>
               <Loader />
@@ -146,7 +178,7 @@ class SearchResults extends React.Component<Props, void> {
           ) : (
             this.renderSearchResultsSection()
           )}
-        </Results>
+        </Card>
         {this.renderClickForMore()}
       </Wrapper>
     )

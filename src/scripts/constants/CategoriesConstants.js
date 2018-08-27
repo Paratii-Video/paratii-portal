@@ -3,8 +3,10 @@
 
 export const CATEGORIES_VIDEOS: Array<Object> = [
   {
-    title: '💰 Explore more crypto content ',
-    slug: '/category/crypto-content ',
+    title: '💰 Explore more crypto content',
+    name: 'Explore more crypto content',
+    tags: 'crypto-content garou',
+    slug: '/category/crypto-content',
     list: [
       {
         title: 'O que é Algoritmo',
@@ -58,6 +60,8 @@ export const CATEGORIES_VIDEOS: Array<Object> = [
   },
   {
     title: '🎥 Documentaries',
+    name: 'Documentaries',
+    tags: 'documentaries around the block bossa nova films movies',
     slug: '/category/documentaries',
     list: [
       {
@@ -112,6 +116,8 @@ export const CATEGORIES_VIDEOS: Array<Object> = [
   },
   {
     title: '🎪 Community Events',
+    name: 'Community Events',
+    tags: 'community-events talk festival home',
     slug: '/category/community-events',
     list: [
       {
@@ -166,6 +172,8 @@ export const CATEGORIES_VIDEOS: Array<Object> = [
   },
   {
     title: '🔨 Network builders',
+    name: 'Network builders',
+    tags: 'network-builders development developer',
     slug: '/category/network-builders',
     list: [
       {
@@ -220,6 +228,8 @@ export const CATEGORIES_VIDEOS: Array<Object> = [
   },
   {
     title: '🎓 Educational',
+    name: 'Educational',
+    tags: 'educational children school',
     slug: '/category/educational',
     list: [
       {
@@ -274,6 +284,8 @@ export const CATEGORIES_VIDEOS: Array<Object> = [
   },
   {
     title: '💡 Opinion makers',
+    name: 'Opinion makers',
+    tags: 'opinion-makers people talk',
     slug: '/category/opinion-makers',
     list: [
       {
@@ -328,6 +340,8 @@ export const CATEGORIES_VIDEOS: Array<Object> = [
   },
   {
     title: '🐕 World-class crypto memes',
+    name: 'World-class crypto memes',
+    tags: 'world-class-crypto-memes fun',
     slug: '/category/world-class-crypto-memes',
     list: [
       {

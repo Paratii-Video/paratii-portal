@@ -194,7 +194,7 @@ class Landing extends Component<Props, void> {
       <Wrapper>
         <Videos>
           <VideosContainer>
-            {CATEGORIES_VIDEOS.map((item, index) => {          
+            {CATEGORIES_VIDEOS.map((item, index) => {
               if (item.slug === pathname) {           
                 return (
                   <ListVideos key={index}>
