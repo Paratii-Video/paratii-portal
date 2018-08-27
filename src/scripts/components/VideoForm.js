@@ -77,10 +77,7 @@ const Header = styled.div`
   cursor: ${({ edit }) => (edit ? null : 'pointer')};
   display: flex;
   flex-direction: column;
-  padding-bottom: ${({ edit }) =>
-    edit
-      ? VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT
-      : VIDEOFORM_HEADER_PADDING_BOTTOM};
+  padding-bottom: ${VIDEOFORM_HEADER_PADDING_BOTTOM};
   user-select: none;
 `
 
