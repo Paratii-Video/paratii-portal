@@ -3,7 +3,7 @@
 export const LANDING_HIGHLIGHT_VIDEOS: Array<Object> = [
   {
     title: 'Explore more crypto content ',
-    slug: 'category/crypto-content ',
+    slug: '/category/crypto-content',
     list: [
       {
         title: 'O que é Algoritmo',
