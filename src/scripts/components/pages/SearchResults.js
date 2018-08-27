@@ -8,7 +8,6 @@ import { FlexCenterStyle } from '../foundations/Styles'
 import Loader from 'components/foundations/Loader'
 import Title from 'components/foundations/Title'
 import Text from 'components/foundations/Text'
-import Button from 'components/foundations/Button'
 import TextButton from 'components/foundations/TextButton'
 import SearchResult from 'components/widgets/SearchResult'
 import TranslatedText from 'components/translations/TranslatedText'
@@ -23,20 +22,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-`
-
-const SearchTermPrompt = styled.span`
-  display: inline-block;
-  margin-right: 10px;
-  color: ${({ theme }) => theme.colors.text.primary};
-`
-
-const Results = styled.div`
-  width: 100%;
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 10px;
 `
 
 const LoaderWrapper = styled.div`

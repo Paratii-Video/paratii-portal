@@ -1,6 +1,5 @@
 /* @flow */
 
-
 export const VIDEO_CATEGORIES: Array<Object> = [
   {
     title: '💰 Explore more crypto content',

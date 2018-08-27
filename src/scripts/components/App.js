@@ -17,7 +17,6 @@ import DebugContainer from 'containers/DebugContainer'
 import WalletContainer from 'containers/WalletContainer'
 import SearchResultsContainer from 'containers/pages/SearchResultsContainer'
 import MainHeader from 'containers/MainHeaderContainer'
-import UserNav from 'containers/UserNavContainer'
 import Notifications from 'containers/NotificationContainer'
 
 import type { Match, RouterHistory } from 'react-router-dom'

@@ -5,8 +5,8 @@ import styled from 'styled-components'
 import TranslatedText from 'components/translations/TranslatedText'
 import Colors from 'components/foundations/base/Colors'
 import Text from 'components/foundations/Text'
-import TruncatedText from 'components/foundations/TruncatedText'
 import { FlexCenterStyle } from 'components/foundations/Styles'
+import type { ParatiiLib } from 'types/ApplicationTypes'
 
 type Props = {
   balance: string,
@@ -21,8 +21,9 @@ const Wrapper = styled.div`
 
 class InvestedBalance extends React.Component<Props, void> {
   render () {
-    const { balance, color, stakedPTI } = this.props
+    const { color, stakedPTI } = this.props
     const stakedNumber = stakedPTI ? Number(stakedPTI) : 0
+    const paratii: ParatiiLib = window.paratii
     const formattedStakedPTI = paratii.eth.web3.utils.fromWei(
       stakedNumber.toString(),
       'ether'

@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import {
   MAINHEADER_HEIGHT,
-  MEDIAQUERY_BREAKPOINT,
-  USERNAV_WIDTH,
   MAINWRAPPER_PADDING_VERTICAL,
   MAINWRAPPER_PADDING_VERTICAL_MOBILE,
   MAINWRAPPER_PADDING_HORIZONTAL,
