@@ -5,7 +5,7 @@ export const VIDEO_CATEGORIES: Array<Object> = [
   {
     title: '💰 Explore more crypto content',
     name: 'Explore more crypto content',
-    tags: 'crypto-content garou',
+    tags: 'crypto-content blockchain',
     slug: '/category/crypto-content',
     list: [
       {
