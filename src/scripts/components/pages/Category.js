@@ -29,7 +29,7 @@ import {
   Z_INDEX_BACK
 } from 'constants/UIConstants'
 import {
-  CATEGORIES_VIDEOS
+  VIDEO_CATEGORIES
 } from 'constants/CategoriesConstants'
 
 import { Link } from 'react-router-dom'
@@ -194,7 +194,7 @@ class Landing extends Component<Props, void> {
       <Wrapper>
         <Videos>
           <VideosContainer>
-            {CATEGORIES_VIDEOS.map((item, index) => {
+            {VIDEO_CATEGORIES.map((item, index) => {
               if (item.slug === pathname) {           
                 return (
                   <ListVideos key={index}>

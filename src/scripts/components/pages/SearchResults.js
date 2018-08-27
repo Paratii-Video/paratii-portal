@@ -13,7 +13,7 @@ import TextButton from 'components/foundations/TextButton'
 import SearchResult from 'components/widgets/SearchResult'
 import TranslatedText from 'components/translations/TranslatedText'
 import Video from 'records/VideoRecords'
-import { CATEGORIES_VIDEOS } from 'constants/CategoriesConstants'
+import { VIDEO_CATEGORIES } from 'constants/CategoriesConstants'
 import Card from 'components/structures/Card'
 import { Link } from 'react-router-dom'
 
@@ -97,7 +97,7 @@ class SearchResults extends React.Component<Props, void> {
 
   relatedContent () {
     const { searchTerm } = this.props
-    const contentRelated = CATEGORIES_VIDEOS.filter(item => item.tags.indexOf(searchTerm) > -1)
+    const contentRelated = VIDEO_CATEGORIES.filter(item => item.tags.indexOf(searchTerm) > -1)
 
     return (
       (contentRelated.length > 0) &&

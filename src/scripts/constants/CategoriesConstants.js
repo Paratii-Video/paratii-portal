@@ -1,7 +1,7 @@
 /* @flow */
 
 
-export const CATEGORIES_VIDEOS: Array<Object> = [
+export const VIDEO_CATEGORIES: Array<Object> = [
   {
     title: '💰 Explore more crypto content',
     name: 'Explore more crypto content',
