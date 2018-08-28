@@ -48,8 +48,9 @@ export const searchForVideos = ({ keyword }: Object = {}) => async (
       const searchResults: SearchResults = await paratii.vids.search({
         keyword,
         limit: SEARCH_BATCH_SIZE,
-        offset: 0,
-        staked: true
+        offset: 0
+        // removed the staked parameter because of (presumably) a bug in db
+        // staked: true
       })
       const results: Array<VideoInfo> = searchResults.results
       dispatch(
@@ -79,8 +80,9 @@ export const searchForMoreVideos = () => async (
       const searchResults: SearchResults = await paratii.vids.search({
         keyword,
         limit: SEARCH_BATCH_SIZE,
-        offset: nextSearchOffset,
-        staked: true
+        offset: nextSearchOffset
+        // removed "staked" param because of (presumably) a bug in db
+        // staked: true
       })
 
       const results: Array<VideoInfo> = searchResults.results || []
