@@ -89,7 +89,7 @@ class MainNavigation extends Component<Props, Object> {
           <NavItem>
             <Anchor
               onClick={this.props.closeMainNavAndUserNav}
-              href="http://paratii.video/"
+              href="htttps://paratii.video/"
               target="_blank"
             >
               <TranslatedText message="navigation.about" />

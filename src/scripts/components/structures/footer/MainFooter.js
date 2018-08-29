@@ -53,7 +53,7 @@ class MainFooter extends Component<Props, void> {
             message="footer.discover_html"
             options={{
               homePageLink: (
-                <Anchor anchor href="http://paratii.video/" target="_blank">
+                <Anchor anchor href="htttps://paratii.video/" target="_blank">
                   <TranslatedText message="footer.homePage" />
                 </Anchor>
               )
