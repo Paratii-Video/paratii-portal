@@ -15,7 +15,6 @@ import {
 import Button from 'components/foundations/Button'
 import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
-import Hidden from 'components/foundations/Hidden'
 import TranslatedText from 'components/translations/TranslatedText'
 
 type Props = {

@@ -39,7 +39,6 @@ import {
   VIDEOFORM_PADDING_HORIZONTAL_BP,
   VIDEOFORM_CONTAINER_MARGIN_BOTTOM,
   VIDEOFORM_HEADER_PADDING_BOTTOM,
-  VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT,
   VIDEOFORM_HEADER_ICON_WIDTH,
   VIDEOFORM_HEADER_ICON_HEIGHT
 } from 'constants/UIConstants'
@@ -77,10 +76,7 @@ const Header = styled.div`
   cursor: ${({ edit }) => (edit ? null : 'pointer')};
   display: flex;
   flex-direction: column;
-  padding-bottom: ${({ edit }) =>
-    edit
-      ? VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT
-      : VIDEOFORM_HEADER_PADDING_BOTTOM};
+  padding-bottom: ${VIDEOFORM_HEADER_PADDING_BOTTOM};
   user-select: none;
 `
 
@@ -477,14 +473,12 @@ class VideoForm extends Component<Props, Object> {
               )}
             </HeaderButtons>
           </HeaderContent>
-          {edit ? null : (
-            <HeaderBar>
-              <VideoProgressBar
-                progress={videoProgress(video) + '%'}
-                nopercentual
-              />
-            </HeaderBar>
-          )}
+          <HeaderBar>
+            <VideoProgressBar
+              progress={videoProgress(video) + '%'}
+              nopercentual
+            />
+          </HeaderBar>
         </Header>
         <Content offsetHeight={this.handleHeight}>
           <ContentHeight

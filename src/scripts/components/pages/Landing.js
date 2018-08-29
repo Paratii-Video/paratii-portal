@@ -4,7 +4,6 @@ import type { Map } from 'immutable'
 import type VideoRecord from 'records/VideoRecords'
 import {
   BUTTON_HEIGHT,
-  BUTTON_PADDING_LEFT,
   LANDING_HEADERWRAPPER_MARGIN_VERTICAL,
   LANDING_HEADERCONTENTITEM_MAX_WIDTH,
   LANDING_HEADERTEXT_MARING,
@@ -20,10 +19,8 @@ import {
   LANDING_LISTVIDEOSITEM_HEIGHT_BP,
   LANDING_LISTVIDEOSITEM_HEIGHT_HIGHLIGHT_BP,
   VIDEOTIMEDISPLAY_POSITION,
-  MAINHEADER_HEIGHT,
   MAINHEADER_PADDING_LEFT,
   MAINHEADER_PADDING_LEFT_BP,
-  MAX_WIDTH,
   MEDIAQUERY_BREAKPOINT,
   Z_INDEX_FRONT,
   Z_INDEX_BACK
@@ -40,18 +37,12 @@ import Text from '../foundations/Text'
 import Button from '../foundations/Button'
 import TextButton from '../foundations/TextButton'
 import VideoTimeDisplay from '../foundations/VideoTimeDisplay'
-import { ButtonStyleHover } from '../foundations/Button'
 import SVGIcon from '../foundations/SVGIcon'
 import TranslatedText from '../translations/TranslatedText'
 
 type Props = {
   videos: Map<string, VideoRecord> // maps video ids to upload records
 }
-
-const ZINDEX_LANDINGVIDEOITEMSHADOW: Number = 2
-const ZINDEX_LANDINGVIDEOITEMBACKGROUND: Number = 1
-const ZINDEX_LANDINGVIDEOITEMLINK: Number = 3
-const VIDEOLINK_POSITION: String = '40px'
 
 const Wrapper = styled.div`
   display: flex;
@@ -206,7 +197,6 @@ const ListVideosItemBackground = styled.span`
   background-size: cover;
   transition: transform 5s ${({ theme }) => theme.animation.ease.outexpo} 0.1s;
   z-index: ${Z_INDEX_BACK};
-
   ${ListVideosItemLink}:hover & {
     transform: scale(1.1);
     transition-delay: 0s;
@@ -222,7 +212,6 @@ const ListVideosItemShadow = styled.div`
   opacity: 1;
   transition: opacity 1s;
   z-index: ${Z_INDEX_BACK};
-
   ${ListVideosItemLink}:hover & {
     opacity: 0.8;
   }
@@ -328,7 +317,7 @@ class Landing extends Component<Props, void> {
                       )
                     })}
                   </ListVideosContainer>
-                  <ListVideosButtonWrapper><ListVideoButton to="/" margin="20px 0 0"><TranslatedText message="landingPage.button" /></ListVideoButton></ListVideosButtonWrapper>
+                  <ListVideosButtonWrapper><ListVideoButton to={item.slug} margin="20px 0 0"><TranslatedText message="landingPage.button" /></ListVideoButton></ListVideosButtonWrapper>
                 </ListVideos>
               )
             })}
@@ -360,7 +349,7 @@ class Landing extends Component<Props, void> {
                       )
                     })}
                   </ListVideosContainer>
-                  <ListVideosButtonWrapper><ListVideoButton to="/" margin="20px 0 0"><TranslatedText message="landingPage.button" /></ListVideoButton></ListVideosButtonWrapper>
+                  <ListVideosButtonWrapper><ListVideoButton to={item.slug} margin="20px 0 0"><TranslatedText message="landingPage.button" /></ListVideoButton></ListVideosButtonWrapper>
                 </ListVideos>
               )
             })}
