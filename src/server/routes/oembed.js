@@ -34,7 +34,7 @@ module.exports = async (req: $Request, res: $Response) => {
     // If video exist build response
     if (video) {
       const thumbUrl =
-        'htttps://paratii.video/imagens/cropped-logo_colorido_horizontal.png'
+        'https://paratii.video/imagens/cropped-logo_colorido_horizontal.png'
       const videoTitle = video.title
       const videoDescription = video.description
       const creatorName = video.author
