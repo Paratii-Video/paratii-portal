@@ -80,7 +80,7 @@ class MainFooter extends Component<Props, void> {
                 <Anchor
                   anchor
                   highlight
-                  href="http://paratii.video/"
+                  href="https://paratii.video/"
                   target="_blank"
                 >
                   <TranslatedText message="footer.homePage" />
