@@ -40,7 +40,7 @@ describe('👤 Profile:', function () {
     })
     browser.waitUntil(() => browser.isVisible('[data-test-id="login-signup"]'))
     const loginText = browser.getText('[data-test-id="login-signup"]')
-    assert.equal(loginText, 'SIGN UP / LOG IN')
+    assert.equal(loginText, 'BECOME A CONTRIBUTOR')
   })
 
   it('if there is secure wallet, in the header we have a login button', function () {
@@ -52,7 +52,7 @@ describe('👤 Profile:', function () {
     browser.url(`http://localhost:8080`)
     browser.waitUntil(() => browser.isVisible('[data-test-id="login-signup"]'))
     const loginText = browser.getText('[data-test-id="login-signup"]')
-    assert.equal(loginText, 'SIGN UP / LOG IN')
+    assert.equal(loginText, 'BECOME A CONTRIBUTOR')
   })
 
   // it.skip('send ether dialog works', function () {
