@@ -161,10 +161,12 @@
 			"placeholder": "Search"
 		},
 		"results": {
-			"resultsFor": "Results for: %{term}",
+			"resultsFor": "Results for \"%{term}\":",
 			"noResultsFor": "No results found for \"%{term}\"",
 			"moreResults": "See more results",
-			"zeroState": "Enter some keywords above to search!"
+			"zeroState": "Enter some keywords above to search!",
+			"relatedContent": "Related Content",
+			"relatedContentCategories": "Categories:"
 		}
 	},
 	"tcr": {

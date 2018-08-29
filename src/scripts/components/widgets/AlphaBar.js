@@ -8,13 +8,17 @@ import TextButton from '../foundations/TextButton'
 import TranslatedText from '../translations/TranslatedText'
 import SVGIcon from '../foundations/SVGIcon'
 import {
-  Z_INDEX_ALPHABAR,
   ALPHABAR_PADDING_VERTICAL,
   MAINHEADER_PADDING_LEFT,
   MAINHEADER_PADDING_LEFT_BP,
   MEDIAQUERY_BREAKPOINT
 
 } from 'constants/UIConstants'
+
+type Props = {}
+type State = {
+  disabled: boolean
+}
 
 const Wrapper = styled.div`
   ${FlexCenterStyle}
@@ -43,7 +47,7 @@ const ButtonWrapper = styled.div`
   }
 `
 
-class AlphaBar extends React.Component<Props> {
+class AlphaBar extends React.Component<Props, State> {
   closeBar: () => void
   constructor (props: Props) {
     super(props)

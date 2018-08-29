@@ -114,7 +114,7 @@ describe('TCR:', function () {
       await paratii.eth.transfer(someAddress, 1, 'PTI')
       revealPeriodActive = await paratii.eth.tcr.revealPeriodActive(challengeId)
     }
-    let isPassed = await paratii.eth.tcr.isPassed(challengeId)
+    const isPassed = await paratii.eth.tcr.isPassed(challengeId)
     assert.isTrue(isPassed)
 
     // the video should enter the whitelist succesfully because there are 2 votes for and 1 against
@@ -133,7 +133,6 @@ describe('TCR:', function () {
     console.log(dbRecord.tcrStatus.data.challenge)
     const challengeRecord = await paratii.db.tcr.challenges.get(id)
     console.log(challengeRecord)
-
   })
 
   it('you can challenge a published video', async function () {
