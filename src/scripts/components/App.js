@@ -108,9 +108,9 @@ class App extends Component<Props, State> {
                 />
                 <Route
                   path={`${match.url}upload/:id`}
-                  component={VideoManager}
+                  component={EditVideo}
                 />
-                <Route path={`${match.url}upload`} component={VideoManager} />
+                <Route path={`${match.url}upload`} component={EditVideo} />
                 <Route path={`${match.url}voucher`} component={Voucher} />
                 <Route path={`${match.url}debug`} component={DebugContainer} />
                 <Route
