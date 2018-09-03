@@ -1,158 +1,368 @@
 {
-    "footer": {
-        "discover_html": "Saiba tudo sobre a paratii em %{homePageLink}",
-        "homePage": "paratii.video",
-        "betaTool_html": "v0.0.1: Este portal está em desenvolvimento! Nós &hearts; ouvir seu feedback no Telegram: %{telegramBrazilLink} ou %{telegramEnglishLink}",
-        "brazil": "Português",
-        "english": "Inglês"
-    },
-    "landingPage": {
-        "header": {
-            "title_html": "Traga os seus vídeos<br /> para o futuro.",
-            "description": "A descentralização está mudando o negócio do vídeo online e devolvendo o poder para os usuários."
-        },
-        "videos": {
-            "title": "Conheça outros pioneiros",
-            "description": "Explore curtas, clipes, e novos formatos que nossa comunidade inventa todos os dias."
-        }
-    },
-    "myVideos": {
-        "title": "My videos",
-        "item": {
-            "status": {
-                "label": "Status",
-                "published": "Publicado",
-                "unpublished": "Não publicado"
-            }
-        }
-    },
-    "navigation": {
-        "voucher": "Obter PTI",
-        "myVideos": "Meus vídeos",
-        "upload": "Upload",
-        "about": "Sobre a Paratii",
-        "logIn": "Registrar / Entrar",
-        "profile": "Perfil"
-    },
-    "notFound": {
-        "title": "Oooooops, página não encontrada!",
-        "description": "Esta página não está disponível ainda. Nossa equipe está desenvolvendo-a ou talvez nem saiba que ela existe. Se quiser nos ajudar a consertar isso mais rápido, conte-nos como veio parar aqui com uma issue no Github:",
-        "linkText": "Paratii-Video"
-    },
-    "videoNotFound": {
-    "title": "Oooooops, vídeo não encontrado",
-    "description": "This page is not available yet. A passionate team is either building it or doesn't know about it. Want to help us move faster? Please tell us how you got here with an issue on our Github:",
-    "linkText": "Paratii-Video"
-    },
-    "search": {
-        "input": {
-            "placeholder": "Buscar"
-        },
-        "results": {
-            "resultsFor": "Resultados para: %{term}",
-            "noResultsFor": "Não foram encontrados resultados para \"%{term}\"",
-            "moreResults": "Mais resultados",
-            "zeroState": "Insira palavras-chave acima para buscar!"
-        }
-    },
-    "uploader": {
-        "dragFiles": "Arraste seus arquivos aqui",
-        "filesInstructions_html": "%{dragFiles} ou clique para buscá-los",
-        "supportedFileTypes": "(atualmente suporta arquivos .mp4 de até 800mb)",
-        "youtubeOrVimeo": "Ou importe do YouTube ou Vimeo (ainda não funciona)"
-    },
-    "player": {
-        "free": "Grátis",
-        "views": {
-            "zero": "zero"
-        },
-        "share": {
-            "title": "Compartilhe este vídeo",
-            "options": {
-                "telegram": "Telegram",
-                "twitter": "Twitter",
-                "whatsapp": "WhatsApp",
-                "embed": "Embedar"
-            },
-            "embedVideo": "Embedar este vídeo"
-        }
-    },
-    "profile": {
-        "modal": {
-            "title": "Perfil",
-            "description": "É assim que você será conhecido na rede Paratii. Insira seu e-mail se você gostaria de receber atualizações sobre a comunidade e sua atividade.",
-            "usernameLabel": "Usuário",
-            "emailLabel": "E-mail",
-            "continue": "Continuar",
-            "pleaseWait": "Por favor aguarde, estamos criando sua carteira",
-            "verificationEmail": {
-                "title": "Verifique seu e-mail",
-                "description": "Enviamos um link de confirmação a você"
-            }
-        }
-    },
-    "wallet": {
-        "securingWallet": "Trancando a sua carteira...",
-        "walletSecured": "Sua carteira está segura",
-        "unlockingKeystore": "Tentando destrancar sua conta...",
+	"footer": {
+		"discover_html": "Saiba mais sobre a Paratii em %{homePageLink}",
+		"homePage": "paratii.video",
+		"betaTool_html": "v0.0.2: Este portal está em desenvolvimento! Nós &hearts; ouvir seu feedback no Telegram: %{telegramBrazilLink} ou %{telegramEnglishLink}.",
+		"brazil": "Portuguese",
+		"english": "English"
+	},
+	"landingPage": {
+		"alert_html": "<strong>Esté é um Alpha</strong> (numa testnet da Ethereum). O código não foi auditado. Não compartilhe informações sensíveis.",
+		"header": {
+			"title_html": "🎉 Around the block<br />: primeiro episódio lançado",
+			"description_html": "Uma websérie documental<br /> sobre as mentes por trás da descentralização. Assista agora!"
+		},
+		"text": "O Lab é uma plataforma peer-to-peer que não espia nem revende suas informações. Encontre séries, tutoriais, palestras e descubra as cripto-comunidades que existem além da sua.",
+		"button": "+ Veja mais",
+		"videos": {
+			"title": "Meet your fellow pioneers",
+			"description": "Explore short stories, music clips, and formats that our community is inventing every day."
+		}
+	},
+	"modal": {
+		"challenge": {
+			"title": "Desafie este vídeo"
+		},
+		"profile": {
+			"title": "Perfil",
+			"description": "Como você quer ser conhecido? Insira seu email para receber updates sobre a comunidade e sua atividade.",
+			"usernameLabel": "Nome de usuário",
+			"emailLabel": "Email",
+			"continue": "Continuar",
+			"pleaseWait": "Aguarde: criando conta.",
+			"verificationEmail": {
+				"title": "Cheque seu email:",
+				"description": "Clique no link de confirmação."
+			}
+		},
+		"vote": {
+			"title": "Vote neste vídeo."
+		}
+	},
+	"myVideos": {
+		"title": "Meus vídeos",
+		"item": {
+			"status": {
+				"label": "Status",
+				"published": "Publicado",
+				"unpublished": "Não-publicado"
+			}
+		}
+	},
+	"navigation": {
+		"voucher": " Tokens",
+		"myVideos": "Enviar & editar",
+		"upload": "Upload",
+		"about": "Sobre a Paratii",
+		"logIn": "Login",
+		"profile": "Perfil",
+		"telegram": "Entre no Telegram"
+	},
+	"notFound": {
+		"title": "Houston, temos um problema.",
+		"description": "Pouso não completado. Causa: link errado, ou a página está em construção. Se quiser ajudar, nos conta como chegou aqui:",
+		"linkText": "Paratii-Video"
+	},
+	"player": {
+		"free": "Gratuito",
+		"views": {
+			"zero": "0"
+		},
+		"share": {
+			"title": "Compartilhar",
+			"options": {
+				"telegram": "Telegram",
+				"twitter": "Twitter",
+				"whatsapp": "WhatsApp",
+				"embed": "Embed"
+			},
+			"embedVideo": "Embedar vídeo"
+		}
+	},
+	"PTI": "💎",
+	"invested": "🔐",
+	"profile": {
+		"title": "Perfil",
+		"editButton": "Editar",
+		"dataLabel": "Desde",
+		"balanceTitle": "Saldo",
+		"investedTitle": "Investido",
+		"emailLabel": "E-mail",
+		"addressLabel": "Endereço",
+		"copyLabel": "Copiar"
+	},
+	"profileEdit": {
+		"title": "Editar perfil",
+		"avatarLabel": "Editar avatar",
+		"usernameLabel": "Nome de usuário",
+		"emailLabel": "E-mail",
+		"cancelButton": "Cancelar",
+		"saveButton": "Salvar"
+	},
+	"profileLogOut": {
+		"title": "Perfil",
+		"text": "Você deve estar logado para acessar este conteúdo.",
+		"button": "Login"
+	},
+	"ptiGuide": {
+		"title": "O que são tokens?",
+		"description": "Leitura recomendada antes de submeter vídeos",
+		"callToAction": "Descubra como usar seus créditos",
+		"ptiGuide": "Credits Guide",
+		"steps": {
+			"token": {
+				"mainContent": "PTI is the native token of the Paratii open system. We call it a \"system\" because the network executes operations with PTI although nobody \"owns\" the machinery who does the job.",
+				"subContent": "PTI tokens are issued, distributed and collected by smart contracts that live on the Ethereum blockchain. Every new registered user on Paratii earns some tokens to experiment with. They show up on the top right of this page (click that icon!) or in our embedded player, when one is watching through other sites. Let's see what you can do with PTI?"
+			},
+			"staking": {
+				"mainContent": "The basic operation here is staking. Whenever you upload a video, 5 of your tokens will be automatically \"attached to it\", as it enters the system. Think of it as a security deposit.",
+				"subContent": "At any time, you will be able to retrieve your tokens back, which also delists the video from this web portal and related interfaces. On the other hand, those who leave tokens staked are continuously granted rewards, issued through inflation, and can also earn profits if the playlists their videos belong to are performing well (these two functions are not live yet). So uploading content and staking are forms of active participation in this economy."
+			},
+			"flagging": {
+				"mainContent": "Videos will be subject to \"flags\". Flagging a video means matching its stake, by putting up an equivalent amount for challenge.",
+				"subContent": "Any user can then go in favour or disfavour that video’s presence on the system. Videos collectively rejected lose their stakes - forfeited PTI go to voters in the challenge (people who flagged or disapproved) and to all people actively staking tokens in the system, at the moment. That means that keeping a well curated record of videos - one that keeps attracting creators and spitting out harmful content - can be a profitable activity to the system's participants."
+			},
+			"conclusion": {
+				"mainContent": "Soon, PTI will also be usable for facilitating micro payments. Creators will have monetisation options to directly receive value from their audiences and/or advertisers.",
+				"subContent_html": "Most important for now is that you understand PTI as an entry ticket to take part in an economy that belongs to you as much as you are willing to belong to it. Tokens displayed here are in a test environment still, and have no monetary value. If you're willing to claim some extra test PTI, ask questions, or make suggestions about the token's feature set itself, don't hesitate to %{getInTouchEmailLink}.",
+				"getInTouch": "get in touch"
+			}
+		}
+	},
+	"uploadListItem": {
+		"statusMessage": {
+			"needsTitle": "Escreva um título e uma descrição.",
+			"videoReady": "✅ Vídeo pronto!",
+			"uploadFailed": "O upload do seu vídeo falhou.",
+			"transcodeFailed": "Seu vídeo falhou em ser transcodado.",
+			"transcoding": "Transcodando seu vídeo...",
+			"uploading": "Fazendo upload do vídeo..."
+		},
+		"title": "Título",
+		"description": "Descrição",
+		"ownership": "A quem os direitos deste vídeo pertencem? Por favor, aponte um link que comprove.",
+		"videoId": "Video Id",
+		"contentType": {
+			"title": "Que tipo de conteúdo?",
+			"free": "Gratuito",
+			"paid": "Pago (não disponível)"
+		},
+		"publish": "Publicar",
+		"termsOfService": "Ao \"Publicar\", você concorda com os Termos de Uso da Paratii. Não são permitidas violações de direito ou privacidade.",
+		"save": "Salvar",
+		"noVideo": "Nenhum vídeo selecionado!",
+		"insufficientBalance": {
+			"title": "Sem créditos suficientes",
+			"description": "Você precisa de %{amount} créditos para realizar esta ação."
+		}
+	},
+	"search": {
+		"input": {
+			"placeholder": "Buscar"
+		},
+		"results": {
+			"resultsFor": "O que encontramos sobre \"%{term}\":",
+			"noResultsFor": "Nenhum resultado para \"%{term}\"",
+			"moreResults": "Veja mais resultados",
+			"zeroState": "Escreva algumas palavras-chave acima para fazer uma busca.",
+			"relatedContent": "Conteúdo relacionado",
+			"relatedContentCategories": "Categorias:"
+		}
+	},
+	"tcr": {
+		"ChallengePeriod": {
+			"whitelistedTitle_html": "<strong>Período de votação</strong> acaba em",
+			"challengedTitle_html": "<strong>Período de desafio</strong> acaba em",
+			"inRevealTitle_html": "<strong>Período de relevação</strong> acaba em",
+			"whitelistedLabel": "Aprovados",
+			"challengedLabel": "Em votação",
+			"inRevealLabel": "Em revelação",
+			"hourLabel": "hora",
+			"minutesLabel": "minutos",
+			"secondsLabel": "segundos"
+		},
+		"CommitYourVote": {
+			"title": "Escolha um lado",
+			"text": "Vote YAY ou NAY sobre a permanência ou não deste vídeo na plataforma.",
+			"buttonSupport": "Yay",
+			"buttonOppose": "Nay"
+		},
+		"RevealYourVote": {
+			"title": "Você precisará revelar o seu voto mais tarde!",
+			"text": "Se você esquecer de fazê-lo, seu voto não contará, mas não perderá seus créditos.",
+			"button": "Revelar voto"
+		},
+		"VideoApproved": {
+			"title": "Este vídeo foi aprovado.",
+			"text": "A comunidade escolheu YAY. Este vídeo pode ser desafiado de novo em 6 dias."
+		},
+		"VideoRejected": {
+			"title": "Este vídeo foi rejeitado.",
+			"text": "A comunidade escolheu NAY. Este vídeo foi delistado, provavelmente por violar os termos de uso da plataforma."
+		},
+		"VoteCommitted": {
+			"title": "Voto comprometido",
+			"text_html": "Quando o período de comprometimento acabar, volte para revelar seu voto. Você deverá enviá-lo <strong>back</strong> durante o período de revelação. Se não revelá-lo, seu voto não contará."
+		},
+		"VoteRevealed": {
+			"title": "Voto revelado",
+			"text": "Seu voto foi revelado. Agora é só esperar o fim do período de revelação para sabermos o resultado."
+		},
+		"Voting": {
+			"title": "Votar",
+			"box1Label": "Yay",
+			"box2Label": "Nay",
+			"dateLabel": "Data do desafio:"
+		},
+		"WhiteListed": {
+			"title": "Este vídeo está ",
+			"text": "Este vídeo fo publicado na rede. Se estiver violando nossos termos de uso, desafie ele para competir por recompensas.",
+			"button": "Desafiar"
+		}
+	},
+	"tipping": {
+		"giveTip": "Fazer doação",
+		"amounts": {
+			"10": "10",
+			"15": "15",
+			"20": "20",
+			"25": "25"
+		},
+		"defaultAuthor": "o autor",
+		"tippingError": "Algo deu errado com o envio.",
+		"steps": {
+			"chooseAmount": {
+				"header": "Sentindo-se generoso?",
+				"chooseTip": "Escolha quanto quer doar a %{username} :"
+			},
+			"enterPassword": {
+				"header": "Confirmando doação",
+				"inputPlaceholder": "Senha",
+				"continue": "Continuar",
+				"wrongPassword": "Senha incorreta"
+			},
+			"completed": {
+				"header1": "%{username} agradece.",
+				"header2": "Valeu por fazer o dia de %{username} mais feliz.",
+				"header3": "Doações são como abraços. Sem todo o contato físico.",
+				"continueWatching": "Continuar assistindo"
+			}
+		}
+	},
+	"uploader": {
+		"dragFiles": "Arraste arquivos aqui",
+		"filesInstructions_html": "%{dragFiles} ou clique para buscá-los na sua máquina",
+		"supportedFileTypes": "(somente .mp4 suportado)",
+		"youtubeOrVimeo": "(Não-funcional) Ou faça upload a partir do YouTube / Vimeo",
+		"notifications": {
+			"starting": {
+				"title": "Aguarde...",
+				"description": "Preparando seu arquivo para a jornada."
+			},
+			"uploadError": {
+				"title": "Erro de upload:",
+				"description": "Algo deu errado com o upload do arquivo. Tente novamente."
+			},
+			"uploaded": {
+				"title": "Upload completo:",
+				"description": "Seus pixels agora estão sendo transcodados."
+			},
+			"transcodeError": {
+				"title": "Erro de transcoding:",
+				"description": "As máquinas não estão cooperando. Pode recarregar a página?"
+			},
+			"transcoding": {
+				"title": "Transcodando:",
+				"description": "Aquele processo com nome estranho: soa como se estivessem mastigando seu vídeo."
+			},
+			"transcoded": {
+				"title": "Transcoding finalizado:",
+				"description": "✅ Vídeo pronto para ser publicado!"
+			},
+			"saving": {
+				"title": "Salvando dados..."
+			},
+			"saved": {
+				"title": "Salvo",
+				"description": "Dados salvos!"
+			},
+			"saveError": {
+				"title": "❌ Erro em salvar dados."
+			}
+		}
+	},
+	"userNav": {
+		"dataLabel": "Desde",
+		"leftBoxTitle": "Disponível",
+		"rightBoxTitle": "Investido"
+	},
+	"videoNotFound": {
+		"title": "Houston, temos um problema.",
+		"description": "Pouso não completado. Vídeo não existente, ou link errado. Se quiser ajudar, nos conta como chegou aqui:",
+		"linkText": "Paratii-Video"
+	},
+	"wallet": {
+        "securingWallet": "Criando uma conta...",
+        "walletSecured": "Você tem uma conta!",
+        "unlockingKeystore": "Acessando a carteira da sua conta...",
         "enterPassword": {
             "title": "Insira sua senha",
-            "description": "Favor inserir a sua senha para utilizar todos os recursos da Paratii",
+            "description": "Favor inserir a sua senha para utilizar todos os recursos do Lab.",
             "inputPlaceholder": "Insira sua senha",
             "forgotPassword": "Esqueci minha senha",
             "continue": "Continuar",
             "success": {
-                "title": "Sucesso!",
-                "description": "Sua conta foi destrancada."
+                "title": "✅ Sucesso!",
+                "description": "Sua conta está pronta para uso."
             },
             "error": {
-                "title": "A senha não está correta",
-                "description": "Por favor escreve sua senha novamente",
-                "formErrorMessage": "A senha não é válida, favor reescrevê-la"
+                "title": "A senha não está correta.",
+                "description": "Por favor escreve sua senha novamente.",
+                "formErrorMessage": "A senha não é válida, favor reescrevê-la."
             }
         },
         "restoreAccount": {
-            "title": "Reescreva a frase de recuperação de conta",
-            "description": "Reescreva as 12 palavras da sua frase de recuperação para continuar o processo",
-            "mnemonic": "Frase",
+            "title": "Lembra daquelas 12 palavras que te pedimos pra guardar?",
+            "description": "Reescreva as 12 palavras (chave da conta) para continuar o processo.",
+            "mnemonic": "Chave da conta (12 palavras)",
             "continue": "Continuar",
             "goBack": "Voltar",
-            "errorMessage": "As 12 palavras inseridas não são válidas"
+            "errorMessage": "As 12 palavras inseridas não são válidas."
         },
-        "secureAccount": {
-            "title": "Antes de prosseguir, você deve criar uma conta",
-            "description": "Não levará mais de um minuto",
-            "alreadyHaveAccount": "Eu já tenho uma conta",
-            "secureThisAccount": "Criar conta"
-        },
-        "choosePassword": {
-            "title": "Escolha uma senha",
-            "description_html": "Favor inserir uma senha com pelo menos <strong>oitostrong> caracteres, e que contenha pelo menos uma letra <strong>maiúscula<strong> e um <strong>número</strong>\n",
-            "newPasswordLabel": "Nova Senha",
-            "confirmPasswordLabel": "Confirmar Senha",
-            "continue": "Continuar",
-            "back": "Voltar",
-            "errors": {
-                "passwordMismatch": "Ei, suas senhas não são iguais",
-                "eightCharacters": "A senha deve ter pelo menos oito caracteres",
-                "numericCharacter": "A senha deve conter pelo menos um número",
-                "uppercaseCharacter": "A senha deve conter pelo menos uma letra maiúscula"
-            }
-        },
-        "showSeed": {
-            "title": "Sua chave de recuperação de conta",
-            "description_html": "Esta é sua chave de recuperação. É como uma senha para restaurar a sua conta. %{keepSafe}",
-            "keepSafe": "Mantenha ela em segredo. Mantenha ela segura",
-            "copy": {
-                "buttonText": "Copiar",
-                "confirmCopy": "Eu copiei as 12 palavras. Elas estão em segredo e em segurança",
-                "notification": {
-                    "title": "Copiado!",
-                    "description": "Sua chave foi copiada"
-                }
-            },
-            "goBack": "Voltar",
-            "continue": "Continuar"
-        }
-    }
+		"secureAccount": {
+			"title": "Pronto para fazer uma conta?",
+			"description": "São só 3 passos.",
+			"alreadyHaveAccount": "Já tenho uma conta",
+			"secureThisAccount": "Criar nova conta"
+		},
+		"choosePassword": {
+			"title": "Crie uma senha.",
+			"description_html": "Use 89 caracteres ou mais. Inclua ao menos 1 letra maiúscula e 1 número.",
+			"newPasswordLabel": "Senha",
+			"confirmPasswordLabel": "Confirmar senha",
+			"continue": "Continuar",
+			"back": "Voltar",
+			"errors": {
+				"passwordMismatch": "Máquina. Está. Confusa. As senhas não batem!",
+				"eightCharacters": "Por favor, use 8 caracteres ou mais.",
+				"numericCharacter": "A senha deve ter ao menos 1 número.",
+				"uppercaseCharacter": "A senha deve ter ao menos 1 letra maiúscula."
+			}
+		},
+		"showSeed": {
+			"title": "🔑 Voilá: aqui está a chave da sua conta.",
+			"description_html": "Está é a única prova de que você é o dono dessa conta. %{keepSafe}",
+			"keepSafe": "Guarde-a em um lugar seguro. Mantenha a chave secreta.",
+			"copy": {
+				"buttonText": "Copiar",
+				"confirmCopy": "Já copiei as 12 palavras. Elas estão seguras e protegidas.",
+				"notification": {
+					"title": "Copiado!",
+					"description": "A chave da sua conta foi copiada para o clipboard."
+				}
+			},
+			"goBack": "Voltar",
+			"continue": "Continuar"
+		}
+	}
 }
