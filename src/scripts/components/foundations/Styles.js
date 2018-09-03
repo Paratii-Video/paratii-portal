@@ -13,3 +13,13 @@ export const AbsoluteFullStyle = css`
   width: 100%;
   height: 100%;
 `
+
+export const OpacityStyleHover = css`
+  backface-visibility: hidden;
+  transition: all 0.5s;
+
+  &:focus,
+  &:hover {
+    opacity: 0.7;
+  }
+`
