@@ -1,18 +1,18 @@
 {
 	"footer": {
-		"discover_html": "Discover all about Paratii at %{homePageLink}",
+		"discover_html": "Learn more about Paratii at %{homePageLink}",
 		"homePage": "paratii.video",
-		"betaTool_html": "v0.0.1: This is a beta tool! We &hearts; to get feedback on Telegram: %{telegramBrazilLink} or %{telegramEnglishLink}",
+		"betaTool_html": "v0.0.2: This is an alpha tool! We &hearts; to get feedback on Telegram: %{telegramBrazilLink} or %{telegramEnglishLink}",
 		"brazil": "Portuguese",
 		"english": "English"
 	},
 	"landingPage": {
-		"alert_html": "<strong>This portal is in Alpha</strong> (Ethereum testnet). Code hasn’t been audited. Don’t share sensitive information.",
+		"alert_html": "<strong>This is an Alpha</strong> (on an Ethereum testnet). Code hasn’t been audited. Don’t share sensitive information.",
 		"header": {
-			"title_html": "Around the block<br /> now available!",
-			"description_html": "The 4-part documentary webseries<br /> on the minds behind the blockchain"
+			"title_html": "🎉 Around the block<br />: episode 1 is live",
+			"description_html": "A 4-part docuseries<br /> on the minds behind the blockchains. Start watching now!"
 		},
-		"text": "Watch documentaries, series and educational videos on Paratii, a decentralized hosting and curation platform",
+		"text": "Lab is a peer-to-peer video site that doesn't spy on you. Find series, tutorials, speeches and discover crypto-communities beyond your own.",
 		"button": "+ Discover more",
 		"videos": {
 			"title": "Meet your fellow pioneers",
@@ -25,14 +25,14 @@
 		},
 		"profile": {
 			"title": "Profile",
-			"description": "This is how you'll be known on the Paratii network. Enter your email if you'd like to receive updates about the community and your activity.",
+			"description": "This is how you'll be known. Enter your email to receive updates about the community and your activity.",
 			"usernameLabel": "Username",
 			"emailLabel": "Email",
 			"continue": "Continue",
-			"pleaseWait": "Please wait, we are creating your wallet",
+			"pleaseWait": "Please wait: creating your wallet.",
 			"verificationEmail": {
-				"title": "Check your email",
-				"description": "We sent you a confirmation link"
+				"title": "Check your email:",
+				"description": "Click the confirmation link."
 			}
 		},
 		"vote": {
@@ -59,8 +59,8 @@
 		"telegram": "Join us on Telegram"
 	},
 	"notFound": {
-		"title": "Oooooops, page not found",
-		"description": "This page is not available yet. A passionate team is either building it or doesn't know about it. Want to help us move faster? Please tell us how you got here with an issue on our Github:",
+		"title": "Houston, we have a problem.",
+		"description": "Landing procedure not completed. Either a wrong link, or the page is under construction. Help us telling how you got here:",
 		"linkText": "Paratii-Video"
 	},
 	"player": {
@@ -101,7 +101,7 @@
 	},
 	"profileLogOut": {
 		"title": "Profile",
-		"text": "Perhaps you want to login to see this content",
+		"text": "Perhaps you want to login to see this content.",
 		"button": "Log in"
 	},
 	"ptiGuide": {
@@ -131,7 +131,7 @@
 	},
 	"uploadListItem": {
 		"statusMessage": {
-			"needsTitle": "Please provide a title and description",
+			"needsTitle": "Please provide a title and description.",
 			"videoReady": "Your video is ready",
 			"uploadFailed": "Your video could not be uploaded",
 			"transcodeFailed": "Your video could not be transcoded",
@@ -140,7 +140,7 @@
 		},
 		"title": "Title",
 		"description": "Description",
-		"ownership": "Is this video really yours?",
+		"ownership": "Who does this belong to?",
 		"videoId": "Video Id",
 		"contentType": {
 			"title": "What kind of content?",
@@ -148,7 +148,7 @@
 			"paid": "Paid (not available yet)"
 		},
 		"publish": "Publish",
-		"termsOfService": "By clicking on the \"Publish\" button you acknowledge that you agree to Paratii’s Terms of Service and Community Guidelines. Please be sure not to violate others’ copyright or privacy rights.",
+		"termsOfService": "By clicking \"Publish\", you agree to Paratii’s Terms of Service. Don't violate others’ copyright or privacy rights.",
 		"save": "Save",
 		"noVideo": "No video selected!",
 		"insufficientBalance": {
@@ -161,11 +161,11 @@
 			"placeholder": "Search"
 		},
 		"results": {
-			"resultsFor": "Results for \"%{term}\":",
+			"resultsFor": "What's on store for \"%{term}\":",
 			"noResultsFor": "No results found for \"%{term}\"",
 			"moreResults": "See more results",
 			"zeroState": "Enter some keywords above to search!",
-			"relatedContent": "Related Content",
+			"relatedContent": "Related content",
 			"relatedContentCategories": "Categories:"
 		}
 	},
@@ -183,26 +183,26 @@
 		},
 		"CommitYourVote": {
 			"title": "Choose your side",
-			"text": "Vote in support or opposition to the permanence of this video in the platform.",
-			"buttonSupport": "Support",
-			"buttonOppose": "Oppose"
+			"text": "Vote YAY or NAY to the permanence of this video in the platform.",
+			"buttonSupport": "Yay",
+			"buttonOppose": "Nay"
 		},
 		"RevealYourVote": {
 			"title": "You need to send back your vote!!",
-			"text": "You need to send back your vote to reveal it. If you forget,your vote is not going to count.",
+			"text": "You need to send back your vote to reveal it. If you forget, your vote won't count.",
 			"button": "Reveal your vote"
 		},
 		"VideoApproved": {
 			"title": "This video has been approved",
-			"text": "The Paratii community supported the permanence of this video on the platform.The video will continue to exist on the plataform and is going to be available for new challenges in 6 days."
+			"text": "The community supported the permanence of this video on the platform. It can be challenged again in 6 days."
 		},
 		"VideoRejected": {
 			"title": "This video has been rejected",
-			"text": "The Paratii community opposed the permanence of this video on the platform.The video was deleted because the community consensus is that this video broke one of our policies."
+			"text": "The community opposed the permanence of this video on the platform. The video was deleted after, probably because it broke one of our policies."
 		},
 		"VoteCommitted": {
 			"title": "Vote Committed",
-			"text_html": "Wait until the commit period ends to reveal it. You will send it <strong>back</strong> when the reveal period starts. If you don’t send it back your vote is not going to be counted."
+			"text_html": "Wait until the commit period ends, to reveal your vote. You will send it <strong>back</strong> when the reveal period starts. If you don’t send it back, your vote won't count."
 		},
 		"VoteRevealed": {
 			"title": "Vote Revealed",
@@ -210,14 +210,14 @@
 		},
 		"Voting": {
 			"title": "Voting",
-			"box1Label": "Support",
-			"box2Label": "Oppose",
+			"box1Label": "Yay",
+			"box2Label": "Nay",
 			"dateLabel": "Date of the challenge:"
 		},
 		"WhiteListed": {
 			"title": "This video is ",
-			"text": "This video has been published to our network. If it breaks any of the rules, challenge it and you’ll be rewarded.",
-			"button": "Challenge this content"
+			"text": "This video has been published to our network. If it breaks any of the rules, challenge it and compete for rewards.",
+			"button": "Challenge"
 		}
 	},
 	"tipping": {
@@ -229,7 +229,7 @@
 			"25": "25"
 		},
 		"defaultAuthor": "the author",
-		"tippingError": "Unfortunately, something went wrong with the tipping process",
+		"tippingError": "Something went wrong with the tipping process",
 		"steps": {
 			"chooseAmount": {
 				"header": "Feeling generous today?",
@@ -256,112 +256,112 @@
 		"youtubeOrVimeo": "(Not working yet) Or upload from Youtube or Vimeo",
 		"notifications": {
 			"starting": {
-				"title": "Be Patient!",
-				"description": "We are preparing your file."
+				"title": "Be patient!",
+				"description": "Preparing your file for the journey."
 			},
 			"uploadError": {
-				"title": "Upload Error",
-				"description": "Something went wrong with your file. We are so sorry. Please retry?"
+				"title": "Upload error:",
+				"description": "Something went wrong with your file. Please retry."
 			},
 			"uploaded": {
-				"title": "File uploaded",
-				"description": "Now we need to transcode your pixels"
+				"title": "File uploaded:",
+				"description": "Your pixels are now being transcoded."
 			},
 			"transcodeError": {
-				"title": "Trascoder Error",
-				"description": "The machines are not cooperating. Please refresh?"
+				"title": "Transcoding error:",
+				"description": "Machines are not cooperating. Please refresh, sir?"
 			},
 			"transcoding": {
-				"title": "Transcoding",
-				"description": "The transcoding has started"
+				"title": "Transcoding:",
+				"description": "The transcoding party has started."
 			},
 			"transcoded": {
-				"title": "Transcoder done",
-				"description": "Your video is ready to be published!"
+				"title": "Transcoding done:",
+				"description": "Video ready to be published!"
 			},
 			"saving": {
-				"title": "We are saving your data"
+				"title": "We are saving your data."
 			},
 			"saved": {
 				"title": "Saved",
-				"description": "Data saved!!"
+				"description": "Data saved!"
 			},
 			"saveError": {
-				"title": "Saving Error"
+				"title": "Saving error."
 			}
 		}
 	},
 	"userNav": {
 		"dataLabel": "Since",
-		"leftBoxTitle": "Available PTI",
-		"rightBoxTitle": "Staked PTI"
+		"leftBoxTitle": "Available",
+		"rightBoxTitle": "Staked"
 	},
 	"videoNotFound": {
-		"title": "Oooooops, page not found",
-		"description": "This page is not available yet. A passionate team is either building it or doesn't know about it. Want to help us move faster? Please tell us how you got here with an issue on our Github:",
+		"title": "Houston, we have a problem.",
+		"description": "Landing procedure not completed. This video does not exist. Help us, telling how you got here:",
 		"linkText": "Paratii-Video"
 	},
 	"wallet": {
-		"securingWallet": "Securing your wallet...",
-		"walletSecured": "Your wallet is now secured",
-		"unlockingKeystore": "Trying to unlock your keystore...",
+		"securingWallet": "Crafting you an account...",
+		"walletSecured": "You have a secure account!",
+		"unlockingKeystore": "Unlocking your wallet...",
 		"enterPassword": {
 			"title": "Enter your password",
-			"description": "Please enter your password to use all the features of Paratii",
-			"inputPlaceholder": "Enter your password",
+			"description": "Log in to access all features of the Lab.",
+			"inputPlaceholder": "My password",
 			"forgotPassword": "Forgot Password",
 			"continue": "Continue",
 			"success": {
 				"title": "Success!",
-				"description": "Your keystore has been unlocked."
+				"description": "Your wallet is ready to go."
 			},
 			"error": {
-				"title": "The password is not valid",
-				"description": "Please reypte the password",
-				"formErrorMessage": "The password is not valid, please retype the password"
+				"title": "Password invalid",
+				"description": "Please reypte the password.",
+				"formErrorMessage": "Wrong password, please retry."
 			}
 		},
 		"restoreAccount": {
-			"title": "Rewrite your account recovery phrase",
-			"description": "Rewrite the 12 words of your recovery phrase to continue the process",
-			"mnemonic": "Mnemonic",
+			"title": "Remember that string of words we asked you to save?",
+			"description": "Enter your account key (those 12 words you copied) to continue.",
+			"mnemonic": "Account key (12 words)",
 			"continue": "Continue",
-			"goBack": "Go Back",
-			"errorMessage": "The 12 words you entered are not valid"
+			"goBack": "Forgot it. Make me a new account",
+			"errorMessage": "The 12 words you entered are not valid."
 		},
 		"secureAccount": {
-			"title": "Before you proceed your account needs to be secure",
-			"description": "It won't take more than a minute",
-			"alreadyHaveAccount": "I already have an account",
-			"secureThisAccount": "Secure this account"
+			"title": "Ready to sign up?",
+			"description": "It only takes 3 steps.",
+			"alreadyHaveAccount": "Access existing account",
+			"secureThisAccount": "Make new account"
 		},
 		"choosePassword": {
-			"title": "Choose a password",
-			"description_html": "Please insert a password of <strong>eight</strong> characters or longer, containing at least one <strong>uppercase</strong> letter and one <strong>number</strong>",
-			"newPasswordLabel": "New Password",
+			"title": "Create a password",
+			"description_html": "Make it 8 characters or longer. Include at least 1 uppercase letter and 1 number.",
+			"newPasswordLabel": "Password",
 			"confirmPasswordLabel": "Confirm Password",
 			"continue": "Continue",
-			"back": "Back",
+			"back": "Go back",
 			"errors": {
-				"passwordMismatch": "Hey, your password do not match",
-				"eightCharacters": "The password must be eight characters or longer",
-				"numericCharacter": "The password must contain at least 1 numeric character",
-				"uppercaseCharacter": "The password must contain at least 1 uppercase alphabetical character"
+				"passwordMismatch": "Machine. Is. Confused. Passwords don't match.",
+				"eightCharacters": "Password must be 8 characters or longer.",
+				"numericCharacter": "Password must contain at least 1 number.",
+				"uppercaseCharacter": "Password must contain at least 1 uppercase letter."
 			}
 		},
 		"showSeed": {
-			"title": "Your account recovery key",
-			"description_html": "This is your recovery key. It's like a password that will restore your account. %{keepSafe}",
+			"title": "🔑 Voilá: here's your account key",
+			"description_html": "This is the only proof that you own this account. %{keepSafe}",
 			"keepSafe": "Keep it secret. Keep it safe",
 			"copy": {
 				"buttonText": "Copy",
-				"confirmCopy": "I have copied the 12 words. They are secret, safe and sound",
+				"confirmCopy": "I have copied the 12 words. They are secret, safe and sound.",
 				"notification": {
 					"title": "Copied!",
-					"description": "Your key has been copied to the clipboard"
+					"description": "Your key has been copied to the clipboard."
 				}
 			},
-			"goBack": "Back",
+			"goBack": "Go back",
 			"continue": "Continue"
 		}
 	}
