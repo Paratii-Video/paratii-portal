@@ -1,5 +1,21 @@
 /* @flow */
 
+export const LANDING_HEADER_VIDEOS: Array<Object> = [
+  {
+    title: '1',
+    url: 'play/D93ftQHK3OXN'
+  },
+  {
+    title: '2'
+  },
+  {
+    title: '3'
+  },
+  {
+    title: '4'
+  }
+]
+
 export const LANDING_HIGHLIGHT_VIDEOS: Array<Object> = [
   {
     title: 'Explore more crypto content ',

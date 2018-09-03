@@ -26,6 +26,7 @@ import {
   Z_INDEX_BACK
 } from 'constants/UIConstants'
 import {
+  LANDING_HEADER_VIDEOS,
   LANDING_HIGHLIGHT_VIDEOS,
   LANDING_CATEGORY_VIDEOS
 } from 'constants/LandingConstants'
@@ -276,20 +277,27 @@ class Landing extends Component<Props, void> {
                   <TranslatedText message="landingPage.header.description_html" />
                 </HeaderText>
                 <HeaderButtons>
-                  <HeaderButtonsItem>
-                    <HeaderButton iconbutton="true" to="/play/65te9Z7bXDM4">
-                      <SVGIcon
-                        icon="icon-player-play"
-                        width="14px"
-                        height="14px"
-                        margin="0 10px 0 0"
-                      />
-                      Episode 1
-                    </HeaderButton>
-                  </HeaderButtonsItem>
-                  <HeaderButtonsItem><Text accent>Episode 2</Text></HeaderButtonsItem>
-                  <HeaderButtonsItem><Text accent>Episode 3</Text></HeaderButtonsItem>
-                  <HeaderButtonsItem><Text accent>Episode 4</Text></HeaderButtonsItem>
+                  {LANDING_HEADER_VIDEOS.map((item, index) => {
+                    if (item.url) {
+                      return (
+                        <HeaderButtonsItem key={index}>
+                          <HeaderButton iconbutton="true" to={item.url}>
+                            <SVGIcon
+                              icon="icon-player-play"
+                              width="14px"
+                              height="14px"
+                              margin="0 10px 0 0"
+                            />
+                            <TranslatedText message="landingPage.header.button" /> {item.title}
+                          </HeaderButton>
+                        </HeaderButtonsItem>
+                      )
+                    } else {
+                      return (
+                        <HeaderButtonsItem key={index}><Text accent><TranslatedText message="landingPage.header.button" /> {item.title}</Text></HeaderButtonsItem>
+                      )
+                    }
+                  })}
                 </HeaderButtons>
               </HeaderContentItem>
             </HeaderContent>
