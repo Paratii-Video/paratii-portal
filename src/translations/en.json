@@ -50,7 +50,7 @@
 		}
 	},
 	"navigation": {
-		"voucher": "Get PTI",
+		"voucher": "Get credits",
 		"myVideos": "Submit &  Edit",
 		"upload": "Upload",
 		"about": "About Paratii",
@@ -101,14 +101,14 @@
 	},
 	"profileLogOut": {
 		"title": "Profile",
-		"text": "Perhaps you want to login to see this content.",
+		"text": "You must login to see this content.",
 		"button": "Log in"
 	},
 	"ptiGuide": {
-		"title": "What is PTI?",
-		"description": "Suggested reading before you upload any content",
-		"callToAction": "Discover how to use your PTI",
-		"ptiGuide": "PTI Guide",
+		"title": "What are credits?",
+		"description": "Suggested reading before you upload any content.",
+		"callToAction": "Discover how to use your credits",
+		"ptiGuide": "Credits Guide",
 		"steps": {
 			"token": {
 				"mainContent": "PTI is the native token of the Paratii open system. We call it a \"system\" because the network executes operations with PTI although nobody \"owns\" the machinery who does the job.",
@@ -132,11 +132,11 @@
 	"uploadListItem": {
 		"statusMessage": {
 			"needsTitle": "Please provide a title and description.",
-			"videoReady": "Your video is ready",
-			"uploadFailed": "Your video could not be uploaded",
-			"transcodeFailed": "Your video could not be transcoded",
-			"transcoding": "Transcoding your video",
-			"uploading": "Uploading your video"
+			"videoReady": "✅ Your video is ready!",
+			"uploadFailed": "Your video could not be uploaded.",
+			"transcodeFailed": "Your video could not be transcoded.",
+			"transcoding": "Transcoding your video...",
+			"uploading": "Uploading your video..."
 		},
 		"title": "Title",
 		"description": "Description",
@@ -165,7 +165,7 @@
 			"resultsFor": "What's on store for \"%{term}\":",
 			"noResultsFor": "No results found for \"%{term}\"",
 			"moreResults": "See more results",
-			"zeroState": "Enter some keywords above to search!",
+			"zeroState": "Enter some keywords above to search.",
 			"relatedContent": "Related content",
 			"relatedContentCategories": "Categories:"
 		}
@@ -175,7 +175,7 @@
 			"whitelistedTitle_html": "<strong>Voting period</strong> ends in",
 			"challengedTitle_html": "<strong>Challenge period</strong> ends in",
 			"inRevealTitle_html": "<strong>Time to reveal</strong> ends in",
-			"whitelistedLabel": "whitelisted",
+			"whitelistedLabel": "Whitelisted",
 			"challengedLabel": "Voting",
 			"inRevealLabel": "Reveal ",
 			"hourLabel": "hour",
@@ -189,7 +189,7 @@
 			"buttonOppose": "Nay"
 		},
 		"RevealYourVote": {
-			"title": "You need to send back your vote!!",
+			"title": "You need to send back your vote!",
 			"text": "You need to send back your vote to reveal it. If you forget, your vote won't count.",
 			"button": "Reveal your vote"
 		},
@@ -207,7 +207,7 @@
 		},
 		"VoteRevealed": {
 			"title": "Vote Revealed",
-			"text": "Vote Your vote has been revealed, now you just need to wait until the reveal period ends."
+			"text": "Your vote has been revealed, now you just need to wait until the reveal period ends."
 		},
 		"Voting": {
 			"title": "Voting",
@@ -234,7 +234,7 @@
 		"steps": {
 			"chooseAmount": {
 				"header": "Feeling generous today?",
-				"chooseTip": "Choose how much to tip %{username}"
+				"chooseTip": "Choose how much to tip %{username} :"
 			},
 			"enterPassword": {
 				"header": "You are about to tip",
@@ -257,11 +257,11 @@
 		"youtubeOrVimeo": "(Not working yet) Or upload from Youtube or Vimeo",
 		"notifications": {
 			"starting": {
-				"title": "Be patient!",
+				"title": "Be patient.",
 				"description": "Preparing your file for the journey."
 			},
 			"uploadError": {
-				"title": "Upload error:",
+				"title": "❌ Upload error:",
 				"description": "Something went wrong with your file. Please retry."
 			},
 			"uploaded": {
@@ -269,7 +269,7 @@
 				"description": "Your pixels are now being transcoded."
 			},
 			"transcodeError": {
-				"title": "Transcoding error:",
+				"title": "❌ Transcoding error:",
 				"description": "Machines are not cooperating. Please refresh, sir?"
 			},
 			"transcoding": {
@@ -278,7 +278,7 @@
 			},
 			"transcoded": {
 				"title": "Transcoding done:",
-				"description": "Video ready to be published!"
+				"description": "✅ Video ready to be published!"
 			},
 			"saving": {
 				"title": "We are saving your data."
@@ -288,7 +288,7 @@
 				"description": "Data saved!"
 			},
 			"saveError": {
-				"title": "Saving error."
+				"title": "❌ Saving error."
 			}
 		}
 	},
@@ -313,7 +313,7 @@
 			"forgotPassword": "Forgot Password",
 			"continue": "Continue",
 			"success": {
-				"title": "Success!",
+				"title": "✅ Success!",
 				"description": "Your wallet is ready to go."
 			},
 			"error": {
@@ -337,7 +337,7 @@
 			"secureThisAccount": "Make new account"
 		},
 		"choosePassword": {
-			"title": "Create a password",
+			"title": "Create a password.",
 			"description_html": "Make it 8 characters or longer. Include at least 1 uppercase letter and 1 number.",
 			"newPasswordLabel": "Password",
 			"confirmPasswordLabel": "Confirm Password",
@@ -351,7 +351,7 @@
 			}
 		},
 		"showSeed": {
-			"title": "🔑 Voilá: here's your account key",
+			"title": "🔑 Voilá: here's your account key.",
 			"description_html": "This is the only proof that you own this account. %{keepSafe}",
 			"keepSafe": "Keep it secret. Keep it safe",
 			"copy": {
@@ -359,7 +359,7 @@
 				"confirmCopy": "I have copied the 12 words. They are secret, safe and sound.",
 				"notification": {
 					"title": "Copied!",
-					"description": "Your key has been copied to the clipboard."
+					"description": "Your account key has been copied to the clipboard."
 				}
 			},
 			"goBack": "Go back",
