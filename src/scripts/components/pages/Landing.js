@@ -105,22 +105,18 @@ const HeaderText = Text.extend`
 const HeaderButtons = styled.div`
   display: flex;
   align-items: center;
-
-  @media (max-width: 500px) {
-    flex-wrap: wrap;
-  }
 `
 
 const HeaderButtonsItem = styled.div`
+  color: ${props => props.theme.colors.text.accent};
   display: flex;
   align-items: center;
   margin: ${LANDING_HEADERBUTTONSITEM_MARGIN};
   min-height: ${BUTTON_HEIGHT};
-
-  @media (max-width: 500px) {
-    flex: 1 1 50%;
-    margin: ${LANDING_HEADERBUTTONSITEM_MARGIN_BP};
-  }
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
 `
 
 const HeaderButton = Button.withComponent(Link)
@@ -294,7 +290,17 @@ class Landing extends Component<Props, void> {
                       )
                     } else {
                       return (
-                        <HeaderButtonsItem key={index}><Text accent><TranslatedText message="landingPage.header.button" /> {item.title}</Text></HeaderButtonsItem>
+                        <HeaderButtonsItem key={index}>
+                          <SVGIcon
+                            icon="icon-lock"
+                            width="14px"
+                            height="14px"
+                            margin="0 10px 0 0"
+                          />
+                          <Text accent small>
+                            <TranslatedText message="landingPage.header.button" /> {item.title}
+                          </Text>
+                        </HeaderButtonsItem>
                       )
                     }
                   })}
