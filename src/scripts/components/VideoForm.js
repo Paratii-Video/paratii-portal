@@ -28,7 +28,7 @@ import {
   videoDuration,
   stakedAmount
 } from 'operators/VideoOperators'
-import { PROFILE_MYVIDEOS_PATH } from 'constants/UrlConstants'
+import { PROFILE_MYVIDEOS_PATH, TERMSOFSERVICE } from 'constants/UrlConstants'
 import { MODAL } from 'constants/ModalConstants'
 import {
   BORDER_RADIUS,
@@ -249,6 +249,8 @@ const URLForShare = Text.extend`
   white-space: nowrap;
   overflow: hidden;
 `
+
+const Anchor = TextButton.withComponent('a')
 
 class VideoForm extends Component<Props, Object> {
   handleInputChange: (input: string, e: Object) => void
@@ -585,7 +587,21 @@ class VideoForm extends Component<Props, Object> {
               )}
               {!isPublished ? (
                 <Text small>
-                  <TranslatedText message="uploadListItem.termsOfService" />
+                  <TranslatedText
+                    message="uploadListItem.termsOfService_html"
+                    options={{
+                      termsOfServiceLink: (
+                        <Anchor
+                          anchor
+                          highlight
+                          href={TERMSOFSERVICE}
+                          target="_blank"
+                        >
+                        <TranslatedText message="uploadListItem.termsOfServiceLinkText" />
+                        </Anchor>
+                      )
+                    }}
+                  />
                 </Text>
               ) : (
                 <URLForShare>{urlForSharing}</URLForShare>

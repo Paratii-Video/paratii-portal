@@ -148,7 +148,8 @@
 			"paid": "Paid (not available yet)"
 		},
 		"publish": "Publish",
-		"termsOfService_html": "By clicking \"Publish\", you agree to <a href=\"#\">Paratii’s Terms of Service</a>. Don't violate others’ copyright or privacy rights.",
+		"termsOfService_html": "By clicking \"Publish\", you agree to %{termsOfServiceLink}. Don't violate others’ copyright or privacy rights.",
+		"termsOfServiceLinkText": "Paratii’s Terms of Service",
 		"save": "Save",
 		"noVideo": "No video selected!",
 		"insufficientBalance": {
