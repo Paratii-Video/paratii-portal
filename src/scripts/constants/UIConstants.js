@@ -12,6 +12,7 @@ export const Z_INDEX_USERNAV: number = 960
 // Layout
 export const MAX_WIDTH: string = '1264px'
 export const MEDIAQUERY_BREAKPOINT: string = '(max-width: 1440px)'
+export const MEDIAQUERY_BREAKPOINT_MAINHEADER: string = '(max-width: 1200px)'
 export const BORDER_RADIUS: string = '4px'
 export const BORDER_RADIUS_SMALL: string = '2px'
 export const BUTTON_HEIGHT: string = '38px'

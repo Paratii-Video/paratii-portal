@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Blockies from 'react-blockies'
 import {
-  MEDIAQUERY_BREAKPOINT,
+  MEDIAQUERY_BREAKPOINT_MAINHEADER,
   MAINHEADER_HEIGHT,
   MAINHEADER_LOGO_WIDTH,
   MAINHEADER_PADDING_LEFT,
@@ -47,7 +47,7 @@ const Header = styled.header`
   width: 100%;
   z-index: ${Z_INDEX_HEADER};
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media ${MEDIAQUERY_BREAKPOINT_MAINHEADER} {
     height: ${props => (props.open ? '100vh' : null)};
     padding: 0;
     overflow-x: hidden;
@@ -61,7 +61,7 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media ${MEDIAQUERY_BREAKPOINT_MAINHEADER} {
     align-content: baseline;
     flex-wrap: wrap;
   }
@@ -72,7 +72,7 @@ const LogoWrapper = styled.div`
   flex: 0 0 ${MAINHEADER_LOGO_WIDTH};
   height: ${MAINHEADER_HEIGHT};
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media ${MEDIAQUERY_BREAKPOINT_MAINHEADER} {
     margin: 0 0 0 ${MAINHEADER_PADDING_LEFT_BP};
   }
 `
@@ -83,7 +83,7 @@ const HeaderContent = styled.div`
   flex: 0 1 100%;
   justify-content: flex-end;
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media ${MEDIAQUERY_BREAKPOINT_MAINHEADER} {
     display: ${props => (props.open ? 'block' : 'none')};
     flex: 1 1 100%;
   }
@@ -92,7 +92,7 @@ const HeaderContent = styled.div`
 const SearchWrapper = styled.div`
   flex: 0 1 auto;
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media ${MEDIAQUERY_BREAKPOINT_MAINHEADER} {
     margin: 0 ${MAINHEADER_PADDING_LEFT_BP};
   }
 `
@@ -103,7 +103,7 @@ const HeaderButtons = styled.div`
   display: flex;
   justify-content: flex-end;
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media ${MEDIAQUERY_BREAKPOINT_MAINHEADER} {
     align-items: flex-start;
     flex-direction: column-reverse;
     justify-content: flex-start;
@@ -116,7 +116,7 @@ const AvatarWrapper = styled.div`
   display: flex;
   padding-left: ${NAVITEM_PADDING_HORIZONTAL};
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media ${MEDIAQUERY_BREAKPOINT_MAINHEADER} {
     background-color: ${props => props.theme.colors.background.secondary};
     margin-bottom: 5px;
     padding: 20px ${MAINHEADER_PADDING_LEFT_BP};
@@ -134,7 +134,7 @@ const ProfileAvatarButton = styled.div`
   margin-left: 10px;
   overflow: hidden;
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media ${MEDIAQUERY_BREAKPOINT_MAINHEADER} {
     margin-left: 0;
     margin-right: 10px;
   }
@@ -149,7 +149,7 @@ const MobileButton = styled(TextButton)`
   width: 20px;
   z-index: 3;
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media ${MEDIAQUERY_BREAKPOINT_MAINHEADER} {
     display: block;
   }
 `
