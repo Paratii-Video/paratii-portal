@@ -5,8 +5,7 @@ import {
   BORDER_RADIUS,
   CARD_PADDING,
   CARD_MAX_WIDTH,
-  CARD_MARGIN_LEFT,
-  CARD_MARGIN_BOTTOM,
+  CARD_MARGIN,
   MEDIAQUERY_BREAKPOINT
 } from 'constants/UIConstants'
 
@@ -15,23 +14,28 @@ type Props = {
   id: string,
   title: string,
   footer: Object,
+  marginBottom: boolean,
   marginLeft: boolean,
   marginRight: boolean,
+  marginTop: boolean,
   nopadding: string,
   innerRef: Object,
   maxWidth: boolean,
   height: string
 }
 
-export const CardWrapper = styled.div`
+const CardWrapper = styled.div`
   border-radius: ${BORDER_RADIUS};
   box-shadow: ${({ theme }) => theme.colors.Card.shadow};
   display: flex;
   flex: 1 1 100%;
   flex-direction: column;
   height: ${({ height }) => height};
-  margin-left: ${({ marginLeft }) => (marginLeft ? CARD_MARGIN_LEFT : null)};
-  margin-right: ${({ marginRight }) => (marginRight ? CARD_MARGIN_LEFT : null)};
+  margin-bottom: ${({ marginBottom }) =>
+    marginBottom ? CARD_MARGIN : null};
+  margin-left: ${({ marginLeft }) => (marginLeft ? CARD_MARGIN : null)};
+  margin-right: ${({ marginRight }) => (marginRight ? CARD_MARGIN : null)};
+  margin-top: ${({ marginTop }) => (marginTop ? CARD_MARGIN : null)};
   max-width: ${({ maxWidth }) => (maxWidth ? CARD_MAX_WIDTH : null)};
   overflow: hidden;
   position: relative;
@@ -39,7 +43,7 @@ export const CardWrapper = styled.div`
 
   @media ${MEDIAQUERY_BREAKPOINT} {
     max-width: initial;
-    margin: 0 0 ${CARD_MARGIN_BOTTOM};
+    margin: 0 0 ${CARD_MARGIN};
   }
 `
 
@@ -77,8 +81,10 @@ class Card extends Component<Props, void> {
     return (
       <CardWrapper
         id={this.props.id}
+        marginBottom={this.props.marginBottom}
         marginLeft={this.props.marginLeft}
         marginRight={this.props.marginRight}
+        marginTop={this.props.marginTop}
         innerRef={this.props.innerRef}
         maxWidth={this.props.maxWidth}
         height={this.props.height}

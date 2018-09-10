@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import { ButtonStyleDisabled } from './Button'
+
 export const TextColor = css`
   ${props => {
     let _color: String
@@ -12,6 +13,8 @@ export const TextColor = css`
       _color = props.theme.colors.text.highlight
     } else if (props.warn) {
       _color = props.theme.colors.text.warn
+    } else if (props.succeed) {
+      _color = props.theme.colors.text.succeed
     } else {
       _color = props.theme.colors.text.secondary
     }
@@ -66,12 +69,12 @@ const Text = styled.p`
 `
 
 export const Strong = styled.strong`
-  ${TextColor} ${TextSize} ${TextStyle} font-weight: ${props =>
+  ${TextColor} ${TextStyle} font-weight: ${props =>
   props.theme.fonts.weight.bold};
 `
 
 export const Span = styled.span`
-  ${TextColor} ${TextSize} ${TextStyle};
+  ${TextColor} ${TextStyle};
 `
 
 export default Text

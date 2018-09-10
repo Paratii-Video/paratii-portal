@@ -43,9 +43,13 @@ const videoStaked = createAction(VIDEO_STAKED)
 function upsertVideo (videoId, dataToUpdate, state) {
   const v = state.videos.get(videoId)
   const updatedVideo = Object.assign({}, v.toJS(), dataToUpdate)
+  delete updatedVideo.challengeExists
   delete updatedVideo.fetchStatus
-  delete updatedVideo.staked
   delete updatedVideo.published
+  delete updatedVideo.staked
+  delete updatedVideo.vote
+  delete updatedVideo.voteStatus
+  delete updatedVideo.whiteListed
   if (!updatedVideo.filename) {
     updatedVideo.filename = ''
   }

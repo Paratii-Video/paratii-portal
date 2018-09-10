@@ -1,23 +1,26 @@
 /* @flow */
 
+import { expect } from 'chai'
 import { createStore } from 'redux'
 import Immutable from 'immutable'
 
 import reducer from 'reducers/VideosReducer'
 import {
-  UPLOAD_REQUESTED,
-  UPLOAD_PROGRESS,
-  UPLOAD_REMOTE_SUCCESS,
-  UPLOAD_LOCAL_SUCCESS,
-  UPDATE_VIDEO_INFO,
-  VIDEO_DATA_START,
-  VIDEO_DATA_SAVED,
-  TRANSCODING_REQUESTED,
-  TRANSCODING_PROGRESS,
-  TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE,
-  VIDEOFETCH_ERROR,
-  VIDEO_FETCH_SUCCESS
+  TRANSCODING_PROGRESS,
+  TRANSCODING_REQUESTED,
+  TRANSCODING_SUCCESS,
+  UPLOAD_LOCAL_SUCCESS,
+  UPLOAD_PROGRESS,
+  UPLOAD_REQUESTED,
+  UPLOAD_REMOTE_SUCCESS,
+  UPDATE_VIDEO_INFO,
+  VIDEO_FETCH_ERROR,
+  VIDEO_DATA_SAVED,
+  VIDEO_DATA_START,
+  VIDEO_FETCH_SUCCESS,
+  VOTE_STATUS,
+  VOTE_STATUS_RECORD
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import {
@@ -26,7 +29,6 @@ import {
   getDefaultAsyncTaskStatus,
   getDefaultDataStatus
 } from 'unit-tests/fixtures/VideoFixtures'
-import { expect } from 'chai'
 
 describe('Video Reducer', () => {
   describe('UPLOAD_REQUESTED', () => {
@@ -1529,12 +1531,12 @@ describe('Video Reducer', () => {
       })
     })
   })
-  describe('VIDEOFETCH_ERROR', () => {
+  describe('VIDEO_FETCH_ERROR', () => {
     it('should do nothing if there is no payload', () => {
       const store = createStore(reducer)
       expect(store.getState().toJS()).to.deep.equal({})
       store.dispatch({
-        type: VIDEOFETCH_ERROR
+        type: VIDEO_FETCH_ERROR
       })
       expect(store.getState().toJS()).to.deep.equal({})
     })
@@ -1549,7 +1551,7 @@ describe('Video Reducer', () => {
         '999': getDefaultVideo()
       })
       store.dispatch({
-        type: VIDEOFETCH_ERROR,
+        type: VIDEO_FETCH_ERROR,
         payload: {
           foo: 'bar'
         }
@@ -1571,7 +1573,7 @@ describe('Video Reducer', () => {
         '999': getDefaultVideo()
       })
       store.dispatch({
-        type: VIDEOFETCH_ERROR,
+        type: VIDEO_FETCH_ERROR,
         payload: {
           id: '333',
           error: {
@@ -1608,7 +1610,7 @@ describe('Video Reducer', () => {
         '999': getDefaultVideo()
       })
       store.dispatch({
-        type: VIDEOFETCH_ERROR,
+        type: VIDEO_FETCH_ERROR,
         payload: {
           id: '999',
           error: {
@@ -1629,6 +1631,119 @@ describe('Video Reducer', () => {
               result: {
                 ...getDefaultResultStatus()
               }
+            }
+          }
+        }
+      })
+    })
+  })
+  describe('VOTE_STATUS_RECORD', () => {
+    it('should do nothing if there is no payload', () => {
+      const store = createStore(reducer)
+      expect(store.getState().toJS()).to.deep.equal({})
+      store.dispatch({
+        type: VOTE_STATUS_RECORD
+      })
+      expect(store.getState().toJS()).to.deep.equal({})
+    })
+    it('should update the status when reuested', () => {
+      const store = createStore(
+        reducer,
+        Immutable.Map({
+          '123': new VideoRecord({})
+        })
+      )
+      const payload = {
+        id: '123',
+        voteStatus: {
+          name: 'voteCommitted',
+          data: {
+            voter: '0x1234',
+            numTokens: Number(100000),
+            vote: '1'
+          }
+        }
+      }
+      store.dispatch({
+        type: VOTE_STATUS_RECORD,
+        payload: payload
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': {
+          ...getDefaultVideo(),
+          voteStatus: {
+            name: 'voteCommitted',
+            data: {
+              voter: '0x1234',
+              numTokens: Number(100000),
+              vote: '1'
+            }
+          }
+        }
+      })
+      //
+    })
+  })
+
+  describe('VOTE_STATUS', () => {
+    it('should do nothing if there is no payload', () => {
+      const store = createStore(reducer)
+      expect(store.getState().toJS()).to.deep.equal({})
+      store.dispatch({
+        type: VOTE_STATUS
+      })
+      expect(store.getState().toJS()).to.deep.equal({})
+    })
+
+    it('should update the status when requested', () => {
+      const store = createStore(
+        reducer,
+        Immutable.Map({
+          '123': new VideoRecord({})
+        })
+      )
+      let payload
+      payload = {
+        id: '123',
+        name: 'voteCommitted'
+      }
+
+      store.dispatch({
+        type: VOTE_STATUS,
+        payload: payload
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': {
+          ...getDefaultVideo(),
+          voteStatus: {
+            name: 'voteCommitted',
+            data: {
+              numTokens: null,
+              voter: null,
+              vote: null
+            }
+          }
+        }
+      })
+      //
+      payload = {
+        id: '123',
+        name: 'voteSent'
+      }
+
+      store.dispatch({
+        type: VOTE_STATUS,
+        payload: payload
+      })
+      expect(store.getState().toJS()).to.deep.equal({
+        '123': {
+          ...getDefaultVideo(),
+          voteStatus: {
+            name: 'voteSent',
+            data: {
+              numTokens: null,
+              voter: null,
+              vote: null
             }
           }
         }

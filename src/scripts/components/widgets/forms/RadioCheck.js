@@ -7,17 +7,17 @@ import { RADIO_SIZE } from 'constants/UIConstants'
 import Colors from 'components/foundations/base/Colors'
 
 type Props = {
-  name: String,
-  value: String,
+  checkbox: boolean,
   children: Object,
-  disabled: Boolean,
-  defaultChecked: Boolean,
-  checkbox: Boolean,
-  nomargin: Boolean,
-  justifyContent: String,
-  margin: String,
-  white: Boolean,
-  tabIndex: String,
+  defaultChecked: boolean,
+  disabled: boolean,
+  justifyContent: string,
+  margin: string,
+  name: string,
+  padding: string,
+  tabIndex: string,
+  value: string,
+  white: boolean,
   onChange: (e: Object) => void
 }
 
@@ -25,6 +25,7 @@ export const RadioWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: ${({ justifyContent }) => justifyContent || null};
+  padding: ${props => props.padding ? props.padding : null};
   width: 100%;
 `
 
@@ -40,10 +41,7 @@ const RadioInput = styled.label`
   cursor: ${props => (props.disabled ? 'initial' : 'pointer')};
   display: inline-flex;
   font-size: ${props => props.theme.fonts.form.input};
-  margin: ${props =>
-    props.margin
-      ? props.margin
-      : props.nomargin ? '0 0 20px 0' : '0 20px 20px 0'};
+  margin: ${props => props.margin ? props.margin : null};
   opacity: ${props => (props.disabled ? '0.2' : '')};
   pointer-events: ${props => (props.disabled ? 'none' : '')};
   position: relative;
@@ -102,7 +100,6 @@ class RadioCheck extends Component<Props, void> {
       <RadioInput
         data-test-id={this.props.name}
         disabled={this.props.disabled}
-        nomargin={this.props.nomargin}
         margin={this.props.margin}
       >
         <input

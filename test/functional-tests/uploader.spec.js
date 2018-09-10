@@ -13,75 +13,18 @@ describe('🦄 Uploader Tool', function () {
     'input[type="file"][data-test-id="upload-file-input"]'
   const modalCloseButtonSelector = '[data-test-id="modal-close-button"]'
   const forgotPasswordButtonSelector = '[data-test-id="forgot-password-button"]'
-
-  before(function () {
-    browser.addCommand('verifyUploadSucceeds', async video => {
-      browser.waitAndClick('[data-test-id="uploader-item"]', 5000)
-
-      // now we should see a form to fill in
-      // the form should contain the id of our video
-      browser.waitForVisible('[data-test-id="uploader-item"]')
-      browser.waitAndClick('[data-test-id="uploader-item"]')
-      browser.waitForExist('[data-test-id="video-id"]')
-      const getVideoId = function () {
-        var videoId = browser.getValue('[data-test-id="video-id"]')
-        if (videoId) {
-          return videoId
-        } else {
-          return false
-        }
-      }
-      browser.waitUntil(getVideoId)
-      const videoId = getVideoId()
-      assert.isOk(videoId)
-      assert.isOk(videoId.length > 8)
-      // set title and video in the form
-      browser.setValue('#input-video-title-' + videoId, video.title)
-      browser.setValue('#input-video-description-' + videoId, video.description)
-      browser.setValue(
-        '#input-video-ownership-proof-' + videoId,
-        video.ownershipProof
-      )
-      // submit the form
-      browser.waitAndClick('[data-test-id="video-submit-save"]')
-      // we now should be on the status screen
-
-      // wait until the video is saved on the blockchain
-      const getVideoInfoFromBlockchain = async function () {
-        try {
-          const videoInfoFromBlockchain = await paratii.eth.vids.get(videoId)
-          return videoInfoFromBlockchain
-        } catch (err) {
-          throw err
-          // console.log(err)
-        }
-      }
-      browser.waitUntil(getVideoInfoFromBlockchain)
-      // Check if video title has been saved
-      browser.waitUntil(() => {
-        return browser.getValue('#input-video-title-' + videoId) === video.title
-      })
-      const address = browser.execute(() => window.paratii.eth.getAccount())
-        .value
-      const videoInfoFromBlockchain = await getVideoInfoFromBlockchain()
-      assert.isOk(videoInfoFromBlockchain)
-      assert.equal(videoInfoFromBlockchain.owner, address)
-      browser.waitUntil(
-        () =>
-          browser.execute(
-            owner => window.paratii.getAccount() === owner,
-            videoInfoFromBlockchain.owner
-          ).value
-      )
-
-      // when the transcoder is done, we should be ready to publish the video
-      browser.waitAndClick(`[data-test-id="video-submit-publish"]`)
-      browser.pause(500)
-      browser.waitAndClick(`[data-test-id="button-stake"]`)
-      browser.waitAndClick(`a[href="/play/${videoId}"]`)
-      browser.url('http://localhost:8080')
-      browser.alertAccept()
-    })
+  beforeEach(async function () {
+    // await paratii.eth.deployContracts()
+    await browser.url(`http://localhost:8080`)
+    // const registryAddress = await paratii.eth.getRegistryAddress()
+    // console.log(`setting registryAddress in browser to ${registryAddress}`)
+    // await browser.execute(function (registryAddress) {
+    //   return paratii.eth.setRegistryAddresss(registryAddress)
+    // }, registryAddress)
+    // const registryAddressBrowser = (await browser.execute(function () { return paratii.eth.getRegistryAddress() })).value
+    // console.log(`registry address in browser: ${registryAddressBrowser}`)
+    // browser.execute(nukeLocalStorage)
+    // browser.execute(nukeSessionStorage)
   })
 
   afterEach(function () {
@@ -130,8 +73,73 @@ describe('🦄 Uploader Tool', function () {
     )
     browser.pause(1000)
     browser.chooseFile(uploadFileInputSelector, fileToUpload)
+    // verify that the upload succeeds
+    browser.waitAndClick('[data-test-id="uploader-item"]', 5000)
 
-    browser.verifyUploadSucceeds(video)
+    // now we should see a form to fill in
+    // the form should contain the id of our video
+    browser.waitForVisible('[data-test-id="uploader-item"]')
+    browser.waitAndClick('[data-test-id="uploader-item"]')
+    browser.waitForExist('[data-test-id="video-id"]')
+    const getVideoId = function () {
+      var videoId = browser.getValue('[data-test-id="video-id"]')
+      if (videoId) {
+        return videoId
+      } else {
+        return false
+      }
+    }
+    browser.waitUntil(getVideoId)
+    const videoId = getVideoId()
+    assert.isOk(videoId)
+    assert.isOk(videoId.length > 8)
+    // set title and video in the form
+    browser.setValue('#input-video-title-' + videoId, video.title)
+    browser.setValue('#input-video-description-' + videoId, video.description)
+    browser.setValue(
+      '#input-video-ownership-proof-' + videoId,
+      video.ownershipProof
+    )
+    // submit the form
+    browser.waitAndClick('[data-test-id="video-submit-save"]')
+    // we now should be on the status screen
+
+    // wait until the video is saved on the blockchain
+    const getVideoInfoFromBlockchain = async function () {
+      try {
+        console.log(`getting ${videoId} from paratii.eth.vids`)
+        const videoInfoFromBlockchain = await paratii.eth.vids.get(videoId)
+        console.log(videoInfoFromBlockchain)
+        return videoInfoFromBlockchain
+      } catch (err) {
+        throw err
+      }
+    }
+    console.log(paratii.config.eth)
+    browser.waitUntil(getVideoInfoFromBlockchain)
+    // Check if video title has been saved
+    browser.waitUntil(() => {
+      return browser.getValue('#input-video-title-' + videoId) === video.title
+    })
+    const address = browser.execute(() => window.paratii.eth.getAccount()).value
+    const videoInfoFromBlockchain = await getVideoInfoFromBlockchain()
+    assert.isOk(videoInfoFromBlockchain)
+    assert.equal(videoInfoFromBlockchain.owner, address)
+    browser.waitUntil(
+      () =>
+        browser.execute(
+          owner => window.paratii.getAccount() === owner,
+          videoInfoFromBlockchain.owner
+        ).value
+    )
+
+    // when the transcoder is done, we should be ready to publish the video
+    browser.waitAndClick(`[data-test-id="video-submit-publish"]`)
+    browser.pause(500)
+    browser.waitAndClick(`[data-test-id="button-stake"]`)
+    browser.waitAndClick(`a[href="/play/${videoId}"]`)
+    browser.url('http://localhost:8080')
+    browser.alertAccept()
   })
 
   it('should redirect to the homepage if there is a wallet but the secure flow is canceled on the "ask for password" modal', async function () {

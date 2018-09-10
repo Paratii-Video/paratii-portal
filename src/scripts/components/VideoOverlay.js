@@ -18,8 +18,6 @@ import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { PlaybackLevel } from 'records/PlayerRecords'
 import {
   VIDEO_OVERLAY_BUTTONS_HEIGHT,
-  VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH,
-  VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH_MOBILE,
   VIDEO_OVERLAY_SHARE_BUTTON_WIDTH,
   VIDEO_OVERLAY_SHARE_BUTTON_WIDTH_MOBILE
 } from 'constants/UIConstants'
@@ -120,14 +118,19 @@ const PlayerTitle = Title.extend`
   @media (max-width: 768px) {
     font-size: ${props => props.theme.fonts.text.big};
   }
+
+  @media (max-width: 440px) {
+    font-size: ${props => props.theme.fonts.text.main};
+  }
+
+  @media (max-width: 320px) {
+    font-size: ${props => props.theme.fonts.text.small};
+  }
 `
 
 const ButtonContainer = styled.div`
-  ${ShowHideTopElements} align-self: flex-start;
-  display: flex;
-  flex: 0;
-  flex-direction: row;
-  justify-content: flex-end;
+  ${ShowHideTopElements}
+  align-self: baseline;
   padding: 22px 25px 0 0;
   position: relative;
   z-index: ${Z_INDEX_BUTTONS};
@@ -137,19 +140,11 @@ const ShareButton = TextButton.extend`
   flex: 0 0 ${VIDEO_OVERLAY_SHARE_BUTTON_WIDTH};
   height: ${VIDEO_OVERLAY_BUTTONS_HEIGHT};
   margin-left: 10px;
+  width: ${VIDEO_OVERLAY_SHARE_BUTTON_WIDTH};
 
   @media (max-width: 768px) {
     flex: 0 0 ${VIDEO_OVERLAY_SHARE_BUTTON_WIDTH_MOBILE};
-  }
-`
-
-const ProfileButtonWrapper = TextButton.extend`
-  flex: 0 0 ${VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH};
-  height: ${VIDEO_OVERLAY_BUTTONS_HEIGHT};
-  margin-left: 10px;
-
-  @media (max-width: 768px) {
-    flex: 0 0 ${VIDEO_OVERLAY_PROFILE_BUTTON_WIDTH_MOBILE};
+    width: ${VIDEO_OVERLAY_SHARE_BUTTON_WIDTH_MOBILE};
   }
 `
 
@@ -175,8 +170,17 @@ const StartScreenIcon = styled.span`
 class VideoOverlay extends Component<Props> {
   getVideoTitle (): string {
     const { video } = this.props
-
-    return (video && (video.get('title') || video.get('filename'))) || ''
+    if (video) {
+      let title = video.get('title') || video.get('filename')
+      if (window.innerWidth < 450) {
+        if (title.length > 55) {
+          title = title.substring(0, 55) + '...'
+        }
+      }
+      return title
+    } else {
+      return ''
+    }
   }
 
   renderPlugins () {
@@ -203,8 +207,6 @@ class VideoOverlay extends Component<Props> {
 
   render () {
     const {
-      activePlugin,
-      toggleActivePlugin,
       isEmbed,
       showStartScreen,
       onClick,
@@ -244,19 +246,6 @@ class VideoOverlay extends Component<Props> {
             transitionState={transitionState}
             showShareModal={showShareModal}
           >
-            {isEmbed && (
-              <ProfileButtonWrapper
-                highlight={activePlugin !== PLAYER_PLUGIN.WALLET}
-                accent={activePlugin === PLAYER_PLUGIN.WALLET}
-                data-test-id="wallet-info-button"
-                onClick={(e: Object) => {
-                  e.stopPropagation()
-                  toggleActivePlugin(PLAYER_PLUGIN.WALLET)
-                }}
-              >
-                <SVGIcon icon="icon-profile" />
-              </ProfileButtonWrapper>
-            )}
             <ShareButton
               highlight
               data-test-id="share-button"

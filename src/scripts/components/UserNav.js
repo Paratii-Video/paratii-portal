@@ -20,8 +20,7 @@ import {
   USERNAV_USERNAVLISTITEMICON_SIZE,
   USERNAV_USERNAVLISTITEMICON_MARGIN_RIGHT,
   USERNAV_USERSUBNAVLISTITEMLINK_PADDING,
-  MAINHEADER_LOGO_HEIGHT,
-  MAINFOOTER_HEIGHT,
+  MAINHEADER_HEIGHT,
   MEDIAQUERY_BREAKPOINT,
   Z_INDEX_USERNAV
 } from '../constants/UIConstants'
@@ -53,7 +52,6 @@ const Wrapper = styled.div`
   left: 0;
   overflow-x: hidden;
   overflow-y: hidden;
-  padding: 0 0 ${MAINFOOTER_HEIGHT};
   position: fixed;
   top: 0;
   transition: transform 0.6s ${({ theme }) => theme.animation.ease.smooth};
@@ -70,7 +68,7 @@ const UserWrapper = styled.div`
   background: ${props => props.theme.colors.background.secondary};
   display: flex;
   flex-direction: column;
-  margin-top: ${MAINHEADER_LOGO_HEIGHT};
+  margin-top: ${MAINHEADER_HEIGHT};
   padding: ${USERNAV_USERWRAPPER_PADDING};
   width: 100%;
 `
@@ -90,7 +88,7 @@ const UserPTIValue = styled.div`
   flex: ${USERNAV_USERPTIVALUEWRAPPER_FLEX};
 `
 
-const UserPTIValueBox = styled.div`
+export const UserPTIValueBox = styled.div`
   ${FlexCenterStyle} background-color: ${props =>
   props.theme.colors.background.tertiary};
   border-radius: ${BORDER_RADIUS_SMALL};
@@ -247,7 +245,7 @@ class UserNav extends Component<Props, Object> {
                   <TranslatedText message="userNav.leftBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text highlight>{formattedBalance} PTI</Text>
+                  <Text highlight>{formattedBalance} <TranslatedText message="PTI" /></Text>
                 </UserPTIValueBox>
               </UserPTIValue>
               <UserPTIValue>
@@ -255,7 +253,7 @@ class UserNav extends Component<Props, Object> {
                   <TranslatedText message="userNav.rightBoxTitle" />
                 </Text>
                 <UserPTIValueBox>
-                  <Text warn>{formattedStakedPTI} PTI</Text>
+                  <Text warn>{formattedStakedPTI} <TranslatedText message="PTI" /></Text>
                 </UserPTIValueBox>
               </UserPTIValue>
             </UserPTIValuesWrapper>

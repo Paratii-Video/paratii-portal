@@ -21,6 +21,7 @@ import TipOverlayContainer from 'containers/tipping/TipOverlayContainer'
 import TranslatedText from 'components/translations/TranslatedText'
 import ShareOverlay from 'containers/widgets/ShareOverlayContainer'
 import VideoNotFound from './pages/VideoNotFound'
+import SidebarTCR from 'containers/widgets/tcr/SidebarTCRContainer'
 import {
   requestFullscreen,
   requestCancelFullscreen,
@@ -32,10 +33,10 @@ import { PLAYER_PARAMS } from 'constants/PlayerConstants'
 import { APP_TITLE } from 'constants/ApplicationConstants'
 import {
   MAX_WIDTH,
+  MAINWRAPPER_PADDING_HORIZONTAL_MOBILE,
   PLAYMAINWRAPPER_MARGIN_RIGHT,
-  MEDIAQUERY_BREAKPOINT,
   MAINWRAPPER_PADDING_VERTICAL,
-  CARD_MARGIN_BOTTOM
+  CARD_MARGIN
 } from 'constants/UIConstants'
 
 import type { ClapprPlayer, PlayerPlugin } from 'types/ApplicationTypes'
@@ -86,19 +87,21 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  height: ${props => (props.isEmbed ? null : null)};
-  padding-bottom: ${MAINWRAPPER_PADDING_VERTICAL};
+  height: 100%;
+  padding-bottom: ${props => (props.isEmbed ? null : MAINWRAPPER_PADDING_VERTICAL)};
   width: 100%;
 `
+
+// Video
 
 const VideoWrapper = styled.div`
   background: black;
   width: 100%;
   height: ${props => (props.isEmbed ? '100%' : null)};
-  margin: ${props => (props.isEmbed ? null : '0 auto ' + CARD_MARGIN_BOTTOM)};
+  margin: ${props => (props.isEmbed ? null : '0 auto ' + CARD_MARGIN)};
 
   @media (max-width: 930px) {
-    margin: ${props => (props.isEmbed ? null : '0 0 ' + CARD_MARGIN_BOTTOM)};
+    margin: ${props => (props.isEmbed ? null : '0 0 ' + CARD_MARGIN)};
   }
 `
 
@@ -107,6 +110,7 @@ const VideoContainer = styled.div`
   margin: 0 auto;
   max-width: ${props => (props.isEmbed ? null : MAX_WIDTH)};
   position: relative;
+  padding: 0 ${MAINWRAPPER_PADDING_HORIZONTAL_MOBILE};
   width: 100%;
 
   @media (max-width: 1440px) {
@@ -122,7 +126,7 @@ const VideoContainer = styled.div`
   @media (max-width: 930px) {
     height: ${props => (props.isEmbed ? '100%' : '0')};
     max-width: initial;
-    padding-top: ${props => (props.isEmbed ? null : CARD_MARGIN_BOTTOM)};
+    padding-top: ${props => (props.isEmbed ? null : CARD_MARGIN)};
     padding-bottom: ${props => (props.isEmbed ? null : '56.25%')};
   }
 `
@@ -160,9 +164,10 @@ const PlayWrapper = styled.div`
   justify-content: space-between;
   margin: 0 auto;
   max-width: ${props => (props.isEmbed ? null : MAX_WIDTH)};
+  padding: 0 ${MAINWRAPPER_PADDING_HORIZONTAL_MOBILE};
   width: 100%;
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media (max-width: 1024px) {
     flex-direction: column;
     max-width: initial;
   }
@@ -171,16 +176,13 @@ const PlayWrapper = styled.div`
 const PlayMainWrapper = styled.div`
   flex: 1 1 100%;
   flex-direction: column;
-  margin-right: ${({ noSidebar }) => noSidebar ? null : PLAYMAINWRAPPER_MARGIN_RIGHT};
+  margin-right: ${({ noSidebar }) =>
+    noSidebar ? null : PLAYMAINWRAPPER_MARGIN_RIGHT};
 `
 
 const PlaySidebarWrapper = styled.div`
   flex: 1 0 410px;
   flex-direction: column;
-
-  @media ${MEDIAQUERY_BREAKPOINT} {
-    flex: 1 1 100%;
-  }
 `
 
 const VideoInfoButtons = styled.div`
@@ -887,13 +889,13 @@ class Play extends Component<Props, State> {
             {!isEmbed &&
               video && (
               <PlayWrapper>
-                <PlayMainWrapper noSidebar>
+                <PlayMainWrapper>
                   <Card>
                     {videoName && <Title accent>{videoName}</Title>}
                     {video.author && <Text>By {video.author}</Text>}
                     {video.share && (
                       <VideoInfoButtons>
-                        <TextButton iconButton margin="0 20px 0 0">
+                        <TextButton iconbutton margin="0 20px 0 0">
                           <SVGIcon
                             width="20px"
                             height="20px"
@@ -904,7 +906,7 @@ class Play extends Component<Props, State> {
                             <TranslatedText message="player.views.zero" />
                           </Text>
                         </TextButton>
-                        <TextButton iconButton margin="0 20px 0 0">
+                        <TextButton iconbutton margin="0 20px 0 0">
                           <SVGIcon
                             width="20px"
                             height="20px"
@@ -915,7 +917,7 @@ class Play extends Component<Props, State> {
                             <TranslatedText message="player.views.zero" />
                           </Text>
                         </TextButton>
-                        <TextButton iconButton>
+                        <TextButton iconbutton>
                           <SVGIcon
                             width="20px"
                             height="20px"
@@ -945,7 +947,9 @@ class Play extends Component<Props, State> {
                     )}
                   </Card>
                 </PlayMainWrapper>
-                {false && <PlaySidebarWrapper></PlaySidebarWrapper>}
+                <PlaySidebarWrapper>
+                  <SidebarTCR video={video} videoId={video && video.id} />
+                </PlaySidebarWrapper>
               </PlayWrapper>
             )}
           </Wrapper>

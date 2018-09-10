@@ -4,6 +4,7 @@ import {
   BORDER_RADIUS_SMALL,
   BUTTON_PADDING_LEFT
 } from 'constants/UIConstants'
+import { FlexCenterStyle } from './Styles'
 
 export const ButtonStyleText = css`
   ${props => {
@@ -88,8 +89,8 @@ export const ButtonStyleBackground = css`
 `
 
 export const IconButtonStyle = css`
-  align-items: ${props => (props.iconButton ? 'center' : null)};
-  display: ${props => (props.iconButton ? 'flex' : null)};
+  align-items: ${props => (props.iconbutton ? 'center' : null)};
+  display: ${props => (props.iconbutton ? 'flex' : null)};
 `
 
 export const ButtonStyle = css`
@@ -102,7 +103,7 @@ export const ButtonStyle = css`
 export const Button = styled.button.attrs({
   'data-test-id': props => props['data-test-id']
 })`
-  ${ButtonStyleText} ${ButtonStyleDisabled} ${ButtonStyleHover} ${ButtonStyleBackground} ${ButtonStyle} ${IconButtonStyle} margin: ${props =>
+  ${FlexCenterStyle} ${ButtonStyleText} ${ButtonStyleDisabled} ${ButtonStyleHover} ${ButtonStyleBackground} ${ButtonStyle} ${IconButtonStyle} margin: ${props =>
   props.margin};
 `
 

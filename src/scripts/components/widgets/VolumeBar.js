@@ -13,7 +13,8 @@ import { TRANSITION_STATE } from 'constants/ApplicationConstants'
 
 import {
   CONTROLS_BUTTON_DIMENSION,
-  CONTROLS_SPACING
+  CONTROLS_SPACING,
+  MEDIAQUERY_BREAKPOINT
 } from 'constants/UIConstants'
 
 import type { TransitionState } from 'types/ApplicationTypes'
@@ -61,6 +62,10 @@ const VolumeBarBuffer = styled.div`
   transition: width 0.75s ${({ theme }) => theme.animation.ease.outexpo};
   display: flex;
   align-items: center;
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    display: none;
+  }
 `
 
 /* prettier-ignore */

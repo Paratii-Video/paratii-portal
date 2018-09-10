@@ -8,6 +8,7 @@ import { getAppRootUrl } from 'utils/AppUtils'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
 import TranslatedText from './translations/TranslatedText'
+import { FlexCenterStyle, AbsoluteFullStyle } from './foundations/Styles'
 import Text from './foundations/Text'
 import TextButton from './foundations/TextButton'
 import SVGIcon from './foundations/SVGIcon'
@@ -27,15 +28,17 @@ import {
   videoDuration,
   stakedAmount
 } from 'operators/VideoOperators'
-import { PROFILE_MYVIDEOS_PATH } from 'constants/UrlConstants'
+import { PROFILE_MYVIDEOS_PATH, TERMSOFSERVICE } from 'constants/UrlConstants'
 import { MODAL } from 'constants/ModalConstants'
 import {
   BORDER_RADIUS,
+  MEDIAQUERY_BREAKPOINT,
   VIDEOFORM_PADDING_VERTICAL,
+  VIDEOFORM_PADDING_VERTICAL_BP,
   VIDEOFORM_PADDING_HORIZONTAL,
+  VIDEOFORM_PADDING_HORIZONTAL_BP,
   VIDEOFORM_CONTAINER_MARGIN_BOTTOM,
   VIDEOFORM_HEADER_PADDING_BOTTOM,
-  VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT,
   VIDEOFORM_HEADER_ICON_WIDTH,
   VIDEOFORM_HEADER_ICON_HEIGHT
 } from 'constants/UIConstants'
@@ -73,10 +76,7 @@ const Header = styled.div`
   cursor: ${({ edit }) => (edit ? null : 'pointer')};
   display: flex;
   flex-direction: column;
-  padding-bottom: ${({ edit }) =>
-    edit
-      ? VIDEOFORM_HEADER_PADDING_BOTTOM_EDIT
-      : VIDEOFORM_HEADER_PADDING_BOTTOM};
+  padding-bottom: ${VIDEOFORM_HEADER_PADDING_BOTTOM};
   user-select: none;
 `
 
@@ -84,6 +84,10 @@ const HeaderContent = styled.div`
   align-items: center;
   display: flex;
   padding: ${VIDEOFORM_PADDING_VERTICAL} ${VIDEOFORM_PADDING_HORIZONTAL};
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    padding: ${VIDEOFORM_PADDING_VERTICAL_BP} ${VIDEOFORM_PADDING_HORIZONTAL_BP};
+  }
 `
 
 const HeaderIcon = styled.button`
@@ -138,6 +142,15 @@ const HeaderButtons = styled.div`
   }
 `
 
+const LabelStake = styled.div`
+  background-color: ${props => props.theme.colors.background.body};
+  color: white;
+  padding: 5px;
+  min-width: 100px;
+  text-align: center;
+  font-size: 14px;
+`
+
 const HeaderBar = styled.div`
   display: ${({ edit }) => (edit ? 'none' : 'block')};
 `
@@ -150,17 +163,23 @@ const Content = styled.div`
 const ContentHeight = styled.div`
   display: flex;
   padding: 20px ${VIDEOFORM_PADDING_HORIZONTAL} ${VIDEOFORM_PADDING_HORIZONTAL};
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    flex-wrap: wrap;
+    padding: 20px ${VIDEOFORM_PADDING_HORIZONTAL_BP} ${VIDEOFORM_PADDING_HORIZONTAL_BP};
+  }
 `
 
 const Form = styled.form`
   flex: 1 1 100%;
   opacity: ${props => (props.disabled ? '0.5' : null)};
-  padding-right: 45px;
+  padding-right: ${VIDEOFORM_PADDING_HORIZONTAL};
   pointer-events: ${props => (props.disabled ? 'none' : null)};
   position: relative;
 
-  @media (max-width: 1150px) {
-    flex: 1 1 100%;
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    padding-right: 0;
+    margin-bottom: ${VIDEOFORM_PADDING_HORIZONTAL};
   }
 `
 
@@ -172,6 +191,10 @@ const FormButtons = styled.div`
 const PreviewBox = styled.div`
   flex: 1 1 100%;
   max-width: 360px;
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    max-width: 100%;
+  }
 `
 
 const VideoMedia = styled.div`
@@ -194,25 +217,15 @@ const VideoImage = styled.div`
 `
 
 const VideoMediaOverlay = styled.div`
-  align-items: center;
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
+  ${FlexCenterStyle}
+  ${AbsoluteFullStyle}
 
   &::before {
+    ${AbsoluteFullStyle}
     background-color: ${props => props.theme.colors.background.body};
     content: '';
-    height: 100%;
-    left: 0;
-    opacity: 0.5;
-    position: absolute;
+    opacity: 0.3;
     transition: opacity ${props => props.theme.animation.time.repaint};
-    top: 0;
-    width: 100%;
     ${VideoMediaLink}:hover & {
       opacity: 0.7;
     }
@@ -231,14 +244,13 @@ const VideoMediaIcon = styled.div`
   }
 `
 
-const LabelStake = styled.div`
-  background-color: ${props => props.theme.colors.background.body};
-  color: white;
-  padding: 5px;
-  min-width: 100px;
-  text-align: center;
-  font-size: 14px;
+const URLForShare = Text.extend`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `
+
+const Anchor = TextButton.withComponent('a')
 
 class VideoForm extends Component<Props, Object> {
   handleInputChange: (input: string, e: Object) => void
@@ -276,7 +288,7 @@ class VideoForm extends Component<Props, Object> {
   }
 
   async componentDidMount () {
-    const stakeAmountBN = await paratii.eth.tcrPlaceholder.getMinDeposit()
+    const stakeAmountBN = await paratii.eth.tcr.getMinDeposit()
     const stakeAmount = stakeAmountBN.toString()
     this.setState({
       stakeAmount
@@ -463,14 +475,12 @@ class VideoForm extends Component<Props, Object> {
               )}
             </HeaderButtons>
           </HeaderContent>
-          {edit ? null : (
-            <HeaderBar>
-              <VideoProgressBar
-                progress={videoProgress(video) + '%'}
-                nopercentual
-              />
-            </HeaderBar>
-          )}
+          <HeaderBar>
+            <VideoProgressBar
+              progress={videoProgress(video) + '%'}
+              nopercentual
+            />
+          </HeaderBar>
         </Header>
         <Content offsetHeight={this.handleHeight}>
           <ContentHeight
@@ -526,6 +536,7 @@ class VideoForm extends Component<Props, Object> {
                 <RadioCheck
                   name="content-type"
                   value="free"
+                  margin="0 20px 20px 0"
                   tabIndex="0"
                   defaultChecked
                 >
@@ -534,8 +545,8 @@ class VideoForm extends Component<Props, Object> {
                 <RadioCheck
                   name="content-type"
                   value="paid"
+                  margin="0 20px 20px 0"
                   tabIndex="-1"
-                  nomargin
                   disabled
                 >
                   <TranslatedText message="uploadListItem.contentType.paid" />
@@ -576,10 +587,24 @@ class VideoForm extends Component<Props, Object> {
               )}
               {!isPublished ? (
                 <Text small>
-                  <TranslatedText message="uploadListItem.termsOfService" />
+                  <TranslatedText
+                    message="uploadListItem.termsOfService_html"
+                    options={{
+                      termsOfServiceLink: (
+                        <Anchor
+                          anchor
+                          highlight
+                          href={TERMSOFSERVICE}
+                          target="_blank"
+                        >
+                        <TranslatedText message="uploadListItem.termsOfServiceLinkText" />
+                        </Anchor>
+                      )
+                    }}
+                  />
                 </Text>
               ) : (
-                <Text>{urlForSharing}</Text>
+                <URLForShare>{urlForSharing}</URLForShare>
               )}
             </PreviewBox>
           </ContentHeight>

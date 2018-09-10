@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { FlexCenterStyle, AbsoluteFullStyle } from 'components/foundations/Styles'
 import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 import Title from 'components/foundations/Title'
@@ -11,6 +12,7 @@ import {
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS
 } from 'constants/ApplicationConstants'
+import { MEDIAQUERY_BREAKPOINT } from 'constants/UIConstants'
 import { copyTextToClipboard } from 'utils/AppUtils'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
 
@@ -38,16 +40,12 @@ const Z_INDEX_ARROWBUTTON: number = 2
 const Z_INDEX_CLOSEBUTTON: number = 3
 
 const Wrapper = styled.div`
+  ${AbsoluteFullStyle}
   background-color: ${props => props.theme.colors.background.transparent};
-  height: 100%;
-  left: 0;
   opacity: ${props => (props.show ? 1 : 0)};
   overflow: hidden;
-  position: absolute;
   pointer-events: ${props => (!props.show ? 'none' : null)};
   transition: opacity ${props => props.theme.animation.time.repaint};
-  top: 0;
-  width: 100%;
   z-index: 15;
 `
 
@@ -79,19 +77,13 @@ const CloseButton = TextButton.extend`
 `
 
 const Content = styled.div`
-  align-items: center;
-  display: flex;
+  ${FlexCenterStyle}
+  ${AbsoluteFullStyle}
   flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  left: 0;
   opacity: ${({ show }) => (show ? 1 : 0)};
   pointer-events: ${({ show }) => (show ? null : 'none')};
-  position: absolute;
-  top: 0;
   transition: opacity ${props => props.theme.animation.time.repaint} linear
     ${({ show }) => (show ? '0.2s' : null)};
-  width: 100%;
   z-index: ${Z_INDEX_CONTENT};
 `
 
@@ -104,7 +96,7 @@ const ShareTitle = Title.extend`
     margin: 18px 0 24px;
   }
 
-  @media (max-width: 400px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     font-size: ${props => props.theme.fonts.text.big};
     margin: 0;
   }
@@ -133,7 +125,7 @@ const CopyEmbed = TextButton.extend`
     overflow: hidden;
   }
 
-  @media (max-width: 400px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     font-size: ${props => props.theme.fonts.text.small};
     height: auto;
     margin: 10px 0 0;
@@ -151,7 +143,7 @@ const ShareButtons = styled.div`
     margin-top: 50px;
   }
 
-  @media (max-width: 400px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
     margin-top: 2%;
   }
 `
@@ -171,11 +163,9 @@ const AnchorLink = Anchor.extend`
   width: 100%;
   word-wrap: break-word;
 
-  @media (max-width: 767px) {
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    font-size: ${props => props.theme.fonts.text.main};
     margin: 0;
-  }
-
-  @media (max-width: 400px) {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -361,13 +351,13 @@ class ShareOverlay extends Component<Props, State> {
               {this.getEmbedCode()}
             </CopyEmbed>
           </ShareContent>
-          <RadioWrapper justifyContent="center">
+          <RadioWrapper justifyContent="center" padding="0 10px">
             {this.state.embedOptions.map((opt: Object, index: number) => (
               <RadioCheck
                 checkbox
                 white
-                nomargin={index === this.state.embedOptions.length - 1}
                 key={index}
+                margin="0 10px 20px"
                 name={opt.name}
                 value={opt.value}
                 onChange={this.toggleOption}

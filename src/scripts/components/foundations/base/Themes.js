@@ -13,7 +13,7 @@ const Themes = {
     },
     button: {
       color: Colors.white,
-      primary: Colors.grayAlt,
+      primary: Colors.gray,
       accent: Colors.purple,
       highlight: Colors.white,
       primaryFrom: Colors.purpleGradientFrom,
@@ -29,7 +29,8 @@ const Themes = {
       secondary: Colors.gray,
       accent: Colors.white,
       highlight: Colors.purple,
-      warn: Colors.red
+      warn: Colors.red,
+      succeed: Colors.green
     },
     header: {
       logo: Colors.white,
@@ -49,15 +50,6 @@ const Themes = {
     },
     Popover: {
       shadow: '0 3px 6px rgba(32, 35, 46, 0.7)'
-    },
-    ProfileCuration: {
-      ChallengeBackgroundOneFrom: Colors.purpleGradientFrom,
-      ChallengeBackgroundOneTo: Colors.purpleGradientTo,
-      ChallengeBackgroundTwoFrom: Colors.pink,
-      ChallengeBackgroundTwoTo: Colors.purple,
-      VotingBarOne: Colors.green,
-      VotingBarTwo: Colors.pink,
-      ChallengeSequenceDot: Colors.white
     }
   }
 }

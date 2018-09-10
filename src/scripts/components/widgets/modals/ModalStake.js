@@ -72,7 +72,7 @@ class ModalStake extends Component<Props, Object> {
       isStaking: true
     })
 
-    paratii.eth.tcrPlaceholder
+    paratii.eth.tcr
       .checkEligiblityAndApply(videoIdStaked, stakeAmountWei)
       .then(resp => {
         if (resp && resp === true) {
@@ -121,7 +121,7 @@ class ModalStake extends Component<Props, Object> {
   }
 
   async componentDidMount () {
-    const stakeAmountBN = await paratii.eth.tcrPlaceholder.getMinDeposit()
+    const stakeAmountBN = await paratii.eth.tcr.getMinDeposit()
     const stakeAmountWei = stakeAmountBN.toString()
     const stakeAmount = paratii.eth.web3.utils.fromWei(stakeAmountWei)
     this.setState({

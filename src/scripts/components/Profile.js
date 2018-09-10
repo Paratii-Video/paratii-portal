@@ -8,6 +8,16 @@ import {
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS
 } from 'constants/ApplicationConstants'
+import {
+  BORDER_RADIUS,
+  PROFILE_AVATAR_SIZE,
+  PROFILE_AVATAR_MARGIN_BOTTOM,
+  PROFILE_EDITPROFILEBUTTON_TOP,
+  PROFILE_EDITPROFILEBUTTON_RIGHT,
+  PROFILE_WORDSWRAPPER_MARGIN,
+  PROFILE_WORDSWRAPPER_PADDING_VERTICAL,
+  PROFILE_EMAILADDRESSWRAPPER_MARGIN_RIGHT
+} from 'constants/UIConstants'
 import Colors from './foundations/base/Colors'
 import TextButton from './foundations/TextButton'
 import Text from './foundations/Text'
@@ -17,6 +27,7 @@ import HR from './foundations/HR'
 import SingleCardWrapper from './foundations/SingleCardWrapper'
 import Card from './structures/Card'
 import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
+import InvestedBalanceContainer from 'containers/widgets/InvestedBalanceContainer'
 import User from 'records/UserRecords'
 import { getEmail, getEmailIsVerified, getName } from 'operators/UserOperators'
 import type { Notification, NotificationLevel } from 'types/ApplicationTypes'
@@ -38,21 +49,31 @@ const CardContent = styled.div`
   flex-direction: column;
 `
 
+const BalanceContainer = styled.div`
+  display: flex;
+`
+
+const BalanceItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 35px;
+`
+
 const NavLink = TextButton.withComponent(Link)
 
 const EditProfileButton = styled(NavLink)`
   position: absolute;
-  top: 50px;
-  right: 42px;
+  top: ${PROFILE_EDITPROFILEBUTTON_TOP};
+  right: ${PROFILE_EDITPROFILEBUTTON_RIGHT};
 `
 
 const ProfileAvatar = styled.div`
   background-color: ${props => props.theme.colors.header.color};
   border-radius: 100%;
-  height: 100px;
-  margin-bottom: 20px;
+  height: ${PROFILE_AVATAR_SIZE};
+  margin-bottom: ${PROFILE_AVATAR_MARGIN_BOTTOM};
   overflow: hidden;
-  width: 100px;
+  width: ${PROFILE_AVATAR_SIZE};
 `
 
 const FooterWrapper = styled.div`
@@ -60,7 +81,7 @@ const FooterWrapper = styled.div`
 `
 
 const EmailAddressWrapper = styled.span`
-  margin-right: 10px;
+  margin-right: ${PROFILE_EMAILADDRESSWRAPPER_MARGIN_RIGHT};
 `
 
 const EmailDataWrapper = styled.span`
@@ -70,11 +91,17 @@ const EmailDataWrapper = styled.span`
 
 const WordsWrapper = styled.div`
   background-color: ${Colors.grayDark};
-  border-radius: 4px;
+  border-radius: ${BORDER_RADIUS};
   display: flex;
   justify-content: space-between;
-  margin: 5px 0 0;
-  padding: 22px ${WORDSWRAPPER_HORIZONTAL_PADDING};
+  margin: ${PROFILE_WORDSWRAPPER_MARGIN};
+  padding: ${PROFILE_WORDSWRAPPER_PADDING_VERTICAL} ${WORDSWRAPPER_HORIZONTAL_PADDING};
+`
+
+const Words = Text.extend`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `
 
 class Profile extends Component<Props, void> {
@@ -147,15 +174,15 @@ class Profile extends Component<Props, void> {
           <TranslatedText message="profile.addressLabel" />
         </Text>
         <WordsWrapper>
-          <Text
+          <Words
             accent
             innerRef={(ref: HTMLElement) => {
               this.KeyWords = ref
             }}
           >
             {userAddress}
-          </Text>
-          <TextButton iconButton small onClick={this.copyWordsToClipboard}>
+          </Words>
+          <TextButton iconbutton small onClick={this.copyWordsToClipboard}>
             <SVGIcon
               icon="icon-copy"
               height="20px"
@@ -186,10 +213,20 @@ class Profile extends Component<Props, void> {
               <TranslatedText message="profile.dataLabel" /> 2018
             </Text>
             <HR />
-            <Text tiny>
-              <TranslatedText message="profile.balanceTitle" />
-            </Text>
-            <PTIBalanceContainer />
+            <BalanceContainer>
+              <BalanceItem>
+                <Text tiny>
+                  <TranslatedText message="profile.balanceTitle" />
+                </Text>
+                <PTIBalanceContainer />
+              </BalanceItem>
+              <BalanceItem>
+                <Text tiny>
+                  <TranslatedText message="profile.investedTitle" />
+                </Text>
+                <InvestedBalanceContainer />
+              </BalanceItem>
+            </BalanceContainer>
           </CardContent>
         </Card>
       </SingleCardWrapper>

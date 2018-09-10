@@ -25,8 +25,7 @@ import {
   CONTROLS_SPACING,
   CONTROLS_SPACING_MOBILE,
   CONTROLS_HEIGHT,
-  CONTROLS_HEIGHT_TABLET,
-  VIDEO_OVERLAY_PADDING
+  CONTROLS_HEIGHT_TABLET
 } from 'constants/UIConstants'
 import { PLAYER_PLUGIN } from 'constants/PlayerConstants'
 import { getFullscreenEnabled } from 'utils/AppUtils'
@@ -85,7 +84,8 @@ const Wrapper = styled.div`
   );
   transition: transform
     ${({ transitionState }) => (TRANSITION_STATE.EXITED ? '0.6s' : '0.9s')}
-    ${({ theme }) => theme.animation.ease.smooth};
+    ${({ theme }) => theme.animation.ease.smooth}
+    ${({ transitionState }) => (TRANSITION_STATE.EXITED ? '0.2s' : null)};
 `
 
 const Shadow = styled.span`
@@ -123,26 +123,23 @@ const Shadow = styled.span`
   }};
 `
 
-const BASE_TIP_BUTTON_MARGIN: string = '20px'
-const BASE_TIP_BUTTON_BOTTOM: string = `calc(${CONTROLS_HEIGHT} * -1 - ${BASE_TIP_BUTTON_MARGIN})`
+export const TIPBUTTONWRAPPER_BOTTOM: string = '74px'
+export const TIPBUTTONWRAPPER_RIGHT: string = '16px'
 
 const TipButtonWrapper = styled.div`
   position: absolute;
-  bottom: ${({ controlsRaised }) =>
-    `calc(${BASE_TIP_BUTTON_MARGIN} + ${VIDEO_OVERLAY_PADDING} + ${
-      controlsRaised ? CONTROLS_HEIGHT : BASE_TIP_BUTTON_BOTTOM
-    } )`};
-  right: ${VIDEO_OVERLAY_PADDING};
-  transition: all ${({ theme }) => theme.animation.time.repaint}
-    ${({ theme }) => theme.animation.ease.smooth};
+  bottom: ${TIPBUTTONWRAPPER_BOTTOM};
+  right: ${TIPBUTTONWRAPPER_RIGHT};
+  transform: translate3d(
+    ${({ controlsRaised }) => (controlsRaised ? 0 : '125%')},
+    0,
+    0
+  );
+  transition: transform
+    ${({ controlsRaised }) => (controlsRaised ? '0.75s' : '0.5s')}
+    ${({ theme }) => theme.animation.ease.smooth}
+    ${({ controlsRaised }) => (controlsRaised ? '0.2s' : null)};
   z-index: ${Z_INDEX_BUTTONS};
-
-  @media (max-width: 768px) {
-    bottom: ${({ controlsRaised }) =>
-    `calc(${BASE_TIP_BUTTON_MARGIN} + ${VIDEO_OVERLAY_PADDING} + ${
-      controlsRaised ? CONTROLS_HEIGHT_TABLET : BASE_TIP_BUTTON_BOTTOM
-    } )`};
-  }
 `
 
 const Controls = styled.div`
@@ -189,18 +186,22 @@ const LeftControls = styled.div`
 `
 
 const RightControls = styled.div`
-  flex: 0;
+  flex: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 `
 
 const Time = styled.div`
+  flex: 1;
   margin-right: ${CONTROLS_SPACING};
+  text-overflow: ellipsis;
   user-select: none;
+  white-space: nowrap;
 `
 
 const VolumeBarWrapper = styled.div`
+  flex: 1 1 100%;
   position: relative;
 `
 

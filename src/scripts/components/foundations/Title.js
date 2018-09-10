@@ -28,5 +28,5 @@ export const TitleSize = css`
 `
 
 export default styled.h1`
-  ${TextColor} ${TextStyle} ${TitleSize};
+  ${TextColor} ${TextStyle} ${TitleSize} margin: ${({ margin }) => margin};
 `

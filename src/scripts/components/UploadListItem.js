@@ -243,7 +243,7 @@ class UploadListItem extends Component<Props, Object> {
   }
 
   async componentDidMount () {
-    const stakeAmountBN = await paratii.eth.tcrPlaceholder.getMinDeposit()
+    const stakeAmountBN = await paratii.eth.tcr.getMinDeposit()
     const stakeAmount = stakeAmountBN.toString()
     this.setState({
       stakeAmount
@@ -487,7 +487,6 @@ class UploadListItem extends Component<Props, Object> {
                   name="content-type"
                   value="paid"
                   tabIndex="-1"
-                  nomargin
                   disabled
                 >
                   <TranslatedText message="uploadListItem.contentType.paid" />

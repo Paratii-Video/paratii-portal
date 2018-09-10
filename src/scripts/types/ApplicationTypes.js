@@ -136,6 +136,7 @@ export type TokenUnit = $Values<typeof TOKEN_UNITS>
 
 // TODO move this into paratii-js repo
 export type ParatiiLib = {
+  getAccount: () => string,
   config: {
     account: {
       address: string,
@@ -154,6 +155,16 @@ export type ParatiiLib = {
     migrateAccount: (address: string) => Object,
     create: Object => Object,
     get: (address: string) => Object
+  },
+  db: {
+    tcr: {
+      challenges: {
+        get: string => Object
+      },
+      votes: {
+        get: (string, string) => Object
+      }
+    }
   },
   eth: {
     getAccount: () => string,
@@ -184,15 +195,30 @@ export type ParatiiLib = {
     },
     tcr: {
       apply: (string, number) => Promise<Object>,
+      challengeExists: string => boolean,
       checkEligiblityAndApply: (string, number) => Promise<Object>,
       getMinDeposit: () => string,
-      getTotalStaked: string => Promise<Object>
+      getTotalStaked: string => Promise<Object>,
+      isWhitelisted: string => Promise<Object>,
+      approveAndStartChallenge: string => Promise<Object>,
+      approveAndGetRightsAndCommitVote: (
+        string,
+        number,
+        number
+      ) => Promise<Object>,
+      challenge: {
+        get: string => Object
+      },
+      revealVote: (pollID: string, vote: string, salt: string) => Object,
+      votes: {
+        get: (string, string) => Object
+      }
     },
-    tcrPlaceholder: {
-      apply: (string, number) => Promise<Object>,
-      checkEligiblityAndApply: (string, number) => Promise<Object>,
-      getMinDeposit: () => string
-    },
+    // tcrPlaceholder: {
+    //   apply: (string, number) => Promise<Object>,
+    //   checkEligiblityAndApply: (string, number) => Promise<Object>,
+    //   getMinDeposit: () => string
+    // },
     transfer: (address: string, amount: number, unit: TokenUnit) => void
   },
   ipfs: {
@@ -334,7 +360,8 @@ type Colors = {
     secondary: string,
     accent: string,
     highlight: string,
-    warn: string
+    warn: string,
+    succeed: string
   },
   header: {
     logo: string,
@@ -354,15 +381,6 @@ type Colors = {
   },
   Popover: {
     shadow: string
-  },
-  ProfileCuration: {
-    ChallengeBackgroundOneFrom: string,
-    ChallengeBackgroundOneTo: string,
-    ChallengeBackgroundTwoFrom: string,
-    ChallengeBackgroundTwoTo: string,
-    VotingBarOne: string,
-    VotingBarTwo: string,
-    ChallengeSequenceDot: string
   }
 }
 

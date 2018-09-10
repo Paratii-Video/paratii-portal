@@ -1,7 +1,15 @@
 /* @flow */
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Z_INDEX_MODAL, BORDER_RADIUS } from 'constants/UIConstants'
+import {
+  BORDER_RADIUS,
+  MODAL_WIDTH,
+  MODAL_WIDTH_SMALL,
+  MODALCONTENT_PADDING,
+  MODALCONTENT_PADDING_MOBILE,
+  Z_INDEX_MODAL
+} from 'constants/UIConstants'
+import Title from 'components/foundations/Title'
 import TextButton from 'components/foundations/TextButton'
 import SVGIcon from 'components/foundations/SVGIcon'
 
@@ -14,6 +22,8 @@ import ModalShowSeed from 'containers/widgets/modals/ModalShowSeedContainer'
 import ModalProfile from 'containers/widgets/modals/ModalProfileContainer'
 import ModalRewriteSeed from 'containers/widgets/modals/ModalRewriteSeedContainer'
 import ModalRestoreAccount from 'containers/widgets/modals/ModalRestoreAccountContainer'
+import ModalChallenge from 'containers/widgets/modals/ModalChallengeContainer'
+import ModalVote from 'containers/widgets/modals/ModalVoteContainer'
 
 import { MODAL } from 'constants/ModalConstants'
 
@@ -90,11 +100,11 @@ const CloseButton = styled(TextButton)`
 
 const Content = styled.div`
   height: 100%;
-  padding: 44px 48px;
+  padding: ${MODALCONTENT_PADDING};
   width: 100%;
 
   @media (max-width: 767px) {
-    padding: 30px 34px;
+    padding: ${MODALCONTENT_PADDING_MOBILE};
   }
 `
 
@@ -112,6 +122,10 @@ export const ModalScrollContent = styled.div`
     overflow-x: hidden;
     overflow-y: scroll;
   }
+`
+
+export const ModalTitle = styled(Title)`
+  margin-bottom: 25px;
 `
 
 class Modal extends Component<Props, void> {
@@ -137,25 +151,29 @@ class Modal extends Component<Props, void> {
     const { modalName } = this.props
     switch (modalName) {
       case MODAL.STAKE:
-        return '490px'
+        return MODAL_WIDTH_SMALL
       case MODAL.SECURE:
-        return '900px'
+        return MODAL_WIDTH
       case MODAL.SHOW_SEED:
-        return '900px'
+        return MODAL_WIDTH
       case MODAL.GREAT_POWER:
-        return '900px'
+        return MODAL_WIDTH
       case MODAL.REWRITE_SEED:
-        return '900px'
+        return MODAL_WIDTH
       case MODAL.RESTORE_ACCOUNT:
-        return '900px'
+        return MODAL_WIDTH
       case MODAL.CREATE_PASSWORD:
-        return '900px'
+        return MODAL_WIDTH
       case MODAL.ASK_PASSWORD:
-        return '490px'
+        return MODAL_WIDTH_SMALL
       case MODAL.PROFILE:
-        return '900px'
+        return MODAL_WIDTH
+      case MODAL.CHALLENGE:
+        return MODAL_WIDTH_SMALL
+      case MODAL.VOTE:
+        return MODAL_WIDTH_SMALL
       default:
-        return '490px'
+        return MODAL_WIDTH_SMALL
     }
   }
 
@@ -205,6 +223,12 @@ class Modal extends Component<Props, void> {
         break
       case MODAL.RESTORE_ACCOUNT:
         ModalComponent = ModalRestoreAccount
+        break
+      case MODAL.CHALLENGE:
+        ModalComponent = ModalChallenge
+        break
+      case MODAL.VOTE:
+        ModalComponent = ModalVote
         break
     }
 

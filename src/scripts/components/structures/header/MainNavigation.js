@@ -1,14 +1,21 @@
 /* @flow */
 
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { MEDIAQUERY_BREAKPOINT } from 'constants/UIConstants'
+import {
+  NAVITEM_PADDING_HORIZONTAL,
+  NAVITEM_PADDING_VERTICAL_BP,
+  MEDIAQUERY_BREAKPOINT,
+  MAINHEADER_PADDING_LEFT_BP } from 'constants/UIConstants'
+import {
+  JOIN_US_ON_TELEGRAM,
+  ABOUT_US
+} from 'constants/UrlConstants'
 import Button from 'components/foundations/Button'
 import TextButton from 'components/foundations/TextButton'
-import Hidden from 'components/foundations/Hidden'
+import SVGIcon from 'components/foundations/SVGIcon'
 import TranslatedText from 'components/translations/TranslatedText'
-import PTIBalanceContainer from 'containers/widgets/PTIBalanceContainer'
 
 type Props = {
   isWalletSecured: boolean,
@@ -18,6 +25,10 @@ type Props = {
 
 const Nav = styled.nav`
   display: block;
+
+  @media ${MEDIAQUERY_BREAKPOINT} {
+    margin: 0 0 0 ${MAINHEADER_PADDING_LEFT_BP};
+  }
 `
 
 const NavList = styled.ul`
@@ -32,10 +43,12 @@ const NavList = styled.ul`
 `
 
 const NavItem = styled.li`
-  padding-left: 45px;
+  display: ${({ onlyMobile }) => onlyMobile ? 'none' : 'flex'};
+  padding-left: ${NAVITEM_PADDING_HORIZONTAL};
 
   @media ${MEDIAQUERY_BREAKPOINT} {
-    padding: 20px 0;
+    display: flex;
+    padding: ${NAVITEM_PADDING_VERTICAL_BP} 0;
   }
 `
 
@@ -66,30 +79,42 @@ class MainNavigation extends Component<Props, Object> {
     return (
       <Nav>
         <NavList>
-          <NavItem>
-            <NavLink onClick={this.props.closeMainNavAndUserNav} to="/voucher">
-              <TranslatedText message="navigation.voucher" />
-            </NavLink>
-          </NavItem>
-          <Hidden>
+          {this.props.isWalletSecured && (
+            <Fragment>
+              <NavItem>
+                <NavLink onClick={this.props.closeMainNavAndUserNav} to="/profile">
+                  <TranslatedText message="navigation.profile" />
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink onClick={this.props.closeMainNavAndUserNav} to="/profile/my-videos">
+                  <TranslatedText message="navigation.myVideos" />
+                </NavLink>
+              </NavItem>
+            </Fragment>
+          )}
+          {!this.props.isWalletSecured && (
             <NavItem>
-              <NavLink
+              <Anchor
                 onClick={this.props.closeMainNavAndUserNav}
-                to="/my-videos"
+                href={JOIN_US_ON_TELEGRAM}
+                target="_blank"
+                iconbutton
               >
-                <TranslatedText message="navigation.myVideos" />
-              </NavLink>
+                <SVGIcon
+                  icon="icon-telegram"
+                  width="18px"
+                  height="16px"
+                  margin="0 18px 0 0"
+                />
+                <TranslatedText message="navigation.telegram" />
+              </Anchor>
             </NavItem>
-          </Hidden>
-          <NavItem>
-            <NavLink onClick={this.props.closeMainNavAndUserNav} to="/upload">
-              <TranslatedText message="navigation.upload" />
-            </NavLink>
-          </NavItem>
+          )}
           <NavItem>
             <Anchor
               onClick={this.props.closeMainNavAndUserNav}
-              href="https://paratii.video/"
+              href={ABOUT_US}
               target="_blank"
             >
               <TranslatedText message="navigation.about" />
@@ -106,11 +131,7 @@ class MainNavigation extends Component<Props, Object> {
                 <TranslatedText message="navigation.logIn" />
               </Button>
             </NavItem>
-          ) : (
-            <NavItem>
-              <PTIBalanceContainer />
-            </NavItem>
-          )}
+          ) : null}
         </NavList>
       </Nav>
     )
