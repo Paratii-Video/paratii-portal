@@ -64,17 +64,10 @@ export const VIDEO_CATEGORIES: Array<Object> = [
     slug: '/category/documentaries',
     list: [
       {
-<<<<<<< Updated upstream
-        title: 'O que é Algoritmo',
-        url: '/play/D93ftQHK3OXN',
-        image: '/assets/img/landing/small/o-que-e-algoritimo.png',
-        time: '02:48'
-=======
         title: 'Cryptocurrency Revolution COMPLETE FILM | Frank Giustra, Frank Holmes & Marco Streng Bitcoin Doc',
         url: 'play/2LczT9UM28Xu',
         image: 'https://gateway.paratii.video/ipfs/QmSiQi6tgBXQktyMmPvu9cdpRUt9erWSwqHnnQVJw7a8bv/thumbnail-480x360_1.png',
         time: '16:27'
->>>>>>> Stashed changes
       },
       {
         title: 'Around the Block - Trailer',
