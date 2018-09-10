@@ -64,10 +64,17 @@ export const VIDEO_CATEGORIES: Array<Object> = [
     slug: '/category/documentaries',
     list: [
       {
+<<<<<<< Updated upstream
         title: 'O que é Algoritmo',
         url: '/play/D93ftQHK3OXN',
         image: '/assets/img/landing/small/o-que-e-algoritimo.png',
         time: '02:48'
+=======
+        title: 'Cryptocurrency Revolution COMPLETE FILM | Frank Giustra, Frank Holmes & Marco Streng Bitcoin Doc',
+        url: 'play/2LczT9UM28Xu',
+        image: 'https://gateway.paratii.video/ipfs/QmSiQi6tgBXQktyMmPvu9cdpRUt9erWSwqHnnQVJw7a8bv/thumbnail-480x360_1.png',
+        time: '16:27'
+>>>>>>> Stashed changes
       },
       {
         title: 'Around the Block - Trailer',
@@ -200,27 +207,27 @@ export const VIDEO_CATEGORIES: Array<Object> = [
     slug: '/category/network-builders',
     list: [
       {
-        title: 'O que é Algoritmo',
-        url: '/play/D93ftQHK3OXN',
-        image: '/assets/img/landing/small/o-que-e-algoritimo.png',
-        time: '02:48'
+        title: 'Blockstack - A New Internet for Decentralized Apps',
+        url: 'play/v42pJ9zBpoXQ',
+        image: 'https://gateway.paratii.video/ipfs/QmWZEVvJDrnanBGsi9kcNELHjnCq1nkTeoTg8RK2UUx32j/thumbnail-1280x552_1.png',
+        time: '05:35'
       },
       {
-        title: 'Around the Block - Trailer',
-        url: '/play/a4Dbd26pLu0X',
-        image: '/assets/img/landing/small/around-the-block-trailer.png',
-        time: '02:56'
+        title: 'Aragon - The Fight for Freedom',
+        url: 'play/qgdKBMkcEMpv',
+        image: 'https://gateway.paratii.video/ipfs/QmVDTceGNnahnheXNXTJLxEhiUTSCUyZH4fb4s4vV6WE5R/thumbnail-1280x464_1.png',
+        time: '05:50'
       },
       {
-        title: 'Todo Tempo do Mundo - Ep. 1',
-        url: '/play/mF7YHwBeGqZq',
-        image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
-        time: '18:38'
+        title: 'Introducing DAOstack',
+        url: 'play/e5Md7X3NRXuS',
+        image: 'https://gateway.paratii.video/ipfs/QmPhS5uW4ZXzSRt4AuhioigDHR3d9WDc7JS9nPnao6ayhh/thumbnail-1280x534_1.png',
+        time: '05.16'
       },
       {
-        title: 'Só Quero Fazer Falta',
-        url: '/play/9Jh8KlGxtRIC',
-        image: '/assets/img/landing/small/so-quero-fazer-falta.png',
+        title: 'Radar Relay | Modular Trade Networks ',
+        url: 'play/dkxn1c6UCg9N',
+        image: 'so-quero-fazer-falta.png',
         time: '02:03'
       },
       {
