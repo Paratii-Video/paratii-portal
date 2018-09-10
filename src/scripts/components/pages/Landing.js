@@ -8,7 +8,6 @@ import {
   LANDING_HEADERCONTENTITEM_MAX_WIDTH,
   LANDING_HEADERTEXT_MARING,
   LANDING_HEADERBUTTONSITEM_MARGIN,
-  LANDING_HEADERBUTTONSITEM_MARGIN_BP,
   LANDING_VIDEOSCONTAINER_MARGIN,
   LANDING_VIDEOSCONTAINER_MAX_WIDTH,
   LANDING_TEXTWRAPPER_MARGIN,
@@ -26,6 +25,7 @@ import {
   Z_INDEX_BACK
 } from 'constants/UIConstants'
 import {
+  LANDING_HEADER_VIDEOS,
   LANDING_HIGHLIGHT_VIDEOS,
   LANDING_CATEGORY_VIDEOS
 } from 'constants/LandingConstants'
@@ -104,22 +104,18 @@ const HeaderText = Text.extend`
 const HeaderButtons = styled.div`
   display: flex;
   align-items: center;
-
-  @media (max-width: 500px) {
-    flex-wrap: wrap;
-  }
 `
 
 const HeaderButtonsItem = styled.div`
+  color: ${props => props.theme.colors.text.accent};
   display: flex;
   align-items: center;
   margin: ${LANDING_HEADERBUTTONSITEM_MARGIN};
   min-height: ${BUTTON_HEIGHT};
-
-  @media (max-width: 500px) {
-    flex: 1 1 50%;
-    margin: ${LANDING_HEADERBUTTONSITEM_MARGIN_BP};
-  }
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
 `
 
 const HeaderButton = Button.withComponent(Link)
@@ -276,20 +272,37 @@ class Landing extends Component<Props, void> {
                   <TranslatedText message="landingPage.header.description_html" />
                 </HeaderText>
                 <HeaderButtons>
-                  <HeaderButtonsItem>
-                    <HeaderButton iconbutton="true" to="/play/65te9Z7bXDM4">
-                      <SVGIcon
-                        icon="icon-player-play"
-                        width="14px"
-                        height="14px"
-                        margin="0 10px 0 0"
-                      />
-                      Episode 1
-                    </HeaderButton>
-                  </HeaderButtonsItem>
-                  <HeaderButtonsItem><Text accent>Episode 2</Text></HeaderButtonsItem>
-                  <HeaderButtonsItem><Text accent>Episode 3</Text></HeaderButtonsItem>
-                  <HeaderButtonsItem><Text accent>Episode 4</Text></HeaderButtonsItem>
+                  {LANDING_HEADER_VIDEOS.map((item, index) => {
+                    if (item.url) {
+                      return (
+                        <HeaderButtonsItem key={index}>
+                          <HeaderButton iconbutton="true" to={item.url}>
+                            <SVGIcon
+                              icon="icon-player-play"
+                              width="14px"
+                              height="14px"
+                              margin="0 10px 0 0"
+                            />
+                            <TranslatedText message="landingPage.header.button" /> {item.title}
+                          </HeaderButton>
+                        </HeaderButtonsItem>
+                      )
+                    } else {
+                      return (
+                        <HeaderButtonsItem key={index}>
+                          <SVGIcon
+                            icon="icon-lock"
+                            width="14px"
+                            height="14px"
+                            margin="0 10px 0 0"
+                          />
+                          <Text accent small>
+                            <TranslatedText message="landingPage.header.button" /> {item.title}
+                          </Text>
+                        </HeaderButtonsItem>
+                      )
+                    }
+                  })}
                 </HeaderButtons>
               </HeaderContentItem>
             </HeaderContent>
@@ -306,7 +319,7 @@ class Landing extends Component<Props, void> {
                       return (
                         <ListVideosItem highlight key={index2}>
                           <ListVideosItemLink to={item2.url}>
-                            <ListVideosItemBackground background={'/assets/img/landing/small/' + item2.image} />
+                            <ListVideosItemBackground background={item2.image} />
                             <ListVideosItemContainer>
                               <ListVideosItemIcon>
                                 <SVGIcon icon="icon-player-play" />
@@ -333,7 +346,7 @@ class Landing extends Component<Props, void> {
                       return (
                         <ListVideosItem key={index2}>
                           <ListVideosItemLink to={item2.url}>
-                            <ListVideosItemBackground background={'/assets/img/landing/small/' + item2.image} />
+                            <ListVideosItemBackground background={item2.image} />
                             <ListVideosItemShadow />
                             <ListVideosItemContainer>
                               <ListVideosItemTitle bold accent>
