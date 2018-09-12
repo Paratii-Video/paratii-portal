@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import {
   NAVITEM_PADDING_HORIZONTAL,
   NAVITEM_PADDING_VERTICAL_BP,
-  MEDIAQUERY_BREAKPOINT,
+  MEDIAQUERY_BREAKPOINT_MAINHEADER,
   MAINHEADER_PADDING_LEFT_BP } from 'constants/UIConstants'
 import {
   JOIN_US_ON_TELEGRAM,
@@ -26,7 +26,7 @@ type Props = {
 const Nav = styled.nav`
   display: block;
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media ${MEDIAQUERY_BREAKPOINT_MAINHEADER} {
     margin: 0 0 0 ${MAINHEADER_PADDING_LEFT_BP};
   }
 `
@@ -35,7 +35,7 @@ const NavList = styled.ul`
   display: flex;
   align-items: center;
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media ${MEDIAQUERY_BREAKPOINT_MAINHEADER} {
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-start;
@@ -46,7 +46,7 @@ const NavItem = styled.li`
   display: ${({ onlyMobile }) => onlyMobile ? 'none' : 'flex'};
   padding-left: ${NAVITEM_PADDING_HORIZONTAL};
 
-  @media ${MEDIAQUERY_BREAKPOINT} {
+  @media ${MEDIAQUERY_BREAKPOINT_MAINHEADER} {
     display: flex;
     padding: ${NAVITEM_PADDING_VERTICAL_BP} 0;
   }

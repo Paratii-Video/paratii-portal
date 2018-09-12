@@ -172,7 +172,7 @@ class Landing extends Component<Props, void> {
                         return (
                           <ListVideosItem key={index2}>
                             <ListVideosItemLink to={item2.url}>
-                              <ListVideosItemBackground background={'/assets/img/landing/small/' + item2.image} />
+                              <ListVideosItemBackground background={item2.image} />
                               <ListVideosItemShadow />
                               <ListVideosItemContainer>
                                 <ListVideosItemTitle bold accent>

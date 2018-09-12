@@ -10,7 +10,8 @@
 		"alert_html": "<strong>Esté é um Alpha</strong> (numa testnet da Ethereum). O código não foi auditado. Não compartilhe informações sensíveis.",
 		"header": {
 			"title_html": "🎉 Around the block<br />: primeiro episódio lançado",
-			"description_html": "Uma websérie documental<br /> sobre as mentes por trás da descentralização. Assista agora!"
+			"description_html": "Uma websérie documental<br /> sobre as mentes por trás da descentralização. Assista agora!",
+			"button": "Ep."
 		},
 		"text": "O Lab é uma plataforma peer-to-peer que não espia nem revende suas informações. Encontre séries, tutoriais, palestras e descubra as cripto-comunidades que existem além da sua.",
 		"button": "+ Veja mais",

@@ -597,7 +597,7 @@ class VideoForm extends Component<Props, Object> {
                           href={TERMSOFSERVICE}
                           target="_blank"
                         >
-                        <TranslatedText message="uploadListItem.termsOfServiceLinkText" />
+                          <TranslatedText message="uploadListItem.termsOfServiceLinkText" />
                         </Anchor>
                       )
                     }}

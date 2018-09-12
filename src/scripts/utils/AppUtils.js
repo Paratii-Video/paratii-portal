@@ -20,7 +20,7 @@ export const getRoot = (): Element => {
 export const getAppRootUrl = (env: ?string = 'development'): string => {
   switch (env) {
     case 'production':
-      return 'https://portal.paratii.video'
+      return 'https://lab.paratii.video'
     case 'staging':
       return 'https://staging.paratii.video'
     case 'development':

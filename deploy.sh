@@ -19,3 +19,9 @@ yarn run build:$1
 echo "copying files..."
 rsync -e 'ssh -o StrictHostKeyChecking=no' -azh --exclude config --exclude pm2-portal-config.json --delete . paratii@$host:/home/paratii/paratii-portal/
 ssh -o StrictHostKeyChecking=no paratii@$host "sh restart.sh"
+#ssh -tt -o StrictHostKeyChecking=no paratii@$host << EOF
+#  cd paratii-portal
+#  git pull
+#  yarn build:$1
+#  sh restart.sh
+#EOF
