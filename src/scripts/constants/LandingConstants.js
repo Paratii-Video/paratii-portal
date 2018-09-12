@@ -205,16 +205,16 @@ export const LANDING_CATEGORY_VIDEOS: Array<Object> = [
     slug: '/category/world-class-crypto-memes',
     list: [
       {
+        title: 'Gramatik - Satoshi Nakamoto MUSIC VIDEO (feat. Adrian Lau & ProbCause)',
+        url: '/play/czC8KxeSPW4u',
+        image: 'https://gateway.paratii.video/ipfs/QmYDsB2rVk2PPYpcBqjrJ5VxfD47TWmcgSvJhvzbmTXqZA/thumbnail-1280x720_1.png',
+        time: '04:26'
+      },
+      {
         title: 'SMINEM VS. BOGDANOFF',
         url: '/play/XZiNjRTxjoW4',
         image: 'https://gateway.paratii.video/ipfs/QmSrGWzBui8YwrbcNX6hcXYxnvMcjZppxcXJDPfNwmDY6K/thumbnail-1280x720_1.png',
         time: '03:00'
-      },
-      {
-        title: 'He bought',
-        url: '/play/AjRcmSLmvuKj',
-        image: 'https://gateway.paratii.video/ipfs/QmXi9RWJXgpNXJMnV6PyPAQNAyidKGPSNHFuiw8cz5rBpQ/thumbnail-1280x720_1.png',
-        time: '01:04'
       },
       {
         title: 'B ＯＧＧＥＤ',

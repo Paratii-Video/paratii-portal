@@ -65,51 +65,9 @@ export const VIDEO_CATEGORIES: Array<Object> = [
     list: [
       {
         title: 'Cryptocurrency Revolution COMPLETE FILM | Frank Giustra, Frank Holmes & Marco Streng Bitcoin Doc',
-        url: 'play/2LczT9UM28Xu',
+        url: 'play/dYVIv7pgLTlu',
         image: 'https://gateway.paratii.video/ipfs/QmSiQi6tgBXQktyMmPvu9cdpRUt9erWSwqHnnQVJw7a8bv/thumbnail-480x360_1.png',
         time: '16:27'
-      },
-      {
-        title: 'Around the Block - Trailer',
-        url: '/play/a4Dbd26pLu0X',
-        image: '/assets/img/landing/small/around-the-block-trailer.png',
-        time: '02:56'
-      },
-      {
-        title: 'Todo Tempo do Mundo - Ep. 1',
-        url: '/play/mF7YHwBeGqZq',
-        image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
-        time: '18:38'
-      },
-      {
-        title: 'Só Quero Fazer Falta',
-        url: '/play/9Jh8KlGxtRIC',
-        image: '/assets/img/landing/small/so-quero-fazer-falta.png',
-        time: '02:03'
-      },
-      {
-        title: 'Só Quero Fazer Falta',
-        url: '/play/9Jh8KlGxtRIC',
-        image: '/assets/img/landing/small/so-quero-fazer-falta.png',
-        time: '02:03'
-      },
-      {
-        title: 'O que é Algoritmo',
-        url: '/play/D93ftQHK3OXN',
-        image: '/assets/img/landing/small/o-que-e-algoritimo.png',
-        time: '02:48'
-      },
-      {
-        title: 'Around the Block - Trailer',
-        url: '/play/a4Dbd26pLu0X',
-        image: '/assets/img/landing/small/around-the-block-trailer.png',
-        time: '02:56'
-      },
-      {
-        title: 'Todo Tempo do Mundo - Ep. 1',
-        url: '/play/mF7YHwBeGqZq',
-        image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
-        time: '18:38'
       }
     ]
   },
@@ -188,10 +146,16 @@ export const VIDEO_CATEGORIES: Array<Object> = [
         time: '06.33'
       },
       {
-        title: 'Waht is Giveth',
+        title: 'What is Giveth',
         url: '/play/Nzgy75t2S8AC',
         image: 'https://gateway.paratii.video/ipfs/QmTbcLH7VujDEgUZSNgNrTntDKH9QA799vAwe3L4PrQJ93/thumbnail-1280x720_1.png',
         time: '02.56'
+      },
+      {
+        title: 'Augur - How A Decentralized Prediction Market Works (Narrated by Shooter Jennings)',
+        url: '/play/guBX6zNn2USM',
+        image: 'https://gateway.paratii.video/ipfs/QmTbcLH7VujDEgUZSNgNrTntDKH9QA799vAwe3L4PrQJ93/thumbnail-1280x720_1.png',
+        time: '02.06'
       }
     ]
   },
@@ -314,53 +278,36 @@ export const VIDEO_CATEGORIES: Array<Object> = [
     slug: '/category/world-class-crypto-memes',
     list: [
       {
-        title: 'O que é Algoritmo',
-        url: '/play/D93ftQHK3OXN',
-        image: '/assets/img/landing/small/o-que-e-algoritimo.png',
-        time: '02:48'
+        title: 'Gramatik - Satoshi Nakamoto MUSIC VIDEO (feat. Adrian Lau & ProbCause)',
+        url: '/play/czC8KxeSPW4u',
+        image: 'https://gateway.paratii.video/ipfs/QmYDsB2rVk2PPYpcBqjrJ5VxfD47TWmcgSvJhvzbmTXqZA/thumbnail-1280x720_1.png',
+        time: '04:26'
       },
       {
-        title: 'Around the Block - Trailer',
-        url: '/play/a4Dbd26pLu0X',
-        image: '/assets/img/landing/small/around-the-block-trailer.png',
-        time: '02:56'
+        title: 'SMINEM VS. BOGDANOFF',
+        url: '/play/XZiNjRTxjoW4',
+        image: 'https://gateway.paratii.video/ipfs/QmSrGWzBui8YwrbcNX6hcXYxnvMcjZppxcXJDPfNwmDY6K/thumbnail-1280x720_1.png',
+        time: '03:00'
       },
       {
-        title: 'Todo Tempo do Mundo - Ep. 1',
-        url: '/play/mF7YHwBeGqZq',
-        image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
-        time: '18:38'
+        title: 'He bought',
+        url: '/play/AjRcmSLmvuKj',
+        image: 'https://gateway.paratii.video/ipfs/QmXi9RWJXgpNXJMnV6PyPAQNAyidKGPSNHFuiw8cz5rBpQ/thumbnail-1280x720_1.png',
+        time: '01:04'
       },
       {
-        title: 'Só Quero Fazer Falta',
-        url: '/play/9Jh8KlGxtRIC',
-        image: '/assets/img/landing/small/so-quero-fazer-falta.png',
-        time: '02:03'
+        title: 'B ＯＧＧＥＤ',
+        url: '/play/pcpcbr3tgIp7',
+        image: 'https://gateway.paratii.video/ipfs/QmUJF8anrN9J2brQPBB3SNu1DFpdugPLMzD3ga5iGvfXmj/thumbnail-1280x720_1.png',
+        time: '01:47'
       },
       {
-        title: 'O que é Algoritmo',
-        url: '/play/D93ftQHK3OXN',
-        image: '/assets/img/landing/small/o-que-e-algoritimo.png',
-        time: '02:48'
-      },
-      {
-        title: 'Around the Block - Trailer',
-        url: '/play/a4Dbd26pLu0X',
-        image: '/assets/img/landing/small/around-the-block-trailer.png',
-        time: '02:56'
-      },
-      {
-        title: 'Todo Tempo do Mundo - Ep. 1',
-        url: '/play/mF7YHwBeGqZq',
-        image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
-        time: '18:38'
-      },
-      {
-        title: 'Só Quero Fazer Falta',
-        url: '/play/9Jh8KlGxtRIC',
-        image: '/assets/img/landing/small/so-quero-fazer-falta.png',
-        time: '02:03'
+        title: 'Funds Are Safu ',
+        url: '/play/gFgul6sKWVQr',
+        image: 'https://gateway.paratii.video/ipfs/QmQFXFA9TLUdCjKLw3kQ2MghYGYbYkewdVHtLUTjRha63G/thumbnail-1280x720_1.png',
+        time: '03:13'
       }
+  
     ]
   }
 ]
