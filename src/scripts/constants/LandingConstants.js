@@ -146,27 +146,27 @@ export const LANDING_CATEGORY_VIDEOS: Array<Object> = [
     list: [
       {
         title: 'The Value Revolution: How Blockchain Will Change Money & the World | Galia Benartzi | TEDxWhiteCity',
-        url: '/play/D93ftQHK3OXN',
-        image: '/assets/img/landing/small/o-que-e-algoritimo.png',
-        time: '02:48'
+        url: '/play/EdKegPIXs8VN',
+        image: 'https://gateway.paratii.video/ipfs/QmWz6wydiYJmCPziHRUSM5XeDTjzzL2HQ9XdXYUbT4s4ru/thumbnail-1280x720_1.png',
+        time: '10:34'
       },
       {
-        title: 'Around the Block - Trailer',
-        url: '/play/a4Dbd26pLu0X',
-        image: '/assets/img/landing/small/around-the-block-trailer.png',
-        time: '02:56'
+        title: 'The new open-source economics ',
+        url: '/play/J9FnHpb0k1EB',
+        image: 'https://gateway.paratii.video/ipfs/QmSdVrtRzPW2Q2zZCjcm5E7HpEqmuwvTPtujCPv8iD9oPM/thumbnail-320x240_1.png',
+        time: '17:52'
       },
       {
-        title: 'Todo Tempo do Mundo - Ep. 1',
-        url: '/play/mF7YHwBeGqZq',
-        image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
-        time: '18:38'
+        title: 'What is Ethereum Gas? Radar explains',
+        url: '/play/XnzJ1uPwPis5',
+        image: 'https://gateway.paratii.video/ipfs/QmRNP8Z83S6UHDZqqyfwK4iABc25Z4ffdjT7YJhQxDddUM/thumbnail-1280x720_1.png',
+        time: '2:31'
       },
       {
-        title: 'Só Quero Fazer Falta',
-        url: '/play/9Jh8KlGxtRIC',
-        image: '/assets/img/landing/small/so-quero-fazer-falta.png',
-        time: '02:03'
+        title: 'Demystifying Decentralization with Joseph Lubin',
+        url: '/play/Ehl82l4E279f',
+        image: 'https://gateway.paratii.video/ipfs/QmdYoPYcCJpFD5vdgLLHuQfkQ5YMUeGDQGEoUJneWWLtqH/thumbnail-1280x720_1.png',
+        time: '02:00'
       }
     ]
   },
@@ -187,16 +187,16 @@ export const LANDING_CATEGORY_VIDEOS: Array<Object> = [
         time: '02:56'
       },
       {
-        title: 'Todo Tempo do Mundo - Ep. 1',
-        url: '/play/mF7YHwBeGqZq',
+        title: 'Cosmos TV | Inside Blockchain | A Sneak Peek of the Latest & Greatest Tokens of 2018 ',
+        url: '/play/wiKpnOavN3bV',
         image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
         time: '18:38'
       },
       {
-        title: 'Só Quero Fazer Falta',
-        url: '/play/9Jh8KlGxtRIC',
-        image: '/assets/img/landing/small/so-quero-fazer-falta.png',
-        time: '02:03'
+        title: 'Simon de la Rouviere - Art, creativity and the blockchain (Interview) ',
+        url: '/play/UeW2wcPpkcoo',
+        image: 'https://gateway.paratii.video/ipfs/QmeAALYfauR76ZsvP9cyNMQx1LLnB1vbuEa28LCh8ZTKST/thumbnail-1280x720_1.png',
+        time: '02:41'
       }
     ]
   },
