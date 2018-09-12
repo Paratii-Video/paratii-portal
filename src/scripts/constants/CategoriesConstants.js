@@ -186,6 +186,12 @@ export const VIDEO_CATEGORIES: Array<Object> = [
         url: '/play/UoljEF8DRyMC',
         image: 'https://gateway.paratii.video/ipfs/QmScUMD1bQzST7Rcb8eDasyMtV46KF6SfGLhEuHMuYjJJu/thumbnail-1280x720_1.png',
         time: '06.33'
+      },
+      {
+        title: 'Waht is Giveth',
+        url: '/play/Nzgy75t2S8AC',
+        image: 'https://gateway.paratii.video/ipfs/QmTbcLH7VujDEgUZSNgNrTntDKH9QA799vAwe3L4PrQJ93/thumbnail-1280x720_1.png',
+        time: '02.56'
       }
     ]
   },
