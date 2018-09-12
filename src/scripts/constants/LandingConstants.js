@@ -55,25 +55,25 @@ export const LANDING_CATEGORY_VIDEOS: Array<Object> = [
     slug: '/category/documentaries',
     list: [
       {
-        title: 'O que é Algoritmo',
+        title: 'TBD: Cryptocurrency Revolution',
         url: '/play/D93ftQHK3OXN',
         image: '/assets/img/landing/small/o-que-e-algoritimo.png',
         time: '02:48'
       },
       {
-        title: 'Around the Block - Trailer',
+        title: 'TBD',
         url: '/play/a4Dbd26pLu0X',
         image: '/assets/img/landing/small/around-the-block-trailer.png',
         time: '02:56'
       },
       {
-        title: 'Todo Tempo do Mundo - Ep. 1',
+        title: 'TBD',
         url: '/play/mF7YHwBeGqZq',
         image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
         time: '18:38'
       },
       {
-        title: 'Só Quero Fazer Falta',
+        title: 'TBD',
         url: '/play/9Jh8KlGxtRIC',
         image: '/assets/img/landing/small/so-quero-fazer-falta.png',
         time: '02:03'
@@ -175,25 +175,25 @@ export const LANDING_CATEGORY_VIDEOS: Array<Object> = [
     slug: '/category/opinion-makers',
     list: [
       {
-        title: 'O que é Algoritmo',
-        url: '/play/D93ftQHK3OXN',
-        image: '/assets/img/landing/small/o-que-e-algoritimo.png',
-        time: '02:48'
+        title: 'Simon de la Rouviere - Art, creativity and the blockchain (Interview) ',
+        url: '/play/UeW2wcPpkcoo',
+        image: 'https://gateway.paratii.video/ipfs/QmeAALYfauR76ZsvP9cyNMQx1LLnB1vbuEa28LCh8ZTKST/thumbnail-1280x720_1.png',
+        time: '02:41'
       },
       {
-        title: 'Around the Block - Trailer',
+        title: 'TBD Around the Block - Trailer',
         url: '/play/a4Dbd26pLu0X',
         image: '/assets/img/landing/small/around-the-block-trailer.png',
         time: '02:56'
       },
       {
-        title: 'Cosmos TV | Inside Blockchain | A Sneak Peek of the Latest & Greatest Tokens of 2018 ',
+        title: 'TBD : Cosmos TV | Inside Blockchain | A Sneak Peek of the Latest & Greatest Tokens of 2018 ',
         url: '/play/wiKpnOavN3bV',
         image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
         time: '18:38'
       },
       {
-        title: 'Simon de la Rouviere - Art, creativity and the blockchain (Interview) ',
+        title: 'TBD: Simon de la Rouviere - Art, creativity and the blockchain (Interview) ',
         url: '/play/UeW2wcPpkcoo',
         image: 'https://gateway.paratii.video/ipfs/QmeAALYfauR76ZsvP9cyNMQx1LLnB1vbuEa28LCh8ZTKST/thumbnail-1280x720_1.png',
         time: '02:41'
@@ -205,28 +205,28 @@ export const LANDING_CATEGORY_VIDEOS: Array<Object> = [
     slug: '/category/world-class-crypto-memes',
     list: [
       {
-        title: 'O que é Algoritmo',
-        url: '/play/D93ftQHK3OXN',
-        image: '/assets/img/landing/small/o-que-e-algoritimo.png',
-        time: '02:48'
+        title: 'SMINEM VS. BOGDANOFF',
+        url: '/play/XZiNjRTxjoW4',
+        image: 'https://gateway.paratii.video/ipfs/QmSrGWzBui8YwrbcNX6hcXYxnvMcjZppxcXJDPfNwmDY6K/thumbnail-1280x720_1.png',
+        time: '03:00'
       },
       {
-        title: 'Around the Block - Trailer',
-        url: '/play/a4Dbd26pLu0X',
-        image: '/assets/img/landing/small/around-the-block-trailer.png',
-        time: '02:56'
+        title: 'He bought',
+        url: '/play/AjRcmSLmvuKj',
+        image: 'https://gateway.paratii.video/ipfs/QmXi9RWJXgpNXJMnV6PyPAQNAyidKGPSNHFuiw8cz5rBpQ/thumbnail-1280x720_1.png',
+        time: '01:04'
       },
       {
-        title: 'Todo Tempo do Mundo - Ep. 1',
-        url: '/play/mF7YHwBeGqZq',
-        image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
-        time: '18:38'
+        title: 'B ＯＧＧＥＤ',
+        url: '/play/pcpcbr3tgIp7',
+        image: 'https://gateway.paratii.video/ipfs/QmUJF8anrN9J2brQPBB3SNu1DFpdugPLMzD3ga5iGvfXmj/thumbnail-1280x720_1.png',
+        time: '01:47'
       },
       {
-        title: 'Só Quero Fazer Falta',
-        url: '/play/9Jh8KlGxtRIC',
-        image: '/assets/img/landing/small/so-quero-fazer-falta.png',
-        time: '02:03'
+        title: 'Funds Are Safu ',
+        url: '/play/gFgul6sKWVQr',
+        image: 'https://gateway.paratii.video/ipfs/QmQFXFA9TLUdCjKLw3kQ2MghYGYbYkewdVHtLUTjRha63G/thumbnail-1280x720_1.png',
+        time: '03:13'
       }
     ]
   }
