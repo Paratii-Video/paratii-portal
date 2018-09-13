@@ -16,39 +16,6 @@ export const LANDING_HEADER_VIDEOS: Array<Object> = [
   }
 ]
 
-export const LANDING_HIGHLIGHT_VIDEOS: Array<Object> = [
-  {
-    title: 'Explore more crypto content ',
-    slug: '/category/crypto-content',
-    list: [
-      {
-        title: 'O que é Algoritmo',
-        url: '/play/D93ftQHK3OXN',
-        image: 'https://m.media-amazon.com/images/M/MV5BMjE4MzM3Mjk5N15BMl5BanBnXkFtZTgwNDI3MTg2MDI@._V1_SY1000_CR0,0,674,1000_AL_.jpg',
-        time: '02:48'
-      },
-      {
-        title: 'Around the Block - Trailer',
-        url: '/play/a4Dbd26pLu0X',
-        image: 'https://m.media-amazon.com/images/M/MV5BMjE4MzM3Mjk5N15BMl5BanBnXkFtZTgwNDI3MTg2MDI@._V1_SY1000_CR0,0,674,1000_AL_.jpg',
-        time: '02:56'
-      },
-      {
-        title: 'Todo Tempo do Mundo - Ep. 1',
-        url: '/play/mF7YHwBeGqZq',
-        image: 'https://m.media-amazon.com/images/M/MV5BMjE4MzM3Mjk5N15BMl5BanBnXkFtZTgwNDI3MTg2MDI@._V1_SY1000_CR0,0,674,1000_AL_.jpg',
-        time: '18:38'
-      },
-      {
-        title: 'Só Quero Fazer Falta',
-        url: '/play/9Jh8KlGxtRIC',
-        image: 'https://m.media-amazon.com/images/M/MV5BMjE4MzM3Mjk5N15BMl5BanBnXkFtZTgwNDI3MTg2MDI@._V1_SY1000_CR0,0,674,1000_AL_.jpg',
-        time: '02:03'
-      }
-    ]
-  }
-]
-
 export const LANDING_CATEGORY_VIDEOS: Array<Object> = [
   {
     title: '🎥 Documentaries',

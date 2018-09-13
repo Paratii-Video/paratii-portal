@@ -25,10 +25,12 @@ const Typography = {
     smallLineHeight: '1.6'
   },
   text: {
+    huge: '1.3rem',
     big: '1.1rem',
     main: '1rem',
     small: '0.9rem',
     tiny: '0.7rem',
+    hugeLineHeight: '1.5',
     bigLineHeight: '1.5',
     mainLineHeight: '1.75',
     smallLineHeight: '1.88',
