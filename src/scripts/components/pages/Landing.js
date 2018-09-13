@@ -310,30 +310,6 @@ class Landing extends Component<Props, void> {
         </Header>
         <Videos>
           <VideosContainer>
-            {LANDING_HIGHLIGHT_VIDEOS.map((item, index) => {
-              return (
-                <ListVideos nomargin key={index}>
-                  <Title accent small margin="0 0 15px">Explore more crypto content</Title>
-                  <ListVideosContainer>
-                    {item.list.map((item2, index2) => {
-                      return (
-                        <ListVideosItem highlight key={index2}>
-                          <ListVideosItemLink to={item2.url}>
-                            <ListVideosItemBackground background={item2.image} />
-                            <ListVideosItemContainer>
-                              <ListVideosItemIcon>
-                                <SVGIcon icon="icon-player-play" />
-                              </ListVideosItemIcon>
-                            </ListVideosItemContainer>
-                          </ListVideosItemLink>
-                        </ListVideosItem>
-                      )
-                    })}
-                  </ListVideosContainer>
-                  <ListVideosButtonWrapper><ListVideoButton to={item.slug} margin="20px 0 0"><TranslatedText message="landingPage.button" /></ListVideoButton></ListVideosButtonWrapper>
-                </ListVideos>
-              )
-            })}
             <TextWrapper>
               <Text big><TranslatedText message="landingPage.text" /></Text>
             </TextWrapper>
