@@ -311,7 +311,7 @@ class Landing extends Component<Props, void> {
         <Videos>
           <VideosContainer>
             <TextWrapper>
-              <Text big><TranslatedText message="landingPage.text" /></Text>
+              <Text huge><TranslatedText message="landingPage.text" /></Text>
             </TextWrapper>
             {LANDING_CATEGORY_VIDEOS.map((item, index) => {
               return (
