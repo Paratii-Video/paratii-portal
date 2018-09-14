@@ -3,7 +3,7 @@
 export const LANDING_HEADER_VIDEOS: Array<Object> = [
   {
     title: '1',
-    url: '/play/D93ftQHK3OXN'
+    url: '/play/GLdcTbPq9fXb'
   },
   {
     title: '2'
@@ -22,10 +22,10 @@ export const LANDING_CATEGORY_VIDEOS: Array<Object> = [
     slug: '/category/documentaries',
     list: [
       {
-        title: 'TBD: Cryptocurrency Revolution',
-        url: '/play/D93ftQHK3OXN',
-        image: '/assets/img/landing/small/o-que-e-algoritimo.png',
-        time: '02:48'
+        title: 'Cryptocurrency Revolution',
+        url: '/play/dYVIv7pgLTlu',
+        image: 'https://gateway.paratii.video/ipfs/QmSiQi6tgBXQktyMmPvu9cdpRUt9erWSwqHnnQVJw7a8bv/thumbnail-1280x720_1.png',
+        time: '16:27'
       },
       {
         title: 'TBD',
