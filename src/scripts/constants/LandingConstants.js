@@ -18,36 +18,6 @@ export const LANDING_HEADER_VIDEOS: Array<Object> = [
 
 export const LANDING_CATEGORY_VIDEOS: Array<Object> = [
   {
-    title: '🎥 Documentaries',
-    slug: '/category/documentaries',
-    list: [
-      {
-        title: 'Cryptocurrency Revolution',
-        url: '/play/dYVIv7pgLTlu',
-        image: 'https://gateway.paratii.video/ipfs/QmSiQi6tgBXQktyMmPvu9cdpRUt9erWSwqHnnQVJw7a8bv/thumbnail-1280x720_1.png',
-        time: '16:27'
-      },
-      {
-        title: 'TBD',
-        url: '/play/a4Dbd26pLu0X',
-        image: '/assets/img/landing/small/around-the-block-trailer.png',
-        time: '02:56'
-      },
-      {
-        title: 'TBD',
-        url: '/play/mF7YHwBeGqZq',
-        image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
-        time: '18:38'
-      },
-      {
-        title: 'TBD',
-        url: '/play/9Jh8KlGxtRIC',
-        image: '/assets/img/landing/small/so-quero-fazer-falta.png',
-        time: '02:03'
-      }
-    ]
-  },
-  {
     title: '🎪 Community Events',
     slug: '/category/community-events',
     list: [
