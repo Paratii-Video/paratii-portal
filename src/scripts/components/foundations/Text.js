@@ -43,7 +43,10 @@ export const TextSize = css`
     let _size: String
     let _line: String
 
-    if (props.big) {
+    if (props.huge) {
+      _size = props.theme.fonts.text.huge
+      _line = props.theme.fonts.text.hugeLineHeight
+    } else if (props.big) {
       _size = props.theme.fonts.text.big
       _line = props.theme.fonts.text.bigLineHeight
     } else if (props.small) {
