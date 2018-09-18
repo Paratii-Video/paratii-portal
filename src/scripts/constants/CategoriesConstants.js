@@ -166,52 +166,28 @@ export const VIDEO_CATEGORIES: Array<Object> = [
     slug: '/category/educational',
     list: [
       {
-        title: 'O que é Algoritmo',
-        url: '/play/D93ftQHK3OXN',
-        image: '/assets/img/landing/small/o-que-e-algoritimo.png',
-        time: '02:48'
+        title: 'The Value Revolution: How Blockchain Will Change Money & the World | Galia Benartzi | TEDxWhiteCity',
+        url: '/play/EdKegPIXs8VN',
+        image: 'https://gateway.paratii.video/ipfs/QmWz6wydiYJmCPziHRUSM5XeDTjzzL2HQ9XdXYUbT4s4ru/thumbnail-1280x720_1.png',
+        time: '10:34'
       },
       {
-        title: 'Around the Block - Trailer',
-        url: '/play/a4Dbd26pLu0X',
-        image: '/assets/img/landing/small/around-the-block-trailer.png',
-        time: '02:56'
+        title: 'The new open-source economics ',
+        url: '/play/J9FnHpb0k1EB',
+        image: 'https://gateway.paratii.video/ipfs/QmSdVrtRzPW2Q2zZCjcm5E7HpEqmuwvTPtujCPv8iD9oPM/thumbnail-320x240_1.png',
+        time: '17:52'
       },
       {
-        title: 'Todo Tempo do Mundo - Ep. 1',
-        url: '/play/mF7YHwBeGqZq',
-        image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
-        time: '18:38'
+        title: 'What is Ethereum Gas? Radar explains',
+        url: '/play/XnzJ1uPwPis5',
+        image: 'https://gateway.paratii.video/ipfs/QmRNP8Z83S6UHDZqqyfwK4iABc25Z4ffdjT7YJhQxDddUM/thumbnail-1280x720_1.png',
+        time: '2:31'
       },
       {
-        title: 'Só Quero Fazer Falta',
-        url: '/play/9Jh8KlGxtRIC',
-        image: '/assets/img/landing/small/so-quero-fazer-falta.png',
-        time: '02:03'
-      },
-      {
-        title: 'O que é Algoritmo',
-        url: '/play/D93ftQHK3OXN',
-        image: '/assets/img/landing/small/o-que-e-algoritimo.png',
-        time: '02:48'
-      },
-      {
-        title: 'Around the Block - Trailer',
-        url: '/play/a4Dbd26pLu0X',
-        image: '/assets/img/landing/small/around-the-block-trailer.png',
-        time: '02:56'
-      },
-      {
-        title: 'Todo Tempo do Mundo - Ep. 1',
-        url: '/play/mF7YHwBeGqZq',
-        image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
-        time: '18:38'
-      },
-      {
-        title: 'Só Quero Fazer Falta',
-        url: '/play/9Jh8KlGxtRIC',
-        image: '/assets/img/landing/small/so-quero-fazer-falta.png',
-        time: '02:03'
+        title: 'Demystifying Decentralization with Joseph Lubin',
+        url: '/play/Ehl82l4E279f',
+        image: 'https://gateway.paratii.video/ipfs/QmdYoPYcCJpFD5vdgLLHuQfkQ5YMUeGDQGEoUJneWWLtqH/thumbnail-1280x720_1.png',
+        time: '02:00'
       }
     ]
   },
@@ -222,52 +198,34 @@ export const VIDEO_CATEGORIES: Array<Object> = [
     slug: '/category/opinion-makers',
     list: [
       {
-        title: 'O que é Algoritmo',
-        url: '/play/D93ftQHK3OXN',
-        image: '/assets/img/landing/small/o-que-e-algoritimo.png',
-        time: '02:48'
+        title: 'Simon de la Rouviere - Art, creativity and the blockchain (Interview) ',
+        url: '/play/UeW2wcPpkcoo',
+        image: 'https://gateway.paratii.video/ipfs/QmeAALYfauR76ZsvP9cyNMQx1LLnB1vbuEa28LCh8ZTKST/thumbnail-1280x720_1.png',
+        time: '02:41'
       },
       {
-        title: 'Around the Block - Trailer',
-        url: '/play/a4Dbd26pLu0X',
-        image: '/assets/img/landing/small/around-the-block-trailer.png',
-        time: '02:56'
+        title: 'The Incredible Story of The PayPal Mafia',
+        url: '/play/4fZm81aL7HYO',
+        image: 'https://gateway.paratii.video/ipfs/QmbpRKVvSdC9NrYUeTzEq7EupvK5jn4N35Wv5CG4ZKHjXk/thumbnail-1280x720_1.png',
+        time: '21:07'
       },
       {
-        title: 'Todo Tempo do Mundo - Ep. 1',
-        url: '/play/mF7YHwBeGqZq',
-        image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
+        title: 'What\'s Proof of Work and Stake',
+        url: '/play/vsdVxcVktGN8',
+        image: 'https://gateway.paratii.video/ipfs/QmSbkoFjVB5XNoGgi8E6csrGZZtkhvAaUZ8451HHzsE5P9/thumbnail-1280x720_1.png',
         time: '18:38'
       },
       {
-        title: 'Só Quero Fazer Falta',
-        url: '/play/9Jh8KlGxtRIC',
-        image: '/assets/img/landing/small/so-quero-fazer-falta.png',
-        time: '02:03'
+        title: 'Where should I store my cryptocurrency',
+        url: '/play/qr6G2f8DcDF4',
+        image: 'https://gateway.paratii.video/ipfs/QmeAALYfauR76ZsvP9cyNMQx1LLnB1vbuEa28LCh8ZTKST/thumbnail-1280x720_1.png',
+        time: '02:41'
       },
       {
-        title: 'O que é Algoritmo',
-        url: '/play/D93ftQHK3OXN',
-        image: '/assets/img/landing/small/o-que-e-algoritimo.png',
-        time: '02:48'
-      },
-      {
-        title: 'Around the Block - Trailer',
-        url: '/play/a4Dbd26pLu0X',
-        image: '/assets/img/landing/small/around-the-block-trailer.png',
-        time: '02:56'
-      },
-      {
-        title: 'Todo Tempo do Mundo - Ep. 1',
-        url: '/play/mF7YHwBeGqZq',
-        image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
-        time: '18:38'
-      },
-      {
-        title: 'Só Quero Fazer Falta',
-        url: '/play/9Jh8KlGxtRIC',
-        image: '/assets/img/landing/small/so-quero-fazer-falta.png',
-        time: '02:03'
+        title: 'What is a cross-chain protocol (Cosmos, Polkadot, Interledger)',
+        url: '/play/7yPahOi1btOa',
+        image: 'https://gateway.paratii.video/ipfs/QmYX9DhawjWdDy8X79CtocdcWvPc3pnM2qzh3WtGgg9awV/thumbnail-1280x720_1.png',
+        time: '17:26'
       }
     ]
   },
@@ -307,7 +265,7 @@ export const VIDEO_CATEGORIES: Array<Object> = [
         image: 'https://gateway.paratii.video/ipfs/QmQFXFA9TLUdCjKLw3kQ2MghYGYbYkewdVHtLUTjRha63G/thumbnail-1280x720_1.png',
         time: '03:13'
       }
-  
+
     ]
   }
 ]

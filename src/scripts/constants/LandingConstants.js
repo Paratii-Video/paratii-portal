@@ -118,20 +118,20 @@ export const LANDING_CATEGORY_VIDEOS: Array<Object> = [
         time: '02:41'
       },
       {
-        title: 'TBD Around the Block - Trailer',
-        url: '/play/a4Dbd26pLu0X',
-        image: '/assets/img/landing/small/around-the-block-trailer.png',
-        time: '02:56'
+        title: 'The Incredible Story of The PayPal Mafia',
+        url: '/play/4fZm81aL7HYO',
+        image: 'https://gateway.paratii.video/ipfs/QmbpRKVvSdC9NrYUeTzEq7EupvK5jn4N35Wv5CG4ZKHjXk/thumbnail-1280x720_1.png',
+        time: '21:07'
       },
       {
-        title: 'TBD : Cosmos TV | Inside Blockchain | A Sneak Peek of the Latest & Greatest Tokens of 2018 ',
-        url: '/play/wiKpnOavN3bV',
-        image: '/assets/img/landing/small/todo-tempo-do-mundo-ep-1.png',
+        title: 'What\'s Proof of Work and Stake',
+        url: '/play/vsdVxcVktGN8',
+        image: 'https://gateway.paratii.video/ipfs/QmSbkoFjVB5XNoGgi8E6csrGZZtkhvAaUZ8451HHzsE5P9/thumbnail-1280x720_1.png',
         time: '18:38'
       },
       {
-        title: 'TBD: Simon de la Rouviere - Art, creativity and the blockchain (Interview) ',
-        url: '/play/UeW2wcPpkcoo',
+        title: 'Where should I store my cryptocurrency',
+        url: '/play/qr6G2f8DcDF4',
         image: 'https://gateway.paratii.video/ipfs/QmeAALYfauR76ZsvP9cyNMQx1LLnB1vbuEa28LCh8ZTKST/thumbnail-1280x720_1.png',
         time: '02:41'
       }
@@ -166,5 +166,14 @@ export const LANDING_CATEGORY_VIDEOS: Array<Object> = [
         time: '03:13'
       }
     ]
+  }
+]
+
+export const BROKEN = [
+  {
+    title: 'BROKEN: What Are Token Curated Registries',
+    url: '/play/9a3pyaklL6xR',
+    image: 'https://gateway.paratii.video/ipfs/QmT91tksqqdS7FJStvyComXgfPcmpmGvxWUDx7qwjdB4Vy/thumbnail-1280x720_1.png',
+    time: '02:56'
   }
 ]
