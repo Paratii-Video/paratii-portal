@@ -70,8 +70,9 @@ export const fetchOwnedVideos = () => async (
       const video = ownedVideos[i]
       // only show videos that have been uploaded
       // FIXME: use status codes or constants, not strings like 'success'
+
       if (
-        video.transcodingStatus &&
+        video.uploadStatus &&
         (video.uploadStatus.name === 'success' ||
           video.uploadStatus.name === 'uploaded to remote')
       ) {
