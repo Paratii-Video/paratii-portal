@@ -930,16 +930,18 @@ class Play extends Component<Props, State> {
                         </TextButton>
                       </VideoInfoButtons>
                     )}
-                    <Text>
-                        Price{' '}
-                      <Span highlight>
-                        {video.free ? (
-                          <TranslatedText message="player.free" />
-                        ) : (
-                          <TranslatedText message="player.free" />
-                        )}
-                      </Span>
-                    </Text>
+                    {
+                    // <Text>
+                    //     Price{' '}
+                    //   <Span highlight>
+                    //     {video.free ? (
+                    //       <TranslatedText message="player.free" />
+                    //     ) : (
+                    //       <TranslatedText message="player.free" />
+                    //     )}
+                    //   </Span>
+                    // </Text>
+                    }
                     {video.description && (
                       <DescriptionWrapper>
                         <Text>{video.description}</Text>
