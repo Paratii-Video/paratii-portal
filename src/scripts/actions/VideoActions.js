@@ -81,14 +81,16 @@ export const fetchOwnedVideos = () => async (
       ) {
         filteredOwnedVideos.push(video)
         if (
-          video.transcodingStatus.name !== 'success' ||
-          video.transcodingStatus.data.progress !== 100
+          video.transcodingStatus && (
+            video.transcodingStatus.name !== 'success' ||
+            (video.transcodingStatus.data && video.transcodingStatus.data.progress !== 100)
+          )
         ) {
           console.log('Restarting to transcode' + video.id)
           dispatch(
             Notifications.success({
               title: 'Transcoding',
-              message: 'We are transcoding video ' + video.id
+              message: 'We are transcoding the video ' + video.id
             })
           )
           transcodeVideo({
