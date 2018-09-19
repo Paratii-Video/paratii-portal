@@ -946,10 +946,11 @@ class Play extends Component<Props, State> {
                       </DescriptionWrapper>
                     )}
                   </Card>
-                </PlayMainWrapper>
-                <PlaySidebarWrapper>
-                  <SidebarTCR video={video} videoId={video && video.id} />
-                </PlaySidebarWrapper>
+                </PlayMainWrapper>{
+                // <PlaySidebarWrapper>
+                //   <SidebarTCR video={video} videoId={video && video.id} />
+                // </PlaySidebarWrapper>
+                }
               </PlayWrapper>
             )}
           </Wrapper>

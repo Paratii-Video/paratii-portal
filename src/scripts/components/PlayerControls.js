@@ -336,14 +336,16 @@ class PlayerControls extends Component<Props, State> {
           showShareModal={showShareModal}
           showStartScreen={showStartScreen}
         />
-        {askForTip &&
-          !isEmbed && (
-          <TipButtonWrapper
-            controlsRaised={transitionState === TRANSITION_STATE.ENTERED}
-          >
-            <TipButtonContainer />
-          </TipButtonWrapper>
-        )}
+        {
+        // {askForTip &&
+        //   !isEmbed && (
+        //   <TipButtonWrapper
+        //     controlsRaised={transitionState === TRANSITION_STATE.ENTERED}
+        //   >
+        //     <TipButtonContainer />
+        //   </TipButtonWrapper>
+        // )}
+        }
         <Controls
           data-test-id="player-controls"
           transitionState={transitionState}
