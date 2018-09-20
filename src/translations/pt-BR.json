@@ -9,8 +9,8 @@
 	"landingPage": {
 		"alert_html": "<strong>Esté é um Alpha</strong> (numa testnet da Ethereum). O código não foi auditado. Não compartilhe informações sensíveis.",
 		"header": {
-			"title_html": "🎉 Around the block<br />: primeiro episódio lançado",
-			"description_html": "Uma websérie documental<br /> sobre as mentes por trás da descentralização. Assista agora!",
+			"title_html": "🎉 Around the block:<br />: 1º episódio lançado",
+			"description_html": "Uma websérie documental sobre as mentes por trás<br /> da descentralização. Assista agora! 👇",
 			"button": "Ep."
 		},
 		"text": "O Lab é uma plataforma peer-to-peer que não espia nem revende suas informações. Encontre séries, tutoriais, palestras e descubra as cripto-comunidades que existem além da sua.",
@@ -32,8 +32,8 @@
 			"continue": "Continuar",
 			"pleaseWait": "Aguarde: criando conta.",
 			"verificationEmail": {
-				"title": "Cheque seu email:",
-				"description": "Clique no link de confirmação."
+				"title": "Verifique seu email:",
+				"description": "Encontre o link de confirmação."
 			}
 		},
 		"vote": {

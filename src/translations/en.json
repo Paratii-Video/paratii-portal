@@ -7,10 +7,10 @@
 		"english": "English"
 	},
 	"landingPage": {
-		"alert_html": "<strong>This is an Alpha</strong> (on an Ethereum testnet). Code hasn’t been audited. Don’t share sensitive information.",
+		"alert_html": "<strong>Alpha product</strong> (on an Ethereum testnet). Code hasn’t been audited. Don’t share sensitive information.",
 		"header": {
-			"title_html": "🎉 Around the block<br />: episode 1 is live",
-			"description_html": "A 4-part docuseries<br /> on the minds behind the blockchains. Start watching now!",
+			"title_html": "🎉 Around the block:<br /> Episode 1 is live",
+			"description_html": "A 4-part docuseries on the story of crypto-land.<br /> 👇 Start watching now!",
 			"button": "Ep."
 		},
 		"text": "Lab is a peer-to-peer video site that doesn't spy on you. Find series, tutorials, speeches and discover crypto-communities beyond your own.",
@@ -32,8 +32,8 @@
 			"continue": "Continue",
 			"pleaseWait": "Please wait: creating your wallet.",
 			"verificationEmail": {
-				"title": "Check your email:",
-				"description": "Click the confirmation link."
+				"title": "Verify your email:",
+				"description": "Find the confirmation link."
 			}
 		},
 		"vote": {
@@ -55,9 +55,9 @@
 		"myVideos": "Submit &  Edit",
 		"upload": "Upload",
 		"about": "About Paratii",
-		"logIn": "Become a contributor",
+		"logIn": "Be a contributor",
 		"profile": "Profile",
-		"telegram": "Join us on Telegram"
+		"telegram": "Join our Telegram"
 	},
 	"notFound": {
 		"title": "Houston, we have a problem.",
@@ -146,7 +146,7 @@
 		"contentType": {
 			"title": "What kind of content?",
 			"free": "Free",
-			"paid": "Paid (not available yet)"
+			"paid": "Paid"
 		},
 		"publish": "Publish",
 		"termsOfService_html": "By clicking \"Publish\", you agree to %{termsOfServiceLink}. Don't violate others’ copyright or privacy rights.",
