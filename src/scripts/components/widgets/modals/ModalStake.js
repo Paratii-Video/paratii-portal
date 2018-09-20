@@ -92,7 +92,7 @@ class ModalStake extends Component<Props, Object> {
           this.props.notification(
             {
               title: 'Stake well done',
-              message: `You have staked ${stakeAmount} PTI.`
+              message: `You have staked ${stakeAmount} 💎.`
             },
             'success'
           )
@@ -144,19 +144,17 @@ class ModalStake extends Component<Props, Object> {
     return (
       <ModalContentWrapper>
         <ModalScrollContent>
-          <Title accent>Stake {minDeposit} PTI</Title>
+          <Title accent>Stake {minDeposit} 💎</Title>
           <Highlight primary>
             By publishing this video you agree to make a stake deposit of{' '}
-            {minDeposit} PTI. The tokens still belong to you, and can be
+            {minDeposit} 💎. The 💎 still belong to you, and can be
             retrieved, along with the video, at any time.
           </Highlight>
           {!balanceIsTooLow ? (
             <MainText small>
-              For now, with no monetary value, this is mostly an experiment.
-              Soon, the community will curate all the content published.
-              Well-received videos will see their stakes increase, earning PTI
-              for their creators. Illegal content may lose its stake. Want to
-              know how exactly this is going to play out? Stay alert!
+              This is an experiment with distributed curation.
+              💎 has no monetary properties. One day, 💎 may accrue value and
+              become freely traded.
             </MainText>
           ) : (
             ''
@@ -170,7 +168,7 @@ class ModalStake extends Component<Props, Object> {
           {balanceIsTooLow ? (
             <MainText warn>
               Your balance is too low: you need to stake at least {minDeposit}{' '}
-              PTI, but you only have {balanceInPTI}. Have no voucher?{' '}
+              💎, but you only have {balanceInPTI}. Have no voucher?{' '}
               <Anchor
                 href="mailto:we@paratii.video"
                 target="_blank"
@@ -179,8 +177,7 @@ class ModalStake extends Component<Props, Object> {
               >
                 Drop us a line
               </Anchor>{' '}
-              and we might hand out some. Remember: these are testnet tokens. No
-              real value (yet)!
+              and we might hand out some!
             </MainText>
           ) : (
             <Footer>
