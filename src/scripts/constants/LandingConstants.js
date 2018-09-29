@@ -3,11 +3,11 @@
 export const LANDING_HEADER_VIDEOS: Array<Object> = [
   {
     title: '1',
-    url: 'https://lab.paratii.video/play/GLdcTbPq9fXb'
+    url: '/play/GLdcTbPq9fXb'
   },
   {
     title: '2',
-    url: 'https://www.youtube.com/watch?v=yMbOxJQ1Hlo'
+    url: '//www.youtube.com/watch?v=yMbOxJQ1Hlo'
   },
   {
     title: '3'
