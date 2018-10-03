@@ -88,7 +88,8 @@ const Wrapper = styled.div`
   flex-direction: column;
   margin: 0 auto;
   height: 100%;
-  padding-bottom: ${props => (props.isEmbed ? null : MAINWRAPPER_PADDING_VERTICAL)};
+  padding-bottom: ${props =>
+    props.isEmbed ? null : MAINWRAPPER_PADDING_VERTICAL};
   width: 100%;
 `
 
@@ -614,49 +615,112 @@ class Play extends Component<Props, State> {
   createPlayer = (video: VideoRecord): void => {
     const { updateVolume } = this.props
 
-    if (!video.ipfsHash) {
-      throw new Error("Can't create player without ipfsHash")
+    if (!video.ipfsHash && !video.lpBoardcaster) {
+      throw new Error(
+        "Can't create player without ipfsHash or livepeer lpBoardcaster"
+      )
     }
+
     let poster = ''
     if (video && video.thumbnails.size === 4) {
       poster = video.thumbnails.get(0)
     }
 
+    console.info('loading paratii-mediaplayer , video: ', video.id)
     import('paratii-mediaplayer').then(CreatePlayer => {
       if (this.state.player && this.state.player.destroy) {
         this.state.player.destroy()
       }
+      const broadcaster = '0x30cc044974d1f408082a41929611f1e40a2eaebe'
 
       const autoPlay: boolean = this.getAutoPlaySetting()
-
-      this.setState(
-        {
-          player: CreatePlayer({
-            selector: `#${PLAYER_ID}`,
-            source: `https://gateway.paratii.video/ipfs/${
-              video.ipfsHash
-            }/master.m3u8`,
-            poster: `https://gateway.paratii.video/ipfs/${
-              video.ipfsHash
-            }/${poster}`,
-            mimeType: 'application/x-mpegURL',
-            ipfsHash: video.ipfsHash,
-            autoPlay
-          })
-        },
-        () => {
-          if (this.state.player) {
-            this.bindClapprEvents({
-              eventsMap: this.state.player.clappr.Events
+      if (video.ipfsHash) {
+        this.setState(
+          {
+            player: CreatePlayer({
+              selector: `#${PLAYER_ID}`,
+              source: `https://gateway.paratii.video/ipfs/${
+                video.ipfsHash
+              }/master.m3u8`,
+              poster: `https://gateway.paratii.video/ipfs/${
+                video.ipfsHash
+              }/${poster}`,
+              mimeType: 'application/x-mpegURL',
+              ipfsHash: video.ipfsHash,
+              autoPlay
             })
-            this.configureVideoAdapter()
+          },
+          () => {
+            if (this.state.player) {
+              console.log('[ipfs video] state.player', this.state.player)
+              this.bindClapprEvents({
+                eventsMap: this.state.player.clappr.Events
+              })
+              this.configureVideoAdapter()
+            }
           }
-        }
-      )
+        )
+      } else {
+        this.setState(
+          {
+            player: CreatePlayer({
+              selector: `#${PLAYER_ID}`,
+              lpBoardcaster: video.lpBroadcaster || broadcaster, // boardcaster is used for testing.
+              lpConfig: {
+                controllerAddress: '0x37dC71366Ec655093b9930bc816E16e6b587F968',
+                provider: 'https://rinkeby.infura.io/srFaWg0SlljdJAoClX3B'
+              },
+              poster: `https://gateway.paratii.video/ipfs/${
+                video.ipfsHash
+              }/${poster}`,
+              mimeType: 'application/x-mpegURL',
+              autoPlay
+            })
+          },
+          () => {
+            if (this.state.player) {
+              console.log('state.player.clappr', this.state.player.clappr)
+              this.bindClapprEvents({
+                eventsMap: this.state.player.clappr.Events
+              })
+              this.configureVideoAdapter()
+            }
+          }
+        )
+      }
 
       if (this.state.player) {
         updateVolume(this.state.player.getVolume())
       }
+
+      // import('@livepeer/sdk').then((lpSDK) => {
+      //   lpSDK.default({
+      //     controllerAddress: '0x37dC71366Ec655093b9930bc816E16e6b587F968',
+      //     provider: 'https://rinkeby.infura.io/srFaWg0SlljdJAoClX3B'
+      //   }).then(async (sdk) => {
+      //     let { rpc } = sdk
+      //
+      //     const tokens = await rpc.getTokenTotalSupply()
+      //     console.log('tokens for dayz: ', tokens)
+      //     const broadcaster = '0x30cc044974d1f408082a41929611f1e40a2eaebe'
+      //     const jobs = await rpc.getJobs({
+      //       broadcaster,
+      //       to: 'latest',
+      //       blocksAgo: 10000,
+      //     })
+      //     console.log('jobs: ', jobs)
+      //     for (let i=0; i < jobs.length; i++) {
+      //       let manifestId = jobs[i].streamId.substr(0, 68 + 64)
+      //       let url = `http://localhost:8935/stream/${manifestId}.m3u8`
+      //       console.log(`Job ${jobs[i].id}: ${url}\n broadcaster: ${jobs[i].broadcaster}`)
+      //     }
+      //
+      //     let manifestId = jobs[0].streamId.substr(0, 68 + 64)
+      //     let url = `http://localhost:8935/stream/${manifestId}.m3u8`
+      //
+      //
+      //   })
+      // })
     })
   }
 

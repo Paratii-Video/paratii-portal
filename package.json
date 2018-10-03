@@ -142,6 +142,7 @@
     "webpack-hot-middleware": "^2.21.0"
   },
   "dependencies": {
+    "abortcontroller-polyfill": "^1.1.9",
     "bip39": "^2.5.0",
     "clappr": "^0.2.87",
     "compression": "^1.7.2",
@@ -151,6 +152,7 @@
     "express-locale": "^1.0.5",
     "hh-mm-ss": "^1.2.0",
     "hlsjs-ipfs-loader": "github:ya7ya/hlsjs-ipfs-loader#bd890b9e78f2c273fcb1dc4e1d43ad0afc69558c",
+    "hlsjs-lp-loader": "github:ya7ya/hlsjs-lp-loader#master",
     "immutable": "^3.8.2",
     "ipfs": "github:ya7ya/js-ipfs#paratii/v0.27.6",
     "ipfs-bitswap": "^0.19.0",
@@ -162,7 +164,7 @@
     "nodemailer": "^4.6.4",
     "paratii-db": "github:Paratii-Video/paratii-db",
     "paratii-js": "github:Paratii-Video/paratii-js#fd62b790765ac8593c4d594decf4b938c591db8b",
-    "paratii-mediaplayer": "3.1.2",
+    "paratii-mediaplayer": "^3.1.2",
     "player.js": "^0.1.0",
     "promise-polyfill": "^7.1.2",
     "query-string": "^6.0.0",
