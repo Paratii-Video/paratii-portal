@@ -54,7 +54,7 @@ class ProfileMyVideos extends Component<Props, void> {
           {this.props.videos
             .entrySeq()
             .map(([videoId, videoInfo]) => (
-              <MyVideoItem key={videoId} videoId={videoId} video={videoInfo} />
+              <MyVideoItem key={videoId} videoId={videoId} video={videoInfo} onDelete={this.props.onDeleteVideo} />
             ))}
           <FileUploaderWrapper>
             <FileUploader />

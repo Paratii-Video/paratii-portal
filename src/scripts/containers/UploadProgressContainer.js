@@ -19,7 +19,7 @@ class UploadProgressContainer extends Component<Props, void> {
   }
 
   cancelUpload () {
-    console.log('Cancel upload..')
+    this.props.cancelUpload()
   }
 
   render () {
@@ -29,12 +29,16 @@ class UploadProgressContainer extends Component<Props, void> {
   }
 }
 
+import { bindActionCreators } from 'redux'
+import { cancelUpload } from 'actions/UploaderActions'
+
 const mapStateToProps = (state: RootState) => ({
   progress: getUploadProgress(state),
   state: state
 })
 
 const mapDispatchToProps = dispatch => ({
+  cancelUpload: bindActionCreators(cancelUpload, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadProgressContainer)

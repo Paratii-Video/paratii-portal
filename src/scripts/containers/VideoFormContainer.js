@@ -8,7 +8,8 @@ import { checkUserWallet } from 'actions/UserActions'
 import {
   saveVideoInfo,
   uploadAndTranscode,
-  selectVideoToPublish
+  selectVideoToPublish,
+  deleteVideo
 } from 'actions/UploaderActions'
 import { getUser } from 'selectors/index'
 import { getFormattedPtiBalance, getIsSecure } from 'selectors/UserSelectors'
@@ -26,7 +27,8 @@ const mapDispatchToProps = dispatch => ({
   uploadAndTranscode: bindActionCreators(uploadAndTranscode, dispatch),
   notification: bindActionCreators(show, dispatch),
   checkUserWallet: bindActionCreators(checkUserWallet, dispatch),
-  setVideoToPublish: bindActionCreators(selectVideoToPublish, dispatch)
+  setVideoToPublish: bindActionCreators(selectVideoToPublish, dispatch),
+  onDeleteVideo: bindActionCreators(deleteVideo, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoForm)

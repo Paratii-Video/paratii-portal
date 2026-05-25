@@ -24,7 +24,8 @@ import { formatDuration } from '../utils/VideoUtils'
 import type VideoRecord from 'records/VideoRecords'
 
 type Props = {
-  video: VideoRecord
+  video: VideoRecord,
+  onDelete?: (id: string) => void
 }
 
 const ZINDEX_MYVIDEOSITEM_IMAGE: number = 1
@@ -58,6 +59,26 @@ const MyVideoItemButton = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+`
+
+const DeleteButton = styled.button`
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 4px;
+  color: #ff6b6b;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 6px 12px;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  z-index: 10;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+  }
 `
 
 const MyVideoItemLink = MyVideoItemButton.withComponent(Link)
@@ -186,7 +207,12 @@ class MyVideoItem extends Component<Props, void> {
     )
 
     const MyVideoItemContent = isPublished ? (
-      <MyVideoItemLink to={urlToPlay}>{videoContent}</MyVideoItemLink>
+      {this.props.onDelete && (
+              <DeleteButton onClick={(e) => { e.preventDefault(); this.props.onDelete(this.props.video.id); }}>
+                ✕ Delete
+              </DeleteButton>
+            )}
+            <MyVideoItemLink to={urlToPlay}>{videoContent}</MyVideoItemLink>
     ) : (
       <MyVideoItemButton>{videoContent}</MyVideoItemButton>
     )

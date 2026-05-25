@@ -18,7 +18,9 @@ import {
   TRANSCODING_PROGRESS,
   TRANSCODING_SUCCESS,
   TRANSCODING_FAILURE,
-  VIDEO_STAKED
+  VIDEO_STAKED,
+  CANCEL_UPLOAD,
+  DELETE_VIDEO
 } from 'constants/ActionConstants'
 import VideoRecord from 'records/VideoRecords'
 import { videoFetchSuccess } from 'actions/VideoActions'
@@ -307,4 +309,47 @@ export const saveVideoStaked = (videoInfo: Object) => async (
 ) => {
   console.log(videoInfo)
   dispatch(videoStaked(videoInfo))
+}
+
+export const cancelUpload = (videoId: string) => async (
+  dispatch: Dispatch<*>,
+  getState: () => RootState
+) => {
+  dispatch({
+    type: CANCEL_UPLOAD,
+    payload: { id: videoId }
+  })
+  dispatch(
+    Notifications.warning({
+      title: 'Upload cancelled',
+      message: `Upload of ${videoId} has been cancelled.`
+    })
+  )
+}
+
+export const deleteVideo = (videoId: string) => async (
+  dispatch: Dispatch<*>,
+  getState: () => RootState
+) => {
+  dispatch({
+    type: DELETE_VIDEO,
+    payload: { id: videoId }
+  })
+  try {
+    await paratii.vids.remove(videoId)
+    dispatch(
+      Notifications.success({
+        title: 'Video deleted',
+        message: 'The video has been removed from your library.'
+      })
+    )
+  } catch (error) {
+    dispatch(
+      Notifications.error({
+        title: 'Delete failed',
+        message: 'Could not delete the video. Please try again.',
+        autoDismiss: 0
+      })
+    )
+  }
 }

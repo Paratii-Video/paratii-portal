@@ -57,6 +57,8 @@ export const UPLOAD_REMOTE_SUCCESS = createActionConstant(
 )
 export const UPDATE_VIDEO_INFO = createActionConstant('UPDATE_VIDEO_INFO')
 export const UPLOAD_VIDEO_SELECT = createActionConstant('UPLOAD_VIDEO_SELECT')
+export const CANCEL_UPLOAD = createActionConstant('CANCEL_UPLOAD')
+export const DELETE_VIDEO = createActionConstant('DELETE_VIDEO')
 
 /* Staking actions */
 export const VIDEO_STAKED = createActionConstant('VIDEO_STAKED')

@@ -58,7 +58,8 @@ type Props = {
   openModal: string => void,
   notification: (Object, string) => void,
   checkUserWallet: () => void,
-  setVideoToPublish: string => void
+  setVideoToPublish: string => void,
+  onDeleteVideo?: (id: string) => void
 }
 
 const Z_INDEX_MEDIAICON = 2
@@ -472,6 +473,14 @@ class VideoForm extends Component<Props, Object> {
                 </TextButton>
               ) : (
                 <LabelStake>{stakedPTI} PTI Staked</LabelStake>
+              )}
+              {this.props.onDeleteVideo && (
+                <TextButton
+                  onClick={(e) => { e.stopPropagation(); this.props.onDeleteVideo(this.props.video.id); }}
+                  style={{ marginLeft: '10px', color: '#ff6b6b' }}
+                >
+                  ✕ Delete
+                </TextButton>
               )}
             </HeaderButtons>
           </HeaderContent>
