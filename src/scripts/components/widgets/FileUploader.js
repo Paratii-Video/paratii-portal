@@ -13,7 +13,7 @@ import SVGIcon from '../foundations/SVGIcon'
 import FilesUploaderSvg from '../foundations/svgs/FilesUploaderSvg'
 import TranslatedText from '../translations/TranslatedText'
 import RawTranslatedText from 'utils/translations/RawTranslatedText'
-import { SUPPORTED_FILE_TYPES } from 'constants/UploaderConstants'
+import { SUPPORTED_FILE_TYPES, MAX_FILE_SIZE } from 'constants/UploaderConstants'
 
 type Props = {
   history: RouterHistory,
@@ -119,6 +119,21 @@ class FilesUploader extends Component<Props, Object> {
     if (this.props.isWalletSecured) {
       const file = e.target.files[0]
       if (file) {
+        // Validate file type and size before proceeding
+        const isValidType = SUPPORTED_FILE_TYPES.includes(file.type)
+        const isValidSize = file.size <= MAX_FILE_SIZE
+        if (!isValidType) {
+          this.setState({
+            fileName: 'Unsupported file format. Please use .mp4 files.'
+          })
+          return
+        }
+        if (!isValidSize) {
+          this.setState({
+            fileName: 'File too large. Maximum size is 2GB.'
+          })
+          return
+        }
         this.props.onFileChosen(file)
         this.setState({
           file: file,
