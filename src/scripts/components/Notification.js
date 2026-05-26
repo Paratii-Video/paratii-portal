@@ -12,13 +12,11 @@ class Notification extends Component<Props, Array<Object>> {
   render () {
     const { notifications } = this.props
 
-    // here the reference for Style the component
-    // https://github.com/igorprado/react-notification-system/blob/master/src/styles.js
     const shadowOpacity = '0.16'
     const shadowColor = '0, 0, 0'
+
     const style = {
       Containers: {
-        // Top right notification
         tr: {
           top: '86px',
           right: '24px'
@@ -77,7 +75,18 @@ class Notification extends Component<Props, Array<Object>> {
       }
     }
 
-    return <Notifications notifications={notifications} style={style} />
+    return (
+      <div>
+        <style>{`
+          @keyframes paratiiNotificationShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+          }
+        `}</style>
+        <Notifications notifications={notifications} style={style} />
+      </div>
+    )
   }
 }
 
